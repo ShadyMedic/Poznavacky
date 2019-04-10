@@ -1,0 +1,298 @@
+/* CSS Document */
+/* CSS reset -----------------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.button, .buttonDisabled {
+    border: none;
+    }
+button {
+    border: none;
+    }
+a {
+    text-decoration: none;
+    }
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+    text-decoration: none;
+}
+ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+/*----------------------------------------------------------------------------*/
+body {
+    background-color: #fff;
+    text-align: center;
+    color: #474747;
+    font-family: Century Gothic, Verdana, sans-serif;
+    font-size: 16px;
+    line-height: 1.3em;
+    }
+main.basic_main {
+    width: 50%;
+    background-color: #e0e0e0;
+    border: 3px solid #aeaeae;
+    margin: 2.4vh auto;
+    padding: 6px;
+    }
+h1 {
+    font-size: 28px;
+    margin: 6px;
+    }
+fieldset {
+    width: 80%;
+    margin: auto;
+    padding: 6px 0;
+    border-bottom: 2px solid #aeaeae;
+    }
+div.prikaz {
+    margin: 2px auto;
+    }
+table {
+    margin: auto;
+    }
+td{
+	vertical-align: middle;
+}
+.img{
+	width: 25vw;
+	height: 25vw;
+	margin: auto;
+    margin: 6px;
+    box-sizing: border-box;
+    border: 2px solid #880e4f;
+	object-fit: contain;
+}
+td button{
+	width: 4vw;
+	height: 25vw;
+	text-align: center;
+    background-color: #880e4f;
+}
+td button img{
+	height: 3vw;
+	width: 3vw;
+}
+#dropList {
+    width: 180px;
+    }
+#dropList:hover{
+    cursor: pointer;
+    }
+#urlInput {
+    width: 80%;
+    }
+#reportMenu{
+	display: none;
+}
+#submitReport{
+	display: none;
+}
+#cancelReport{
+	display: none;
+}
+main#main_kod {
+    width: 360px;
+	height: 140px;
+	border: 3px solid #aeaeae;
+    background-color: #e0e0e0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    }
+div#kod {
+    position: relative;
+    top: 16px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto}
+span#span_kod {
+    font-size: 24px;
+    }
+form {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    }
+#kod form {
+    margin: 6px auto;
+    }
+.text{
+    box-sizing: border-box;
+    font-family: Century Gothic, Verdana, sans-serif;
+    color: #474747;
+    padding: 2px;
+    height: 28px;
+    border: 2px solid #880e4f;
+    margin: 4px;
+}
+.text:focus {
+    outline: none;
+    border: 2px solid #560027;
+    }
+#kod_input {
+    width: 160px;
+	height: 28px;
+    font-size: 16px;
+    margin: 2px 0;
+    }
+.confirm{
+	width: 160px;
+}
+.button {
+    background-color: #880e4f;
+    color: #fff;
+    height: 28px;
+    font-family: Century Gothic, Verdana, sans-serif;
+    padding: 4px 8px;
+    margin: 2px;
+    }
+.button:hover, button:hover {
+    background-color: #560027;
+    cursor: pointer;
+    transition: 0.2s;
+    }
+.button:active, button:active {
+    outline: none;
+    cursor: pointer;
+    }
+.button:focus, button:focus {
+    outline: none;
+    }
+a .button {
+    margin: 8px 0 2px 0
+    }
+.buttonDisabled {
+    background-color: #aeaeae;
+    color: #fff;
+    height: 28px;
+    font-family: Century Gothic, Verdana, sans-serif;
+    padding: 4px 8px;
+    margin: 2px;
+    }
+.buttonDisabled:hover, .buttonDisabled:active {
+    background-color: #aeaeae;
+    cursor: auto;
+    }
+#menuHeading{
+	width: 98%;
+    height: 6vh;
+    line-height: 6vh;
+    font-size: 34px;
+    color: #474747;
+    margin: 1.1vh auto;
+	}
+div.menu {
+    width: 98%;
+    height: 28vh;
+    line-height: 30vh;
+    font-size: 34px;
+    color: #474747;
+    margin: 2.24vh auto;
+    background-color: #e0e0e0;
+    border: 3px solid #aeaeae;
+    box-sizing: border-box;
+    vertical-align: middle;
+    }
+div.menu:hover {
+    color: #fff;
+    background-color: #880e4f;
+    border: 3px solid #880e4f;
+    transition: 0.2s;
+    }
+#answerForm{
+	display: block;
+	}
+#correctAnswer{
+	color: #00AA00;
+	display: none;
+	}
+#wrongAnswer{
+	color: #FF0000;
+	display: none;
+	}
+#wrong2, #serverResponse{
+	color: #000;
+	}
+#nextButton{
+	display: none;
+	margin: auto;
+	margin-top: 6px;
+	margin-bottom: 6px;
+	}
+#correctAnswer, #wrongAnswer {
+    padding: 4px;
+    margin: auto;
+    }
+    
+/*Nové styly pøidané kvùli stránce list.php*/
+#listTable{
+	margin-top: 5vh;
+	line-height: 3vh;
+	font-size: 2.5vh;
+	border: 1px solid black;
+	}
+.listRow{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-collapse: collapse;
+	background-color: #FFCCCC;
+	margin: 0;
+	cursor: pointer;
+	}
+.listRow:hover{
+	background-color: #ffff9b;
+	}
+th{
+	font-weight: bold;
+	}
+.listNames{
+	min-width: 20vw;
+	}
+.listNaturals{
+	min-width: 10vw;
+	}
+.listPics{
+	min-width: 10vw;
+	}
