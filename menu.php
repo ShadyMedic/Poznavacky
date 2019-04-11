@@ -33,7 +33,8 @@
     </head>
     <body>
         <header>  	
-			<div id="menuHeading">
+			
+            <div id="menuHeading">
 				Zvolená poznávačka: <?php echo $_SESSION['current'][1]; ?>
 				(<a href="list.php">Změnit</a>)
 			</div>
