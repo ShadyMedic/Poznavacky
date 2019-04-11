@@ -32,12 +32,13 @@
         <title>Menu - <?php echo $_SESSION['current'][1]; ?></title>
     </head>
     <body>
-        <main>
-        	
+        <header>  	
 			<div id="menuHeading">
 				Zvolená poznávačka: <?php echo $_SESSION['current'][1]; ?>
-				(<a href="list.php" style="text-decoration: underline;">Změnit</a>)
+				(<a href="list.php">Změnit</a>)
 			</div>
+        </header>
+        <main>
     	   <a href="addPics.php">
 	           <div id="btn1" class="menu" onclick="addPics()">Přidat obrázky</div>
 	       </a>
