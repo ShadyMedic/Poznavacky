@@ -20,8 +20,11 @@
 		<title>Poznávačky</title>
 	</head>
 	<body>
-		<h1>Dostupné poznávačky</h1>
-		 <table id="listTable">
+        <header>
+		  <h1>Dostupné poznávačky</h1>
+        </header>
+        <main>
+		  <table id="listTable">
 		 	<tr>
 		 		<th>Název</th>
 		 		<th>Přírodniny</th>
@@ -41,7 +44,8 @@
 						echo '<td class="listPics">'.$info['obrazky'].'</td>';
 					echo '</tr>';
 				}
-			?>
-		 </table>
+			?> 
+		    </table>
+         </main>
 	</body>
 </html>
