@@ -32,8 +32,7 @@
         <title>Menu - <?php echo $_SESSION['current'][1]; ?></title>
     </head>
     <body>
-        <header>  	
-			
+        <header>  				
             <div id="menuHeading">
 				Zvolená poznávačka: <?php echo $_SESSION['current'][1]; ?>
 				(<a href="list.php">Změnit</a>)

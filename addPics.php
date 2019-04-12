@@ -14,8 +14,10 @@
 		<title>Přidat obrázky</title>
 	</head>
 	<body>
+        <header>
+            <h1>Přidat obrázky</h1>
+        </header>
 		<main class="basic_main">
-			<h1>Přidat obrázky</h1>
 			<form onsubmit="add(event)">
 				<fieldset id="field1">
 					<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div><!-- div místo nadpisů, class "prikaz"-->
