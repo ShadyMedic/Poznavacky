@@ -29,7 +29,7 @@
     <head>
         <meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css.css">
-        <title>Menu - <?php echo $_SESSION['current'][1]; ?></title>
+        <title>Menu: <?php echo $_SESSION['current'][1]; ?></title>
     </head>
     <body>
         <header>  				
