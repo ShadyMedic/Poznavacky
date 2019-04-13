@@ -29,15 +29,16 @@
     <head>
         <meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css.css">
-        <title>Menu - <?php echo $_SESSION['current'][1]; ?></title>
+        <title>Menu: <?php echo $_SESSION['current'][1]; ?></title>
     </head>
     <body>
-        <main>
-        	
-			<div id="menuHeading">
-				Zvolená poznávačka: <?php echo $_SESSION['current'][1]; ?>
-				(<a href="list.php" style="text-decoration: underline;">Změnit</a>)
+        <header>  				
+            <div id="menuHeading">
+				<?php echo $_SESSION['current'][1]; ?>
+				(<a href="list.php">Změnit</a>)
 			</div>
+        </header>
+        <main>
     	   <a href="addPics.php">
 	           <div id="btn1" class="menu" onclick="addPics()">Přidat obrázky</div>
 	       </a>
