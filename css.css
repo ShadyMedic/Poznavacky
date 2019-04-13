@@ -58,12 +58,12 @@ body {
     background-color: #fff;
     background: linear-gradient(#fff,#405d27);
     text-align: center;
-    color: #474747;
+    color: #3e4444;
     font-family: Century Gothic, Verdana, sans-serif;
     font-size: 16px;
     line-height: 1.3em;
     background: url(bg1.jpg) no-repeat center fixed;
-    background: url(bg2.jpg) no-repeat center fixed; 
+    /*background: url(bg2.jpg) no-repeat center fixed;      */
     background-size: cover;    
     }
 main.basic_main {
@@ -78,6 +78,7 @@ header {
     display: block;
     color: #fff;
     height: 7vh;  
+    text-align: center;
     }
 h1 {
     font-size: 4vh;
@@ -85,9 +86,8 @@ h1 {
     line-height: 7vh;
     }
 #menuHeading {
-	width: 98%;
     line-height: 7vh;
-    font-size: 5vh;
+    font-size: 4vh;
 	}
 #menuHeading a {
     color: #fff;
@@ -104,7 +104,7 @@ div.prikaz {
 table {
     margin: auto;
     }
-td{
+td {
 	vertical-align: middle;
 }
 .img{
@@ -129,7 +129,7 @@ td button{
     background-color: #405d27;
     transition: background 0.2s;
 }
-td button img{
+td button img {
 	height: 3vw;
 	width: 3vw;
 }
@@ -155,19 +155,12 @@ main#main_kod {
     width: 360px;
 	height: 140px;
     background-color: #fff;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+    margin: 30vh auto;
+    border-radius: 6px;
     }
 div#kod {
     position: relative;
-    top: 16px;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    top: 18px;
     margin: auto
     }
 span#span_kod {
@@ -203,7 +196,7 @@ form {
     font-size: 16px;
     margin: 2px 0;
     }
-.confirm{
+.confirm {
 	width: 160px;
 }
 .button {
@@ -247,7 +240,7 @@ div.menu {
     height: 28vh;
     line-height: 28vh;
     font-size: 5vh;
-    color: #474747;
+    color: #3e4444;
     margin: 2.24vh auto;
     background-color: #fff;
     /*border: 3px solid #880e4f; */
@@ -283,47 +276,105 @@ div.menu:hover {
     padding: 4px;
     margin: auto;
     }
-    
 /*Nové styly pøidané kvùli stránce list.php*/
-#listTable{
-	margin-top: 5vh;
-	line-height: 3vh;
-	font-size: 2.5vh;
-	border: 1px solid black;
-	}
-.listRow{
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	border-collapse: collapse;
-	background-color: #FFCCCC;
+#listTable {
+    border: 12px solid #fff;
+    margin: 4vh auto;
+    transition: 0.2s;
+    background-color: #fff;
+    border-radius: 6px;
+    border-collapse: separate;
+	}  
+#listTable th, #listTable td {
+    padding: 2px;
+    }
+.listRow {
 	margin: 0;
 	cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 6px;
 	}
-.listRow:hover{
-	background-color: #ffff9b;
+.listRow:hover {
+	background-color: #405d27;
+    color: #fff;
+    transition: color 0.2s; 
 	}
-th{
+th {
 	font-weight: bold;
 	}
-.listNames{
+.listNames {
 	min-width: 20vw;
 	}
-.listNaturals{
+.listNaturals {
 	min-width: 10vw;
 	}
-.listPics{
+.listPics {
 	min-width: 10vw;
 	}
+/* ---------------------------------------@media------------------------*/
 @media (max-aspect-ratio: 1/1) {
     main.basic_main {
         width: 80%;
         }
     .img {
-	   width: 40vw;
-	   height: 40vw;
+	    width: 45vw;
+        height: 45vw;
        }
     td button{
-	   height: 40vw;
+        height: 45vw;
         }
+    header {
+        height: 6vh;  
+        }
+    h1 {
+        font-size: 3vh;
+        line-height: 6vh;
+        }
+    #menuHeading {
+        line-height: 6vh;
+        font-size: 3vh;
+	    }
+    div.menu {
+        font-size: 4vh;
+        height: 30vh;
+        width: 96%;
+        margin: 1.5vh auto;
+        line-height: 30vh;
+        }
+    .listNames {
+    	min-width: 40vw;
+    	}
+    .listNaturals {
+    	min-width: 20vw;
+    	}
+    .listPics {
+	   min-width: 20vw;
 	}
+      }      
+@media (max-aspect-ratio: 5/8) {
+     main.basic_main {
+        width: 95%;
+        }
+    .img {
+	    width: 50vw;
+        height: 50vw;
+       }
+    td button{
+        height: 50vw;
+        }
+    header {
+        height: 6vh;  
+        }
+    h1 {
+        font-size: 2vh;
+        line-height: 6vh;
+        }
+    #menuHeading {
+        line-height: 6vh;
+        font-size: 2vh;
+	    }
+    div.menu {
+        font-size: 3vh;
+        }
+      }
     
