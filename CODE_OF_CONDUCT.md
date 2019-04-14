@@ -1,3 +1,5 @@
+# Tato stránka je zatím dostupná pouze v Angličtině
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
