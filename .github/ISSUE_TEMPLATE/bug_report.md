@@ -1,9 +1,8 @@
 ---
-name: Hlášení chyby
-about: Nahlašte chybu a pomozte nám tak růst
-title: ''
-labels: ''
-assignees: ''
+jméno: Hlášení chyby
+informace: Nahlašte chybu a pomozte nám tak růst
+titulek: ''
+nálepky: ''
 
 ---
 
