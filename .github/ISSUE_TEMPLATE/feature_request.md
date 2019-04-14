@@ -1,20 +1,19 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+jméno: Požadavek na novou funkci
+informace: Navrhněte nový nápad pro tento projekt
+titulek: ''
+nálepky: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**Vztahuje se váš požadavek k nějakému problému? Popište prosím.**
+Jasný a stručný popis problému. Například: Vždycky jsem frustrovaný, když '...'
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Popište řešení, které by se vám zamlouvalo**
+Jasný a stručný popis toho, co chcete aby se stalo.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Popište alternativy, které jste zvážili**
+Jasný a stručný popis všech alternativních řešení nebo funkcí, které jste zvážili.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Dodatečné informace**
+Zde můžete přidat další informace nebo snímky obrazovky o požadavku na funkci.
