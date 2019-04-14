@@ -20,28 +20,32 @@
 		<title>Poznávačky</title>
 	</head>
 	<body>
-		<h1>Dostupné poznávačky</h1>
-		 <table id="listTable">
-		 	<tr>
-		 		<th>Název</th>
-		 		<th>Přírodniny</th>
-		 		<th>Obrázky</th>
-		 	</tr>
-		 	<?php
-				//Seznam dostupných poznávaček
-				include 'connect.php';
-				
-				$query = 'SELECT * FROM poznavacky';
-				$result = mysqli_query($connection,$query);
-				while ($info = mysqli_fetch_array($result))
-				{
-					echo '<tr class="listRow" onclick="choose(\''.$info['id'].'&'.$info['nazev'].'\')">';
-						echo '<td class="listNames">'.$info['nazev'].'</td>';
-						echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
-						echo '<td class="listPics">'.$info['obrazky'].'</td>';
-					echo '</tr>';
-				}
-			?>
-		 </table>
+        <header>
+            <h1>Dostupné poznávačky</h1>
+        </header>
+        <main>
+            <table id="listTable">
+		 	    <tr>
+    		 		<th>Název</th>
+    		 		<th>Přírodniny</th>
+    		 		<th>Obrázky</th>
+    		 	</tr>
+    		 	<?php
+    				//Seznam dostupných poznávaček
+    				include 'connect.php';
+    				
+    				$query = 'SELECT * FROM poznavacky';
+    				$result = mysqli_query($connection,$query);
+    				while ($info = mysqli_fetch_array($result))
+    				{
+    					echo '<tr class="listRow" onclick="choose(\''.$info['id'].'&'.$info['nazev'].'\')">';
+    						echo '<td class="listNames">'.$info['nazev'].'</td>';
+    						echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
+    						echo '<td class="listPics">'.$info['obrazky'].'</td>';
+    					echo '</tr>';
+    				}
+    			?> 
+      		</table>
+         </main>
 	</body>
 </html>

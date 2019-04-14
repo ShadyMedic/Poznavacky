@@ -12,10 +12,10 @@
 			$redirectOut = true;
 			require 'verification.php';
 		?>
+        <header>
+            <h1>Vyzkoušet se</h1>
+        </header>
 		<main class="basic_main">
-			<fieldset>
-				<h1>Vyzkoušet se</h1>
-			</fieldset>
 			<fieldset>
 				<img id="image" class="img" src="imagePreview.png">
 				<div id="inputOutput">

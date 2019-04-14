@@ -14,8 +14,10 @@
 		<title>Učit se</title>
 	</head>
 	<body>
+        <header>
+            <h1>Učit se</h1>
+        </header>
 		<main class="basic_main">
-			<h1>Učit se</h1>
 			<fieldset>
 				<div class="prikaz">Vyberte si přírodninu, jejíž obrázky si chcete prohlížet. Na další nebo předchozí přírodninu můžete přejít rychle pomocí tlačítek.</div><!-- div místo nadpisu, class "prikaz"-->
 				<select onchange="sel()" id="dropList" class="text"><!--class "text"-->
