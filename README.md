@@ -1,14 +1,14 @@
-# Poznavacky
-This repository contains my PHP app that can be used for learning for biology recognition tests.
+# Poznávačky
+Toto úložiště obsahuje moje PHP stránky, které mohou být používány k učení se na poznávačky z biologie/přírodovědy
 ------------------------------------------------------------------------------------------------
-Hello. Welcome to my little project.
-Have you ever had to memorize some animals, plants or minerals for your biology lessons and be able to recognize them on pictures?
-This PHP app is right what you need to memorize this kind of things easier.
-You just need to create a list of organisms you need to learn, and then you (and anyone else) can upload images from which you will learn.
-After that, you can learn in your own pace, or you can let the app create a random test for you from the pictures you uploaded, so you can see how well do learnt that.
+Ahoj. Vítejte v mém malém projektu.
+Už jste se někdy museli zapamatovat některá zvířata, rostliny nebo horniny pro vaše hodiny biologie a být schopni je rozpoznat na fotografiích?
+Tato PHP aplikace je přesně to, co potřebujete k zapamatování si těchto věcí jednodušeji.
+Stačí vytvořit seznam přírodnin, které se potřebujete naučit a poté můžete (vy nebo kdokoli jiný) nahrát obrázky, ze kterých se je naučíte.
+Poté se můžete učit svým vlastním tempem, nebo můžete nechat aplikaci vytvořit náhodný test z obrázků, které jste nahráli, takže můžete vidět, jak dobře jste se je naučili.
 
-I am looking for other developers that would help me with this. Currently, it is all working perfectly, but I am still adding new things and as the project grows, it becomes harder and harder to maintain.
-The app is currently only in my native language (Czech), so I am looking for volunteers that would be willing to translate it into languages they know.
-Let me know here on GitHub if you want to help me with development, or if you just have an interesting suggestion.
+Hledám další vývojáře, kteří by mi s tímto projektem pomohli. V současné době vše funguje jak má, ale stále přidávám nové věci a jak projekt roste, je stále těžší a těžší jej spravovat.
+Aplikace je v současné době pouze v mém rodném jazyce (češtině), takže hledám dobrovolníky, kteří by byli ochotni ji přeložit do jazyků, které znají.
+Dejte mi vědět na GitHub, pokud mi chcete pomoci s vývojem, s překladem, nebo pokud máte zajímavý návrh.
 
-If you want to create your own list of organisms to learn via this app, contact me and I will add the organisms you send me.
+Pokud chcete vytvořit svůj vlastní seznam přírodnin, které se chcete naučit prostřednictvím této aplikace, kontaktujte mě a já přidám přírodniny, které mi pošlete.

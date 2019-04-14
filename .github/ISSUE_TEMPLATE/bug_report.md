@@ -1,38 +1,37 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+jméno: Hlášení chyby
+informace: Nahlašte chybu a pomozte nám tak růst
+titulek: ''
+nálepky: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Popište chybu**
+Jasný a výstižný popis chyby.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Jak vyvolat chybu**
+Návod jak vyvolat chybu:
+1. Běžte do '...'
+2. Klikněte na '....'
+3. Posuňte stránku na '....'
+4. Zde vidíte chybu
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**Předpokládané chování**
+Jasný a stručný popis toho, co jste čekali, že se stane
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Snímky obrazovky**
+V případě potřeby přidejte snímky obrazovky, které vám pomohou vysvětlit váš problém.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+**Na počítači (prosím, vyplňte následující informace):**
+ - Operační systém: (například iOS])
+ - Prohlížeč: (například chrome, safari])
+ - Verze: [například 22])
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+**Na chytrém telefonu (prosím, vyplňte následující informace):**
+ - Typ zařízení: (například iPhone6])
+ - Operační systém: (například iOS8.1])
+ - Prohlížeč: (například stock browser, safari])
+ - Verze: (například 22)
 
-**Additional context**
-Add any other context about the problem here.
+**Další informace**
+Jakékoliv další informace o vámi popisované chybě.
