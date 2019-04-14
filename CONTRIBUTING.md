@@ -1,16 +1,16 @@
-# How to contribute to this repository
+# Jak přispívat do tohoto projektu
 
-## Committing
-  Every contributor MUST create its own branch on which he/she creates commits. You can create as many branches as you want, but please, delete branches that are not needed anymore to keep this repository clean.
+## Změny (commits)
+  Každý přispěvatel MUSÍ vytvořit svou vlastní větev, na které vytváří změny. Můžete vytvořit tolik větví, kolik chcete, ale odstraňujte prosím větve, které již nejsou zapotřebí, aby byl tento projekt udržován zorganizovaný.
   
-  You can make all commits on a single branch, but it would be better if you create a single branch for every bigger update.
+  Všechny změny můžete provádět na jedné větvi, ale bylo by lepší, kdybyste vytvořili jednu větev pro každou větší skupinu souvisejících změn.
   
-  Every commit should include only one changed file. If you want to change more files, you should do that in more than one commit.
+  Každá změna by měla obsahovat pouze jeden změněný soubor. Pokud chcete změnit více souborů, měli byste to provést ve více než jedné změně.
   
-  Write short, but descriptive commit messages that explain everything that was changed. If you added a new feature and fixed a typo while doing it, don't forget to mention the fix of the typo too.
-  
+  Pište krátké, ale výstižné změnové zprávy, které popisují, co vše bylo změněno. Pokud jste přidali novou funkci a zároveň opravili překlep, nezapomeňte také zmínit opravu překlepu.
+  
 
-## Pull requests
-  Don't post pull requests after every minor commit. Post it only once you completed a feature or completly fixed a bug. NEVER create pull requests for branches that contain an unfinished update. If you want to merge a branch with an unfinished update, you can do so after a reasonable amount of time to keep the master branch up-to-date, but you MUST mention in your pull request that the update is incomplete.
+## Požadavky na spojení (pull requests)
+  Nevyžadujte spojení po každé malé změně. Žádejte o něj pouze po dokončení funkce nebo úplném odstranění chyby. NIKDY nevytvářejte žádost o spojení pro větve, které obsahují nedokončenou aktualizaci. Pokud chcete sloučit větev s nedokončenou aktualizací, můžete tak učinit po rozumném časovém intervalu, aby se hlavní větev udržovala aktuální, ale ve vašem požadavku na spojení musíte uvést, že aktualizace není dokončená.
   
-  Merged branch won't be deleted by default by the project manager to prevent unwanted deletions, but if the branch won't be needed after the merge, you should mention it in your pull request, so the project manager can delete the branch immediately after merging it. This will help to keep the repository clean.
+  Spojená větev nebude smazána správcem projektu, aby se předešlo nechtěným ztrátám větví, ale pokud nebude větev po sloučení již potřebná, měli byste to uvést ve svém požadavku na spojení, aby mohl správce projektu větev po spojení ihned odstranit. To pomůže udržovat projekt zorganizovaný.
