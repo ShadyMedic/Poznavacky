@@ -1,6 +1,13 @@
 function selected1()
 {
 	document.getElementById("field2").style.display = "block";
+	
+	var final = "";
+	var arr = document.getElementById("dropList").value;
+	for (var i = arr.length - 1; arr[i] != '('; i--){}
+	for (var j = 0; j < i - 1; j++){final += arr[j];}
+	document.getElementById("duckLink").href = "https://duckduckgo.com/?q=" + final + "&iax=images&ia=images";
+	
 	document.getElementById("previewImg").style.display = "block";
 }
 function urlTyped()
