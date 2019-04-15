@@ -366,6 +366,9 @@ footer{
 #about{
 	text-align: right;
 }
+.outer_main{
+	height: 85.5vh;
+}
 /* ---------------------------------------@media------------------------*/
 @media (max-aspect-ratio: 1/1) {
     main.basic_main {
