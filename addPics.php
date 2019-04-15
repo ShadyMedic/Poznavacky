@@ -20,8 +20,8 @@
 		<main class="basic_main">
 			<form>
 				<fieldset id="field1">
-					<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div><!-- div místo nadpisů, class "prikaz"-->
-					<select onchange="selected1()" id="dropList" class="text"><!--class "text"-->
+					<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div>
+					<select onchange="selected1()" id="dropList" class="text">
 						<option value="" selected disabled hidden></option>
 						<?php 
 							//Vypisování přírodnin
@@ -40,19 +40,19 @@
 					</select>
 				</fieldset>
 				<fieldset id="field2">
-					<div<a id="duckLink" target=_blank>  
+					<div><a id="duckLink" target=_blank>
 						<button type=button class="button"><span>Vyhledat na </span><img id="duckLogo" src="duckLogo.png"></button>       
 					</a></div>       
-					<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/><!-- class "text"-->
-					<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button><!-- class "button" -->
+					<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/>
+					<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button>
 				</fieldset>
-				    <img id="previewImg" class="img" src="imagePreview.png"><!-- class "img"--> 
+				    <img id="previewImg" class="img" src="imagePreview.png">
 				<fieldset>
-					<input type=submit value="Přidat" onclick="add(event)" id="sendButton" class="buttonDisabled" disabled /><!-- class "button"-->
-					<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button><!-- class "button"-->
+					<input type=submit value="Přidat" onclick="add(event)" id="sendButton" class="buttonDisabled" disabled />
+					<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
 				</fieldset>
 			</form>
-			<a href="menu.php"><button class="button">Zpět</button></a><!--class "button"-->
+			<a href="menu.php"><button class="button">Zpět</button></a>
 		</main>
 	</body>
 	<script>resetForm();</script>
