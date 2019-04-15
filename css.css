@@ -213,7 +213,7 @@ form {
     transition: background 0.2s;
     font-size: 14px;
     }
-.button:hover, button:hover {
+.button:hover, button:hover, #duckLink_div:hover {
     background-color: #3e4444;
     cursor: pointer;
     transition: background 0.2s;
