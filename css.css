@@ -336,6 +336,36 @@ th {
 .listPics {
 	min-width: 10vw;
 	}
+/* Footer styly */
+footer{
+	margin: 0;
+	background-color: #FFF;
+	opacity: 0.75;
+    width: -webkit-fill-available;
+    padding: 0 2.5vw;
+	line-height: 5vh;
+	font-size: 2.5vh;
+	position: absolute;
+	bottom: 0;
+}
+.footerOption{
+	text-align: center;
+	width: 32.5vw;
+	margin: 0 auto;
+	display: table-cell;
+}
+.footerOption a{
+	text-decoration: underline;
+}
+#issues{
+	text-align: left;
+}
+#help{
+	text-align: center;
+}
+#about{
+	text-align: right;
+}
 /* ---------------------------------------@media------------------------*/
 @media (max-aspect-ratio: 1/1) {
     main.basic_main {
