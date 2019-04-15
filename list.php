@@ -23,7 +23,7 @@
         <header>
             <h1>Dostupné poznávačky</h1>
         </header>
-        <main>
+        <main style="height: 84vh;">
             <table id="listTable">
 		 	    <tr>
     		 		<th>Název</th>
@@ -47,5 +47,16 @@
     			?> 
       		</table>
          </main>
+         <footer>
+         	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new">Nalezli jste problém?</a></div>
+         	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
+         	<div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
+         	<script>
+             	function showLogin()
+             	{
+             		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
+             	}
+         	</script>
+         </footer>
 	</body>
 </html>
