@@ -180,12 +180,16 @@ form {
 .text {
     box-sizing: border-box;
     font-family: Century Gothic, Verdana, sans-serif;
-    color: #474747;
-    padding: 2px 4px;
+    color: #3e4444;
+    padding: 2px 6px;
     height: 28px;
     border: 2px solid #405d27;
     margin: 4px;
+    font-size: 14px;
 }
+.text#dropList {
+    padding: 2px 2px;
+    }
 .text:focus {
     outline: none;
     border: 2px solid #3e4444;
@@ -206,18 +210,19 @@ form {
     font-family: Century Gothic, Verdana, sans-serif;
     padding: 4px 8px;
     margin: 4px;
-    transition: background 0.2s
+    transition: background 0.2s;
+    font-size: 14px;
     }
-.button:hover, button:hover {
+.button:hover, button:hover, #duckLink_div:hover {
     background-color: #3e4444;
     cursor: pointer;
     transition: background 0.2s;
     }
-.button:active, button:active {
+.button:active, button:active, #duckLink_div:active {
     outline: none;
     cursor: pointer;
     }
-.button:focus, button:focus {
+.button:focus, button:focus, #duckLink_div:active {
     outline: none;
     }
 #duckLogo {
@@ -225,18 +230,22 @@ form {
     width: 20px;
     height: 20px;
     position: relative;
-    top: -4px;
     }
 #duckLink span {
     position: relative;
-    top: -14px;
+    top: -10px;
     }
-#duckLink {
-    line-height: 28px;
+#duckLink_div {
+    background: #406d27;
     height: 28px;
-    }  
-div #duckLink {
-    margin: auto;
+    width: 144px;
+    margin: 4px auto;
+    font-size: 14px;
+    transition: 0.2s;
+    }
+#duckLink_div a {
+    color: #fff;
+    font-size: 14px;
     }
 .buttonDisabled {
     background-color: #aeaeae;
@@ -245,6 +254,7 @@ div #duckLink {
     font-family: Century Gothic, Verdana, sans-serif;
     padding: 4px 8px;
     margin: 4px;
+    font-size: 14px;
     }
 .buttonDisabled:hover, .buttonDisabled:active {
     background-color: #aeaeae;
@@ -291,7 +301,7 @@ div.menu:hover {
     padding: 4px;
     margin: auto;
     }
-/*Nové styly pøidané kvùli stránce list.php*/
+/*NovÃ© styly pÃ¸idanÃ© kvÃ¹li strÃ¡nce list.php*/
 #listTable {
     border: 12px solid #fff;
     margin: 4vh auto;
