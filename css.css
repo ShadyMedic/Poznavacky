@@ -303,6 +303,7 @@ div.menu:hover {
     }
 /*Nové styly pøidané kvùli stránce list.php*/
 #listTable {
+	max-height: 80vh;
     border: 12px solid #fff;
     margin: 4vh auto;
     transition: 0.2s;
@@ -345,7 +346,6 @@ footer{
     padding: 0 2.5vw;
 	line-height: 5vh;
 	font-size: 2.5vh;
-	position: absolute;
 	bottom: 0;
 }
 .footerOption{

@@ -23,7 +23,7 @@
         <header>
             <h1>Dostupné poznávačky</h1>
         </header>
-        <main>
+        <main style="height: 84vh;">
             <table id="listTable">
 		 	    <tr>
     		 		<th>Název</th>
