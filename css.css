@@ -262,8 +262,8 @@ form {
     }
 div.menu {
     width: 98%;
-    height: 28vh;
-    line-height: 28vh;
+    height: 26.33vh;
+    line-height: 26.33vh;
     font-size: 5vh;
     color: #3e4444;
     margin: 2.24vh auto;
@@ -303,6 +303,7 @@ div.menu:hover {
     }
 /*Nové styly pøidané kvùli stránce list.php*/
 #listTable {
+	max-height: 80vh;
     border: 12px solid #fff;
     margin: 4vh auto;
     transition: 0.2s;
@@ -336,6 +337,38 @@ th {
 .listPics {
 	min-width: 10vw;
 	}
+/* Footer styly */
+footer{
+	margin: 0;
+	background-color: #FFF;
+	opacity: 0.75;
+    width: -webkit-fill-available;
+    padding: 0 2.5vw;
+	line-height: 5vh;
+	font-size: 2.5vh;
+	bottom: 0;
+}
+.footerOption{
+	text-align: center;
+	width: 32.5vw;
+	margin: 0 auto;
+	display: table-cell;
+}
+.footerOption a{
+	text-decoration: underline;
+}
+#issues{
+	text-align: left;
+}
+#help{
+	text-align: center;
+}
+#about{
+	text-align: right;
+}
+.outer_main{
+	height: 85.5vh;
+}
 /* ---------------------------------------@media------------------------*/
 @media (max-aspect-ratio: 1/1) {
     main.basic_main {

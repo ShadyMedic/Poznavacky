@@ -17,43 +17,56 @@
         <header>
             <h1>Přidat obrázky</h1>
         </header>
-		<main class="basic_main">
-			<form>
-				<fieldset id="field1">
-					<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div>
-					<select onchange="selected1()" id="dropList" class="text">
-						<option value="" selected disabled hidden></option>
-						<?php 
-							//Vypisování přírodnin
-							$table = $_SESSION['current'][0].seznam;
-							
-							include 'connect.php';
-							$query = "SELECT * FROM $table ORDER BY nazev,obrazky,id";
-							$result = mysqli_query($connection, $query);
-							while($row = mysqli_fetch_array($result))
-							{
-								$name = $row['nazev'];
-								$count = $row['obrazky'];
-								echo "<option>$name ($count)</option>";
-							}
-						?>
-					</select>
-				</fieldset>
-				<fieldset id="field2">
-					<div id="duckLink_div"><a id="duckLink" target=_blank>  
-						<div><span>Vyhledat na </span><img id="duckLogo" src="duckLogo.png"></div>       
-					</a></div>       
-					<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/>
-					<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button>
-				</fieldset>
-				    <img id="previewImg" class="img" src="imagePreview.png">
-				<fieldset>
-					<input type=submit value="Přidat" onclick="add(event)" id="sendButton" class="buttonDisabled" disabled />
-					<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
-				</fieldset>
-			</form>
-			<a href="menu.php"><button class="button">Zpět</button></a>
-		</main>
+        <main class="outer_main">
+			<main class="basic_main">
+    			<form>
+    				<fieldset id="field1">
+    					<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div>
+    					<select onchange="selected1()" id="dropList" class="text">
+    						<option value="" selected disabled hidden></option>
+    						<?php 
+    							//Vypisování přírodnin
+    							$table = $_SESSION['current'][0].seznam;
+    							
+    							include 'connect.php';
+    							$query = "SELECT * FROM $table ORDER BY nazev,obrazky,id";
+    							$result = mysqli_query($connection, $query);
+    							while($row = mysqli_fetch_array($result))
+    							{
+    								$name = $row['nazev'];
+    								$count = $row['obrazky'];
+    								echo "<option>$name ($count)</option>";
+    							}
+    						?>
+    					</select>
+    				</fieldset>
+    				<fieldset id="field2">
+    					<div id="duckLink_div"><a id="duckLink" target=_blank>  
+    						<div><span>Vyhledat na </span><img id="duckLogo" src="duckLogo.png"></div>       
+    					</a></div>       
+    					<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/>
+    					<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button>
+    				</fieldset>
+    				    <img id="previewImg" class="img" src="imagePreview.png">
+    				<fieldset>
+    					<input type=submit value="Přidat" onclick="add(event)" id="sendButton" class="buttonDisabled" disabled />
+    					<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
+    				</fieldset>
+    			</form>
+    			<a href="menu.php"><button class="button">Zpět</button></a>
+    		</main>
+    	</main>
+		<footer>
+         	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new">Nalezli jste problém?</a></div>
+         	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
+         	<div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
+         	<script>
+             	function showLogin()
+             	{
+             		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
+             	}
+         	</script>
+         </footer>
 	</body>
 	<script>resetForm();</script>
 </html>
