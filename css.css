@@ -67,7 +67,7 @@ body {
     background-size: cover;    
     }
 main.basic_main {
-    width: 50%;
+    width: 50vw;
     background-color: #fff;
     border-radius: 6px;
     margin: 2.4vh auto;
@@ -220,9 +220,24 @@ form {
 .button:focus, button:focus {
     outline: none;
     }
-/*a .button {
-    margin: 0 0 4px 0
-    }    */
+#duckLogo {
+    margin: 4px;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: -4px;
+    }
+#duckLink span {
+    position: relative;
+    top: -14px;
+    }
+#duckLink {
+    line-height: 28px;
+    height: 28px;
+    }  
+div #duckLink {
+    margin: auto;
+    }
 .buttonDisabled {
     background-color: #aeaeae;
     color: #fff;
@@ -314,14 +329,14 @@ th {
 /* ---------------------------------------@media------------------------*/
 @media (max-aspect-ratio: 1/1) {
     main.basic_main {
-        width: 80%;
+        width: 85vw;
         }
     .img {
-	    width: 45vw;
-        height: 45vw;
+	    width: 55vw;
+        height: 55vw;
        }
     td button{
-        height: 45vw;
+        height: 55vw;
         }
     header {
         height: 6vh;  
@@ -337,7 +352,7 @@ th {
     div.menu {
         font-size: 4vh;
         height: 30vh;
-        width: 96%;
+        width: 96vw;
         margin: 1.5vh auto;
         line-height: 30vh;
         }
@@ -348,16 +363,16 @@ th {
     	min-width: 20vw;
     	}
     .listPics {
-	   min-width: 20vw;
-	}
-      }      
+	    min-width: 20vw;
+        }
+    }           
 @media (max-aspect-ratio: 5/8) {
      main.basic_main {
-        width: 95%;
+        width: 95vw;
         }
     .img {
-	    width: 50vw;
-        height: 50vw;
+	    width: 60vw;
+        height: 60vw;
        }
     td button{
         height: 50vw;

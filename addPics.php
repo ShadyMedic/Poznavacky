@@ -40,9 +40,9 @@
 					</select>
 				</fieldset>
 				<fieldset id="field2">
-					<a id="duckLink" target=_blank>
-						<div class="button">Vyhledat na <img style="height: 20px; width: 20px;" src="duckLogo.png"/></div>
-					</a>
+					<div><a id="duckLink" target=_blank>
+						<button type=button class="button"><span>Vyhledat na </span><img id="duckLogo" src="duckLogo.png"></button>       
+					</a></div>       
 					<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/>
 					<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button>
 				</fieldset>
