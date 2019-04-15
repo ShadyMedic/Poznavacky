@@ -218,11 +218,11 @@ form {
     cursor: pointer;
     transition: background 0.2s;
     }
-.button:active, button:active {
+.button:active, button:active, #duckLink_div:active {
     outline: none;
     cursor: pointer;
     }
-.button:focus, button:focus {
+.button:focus, button:focus, #duckLink_div:active {
     outline: none;
     }
 #duckLogo {
