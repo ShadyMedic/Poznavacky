@@ -114,5 +114,13 @@ function getRequest(url, success = null, error = null){
 function responseFunc(response)
 {
 	eval(response);
-	if (response === "swal('Obrázek úspěšně přidán', '', 'success');"){resetForm();}
+	if (response === "swal('Obrázek úspěšně přidán', '', 'success');")
+	{
+		document.getElementById("sendButton").setAttribute("disabled", true);
+		document.getElementById("sendButton").setAttribute("class","buttonDisabled");
+		document.getElementById("previewImg").src = "imagePreview.png";
+		document.getElementById("urlConfirm").setAttribute("disabled", true);
+		document.getElementById("urlConfirm").setAttribute("class","buttonDisabled");
+		document.getElementById("urlInput").value = "";
+	}
 }
