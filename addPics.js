@@ -116,6 +116,17 @@ function responseFunc(response)
 	eval(response);
 	if (response === "swal('Obrázek úspěšně přidán', '', 'success');")
 	{
+		var options = document.getElementById("dropList").options;
+		for (var i = 0; i < options.length; i++)
+		{
+			if (options[i].innerHTML == document.getElementById("dropList").value){break;}
+		}
+		var option = options[i].innerHTML;
+		var newValue = Number(option.split("(")[1].split(")")[0]) + 1;
+		var name = option.split("(")[0];
+		var newOption = name + "(" + newValue + ")";
+		document.getElementById("dropList").options[i].innerHTML = newOption;//TODO
+		
 		document.getElementById("sendButton").setAttribute("disabled", true);
 		document.getElementById("sendButton").setAttribute("class","buttonDisabled");
 		document.getElementById("previewImg").src = "imagePreview.png";
