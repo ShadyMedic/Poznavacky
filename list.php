@@ -20,10 +20,11 @@
 		<title>Poznávačky</title>
 	</head>
 	<body>
+    <div class="container">
         <header>
             <h1>Dostupné poznávačky</h1>
         </header>
-        <main style="height: 84vh;">
+        <main>
             <table id="listTable">
 		 	    <tr>
     		 		<th>Název</th>
@@ -45,9 +46,10 @@
     					echo '</tr>';
     				}
     			?> 
-      		</table>
-         </main>
-         <footer>
+            </table>
+        </main>
+    </div>
+        <footer>
          	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new">Nalezli jste problém?</a></div>
          	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
          	<div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
@@ -57,6 +59,6 @@
              		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
              	}
          	</script>
-         </footer>
+        </footer>
 	</body>
 </html>
