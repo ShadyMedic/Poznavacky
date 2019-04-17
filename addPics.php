@@ -26,7 +26,7 @@
     					<option value="" selected disabled hidden></option>
     					<?php 
     						//Vypisování přírodnin
-    						$table = $_SESSION['current'][0].seznam;
+    						$table = $_SESSION['current'][0].'seznam';
     							
     						include 'connect.php';
     						$query = "SELECT * FROM $table ORDER BY nazev,obrazky,id";

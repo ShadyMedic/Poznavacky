@@ -5,8 +5,8 @@ define('DELAY', 1800); //1800 s = 0.5 h
 
 $ip = $_SERVER['REMOTE_ADDR'];
 
-include_once 'connect.php';
-include_once 'logger.php';
+include 'httpStats.php'; //Zahrnuje connect.php
+include 'logger.php';
 $query = "SELECT pokusy,dalsiPokus FROM uzivatele WHERE ip='$ip'";
 $sql = mysqli_query($connection, $query);
 try

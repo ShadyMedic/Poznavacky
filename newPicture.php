@@ -1,7 +1,9 @@
 <?php
 session_start();
 
+include 'httpStats.php'; //Zahrnuje connect.php
 include 'logger.php';
+
 $ip = $_SERVER['REMOTE_ADDR'];
 
 $name = urldecode($_GET['name']);
@@ -10,7 +12,6 @@ $url = urldecode($_GET['url']);
 if (empty($name)){die("swal('Neplatný název', '', 'error');");}
 if (empty($url)){die("swal('Neplatná adresa', '', 'error');");}
 
-include 'connect.php';
 $table = $_SESSION['current'][0];
 $pName = $_SESSION['current'][1];
 

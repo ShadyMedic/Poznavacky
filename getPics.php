@@ -3,7 +3,7 @@ session_start();
 
 $name = $_GET['name'];
 $number = $_GET['number'];
-include 'connect.php';
+include 'httpStats.php'; //Zahrnuje connect.php
 include 'logger.php';
 
 //Kontrola zda je vybrána nějaká přírodnina
