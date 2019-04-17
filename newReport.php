@@ -1,7 +1,9 @@
 <?php
 session_start();
 
+include 'httpStats.php'; //Zahrnuje connect.php
 include 'logger.php';
+
 $ip = $_SERVER['REMOTE_ADDR'];
 
 $url = $_GET['pic'];
@@ -11,8 +13,6 @@ if ($reason != 0 && $reason != 1 && $reason != 2 && $reason != 3 && $reason != 4
 {
 	die("swal('Neplatný důvod!','','error');");
 }
-
-include 'connect.php';
 
 //Získávání id obrázku
 $table = $_SESSION['current'][0].'obrazky';
