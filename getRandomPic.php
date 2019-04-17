@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	
-	include 'connect.php';
+	include 'httpStats.php'; //Zahrnuje connect.php
 	include 'logger.php';
 	$ip = $_SERVER['REMOTE_ADDR'];
 	
