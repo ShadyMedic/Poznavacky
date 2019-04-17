@@ -32,7 +32,7 @@
         <title>Menu: <?php echo $_SESSION['current'][1]; ?></title>
     </head>
     <body>
-    <div class="container_menu">
+    <div class="container">
         <header>  				
             <div id="menuHeading">
 				<?php echo $_SESSION['current'][1]; ?>
@@ -48,7 +48,7 @@
             </a>
             <a href="test.php">
 	           <div id="btn3" class="menu" onclick="test()">Vyzkoušet se</div>
-            </a>
+            </a>  
         </main>
     </div>
         <footer class="footer_menu">
