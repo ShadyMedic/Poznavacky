@@ -1,8 +1,9 @@
 ---
-jméno: Požadavek na novou funkci
-informace: Navrhněte nový nápad pro tento projekt
-titulek: ''
-nálepky: ''
+name: ''
+about: ''
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
