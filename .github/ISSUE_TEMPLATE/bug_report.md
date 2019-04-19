@@ -1,8 +1,9 @@
 ---
-jméno: Hlášení chyby
-informace: Nahlašte chybu a pomozte nám tak růst
-titulek: ''
-nálepky: ''
+name: 
+about: 
+title: 
+labels: 
+assignees: 
 
 ---
 
