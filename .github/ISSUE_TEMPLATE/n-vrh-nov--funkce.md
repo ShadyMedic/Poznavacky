@@ -2,7 +2,7 @@
 name: Návrh nové funkce
 about: Tuto šablonu použijte, pokud chcete navrhnout novou funkci pro tuto aplikaci.
 title: Návrh na ...
-labels: Nápad
+labels: ''
 assignees: ''
 
 ---

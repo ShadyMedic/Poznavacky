@@ -2,7 +2,7 @@
 name: Hlášení problému
 about: Tuto šablonu použijte, pokud nahlašujete problém.
 title: Nová chyba na stránce ...
-labels: Bug
+labels: ''
 assignees: ''
 
 ---

@@ -2,7 +2,7 @@
 name: Žádost o pomoc.
 about: Tuto šablonu použijte, pokud máte nějakou otázku k fungování této aplikace.
 title: Mám otázku o ...
-labels: Otázka
+labels: ''
 assignees: ''
 
 ---
