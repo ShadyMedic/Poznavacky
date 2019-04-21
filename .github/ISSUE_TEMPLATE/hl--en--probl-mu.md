@@ -2,10 +2,12 @@
 name: Hlášení problému
 about: Tuto šablonu použijte, pokud nahlašujete problém.
 title: Nová chyba na stránce ...
-labels: ''
+labels: Issue - Bug
 assignees: ''
 
 ---
+
+Před přispíváním si prosím přečtěte [tohoto](https://github.com/HonzaSTECH/Poznavacky/blob/master/CONTRIBUTING.md) stručného průvodce. Tento odstavec před odelsáním smažte.
 
 **Popište chybu**
 Jasný a výstižný popis chyby.
