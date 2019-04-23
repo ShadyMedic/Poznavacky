@@ -1,3 +1,15 @@
+<?php
+	$redirectIn = false;
+	$redirectOut = true;
+	require 'verification.php';
+	
+	session_start();
+		
+	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
+	{
+		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	}
+?>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -7,11 +19,6 @@
 		<title>Vyzkoušet se</title>
 	</head>
 	<body>
-		<?php
-			$redirectIn = false;
-			$redirectOut = true;
-			require 'verification.php';
-		?>
     <div class="container">
         <header>
             <h1>Vyzkoušet se</h1>
