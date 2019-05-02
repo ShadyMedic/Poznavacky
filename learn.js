@@ -55,7 +55,11 @@ function getImage()
 }
 function showImg(response)
 {
-	if (response == "swal('Neplatný název!','','error');"){eval(response);}
+	if (response == "swal('Neplatný název!','','error');" || response == "<script type='text/javascript'>location.href = 'list.php';</script>")
+	{
+		eval(response);
+		return;
+	}
 	else if (response != "noImage.png" && response != "imagePreview.png")
 	{
 		document.getElementById("reportButton").removeAttribute("disabled");
