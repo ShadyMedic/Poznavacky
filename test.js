@@ -101,7 +101,7 @@ function next()
 }
 function showPic(response)
 {
-	if (response == "location.href = 'list.php';";)
+	if (response == "location.href = 'list.php';")
 	{
 		eval(response);
 		return;
