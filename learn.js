@@ -55,7 +55,7 @@ function getImage()
 }
 function showImg(response)
 {
-	if (response == "swal('Neplatný název!','','error');" || response == "<script type='text/javascript'>location.href = 'list.php';</script>")
+	if (response == "swal('Neplatný název!','','error');" || response == "location.href = 'list.php';")
 	{
 		eval(response);
 		return;

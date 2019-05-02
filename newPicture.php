@@ -6,7 +6,7 @@
 
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
-		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+		echo "location.href = 'list.php';";
 		die();
 	}
 
