@@ -35,7 +35,6 @@ function sel()
 }
 function prev(event)
 {
-	event.preventDefault();
 	var index = naturalList.indexOf(selected);
 	
 	if(index <= 0){index = naturalList.length;}
@@ -49,7 +48,6 @@ function prev(event)
 }
 function next(event)
 {
-	event.preventDefault();
 	var index = naturalList.indexOf(selected);
 	
 	if(index >= naturalList.length - 1){index = -1;}
