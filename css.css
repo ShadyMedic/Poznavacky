@@ -266,6 +266,16 @@ th {
 .button:focus, button:focus, #duckLink_div:active {
     outline: none;
     }
+kbd{
+	background-color: #fafbfc;
+    border: 1px solid #d1d5da;
+	color: black;
+    font-family: monospace;
+    line-height: 10px;
+    padding: 3px 5px;
+	display: inline-block;
+	margin-right: 5px;
+}
 #duckLogo {
     margin: 4px;
     width: 20px;

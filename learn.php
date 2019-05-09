@@ -44,20 +44,32 @@
     				?>
     			</select>
     			<br>
-    			<button onclick="prev(event)" class="button">Předchozí přírodnina</button>
-    			<button onclick="next(event)" class="button">Následující přírodnina</button>
+    			<button onclick="prev(event)" class="button">
+				<kbd>S</kbd>
+				Předchozí přírodnina
+			</button>
+    			<button onclick="next(event)" class="button">
+				<kbd>W</kbd>
+				Následující přírodnina
+			</button>
     		</fieldset>
     		<fieldset>
     			<table>
     				<tr>
     					<td>
-    						<button onclick="prevImg()" id="prevImg"><img src="arrow.png" style="transform: rotate(180deg);" /></button>
+    						<button onclick="prevImg()" id="prevImg">
+							<kbd>A</kbd>
+							<img src="arrow.png" style="transform: rotate(180deg);" />
+						</button>
     					</td>
     					<td>
     						<img id="image" class="img" src="imagePreview.png">
     					</td>
     					<td>
-    						<button onclick = "nextImg()" id="nextImg"><img src="arrow.png" /></button>
+    						<button onclick = "nextImg()" id="nextImg">
+							<kbd>D</kbd>
+							<img src="arrow.png" />
+						</button>
     					</td>
     				</tr>
     			</table>
