@@ -18,7 +18,7 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Učit se</title>
 	</head>
-	<body>
+	<body onkeypress="keyPressed(event)">
         <div class="container">
         <header>
             <h1>Učit se</h1>

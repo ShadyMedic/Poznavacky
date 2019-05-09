@@ -2,6 +2,30 @@ var naturalList = [];
 var selected
 var imageNumber = 0;
 
+function keyPressed(event)
+{
+    var charCode = event.code || event.which;
+	console.log(charCode);
+    switch (charCode)
+	{
+		case "KeyW":
+			next();
+			return;
+			break;
+		case "KeyS":
+			prev();
+			return;
+			break;
+		case "KeyD":
+			nextImg();
+			return;
+			break;
+		case "KeyA":
+			prevImg();
+			return;
+			break;
+	}
+}
 function sel()
 {
 	selected = document.getElementById("dropList").value;
