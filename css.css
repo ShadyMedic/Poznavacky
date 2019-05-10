@@ -150,8 +150,7 @@ div.prikaz {
 table {
     margin: auto;
     }
-td button{
-	width: 4vw;
+td button {
 	height: 25vw;
 	text-align: center;
     margin: 0 6px;
@@ -161,10 +160,24 @@ td button{
 td button img {
 	height: 3vw;
 	width: 3vw;
+    position: relative;
+    top: 10px;   
 }
 td {
 	vertical-align: middle;
 }
+kbd {
+	color: #fff;
+    font-family: Century Gothic, Verdana, sans-serif;
+    line-height: 20px;
+    font-size: 16px;
+    height: 20px;
+	display: inline-block;
+    }
+td kbd {
+    position: relative;
+    top: 10px;    
+    }
 #prevImg {
     border-radius: 6px 0 0 6px;
     }
@@ -388,6 +401,10 @@ div.menu:hover {
     td button{
         height: 55vw;
         }
+    td button img {
+        width: 4.5vw;
+        height: 4.5vw;
+        }
     header {
         height: 6vh;  
         }
@@ -425,7 +442,11 @@ div.menu:hover {
         height: 60vw;
        }
     td button{
-        height: 50vw;
+        height: 60vw;
+        }
+    td button img {
+        width: 6vw;
+        height: 6vw;
         }
     header {
         height: 6vh;  

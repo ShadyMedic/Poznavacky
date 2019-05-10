@@ -18,7 +18,7 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Učit se</title>
 	</head>
-	<body>
+	<body onkeypress="keyPressed(event)">
         <div class="container">
         <header>
             <h1>Učit se</h1>
@@ -44,20 +44,32 @@
     				?>
     			</select>
     			<br>
-    			<button onclick="prev(event)" class="button">Předchozí přírodnina</button>
-    			<button onclick="next(event)" class="button">Následující přírodnina</button>
+    			<button onclick="prev(event)" class="button">
+				Předchozí přírodnina
+                <kbd>[S]</kbd>
+			</button>
+    			<button onclick="next(event)" class="button">
+				Následující přírodnina
+                <kbd>[W]</kbd>
+			</button>
     		</fieldset>
     		<fieldset>
     			<table>
     				<tr>
     					<td>
-    						<button onclick="prevImg()" id="prevImg"><img src="arrow.png" style="transform: rotate(180deg);" /></button>
+    						<button onclick="prevImg()" id="prevImg">
+							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
+                            <kbd>[A]</kbd>
+						    </button>
     					</td>
     					<td>
     						<img id="image" class="img" src="imagePreview.png">
     					</td>
     					<td>
-    						<button onclick = "nextImg()" id="nextImg"><img src="arrow.png" /></button>
+    						<button onclick = "nextImg()" id="nextImg">
+							<img src="arrow.png" /><br>
+                            <kbd>[D]</kbd>
+						    </button>
     					</td>
     				</tr>
     			</table>
