@@ -3,6 +3,13 @@
 	
 	include 'httpStats.php'; //Zahrnuje connect.php
 	include 'logger.php';
+	
+	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
+	{
+		echo "location.href = 'list.php';";
+		die();
+	}
+	
 	$ip = $_SERVER['REMOTE_ADDR'];
 	
 	$table = $_SESSION['current'][0].'obrazky';
@@ -34,4 +41,3 @@
 	
 	filelog("Na adresu $ip byl odeslán obrázek pro zkoušecí stránku pro poznávačku $pName.");
 	echo $result['nazev'];
-?>

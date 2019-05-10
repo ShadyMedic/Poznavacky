@@ -2,6 +2,30 @@ var naturalList = [];
 var selected
 var imageNumber = 0;
 
+function keyPressed(event)
+{
+    var charCode = event.code || event.which;
+	console.log(charCode);
+    switch (charCode)
+	{
+		case "KeyW":
+			next();
+			return;
+			break;
+		case "KeyS":
+			prev();
+			return;
+			break;
+		case "KeyD":
+			nextImg();
+			return;
+			break;
+		case "KeyA":
+			prevImg();
+			return;
+			break;
+	}
+}
 function sel()
 {
 	selected = document.getElementById("dropList").value;
@@ -11,7 +35,6 @@ function sel()
 }
 function prev(event)
 {
-	event.preventDefault();
 	var index = naturalList.indexOf(selected);
 	
 	if(index <= 0){index = naturalList.length;}
@@ -25,7 +48,6 @@ function prev(event)
 }
 function next(event)
 {
-	event.preventDefault();
 	var index = naturalList.indexOf(selected);
 	
 	if(index >= naturalList.length - 1){index = -1;}
@@ -55,7 +77,11 @@ function getImage()
 }
 function showImg(response)
 {
-	if (response == "swal('Neplatný název!','','error');"){eval(response);}
+	if (response == "swal('Neplatný název!','','error');" || response == "location.href = 'list.php';")
+	{
+		eval(response);
+		return;
+	}
 	else if (response != "noImage.png" && response != "imagePreview.png")
 	{
 		document.getElementById("reportButton").removeAttribute("disabled");

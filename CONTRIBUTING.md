@@ -1,5 +1,16 @@
 # Jak přispívat do tohoto projektu
 
+## Hlášení (issues)
+  Při nahlašování problémů, navrhování nových funkcí, nebo obecných otázek používejte prosím předpřipravené šablony. V případě jiného typu hlášení použijte prázdnou šablonu.
+  
+  Nemusíte striktně vyplňovat všechny předepsané položky, ty slouží spíše jako něco, co vám má pomoci vytvořit přehledné hlášení, ne jako něco, co vám přesně diktuje, co máte napsat.
+  
+  Nevyplněné položky v rámci zpřehlednění hlášení odstraňte.
+  
+  Před odsláním nového hlášení se prosím ujistěte, že takové hlášení ještě neexistuje. Pokud již existuje, ale vy plánujete přidat další, zatím nezahrnuté informace, můžete hlášení přidat, ale nepohoršujte se, když mu bude přidána nálepka "Duplikát". Vhodnější možností (i když nepatrně méně viditelnou) je přidání rozšiřujícího komentáře pod již existující hlášení.
+  
+  Pokud přidáváte hlášení z komunitního účtu (účtu, na který má přístup více uživatelů), podepište se na konec hlášení nějakou unikátní značkou, aby bylo jasné, zda nahlašuje ten samý uživatel jako dříve v minulosti. Značka nemusí být jméno. Může to být přezdívka, iniciály, nebo číselný kód. Při jejím výberu však myslete na to, že musí být unikátní.
+
 ## Změny (commits)
   Každý přispěvatel MUSÍ vytvořit svou vlastní větev, na které vytváří změny. Můžete vytvořit tolik větví, kolik chcete, ale odstraňujte prosím větve, které již nejsou zapotřebí, aby byl tento projekt udržován zorganizovaný.
   

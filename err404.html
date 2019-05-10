@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>HTTP CHYBA 404</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="errors.css">
+	<title>HTTP CHYBA 404</title>
 </head>
 <body>
-	<h1>HTTP CHYBA 404</h1>
-	<h3>Vypadá to, že tato stránka neexistuje.</h3>
-	<h3>Klikněte <a href="menu.php">sem</a> pro návrat na domovskou stránku</h3>
+	<img src="error.png" id="errorPic"/>
+	<main>
+		<h1>HTTP CHYBA <span id="code">404</span></h1>
+		<br><br><br><br><br><br>
+		<span>Vámi požadovaná URL adresa nemohla být na serveru nalezena.</span>
+		<br><br><br><br><br><br>
+		<span id="listHeader">Navrhované akce:</span>
+		<br><br>
+		<ul>
+			<li>Vraťte se na <a href="list.php">domovskou stránku</a></li>
+			<li>Zkontrolujte, zda nemáte v adrese URL chybu.</li>
+			<li>Kontaktujte <a href="mailto:honza.stech@gmail.com">správce</a></li>
+			<li>Zkuste to znovu později</li>
+		</ul>
+	</main>
 </body>
 </html>

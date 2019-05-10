@@ -101,6 +101,11 @@ function next()
 }
 function showPic(response)
 {
+	if (response == "location.href = 'list.php';")
+	{
+		eval(response);
+		return;
+	}
 	var arr = response.split("¶");
 	
 	document.getElementById("image").src = arr[0];

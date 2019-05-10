@@ -4,6 +4,11 @@
 	require 'verification.php';
 	
 	session_start();
+		
+	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
+	{
+		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	}
 ?>
 <html>
 	<head>
@@ -13,7 +18,7 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Učit se</title>
 	</head>
-	<body>
+	<body onkeypress="keyPressed(event)">
         <div class="container">
         <header>
             <h1>Učit se</h1>
@@ -39,20 +44,32 @@
     				?>
     			</select>
     			<br>
-    			<button onclick="prev(event)" class="button">Předchozí přírodnina</button>
-    			<button onclick="next(event)" class="button">Následující přírodnina</button>
+    			<button onclick="prev(event)" class="button">
+				<kbd>S</kbd>
+				Předchozí přírodnina
+			</button>
+    			<button onclick="next(event)" class="button">
+				<kbd>W</kbd>
+				Následující přírodnina
+			</button>
     		</fieldset>
     		<fieldset>
     			<table>
     				<tr>
     					<td>
-    						<button onclick="prevImg()" id="prevImg"><img src="arrow.png" style="transform: rotate(180deg);" /></button>
+    						<button onclick="prevImg()" id="prevImg">
+							<kbd>A</kbd>
+							<img src="arrow.png" style="transform: rotate(180deg);" />
+						</button>
     					</td>
     					<td>
     						<img id="image" class="img" src="imagePreview.png">
     					</td>
     					<td>
-    						<button onclick = "nextImg()" id="nextImg"><img src="arrow.png" /></button>
+    						<button onclick = "nextImg()" id="nextImg">
+							<kbd>D</kbd>
+							<img src="arrow.png" />
+						</button>
     					</td>
     				</tr>
     			</table>
@@ -71,7 +88,7 @@
     	</main>
         </div>
 	    <footer>
-         	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new">Nalezli jste problém?</a></div>
+         	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
          	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
          	<div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
          	<script>
