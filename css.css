@@ -220,6 +220,34 @@ form {
 .confirm {
 	width: 160px;
 }
+#cookiesAlert{
+	background-color: #7eb35c;
+	font-size: 2vh;
+	height: 5vh;
+    line-height: 5vh;
+    width: 100%;
+    flex-shrink: 0;    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+	font-weight: bold;
+    color: #000;
+}
+#cookiesAlertCloser{
+	display: block;
+	/*margin-top: 0.5vh;
+	margin-bottom: 0.5vh;*/
+    height: 5vh;
+    width: 5vh;
+    font-size: 5vh;
+	color: #900;
+	/*border: 2px ofset #4e832c;*/
+	border-radius: 4vh;
+	cursor: pointer;
+}
+#cookiesAlertCloser:hover{
+	border: 2px inset #4e832c;
+}
 /* -----------------------------------------------------------------------------list stranka */
 #listTable {
 	max-height: 80vh;
