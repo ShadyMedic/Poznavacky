@@ -187,7 +187,7 @@ td kbd {
 /* -------------------------------------------------------------------index stranka */
 main#main_kod {
     width: 360px;
-	height: 140px;
+	height: 150px;
     background-color: #fff;
     margin: 30vh auto;
     border-radius: 6px;
@@ -219,6 +219,12 @@ form {
     }
 .confirm {
 	width: 160px;
+}
+span#span_terms{
+	font-size: 12px;
+}
+#span_terms a{
+	text-decoration: underline;
 }
 /* -----------------------------------------------------------------------------list stranka */
 #listTable {

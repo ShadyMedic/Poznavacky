@@ -17,9 +17,11 @@
         <div id="kod"> 
             <span id="span_kod">Zadejte ověřovací kód:</span><br>
             <form onsubmit="validate(event)">
-	           <input type=text maxlength=8 class="text" id="kod_input"><br>
+	           <input type=text maxlength=8 class="text" id="kod_input">
+		   <br>
 	           <input type=submit value="Potvrdit" class="confirm button">
-            </form> 
+            </form>
+	    <span id="span_terms">Odesláním kódu souhlasíte s <a target="_blank" href="https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md">podmínkami služby</a>.</span>
         </div>
     </main>   
     </body>
