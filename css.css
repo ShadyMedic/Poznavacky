@@ -245,7 +245,8 @@ form {
 }
 #cookiesAlertCloser:hover{
 	border: 2px inset #4e832c;
-span#span_terms{
+}
+#span_terms{
 	font-size: 12px;
 }
 #span_terms a{
