@@ -26,7 +26,7 @@
 	</div>
 	<footer id="cookiesAlert">
 		<span>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíte s ukládáním souborů cookie na vašem zařízení.</span>
-		<div id="cookiesAlertCloser" onclick="hideCookies">×</div>
+		<div id="cookiesAlertCloser" onclick="hideCookies()">×</div>
 	</footer>
     </body>
 </html>
