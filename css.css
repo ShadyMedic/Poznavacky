@@ -221,6 +221,7 @@ form {
 	width: 160px;
 }
 /* -----------------------------------------------------------------------------list stranka */
+/* changelog styly */
 #changelogOverlay {
 	z-index: 9;
 	position: absolute;
@@ -237,16 +238,43 @@ form {
 	bottom: 0;
 	right: 0;
 	margin: auto;
-	border: 5px solid black;
+	border: 5px outset #21821f;
 	border-radius: 20px;
 	padding: 20px;
 	height: 50vh;
-	width: 50vw;
+	width: 40vw;
 	overflow-y: auto;
 	color: black;
-	background-color: white;
+	background-color: #b8cea0;
 	text-align: left;
 }
+#changelog h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+}
+#changelog hr {
+	border-color: yellowgreen;
+}
+#changelog #general {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('dot.gif');
+}
+#changelog #additions {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('plus.gif');
+}
+#changelog #deletions {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('minus.gif');
+}
+#changelog ul li {
+	margin-top: 1em;
+}
+/* zbytek stránky */
 #listTable {
 	max-height: 80vh;
     border: 12px solid #fff;
