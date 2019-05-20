@@ -221,6 +221,32 @@ form {
 	width: 160px;
 }
 /* -----------------------------------------------------------------------------list stranka */
+#changelogOverlay {
+	z-index: 9;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	background-color: black;
+	opacity: 0.5;
+}
+#changelog {
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+	border: 5px solid black;
+	border-radius: 20px;
+	padding: 20px;
+	height: 50vh;
+	width: 50vw;
+	overflow-y: auto;
+	color: black;
+	background-color: white;
+	text-align: left;
+}
 #listTable {
 	max-height: 80vh;
     border: 12px solid #fff;

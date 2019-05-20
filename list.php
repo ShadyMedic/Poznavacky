@@ -21,6 +21,18 @@
 	</head>
 	<body>
     <div class="container">
+        <div id="changelogContainer">
+        	<?php
+        	if (/*cookie outdated*/true)
+        	{
+        	    echo "<div id='changelogOverlay'></div>"; //Zatemnění zbytku stránky
+        	    echo "<div id='changelog'>"; //Prvek se zprávou
+        	    include 'changelog.html';
+        	    echo "<button id='closeChangelog' onclick='closeChangelog()'>Zavřít</button>";
+        	    echo "</div>";
+        	}
+        	?>
+        </div>
         <header>
             <h1>Dostupné poznávačky</h1>
         </header>
