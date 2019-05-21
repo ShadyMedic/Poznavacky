@@ -256,8 +256,15 @@ form {
 	font-weight: bold;
 	text-align: center;
 }
-#changelogText hr, #changelog hr {
+#changelog hr {
 	border-color: yellowgreen;
+	margin-top: 1px;
+	margin-bottom: 0.5em;
+}
+#changelogText hr{
+	border-color: yellowgreen;
+	margin-top: 0.5em;
+	margin-bottom: 1px;
 }
 #changelogMsg #general {
 	list-style-type: disc;
