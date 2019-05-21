@@ -31,7 +31,7 @@
         	    echo "<div id='changelogOverlay'></div>"; //Zatemnění zbytku stránky
 				
         	    echo "<div id='changelog'>"; //Okno se zprávou
-					echo "<div id='changelogMsg'>";	//Prvek se zprávou
+					echo "<div id='changelogText'>"; //Prvek se zprávou
 						include 'changelog.html'; //Zpráva
 					echo "</div>";
 					echo "<hr />"; //Oddělovač tlačítka

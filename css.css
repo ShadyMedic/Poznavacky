@@ -248,15 +248,15 @@ form {
 	text-align: left;
 }
 #changelogMsg {
-	height: 45vh;
+	height: 40vh;
 	overflow-y: auto;
 }
-#changelogMsg h2 {
+#changelogText h2 {
 	font-size: 1.5em;
 	font-weight: bold;
 	text-align: center;
 }
-#changelog hr {
+#changelogText hr, #changelog hr {
 	border-color: yellowgreen;
 }
 #changelogMsg #general {
