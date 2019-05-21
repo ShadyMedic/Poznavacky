@@ -241,14 +241,17 @@ form {
 	border: 5px outset #21821f;
 	border-radius: 20px;
 	padding: 20px;
-	height: 50vh;
+	height: fit-content;
 	width: 40vw;
-	overflow-y: auto;
 	color: black;
 	background-color: #b8cea0;
 	text-align: left;
 }
-#changelog h2 {
+#changelogMsg {
+	height: 45vh;
+	overflow-y: auto;
+}
+#changelogMsg h2 {
 	font-size: 1.5em;
 	font-weight: bold;
 	text-align: center;
@@ -256,22 +259,22 @@ form {
 #changelog hr {
 	border-color: yellowgreen;
 }
-#changelog #general {
+#changelogMsg #general {
 	list-style-type: disc;
 	list-style-position: inside;
 	list-style-image: url('dot.gif');
 }
-#changelog #additions {
+#changelogMsg #additions {
 	list-style-type: disc;
 	list-style-position: inside;
 	list-style-image: url('plus.gif');
 }
-#changelog #deletions {
+#changelogMsg #deletions {
 	list-style-type: disc;
 	list-style-position: inside;
 	list-style-image: url('minus.gif');
 }
-#changelog ul li {
+#changelogMsg ul li {
 	margin-top: 1em;
 }
 /* zbytek stránky */

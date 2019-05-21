@@ -27,11 +27,15 @@
         	if (!(isset($_COOKIE['lastChangelog']) && $_COOKIE['lastChangelog'] == VERSION))
         	{
         	    setcookie('lastChangelog',VERSION, time() + 60 * 60 * 24 * 365);
+				
         	    echo "<div id='changelogOverlay'></div>"; //Zatemnění zbytku stránky
-        	    echo "<div id='changelog'>"; //Prvek se zprávou
-        	       include 'changelog.html';
-        	       echo "<hr />"; //Oddělovač tlačítka
-        	       echo "<div style='text-align: center;'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
+				
+        	    echo "<div id='changelog'>"; //Okno se zprávou
+					echo "<div id='changelogMsg'>";	//Prvek se zprávou
+						include 'changelog.html'; //Zpráva
+					echo "</div>";
+					echo "<hr />"; //Oddělovač tlačítka
+					echo "<div style='text-align: center;'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
         	    echo "</div>";
         	}
         	?>
