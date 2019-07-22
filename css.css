@@ -253,6 +253,70 @@ form {
 	text-decoration: underline;
 }
 /* -----------------------------------------------------------------------------list stranka */
+/* changelog styly */
+#changelogOverlay {
+	z-index: 9;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	background-color: black;
+	opacity: 0.5;
+}
+#changelog {
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+	border: 5px outset #21821f;
+	border-radius: 20px;
+	padding: 20px;
+	height: fit-content;
+	width: 40vw;
+	color: black;
+	background-color: #b8cea0;
+	text-align: left;
+}
+#changelogMsg {
+	height: 40vh;
+	overflow-y: auto;
+}
+#changelogText h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+}
+#changelog hr {
+	border-color: yellowgreen;
+	margin-top: 1px;
+	margin-bottom: 0.5em;
+}
+#changelogText hr{
+	border-color: yellowgreen;
+	margin-top: 0.5em;
+	margin-bottom: 1px;
+}
+#changelogMsg #general {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('dot.gif');
+}
+#changelogMsg #additions {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('plus.gif');
+}
+#changelogMsg #deletions {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('minus.gif');
+}
+#changelogMsg ul li {
+	margin-top: 1em;
+}
+/* zbytek stránky */
 #listTable {
 	max-height: 80vh;
     border: 12px solid #fff;

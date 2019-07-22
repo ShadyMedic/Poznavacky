@@ -2,6 +2,7 @@
 	$redirectIn = false;
 	$redirectOut = true;
 	require 'verification.php';
+	require 'CONSTANTS.php';
 	
 	//Mazání sezení
 	session_start();
@@ -21,6 +22,24 @@
 	</head>
 	<body>
     <div class="container">
+        <div id="changelogContainer">
+        	<?php
+        	if (!(isset($_COOKIE['lastChangelog']) && $_COOKIE['lastChangelog'] == VERSION))
+        	{
+        	    setcookie('lastChangelog',VERSION, time() + 60 * 60 * 24 * 365);
+				
+        	    echo "<div id='changelogOverlay'></div>"; //Zatemnění zbytku stránky
+				
+        	    echo "<div id='changelog'>"; //Okno se zprávou
+					echo "<div id='changelogText'>"; //Prvek se zprávou
+						include 'changelog.html'; //Zpráva
+					echo "</div>";
+					echo "<hr />"; //Oddělovač tlačítka
+					echo "<div style='text-align: center;'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
+        	    echo "</div>";
+        	}
+        	?>
+        </div>
         <header>
             <h1>Dostupné poznávačky</h1>
         </header>
