@@ -7,7 +7,6 @@
 	//Ověřování, zda se již daná IP adresa někdy úspěšně přihlásila.
 	//$query = "SELECT * FROM uzivatele WHERE ip='$ip' AND pokusy=3";
 	//$result = mysqli_query($connection, $query);
-	$cookie = 0;
 	$auth = null;
 	if(isset($_COOKIE['token']) && $_COOKIE['token'] == ACCESSCODE){$auth = true;}
 	else if(isset($_COOKIE['token'])){$auth = false;}
