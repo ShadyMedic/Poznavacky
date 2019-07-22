@@ -1,7 +1,12 @@
-function validate(event){
-    try{event.preventDefault();}catch(e){console.log("?");}
+function hideCookies()
+{
+	document.getElementById("cookiesAlert").style.visibility = "hidden"
+}
+
+function validate(event)
+{
+    try{event.preventDefault();}catch(e){}
     var code = document.getElementsByClassName("text")[0].value;
-    console.log(code);
     var result = getRequest("auth.php?token=" + code, responseFunc);
 }
 
