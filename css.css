@@ -217,6 +217,9 @@ form {
     font-size: 16px;
     margin: 2px 0;
     }
+.big_checkbox {
+	transform: scale(1.5);
+}
 .confirm {
 	width: 160px;
 }

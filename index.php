@@ -34,11 +34,11 @@
                             <div id='registrace'>
         				    <span>Zaregistrujte se</span>
         				    <form onsubmit='register(event)'>
-        				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' class='text'>
+        				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true class='text'>
         				    	<br>
-        				    	<input type='text' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
+        				    	<input type='text' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
         				    	<br>
-        				    	<input type='text' name='repass_input' maxlength=31 placeholder='Heslo znovu' class='text'>
+        				    	<input type='text' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
         				    	<br>
         				    	<input type='text' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
         				    	<br>
@@ -58,6 +58,11 @@
             				    	<br>
             				    	<input type='text' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
             				    	<br>
+                                    <label>
+                                        <input type='checkbox' name='stay_logged' class='big_checkbox'>
+                                        <span>Zůstat přihlášen</span>
+                                    </label>
+    								<br>
             				 		<input type=submit value='Přihlásit se' class='confirm button'>
         				        </form>
     					   </div>
