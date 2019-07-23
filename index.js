@@ -3,11 +3,24 @@ function hideCookies()
 	document.getElementById("cookiesAlert").style.visibility = "hidden"
 }
 
-function validate(event)
+function register(event)
 {
+	/*
+	 * TODO
     try{event.preventDefault();}catch(e){}
     var code = document.getElementsByClassName("text")[0].value;
     var result = getRequest("auth.php?token=" + code, responseFunc);
+	 */
+}
+
+function login()
+{
+	/*
+	 * TODO
+	try{event.preventDefault();}catch(e){}
+    var code = document.getElementsByClassName("text")[0].value;
+    var result = getRequest("auth.php?token=" + code, responseFunc);
+	 */
 }
 
 function responseFunc(response)
