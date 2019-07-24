@@ -23,34 +23,34 @@
     				    {
     				        echo "
                             <div id='registrace'>
-        				    <span>Zaregistrujte se</span>
-        				    <form method='post' action='register.php'>
-        				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true class='text'>
-        				    	<br>
-        				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
-        				    	<br>
-        				    	<input type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
-        				    	<br>
-        				    	<input type='text' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
-        				    	<br>
-        				 		<input type=submit value='Vytvořit účet' class='confirm button'>
-        				    </form>
-        				    <span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
-                            ";
-    				        
-    				        //Chyby při minulé registraci
-    				        $errors = @$_SESSION['registerErrors'];
-    				        $errors = explode(';',$errors);
-    				        if (!empty($errors))
-    				        {
-        				        echo "<ul id='registerErrorList'>";
-        				        foreach ($errors as $err)
+            				    <span>Zaregistrujte se</span>
+            				    <form method='post' action='register.php'>
+            				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true class='text'>
+            				    	<br>
+            				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
+            				    	<br>
+            				    	<input type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
+            				    	<br>
+            				    	<input type='text' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
+            				    	<br>
+            				 		<input type=submit value='Vytvořit účet' class='confirm button'>
+            				    </form>
+            				    <span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
+                                ";
+        				        
+        				        //Chyby při minulé registraci
+        				        $errors = @$_SESSION['registerErrors'];
+        				        $errors = explode(';',$errors);
+        				        if (!empty($errors))
         				        {
-        				            echo "<li>".$err."</li>";
+            				        echo "<ul id='registerErrorList'>";
+            				        foreach ($errors as $err)
+            				        {
+            				            echo "<li>".$err."</li>";
+            				        }
+            				        echo "</ul>";
         				        }
-        				        echo "</ul>";
-    				        }
-    				        
+        				        
     				        echo "</div>";
     				    }
     				    else    //Zobrazit přihlašovací formulář
@@ -58,7 +58,7 @@
     				        echo "
                             <div id='prihlaseni'>
             				    <span>Přihlašte se</span>
-            				    <form method='post' onsubmit='login(event)'>
+            				    <form method='post' action='login.php'>
             				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' class='text'>
             				    	<br>
             				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
@@ -70,8 +70,17 @@
     								<br>
             				 		<input type=submit value='Přihlásit se' class='confirm button'>
         				        </form>
-    					   </div>
-                            ";
+                                ";
+        				        //Chyba při minulém přihlášení
+        				        $error = @$_SESSION['loginError'];
+        				        if (!empty($error))
+        				        {
+        				            echo "<ul id='registerErrorList'>";
+        				                echo "<li>".$error."</li>";
+        				            echo "</ul>";
+        				        }
+        				        
+        				    echo "</div>";
     				    }
 				    ?>
 				</div>
