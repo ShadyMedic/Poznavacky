@@ -16,15 +16,6 @@
 		<div class="container">
 			<main>
 				<div id="main_kod">
-					<!--
-					<span id="span_kod">Zadejte ověřovací kód:</span><br>
-					<form onsubmit="validate(event)">
-						<input type=text maxlength=8 class="text" id="kod_input">
-						<br>
-						<input type=submit value="Potvrdit" class="confirm button">
-					</form>
-					<span id="span_terms">Odesláním kódu souhlasíte s <a target="_blank" href="https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md">podmínkami služby</a>.</span>
-				    -->
 				    <?php
     				    //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval
     				    
@@ -33,30 +24,44 @@
     				        echo "
                             <div id='registrace'>
         				    <span>Zaregistrujte se</span>
-        				    <form onsubmit='register(event)'>
+        				    <form method='post' action='register.php'>
         				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true class='text'>
         				    	<br>
-        				    	<input type='text' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
+        				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
         				    	<br>
-        				    	<input type='text' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
+        				    	<input type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
         				    	<br>
         				    	<input type='text' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
         				    	<br>
         				 		<input type=submit value='Vytvořit účet' class='confirm button'>
         				    </form>
         				    <span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
-                        </div>
                             ";
+    				        
+    				        //Chyby při minulé registraci
+    				        $errors = @$_SESSION['registerErrors'];
+    				        $errors = explode(';',$errors);
+    				        if (!empty($errors))
+    				        {
+        				        echo "<ul id='registerErrorList'>";
+        				        foreach ($errors as $err)
+        				        {
+        				            echo "<li>".$err."</li>";
+        				        }
+        				        echo "</ul>";
+    				        }
+    				        
+    				        echo "</div>";
     				    }
     				    else    //Zobrazit přihlašovací formulář
     				    {
     				        echo "
                             <div id='prihlaseni'>
             				    <span>Přihlašte se</span>
-            				    <form onsubmit='login(event)'>
+            				    <form method='post' onsubmit='login(event)'>
             				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' class='text'>
             				    	<br>
-            				    	<input type='text' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
+            				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
             				    	<br>
                                     <label>
                                         <input type='checkbox' name='stay_logged' class='big_checkbox'>

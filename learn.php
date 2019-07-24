@@ -1,9 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
-	
-	session_start();
+	require 'verification.php';    //Obsahuje session_start();
 		
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{

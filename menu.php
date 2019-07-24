@@ -1,9 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
-	
-	session_start();
+	require 'verification.php';    //Obsahuje session_start();
 	
 	//Nastavování současné poznávačky
 	$cookieData = @$_COOKIE['current'];
