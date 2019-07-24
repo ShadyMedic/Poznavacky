@@ -18,71 +18,90 @@
 				<div id="main_kod">
 				    <?php
     				    //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval
-    				    
-    				    if(!isset($_COOKIE['lastChangelog']))   //Za poslední rok se nikdo nepřihlásil, nebo byly vymazány cookies
+    				    if(!isset($_COOKIE['lastChangelog']))
     				    {
-    				        echo "
-                            <div id='registrace'>
-            				    <span>Zaregistrujte se</span>
-            				    <form method='post' action='register.php'>
-            				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true class='text'>
-            				    	<br>
-            				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
-            				    	<br>
-            				    	<input type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
-            				    	<br>
-            				    	<input type='text' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
-            				    	<br>
-            				 		<input type=submit value='Vytvořit účet' class='confirm button'>
-            				    </form>
-            				    <span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
-                                ";
-        				        
-        				        //Chyby při minulé registraci
-        				        $errors = @$_SESSION['registerErrors'];
-        				        $errors = explode(';',$errors);
-        				        if (!empty($errors))
-        				        {
-            				        echo "<ul id='registerErrorList'>";
-            				        foreach ($errors as $err)
-            				        {
-            				            echo "<li>".$err."</li>";
-            				        }
-            				        echo "</ul>";
-        				        }
-        				        
-    				        echo "</div>";
+    				        //Za poslední rok se nikdo nepřihlásil, nebo byly vymazány cookies
+    				        //--> nechat zobrazený registrační formulář
+    				        echo "<div id='registrace' style='display:block'>";
     				    }
-    				    else    //Zobrazit přihlašovací formulář
+    				    else
     				    {
-    				        echo "
-                            <div id='prihlaseni'>
-            				    <span>Přihlašte se</span>
-            				    <form method='post' action='login.php'>
-            				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' class='text'>
-            				    	<br>
-            				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
-            				    	<br>
-                                    <label>
-                                        <input type='checkbox' name='stay_logged' class='big_checkbox'>
-                                        <span>Zůstat přihlášen</span>
-                                    </label>
-    								<br>
-            				 		<input type=submit value='Přihlásit se' class='confirm button'>
-        				        </form>
-                                ";
-        				        //Chyba při minulém přihlášení
-        				        $error = @$_SESSION['loginError'];
-        				        if (!empty($error))
-        				        {
-        				            echo "<ul id='registerErrorList'>";
-        				                echo "<li>".$error."</li>";
-        				            echo "</ul>";
-        				        }
-        				        
-        				    echo "</div>";
+    				        //Nedávno se tu někdo přihlašoval
+    				        //--> skrýt registrační formulář
+    				        echo "<div id='registrace' style='display:none'>";
     				    }
+    				?>
+				    <span>Zaregistrujte se</span>
+				    <form method='post' action='register.php'>
+				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true class='text'>
+				    	<br>
+				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
+				    	<br>
+				    	<input type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
+				    	<br>
+				    	<input type='text' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
+				    	<br>
+				    	<span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
+				    	<br>
+				 		<input type=submit value='Vytvořit účet' class='confirm button'>
+				    </form>
+			        <span class='toggleForms'>Již máte účet? <a href="javascript:showLogin()">Přihlašte se</a>.</span>
+			        <?php
+    			        //Chyby při minulé registraci
+    			        $errors = @$_SESSION['registerErrors'];
+    			        if (strlen($errors) > 0)
+    			        {
+    			            $errors = explode(';',$errors);
+    				        echo "<ul id='registerErrorList'>";
+    				        foreach ($errors as $err)
+    				        {
+    				            echo "<li>".$err."</li>";
+    				        }
+    				        echo "</ul>";
+    			        }
+    			    ?>
+    		        </div>
+    		        
+    		        <?php
+    		        //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval
+    		        if(isset($_COOKIE['lastChangelog']))
+    		        {
+    		            //Nedávno se tu někdo přihlašoval
+    		            //--> nechat zobrazený přihlašovací formulář
+    		            echo "<div id='prihlaseni' style='display:block'>";
+    		        }
+    		        else
+    		        {
+    		            //Za poslední rok se nikdo nepřihlásil, nebo byly vymazány cookies
+    		            //--> skrýt přihlašovací formulář
+    		            echo "<div id='prihlaseni' style='display:none'>";
+    		        }
+    			    ?>
+				    <span>Přihlašte se</span>
+				    <form method='post' action='login.php'>
+				    	<input type='text' name='name_input' maxlength=15 placeholder='Jméno' class='text'>
+				    	<br>
+				    	<input type='password' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
+				    	<br>
+                        <label>
+                            <input type='checkbox' name='stay_logged' class='big_checkbox'>
+                            <span>Zůstat přihlášen</span>
+                        </label>
+						<br>
+				 		<input type=submit value='Přihlásit se' class='confirm button'>
+			        </form>
+			        <span class='toggleForms'>Ještě nemáte účet? <a href="javascript:showRegister()">Zaregistrujte se</a>.</span>
+			        <?php
+				        //Chyba při minulém přihlášení
+				        $error = @$_SESSION['loginError'];
+				        if (!empty($error))
+				        {
+				            echo "<ul id='registerErrorList'>";
+				                echo "<li>".$error."</li>";
+				            echo "</ul>";
+				        }
 				    ?>
+				    </div>
 				</div>
 			</main>
 		</div>
