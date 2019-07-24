@@ -46,11 +46,28 @@
         //Kontrola zvolení možnosti uchování přihlášení
         if (isset($_POST['stay_logged']))
         {
-            //TODO
+            //Vygenerovat čtrnáctimístný kód
+            $code = bin2hex(random_bytes(7));   //56 bitů --> maximálně čtrnáctimístný kód
+
+            //Uložit kód do databáze
+            $userId = $result['id'];
+            $query = "INSERT INTO sezeni (kod_cookie, uzivatel_id) VALUES ('".md5($code)."', $userId)";
+            $innerResult = @mysqli_query($connection, $query);
+            /* 
+             *Poznámka: v případě, že by byl $code již někdy uložen, dotaz prostě selže a přihlášení se neuloží. Nic jiného se nestane.
+             *          Jelikož je riziko, že se to stane velice malé, nebudu jej nijak ošetřovat. Kontrola, zda je již kód uložen by zbytečně zatěžovala server.
+             */
+            if (!$innerResult)
+            {
+                header("Location: errSql.html");
+                die();
+            }
+            setcookie('instantLogin', $code, time() + 2592000, '/');    //2 592 000‬ s = 30 dní
+            $_COOKIE['instantLogin'] = $code;
         }
         
         //Přihlašování
-        $_SESSION['user'] = $name;
+        $_SESSION['user'] = $result['id'];
         header("Location: list.php");
         die();
     }

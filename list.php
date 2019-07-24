@@ -38,6 +38,7 @@
         </div>
         <header>
             <h1>Dostupné poznávačky</h1>
+            <a href="logout.php" style="position: absolute; right: 0; margin: auto;">Odhlásit se</a>
         </header>
         <main>
             <table id="listTable">

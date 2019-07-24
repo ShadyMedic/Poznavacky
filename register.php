@@ -79,7 +79,10 @@
         }
         
         //Přihlášení
-        $_SESSION['user'] = $name;
+        $query = "SELECT id FROM uzivatele WHERE name='$name'";
+        $userId = mysqli_query($connection, $query);
+        $userId = mysqli_fetch_array($userId)['id'];
+        $_SESSION['user'] = $userId;
         
         //Přesměrování do systému
         header("Location: list.php");
