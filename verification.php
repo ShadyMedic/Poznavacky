@@ -63,6 +63,12 @@
 	    if (isset($_COOKIE['instantLogin']) && tryCookieLogin())
 	    {
             $userdata = $_SESSION['user'];
+            
+            //Aktualizace času posledního přihlášení
+            $userId = $userData['id'];
+            $query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
+            $result = mysqli_query($connection, $query);
+            
             $username = $userdata['name'];
             filelog("Uživatel ($username) byl ověřen souborem cookie a bylo obnoveno jeho přihlášení");
 	    }
@@ -79,6 +85,12 @@
 	    {   
     		//Přesměrovávání na domovskou stránku
     		$userdata = $_SESSION['user'];
+    		
+    		//Aktualizace času posledního přihlášení
+    		$userId = $userData['id'];
+    		$query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
+    		$result = mysqli_query($connection, $query);
+    		
     		$username = $userdata['name'];
 	        filelog("Uživatel $username byl ověřen a přesměrován do systému.");
 	        header("Location: list.php");
@@ -88,6 +100,12 @@
 	    {
 	        //Přesměrovávání na domovskou stránku
 	        $userdata = $_SESSION['user'];
+	        
+	        //Aktualizace času posledního přihlášení
+	        $userId = $userData['id'];
+	        $query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
+	        $result = mysqli_query($connection, $query);
+	        
 	        $username = $userdata['name'];
 	        filelog("Uživatel $username byl ověřen souborem cookie a přesměrován do systému.");
 	        header("Location: list.php");

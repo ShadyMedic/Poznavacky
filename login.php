@@ -89,6 +89,11 @@
         ];
         $_SESSION['user'] = $userData;
         
+        //Aktualizace času posledního přihlášení
+        $userId = $userData['id'];
+        $query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
+        $result = mysqli_query($connection, $query);
+        
         $ip = $_SERVER['REMOTE_ADDR'];
         $username = $result['jmeno'];
         fileLog("Uživatel $username se přihlásil z IP adresy $ip");
