@@ -1,12 +1,13 @@
 <?php
     session_start();
-
+    
+    include 'httpStats.php'; //Zahrnuje connect.php
+    include 'logger.php';
+    
     $name = @$_POST['name_input'];
     $pass = @$_POST['pass_input'];
     $repass = @$_POST['repass_input'];
     $email = @$_POST['email_input'];
-    
-    include 'httpStats.php'; //Zahrnuje connect.php
     
     //Ochrana proti SQL injekci
     $name = mysqli_real_escape_string($connection, $name);
@@ -26,7 +27,7 @@
     if (strlen($name) > 15){array_push($errors, "Jméno nesmí být více než 15 znaků dlouhé.");}
     
     //Kontrola znaků ve jméně
-    if(strlen($name) !== strspn($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ')){array_push($errors, "Jméno může obsahovat pouze písmena a číslice.");}
+    if(strlen($name) !== strspn($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ')){array_push($errors, "Jméno může obsahovat pouze písmena, číslice a mezery.");}
     
     //Kontrola volnosti jména
     $query = "SELECT id FROM uzivatele WHERE jmeno = '$name'";
@@ -42,7 +43,7 @@
     if (strlen($pass) > 31){array_push($errors, "Heslo nesmí být více než 31 znaků dlouhé.");}
     
     //Kontrola znaků v hesle
-    if(strlen($pass) !== strspn($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ{}()[]#:;^,.?!|&_`~@$%/\\+-*=\"\'')){array_push($errors, "Vaše heslo obsahuje nepovolený znak.");}
+    if(strlen($pass) !== strspn($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/\\+-*=\"\'')){array_push($errors, "Vaše heslo obsahuje nepovolený znak.");}
     
     //Kontrola shodnosti hesel
     if ($pass !== $repass){array_push($errors, "Hesla se neshodují.");}
@@ -74,25 +75,40 @@
         if (!$result)
         {
             header("Location: errSql.html");
-            //echo "SQL errors";
             die();
         }
         
         //Přihlášení
+        require 'CONSTANTS.php';
         $query = "SELECT id FROM uzivatele WHERE name='$name'";
         $userId = mysqli_query($connection, $query);
         $userId = mysqli_fetch_array($userId)['id'];
-        $_SESSION['user'] = $userId;
+        
+        $userData = [
+            'id' => $userId,
+            'name' => $name,
+            'hash' => $pass,
+            'email' => $email,
+            'addedPics' => 0,
+            'guessedPics' => 0,
+            'karma' => DEFAULT_KARMA,
+            'status' => DEFAULT_RANK
+        ];
+        $_SESSION['user'] = $userData;
+        
+        $ip = $_SERVER['REMOTE_ADDR'];
+        fileLog("Uživatel $name se zaregistroval do systému z IP adresy $ip");
         
         //Přesměrování do systému
         header("Location: list.php");
-        //echo "No errors";
         die();
     }
     else    //Chybné údaje
     {
+        $ip = $_SERVER['REMOTE_ADDR'];
+        fileLog("Uživatel se pokusil zaregistroval do systému z IP adresy $ip, ale zadal neplatné údaje.");
+        
         $_SESSION['registerErrors'] = implode(';',$errors);
         header("Location: index.php");
-        //echo "Errors";
         die();
     }
