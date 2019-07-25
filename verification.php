@@ -65,7 +65,7 @@
             $userdata = $_SESSION['user'];
             
             //Aktualizace času posledního přihlášení
-            $userId = $userData['id'];
+            $userId = $userdata['id'];
             $query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
             $result = mysqli_query($connection, $query);
             
@@ -87,7 +87,7 @@
     		$userdata = $_SESSION['user'];
     		
     		//Aktualizace času posledního přihlášení
-    		$userId = $userData['id'];
+    		$userId = $userdata['id'];
     		$query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
     		$result = mysqli_query($connection, $query);
     		
