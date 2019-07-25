@@ -8,8 +8,8 @@
 	if ($redirectOut == true && !isset($_SESSION['user']))
 	{
 		//Přesměrovávání na autorizační stránku
-		echo "<script type='text/javascript'>location.href = 'index.php';</script>";
-		filelog("Uživatel ($ip) byl přesměrován na ověřovací stránku.");
+	    filelog("Uživatel ($ip) byl přesměrován na ověřovací stránku.");
+	    header("Location: index.php");
 		die();
 	}
 	else if($redirectIn == true && (isset($_SESSION['user']) || isset($_COOKIE['instantLogin'])))
@@ -17,8 +17,8 @@
 	    if (isset($_SESSION['user']))
 	    {
     		//Přesměrovávání na domovskou stránku
-    		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
-    		filelog("Uživatel ($ip) byl ověřen a přesměrován do systému.");
+	        filelog("Uživatel ($ip) byl ověřen a přesměrován do systému.");
+	        header("Location: list.php");
     		die();
 	    }
 	    else
@@ -41,7 +41,9 @@
 	            //Přesměrování do systému
 	            $userId = mysqli_fetch_array($result)['uzivatel_id'];
 	            $_SESSION['user'] = $userId;
-	            echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	            filelog("Uživatel ($ip) byl ověřen souborem cookie a přesměrován do systému");
+	            header("Location: list.php");
+	            die();
 	        }
 	        else
 	        {
