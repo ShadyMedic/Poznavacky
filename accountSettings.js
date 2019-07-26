@@ -13,7 +13,7 @@ function confirmNameChange()
 	//Reset HTML
 	document.getElementById("changeNameInputField").value = "";
 	document.getElementById("changeNameInput").style.display = "none";
-	document.getElementById("changeNameButton").style.display = "block";
+	document.getElementById("changeNameButton").style.display = "inline-block";
 }
 
 function checkNameChange(response)
