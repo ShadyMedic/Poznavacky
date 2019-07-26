@@ -32,13 +32,13 @@
     //Kontrola délky jména
     if (strlen($newName) < 4)
     {
-        alert("Jméno musí být alespoň 4 znaky dlouhé.");
-        return;
+        echo "Jméno musí být alespoň 4 znaky dlouhé.";
+        die();
     }
     if (strlen($newName) > 15)
     {
-        alert("Jméno nesmí být více než 15 znaků dlouhé.");
-        return;
+        echo "Jméno nesmí být více než 15 znaků dlouhé.";
+        die();
     }
     
     //KONTROLA DAT V POŘÁDKU
