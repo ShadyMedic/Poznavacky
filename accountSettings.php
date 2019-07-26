@@ -7,10 +7,35 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="css.css">
+		<!-- <link rel="stylesheet" type="text/css" href="css.css"> -->
 		<script type="text/javascript" src="accountSettings.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Ověření</title>
+		
+		<style>
+		  table{
+		      border: 1px solid black;
+		      position: absolute;
+		      top: 0;
+		      left: 0;
+		      bottom: 0;
+		      right: 0;
+		      margin: auto;
+		  }
+		  .table_left{
+		      text-align: left;
+		  }
+		  .table_right{
+		      text-align: right;
+		  }
+		  .table_action{
+		      text-align: center;
+		  }
+		  
+		  #changeNameInput{
+		      display: none;
+		  }
+		</style>
 	</head>
 	<body>
 		<table id="static_info">
@@ -22,7 +47,13 @@
 			<tr>
 				<td class='table_left'>Jméno</td>
 				<td class='table_right'><?php echo $userdata['name']; ?></td>
-				<td class='table_action'><button onclick="changeName()">Vyžádat změnu</button></td>
+				<td class='table_action'>
+					<button id="changeNameButton" onclick="changeName()">Vyžádat změnu</button>
+					<div id="changeNameInput">
+						<input id="changeNameInputField" type=text placeholder="Nové jméno" maxlength=15 />
+						<button id="changeNameConfirm" onclick="confirmNameChange()">OK</button>
+					</div>
+				</td>
 			</tr>
 			<tr>
 				<td class='table_left'>Heslo</td>
