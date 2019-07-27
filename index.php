@@ -39,7 +39,7 @@
 				    	<br>
 				    	<input type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
 				    	<br>
-				    	<input type='text' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
+				    	<input type='email' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
 				    	<br>
 				    	<span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
 				    	<br>
@@ -90,7 +90,7 @@
 						<br>
 				 		<input type=submit value='Přihlásit se' class='confirm button'>
 			        </form>
-			        <span class='recoverPass'><a href="recoverPassword.php">Zapomněli jste heslo?</a></span>
+			        <span class='recoverPass'><a href="javascript:showPasswordRecovery()">Zapomněli jste heslo?</a></span>
 			        <br>
 			        <span class='toggleForms'>Ještě nemáte účet? <a href="javascript:showRegister()">Zaregistrujte se</a>.</span>
 			        <?php
@@ -103,6 +103,16 @@
 				            echo "</ul>";
 				        }
 				    ?>
+				    </div>
+				    <div id="obnoveniHesla" style="display: none;">
+				    	<span>Zadejte svojí e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
+                		<form action="recoverPassword.php" method=POST>
+                    		<input type=text name="email" maxlength=255 required=true />
+                    		<input type=submit value="Odeslat" /> 
+                		</form>
+                		<span>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</span>
+				    	<br>
+				    	<a href="javascript:showLogin()">Zpět</a>
 				    </div>
 				</div>
 			</main>

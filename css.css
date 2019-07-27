@@ -192,7 +192,7 @@ td kbd {
     margin: 20vh auto;
     border-radius: 6px;
     }
-#registrace, #prihlaseni{
+#registrace, #prihlaseni, #obnoveniHesla{
     position: relative;
     padding: 18px 0;
     margin: auto
