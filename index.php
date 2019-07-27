@@ -90,6 +90,8 @@
 						<br>
 				 		<input type=submit value='Přihlásit se' class='confirm button'>
 			        </form>
+			        <span class='recoverPass'><a href="recoverPassword.php">Zapomněli jste heslo?</a></span>
+			        <br>
 			        <span class='toggleForms'>Ještě nemáte účet? <a href="javascript:showRegister()">Zaregistrujte se</a>.</span>
 			        <?php
 				        //Chyba při minulém přihlášení

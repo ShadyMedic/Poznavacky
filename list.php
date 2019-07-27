@@ -39,6 +39,7 @@
         <header>
             <h1>Dostupné poznávačky</h1>
             <a href="logout.php" style="position: absolute; right: 0; margin: auto;">Odhlásit se</a>
+            <a href="accountSettings.php" style="position: absolute; right: 100px; margin: auto;">Nastavení účtu</a>
         </header>
         <main>
             <table id="listTable">
