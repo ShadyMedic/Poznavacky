@@ -8,7 +8,7 @@ function confirmNameChange()
 {
 	var newName = document.getElementById("changeNameInputField").value;
 	
-	getRequest("changeUsername.php?new=" + newName, checkNameChange)
+	getRequest("changeUsername.php?new=" + newName, responseFunc)
 	
 	//Reset HTML
 	document.getElementById("changeNameInputField").value = "";
@@ -16,21 +16,40 @@ function confirmNameChange()
 	document.getElementById("changeNameButton").style.display = "inline-block";
 }
 
-function checkNameChange(response)
-{
-	alert(response);
-}
 /*-----------------------------------------------------------------------------*/
+
 function changePassword()
 {
 	
 }
+
 /*-----------------------------------------------------------------------------*/
+
 function changeEmail()
 {
-	
+	document.getElementById("changeEmailButton").style.display = "none";
+	document.getElementById("changeEmailInput").style.display = "block";
 }
+
+function confirmEmailChange()
+{
+	var newEmail = document.getElementById("changeEmailInputField").value;
+	
+	getRequest("changeEmail.php?new=" + newEmail, responseFunc)
+	
+	//Reset HTML
+	document.getElementById("changeEmailInputField").value = "";
+	document.getElementById("changeEmailInput").style.display = "none";
+	document.getElementById("changeEmailButton").style.display = "inline-block";
+}
+
+function updateEmail(newEmail)
+{
+	document.getElementById("emailAddress").innerHTML = newEmail;
+}
+
 /*-----------------------------------------------------------------------------*/
+
 function getRequest(url, success = null, error = null){
 	var req = false;
 	//Creating request
@@ -75,4 +94,9 @@ function getRequest(url, success = null, error = null){
 	req.open("GET", url, true);
 	req.send();
 	return req;
+}
+
+function responseFunc(response)
+{
+	eval(response);
 }

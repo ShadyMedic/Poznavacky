@@ -35,6 +35,9 @@
 		  #changeNameInput{
 		      display: none;
 		  }
+		  #changeEmailInput{
+		      display: none;
+		  }
 		</style>
 	</head>
 	<body>
@@ -62,8 +65,14 @@
 			</tr>
 			<tr>
 				<td class='table_left'>E-mail</td>
-				<td class='table_right'><?php echo $userdata['email']; ?></td>
-				<td class='table_action'><button onclick="changeEmail()">Změnit</button></td>
+				<td class='table_right' id="emailAddress"><?php echo $userdata['email']; ?></td>
+				<td class='table_action'>
+					<button id="changeEmailButton" onclick="changeEmail()">Změnit</button>
+					<div id="changeEmailInput">
+						<input id="changeEmailInputField" type=text placeholder="Nový e-mail" maxlength=255 />
+						<button id="changeEmailConfirm" onclick="confirmEmailChange()">OK</button>
+					</div>
+				</td>
 			</tr>
 			<tr>
 				<td class='table_left'>Přidané obrázky</td>

@@ -17,20 +17,20 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        echo "Vyskytla se chyba při práci s databází. \nPro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html";
+        echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
         die();
     }
     if (mysqli_num_rows($result) > 0)
     {
         filelog("Uživatel $oldName se pokusil změnit si jméno na $newName, avšak neuspěl kvůli neunikátnímu jménu.");
-        echo "Jiný uživatel již toto jméno používá, nebo o změnu na něj zažádal.";
+        echo "swal('Jiný uživatel již toto jméno používá, nebo o změnu na něj zažádal.','','error')";
         die();
     }
     
     //Kontrola znaků ve jméně
     if(strlen($newName) !== strspn($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ '))
     {
-        echo "Jméno může obsahovat pouze písmena, číslice a mezery.";
+        echo "swal('Jméno může obsahovat pouze písmena, číslice a mezery.','','error')";
         die();
     }
     
@@ -38,13 +38,13 @@
     if (strlen($newName) < 4)
     {
         filelog("Uživatel $oldName se pokusil změnit si jméno, avšak neuspěl kvůli krátkému jménu.");
-        echo "Jméno musí být alespoň 4 znaky dlouhé.";
+        echo "swal('Jméno musí být alespoň 4 znaky dlouhé.','','error')";
         die();
     }
     if (strlen($newName) > 15)
     {
         filelog("Uživatel $oldName se pokusil změnit si jméno, avšak neuspěl kvůli dlouhému jménu.");
-        echo "Jméno nesmí být více než 15 znaků dlouhé.";
+        echo "swal('Jméno nesmí být více než 15 znaků dlouhé.','','error')";
         die();
     }
     
@@ -55,7 +55,7 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        echo "Vyskytla se chyba při práci s databází. \nPro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html";
+        echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
         die();
     }
     if (mysqli_num_rows($result) > 0)
@@ -67,11 +67,11 @@
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
-            echo "Vyskytla se chyba při práci s databází. \nPro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html";
+            echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
             die();
         }
         filelog("Uživatel $oldName se změnil svou žádost o nové jméno na $newName.");
-        echo "O změnu jména bylo zažádáno. \nNové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. \n\nTato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.";
+        echo "swal('O změnu jména bylo zažádáno. \nNové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. \n\nTato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.','','success')";
     }
     else
     {
@@ -80,9 +80,9 @@
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
-            echo "Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html";
+            echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
             die();
         }
         filelog("Uživatel $oldName zažádal o změnu jména na $newName.");
-        echo "O změnu jména bylo zažádáno. \nNové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno.";
+        echo "swal('O změnu jména bylo zažádáno. \nNové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno.','','success')";
     }
