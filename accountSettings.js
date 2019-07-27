@@ -20,7 +20,38 @@ function confirmNameChange()
 
 function changePassword()
 {
+	document.getElementById("changePasswordButton").style.display = "none";
+	document.getElementById("changePasswordInput2").style.display = "none";
+	document.getElementById("changePasswordInput1").style.display = "block";
+}
+
+function changePasswordStage2()
+{
+	document.getElementById("changePasswordInput1").style.display = "none";
+	document.getElementById("changePasswordInput3").style.display = "none";
+	document.getElementById("changePasswordInput2").style.display = "block";
+}
+
+function changePasswordStage3()
+{
+	document.getElementById("changePasswordInput2").style.display = "none";
+	document.getElementById("changePasswordInput3").style.display = "block";
+}
+
+function confirmPasswordChange()
+{
+	var oldPass = document.getElementById("changePasswordInputFieldOld").value;
+	var newPass = document.getElementById("changePasswordInputFieldNew").value;
+	var rePass = document.getElementById("changePasswordInputFieldReNew").value;
 	
+	getRequest("changePassword.php?old=" + oldPass + "&new=" + newPass + "&reNew=" + rePass, responseFunc)
+	
+	//Reset HTML
+	document.getElementById("changePasswordInputFieldOld").value = "";
+	document.getElementById("changePasswordInputFieldNew").value = "";
+	document.getElementById("changePasswordInputFieldReNew").value = "";
+	document.getElementById("changePasswordInput3").style.display = "none";
+	document.getElementById("changePasswordButton").style.display = "inline-block";
 }
 
 /*-----------------------------------------------------------------------------*/

@@ -32,10 +32,7 @@
 		      text-align: center;
 		  }
 		  
-		  #changeNameInput{
-		      display: none;
-		  }
-		  #changeEmailInput{
+		  #changeNameInput, #changeEmailInput, #changePasswordInput1, #changePasswordInput2, #changePasswordInput3{
 		      display: none;
 		  }
 		</style>
@@ -61,7 +58,23 @@
 			<tr>
 				<td class='table_left'>Heslo</td>
 				<td class='table_right'>[Skryto]</td>
-				<td class='table_action'><button onclick="changePassword()">Změnit</button></td>
+				<td class='table_action'>
+					<button id="changePasswordButton" onclick="changePassword()">Změnit</button>
+					<div id="changePasswordInput1">
+						<input id="changePasswordInputFieldOld" type=password placeholder="Staré heslo" maxlength=31 />
+						<button id="changePasswordNext1" onclick="changePasswordStage2()">Dále</button>
+					</div>
+					<div id="changePasswordInput2">
+						<input id="changePasswordInputFieldNew" type=password placeholder="Nové heslo" maxlength=31 />
+						<button id="changePasswordBack2" onclick="changePassword()">Zpět</button>
+						<button id="changePasswordNext2" onclick="changePasswordStage3()">Dále</button>
+					</div>
+					<div id="changePasswordInput3">
+						<input id="changePasswordInputFieldReNew" type=password placeholder="Nové heslo znovu" maxlength=31 />
+						<button id="changePasswordBack3" onclick="changePasswordStage2()">Zpět</button>
+						<button id="changePasswordConfirm" onclick="confirmPasswordChange()">Potvrdit</button>
+					</div>
+				</td>
 			</tr>
 			<tr>
 				<td class='table_left'>E-mail</td>

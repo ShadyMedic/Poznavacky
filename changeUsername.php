@@ -17,7 +17,7 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
+        echo "swal('Vyskytla se chyba při práci s databází.','Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','error')";
         die();
     }
     if (mysqli_num_rows($result) > 0)
@@ -55,7 +55,7 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
+        echo "swal('Vyskytla se chyba při práci s databází.','Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','error')";
         die();
     }
     if (mysqli_num_rows($result) > 0)
@@ -67,11 +67,12 @@
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
-            echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
+            echo "swal('Vyskytla se chyba při práci s databází.','Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','error')";
             die();
         }
-        filelog("Uživatel $oldName se změnil svou žádost o nové jméno na $newName.");
-        echo "swal('O změnu jména bylo zažádáno. \nNové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. \n\nTato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.','','success')";
+        $ip = $_SERVER['REMOTE_ADDR'];
+        filelog("Uživatel $oldName se změnil svou žádost o nové jméno na $newName z IP adresy $ip.");
+        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. \nTato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.','success')";
     }
     else
     {
@@ -83,6 +84,7 @@
             echo "swal('Vyskytla se chyba při práci s databází. Pro více informací přejděte na ".$_SERVER['SERVER_NAME']."/errSql.html','','error')";
             die();
         }
-        filelog("Uživatel $oldName zažádal o změnu jména na $newName.");
-        echo "swal('O změnu jména bylo zažádáno. \nNové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno.','','success')";
+        $ip = $_SERVER['REMOTE_ADDR'];
+        filelog("Uživatel $oldName zažádal o změnu jména na $newName z IP adresy $ip.");
+        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno.','success')";
     }
