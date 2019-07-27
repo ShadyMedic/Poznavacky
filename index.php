@@ -13,6 +13,14 @@
 		<title>Ověření</title>
 	</head>
 	<body id="root">
+    	<?php 
+    		if (isset($_SESSION['passwordRecoveryError']))
+    		{
+    		    $err = $_SESSION['passwordRecoveryError'];
+    		    echo "<script>swal('$err','','error');</script>";
+    		    unset($_SESSION['passwordRecoveryError']);
+    		}
+    	?>
 		<div class="container">
 			<main>
 				<div id="main_kod">
