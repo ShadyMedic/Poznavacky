@@ -1,7 +1,8 @@
 <?php
     session_start();
     
-    include 'connect.php';
+    include 'httpStats.php'; //Zahrnuje connect.php
+    include 'logger.php';
     
     $newEmail = $_GET['new'];
     
