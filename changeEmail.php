@@ -6,6 +6,10 @@
     
     $newEmail = $_GET['new'];
     
+    $userdata = $_SESSION['user'];
+    $username = $userdata['name'];
+    $userId = $userdata['id'];
+    
     //Ochrana před SQL injekcí
     $newEmail = mysqli_real_escape_string($connection, $newEmail);
     
@@ -41,10 +45,6 @@
     }
     
     //KONTROLA DAT V POŘÁDKU
-    
-    $userdata = $_SESSION['user'];
-    $username = $userdata['name'];
-    $userId = $userdata['id'];
     
     //Aktualizace e-mailu
     $query = "UPDATE uzivatele SET email = '$newEmail' WHERE id = $userId";

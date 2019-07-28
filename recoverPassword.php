@@ -96,7 +96,7 @@
         $email, 
         'Žádost o obnovu hesla na poznavacky.chytrak.cz', 
         "<span>Pro obnovení vašeho hesla klikněte na tento odkaz: </span>".
-        "<a href='localhost/Poznavacky/emailPasswordRecovery?token=$code'>OBNOVIT HESLO</a>".
+        "<a href='localhost/Poznavacky/emailPasswordRecovery.php?token=$code'>OBNOVIT HESLO</a>".
         "<br>".
         "<span>Tento odkaz bude platný po následujících 24 hodin, nebo do odeslání žádosti o nový kód.</span>".
         "<br>".
