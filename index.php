@@ -66,6 +66,7 @@
     				            echo "<li>".$err."</li>";
     				        }
     				        echo "</ul>";
+    				        unset($_SESSION['registerErrors']);
     			        }
     			    ?>
     		        </div>
@@ -109,6 +110,7 @@
 				            echo "<ul id='registerErrorList'>";
 				                echo "<li>".$error."</li>";
 				            echo "</ul>";
+				            unset($_SESSION['loginError']);
 				        }
 				    ?>
 				    </div>
