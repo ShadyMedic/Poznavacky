@@ -12,7 +12,7 @@
 		<!-- <link rel="stylesheet" type="text/css" href="css.css"> -->
 		<script type="text/javascript" src="accountSettings.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<title>Ověření</title>
+		<title>Správa účtu</title>
 		
 		<style>
 		  table{
