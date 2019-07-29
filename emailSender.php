@@ -62,11 +62,12 @@ function sendEmail($to, $subject, $message, $fromAddress = 'poznavacky@email.com
     $result = $mail->Send();
     if(!$result)
     {
-        return "<script>swal('E-mail nemohl být odeslán!','".$mail->ErrorInfo." Prosíme, kontaktujte správce.','error');</script>";
+        return "E-mail nemohl být odeslán! Chyba: ".$mail->ErrorInfo." Prosíme, kontaktujte správce.";
     }
     else
     {
-        return "<script>swal('E-mail byl úspěšně odeslán','','success');</script>";
+        //return "E-mail byl úspěšně odeslán.";
+        return NULL;
     }
 }
 ?>

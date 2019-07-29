@@ -11,7 +11,6 @@
     $name = mysqli_real_escape_string($connection, $name);
     $pass = mysqli_real_escape_string($connection, $pass);
     
-    //Mazání předchozích chyb
     $_SESSION['loginError'] = "";
     
     //Kontrola maximální délky jména (aby nevznikaly dlouhé SQL dotazy)

@@ -5,19 +5,24 @@
     
     $email = $_POST['email'];
     
+    $_SESSION['passwordRecoveryError'] ="";
+    
+    //Ochrana proti SQL injekci
+    $email = mysqli_real_escape_string($connection, $email);
+    
     //Kontrola délky e-mailu (aby nevznikaly dlouhé SQL dotazy)
     if(strlen($email) > 255)
     {
-        header("Location: index.php");
         $_SESSION['passwordRecoveryError'] = "Email nesmí být delší než 255 znaků.";
+        header("Location: index.php");
         die();
     }
     
     //Kontrola platného e-mailu
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
-        header("Location: index.php");
         $_SESSION['passwordRecoveryError'] = "E-mail nemá platný formát.";
+        header("Location: index.php");
         die();
     }
     
@@ -33,8 +38,8 @@
     }
     if (mysqli_num_rows($result) == 0)
     {
-        header("Location: index.php");
         $_SESSION['passwordRecoveryError'] = "K této e-mailové adrese není přidružen žádný účet.";
+        header("Location: index.php");
         die();
     }
     
@@ -81,18 +86,10 @@
         header("Location: errSql.html");
         die();
     }
-?>
-
-<html>
-	<head>
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	</head>
-	<body>
-
-<?php
+    
     //Poslat e-mail.
     include 'emailSender.php';
-    echo sendEmail(
+    $_SESSION['passwordRecoveryError'] = sendEmail(
         $email, 
         'Žádost o obnovu hesla na poznavacky.chytrak.cz', 
         "<span>Pro obnovení vašeho hesla klikněte na tento odkaz: </span>".
@@ -103,7 +100,6 @@
         "<span style='color: #990000; font-weight: bold;'>DŮLEŽITÉ: </span>".
         "<span style='color: #990000;'>Tento e-mail nikomu nepřeposílejte! Mohl by získat přístup k vašemu účtu.</span>"
         );
+    header("Location: index.php");
+    die();
 ?>
-		<a href="index.php" style="height: fit-content; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; text-align: center; font-size: 4em;">Zpět na úvodní stránku</a>
-	</body>
-</html>
