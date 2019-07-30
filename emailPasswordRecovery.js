@@ -4,14 +4,14 @@ function changePassword()
 	var rePass = document.getElementById("repass").value;
 	var token = window.location.search.substr(1).split("=")[1];	//Získání kódu z URL
 	
-	getRequest("emailPasswordChange.php", responseFunc, responseFunc, newPass, rePass, token);
+	postRequest("emailPasswordChange.php", responseFunc, responseFunc, newPass, rePass, token);
 	
 	//Reset HTML
 	document.getElementById("pass").value="";
 	document.getElementById("repass").value="";
 }
 
-function getRequest(url, success = null, error = null, newPass, rePass, token){
+function postRequest(url, success = null, error = null, newPass, rePass, token){
 	var req = false;
 	//Creating request
 	try

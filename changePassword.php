@@ -4,9 +4,9 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    $oldPass = $_GET['old'];
-    $newPass = $_GET['new'];
-    $rePass = $_GET['reNew'];
+    $oldPass = $_POST['old'];
+    $newPass = $_POST['new'];
+    $rePass = $_POST['reNew'];
     
     $userdata = $_SESSION['user'];
     $userId = $userdata['id'];
