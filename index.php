@@ -17,17 +17,15 @@
 			<main>
 				<div id="main_kod">
 				    <?php
-    				    //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval
-    				    if(!isset($_COOKIE['lastChangelog']))
+    				    //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval, nebo zda existují chyby registrace k zobrazení
+				    if (isset($_SESSION['registerErrors']) || (!isset($_COOKIE['lastChangelog'])) && !isset($_SESSION['loginError']) && !isset($_SESSION['passwordRecoveryError']))
     				    {
-    				        //Za poslední rok se nikdo nepřihlásil, nebo byly vymazány cookies
-    				        //--> nechat zobrazený registrační formulář
+    				        //Podmínka splněna --> nechat zobrazený registrační formulář
     				        echo "<div id='registrace' style='display:block'>";
     				    }
     				    else
     				    {
-    				        //Nedávno se tu někdo přihlašoval
-    				        //--> skrýt registrační formulář
+    				        //Podmínka nesplněna --> skrýt registrační formulář
     				        echo "<div id='registrace' style='display:none'>";
     				    }
     				?>
@@ -58,23 +56,20 @@
         				            echo "<li>".$err."</li>";
         				        }
         				        echo "</ul>";
-        				        unset($_SESSION['registerErrors']);
         			        }
         			    ?>
     		        </div>
     		        
     		        <?php
-    		        //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval
-    		        if(isset($_COOKIE['lastChangelog']))
+    		        //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval, nebo je přihlašovací chyba k zobrazení
+    		        if (isset($_SESSION['loginError']) || (isset($_COOKIE['lastChangelog'])) && !isset($_SESSION['registerErrors']) && !isset($_SESSION['passwordRecoveryError']))
     		        {
-    		            //Nedávno se tu někdo přihlašoval
-    		            //--> nechat zobrazený přihlašovací formulář
+    		            //Podmínka splněna --> nechat zobrazený přihlašovací formulář
     		            echo "<div id='prihlaseni' style='display:block'>";
     		        }
     		        else
     		        {
-    		            //Za poslední rok se nikdo nepřihlásil, nebo byly vymazány cookies
-    		            //--> skrýt přihlašovací formulář
+    		            //Podmínka nesplněna --> skrýt přihlašovací formulář
     		            echo "<div id='prihlaseni' style='display:none'>";
     		        }
     			    ?>
@@ -102,11 +97,23 @@
         			            echo "<ul class='errorList'>";
         			               echo "<li>".$error."</li>";
         			            echo "</ul>";
-        			            unset($_SESSION['loginError']);
         			        }
     				    ?>
 				    </div>
-				    <div id="obnoveniHesla" style="display: none;">
+				    
+				    <?php
+    		        //Zjistit, zda existuje chyba obnovy hesla k zobrazení
+				    if (isset($_SESSION['passwordRecoveryError']))
+    		        {
+    		            //Podmínka splněna --> Zobrazit formulář pro obnovu hesla
+    		            echo "<div id='obnoveniHesla' style='display: block;'>";
+    		        }
+    		        else
+    		        {
+    		            //Podmínka nesplněna --> Skrýt formulář pro obnovu hesla
+    		            echo "<div id='obnoveniHesla' style='display: none;'>";
+    		        }
+    			    ?>
 				    	<span>Zadejte svojí e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
                 		<form method='post' action="recoverPassword.php">
                     		<input type=text name="email" maxlength=255 required=true />
@@ -123,7 +130,6 @@
     				    	    echo "<ul class='errorList'>";
     				    	       echo "<li>".$error."</li>";
     				    	    echo "</ul>";
-    				    	    unset($_SESSION['passwordRecoveryError']);
     				    	}
 				        ?>
 				    </div>
@@ -136,3 +142,8 @@
 		</footer>
 	</body>
 </html>
+<?php
+    unset($_SESSION['registerErrors']);
+    unset($_SESSION['loginError']);
+    unset($_SESSION['passwordRecoveryError']);
+?>
