@@ -42,7 +42,7 @@
     //JMÉNO JE OK
     
     //Kontrola znaků v hesle
-    if(strlen($pass) !== strspn($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/+-*=\"\'')){array_push($errors, "Vaše heslo obsahuje nepovolený znak.");}
+    if(strlen($pass) !== strspn($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'')){array_push($errors, "Vaše heslo obsahuje nepovolený znak.");}
     
     //Kontrola shodnosti hesel
     if ($pass !== $repass){array_push($errors, "Hesla se neshodují.");}
