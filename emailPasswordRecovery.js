@@ -1,17 +1,20 @@
-function changePassword()
+function changePassword(event)
 {
+	event.preventDefault();
+	//document.getElementById("inputForm").submit();	//Tohle funguje, ale reloaduje to stránku, což nechci
+	
 	var newPass = document.getElementById("pass").value;
 	var rePass = document.getElementById("repass").value;
-	var token = window.location.search.substr(1).split("=")[1];
+	var token = window.location.search.substr(1).split("=")[1];	//Získání kódu z URL
 	
-	getRequest("emailPasswordChange.php?new=" + newPass + "&reNew=" + rePass + "&token=" + token, responseFunc)
+	getRequest("emailPasswordChange.php", responseFunc, responseFunc, newPass, rePass, token);
 	
 	//Reset HTML
-	document.getElementById("pass").value = "";
-	document.getElementById("repass").value = "";
+	document.getElementById("pass").value="";
+	document.getElementById("repass").value="";
 }
 
-function getRequest(url, success = null, error = null){
+function getRequest(url, success = null, error = null, newPass, rePass, token){
 	var req = false;
 	//Creating request
 	try
@@ -52,8 +55,9 @@ function getRequest(url, success = null, error = null){
 			return req.status === 200 ? success(req.responseText) : error(req.status);
 		}
 	}
-	req.open("GET", url, true);
-	req.send();
+	req.open("POST", url, true);
+	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	req.send("new="+newPass+"&reNew="+rePass+"&token=" + token);
 	return req;
 }
 

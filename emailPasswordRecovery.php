@@ -50,7 +50,7 @@
 		<div>
 			<input type=password maxlength=31 placeholder="Nové heslo" id="pass" required=true />
 			<input type=password maxlength=31 placeholder="Nové heslo znovu" id="repass" required=true />
-			<button onclick="changePassword()">Změnit heslo</button>
+			<button onclick="changePassword(event)">Změnit heslo</button>
 		</div>
 	</body>
 </html>

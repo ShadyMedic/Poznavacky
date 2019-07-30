@@ -4,9 +4,9 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    $newPass = $_GET['new'];
-    $rePass = $_GET['reNew'];
-    $token = $_GET['token'];
+    $newPass = $_POST['new'];
+    $rePass = $_POST['reNew'];
+    $token = $_POST['token'];
     
     //Ochrana před SQL injekcí
     $newPass = mysqli_real_escape_string($connection, $newPass);
@@ -74,7 +74,7 @@
     $ip = $_SERVER['REMOTE_ADDR'];
     filelog("Uživatel s ID $userId si změnil heslo z IP adresy $ip pomocí odkazu z e-mailu.");
     
-    echo "swal('Heslo bylo úspěšně změněno.','','success');";
+    echo "swal('Heslo bylo úspěšně změněno.','','success').then(function() {window.location = 'index.php';})";
     
     //Odstraňování kódu z databáze.
     $query = "DELETE FROM obnovenihesel WHERE kod='".md5($token)."'";
