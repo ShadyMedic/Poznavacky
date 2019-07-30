@@ -7,13 +7,8 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    //Ochrana proti SQL injekci
-    $name = mysqli_real_escape_string($connection, $name);
-    $pass = mysqli_real_escape_string($connection, $pass);
-    
     $_SESSION['loginError'] = "";
-    
-    //Kontrola maximální délky jména (aby nevznikaly dlouhé SQL dotazy)
+    //Kontrola maximální délky jména (aby nevznikaly dlouhé SQL dotazy) - je potřeba provést před mysqli_real_escape_string
     if (strlen($name) > 15)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -24,7 +19,7 @@
         die();
     }
     
-    //Kontrola maximální délky hesla (aby nevznikaly dlouhé SQL dotazy)
+    //Kontrola maximální délky hesla (aby nevznikaly dlouhé SQL dotazy) - je potřeba provést před mysqli_real_escape_string
     if (strlen($pass) > 31)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -34,6 +29,10 @@
         header("Location: index.php");
         die();
     }
+    
+    //Ochrana proti SQL injekci
+    $name = mysqli_real_escape_string($connection, $name);
+    $pass = mysqli_real_escape_string($connection, $pass);
     
     //Hledání účtu se zadaným jménem
     $query = "SELECT id,jmeno,heslo,email,pridaneObrazky,uhodnuteObrazky,karma,status FROM uzivatele WHERE jmeno='$name' LIMIT 1";

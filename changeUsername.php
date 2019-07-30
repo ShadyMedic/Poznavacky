@@ -9,6 +9,20 @@
     $oldName = $_SESSION['user'];
     $oldName = $oldName['name'];
     
+    //Kontrola délky jména
+    if (strlen($newName) < 4)
+    {
+        filelog("Uživatel $oldName se pokusil změnit si jméno, avšak neuspěl kvůli krátkému jménu.");
+        echo "swal('Jméno musí být alespoň 4 znaky dlouhé.','','error')";
+        die();
+    }
+    if (strlen($newName) > 15)
+    {
+        filelog("Uživatel $oldName se pokusil změnit si jméno, avšak neuspěl kvůli dlouhému jménu.");
+        echo "swal('Jméno nesmí být více než 15 znaků dlouhé.','','error')";
+        die();
+    }
+    
     //Ochrana před SQL injekcí
     $newName = mysqli_real_escape_string($connection, $newName);
     
@@ -31,20 +45,6 @@
     if(strlen($newName) !== strspn($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ '))
     {
         echo "swal('Jméno může obsahovat pouze písmena, číslice a mezery.','','error')";
-        die();
-    }
-    
-    //Kontrola délky jména
-    if (strlen($newName) < 4)
-    {
-        filelog("Uživatel $oldName se pokusil změnit si jméno, avšak neuspěl kvůli krátkému jménu.");
-        echo "swal('Jméno musí být alespoň 4 znaky dlouhé.','','error')";
-        die();
-    }
-    if (strlen($newName) > 15)
-    {
-        filelog("Uživatel $oldName se pokusil změnit si jméno, avšak neuspěl kvůli dlouhému jménu.");
-        echo "swal('Jméno nesmí být více než 15 znaků dlouhé.','','error')";
         die();
     }
     

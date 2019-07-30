@@ -10,6 +10,14 @@
     $username = $userdata['name'];
     $userId = $userdata['id'];
     
+    //Kontrola délky e-mailu
+    if(strlen($newEmail) > 255)
+    {
+        filelog("Uživatel $username se pokusil změnit si e-mailovou adresu na $newEmail, avšak neuspěl z důvodu dlouhé nové e-mailové adresy.");
+        echo "swal('Email nesmí být delší než 255 znaků.','','error')";
+        die();
+    }
+    
     //Ochrana před SQL injekcí
     $newEmail = mysqli_real_escape_string($connection, $newEmail);
     
@@ -25,14 +33,6 @@
     {
         filelog("Uživatel $username se pokusil změnit si e-mailovou adresu na $newEmail, avšak neuspěl kvůli neunikátní nové e-mailové adrese.");
         echo "swal('Email je již používán jiným uživatelem.','','error')";
-        die();
-    }
-    
-    //Kontrola délky e-mailu
-    if(strlen($newEmail) > 255)
-    {
-        filelog("Uživatel $username se pokusil změnit si e-mailovou adresu na $newEmail, avšak neuspěl z důvodu dlouhé nové e-mailové adresy.");
-        echo "swal('Email nesmí být delší než 255 znaků.','','error')";
         die();
     }
     

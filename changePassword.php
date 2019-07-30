@@ -13,24 +13,11 @@
     $username = $userdata['name'];
     $savedHash = $userdata['hash'];
     
-    //Ochrana před SQL injekcí
-    $oldPass = mysqli_real_escape_string($connection, $oldPass);
-    $newPass = mysqli_real_escape_string($connection, $newPass);
-    $rePass = mysqli_real_escape_string($connection, $rePass);
-    
     //Kontrola délky starého hesla (aby nevznikaly dlouhé SQL dotazy)
     if (strlen($oldPass) > 31)
     {
         filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli dlouhému starému heslu.");
         echo "swal('Staré heslo nemohlo být delší než 31 znaků.','','error')";
-        die();
-    }
-    
-    //Kontrola správnosti starého hesla
-    if (!password_verify($oldPass, $savedHash))
-    {
-        filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli nesprávnému starému heslu.");
-        echo "swal('Staré heslo není správné.','','error')";
         die();
     }
     
@@ -45,6 +32,19 @@
     {
         filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli dlouhému novému heslu.");
         echo "swal('Nové heslo nesmí být více než 31 znaků dlouhé.','','error')";
+        die();
+    }
+    
+    //Ochrana před SQL injekcí
+    $oldPass = mysqli_real_escape_string($connection, $oldPass);
+    $newPass = mysqli_real_escape_string($connection, $newPass);
+    $rePass = mysqli_real_escape_string($connection, $rePass);
+    
+    //Kontrola správnosti starého hesla
+    if (!password_verify($oldPass, $savedHash))
+    {
+        filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli nesprávnému starému heslu.");
+        echo "swal('Staré heslo není správné.','','error')";
         die();
     }
     

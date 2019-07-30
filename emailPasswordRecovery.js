@@ -1,8 +1,5 @@
-function changePassword(event)
-{
-	event.preventDefault();
-	//document.getElementById("inputForm").submit();	//Tohle funguje, ale reloaduje to stránku, což nechci
-	
+function changePassword()
+{	
 	var newPass = document.getElementById("pass").value;
 	var rePass = document.getElementById("repass").value;
 	var token = window.location.search.substr(1).split("=")[1];	//Získání kódu z URL
