@@ -43,7 +43,7 @@
     if (strlen($pass) > 31){array_push($errors, "Heslo nesmí být více než 31 znaků dlouhé.");}
     
     //Kontrola znaků v hesle
-    if(strlen($pass) !== strspn($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/\\+-*=\"\'')){array_push($errors, "Vaše heslo obsahuje nepovolený znak.");}
+    if(strlen($pass) !== strspn($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/+-*=\"\'')){array_push($errors, "Vaše heslo obsahuje nepovolený znak.");}
     
     //Kontrola shodnosti hesel
     if ($pass !== $repass){array_push($errors, "Hesla se neshodují.");}
