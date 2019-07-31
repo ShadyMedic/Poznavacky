@@ -4,8 +4,8 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    $newPass = $_POST['new'];
-    $rePass = $_POST['reNew'];
+    $newPass = urldecode($_POST['new']);
+    $rePass = urldecode($_POST['reNew']);
     $token = $_POST['token'];
     
     //Kontrola délky nového hesla
@@ -23,8 +23,10 @@
     }
     
     //Ochrana před SQL injekcí
+    /*  Není potřeba escapovat, protože hodnota je před použitím v SQL dotazu zahešována.
     $newPass = mysqli_real_escape_string($connection, $newPass);
     $rePass = mysqli_real_escape_string($connection, $rePass);
+    */
     $token = mysqli_real_escape_string($connection, $token);
     
     //Kontrola správnosti kódu (už sice bylo zkontrolováno v emailPasswordRecovery.php, ale pro případ modifikace cookies to raději zkontrolujeme znovu)

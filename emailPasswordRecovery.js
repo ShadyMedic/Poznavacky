@@ -4,6 +4,9 @@ function changePassword()
 	var rePass = document.getElementById("repass").value;
 	var token = window.location.search.substr(1).split("=")[1];	//Získání kódu z URL
 	
+	newPass = encodeURIComponent(newPass);
+	rePass = encodeURIComponent(rePass);
+	
 	postRequest("emailPasswordChange.php", responseFunc, responseFunc, newPass, rePass, token);
 	
 	//Reset HTML
