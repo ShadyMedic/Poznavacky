@@ -5,24 +5,20 @@
     
     $email = $_POST['email'];
     
-    $_SESSION['passwordRecoveryError'] ="";
+    //Kontrola délky e-mailu (aby nevznikaly dlouhé SQL dotazy)
+    if(strlen($email) > 255)
+    {
+        echo "<li>Email nesmí být delší než 255 znaků.</li>";
+        die();
+    }
     
     //Ochrana proti SQL injekci
     $email = mysqli_real_escape_string($connection, $email);
     
-    //Kontrola délky e-mailu (aby nevznikaly dlouhé SQL dotazy)
-    if(strlen($email) > 255)
-    {
-        $_SESSION['passwordRecoveryError'] = "Email nesmí být delší než 255 znaků.";
-        header("Location: index.php");
-        die();
-    }
-    
     //Kontrola platného e-mailu
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
-        $_SESSION['passwordRecoveryError'] = "E-mail nemá platný formát.";
-        header("Location: index.php");
+        echo "<li>E-mail nemá platný formát.</li>";
         die();
     }
     
@@ -33,13 +29,12 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        header("Location: errSql.html");
+        echo "location.href = 'errSql.html';";
         die();
     }
     if (mysqli_num_rows($result) == 0)
     {
-        $_SESSION['passwordRecoveryError'] = "K této e-mailové adrese není přidružen žádný účet.";
-        header("Location: index.php");
+        echo "<li>K této e-mailové adrese není přidružen žádný účet.</li>";
         die();
     }
     
@@ -60,7 +55,7 @@
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
-            header("Location: errSql.html");
+            echo "location.href = 'errSql.html';";
             die();
         }
         if (!mysqli_num_rows($result) > 0)  //Kontrola případné potřeby opakování generování kódu
@@ -74,7 +69,7 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        header("Location: errSql.html");
+        echo "location.href = 'errSql.html';";
         die();
     }
     
@@ -83,13 +78,13 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        header("Location: errSql.html");
+        echo "location.href = 'errSql.html';";
         die();
     }
     
     //Poslat e-mail.
     include 'emailSender.php';
-    $_SESSION['passwordRecoveryError'] = sendEmail(
+    $emailResult = sendEmail(
         $email, 
         'Žádost o obnovu hesla na poznavacky.chytrak.cz', 
         "<span>Pro obnovení vašeho hesla klikněte na tento odkaz: </span>".
@@ -100,6 +95,13 @@
         "<span style='color: #990000; font-weight: bold;'>DŮLEŽITÉ: </span>".
         "<span style='color: #990000;'>Tento e-mail nikomu nepřeposílejte! Mohl by získat přístup k vašemu účtu.</span>"
         );
-    header("Location: index.php");
+    
+    if (empty($emailResult))
+    {
+        echo "<li style='color: #009900'>E-mail byl úspěšně odeslán</li>";
+    }
+    else
+    {
+        echo "<li>$emailResult</li>";
+    }
     die();
-?>

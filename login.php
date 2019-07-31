@@ -1,21 +1,19 @@
 <?php
     session_start();
     
-    $name = @$_POST['name_input'];
-    $pass = @$_POST['pass_input'];
+    $name = urldecode(@$_POST['name']);
+    $pass = urldecode(@$_POST['pass']);
     
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    $_SESSION['loginError'] = "";
     //Kontrola maximální délky jména (aby nevznikaly dlouhé SQL dotazy) - je potřeba provést před mysqli_real_escape_string
     if (strlen($name) > 15)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit s příliš dlouhým jménem z IP adresy $ip");
         
-        $_SESSION['loginError'] = "Jméno nesmí být více než 15 znaků dlouhé.";
-        header("Location: index.php");
+        echo "<li>Jméno nesmí být více než 15 znaků dlouhé.</li>";
         die();
     }
     
@@ -25,14 +23,13 @@
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit s příliš dlouhým heslem z IP adresy $ip");
         
-        $_SESSION['loginError'] = "Heslo nesmí být více než 31 znaků dlouhé.";
-        header("Location: index.php");
+        echo "<li>Heslo nesmí být více než 31 znaků dlouhé.</li>";
         die();
     }
     
     //Ochrana proti SQL injekci
     $name = mysqli_real_escape_string($connection, $name);
-    $pass = mysqli_real_escape_string($connection, $pass);
+    //$pass = mysqli_real_escape_string($connection, $pass);    Nemusí být escapováno - hodnota není použita v SQL dotazu nezahešovaná
     
     //Hledání účtu se zadaným jménem
     $query = "SELECT id,jmeno,heslo,email,pridaneObrazky,uhodnuteObrazky,karma,status FROM uzivatele WHERE jmeno='$name' LIMIT 1";
@@ -42,8 +39,7 @@
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit k neexistujícímu účtu ($name) z IP adresy $ip");
         
-        $_SESSION['loginError'] = "Uživatel s tímto jménem neexistuje.";
-        header("Location: index.php");
+        echo "<li>Uživatel s tímto jménem neexistuje.</li>";
         die();
     }
     
@@ -67,7 +63,7 @@
              */
             if (!$innerResult)
             {
-                header("Location: errSql.html");
+                echo "location.href = 'errSql.html';";
                 die();
             }
             setcookie('instantLogin', $code, time() + 2592000, '/');    //2 592 000‬ s = 30 dní
@@ -96,12 +92,11 @@
         $username = $result['jmeno'];
         fileLog("Uživatel $username se přihlásil z IP adresy $ip");
         
-        header("Location: list.php");
+        echo "location.href = 'list.php';";  //Přesměrování do systému
         die();
     }
     //Chybné heslo
+    $ip = $_SERVER['REMOTE_ADDR'];
     fileLog("Uživatel $name se pokusil přihlásit se špatným heslem z IP adresy $ip");
     
-    $_SESSION['loginError'] = "Špatné heslo";
-    header("Location: index.php");
-    die();
+    echo "<li>Špatné heslo</li>";

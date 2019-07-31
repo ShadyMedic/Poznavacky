@@ -4,13 +4,10 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    $name = @$_POST['name_input'];
-    $pass = @$_POST['pass_input'];
-    $repass = @$_POST['repass_input'];
-    $email = @$_POST['email_input'];
-    
-    //Mazání předchozích chyb
-    $_SESSION['registerErrors'] = array();
+    $name = urldecode(@$_POST['name']);
+    $pass = urldecode(@$_POST['pass']);
+    $repass = urldecode(@$_POST['rePass']);
+    $email = urldecode(@$_POST['email']);
     
     $errors = array();
     
@@ -28,8 +25,8 @@
     
     //Ochrana proti SQL injekci (e-mail je zvlášť)
     $name = mysqli_real_escape_string($connection, $name);
-    $pass = mysqli_real_escape_string($connection, $pass);
-    $repass = mysqli_real_escape_string($connection, $repass);
+    //$pass = mysqli_real_escape_string($connection, $pass);        Není potřeba escapovat, protože zadaná hodnota není použitav v SQL dotazu
+    //$repass = mysqli_real_escape_string($connection, $repass);
     
     //Kontrola znaků ve jméně
     if(strlen($name) !== strspn($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ')){array_push($errors, "Jméno může obsahovat pouze písmena, číslice a mezery.");}
@@ -37,6 +34,11 @@
     //Kontrola volnosti jména
     $query = "SELECT id FROM uzivatele WHERE jmeno = '$name'";
     $result = mysqli_query($connection, $query);
+    if (!$result)
+    {
+        echo "location.href = 'errSql.html'";
+        die();
+    }
     if (mysqli_num_rows($result) > 0){array_push($errors, "Jméno je již používáno jiným uživatelem.");}
     
     //JMÉNO JE OK
@@ -63,6 +65,11 @@
         //Kontrola volnosti e-mailu
         $query = "SELECT id FROM uzivatele WHERE email = '$email'";
         $result = mysqli_query($connection, $query);
+        if (!$result)
+        {
+            echo "location.href = 'errSql.html'";
+            die();
+        }
         if (mysqli_num_rows($result) > 0){array_push($errors, "E-mail je již používán jiným uživatelem.");}
     }
     
@@ -76,14 +83,20 @@
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
-            header("Location: errSql.html");
+            echo "location.href = 'errSql.html'";
             die();
         }
         
         //Přihlášení
         require 'CONSTANTS.php';
-        $query = "SELECT id FROM uzivatele WHERE name='$name'";
+        $query = "SELECT id FROM uzivatele WHERE jmeno='$name'";
         $userId = mysqli_query($connection, $query);
+        if (!$userId)
+        {
+            echo mysqli_error($connection);
+            //echo "location.href = 'errSql.html'";
+            die();
+        }
         $userId = mysqli_fetch_array($userId)['id'];
         
         $userData = [
@@ -102,7 +115,7 @@
         fileLog("Uživatel $name se zaregistroval do systému z IP adresy $ip");
         
         //Přesměrování do systému
-        header("Location: list.php");
+        echo "location.href = 'list.php'";
         die();
     }
     else    //Chybné údaje
@@ -110,7 +123,9 @@
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil zaregistroval do systému z IP adresy $ip, ale zadal neplatné údaje.");
         
-        $_SESSION['registerErrors'] = implode(';',$errors);
-        header("Location: index.php");
+        foreach ($errors as $err)
+        {
+            echo "<li>$err</li>";
+        }
         die();
     }
