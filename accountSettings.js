@@ -44,6 +44,10 @@ function confirmPasswordChange()
 	var newPass = document.getElementById("changePasswordInputFieldNew").value;
 	var rePass = document.getElementById("changePasswordInputFieldReNew").value;
 	
+	oldPass = encodeURIComponent(oldPass);
+	newPass = encodeURIComponent(newPass);
+	rePass = encodeURIComponent(rePass);
+	
 	postRequest("changePassword.php", responseFunc, responseFunc, oldPass, newPass, rePass);
 	
 	//Reset HTML

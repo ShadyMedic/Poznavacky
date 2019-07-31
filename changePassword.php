@@ -4,9 +4,9 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    $oldPass = $_POST['old'];
-    $newPass = $_POST['new'];
-    $rePass = $_POST['reNew'];
+    $oldPass = urldecode($_POST['old']);
+    $newPass = urldecode($_POST['new']);
+    $rePass = urldecode($_POST['reNew']);
     
     $userdata = $_SESSION['user'];
     $userId = $userdata['id'];
@@ -35,10 +35,12 @@
         die();
     }
     
-    //Ochrana před SQL injekcí
+    /*Ochrana před SQL injekcí
+    Nemusí být provedeno, protože přímé nezahešované hodnoty nejsou nikdy použity v SQL dotazu.
     $oldPass = mysqli_real_escape_string($connection, $oldPass);
     $newPass = mysqli_real_escape_string($connection, $newPass);
     $rePass = mysqli_real_escape_string($connection, $rePass);
+    */
     
     //Kontrola správnosti starého hesla
     if (!password_verify($oldPass, $savedHash))
