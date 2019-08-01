@@ -15,6 +15,8 @@
 		<title>Správa účtu</title>
 		
 		<style>
+		  /*Toto jsou dočasné styly, které jsem vytvořil jenom provizorně.*/
+		  /*Až to budeš stylovat, smaž tenhle blok a přesuň stylování do css.css*/
 		  table{
 		      border: 1px solid black;
 		      position: absolute;

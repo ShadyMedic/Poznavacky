@@ -7,8 +7,9 @@ function changeName()
 function confirmNameChange()
 {
 	var newName = document.getElementById("changeNameInputField").value;
+	newName = encodeURIComponent(newName);
 	
-	getRequest("changeUsername.php?new=" + newName, responseFunc)
+	postRequest("changeUsername.php", responseFunc, responseFunc, newName);
 	
 	//Reset HTML
 	document.getElementById("changeNameInputField").value = "";
@@ -48,7 +49,7 @@ function confirmPasswordChange()
 	newPass = encodeURIComponent(newPass);
 	rePass = encodeURIComponent(rePass);
 	
-	postRequest("changePassword.php", responseFunc, responseFunc, oldPass, newPass, rePass);
+	postRequest("changePassword.php", responseFunc, responseFunc, null, oldPass, newPass, rePass);
 	
 	//Reset HTML
 	document.getElementById("changePasswordInputFieldOld").value = "";
@@ -131,7 +132,7 @@ function getRequest(url, success = null, error = null){
 	return req;
 }
 
-function postRequest(url, success = null, error = null, oldPass, newPass, rePass){
+function postRequest(url, success = null, error = null, newName = null, oldPass = null, newPass = null, rePass = null){
 	var req = false;
 	//Creating request
 	try
@@ -174,7 +175,7 @@ function postRequest(url, success = null, error = null, oldPass, newPass, rePass
 	}
 	req.open("POST", url, true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send("old="+oldPass+"&new="+newPass+"&reNew=" + rePass);
+	req.send("newName="+newName+"&oldPass="+oldPass+"&newPass="+newPass+"&reNewPass="+rePass);
 	return req;
 }
 

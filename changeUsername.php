@@ -4,7 +4,7 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
 
-    $newName = $_GET['new'];
+    $newName = urldecode($_POST['newName']);
     
     $oldName = $_SESSION['user'];
     $oldName = $oldName['name'];
