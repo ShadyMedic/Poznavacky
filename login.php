@@ -8,17 +8,16 @@
     include 'logger.php';
     
     //Kontrola maximální délky jména (aby nevznikaly dlouhé SQL dotazy) - je potřeba provést před mysqli_real_escape_string
-    if (strlen($name) > 15)
+    if (mb_strlen($name) > 15)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit s příliš dlouhým jménem z IP adresy $ip");
-        
         echo "<li>Jméno nesmí být více než 15 znaků dlouhé.</li>";
         die();
     }
     
     //Kontrola maximální délky hesla (aby nevznikaly dlouhé SQL dotazy) - je potřeba provést před mysqli_real_escape_string
-    if (strlen($pass) > 31)
+    if (mb_strlen($pass) > 31)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit s příliš dlouhým heslem z IP adresy $ip");

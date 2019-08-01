@@ -12,16 +12,16 @@
     $errors = array();
     
     //Kontrola minimální délky jména
-    if (strlen($name) < 4){array_push($errors, "Jméno musí být alespoň 4 znaky dlouhé.");}
+    if (mb_strlen($name) < 4){array_push($errors, "Jméno musí být alespoň 4 znaky dlouhé.");}
     
     //Kontrola maximální délky jména
-    if (strlen($name) > 15){array_push($errors, "Jméno nesmí být více než 15 znaků dlouhé.");}
+    if (mb_strlen($name) > 15){array_push($errors, "Jméno nesmí být více než 15 znaků dlouhé.");}
     
     //Kontrola minimální délky hesla
-    if (strlen($pass) < 6){array_push($errors, "Heslo musí být alespoň 6 znaků dlouhé.");}
+    if (mb_strlen($pass) < 6){array_push($errors, "Heslo musí být alespoň 6 znaků dlouhé.");}
     
     //Kontrola maximální délky hesla
-    if (strlen($pass) > 31){array_push($errors, "Heslo nesmí být více než 31 znaků dlouhé.");}
+    if (mb_strlen($pass) > 31){array_push($errors, "Heslo nesmí být více než 31 znaků dlouhé.");}
     
     //Ochrana proti SQL injekci (e-mail je zvlášť)
     $name = mysqli_real_escape_string($connection, $name);
@@ -54,7 +54,7 @@
     if (!empty($email)) //E-mail je nepovinná položka
     {
         //Kontrola délky e-mailu
-        if(strlen($email) > 255){array_push($errors, "Email nesmí být delší než 255 znaků.");}
+        if(mb_strlen($email) > 255){array_push($errors, "Email nesmí být delší než 255 znaků.");}
         
         //Ochrana proti SQL injekci
         $email = mysqli_real_escape_string($connection, $email);

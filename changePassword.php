@@ -14,7 +14,7 @@
     $savedHash = $userdata['hash'];
     
     //Kontrola délky starého hesla (aby nevznikaly dlouhé SQL dotazy)
-    if (strlen($oldPass) > 31)
+    if (mb_strlen($oldPass) > 31)
     {
         filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli dlouhému starému heslu.");
         echo "swal('Staré heslo nemohlo být delší než 31 znaků.','','error')";
@@ -22,13 +22,13 @@
     }
     
     //Kontrola délky nového hesla
-    if (strlen($newPass) < 6)
+    if (mb_strlen($newPass) < 6)
     {
         filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli krátkému novému heslu.");
         echo "swal('Nové heslo musí být alespoň 6 znaků dlouhé.','','error')";
         die();
     }
-    if (strlen($newPass) > 31)
+    if (mb_strlen($newPass) > 31)
     {
         filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli dlouhému novému heslu.");
         echo "swal('Nové heslo nesmí být více než 31 znaků dlouhé.','','error')";
@@ -51,7 +51,7 @@
     }
     
     //Kontrola znaků v hesle
-    if (strlen($newPass) !== strspn($newPass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/\\+-*=\"\''))
+    if (mb_strlen($newPass) !== strspn($newPass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/\\+-*=\"\''))
     {
         filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli přítomnosti nepovolených znaků v novém hesle.");
         echo "swal('Nové heslo obsahuje nepovolený znak.','','error')";
