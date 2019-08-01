@@ -37,7 +37,7 @@
     if (mysqli_num_rows($result) > 0)
     {
         filelog("Uživatel $oldName se pokusil změnit si jméno na $newName, avšak neuspěl kvůli neunikátnímu jménu.");
-        echo "swal('Jiný uživatel již toto jméno používá, nebo o změnu na něj zažádal.','','error')";
+        echo "swal('Toto jméno je již někým používáno, nebo o změnu na něj již někdo zažádal.','','error')";
         die();
     }
     
@@ -72,7 +72,7 @@
         }
         $ip = $_SERVER['REMOTE_ADDR'];
         filelog("Uživatel $oldName se změnil svou žádost o nové jméno na $newName z IP adresy $ip.");
-        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. \nTato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.','success')";
+        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. Tato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.','success')";
     }
     else
     {
