@@ -4,7 +4,7 @@
     include 'httpStats.php'; //Zahrnuje connect.php
     include 'logger.php';
     
-    $newEmail = $_GET['new'];
+    $newEmail = urldecode($_POST['newEmail']);
     
     $userdata = $_SESSION['user'];
     $username = $userdata['name'];

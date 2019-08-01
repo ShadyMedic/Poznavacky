@@ -70,8 +70,9 @@ function changeEmail()
 function confirmEmailChange()
 {
 	var newEmail = document.getElementById("changeEmailInputField").value;
+	newEmail = encodeURIComponent(newEmail);
 	
-	getRequest("changeEmail.php?new=" + newEmail, responseFunc)
+	postRequest("changeEmail.php", responseFunc, responseFunc, null, null, null, null, newEmail);
 	
 	//Reset HTML
 	document.getElementById("changeEmailInputField").value = "";
@@ -132,7 +133,7 @@ function getRequest(url, success = null, error = null){
 	return req;
 }
 
-function postRequest(url, success = null, error = null, newName = null, oldPass = null, newPass = null, rePass = null){
+function postRequest(url, success = null, error = null, newName = null, oldPass = null, newPass = null, rePass = null, newEmail = null){
 	var req = false;
 	//Creating request
 	try
@@ -175,7 +176,7 @@ function postRequest(url, success = null, error = null, newName = null, oldPass 
 	}
 	req.open("POST", url, true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send("newName="+newName+"&oldPass="+oldPass+"&newPass="+newPass+"&reNewPass="+rePass);
+	req.send("newName="+newName+"&oldPass="+oldPass+"&newPass="+newPass+"&reNewPass="+rePass+"&newEmail="+newEmail);
 	return req;
 }
 
