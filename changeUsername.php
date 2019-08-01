@@ -42,7 +42,7 @@
     }
     
     //Kontrola znaků ve jméně
-    if(mb_strlen($newName) !== strspn($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ '))
+    if(strlen($newName) !== strspn($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ '))
     {
         echo "swal('Jméno může obsahovat pouze písmena, číslice a mezery.','','error')";
         die();

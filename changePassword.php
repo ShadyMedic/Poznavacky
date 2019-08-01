@@ -51,7 +51,7 @@
     }
     
     //Kontrola znaků v hesle
-    if (mb_strlen($newPass) !== strspn($newPass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/\\+-*=\"\''))
+    if (strlen($newPass) !== strspn($newPass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|&_`~@$%/\\+-*=\"\''))
     {
         filelog("Uživatel $username se pokusil změnit si heslo, avšak neuspěl kvůli přítomnosti nepovolených znaků v novém hesle.");
         echo "swal('Nové heslo obsahuje nepovolený znak.','','error')";
