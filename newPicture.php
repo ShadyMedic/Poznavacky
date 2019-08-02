@@ -68,7 +68,7 @@
 	{
 		$err = mysqli_error($connection);
 		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err).");', 'error');");
+		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 
 	//Upravit počet obrázků dané přírodniny v tabulce seznam
@@ -83,7 +83,7 @@
 	{
 		$err = mysqli_error($connection);
 		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err).");', 'error');");
+		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 
 	//Upravit počet obrázků dané přírodniny v tabulce poznavacky
@@ -98,7 +98,7 @@
 	{
 		$err = mysqli_error($connection);
 		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err).");', 'error');");
+		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 	else
 	{
