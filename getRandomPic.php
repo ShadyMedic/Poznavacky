@@ -10,7 +10,7 @@
 		die();
 	}
 	
-	$ip = $_SERVER['REMOTE_ADDR'];
+	$username = $_SESSION['user']['name'];
 	
 	
 	$table = $_SESSION['current'][0].'seznam';
@@ -42,4 +42,4 @@
     
 	//Logování
 	$pName = $_SESSION['current'][1];
-	filelog("Na adresu $ip byl odeslán obrázek pro zkoušecí stránku pro poznávačku $pName.");
+	filelog("K uživateli $username byl odeslán obrázek pro zkoušecí stránku pro poznávačku $pName.");
