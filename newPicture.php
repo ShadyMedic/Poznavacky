@@ -70,7 +70,19 @@
 		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
 		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
-
+    
+	//Zvýšit autorovy obrázku počet nahraných obrázků v databázi
+	$_SESSION['user']['addedPics'] = ++$_SESSION['user']['addedPics'];
+	$newAmount = $_SESSION['user']['addedPics'];
+	$query = "UPDATE uzivatele SET pridaneObrazky = $newAmount WHERE jmeno = '$username'";
+	$result = mysqli_query($connection, $query);
+	if (!$result)
+	{
+	    $err = mysqli_error($connection);
+	    filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
+	    die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
+	}
+	
 	//Upravit počet obrázků dané přírodniny v tabulce seznam
 	$query = "SELECT obrazky FROM ".$table.'seznam'." WHERE id = $id";
 	$result = mysqli_query($connection, $query);
