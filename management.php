@@ -69,10 +69,11 @@
 	</head>
     <body>
 		<nav>
-			<a onclick="firstTab()">Tab1</a>
-			<a onclick="secondTab()">Tab2</a>
-			<a onclick="thirdTab()">Tab3</a>
-			<a onclick="fourthTab()">Tab4</a>
+			<a onclick="firstTab()">Nastavení</a>
+			<a onclick="secondTab()">Správa účtů</a>
+			<a onclick="thirdTab()">Správa hlášení</a>
+			<a onclick="fourthTab()">Správa změn jmen</a>
+			<a onclick="fifthTab()">Poslat e-mail</a>
 		</nav>
 		<div id="container">
 			<div id="tab1">
@@ -86,6 +87,9 @@
 			</div>
 			<div id="tab4">
 				Obsah 4
+			</div>
+			<div id="tab5">
+				Obsah 5
 			</div>
 		</div>
 	</body>

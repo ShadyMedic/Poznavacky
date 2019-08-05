@@ -29,27 +29,34 @@ nav a {
 	display: block;
 	position: absolute;
 	overflow: auto;
-	width: 47.8vw;
-	max-height: 78vh;
+	width: 96vw;
+	max-height: 89vh;
 }
 #tab2{
 	display: none;
 	position: absolute;
 	overflow: auto;
-	width: 47.8vw;
-	max-height: 78vh;
+	width: 96vw;
+	max-height: 89vh;
 }
 #tab3{
 	display: none;
 	position: absolute;
 	overflow: auto;
-	width: 47.8vw;
-	max-height: 78vh;
+	width: 96vw;
+	max-height: 89vh;
 }
 #tab4{
 	display: none;
 	position: absolute;
 	overflow: auto;
-	width: 47.8vw;
-	max-height: 78vh;
+	width: 96vw;
+	max-height: 89vh;
+}
+#tab5{
+	display: none;
+	position: absolute;
+	overflow: auto;
+	width: 96vw;
+	max-height: 89vh;
 }
