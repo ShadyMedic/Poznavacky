@@ -44,15 +44,16 @@
         ";
     }
     
-    //Mazání zadaného hesla
-    unset($_POST['adminPassword']);
-    
     if (password_verify(@$_POST['adminPassword'], $adminHash))
     {
-        //Nic nedělej a počkej na vykreslení stránky
+        //Vymaž zadané heslo a počkej na vykreslení stránky
+        unset($_POST['adminPassword']);
     }
     else
     {
+        //Vymaž zadané heslo
+        unset($_POST['adminPassword']);
+        
         //Nevykresluj stránku - admin není autorizován
         die();
     }
@@ -61,10 +62,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+	<script type="text/javascript" src="management.js"></script>
+	<link rel="stylesheet" type="text/css" href="private.css">
     <title>Správa služby</title>
 	</head>
     <body>
-    	
-    </body>
+		<nav>
+			<a onclick="firstTab()">Tab1</a>
+			<a onclick="secondTab()">Tab2</a>
+			<a onclick="thirdTab()">Tab3</a>
+			<a onclick="fourthTab()">Tab4</a>
+		</nav>
+		<div id="container">
+			<div id="tab1">
+				Obsah 1
+			</div>
+			<div id="tab2">
+				Obsah 2
+			</div>
+			<div id="tab3">
+				Obsah 3
+			</div>
+			<div id="tab4">
+				Obsah 4
+			</div>
+		</div>
+	</body>
 </html>

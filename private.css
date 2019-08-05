@@ -1,0 +1,55 @@
+nav {
+	height: 4vh;
+	z-index: -1;
+	overflow: hidden;
+}
+nav a {
+	border-radius: 1vh;
+	font-size: 3vh;
+	border: 1px solid black;
+	display: block;
+	float: left;
+	min-height: 5vh;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#container{
+	padding-top: 1vh;
+	padding-left: 1vw;
+	padding-bottom: 1vh;
+	padding-right: 1vw;
+	height: 91vh;
+	width: 95.984%;
+	overflow: auto;
+	border: 1px solid black;
+	z-index: 1;
+}
+/*---------------------------*/
+#tab1{
+	display: block;
+	position: absolute;
+	overflow: auto;
+	width: 47.8vw;
+	max-height: 78vh;
+}
+#tab2{
+	display: none;
+	position: absolute;
+	overflow: auto;
+	width: 47.8vw;
+	max-height: 78vh;
+}
+#tab3{
+	display: none;
+	position: absolute;
+	overflow: auto;
+	width: 47.8vw;
+	max-height: 78vh;
+}
+#tab4{
+	display: none;
+	position: absolute;
+	overflow: auto;
+	width: 47.8vw;
+	max-height: 78vh;
+}
