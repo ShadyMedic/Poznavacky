@@ -39,6 +39,9 @@
 	echo $row['zdroj'];
 	echo "¶";
 	echo $answer;
+	
+	//Nastavování správné odpovědi pro účel možného zvýšení počtu uhodnutých obrázků uživatele
+	$_SESSION['testAnswer'] = $answer;
     
 	//Logování
 	$pName = $_SESSION['current'][1];
