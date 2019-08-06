@@ -60,3 +60,36 @@ nav a {
 	width: 96vw;
 	max-height: 89vh;
 }
+/*---------------------------*/
+table
+{
+	border-collapse: collapse;
+	text-align: center;
+	vertical-align: middle;
+	margin: auto;
+}
+td
+{
+	width: 150px;
+}
+td img
+{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+td button
+{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background-color: #FFF;
+	transition: 0s;
+}
+.activeBtn:hover
+{
+	background-color: #CCCCFF;
+}
+.grayscale
+{
+	filter: grayscale(1);
+}

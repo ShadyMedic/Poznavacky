@@ -43,3 +43,19 @@ function fifthTab()
 	
 	document.getElementById("tab5").style.display = "block";
 }
+/*------------------------------------------------------------*/
+function acceptNameChange(event)
+{
+	//TODO implementovat funkci pro přijmutí změny jména
+	console.log("Accepted.");
+}
+function declineNameChange(event)
+{
+	//TODO implementovat funkci pro odmítnutí změny jména
+	console.log("Declined.");
+}
+function sendMailNameChange(event)
+{
+	//TODO implementovat funkci pro odeslání e-mailu žadateli o změnu jména
+	console.log("Sent.");
+}
