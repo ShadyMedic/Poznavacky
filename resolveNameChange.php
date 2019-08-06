@@ -18,15 +18,19 @@
         die();
     }
     
+    $action = $_POST['acc'];
     $oldName = $_POST['oldName'];
     $newName = $_POST['newName'];
     
     $oldName = mysqli_real_escape_string($connection, $oldName);
     $newName = mysqli_real_escape_string($connection, $newName);
     
-    //Změna jména
-    $query = "UPDATE uzivatele SET jmeno = '$newName' WHERE jmeno = '$oldName'";
-    $result = mysqli_query($connection, $query);
+    if ($action == true)
+    {
+        //Změna jména
+        $query = "UPDATE uzivatele SET jmeno = '$newName' WHERE jmeno = '$oldName'";
+        $result = mysqli_query($connection, $query);
+    }
     
     //Odstraňování žádosti
     $query = "DELETE FROM zadostijmena WHERE puvodni='$oldName'";

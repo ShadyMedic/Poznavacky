@@ -53,7 +53,7 @@ function acceptNameChange(event)
 	var newName = event.target.parentNode.parentNode.parentNode.childNodes[1].innerHTML;
 	
 	//Posílání požadavku na ovlivnění databáze
-	postRequest("changeName.php", null, null, oldName, newName);
+	postRequest("resolveNameChange.php", null, null, true, oldName, newName);
 	
 	//Odstranění požadavku z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
@@ -69,7 +69,7 @@ function sendMailNameChange(event)
 	console.log("Sent.");
 }
 /*------------------------------------------------------------*/
-function postRequest(url, success = null, error = null, oldName = null, newName = null)
+function postRequest(url, success = null, error = null, accepted = null, oldName = null, newName = null)
 {
 	var req = false;
 	//Creating request
@@ -113,6 +113,6 @@ function postRequest(url, success = null, error = null, oldName = null, newName 
 	}
 	req.open("POST", url, true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send("oldName="+oldName+"&newName="+newName);
+	req.send("acc="+accepted+"&oldName="+oldName+"&newName="+newName);
 	return req;
 }
