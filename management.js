@@ -60,8 +60,14 @@ function acceptNameChange(event)
 }
 function declineNameChange(event)
 {
-	//TODO implementovat funkci pro odmítnutí změny jména
-	console.log("Declined.");
+	//Získání současného jména
+	var oldName = event.target.parentNode.parentNode.parentNode.childNodes[0].innerHTML;
+	
+	//Posílání požadavku na ovlivnění databáze
+	postRequest("resolveNameChange.php", null, null, false, oldName);
+	
+	//Odstranění požadavku z DOM
+	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 }
 function sendMailNameChange(event)
 {

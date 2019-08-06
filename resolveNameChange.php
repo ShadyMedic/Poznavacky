@@ -25,7 +25,7 @@
     $oldName = mysqli_real_escape_string($connection, $oldName);
     $newName = mysqli_real_escape_string($connection, $newName);
     
-    if ($action == true)
+    if ($action === "true")
     {
         //Změna jména
         $query = "UPDATE uzivatele SET jmeno = '$newName' WHERE jmeno = '$oldName'";
