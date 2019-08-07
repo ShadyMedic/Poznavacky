@@ -70,4 +70,23 @@ function sendEmail($to, $subject, $message, $fromAddress = 'poznavacky@email.com
         return NULL;
     }
 }
-?>
+
+/*-----------------------------------------------------------------*/
+
+//Kód pro odeslání e-mailu, pokud je tento skript použit v AJAX
+$to = @$_POST['to'];
+$subject = @$_POST['sub'];
+$message = nl2br(@$_POST['msg']);
+
+if (!(empty($to) || empty($subject) || empty($message)))
+{
+    $result = sendEmail($to, $subject, $message) === NULL;
+    if($result)
+    {
+        echo "alert('Email byl úspěšně odeslán');";
+    }
+    else
+    {
+        echo "alert($result);";
+    }
+}

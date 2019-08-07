@@ -60,7 +60,7 @@ nav a {
 	width: 96vw;
 	max-height: 89vh;
 }
-/*---------------------------*/
+/*-----------Tab4------------*/
 table
 {
 	border-collapse: collapse;
@@ -92,4 +92,10 @@ td button
 .grayscale
 {
 	filter: grayscale(1);
+}
+/*-----------Tab5------------*/
+#emailPreview
+{
+	margin: 20px;
+	border: 1px solid black;
 }

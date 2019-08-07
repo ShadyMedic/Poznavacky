@@ -125,11 +125,11 @@
                                    $email = mysqli_fetch_array($email)['email'];
                                    if (empty($email))
                                    {
-                                       echo "<button class='nameChangeAction grayscale' onclick='sendMailNameChange(event)' disabled>";
+                                       echo "<button class='nameChangeAction grayscale' disabled>";
                                    }
                                    else
                                    {
-                                       echo "<button class='nameChangeAction activeBtn' onclick='sendMailNameChange(event)'>";
+                                       echo "<button class='nameChangeAction activeBtn' onclick='sendMailNameChange(\"$email\")'>";
                                    }
                                         echo "<img src='mail.gif'/>";
                                    echo "</button>";
@@ -140,7 +140,21 @@
 				</table>
 			</div>
 			<div id="tab5">
-				Obsah 5
+				<div id="email">
+					<span>Adresát: </span>
+					<input id="emailAddressee" type=email maxlength=255 />
+					<br>
+					<span>Předmět: </span>
+					<input id="emailSubject" type=text maxlength=70 />
+					<br>
+					<textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
+					<br>
+					<button id="emailPreviewButton" onclick="updateEmailPreview()">Zobrazit náhled</button>
+					<button id="emailSendButton" onclick="sendMail()">Odeslat</button>
+					<div id="emailPreview">
+					Náhled e-mailu se zobrazí zde
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

@@ -69,13 +69,35 @@ function declineNameChange(event)
 	//Odstranění požadavku z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 }
-function sendMailNameChange(event)
+function sendMailNameChange(email)
 {
-	//TODO implementovat funkci pro odeslání e-mailu žadateli o změnu jména
-	console.log("Sent.");
+	fifthTab();
+	document.getElementById("emailAddressee").value = email;
 }
 /*------------------------------------------------------------*/
-function postRequest(url, success = null, error = null, accepted = null, oldName = null, newName = null)
+function updateEmailPreview()
+{
+	var msg = document.getElementById("emailMessage").value;
+	if (msg !== "")
+	{
+		document.getElementById("emailPreview").innerHTML = msg;
+	}
+	else
+	{
+		msg = msg.replace("\n", "<br>");
+		document.getElementById("emailPreview").innerHTML = "Náhled e-mailu se zobrazí zde";
+	}
+}
+function sendMail()
+{
+	var to = document.getElementById("emailAddressee").value;
+	var subject = document.getElementById("emailSubject").value;
+	var message = document.getElementById("emailMessage").value;
+	
+	postRequest("emailSender.php", responseFunc, responseFunc, null, null, null, to, subject, message);
+}
+/*------------------------------------------------------------*/
+function postRequest(url, success = null, error = null, accepted = null, oldName = null, newName = null, emailAddressee = null, emailSubject = null, emailMessage = null)
 {
 	var req = false;
 	//Creating request
@@ -119,6 +141,10 @@ function postRequest(url, success = null, error = null, accepted = null, oldName
 	}
 	req.open("POST", url, true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send("acc="+accepted+"&oldName="+oldName+"&newName="+newName);
+	req.send("acc="+accepted+"&oldName="+oldName+"&newName="+newName+"&to="+emailAddressee+"&sub="+emailSubject+"&msg="+emailMessage);
 	return req;
+}
+function responseFunc(response)
+{
+	eval(response);
 }
