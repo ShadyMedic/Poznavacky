@@ -44,6 +44,15 @@ function fifthTab()
 	document.getElementById("tab5").style.display = "block";
 }
 /*------------------------------------------------------------*/
+function editUser(event)
+{
+	//TODO implementovat funkci pro úpravy uživatelů
+}
+function deleteUser(event)
+{
+	//TODO implementovat funkci pro odstraňování uživatelů
+}
+/*------------------------------------------------------------*/
 function acceptNameChange(event)
 {
 	//Získání současného jména

@@ -80,7 +80,82 @@
 				Obsah 1
 			</div>
 			<div id="tab2">
-				Obsah 2
+				<table border=1>
+					<tr>
+    					<th>ID</th>
+    					<th>Jméno</th>
+    					<th>E-mail</th>
+    					<th>Poslední přihlášení</th>
+    					<th>Přidané obrázky</th>
+    					<th>Uhodnuté obrázky</th>
+    					<th>Karma</th>
+    					<th>Status</th>
+    					<th>Akce</th>
+    				</tr>
+					<?php
+					   $query = "SELECT id,jmeno,email,posledniPrihlaseni,pridaneObrazky,uhodnuteObrazky,karma,status FROM uzivatele ORDER BY posledniPrihlaseni DESC LIMIT 25";
+					   $result = mysqli_query($connection, $query);
+					   if (!$result)
+					   {
+					       echo "Nastala chyba SQL: ".mysqli_error($connection);
+					   }
+					   while ($row = mysqli_fetch_array($result))
+					   {
+					        echo "<tr>";
+					           echo "<td>";
+					               echo $row['id'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo $row['jmeno'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo $row['email'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo $row['posledniPrihlaseni'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo $row['pridaneObrazky'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo $row['uhodnuteObrazky'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo $row['karma'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo $row['status'];
+					           echo "</td>";
+					           echo "<td>";
+					               echo "<button class='userAction activeBtn' onclick='editUser(event)' title='Upravit'>";
+					                   echo "<img src='pencil.gif'/>";
+                                   echo "</button>";
+                                   //Kontrola, jestli má uživatel zadaný e-mail
+                                   $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['jmeno']."' LIMIT 1";
+                                   $email = mysqli_query($connection, $query);
+                                   if (!$result)
+                                   {
+                                       echo "Nastala chyba SQL: ".mysqli_error($connection);
+                                   }
+                                   $email = mysqli_fetch_array($email)['email'];
+                                   if (empty($email))
+                                   {
+                                       echo "<button class='userAction grayscale' disabled>";
+                                   }
+                                   else
+                                   {
+                                       echo "<button class='userAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
+                                   }
+                                   echo "<img src='mail.gif'/>";
+                                   echo "</button>";
+                                   echo "<button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>";
+                                        echo "<img src='cross.gif'/>";
+                                   echo "</button>";
+                               echo "</td>";
+					        echo "</tr>";
+					   }
+					?>
+				</table>
 			</div>
 			<div id="tab3">
 				Obsah 3
@@ -93,7 +168,7 @@
     					<th>Akce</th>
     				</tr>
 					<?php
-					   $query = "SELECT puvodni,nove FROM `zadostijmena` ORDER BY cas ASC LIMIT 25";
+					   $query = "SELECT puvodni,nove FROM zadostijmena ORDER BY cas ASC LIMIT 25";
 					   $result = mysqli_query($connection, $query);
 					   if (!$result)
 					   {
@@ -109,10 +184,10 @@
 					               echo $row['nove'];
 					           echo "</td>";
 					           echo "<td>";
-					               echo "<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)'>";
+					               echo "<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>";
 					                   echo "<img src='tick.gif'/>";
                                    echo "</button>";
-                                   echo "<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)'>";
+                                   echo "<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>";
                                         echo "<img src='cross.gif'/>";
                                    echo "</button>";
                                    //Kontrola, jestli má uživatel zadaný e-mail
@@ -129,7 +204,7 @@
                                    }
                                    else
                                    {
-                                       echo "<button class='nameChangeAction activeBtn' onclick='sendMailNameChange(\"$email\")'>";
+                                       echo "<button class='nameChangeAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
                                    }
                                         echo "<img src='mail.gif'/>";
                                    echo "</button>";
