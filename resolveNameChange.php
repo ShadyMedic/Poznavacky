@@ -32,7 +32,7 @@
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
-            echo "Nastala chyba SQL: ".mysqli_error($connection);
+            echo "alert(Nastala chyba SQL: ".mysqli_error($connection).");";
         }
     }
     
@@ -41,5 +41,11 @@
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
-        echo "Nastala chyba SQL: ".mysqli_error($connection);
+        echo "alert(Nastala chyba SQL: ".mysqli_error($connection).");";
+    }
+    
+    //Pokud si jméno změnil sám administrátor, přepíšeme uloženou hodnotu v $_SESSION, aby se předešlo problémům s autorizací
+    if ($_SESSION['user']['name'] == $oldName)
+    {
+        $_SESSION['user']['name'] = $newName;
     }
