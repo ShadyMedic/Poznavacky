@@ -1,9 +1,11 @@
-nav {
+nav
+{
 	height: 4vh;
 	z-index: -1;
 	overflow: hidden;
 }
-nav a {
+nav a
+{
 	border-radius: 1vh;
 	font-size: 3vh;
 	border: 1px solid black;
@@ -13,7 +15,8 @@ nav a {
 	padding-left: 10px;
 	padding-right: 10px;
 }
-#container{
+#container
+{
 	padding-top: 1vh;
 	padding-left: 1vw;
 	padding-bottom: 1vh;
@@ -25,40 +28,51 @@ nav a {
 	z-index: 1;
 }
 /*---------------------------*/
-#tab1{
+#tab1
+{
 	display: block;
 	position: absolute;
 	overflow: auto;
 	width: 96vw;
 	max-height: 89vh;
 }
-#tab2{
+#tab2
+{
 	display: none;
 	position: absolute;
 	overflow: auto;
 	width: 96vw;
 	max-height: 89vh;
 }
-#tab3{
+#tab3
+{
 	display: none;
 	position: absolute;
 	overflow: auto;
 	width: 96vw;
 	max-height: 89vh;
 }
-#tab4{
+#tab4
+{
 	display: none;
 	position: absolute;
 	overflow: auto;
 	width: 96vw;
 	max-height: 89vh;
 }
-#tab5{
+#tab5
+{
 	display: none;
 	position: absolute;
 	overflow: auto;
 	width: 96vw;
 	max-height: 89vh;
+}
+/*-----------Tab2------------*/
+.userField
+{
+	border: 0;
+    text-align: center;
 }
 /*-----------Tab4------------*/
 table
@@ -74,12 +88,15 @@ td th
 }
 td img
 {
+	*/*
 	padding-left: 10px;
 	padding-right: 10px;
+	*/
 }
 td button
 {
-    margin: 0;
+    margin-left: 10px;
+    margin-right: 10px;
     border: 0;
     padding: 0;
     background-color: #FFF;

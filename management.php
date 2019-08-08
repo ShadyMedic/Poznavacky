@@ -115,16 +115,16 @@
 					               echo $row['posledniPrihlaseni'];
 					           echo "</td>";
 					           echo "<td>";
-					               echo $row['pridaneObrazky'];
+					               echo "<input type=number readonly value=".$row['pridaneObrazky']." class='userField'/>";
 					           echo "</td>";
 					           echo "<td>";
-					               echo $row['uhodnuteObrazky'];
+					               echo "<input type=number readonly value=".$row['uhodnuteObrazky']." class='userField'/>";
 					           echo "</td>";
 					           echo "<td>";
-					               echo $row['karma'];
+					               echo "<input type=number readonly value=".$row['karma']." class='userField'/>";
 					           echo "</td>";
 					           echo "<td>";
-					               echo $row['status'];
+					               echo "<select disabled selected=".$row['status']." class='userField'><option>admin</option><option>moderator</option><option>member</option></select>";
 					           echo "</td>";
 					           echo "<td>";
 					               if ($row['id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
