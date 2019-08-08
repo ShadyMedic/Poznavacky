@@ -18,26 +18,12 @@
         die();
     }
     
-    $action = $_POST['acc'];
-    $oldName = $_POST['oldName'];
-    $newName = $_POST['newName'];
+    $username = $_POST['oldName'];
     
-    $oldName = mysqli_real_escape_string($connection, $oldName);
-    $newName = mysqli_real_escape_string($connection, $newName);
+    $username = mysqli_real_escape_string($connection, $username);
     
-    if ($action === "true")
-    {
-        //Změna jména
-        $query = "UPDATE uzivatele SET jmeno = '$newName' WHERE jmeno = '$oldName'";
-        $result = mysqli_query($connection, $query);
-        if (!$result)
-        {
-            echo "Nastala chyba SQL: ".mysqli_error($connection);
-        }
-    }
-    
-    //Odstraňování žádosti
-    $query = "DELETE FROM zadostijmena WHERE puvodni='$oldName'";
+    //Odstraňování účtu
+    $query = "DELETE FROM uzivatele WHERE jmeno='$username'";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {

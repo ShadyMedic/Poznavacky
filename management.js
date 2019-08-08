@@ -50,7 +50,17 @@ function editUser(event)
 }
 function deleteUser(event)
 {
-	//TODO implementovat funkci pro odstraňování uživatelů
+	var confirmation = confirm("Opravdu chcete odstranit tohoto uživatele?\nTato akce je nevratná!");
+	
+	if (confirmation === true)
+	{
+		//Ovlivnění databáze
+		var username = event.target.parentNode.parentNode.parentNode.childNodes[1].innerHTML;
+		postRequest("deleteUser.php", responseFunc, responseFunc, null, username);
+		
+		//Odstranění účtu z DOM
+		event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
+	}
 }
 /*------------------------------------------------------------*/
 function acceptNameChange(event)
