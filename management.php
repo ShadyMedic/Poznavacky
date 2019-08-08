@@ -127,30 +127,33 @@
 					               echo $row['status'];
 					           echo "</td>";
 					           echo "<td>";
-					               echo "<button class='userAction activeBtn' onclick='editUser(event)' title='Upravit'>";
-					                   echo "<img src='pencil.gif'/>";
-                                   echo "</button>";
-                                   //Kontrola, jestli má uživatel zadaný e-mail
-                                   $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['jmeno']."' LIMIT 1";
-                                   $email = mysqli_query($connection, $query);
-                                   if (!$result)
-                                   {
-                                       echo "Nastala chyba SQL: ".mysqli_error($connection);
-                                   }
-                                   $email = mysqli_fetch_array($email)['email'];
-                                   if (empty($email))
-                                   {
-                                       echo "<button class='userAction grayscale' disabled>";
-                                   }
-                                   else
-                                   {
-                                       echo "<button class='userAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
-                                   }
-                                   echo "<img src='mail.gif'/>";
-                                   echo "</button>";
-                                   echo "<button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>";
-                                        echo "<img src='cross.gif'/>";
-                                   echo "</button>";
+					               if ($row['id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
+					               {
+    					               echo "<button class='userAction activeBtn' onclick='editUser(event)' title='Upravit'>";
+    					                   echo "<img src='pencil.gif'/>";
+                                       echo "</button>";
+                                       //Kontrola, jestli má uživatel zadaný e-mail
+                                       $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['jmeno']."' LIMIT 1";
+                                       $email = mysqli_query($connection, $query);
+                                       if (!$result)
+                                       {
+                                           echo "Nastala chyba SQL: ".mysqli_error($connection);
+                                       }
+                                       $email = mysqli_fetch_array($email)['email'];
+                                       if (empty($email))
+                                       {
+                                           echo "<button class='userAction grayscale' disabled>";
+                                       }
+                                       else
+                                       {
+                                           echo "<button class='userAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
+                                       }
+                                       echo "<img src='mail.gif'/>";
+                                       echo "</button>";
+                                       echo "<button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>";
+                                            echo "<img src='cross.gif'/>";
+                                       echo "</button>";
+					               }
                                echo "</td>";
 					        echo "</tr>";
 					   }
