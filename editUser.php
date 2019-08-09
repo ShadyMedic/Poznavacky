@@ -17,13 +17,21 @@
         //Zamítnutí přístupu
         die();
     }
-    
+
     $username = $_POST['oldName'];
+    $addedPics = $_POST['aPics'];
+    $guessedPics = $_POST['gPics'];
+    $karma = $_POST['karma'];
+    $status = $_POST['status'];
     
     $username = mysqli_real_escape_string($connection, $username);
+    $addedPics = mysqli_real_escape_string($connection, $addedPics);
+    $guessedPics = mysqli_real_escape_string($connection, $guessedPics);
+    $karma = mysqli_real_escape_string($connection, $karma);
+    $status = mysqli_real_escape_string($connection, $status);
     
-    //Odstraňování účtu
-    $query = "DELETE FROM uzivatele WHERE jmeno='$username'";
+    //Ovlivnění databáze
+    $query = "UPDATE uzivatele SET pridaneObrazky = '$addedPics', uhodnuteObrazky = '$guessedPics', karma = '$karma', status = '$status' WHERE jmeno  = '$username'";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {

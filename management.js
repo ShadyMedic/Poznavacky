@@ -76,9 +76,21 @@ function editUser(event)
 }
 function confirmUserEdit(event)
 {
+	var username = event.target.parentNode.parentNode.parentNode.childNodes[1].innerHTML;
+	var newAddedPics = event.target.parentNode.parentNode.parentNode.childNodes[4].childNodes[0].value;
+	var newGuessedPics = event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[0].value;
+	var newKarma = event.target.parentNode.parentNode.parentNode.childNodes[6].childNodes[0].value;
+	var newStatus = event.target.parentNode.parentNode.parentNode.childNodes[7].childNodes[0].value;
+
+	//Reset tlačítek a stylů
+	var userRow = event.target.parentNode.parentNode.parentNode;
 	event.target.parentNode.parentNode.parentNode.innerHTML = userTr;
-	userTr = "";
-	//TODO uložit pole
+	
+	//Aktualizace hodnot v DOM
+	userRow.childNodes[4].childNodes[0].value = newAddedPics;
+	userRow.childNodes[5].childNodes[0].value = newGuessedPics;
+	userRow.childNodes[6].childNodes[0].value = newKarma;
+	userRow.childNodes[7].childNodes[0].value = newStatus;
 	
 	//Znovu umožnit editaci jiných uživatelů
 	var buttons = document.getElementsByClassName("editButton");
@@ -88,6 +100,9 @@ function confirmUserEdit(event)
 	    buttons[i].setAttribute("title", "upravit");
 	    buttons[i].removeAttribute("disabled");
 	}
+	
+	//Upravit data v databázi
+	postRequest("editUser.php", responseFunc, responseFunc, null, username, null, null, null, null, newAddedPics, newGuessedPics, newKarma, newStatus);
 }
 function cancelUserEdit(event)
 {
@@ -171,7 +186,7 @@ function sendMail()
 	postRequest("emailSender.php", responseFunc, responseFunc, null, null, null, to, subject, message);
 }
 /*------------------------------------------------------------*/
-function postRequest(url, success = null, error = null, accepted = null, oldName = null, newName = null, emailAddressee = null, emailSubject = null, emailMessage = null)
+function postRequest(url, success = null, error = null, accepted = null, oldName = null, newName = null, emailAddressee = null, emailSubject = null, emailMessage = null, addedPics = null, guessedPics = null, karma = null, status = null)
 {
 	var req = false;
 	//Creating request
@@ -215,7 +230,7 @@ function postRequest(url, success = null, error = null, accepted = null, oldName
 	}
 	req.open("POST", url, true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send("acc="+accepted+"&oldName="+oldName+"&newName="+newName+"&to="+emailAddressee+"&sub="+emailSubject+"&msg="+emailMessage);
+	req.send("acc="+accepted+"&oldName="+oldName+"&newName="+newName+"&to="+emailAddressee+"&sub="+emailSubject+"&msg="+emailMessage+"&aPics="+addedPics+"&gPics="+guessedPics+"&karma="+karma+"&status="+status);
 	return req;
 }
 function responseFunc(response)
