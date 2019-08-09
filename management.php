@@ -124,7 +124,12 @@
 					               echo "<input type=number readonly value=".$row['karma']." class='userField'/>";
 					           echo "</td>";
 					           echo "<td>";
-					               echo "<select disabled selected=".$row['status']." class='userField'><option>admin</option><option>moderator</option><option>member</option></select>";
+					               echo "<select disabled class='userField'>";
+					                   echo "<option";     if ($row['status'] === "admin"){echo " selected";}   echo ">admin</option>";
+					                   echo "<option";     if ($row['status'] === "moderator"){echo " selected";}   echo ">moderator</option>";
+					                   echo "<option";     if ($row['status'] === "member"){echo " selected";}   echo">member</option>";
+					                   echo "<option";     if ($row['status'] === "guest"){echo " selected";}   echo">guest</option>";
+					               echo "</select>";
 					           echo "</td>";
 					           echo "<td>";
 					               if ($row['id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
