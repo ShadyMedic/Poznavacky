@@ -74,9 +74,11 @@
 			<a onclick="thirdTab()">Správa hlášení</a>
 			<a onclick="fourthTab()">Správa změn jmen</a>
 			<a onclick="fifthTab()">Poslat e-mail</a>
+			<a onclick="sixthTab()">Ovládání databáze</a>
 		</nav>
 		<div id="container">
 			<div id="tab1">
+				<!-- TODO -->
 				Obsah 1
 			</div>
 			<div id="tab2">
@@ -166,6 +168,7 @@
 				</table>
 			</div>
 			<div id="tab3">
+				<!-- TODO -->
 				Obsah 3
 			</div>
 			<div id="tab4">
@@ -238,6 +241,10 @@
 					Náhled e-mailu se zobrazí zde
 					</div>
 				</div>
+			</div>
+			<div id="tab6">
+				<!-- TODO -->
+				Obsah 6
 			</div>
 		</div>
 	</body>
