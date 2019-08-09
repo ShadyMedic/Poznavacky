@@ -50,24 +50,58 @@ function editUser(event)
 	//Uložit současný stav
 	userTr = event.target.parentNode.parentNode.parentNode.innerHTML;
 	
-	//TODO povolit editaci jednotlivých polí
+	//Dočasně znemožnit editaci jiných uživatelů
+	var buttons = document.getElementsByClassName("editButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "userAction grayscale editButton");
+	    buttons[i].removeAttribute("title");
+	    buttons[i].setAttribute("disabled", "true");
+	}
+	
+	//Povolit editaci polí
 	event.target.parentNode.parentNode.parentNode.childNodes[4].childNodes[0].removeAttribute("readonly");
 	event.target.parentNode.parentNode.parentNode.childNodes[5].childNodes[0].removeAttribute("readonly");
 	event.target.parentNode.parentNode.parentNode.childNodes[6].childNodes[0].removeAttribute("readonly");
 	event.target.parentNode.parentNode.parentNode.childNodes[7].childNodes[0].removeAttribute("disabled");
-
+	
+	//Obarvit upravitelná políčka
+	event.target.parentNode.parentNode.parentNode.childNodes[4].setAttribute("class", "editableField");
+	event.target.parentNode.parentNode.parentNode.childNodes[5].setAttribute("class", "editableField");
+	event.target.parentNode.parentNode.parentNode.childNodes[6].setAttribute("class", "editableField");
+	event.target.parentNode.parentNode.parentNode.childNodes[7].setAttribute("class", "editableField");
+	
 	//Změnit tlačítka akcí
 	event.target.parentNode.parentNode.innerHTML = "<button class='nameChangeAction activeBtn' onclick='confirmUserEdit(event)' title='Uložit'><img src='tick.gif'/></button><button class='nameChangeAction activeBtn' onclick='cancelUserEdit(event)' title='Zrušit'><img src='cross.gif'/></button>";
 }
 function confirmUserEdit(event)
 {
 	event.target.parentNode.parentNode.parentNode.innerHTML = userTr;
+	userTr = "";
 	//TODO uložit pole
+	
+	//Znovu umožnit editaci jiných uživatelů
+	var buttons = document.getElementsByClassName("editButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "userAction activeBtn editButton");
+	    buttons[i].setAttribute("title", "upravit");
+	    buttons[i].removeAttribute("disabled");
+	}
 }
 function cancelUserEdit(event)
 {
 	event.target.parentNode.parentNode.parentNode.innerHTML = userTr;
-	//TODO navrátit pole do původního stavu
+	userTr = "";
+	
+	//Znovu umožnit editaci jiných uživatelů
+	var buttons = document.getElementsByClassName("editButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "userAction activeBtn editButton");
+	    buttons[i].setAttribute("title", "upravit");
+	    buttons[i].removeAttribute("disabled");
+	}
 }
 function deleteUser(event)
 {

@@ -73,6 +73,11 @@ nav a
 {
 	border: 0;
     text-align: center;
+    background-color: inherit;
+}
+.editableField
+{
+	background-color: #CCCCFF;
 }
 /*-----------Tab4------------*/
 table
@@ -100,6 +105,8 @@ td button
     border: 0;
     padding: 0;
     background-color: #FFF;
+    height: 16px;
+    width: 16px;
 	transition: 0s;
 }
 .activeBtn:hover

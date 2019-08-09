@@ -134,7 +134,7 @@
 					           echo "<td>";
 					               if ($row['id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
 					               {
-    					               echo "<button class='userAction activeBtn' onclick='editUser(event)' title='Upravit'>";
+    					               echo "<button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>";
     					                   echo "<img src='pencil.gif'/>";
                                        echo "</button>";
                                        //Kontrola, jestli má uživatel zadaný e-mail
