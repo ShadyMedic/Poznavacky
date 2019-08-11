@@ -86,5 +86,5 @@
         }
         $ip = $_SERVER['REMOTE_ADDR'];
         filelog("Uživatel $oldName zažádal o změnu jména na $newName z IP adresy $ip.");
-        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno.','success')";
+        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. Bude-li vaše jméno změněno, obdržíte oznámění e-mailem (pokud jste jej přidali do svého účtu). Pokud se jednoho dne nebudete moci přihlásit pomocí svého stávajícího jména, pokuste se přihlásit pod novým jménem.','success')";
     }
