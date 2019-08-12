@@ -70,6 +70,39 @@ function changeEmail()
 function confirmEmailChange()
 {
 	var newEmail = document.getElementById("changeEmailInputField").value;
+	
+	if (newEmail.length == 0)
+	{
+		if (!confirm("Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.")){return;}
+		/*
+		swal({
+			title: "Odebrat e-mail",
+			text: "Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.",
+			icon: "question",
+			buttons: {
+				no:
+				{
+					text: "Ponechat",
+					value: "no",
+				},
+			    yes:
+			    {
+			      text: "Odebrat",
+			      value: "yes",
+			    }
+			  },
+			})
+			.then((value) => {
+				switch (value)
+				{
+			  		case "no":
+			    	return;
+			    	break;
+				}
+			});
+		*/
+	}
+	
 	newEmail = encodeURIComponent(newEmail);
 	
 	postRequest("changeEmail.php", responseFunc, responseFunc, null, null, null, null, newEmail);
