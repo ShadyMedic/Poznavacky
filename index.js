@@ -42,11 +42,10 @@ function register()
 	var username = document.getElementById("register_name").value;
 	var password = document.getElementById("register_pass").value;
 	var rePassword = document.getElementById("register_repass").value;
-	try
+	var email = document.getElementById("register_email").value;
+	if (email.length == 0)
 	{
-		var email = document.getElementById("register_email").value;
-	}catch(Exception){
-		email = null;
+		if (!confirm("Opravdu se chcete zaregistrovat bez zadání e-mailové adresy? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo. E-mailovou adresu můžete kdykoliv změnit nebo odebrat.")){return;}
 	}
 	
 	username = encodeURIComponent(username);
