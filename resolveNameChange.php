@@ -1,5 +1,6 @@
 <?php
     include 'httpStats.php';     //Obsahuje session_start();
+    include 'emailSender.php';
     session_start();
     
     //Kontrola, zda je uživatel administrátorem.
@@ -32,7 +33,52 @@
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
+            echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
+            die();
+        }
+        //Odeslat uživateli e-mail informující o změně jména
+        $query = "SELECT email FROM uzivatele WHERE jmeno = '$newName'";
+        $result = mysqli_query($connection, $query);
+        if (!$result)
+        {
             echo "alert(Nastala chyba SQL: ".mysqli_error($connection).");";
+            die();
+        }
+        $email = mysqli_fetch_array($result)['email'];
+        $emailResult = sendEmail(
+            $email,
+            'Vaše přihlašovací jméno bylo změněno',
+            "<p>".
+            "Na základě vaší žádosti na <a href='poznavacky.chytrak.cz'>poznavacky.chytrak.cz</a> bylo změněno vaše".
+            "<br>".
+            "uživatelské jméno na <b>$newName</b>.".
+            "<br>".
+            "Pod svým starým jménem (<b>$oldName</b>) se od nynějška již nebudete moci".
+            "<br>".
+            "přihlásit.".
+            "<br>".
+            "</p><p>".
+            "Pokud si přejete změnit jméno zpět na staré, nebo nějaké úplně jiné,".
+            "<br>".
+            "můžete tak učinit odesláním další žádosti o změnu jména v nastavení".
+            "<br>".
+            "vašeho uživatelského účtu.".
+            "<br>".
+            "</p><p>".
+            "Neodesílali jste žádnou žádost na změnu uživatelského jména? Je možné,".
+            "<br>".
+            "že někdo získal přístup k vašemu účtu. Doporučujeme vám si co".
+            "<br>".
+            "nejdříve změnit vaše heslo. Pokud se nemůžete přihlásit, kontaktujte".
+            "<br>".
+            "nás prosím na e-mailové adrese <a href='mailto:poznavacky@email.com'>poznavacky@email.com</a>".
+            "</p><hr>".
+            "<span style='color:#777777'>Toto je automaticky vygenerovaná zpráva. Prosíme, neodpovídejte na ni.</span>"
+            );
+        
+        if (!empty($emailResult))
+        {
+            echo "alert(Automatický e-mail nemohl být odeslán. Chyba: $emailResult);";
         }
     }
     

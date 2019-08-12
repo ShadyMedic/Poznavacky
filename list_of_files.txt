@@ -124,7 +124,7 @@ Vložené serverové skripty:
 		Zahrnuje se do: list.php, register.php
 		Obsahuje všechny konstanty systému
 	emailSender.php
-		Zahrnuje se do: recoverPassword.php
+		Zahrnuje se do: recoverPassword.php, resolveNameChange.php
 		Definuje funkci pro posílání e-mailu a umožňuje i okamžité poslání e-mailu pomocí dat z AJAX
 	httpStats.php
 		Zahrnuje se do: všechny stránky a AJAX skripty
