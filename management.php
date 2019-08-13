@@ -243,8 +243,19 @@
 				</div>
 			</div>
 			<div id="tab6">
-				<!-- TODO -->
-				Obsah 6
+				<div id="sql">
+					<div id="sqlWarning">
+						<span>Neuvědomělé používání tohoto nástroje může mít destruktivní účinky. Používejte tento nástroj pouze v případě, že jste si naprosto jistí tím, co děláte!</span>
+					</div>
+					<div id="sqlQuery">
+						<textarea id="sqlQueryInput" rows=5 cols=150 placeholder="Zadejte příkazy. Každý příkaz musí být ukončen středníkem (;)"></textarea>
+						<br>
+						<button onclick="sendSqlQuery()">Odeslat</button>
+					</div>
+					<div id="sqlResult">
+						Žádný výstup
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

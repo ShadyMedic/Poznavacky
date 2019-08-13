@@ -201,6 +201,17 @@ function sendMail()
 	postRequest("emailSender.php", responseFunc, responseFunc, null, null, null, to, subject, message);
 }
 /*------------------------------------------------------------*/
+function sendSqlQuery()
+{
+	var query = document.getElementById("sqlQueryInput").value;
+	
+	postRequest("executeSqlQuery.php", printSqlResponse, responseFunc, null, null, null, null, null, query);
+}
+function printSqlResponse(response)
+{
+	document.getElementById("sqlResult").innerHTML = response;
+}
+/*------------------------------------------------------------*/
 function postRequest(url, success = null, error = null, accepted = null, oldName = null, newName = null, emailAddressee = null, emailSubject = null, emailMessage = null, addedPics = null, guessedPics = null, karma = null, status = null)
 {
 	var req = false;

@@ -79,6 +79,9 @@ AJAX serverové skripty:
 	emailSender.php
 		Spouští se v: management.js
 		Definuje funkci pro posílání e-mailu a umožňuje i okamžité poslání e-mailu pomocí dat z AJAX
+	executeSqlQuery.php
+		Spouští se v: management.js
+		Provádí sql dotaz zadaný uživatelem. Dostupné pouze pro uživatele se statusem "administrátor"
 	getPics.php
 		Spouští se v: learn.js
 		Získává a odesílá odkaz obrázku, který si uživatel chce prohlédnout ve zvolené poznávačce
