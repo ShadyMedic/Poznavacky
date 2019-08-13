@@ -44,6 +44,15 @@ nav a
 	width: 96vw;
 	max-height: 89vh;
 }
+/*-----------Tab1------------*/
+.centerBtn
+{
+	margin: auto;
+    margin-top: 20px;
+    /*position: fixed;*/
+    left: 0;
+    right: 0;
+}
 /*-----------Tab2------------*/
 .userField
 {
@@ -74,7 +83,7 @@ td img
 	padding-right: 10px;
 	*/
 }
-td button
+td button, .actionButton
 {
     margin-left: 10px;
     margin-right: 10px;

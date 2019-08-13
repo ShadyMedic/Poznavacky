@@ -60,6 +60,23 @@ function sixthTab()
 	document.getElementById("tab6").style.display = "block";
 }
 /*------------------------------------------------------------*/
+function editConstant()
+{
+	
+}
+function deleteConstant()
+{
+	
+}
+function addConstant()
+{
+	
+}
+function saveConstants()
+{
+	
+}
+/*------------------------------------------------------------*/
 function editUser(event)
 {
 	//Uložit současný stav
