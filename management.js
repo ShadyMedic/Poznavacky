@@ -128,11 +128,29 @@ function cancelConstEdit(event)
 }
 function moveConstantUp(event)
 {
-	//TODO umožnit posouvání konstant nahoru	
+	var movedHTML = event.target.parentNode.parentNode.parentNode.innerHTML;
+	var replacedHTML = event.target.parentNode.parentNode.parentNode.previousSibling.innerHTML;
+	
+	var movedNode = event.target.parentNode.parentNode.parentNode;
+	var replacedNode = event.target.parentNode.parentNode.parentNode.previousSibling;
+	
+	movedNode.innerHTML = replacedHTML;
+	replacedNode.innerHTML = movedHTML;
+	
+	reevaluateMoveButtons();
 }
 function moveConstantDown(event)
 {
-	//TODO umožnit posouvání konstant dolů
+	var movedHTML = event.target.parentNode.parentNode.parentNode.innerHTML;
+	var replacedHTML = event.target.parentNode.parentNode.parentNode.nextSibling.innerHTML;
+	
+	var movedNode = event.target.parentNode.parentNode.parentNode;
+	var replacedNode = event.target.parentNode.parentNode.parentNode.nextSibling;
+	
+	movedNode.innerHTML = replacedHTML;
+	replacedNode.innerHTML = movedHTML;
+	
+	reevaluateMoveButtons();
 }
 function deleteConstant(event)
 {
@@ -144,7 +162,7 @@ function deleteConstant(event)
 }
 function addConstant()
 {
-	var cName = prompt("Zadejte jméno konstanty.\n\nJméno by se MĚLO skládat pouze z velkých písmen.\nJméno NESMÍ obsahovat jiné znaky než písmena, číslice a podtržítka.\nJméno NESMÍ začína číslicí.")
+	var cName = prompt("Zadejte jméno konstanty.\n\nJméno by se MĚLO skládat pouze z velkých písmen a podtržítek.\nJméno NESMÍ obsahovat jiné znaky než písmena, číslice a podtržítka.\nJméno NESMÍ začína číslicí.")
 	if (cName === null || cName.length === 0){return;}
 	var pattern = new RegExp("^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$");	//RegEx zkopírováno z https://www.php.net/manual/en/language.constants.php
 	if (!pattern.test(cName))
