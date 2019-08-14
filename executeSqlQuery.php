@@ -1,4 +1,24 @@
 <?php
+    include 'httpStats.php';     //Obsahuje session_start();
+    include 'emailSender.php';
+    session_start();
+
+    //Kontrola, zda je uživatel administrátorem.
+    $username = $_SESSION['user']['name'];
+    $query = "SELECT status FROM uzivatele WHERE jmeno='$username' LIMIT 1";
+    $result = mysqli_query($connection, $query);
+    if (!$result)
+    {
+        header("Location: errSql.html");
+        die();
+    }
+    $status = mysqli_fetch_array($result)['status'];
+    if ($status !== 'admin')
+    {
+        //Zamítnutí přístupu
+        die();
+    }
+
     $query = $_POST['msg'];
     
     //Kontrola pro nebezpečná klíčová slova
