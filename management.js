@@ -66,12 +66,30 @@ function reevaluateMoveButtons()
 {
 	try		//Pro případ, že by nebyla přítomna již žádná konstanta
 	{
-		document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].setAttribute("class","grayscale");
+		var buttons = document.getElementsByClassName("moveDownButton");
+		for (var i = 0; i < buttons.length; i++)
+		{
+		    buttons[i].setAttribute("class", "moveDownButton activeBtn");
+		    buttons[i].setAttribute("title", "Posunout dolů");
+		    buttons[i].setAttribute("onclick", "moveConstantDown(event)");
+		    buttons[i].removeAttribute("disabled");
+		}
+		
+		var buttons = document.getElementsByClassName("moveUpButton");
+		for (var i = 0; i < buttons.length; i++)
+		{
+		    buttons[i].setAttribute("class", "moveUpButton activeBtn");
+		    buttons[i].setAttribute("title", "Posunout nahoru");
+		    buttons[i].setAttribute("onclick", "moveConstantUp(event)");
+		    buttons[i].removeAttribute("disabled");
+		}
+		
+		document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].setAttribute("class","moveUpButton grayscale");
 	    document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].removeAttribute("onclick");
 	    document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].removeAttribute("title");
 	    document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].setAttribute("disabled", "true");
 	
-	    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].setAttribute("class","grayscale");
+	    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].setAttribute("class","moveDownButton grayscale");
 	    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].removeAttribute("onclick");
 	    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].removeAttribute("title");
 	    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].setAttribute("disabled", "true");
@@ -79,15 +97,32 @@ function reevaluateMoveButtons()
 }
 function editConstant(event)
 {
+	//TODO zaimplementovat funkci pro editaci konstant
+}
+function confirmConstEdit(event)
+{
+	var newValue = event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].value;
+
+	//Reset tlačítek a stylů
+	var constantRow = event.target.parentNode.parentNode.parentNode;
+	event.target.parentNode.parentNode.parentNode.innerHTML = constantTr;
+	constantTr = "";
 	
+	//Aktualizace hodnot v DOM
+	constantRow.childNodes[1].childNodes[0].value = newValue;
+}
+function cancelConstEdit(event)
+{
+	event.target.parentNode.parentNode.parentNode.innerHTML = constantTr;
+	constantTr = "";
 }
 function moveConstantUp(event)
 {
-	
+	//TODO umožnit posouvání konstant nahoru	
 }
 function moveConstantDown(event)
 {
-	
+	//TODO umožnit posouvání konstant dolů
 }
 function deleteConstant(event)
 {
@@ -99,11 +134,28 @@ function deleteConstant(event)
 }
 function addConstant()
 {
+	var cName = prompt("Zadejte jméno konstanty.\n\nJméno by se MĚLO skládat pouze z velkých písmen.\nJméno NESMÍ obsahovat jiné znaky než písmena, číslice a podtržítka.\nJméno NESMÍ začína číslicí.")
+	if (cName === null || cName.length === 0){return;}
+	var pattern = new RegExp("^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$");	//RegEx zkopírováno z https://www.php.net/manual/en/language.constants.php
+	if (!pattern.test(cName))
+	{
+		alert("Neplatné jméno konstanty.");
+		return;
+	}
 	
+	//Tvorba a zobrazení nového řádku
+	var newTr = document.createElement("tr");
+	newTr.innerHTML = "<td>"+cName+"</td><td class='editableField'><input type='text' value='' class='userField'></td><td><button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='tick.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit'><img src='cross.gif'></button></td>";
+	document.getElementById("constantsTable").childNodes[0].appendChild(newTr);
+	document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[1].childNodes[0].focus();
+	
+	constantTr = "<td>"+cName+"</td><td><input type='text' readonly value=''></td><td><button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button><button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='up.gif'></button><button class='moveDownButton grayscale' disabled='true'><img src='down.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='cross.gif'></button></td>"
+	
+	reevaluateMoveButtons();
 }
 function saveConstants()
 {
-	
+	//TODO zaimplementovat ukládání konstant z DOM do CONSTANTS.php
 }
 /*------------------------------------------------------------*/
 function editUser(event)
@@ -214,7 +266,7 @@ function declineNameChange(event)
 {
 	//Získat důvod zamítnutí.
 	var reason = prompt("Zadejte prosím důvod zamítnutí.\nTento důvod obdrží žadatel e-mailem (pokud jej zadal).")
-	if (reason.length === 0){return;}	//Zrušit odmítnutí v případě nezadání důvodu
+	if (reason === null || reason.length === 0){return;}	//Zrušit odmítnutí v případě nezadání důvodu či kliknutí na "Zrušit"
 	
 	//Získání současného jména
 	var oldName = event.target.parentNode.parentNode.parentNode.childNodes[0].innerHTML;
