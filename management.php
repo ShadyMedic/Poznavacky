@@ -127,6 +127,19 @@
     				    }
     				    echo "</table>";
     			    ?>
+    			    <!-- Vypnutí prvního a posledního tlačítka posunu, které bylo právě vykresleno -->
+    			    <script>
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].setAttribute("class","grayscale");
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].removeAttribute("onclick");
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].removeAttribute("title");
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[0].childNodes[2].childNodes[1].setAttribute("disabled", "true");
+    
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].setAttribute("class","grayscale");
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].removeAttribute("onclick");
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].removeAttribute("title");
+        			    document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[2].childNodes[2].setAttribute("disabled", "true");
+    			    </script>
+    			    
     			    <div style="text-align: center;">
         				<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='plus.gif'></button>
         				<br>
