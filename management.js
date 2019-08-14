@@ -97,7 +97,17 @@ function reevaluateMoveButtons()
 }
 function editConstant(event)
 {
-	//TODO zaimplementovat funkci pro editaci konstant
+	//Uložit současný stav
+	constantTr = event.target.parentNode.parentNode.parentNode.innerHTML;
+	
+	//Povolit editaci hodnoty
+	event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].removeAttribute("readonly");
+	
+	//Obarvit upravitelné políčko
+	event.target.parentNode.parentNode.parentNode.childNodes[0].setAttribute("class", "editableField");
+	
+	//Změnit tlačítka akcí
+	event.target.parentNode.parentNode.innerHTML = "<button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='tick.gif'/></button><button class='activeBtn' onclick='cancelConstEdit(event)' title='Zrušit'><img src='cross.gif'/></button>";
 }
 function confirmConstEdit(event)
 {
