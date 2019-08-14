@@ -1,4 +1,6 @@
-var userTr;	//Používá se při změně uživatelských údajů - ukládá se sem innerHTML řádku uživatele
+var userTr;		//Používá se při změně uživatelských údajů - ukládá se sem innerHTML řádku uživatele
+var constantTr;	//Používá se při změně konstant - ukládá se sem innerHTML řádku konstanty
+/*------------------------------------------------------------*/
 function firstTab()
 {
 	document.getElementById("tab2").style.display = "none";
@@ -60,11 +62,19 @@ function sixthTab()
 	document.getElementById("tab6").style.display = "block";
 }
 /*------------------------------------------------------------*/
-function editConstant()
+function editConstant(event)
 {
 	
 }
-function deleteConstant()
+function moveConstantUp(event)
+{
+	
+}
+function moveConstantDown(event)
+{
+	
+}
+function deleteConstant(event)
 {
 	
 }
@@ -164,6 +174,8 @@ function deleteUser(event)
 		event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	}
 }
+/*------------------------------------------------------------*/
+//TODO Funkce pro správu hlášení
 /*------------------------------------------------------------*/
 function acceptNameChange(event)
 {

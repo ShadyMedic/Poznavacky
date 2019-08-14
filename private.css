@@ -45,6 +45,10 @@ nav a
 	max-height: 89vh;
 }
 /*-----------Tab1------------*/
+#constants
+{
+	text-align: center;
+}
 .centerBtn
 {
 	margin: auto;

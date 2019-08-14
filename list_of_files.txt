@@ -152,6 +152,9 @@ Obrázky:
 	dot.gif:
 		Používá se na: changelog.html
 		Ikona listu ozančující obecné změny
+	down.gif:
+		Používá se na: management.php
+		Šipka dolů zobrazovaná na tlačítkách pro posun položky dolů
 	duckLogo.png:
 		Používá se na: addPics.php
 		Obrázek zobrazující se na tlačítku vyhledat na DuckDuckGo
@@ -177,11 +180,14 @@ Obrázky:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro úpravy
 	plus.gif:
-		Používá se na: changelog.html
+		Používá se na: changelog.html, management.php
 		Ikona listu ozančující přidané funkce
 	tick.gif:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách jako přijmout či potvrdit
+	up.gif:
+		Používá se na: management.php
+		Šipka nahoru zobrazovaná na tlačítkách pro posun položky nahoru
 
 Git a GitHub soubory:
 	.gitignore

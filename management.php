@@ -78,56 +78,61 @@
 		</nav>
 		<div id="container">
 			<div id="tab1">
-				<?php 
-				    $constantsFile = file('CONSTANTS.php');
-				    echo "<table id='constantsTable'>";
-				    foreach ($constantsFile as $fileLine)
-				    {
-				        if (strpos($fileLine, 'define') === 0)  //Řádka obsahuje definici konstanty
-				        {
-				            //Získat jméno a hodnotu konstanty
-				            $fileLine = str_replace('define(\'', '', $fileLine);
-				            $fileLine = str_replace(');', '', $fileLine);
-				            
-				            $pos = strpos($fileLine, '\'');
-				            $constantName = '';
-				            for ($i = 0; $i < $pos; $i++)
-				            {
-				                $constantName .= $fileLine[0];
-				                $fileLine = substr($fileLine, 1);   //Odstranění přepsaného znaku
-				            }
-				            
-				            $fileLine = str_replace('\', ', '', $fileLine);
-				            
-				            if (strpos($fileLine, '\'') === 0) //Hodnota je řetězec --> odstraníme apostrofy
-				            {
-				                $fileLine = str_replace('\'', '', $fileLine);
-				            }
-				            
-				            $constantValue = $fileLine;
-				            
-				            //Vypsat jméno a hodnotu konstanty
-				            echo "<tr>";
-				                echo "<td>";
-				                    echo $constantName;
-				                echo "</td>";
-				                echo "<td>";
-				                    echo "<input type=text readonly value=$constantValue />";
-				                echo "</td>";
-				                echo "<td>";
-				                    echo "<button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button>";
-				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='cross.gif'></button>";
-				                echo "</td>";
-				            echo "</tr>";
-				        }
-				    }
-				    echo "</table>";
-			    ?>
-			    <div style="text-align: center;">
-				<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='plus.gif'></button>
-				<br>
-				<button class='centerBtn' onclick='saveConstants()' title='Přidat novou konstantu'>Uložit konstanty</button>
-				</div>
+				<div id='constants'>
+    				<h3>Správa systémových konstant</h3>
+    				<?php 
+    				    $constantsFile = file('CONSTANTS.php');
+    				    echo "<table id='constantsTable'>";
+    				    foreach ($constantsFile as $fileLine)
+    				    {
+    				        if (strpos($fileLine, 'define') === 0)  //Řádka obsahuje definici konstanty
+    				        {
+    				            //Získat jméno a hodnotu konstanty
+    				            $fileLine = str_replace('define(\'', '', $fileLine);
+    				            $fileLine = str_replace(');', '', $fileLine);
+    				            
+    				            $pos = strpos($fileLine, '\'');
+    				            $constantName = '';
+    				            for ($i = 0; $i < $pos; $i++)
+    				            {
+    				                $constantName .= $fileLine[0];
+    				                $fileLine = substr($fileLine, 1);   //Odstranění přepsaného znaku
+    				            }
+    				            
+    				            $fileLine = str_replace('\', ', '', $fileLine);
+    				            
+    				            if (strpos($fileLine, '\'') === 0) //Hodnota je řetězec --> odstraníme apostrofy
+    				            {
+    				                $fileLine = str_replace('\'', '', $fileLine);
+    				            }
+    				            
+    				            $constantValue = $fileLine;
+    				            
+    				            //Vypsat jméno a hodnotu konstanty
+    				            echo "<tr>";
+    				                echo "<td>";
+    				                    echo $constantName;
+    				                echo "</td>";
+    				                echo "<td>";
+    				                    echo "<input type=text readonly value=$constantValue />";
+    				                echo "</td>";
+    				                echo "<td>";
+    				                    echo "<button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button>";
+    				                    echo "<button class='activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='up.gif'></button>";
+    				                    echo "<button class='activeBtn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='down.gif'></button>";
+    				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='cross.gif'></button>";
+    				                echo "</td>";
+    				            echo "</tr>";
+    				        }
+    				    }
+    				    echo "</table>";
+    			    ?>
+    			    <div style="text-align: center;">
+        				<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='plus.gif'></button>
+        				<br>
+        				<button class='centerBtn' onclick='saveConstants()' title='Přidat novou konstantu'>Uložit konstanty</button>
+    				</div>
+    			</div>
 			</div>
 			<div id="tab2">
 				<table border=1>
