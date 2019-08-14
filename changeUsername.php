@@ -72,7 +72,7 @@
         }
         $ip = $_SERVER['REMOTE_ADDR'];
         filelog("Uživatel $oldName se změnil svou žádost o nové jméno na $newName z IP adresy $ip.");
-        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. Tato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.','success')";
+        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. Jakmile bude vaše žádost vyřízena, obdržíte oznámění e-mailem (pokud jste jej přidali do svého účtu). Pokud se jednoho dne nebudete moci přihlásit pomocí svého stávajícího jména, pokuste se přihlásit pod novým jménem. Tato žádost o změnu přepsala vaší nevyřízenou žádost o změnu jména z minulosti.','success')";
     }
     else
     {
@@ -86,5 +86,5 @@
         }
         $ip = $_SERVER['REMOTE_ADDR'];
         filelog("Uživatel $oldName zažádal o změnu jména na $newName z IP adresy $ip.");
-        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. Bude-li vaše jméno změněno, obdržíte oznámění e-mailem (pokud jste jej přidali do svého účtu). Pokud se jednoho dne nebudete moci přihlásit pomocí svého stávajícího jména, pokuste se přihlásit pod novým jménem.','success')";
+        echo "swal('O změnu jména bylo zažádáno.','Nové jméno bude co nejdříve zkontrolováno a případně nahradí vaše stávající jméno. Jakmile bude vaše žádost vyřízena, obdržíte oznámění e-mailem (pokud jste jej přidali do svého účtu). Pokud se jednoho dne nebudete moci přihlásit pomocí svého stávajícího jména, pokuste se přihlásit pod novým jménem.','success')";
     }

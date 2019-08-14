@@ -181,11 +181,15 @@ function acceptNameChange(event)
 }
 function declineNameChange(event)
 {
+	//Získat důvod zamítnutí.
+	var reason = prompt("Zadejte prosím důvod zamítnutí.\nTento důvod obdrží žadatel e-mailem (pokud jej zadal).")
+	if (reason.length === 0){return;}	//Zrušit odmítnutí v případě nezadání důvodu
+	
 	//Získání současného jména
 	var oldName = event.target.parentNode.parentNode.parentNode.childNodes[0].innerHTML;
 	
 	//Posílání požadavku na ovlivnění databáze
-	postRequest("resolveNameChange.php", null, null, false, oldName);
+	postRequest("resolveNameChange.php", null, null, false, oldName, null, null, null, reason);
 	
 	//Odstranění požadavku z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
