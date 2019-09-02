@@ -75,3 +75,5 @@
     }
     
     fclose($file);
+    
+    echo "alert('Konstanty byly úspěšně aktualizovány.');";
