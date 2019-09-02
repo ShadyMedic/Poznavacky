@@ -183,7 +183,24 @@ function addConstant()
 }
 function saveConstants()
 {
-	//TODO zaimplementovat ukládání konstant z DOM do CONSTANTS.php
+	//Formát: KONSTANTA¶KONSTANTA¶KONSTANTA
+	//KONSTANTA = JMÉNO¤HODNOTA
+	// --> A¤1B¤2¶C¤3
+	var requestString = "";
+	var constantList = document.getElementById("constantsTable").childNodes[0].childNodes;
+	for (var i = 0; i < constantList.length; i++)
+	{
+		var constant = constantList[i];
+		
+		var cName = constant.childNodes[0].innerHTML;
+		var cValue = constant.childNodes[1].childNodes[0].value;
+		
+		requestString += ("¶"+cName+"¤"+cValue);
+	}
+	requestString = requestString.substring(1);	//Odstraňování prvního oddělovače konstant
+	
+	//Odeslat konstanty na server
+	postRequest("updateConstants.php", responseFunc, responseFunc, null, null, null, null, null, requestString);
 }
 /*------------------------------------------------------------*/
 function editUser(event)
