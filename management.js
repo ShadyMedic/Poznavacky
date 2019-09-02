@@ -1,5 +1,6 @@
-var userTr;		//Používá se při změně uživatelských údajů - ukládá se sem innerHTML řádku uživatele
-var constantTr;	//Používá se při změně konstant - ukládá se sem innerHTML řádku konstanty
+var userTr;			//Používá se při změně uživatelských údajů - ukládá se sem innerHTML řádku uživatele
+var constantTr;		//Používá se při změně konstant - ukládá se sem innerHTML řádku konstanty
+var currentReports	//Používá se pro uchování id poznávačky, od které jsou aktuálně zobrazena hlášení
 /*------------------------------------------------------------*/
 function firstTab()
 {
@@ -363,7 +364,52 @@ function deleteUser(event)
 	}
 }
 /*------------------------------------------------------------*/
-//TODO Funkce pro správu hlášení
+function getReports(pId)
+{
+	currentReports = pId;
+	postRequest('getReports.php', showRecords, responseFunc, null, pId);
+}
+function showRecords(response)
+{
+	document.getElementById("singleTestReports").innerHTML = response;
+}
+function deletePicture(event)
+{
+	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
+	
+	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
+	
+	postRequest("deletePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
+}
+function deleteReport(event)
+{
+	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
+	var reason = event.target.parentNode.parentNode.parentNode.childNodes[1].innerHTML;
+	
+	//Převedení důvodu do číselné podoby
+	switch (reason)
+	{
+	case "Obrázek se nezobrazuje správně":
+		reason = 0;
+		break;
+	case "Obrázek zobrazuje nesprávnou přírodninu":
+		reason = 1;
+		break;
+	case "Obrázek obsahuje název přírodniny":
+		reason = 2;
+		break;
+	case "Obrázek má příliš špatné rozlišení":
+		reason = 3;
+		break;
+	case "Obrázek porušuje autorská práva":
+		reason = 4;
+		break;
+	}
+	
+	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
+	
+	postRequest("deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason);
+}
 /*------------------------------------------------------------*/
 function acceptNameChange(event)
 {

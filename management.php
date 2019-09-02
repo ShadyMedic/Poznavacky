@@ -226,8 +226,62 @@
 				</table>
 			</div>
 			<div id="tab3">
-				<!-- TODO -->
-				Obsah 3
+				<table border=1>
+					<tr>
+						<th>Název poznávačky</th>
+						<th>Počet hlášení</th>
+					</tr>
+					
+					<?php 
+					   $query = "SELECT id,nazev FROM poznavacky";
+					   $result = mysqli_query($connection, $query);
+					   if (!$result)
+					   {
+					       echo "Nastala chyba SQL: ".mysqli_error($connection);
+					   }
+					   
+					   $ids = array();
+					   $names = array();
+					   while ($row = mysqli_fetch_array($result))
+					   {
+					       array_push($ids, $row['id']);
+					       array_push($names, $row['nazev']);
+					   }
+					   
+					   foreach ($ids as $id)
+					   {
+					       //Získávání počtu řádek
+					       $query = "SHOW TABLE STATUS WHERE name='".$id."hlaseni'";
+					       $innerresult = mysqli_query($connection, $query);
+					       if (!$innerresult)
+					       {
+					           echo "Nastala chyba SQL: ".mysqli_error($connection);
+					       }
+					       $rowCount = mysqli_fetch_array($innerresult)['Rows'];
+					       
+					       echo "<tr>";
+					       echo "<td>";
+					           echo $names[$id - 1];
+					       echo "</td>";
+					       if ($rowCount == 0)
+					       {
+					           echo "<td style='color:#009900;'><b>";
+					               echo $rowCount;
+					       }
+					       else
+					       {
+					           echo "<td onclick='getReports($id)' style='color:#990000;'><b><u>";
+					               echo $rowCount."</u>";
+					       }
+					       echo "</b></td>";
+					       echo "</tr>";
+					   }
+					?>
+				</table>
+				<hr>
+				<div id="singleTestReports">
+					Klikněte na počet hlášení vyšší než 0 v horní tabulce pro zobrazení jednotlivých záznamů.
+				</div>
 			</div>
 			<div id="tab4">
 				<table border=1>

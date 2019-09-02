@@ -67,6 +67,12 @@ Přesměrovávací stránky:
 		Odhlašuje uživatele vymazáním dat ze $_SESSION a odstraňuje cookie zajišťující trvalé přihlášení (pokud je přítomno)
 
 AJAX serverové skripty:
+	deletePicture.php
+		Spouští se v: management.js
+		Provádí odstranění obrázku na základě hlášení. Dostupné pouze pro uživatele se statusem "administrator"
+	deleteReport.php
+		Spouští se v: management.js
+		Provádí odstranění hlášení. Dostupné pouze pro uživatele se statusem "administrator"
 	deleteUser.php
 		Spouští se v: management.js
 		Provádí odstranění uživatele. Dostupné pouze pro uživatele se statusem "administrator"
@@ -88,6 +94,9 @@ AJAX serverové skripty:
 	getRandomPic.php
 		Spouští se v: test.js
 		Získává a odesílá odkaz náhodného obrázku ze zvolené poznávačky
+	getReports.php
+		Spouští se v: management.js
+		Získává a odesílá seznam hlášení v určité poznávačce. Dostupné pouze pro uživatele se statusem "administrator"
 	changeEmail.php
 		Spouští se v: accountSettings.js
 		Provádí změnu e-mailové adresy uživatele po jejím zadání uživatelem
@@ -118,6 +127,9 @@ AJAX serverové skripty:
 	testAnswerCheck.php
 		Spouští se v: test.js
 		Kontroluje zadanou odpověď na testovací stránce a popřípadě zvyšuje skóre "uhodnuteObrazky" přihlášeného uživatele
+	updateConstants.php
+		Spouští se v: management.js
+		Uklídá změněné konstanty do CONSTANTS.php. Dostupné pouze pro uživatele se statusem "administrator"
 
 Vložené serverové skripty:
 	connect.php
@@ -147,7 +159,7 @@ Obrázky:
 		Používá se na: addPics.php, index.php, learn.php, list.php, test.php
 		Obrázek pozadí stránek
 	cross.gif:
-		Používá se na: management.php
+		Používá se na: getReports.php, management.php
 		Obrázek zobrazovaný na tlačítkách jako zamítnout, odstranit či zrušit
 	dot.gif:
 		Používá se na: changelog.html
@@ -171,7 +183,7 @@ Obrázky:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro poslání e-mailu
 	minus.gif:
-		Používá se na: changelog.html
+		Používá se na: getReports.php, changelog.html
 		Ikona listu ozančující odebrané funkce
 	noImage.png:
 		Používá se na: learn.php
