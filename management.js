@@ -104,7 +104,8 @@ function editConstant(event)
 	event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].removeAttribute("readonly");
 	
 	//Obarvit upravitelné políčko
-	event.target.parentNode.parentNode.parentNode.childNodes[0].setAttribute("class", "editableField");
+	event.target.parentNode.parentNode.parentNode.childNodes[1].setAttribute("class", "editableField");
+	event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].setAttribute("class", "constantField");
 	
 	//Změnit tlačítka akcí
 	event.target.parentNode.parentNode.innerHTML = "<button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='tick.gif'/></button><button class='activeBtn' onclick='cancelConstEdit(event)' title='Zrušit'><img src='cross.gif'/></button>";
@@ -185,7 +186,7 @@ function saveConstants()
 {
 	//Formát: KONSTANTA¶KONSTANTA¶KONSTANTA
 	//KONSTANTA = JMÉNO¤HODNOTA
-	// --> A¤1B¤2¶C¤3
+	// --> A¤1¶B¤2¶C¤3
 	var requestString = "";
 	var constantList = document.getElementById("constantsTable").childNodes[0].childNodes;
 	for (var i = 0; i < constantList.length; i++)

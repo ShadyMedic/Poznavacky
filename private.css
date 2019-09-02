@@ -49,6 +49,11 @@ nav a
 {
 	text-align: center;
 }
+.constantField
+{
+	border: 0;
+    background-color: inherit;
+}
 .centerBtn
 {
 	margin: auto;
