@@ -122,18 +122,21 @@ footer {
 .footerOption {
     margin: 0.8vh 1vw;
     padding: 0.2vh 0.5vw;
-    border-radius: 6px; 
-    }
+    }       
 .footerOption:hover {
     cursor: pointer;
+    text-decoration: underline;
+    }
+.footerOption#about {
+    color: #ccc;
     }
 .footerOption#about:hover {
     cursor: auto;
+    text-decoration: none;
     }
-.footerOption a {
-	text-decoration: none;                                                                                             
+.footerOption a {                                                                                             
     color: #fff;
-    }
+    }  
 /* ------------------------------------------------styly obsahu hlavni casti */
 div.prikaz {
     margin: 2px auto;
