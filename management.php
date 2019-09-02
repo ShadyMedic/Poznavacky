@@ -117,7 +117,7 @@
     				                    echo "<input type=text readonly value=$constantValue />";
     				                echo "</td>";
     				                echo "<td>";
-    				                    echo "<button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button>";
+    				                    echo "<button class='editConstantButton activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button>";
     				                    echo "<button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='up.gif'></button>";
     				                    echo "<button class='moveDownButton activeBtn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='down.gif'></button>";
     				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='cross.gif'></button>";

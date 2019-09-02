@@ -100,6 +100,29 @@ function editConstant(event)
 	//Uložit současný stav
 	constantTr = event.target.parentNode.parentNode.parentNode.innerHTML;
 	
+	//Dočasně znemožnit editaci jiných konstant a jejich posouvání
+	var buttons = document.getElementsByClassName("editConstantButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "grayscale editConstantButton");
+	    buttons[i].removeAttribute("title");
+	    buttons[i].setAttribute("disabled", "true");
+	}
+	var buttons = document.getElementsByClassName("moveUpButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "grayscale moveUpButton");
+	    buttons[i].removeAttribute("title");
+	    buttons[i].setAttribute("disabled", "true");
+	}
+	var buttons = document.getElementsByClassName("moveDownButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "grayscale moveDownButton");
+	    buttons[i].removeAttribute("title");
+	    buttons[i].setAttribute("disabled", "true");
+	}
+	
 	//Povolit editaci hodnoty
 	event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].removeAttribute("readonly");
 	
@@ -119,11 +142,31 @@ function confirmConstEdit(event)
 	event.target.parentNode.parentNode.parentNode.innerHTML = constantTr;
 	constantTr = "";
 	
+	//Znovu umožnit editaci jiných konstant a jejich posouvání
+	var buttons = document.getElementsByClassName("editConstantButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+		buttons[i].setAttribute("class", "editConstantButton activeBtn");
+	    buttons[i].setAttribute("title", "Upravit konstantu");
+	    buttons[i].removeAttribute("disabled");
+	}
+	reevaluateMoveButtons()
+	
 	//Aktualizace hodnot v DOM
 	constantRow.childNodes[1].childNodes[0].value = newValue;
 }
 function cancelConstEdit(event)
 {
+	//Znovu umožnit editaci jiných konstant a jejich posouvání
+	var buttons = document.getElementsByClassName("editConstantButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+		buttons[i].setAttribute("class", "editConstantButton activeBtn");
+	    buttons[i].setAttribute("title", "Upravit konstantu");
+	    buttons[i].removeAttribute("disabled");
+	}
+	reevaluateMoveButtons();
+	
 	event.target.parentNode.parentNode.parentNode.innerHTML = constantTr;
 	constantTr = "";
 }
@@ -158,7 +201,14 @@ function deleteConstant(event)
 	//Odstranit řádek tabulky z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	
-	//Znovu propočítat vypnutí tlačítek
+	//Znovu propočítat vypnutí tlačítek, zároveň znovu povolit úpravy konstant, pokud byly vypnuty v addConstant();
+	var buttons = document.getElementsByClassName("editConstantButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+		buttons[i].setAttribute("class", "editConstantButton activeBtn");
+	    buttons[i].setAttribute("title", "Upravit konstantu");
+	    buttons[i].removeAttribute("disabled");
+	}
 	reevaluateMoveButtons();
 }
 function addConstant()
@@ -180,7 +230,28 @@ function addConstant()
 	
 	constantTr = "<td>"+cName+"</td><td><input type='text' readonly value=''></td><td><button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button><button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='up.gif'></button><button class='moveDownButton grayscale' disabled='true'><img src='down.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='cross.gif'></button></td>"
 	
-	reevaluateMoveButtons();
+	//Dočasně znemožnit editaci jiných konstant a jejich posouvání
+	var buttons = document.getElementsByClassName("editConstantButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "grayscale editConstantButton");
+	    buttons[i].removeAttribute("title");
+	    buttons[i].setAttribute("disabled", "true");
+	}
+	var buttons = document.getElementsByClassName("moveUpButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "grayscale moveUpButton");
+	    buttons[i].removeAttribute("title");
+	    buttons[i].setAttribute("disabled", "true");
+	}
+	var buttons = document.getElementsByClassName("moveDownButton");
+	for (var i = 0; i < buttons.length; i++)
+	{
+	    buttons[i].setAttribute("class", "grayscale moveDownButton");
+	    buttons[i].removeAttribute("title");
+	    buttons[i].setAttribute("disabled", "true");
+	}
 }
 function saveConstants()
 {
