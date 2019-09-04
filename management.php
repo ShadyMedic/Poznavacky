@@ -69,12 +69,13 @@
 	</head>
     <body>
 		<nav>
-			<a onclick="firstTab()">Nastavení</a>
-			<a onclick="secondTab()">Správa účtů</a>
-			<a onclick="thirdTab()">Správa hlášení</a>
-			<a onclick="fourthTab()">Správa změn jmen</a>
-			<a onclick="fifthTab()">Poslat e-mail</a>
-			<a onclick="sixthTab()">Ovládání databáze</a>
+			<a id="tab1link" onclick="firstTab()">Nastavení</a>
+			<a id="tab2link" onclick="secondTab()">Správa účtů</a>
+			<a id="tab3link" onclick="thirdTab()">Správa hlášení</a>
+			<a id="tab4link" onclick="fourthTab()">Správa změn jmen</a>
+			<a id="tab5link" onclick="fifthTab()">Poslat e-mail</a>
+			<a id="tab6link" onclick="sixthTab()">Ovládání databáze</a>
+			<a href="list.php" style="background-color: #FFFF99">Návrat</a>
 		</nav>
 		<div id="container">
 			<div id="tab1">
