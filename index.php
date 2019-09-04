@@ -68,7 +68,7 @@
     				    	<input id='login_pass' type='password' name='pass_input' maxlength=31 placeholder='Heslo' class='text'>
     				    	<br>
                             <label>
-                                <input type='checkbox' name='stay_logged' class='big_checkbox'>
+                                <input id='login_keep' type='checkbox' name='stay_logged' class='big_checkbox'>
                                 <span>Zůstat přihlášen</span>
                             </label>
     						<br>

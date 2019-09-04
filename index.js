@@ -30,11 +30,11 @@ function login()
 {	
 	var username = document.getElementById("login_name").value;
 	var password = document.getElementById("login_pass").value;
-	
+	var keepLogged = document.getElementById("login_keep").checked;
 	username = encodeURIComponent(username);
 	password = encodeURIComponent(password);
 	
-	postRequest("login.php", responseFunc, null, username, password);
+	postRequest("login.php", responseFunc, null, username, password, keepLogged);
 }
 
 function register()

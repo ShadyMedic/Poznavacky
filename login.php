@@ -47,7 +47,7 @@
     if (password_verify($pass, $result['heslo']))   //Heslo je správné
     {
         //Kontrola zvolení možnosti uchování přihlášení
-        if (isset($_POST['stay_logged']))
+        if ($_POST['rePass'] === 'true')
         {
             //Vygenerovat čtrnáctimístný kód
             $code = bin2hex(random_bytes(7));   //56 bitů --> maximálně čtrnáctimístný kód
