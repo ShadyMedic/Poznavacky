@@ -71,6 +71,9 @@
                 
                 //Výpis akcí
                 echo "<td>";
+                    echo "<button class='reportAction activeBtn' onclick='disablePicture(event)' title='Skrýt obrázek'>";
+                        echo "<img src='dot.gif'/>";
+                    echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='deletePicture(event)' title='Odstranit obrázek'>";
                         echo "<img src='cross.gif'/>";
                     echo "</button>";

@@ -373,11 +373,49 @@ function showRecords(response)
 {
 	document.getElementById("singleTestReports").innerHTML = response;
 }
+function disablePicture(event)
+{
+	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
+	
+	//Odstranění všech hlášení k danému obrázku z DOM
+	var rows = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
+	var cnt = rows.length;
+	var j = 1;	//Přeskočíme hlavičku tabulky s indexem 0
+	for (var i = 1; i < cnt; i++)
+	{
+		if (rows[j].childNodes[0].childNodes[0].innerHTML === url)
+		{
+			rows[j].parentNode.removeChild(rows[j]);
+			rows.length;	//Aktualizace listu
+		}
+		else
+		{
+			j++;	//Postup na další řádku
+		}
+	}
+	
+	postRequest("disablePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
+}
 function deletePicture(event)
 {
 	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
 	
-	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
+	//Odstranění všech hlášení k danému obrázku z DOM
+	var rows = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
+	var cnt = rows.length;
+	var j = 1;	//Přeskočíme hlavičku tabulky s indexem 0
+	for (var i = 1; i < cnt; i++)
+	{
+		if (rows[j].childNodes[0].childNodes[0].innerHTML === url)
+		{
+			rows[j].parentNode.removeChild(rows[j]);
+			rows.length;	//Aktualizace listu
+		}
+		else
+		{
+			j++;	//Postup na další řádku
+		}
+	}
 	
 	postRequest("deletePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
 }
@@ -406,6 +444,7 @@ function deleteReport(event)
 		break;
 	}
 	
+	//Odstranění hlášení z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	
 	postRequest("deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason);

@@ -76,6 +76,9 @@ AJAX serverové skripty:
 	deleteUser.php
 		Spouští se v: management.js
 		Provádí odstranění uživatele. Dostupné pouze pro uživatele se statusem "administrator"
+	disablePicture.php
+		Spouští se v: management.js
+		Provádí odstavení nahlášeného obrázku. Dostupné pouze pro uživatele se statusem "administrator"
 	editUser.php
 		Spouští se v: management.js
 		Provádí úpravu dat uživatele. Dostupné pouze pro uživatele se statusem "administrator"
@@ -162,7 +165,7 @@ Obrázky:
 		Používá se na: getReports.php, management.php
 		Obrázek zobrazovaný na tlačítkách jako zamítnout, odstranit či zrušit
 	dot.gif:
-		Používá se na: changelog.html
+		Používá se na: getReports.php, changelog.html
 		Ikona listu ozančující obecné změny
 	down.gif:
 		Používá se na: management.php
