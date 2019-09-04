@@ -29,7 +29,7 @@
 	$table = $_SESSION['current'][0].'obrazky';
 	
 	//Získávání seznamu obrázků dané přírodniny
-	$query = "SELECT zdroj FROM $table WHERE prirodninaId = $id";
+	$query = "SELECT zdroj FROM $table WHERE prirodninaId = $id AND povoleno = 1";
 	$result = mysqli_query($connection, $query);
 	$randIndex = rand(0,mysqli_num_rows($result) - 1);
 	mysqli_data_seek($result, $randIndex);
