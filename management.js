@@ -557,11 +557,12 @@ function updateEmailPreview()
 }
 function sendMail()
 {
+	var code = document.getElementById("emailCode").value;
 	var to = document.getElementById("emailAddressee").value;
 	var subject = document.getElementById("emailSubject").value;
 	var message = document.getElementById("emailMessage").value;
 	
-	postRequest("emailSender.php", responseFunc, responseFunc, null, null, null, to, subject, message);
+	postRequest("emailSender.php", responseFunc, responseFunc, code, null, null, to, subject, message);
 }
 /*------------------------------------------------------------*/
 function sendSqlQuery()

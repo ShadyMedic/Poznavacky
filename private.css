@@ -37,7 +37,6 @@ nav a
 	overflow: auto;
 	width: 96vw;
 	max-height: 89vh;
-	background-color: #9999FF
 }
 #tab2, #tab3, #tab4, #tab5, #tab6
 {
@@ -46,7 +45,6 @@ nav a
 	overflow: auto;
 	width: 96vw;
 	max-height: 89vh;
-	background-color: #FFFFFF
 }
 /*-----------Tab1------------*/
 #constants

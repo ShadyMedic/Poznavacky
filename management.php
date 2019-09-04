@@ -69,7 +69,7 @@
 	</head>
     <body>
 		<nav>
-			<a id="tab1link" onclick="firstTab()">Nastavení</a>
+			<a id="tab1link" onclick="firstTab()" style="background-color: #9999FF;">Nastavení</a>
 			<a id="tab2link" onclick="secondTab()">Správa účtů</a>
 			<a id="tab3link" onclick="thirdTab()">Správa hlášení</a>
 			<a id="tab4link" onclick="fourthTab()">Správa změn jmen</a>
@@ -347,6 +347,9 @@
 					<input id="emailSubject" type=text maxlength=70 />
 					<br>
 					<textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
+					<br>
+					<span>Bezpečnostní kód: </span>
+					<input id="emailCode" type=text maxlength=8 value="<?php include 'CONSTANTS.php'; echo EMAIL_CODE;?>" />
 					<br>
 					<button id="emailPreviewButton" onclick="updateEmailPreview()">Zobrazit náhled</button>
 					<button id="emailSendButton" onclick="sendMail()">Odeslat</button>
