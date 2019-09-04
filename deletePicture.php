@@ -26,6 +26,16 @@
     $url = mysqli_real_escape_string($connection, $url);
     $pId = mysqli_real_escape_string($connection, $pId);
     
+    //Získávíní ID obrázku (aby bylo možné smazat všechna hlášení, která se k němu vztahují)
+    $query = "SELECT id FROM ".$pId."obrazky WHERE zdroj='$url' LIMIT 1";
+    $result = mysqli_query($connection, $query);
+    if (!$result)
+    {
+        echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
+    }
+    $result = mysqli_fetch_array($result);
+    $picId = $result['id'];
+    
     //Odstranění obrázku
     $tableName = $pId.'obrazky';
     $query = "DELETE FROM $tableName WHERE zdroj='$url' LIMIT 1";
@@ -38,19 +48,8 @@
     
     
     //Odstranění všech hlášení vztahujících se k obrázku
-    //Získávíní ID obrázku
-    $query = "SELECT id FROM ".$pId."obrazky WHERE zdroj='$url' LIMIT 1";
-    $result = mysqli_query($connection, $query);
-    if (!$result)
-    {
-        echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
-    }
-    $result = mysqli_fetch_array($result);
-    $picId = $result['id'];
-    
-    //Odstranění hlášení
     $tableName = $pId.'hlaseni';
-    $query = "DELETE FROM $tableName WHERE obrazekId='$picId' LIMIT 1";
+    $query = "DELETE FROM $tableName WHERE obrazekId=$picId";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
