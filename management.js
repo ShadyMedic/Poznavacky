@@ -1,6 +1,7 @@
 var userTr;			//Používá se při změně uživatelských údajů - ukládá se sem innerHTML řádku uživatele
 var constantTr;		//Používá se při změně konstant - ukládá se sem innerHTML řádku konstanty
 var currentReports	//Používá se pro uchování id poznávačky, od které jsou aktuálně zobrazena hlášení
+var reportsTable	//Používá se pro uchování tabulky s hlášeními, místo kterých se zobrazí náhled obrázku. Používáno funkcemi showPicture() a hidePicture()
 /*------------------------------------------------------------*/
 function firstTab()
 {
@@ -372,6 +373,20 @@ function getReports(pId)
 function showRecords(response)
 {
 	document.getElementById("singleTestReports").innerHTML = response;
+}
+function showPicture(event)
+{
+	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
+	
+	//Uchování současného stavu tabulky
+	reportsTable = document.getElementById("singleTestReports").innerHTML;
+	
+	//Zobrazení obrázku
+	document.getElementById("singleTestReports").innerHTML = "<img src='"+ url +"' /><br><button onclick='hidePicture()'>Zpět</button>";
+}
+function hidePicture()
+{
+	document.getElementById("singleTestReports").innerHTML = reportsTable;
 }
 function disablePicture(event)
 {

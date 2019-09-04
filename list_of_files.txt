@@ -176,6 +176,9 @@ Obrázky:
 	error.png:
 		Používá se na: err403.html, err404.html, err500.html. err503.html a errSql.html
 		Obrázek pozadí chybových stránek
+	eye.gif:
+		Používá se na: getReports.php
+		Obrázek zobrazovaný na tlačítku pro zobrazení obrázku
 	favicon.ico
 		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
 		Ikona stránek zobrazovaná na záložce v prohlížeči
