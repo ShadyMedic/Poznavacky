@@ -1,9 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
-	
-	session_start();
+	require 'verification.php';    //Obsahuje session_start();
 		
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
@@ -27,7 +25,7 @@
     		<fieldset>
     			<div class="prikaz">Vyberte si přírodninu, jejíž obrázky si chcete prohlížet. Na další nebo předchozí přírodninu můžete přejít rychle pomocí tlačítek.</div>
     		  <select onchange="sel()" id="dropList" class="text">
-    				<option value="" selected disabled hidden></option>
+    				<option value="" selected disabled hidden = true></option>
     				<?php 
     					//Vypisování přírodnin
     					$table = $_SESSION['current'][0].'seznam';

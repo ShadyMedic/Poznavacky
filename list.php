@@ -1,15 +1,11 @@
  <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
+	require 'verification.php';    //Obsahuje session_start();
 	require 'CONSTANTS.php';
 	
-	//Mazání sezení
-	session_start();
-	$_SESSION = array();
-	$cookie_par = session_get_cookie_params();
-	setcookie(session_name(), '', time() - 86400, $cookie_par['path'], $cookie_par['domain'], $cookie_par['secure'], $cookie_par['httponly']);
-	session_destroy();
+	//Mazání zvolené poznávačky ze sezení
+	unset($_SESSION['current']);
 	
 ?>
 <!DOCTYPE html>
@@ -42,6 +38,8 @@
         </div>
         <header>
             <h1>Dostupné poznávačky</h1>
+            <a href="logout.php" style="position: absolute; right: 0; margin: auto;">Odhlásit se</a>
+            <a href="accountSettings.php" style="position: absolute; right: 100px; margin: auto;">Nastavení účtu</a>
         </header>
         <main>
             <table id="listTable">

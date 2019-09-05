@@ -1,9 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
-	
-	session_start();
+	require 'verification.php';    //Obsahuje session_start();
 	
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
@@ -28,7 +26,7 @@
     			<fieldset id="field1">
     				<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div>
     				<select onchange="selected1()" id="dropList" class="text">
-    					<option value="" selected disabled hidden></option>
+    					<option value="" selected disabled hidden = true></option>
     					<?php 
     						//Vypisování přírodnin
     						$table = $_SESSION['current'][0].'seznam';
@@ -46,9 +44,14 @@
     				</select>
     			</fieldset>
     			<fieldset id="field2">
-    				<div id="duckLink_div"><a id="duckLink" target=_blank>  
-    					<div><span>Vyhledat na </span><img id="duckLogo" src="duckLogo.png"></div>       
-    				</a></div>       
+    				<div id="duckLink_div">
+    					<a id="duckLink" target=_blank>  
+    						<div>
+    							<span>Vyhledat na </span>
+    							<img id="duckLogo" src="duckLogo.png">
+    						</div>       
+    					</a>
+    				</div>       
     				<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/>
     				<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button>
     			</fieldset>

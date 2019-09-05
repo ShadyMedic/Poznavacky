@@ -15,14 +15,17 @@
 
 	//Kontrola zda je vybrána nějaká přírodnina
 	if ($name === "undefined"){die("imagePreview.png");}
-
+    
+	//Ochrana před SQL injekcí
+	$name = mysqli_real_escape_string($connection, $name);
+	
 	//Zjišťování počtu obrázků
 	$table = $_SESSION['current'][0].'seznam';
 	$pName = $_SESSION['current'][1];
 
 	$query = "SELECT id,obrazky FROM $table WHERE nazev='$name'";
 	$result = mysqli_query($connection, $query);
-	if (gettype($result) === "object"){$result = mysqli_fetch_array($result);}
+	if ($result && mysqli_num_rows($result) > 0){$result = mysqli_fetch_array($result);}
 	else{die("swal('Neplatný název!','','error');");}
 	$id = $result['id'];
 	$amount = $result['obrazky'];
@@ -42,6 +45,6 @@
 		$resultArr = mysqli_fetch_array($result);
 	}
 	$resultArr = $resultArr['zdroj'];
-	$ip = $_SERVER['REMOTE_ADDR'];
-	filelog("Na adresu $ip byl odeslán obrázek pro učící stránku pro poznávačku $pName.");
+	$username = $_SESSION['user']['name'];
+	filelog("K uživateli $username byl odeslán obrázek pro učící stránku pro poznávačku $pName.");
 	echo $resultArr;

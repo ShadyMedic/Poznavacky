@@ -185,16 +185,16 @@ td kbd {
     border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
-main#main_kod {
+#main_kod {
     width: 360px;
-	height: 140px;
+	height: fit-content;
     background-color: #fff;
-    margin: 30vh auto;
+    margin: 20vh auto;
     border-radius: 6px;
     }
-div#kod {
+#registrace, #prihlaseni, #obnoveniHesla{
     position: relative;
-    top: 18px;
+    padding: 18px 0;
     margin: auto
     }
 span#span_kod {
@@ -217,8 +217,51 @@ form {
     font-size: 16px;
     margin: 2px 0;
     }
+.big_checkbox {
+	transform: scale(1.5);
+}
 .confirm {
 	width: 160px;
+}
+#loginErrors, #registerErrors, #passwordRecoveryErrors{
+	padding-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: red;
+    list-style: inside;
+    text-align: left;
+}
+#cookiesAlert{
+	background-color: #7eb35c;
+	font-size: 2vh;
+	height: 5vh;
+    line-height: 5vh;
+    width: 100%;
+    flex-shrink: 0;    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+	font-weight: bold;
+    color: #000;
+}
+#cookiesAlertCloser{
+	display: block;
+    height: 5vh;
+    width: 5vh;
+    font-size: 5vh;
+  /*border: 2px outset #4e832c;*/
+	color: #900;
+	border-radius: 4vh;
+	cursor: pointer;
+}
+#cookiesAlertCloser:hover{
+	border: 2px inset #4e832c;
+}
+#span_terms{
+	font-size: 12px;
+}
+#span_terms a{
+	text-decoration: underline;
 }
 /* -----------------------------------------------------------------------------list stranka */
 /* changelog styly */

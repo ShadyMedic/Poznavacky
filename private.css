@@ -1,0 +1,165 @@
+nav
+{
+	height: 4vh;
+	z-index: -1;
+	overflow: hidden;
+}
+nav a
+{
+	border-radius: 1vh;
+	font-size: 3vh;
+	text-decoration: none;
+    color: black;
+	border: 1px solid black;
+	display: block;
+	float: left;
+	min-height: 5vh;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#container
+{
+	padding-top: 1vh;
+	padding-left: 1vw;
+	padding-bottom: 1vh;
+	padding-right: 1vw;
+	height: 91vh;
+	width: 95.984%;
+	overflow: auto;
+	border: 1px solid black;
+	z-index: 1;
+}
+/*---------------------------*/
+#tab1
+{
+	display: block;
+	position: absolute;
+	overflow: auto;
+	width: 96vw;
+	max-height: 89vh;
+}
+#tab2, #tab3, #tab4, #tab5, #tab6
+{
+	display: none;
+	position: absolute;
+	overflow: auto;
+	width: 96vw;
+	max-height: 89vh;
+}
+/*-----------Tab1------------*/
+#constants
+{
+	text-align: center;
+}
+.constantField
+{
+	border: 0;
+    background-color: inherit;
+}
+.centerBtn
+{
+	margin: auto;
+    margin-top: 20px;
+    /*position: fixed;*/
+    left: 0;
+    right: 0;
+}
+/*-----------Tab2------------*/
+.userField
+{
+	border: 0;
+    text-align: center;
+    background-color: inherit;
+}
+.editableField
+{
+	background-color: #CCCCFF;
+}
+/*-----------Tab3------------*/
+#singleTestReports
+{
+	text-align: center;
+}
+/*-----------Tab4------------*/
+table
+{
+	border-collapse: collapse;
+	text-align: center;
+	vertical-align: middle;
+	margin: auto;
+}
+td th
+{
+	width: 150px;
+}
+td img
+{
+	/*
+	padding-left: 10px;
+	padding-right: 10px;
+	*/
+}
+td button, .actionButton
+{
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 0;
+    padding: 0;
+    background-color: #FFF;
+    height: 16px;
+    width: 16px;
+	transition: 0s;
+}
+.activeBtn:hover
+{
+	background-color: #CCCCFF;
+}
+.grayscale
+{
+	filter: grayscale(1);
+}
+/*-----------Tab5------------*/
+#emailPreview
+{
+	margin: 20px;
+	border: 1px solid black;
+}
+/*-----------Tab6------------*/
+#sql
+{
+	text-align: center;
+}
+#sqlWarning
+{
+	border: 1px solid #FF9900;
+	background-color: #FFFF77;
+	color: #774400;
+	text-align: center;
+	font-weight: bold;
+	width: fit-content;
+	display: inline-block;
+	margin: 5px;
+}
+#sqlQuery
+{
+	width: 50vw;
+	display: inline-block;
+}
+#sqlQuery textarea
+{
+	width: 100%;
+}
+#sqlQuery button
+{
+	width: 100%;
+}
+#sqlResult
+{
+	margin: 5px;
+	border: 1px solid black;
+	width: 50vw;
+	overflow: auto;
+	display: inline-block;
+	min-height: 200px;
+	text-align: left;
+}
