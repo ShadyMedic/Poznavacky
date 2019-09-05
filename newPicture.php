@@ -10,7 +10,7 @@
 		die();
 	}
 
-	$ip = $_SERVER['REMOTE_ADDR'];
+	$username = $_SESSION['user']['name'];
 
 	$name = urldecode($_GET['name']);
 	$url = urldecode($_GET['url']);
@@ -47,7 +47,7 @@
 
 	if (!(strpos($urlCopy, ".jpg@") || strpos($urlCopy, ".jpeg@") || strpos($urlCopy, ".png@") || strpos($urlCopy, ".gif@") || strpos($urlCopy, ".bmp@") || strpos($urlCopy, ".tiff@")))
 	{
-		filelog("Uživatel ($ip) se pokusil nahrát obrázek v nesprávném formátu ($url) k přírodnině id $id v poznávačce $pName");
+		filelog("Uživatel $username se pokusil nahrát obrázek v nesprávném formátu ($url) k přírodnině id $id v poznávačce $pName");
 		die("swal('Obrázek musí být ve formátu .jpg, .jpeg, .png, .gif, .bmp nebo .tiff.', '', 'error');");
 	}
 
@@ -57,7 +57,7 @@
 	$result = mysqli_query($connection, $query);
 	if (mysqli_num_rows($result) > 0)
 	{
-		filelog("Uživatel ($ip) se pokusil nahrát duplicitní obrázek k přírodnině id $id v poznávačce $pName");
+		filelog("Uživatel $username se pokusil nahrát duplicitní obrázek k přírodnině id $id v poznávačce $pName");
 		die("swal('Tento obrázek je již přidán.', '', 'error');");
 	}
 
@@ -67,10 +67,22 @@
 	if (!$result)
 	{
 		$err = mysqli_error($connection);
-		filelog("Uživatel ($ip) nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení: $err);', '', 'error');");
+		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
+		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
-
+    
+	//Zvýšit autorovy obrázku počet nahraných obrázků v databázi
+	$_SESSION['user']['addedPics'] = ++$_SESSION['user']['addedPics'];
+	$newAmount = $_SESSION['user']['addedPics'];
+	$query = "UPDATE uzivatele SET pridaneObrazky = $newAmount WHERE jmeno = '$username'";
+	$result = mysqli_query($connection, $query);
+	if (!$result)
+	{
+	    $err = mysqli_error($connection);
+	    filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
+	    die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
+	}
+	
 	//Upravit počet obrázků dané přírodniny v tabulce seznam
 	$query = "SELECT obrazky FROM ".$table.'seznam'." WHERE id = $id";
 	$result = mysqli_query($connection, $query);
@@ -82,8 +94,8 @@
 	if (!$result)
 	{
 		$err = mysqli_error($connection);
-		filelog("Uživatel ($ip) nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení: $err);', '', 'error');");
+		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
+		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 
 	//Upravit počet obrázků dané přírodniny v tabulce poznavacky
@@ -97,11 +109,11 @@
 	if (!$result)
 	{
 		$err = mysqli_error($connection);
-		filelog("Uživatel ($ip) nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení: $err);', '', 'error');");
+		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
+		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 	else
 	{
-		filelog("Uživatel ($ip) nahrál nový obrázek k přírodnině id $id v poznávačce $pName");
+		filelog("Uživatel $username nahrál nový obrázek k přírodnině id $id v poznávačce $pName");
 		die("swal('Obrázek úspěšně přidán', '', 'success');");
 	}

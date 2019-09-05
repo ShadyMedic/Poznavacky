@@ -10,7 +10,7 @@
 		die();
 	}
 	
-	$ip = $_SERVER['REMOTE_ADDR'];
+	$username = $_SESSION['user']['name'];
 	
 	
 	$table = $_SESSION['current'][0].'seznam';
@@ -29,7 +29,7 @@
 	$table = $_SESSION['current'][0].'obrazky';
 	
 	//Získávání seznamu obrázků dané přírodniny
-	$query = "SELECT zdroj FROM $table WHERE prirodninaId = $id";
+	$query = "SELECT zdroj FROM $table WHERE prirodninaId = $id AND povoleno = 1";
 	$result = mysqli_query($connection, $query);
 	$randIndex = rand(0,mysqli_num_rows($result) - 1);
 	mysqli_data_seek($result, $randIndex);
@@ -39,7 +39,10 @@
 	echo $row['zdroj'];
 	echo "¶";
 	echo $answer;
+	
+	//Nastavování správné odpovědi pro účel možného zvýšení počtu uhodnutých obrázků uživatele
+	$_SESSION['testAnswer'] = $answer;
     
 	//Logování
 	$pName = $_SESSION['current'][1];
-	filelog("Na adresu $ip byl odeslán obrázek pro zkoušecí stránku pro poznávačku $pName.");
+	filelog("K uživateli $username byl odeslán obrázek pro zkoušecí stránku pro poznávačku $pName.");

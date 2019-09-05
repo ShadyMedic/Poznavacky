@@ -185,16 +185,16 @@ td kbd {
     border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
-main#main_kod {
+#main_kod {
     width: 360px;
-	height: 150px;
+	height: fit-content;
     background-color: #fff;
-    margin: 30vh auto;
+    margin: 20vh auto;
     border-radius: 6px;
     }
-div#kod {
+#registrace, #prihlaseni, #obnoveniHesla{
     position: relative;
-    top: 18px;
+    padding: 18px 0;
     margin: auto
     }
 span#span_kod {
@@ -217,8 +217,19 @@ form {
     font-size: 16px;
     margin: 2px 0;
     }
+.big_checkbox {
+	transform: scale(1.5);
+}
 .confirm {
 	width: 160px;
+}
+#loginErrors, #registerErrors, #passwordRecoveryErrors{
+	padding-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: red;
+    list-style: inside;
+    text-align: left;
 }
 #cookiesAlert{
 	background-color: #7eb35c;
