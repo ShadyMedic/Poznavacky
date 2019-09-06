@@ -10,34 +10,39 @@
 		die();
 	}
 	
-	$ip = $_SERVER['REMOTE_ADDR'];
+	$username = $_SESSION['user']['name'];
+	
+	
+	$table = $_SESSION['current'][0].'seznam';
+	
+	//Získávání náhodné přírodniny
+	/*
+	 * Poznámka: tento způsob náhodného výběru je neefektivní pro velké tabulky,
+	 * ale pro seznamové tabulky je naprosto v pořádku, protože obsahují maximálně 50 - 100 záznamů.
+	 */
+	$query = "SELECT id,nazev,obrazky FROM $table WHERE obrazky > 0 ORDER BY RAND() LIMIT 1";
+	$result = mysqli_query($connection, $query);
+	$result = mysqli_fetch_array($result);
+	$answer = $result['nazev'];
+	$id = $result['id'];
 	
 	$table = $_SESSION['current'][0].'obrazky';
 	
-	$query = "SELECT COUNT(*) AS c FROM $table";
+	//Získávání seznamu obrázků dané přírodniny
+	$query = "SELECT zdroj FROM $table WHERE prirodninaId = $id AND povoleno = 1";
 	$result = mysqli_query($connection, $query);
-	$result =  mysqli_fetch_array($result);
-	$amount = $result['c'];
+	$randIndex = rand(0,mysqli_num_rows($result) - 1);
+	mysqli_data_seek($result, $randIndex);
+	$row = mysqli_fetch_array($result);
 	
-	$number = rand(1,$amount);
-	
-	$query = "SELECT zdroj,prirodninaId FROM $table";
-	$result = mysqli_query($connection, $query);
-	for ($i = 0; $i < $number; $i++)
-	{
-		$resultArr = mysqli_fetch_array($result);
-	}
-	
-	echo $resultArr['zdroj'];
+	//Odesílání dat
+	echo $row['zdroj'];
 	echo "¶";
+	echo $answer;
 	
-	$id = $resultArr['prirodninaId'];
-	$table = $_SESSION['current'][0].'seznam';
+	//Nastavování správné odpovědi pro účel možného zvýšení počtu uhodnutých obrázků uživatele
+	$_SESSION['testAnswer'] = $answer;
+    
+	//Logování
 	$pName = $_SESSION['current'][1];
-	
-	$query = "SELECT nazev FROM $table WHERE id=$id";
-	$result = mysqli_query($connection, $query);
-	$result =  mysqli_fetch_array($result);
-	
-	filelog("Na adresu $ip byl odeslán obrázek pro zkoušecí stránku pro poznávačku $pName.");
-	echo $result['nazev'];
+	filelog("K uživateli $username byl odeslán obrázek pro zkoušecí stránku pro poznávačku $pName.");

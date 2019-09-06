@@ -1,9 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
-	
-	session_start();
+	require 'verification.php';    //Obsahuje session_start();
 		
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
@@ -91,7 +89,6 @@
             <div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
             <div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
          	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
-         	
          	<script>
              	function showLogin()
              	{
@@ -99,5 +96,5 @@
              	}
          	</script>
          </footer>
-	</body>
+  </body>
 </html>

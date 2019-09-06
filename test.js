@@ -74,6 +74,8 @@ function answer(event)
 	if (isCorrect(ans))
 	{
 		document.getElementById("correctAnswer").style.display = "block";
+		//Druhá kontrola správnosti odpovědi serverem a případné navýšení skóre uhodnutých obrázků
+		postRequest("testAnswerCheck.php", responseFunc, responseFunc, correct);
 	}
 	else
 	{
@@ -159,7 +161,7 @@ function submitReport(event)
 		return;
 	}
 	
-	getRequest("newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
+	getRequest("newReport.php?pic=" + picUrl + "&reason=" + reason, responseFunc);
 }
 function cancelReport(event)
 {
@@ -168,7 +170,7 @@ function cancelReport(event)
 	document.getElementById("submitReport").style.display = "none";
 	document.getElementById("cancelReport").style.display = "none";
 }
-function reportResponse(response)
+function responseFunc(response)
 {
 	eval(response);
 }
@@ -215,5 +217,51 @@ function getRequest(url, success = null, error = null){
 	}
 	req.open("GET", url, true);
 	req.send();
+	return req;
+}
+function postRequest(url, success = null, error = null, answer = null){
+	var req = false;
+	//Creating request
+	try
+	{
+		//Most broswers
+		req = new XMLHttpRequest();
+	} catch (e)
+	{
+		//Interned Explorer
+		try
+		{
+			req = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch(e)
+		{
+			//Older version of IE
+			try
+			{
+				req = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch(e)
+			{
+				return false;
+			}
+		}
+	}
+	
+	//Checking request
+	if (!req) return false;
+	
+	//Checking function parameters and setting intial values in case they aren´t specified
+	if (typeof success != 'function') success = function () {};
+	if (typeof error!= 'function') error = function () {};
+	
+	//Waiting for server response
+	req.onreadystatechange = function()
+	{
+		if(req.readyState == 4)
+		{
+			return req.status === 200 ? success(req.responseText) : error(req.status);
+		}
+	}
+	req.open("POST", url, true);
+	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	req.send("ans="+answer);
 	return req;
 }

@@ -153,8 +153,7 @@ div.prikaz {
 table {
     margin: auto;
     }
-td button{
-	width: 4vw;
+td button {
 	height: 25vw;
 	text-align: center;
     margin: 0 6px;
@@ -164,10 +163,24 @@ td button{
 td button img {
 	height: 3vw;
 	width: 3vw;
+    position: relative;
+    top: 10px;   
 }
 td {
 	vertical-align: middle;
 }
+kbd {
+	color: #fff;
+    font-family: Century Gothic, Verdana, sans-serif;
+    line-height: 20px;
+    font-size: 16px;
+    height: 20px;
+	display: inline-block;
+    }
+td kbd {
+    position: relative;
+    top: 10px;    
+    }
 #prevImg {
     border-radius: 6px 0 0 6px;
     }
@@ -175,16 +188,16 @@ td {
     border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
-main#main_kod {
+#main_kod {
     width: 360px;
-	height: 140px;
+	height: fit-content;
     background-color: #fff;
-    margin: 30vh auto;
+    margin: 20vh auto;
     border-radius: 6px;
     }
-div#kod {
+#registrace, #prihlaseni, #obnoveniHesla{
     position: relative;
-    top: 18px;
+    padding: 18px 0;
     margin: auto
     }
 span#span_kod {
@@ -207,10 +220,117 @@ form {
     font-size: 16px;
     margin: 2px 0;
     }
+.big_checkbox {
+	transform: scale(1.5);
+}
 .confirm {
 	width: 160px;
 }
+#loginErrors, #registerErrors, #passwordRecoveryErrors{
+	padding-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: red;
+    list-style: inside;
+    text-align: left;
+}
+#cookiesAlert{
+	background-color: #7eb35c;
+	font-size: 2vh;
+	height: 5vh;
+    line-height: 5vh;
+    width: 100%;
+    flex-shrink: 0;    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+	font-weight: bold;
+    color: #000;
+}
+#cookiesAlertCloser{
+	display: block;
+    height: 5vh;
+    width: 5vh;
+    font-size: 5vh;
+  /*border: 2px outset #4e832c;*/
+	color: #900;
+	border-radius: 4vh;
+	cursor: pointer;
+}
+#cookiesAlertCloser:hover{
+	border: 2px inset #4e832c;
+}
+#span_terms{
+	font-size: 12px;
+}
+#span_terms a{
+	text-decoration: underline;
+}
 /* -----------------------------------------------------------------------------list stranka */
+/* changelog styly */
+#changelogOverlay {
+	z-index: 9;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	background-color: black;
+	opacity: 0.5;
+}
+#changelog {
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+	border: 5px outset #21821f;
+	border-radius: 20px;
+	padding: 20px;
+	height: fit-content;
+	width: 40vw;
+	color: black;
+	background-color: #b8cea0;
+	text-align: left;
+}
+#changelogMsg {
+	height: 40vh;
+	overflow-y: auto;
+}
+#changelogText h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+}
+#changelog hr {
+	border-color: yellowgreen;
+	margin-top: 1px;
+	margin-bottom: 0.5em;
+}
+#changelogText hr{
+	border-color: yellowgreen;
+	margin-top: 0.5em;
+	margin-bottom: 1px;
+}
+#changelogMsg #general {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('dot.gif');
+}
+#changelogMsg #additions {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('plus.gif');
+}
+#changelogMsg #deletions {
+	list-style-type: disc;
+	list-style-position: inside;
+	list-style-image: url('minus.gif');
+}
+#changelogMsg ul li {
+	margin-top: 1em;
+}
+/* zbytek stránky */
 #listTable {
 	max-height: 80vh;
     border: 12px solid #fff;
@@ -266,16 +386,6 @@ th {
 .button:focus, button:focus, #duckLink_div:active {
     outline: none;
     }
-kbd{
-	background-color: #fafbfc;
-    border: 1px solid #d1d5da;
-	color: black;
-    font-family: monospace;
-    line-height: 10px;
-    padding: 3px 5px;
-	display: inline-block;
-	margin-right: 5px;
-}
 #duckLogo {
     margin: 4px;
     width: 20px;
@@ -398,6 +508,10 @@ div.menu:hover {
     td button{
         height: 55vw;
         }
+    td button img {
+        width: 4.5vw;
+        height: 4.5vw;
+        }
     header {
         height: 6vh;  
         }
@@ -435,7 +549,11 @@ div.menu:hover {
         height: 60vw;
        }
     td button{
-        height: 50vw;
+        height: 60vw;
+        }
+    td button img {
+        width: 6vw;
+        height: 6vw;
         }
     header {
         height: 6vh;  
