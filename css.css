@@ -110,8 +110,8 @@ h1 {
 /* ----------------------------------------------------------------------footer styly */
 footer {
 	background-color: #405d27;
-    /*height: 5vh;   */
 	font-size: 2vh;
+    line-height: 3vh;
     width: 100%;
     flex-shrink: 0;    
     display: flex;
@@ -120,20 +120,23 @@ footer {
     color: #fff;
 }
 .footerOption {
-    margin: 4px 16px;
-    padding: 2px 12px;
-    }
-.footerOption a:hover {
-    background: #3e4444;
+    margin: 0.8vh 1vw;
+    padding: 0.2vh 0.5vw;
+    }       
+.footerOption:hover {
     cursor: pointer;
+    text-decoration: underline;
     }
-.footerOption a {
-	text-decoration: none;                                                                                             
-    padding: 2px 12px;
+.footerOption#about {
+    color: #ccc;
+    }
+.footerOption#about:hover {
+    cursor: auto;
+    text-decoration: none;
+    }
+.footerOption a {                                                                                             
     color: #fff;
-    margin: 4px 16px;
-    border-radius: 6px;
-    }
+    }  
 /* ------------------------------------------------styly obsahu hlavni casti */
 div.prikaz {
     margin: 2px auto;
@@ -332,7 +335,6 @@ form {
 	max-height: 80vh;
     border: 12px solid #fff;
     margin: 4vh auto;
-    transition: 0.2s;
     background-color: #fff;
     border-radius: 6px;
     border-collapse: separate;
@@ -343,13 +345,11 @@ form {
 .listRow {
 	margin: 0;
 	cursor: pointer;
-    transition: background 0.2s;
     border-radius: 6px;
 	}
 .listRow:hover {
 	background-color: #405d27;
-    color: #fff;
-    transition: color 0.2s; 
+    color: #fff; 
 	}
 th {
 	font-weight: bold;
