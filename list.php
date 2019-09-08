@@ -12,6 +12,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<script type="text/javascript" src="list.js"></script>
 		<title>Poznávačky</title>
@@ -30,8 +31,8 @@
 					echo "<div id='changelogText'>"; //Prvek se zprávou
 						include 'changelog.html'; //Zpráva
 					echo "</div>";
-					echo "<hr />"; //Oddělovač tlačítka
-					echo "<div style='text-align: center;'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
+					//echo "<hr />"; //Oddělovač tlačítka
+					echo "<div style='text-align:center'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
         	    echo "</div>";
         	}
         	?>
