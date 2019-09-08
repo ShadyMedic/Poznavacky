@@ -277,32 +277,33 @@ form {
 	opacity: 0.5;
 }
 #changelog {
-	z-index: 10;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 	margin: auto;
-	border: 5px outset #21821f;
-	border-radius: 20px;
+	border: 5px solid #405d27;
+	border-radius: 10px;
 	padding: 20px;
 	height: fit-content;
-	width: 40vw;
-	color: black;
-	background-color: #b8cea0;
+    width: 40vw;
+	color: #3e4444;
+    background: #fff;
 	text-align: left;
 }
 #changelogMsg {
-	height: 40vh;
-	overflow-y: auto;
+	margin: 10px auto;
+    overflow-y: auto;
+    max-height: 40vh;
 }
 #changelogText h2 {
 	font-size: 1.5em;
-	font-weight: bold;
-	text-align: center;
+    margin: 4px;
+    text-align:center;
 }
-#changelog hr {
+/*#changelog hr {
 	border-color: yellowgreen;
 	margin-top: 1px;
 	margin-bottom: 0.5em;
@@ -311,7 +312,7 @@ form {
 	border-color: yellowgreen;
 	margin-top: 0.5em;
 	margin-bottom: 1px;
-}
+}*/
 #changelogMsg #general {
 	list-style-type: disc;
 	list-style-position: inside;
@@ -328,9 +329,9 @@ form {
 	list-style-image: url('minus.gif');
 }
 #changelogMsg ul li {
-	margin-top: 1em;
+	margin: 0.4em;
 }
-/* zbytek stránky */
+/* zbytek strï¿½nky */
 #listTable {
 	max-height: 80vh;
     border: 12px solid #fff;
@@ -539,9 +540,15 @@ div.menu:hover {
     .listPics {
 	    min-width: 20vw;
         }
-    }           
+    #changelog {
+        width: 60vw;
+        }
+    #changelogMsg {
+        max-height:50vh;
+        }
+    }    
 @media (max-aspect-ratio: 5/8) {
-     main.basic_main {
+    main.basic_main {
         width: 95vw;
         }
     .img {
@@ -569,30 +576,13 @@ div.menu:hover {
     div.menu {
         font-size: 3vh;
         }
-      }
-/*@media (max-aspect-ratio: 659/778) {
-    footer {
-        height: 10vh;
+    #changelog {
+        width: 80vw;
         }
-    .footer_menu {
-        margin-top: 1.8vh;
+    #changelogMsg {
+        max-height:60vh;
         }
-    .container {
-        min-height: 87.5vh;
-        }
-    .container_menu {
-        min-height: 88.2vh;
-        }
-    div.menu {
-        height: 25.9vh;
-        line-height: 25.9vh;
-        }
-@media (max-aspect-ratio: 297/679) {
-    footer {
-        height: 15vh;
-        }
-    .container {
-        min-height: 82.5vh;
-        }  */
+    }
+
     
     

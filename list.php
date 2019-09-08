@@ -1,21 +1,41 @@
  <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
+	require 'verification.php';    //Obsahuje session_start();
+	require 'CONSTANTS.php';
 	
 	//Mazání zvolené poznávačky ze sezení
 	unset($_SESSION['current']);
+	
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<script type="text/javascript" src="list.js"></script>
 		<title>Poznávačky</title>
 	</head>
 	<body>
     <div class="container">
+        <div id="changelogContainer">
+        	<?php
+        	if (!(isset($_COOKIE['lastChangelog']) && $_COOKIE['lastChangelog'] == VERSION))
+        	{
+        	    setcookie('lastChangelog',VERSION, time() + 60 * 60 * 24 * 365);
+				
+        	    echo "<div id='changelogOverlay'></div>"; //Zatemnění zbytku stránky
+				
+        	    echo "<div id='changelog'>"; //Okno se zprávou
+					echo "<div id='changelogText'>"; //Prvek se zprávou
+						include 'changelog.html'; //Zpráva
+					echo "</div>";
+					echo "<div style='text-align:center'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
+        	    echo "</div>";
+        	}
+        	?>
+        </div>
         <header>
             <h1>Dostupné poznávačky</h1>
             <a href="logout.php" style="position: absolute; right: 0; margin: auto;">Odhlásit se</a>
