@@ -1,5 +1,5 @@
 <?php
-    include 'httpStats.php';     //Obsahuje session_start();
+    include 'httpStats.php';
     include 'emailSender.php';
     session_start();
     

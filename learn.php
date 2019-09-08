@@ -25,7 +25,7 @@
     		<fieldset>
     			<div class="prikaz">Vyberte si přírodninu, jejíž obrázky si chcete prohlížet. Na další nebo předchozí přírodninu můžete přejít rychle pomocí tlačítek.</div>
     		  <select onchange="sel()" id="dropList" class="text">
-    				<option value="" selected disabled hidden = true></option>
+    				<option value="" selected disabled hidden></option>
     				<?php 
     					//Vypisování přírodnin
     					$table = $_SESSION['current'][0].'seznam';
@@ -43,12 +43,12 @@
     			</select>
     			<br>
     			<button onclick="prev(event)" class="button">
+				<kbd>S</kbd>
 				Předchozí přírodnina
-                <kbd>[S]</kbd>
 			</button>
     			<button onclick="next(event)" class="button">
+				<kbd>W</kbd>
 				Následující přírodnina
-                <kbd>[W]</kbd>
 			</button>
     		</fieldset>
     		<fieldset>
@@ -56,18 +56,18 @@
     				<tr>
     					<td>
     						<button onclick="prevImg()" id="prevImg">
-							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
-                            <kbd>[A]</kbd>
-						    </button>
+							<kbd>A</kbd>
+							<img src="arrow.png" style="transform: rotate(180deg);" />
+						</button>
     					</td>
     					<td>
     						<img id="image" class="img" src="imagePreview.png">
     					</td>
     					<td>
     						<button onclick = "nextImg()" id="nextImg">
-							<img src="arrow.png" /><br>
-                            <kbd>[D]</kbd>
-						    </button>
+							<kbd>D</kbd>
+							<img src="arrow.png" />
+						</button>
     					</td>
     				</tr>
     			</table>
@@ -86,15 +86,15 @@
     	</main>
         </div>
 	    <footer>
-         	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+            <div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+            <div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
          	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
-         	<div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
          	<script>
              	function showLogin()
              	{
              		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
              	}
          	</script>
-        </footer>
-	</body>
+         </footer>
+  </body>
 </html>

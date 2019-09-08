@@ -31,7 +31,6 @@
 					echo "<div id='changelogText'>"; //Prvek se zprávou
 						include 'changelog.html'; //Zpráva
 					echo "</div>";
-					//echo "<hr />"; //Oddělovač tlačítka
 					echo "<div style='text-align:center'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
         	    echo "</div>";
         	}
@@ -68,15 +67,15 @@
         </main>
     </div>
         <footer>
-         	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+            <div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+            <div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
          	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
-         	<div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
          	<script>
              	function showLogin()
              	{
              		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
              	}
          	</script>
-        </footer>
+         </footer>
 	</body>
 </html>

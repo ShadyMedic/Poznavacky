@@ -1,6 +1,5 @@
 <?php
-    include 'httpStats.php';     //Obsahuje session_start();
-    include 'emailSender.php';
+    include 'httpStats.php';
     session_start();
 
     //Kontrola, zda je uživatel administrátorem.
