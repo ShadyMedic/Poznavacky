@@ -267,7 +267,7 @@ form {
 	text-decoration: underline;
 }
 /* -----------------------------------------------------------------------------list stranka */
-/* changelog styly */
+/* ----------------------------------------------------changelog styly */
 #changelogOverlay {
 	z-index: 9;
 	position: absolute;
@@ -303,16 +303,6 @@ form {
     margin: 4px;
     text-align:center;
 }
-/*#changelog hr {
-	border-color: yellowgreen;
-	margin-top: 1px;
-	margin-bottom: 0.5em;
-}
-#changelogText hr{
-	border-color: yellowgreen;
-	margin-top: 0.5em;
-	margin-bottom: 1px;
-}*/
 #changelogMsg #general {
 	list-style-type: disc;
 	list-style-position: inside;
@@ -331,7 +321,7 @@ form {
 #changelogMsg ul li {
 	margin: 0.4em;
 }
-/* zbytek stránky */
+/* -----------------------------------------------------zbytek stránky */
 #listTable {
 	max-height: 80vh;
     border: 12px solid #fff;
@@ -363,7 +353,11 @@ th {
 	}
 .listPics {
 	min-width: 10vw;
-	}
+    }
+/* ------------------------------------------------------------------accountSettings tabulka */
+#static_info td, #static_info th {
+    padding: 3px 4px;
+}
 /* --------------------------------------------------------tlacitka, droplisty, textova okna */
 .button {
     background-color: #405d27;

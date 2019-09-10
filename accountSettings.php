@@ -32,16 +32,16 @@
 				<tr>
 					<td class='table_left'>ID</td>
 					<td class='table_right'><?php echo $userdata['id']; ?></td>
-					<td class='table_action'><button disabled>Nelze změnit</button></td>
+					<td class='table_action'><button disabled class="buttonDisabled">Nelze změnit</button></td>
 				</tr>	
 				<tr>
 					<td class='table_left'>Jméno</td>
 					<td class='table_right'><?php echo $userdata['name']; ?></td>
 					<td class='table_action'>
-						<button id="changeNameButton" onclick="changeName()">Vyžádat změnu</button>
+						<button class="button" id="changeNameButton" onclick="changeName()">Vyžádat změnu</button>
 						<div id="changeNameInput">
-							<input id="changeNameInputField" type=text placeholder="Nové jméno" maxlength=15 />
-							<button id="changeNameConfirm" onclick="confirmNameChange()">OK</button>
+							<input class="text" id="changeNameInputField" type=text placeholder="Nové jméno" maxlength=15 />
+							<button class="button" id="changeNameConfirm" onclick="confirmNameChange()">OK</button>
 						</div>
 					</td>
 				</tr>
@@ -49,20 +49,20 @@
 					<td class='table_left'>Heslo</td>
 					<td class='table_right'>[Skryto]</td>
 					<td class='table_action'>
-						<button id="changePasswordButton" onclick="changePassword()">Změnit</button>
+						<button class="button" id="changePasswordButton" onclick="changePassword()">Změnit</button>
 						<div id="changePasswordInput1">
-							<input id="changePasswordInputFieldOld" type=password placeholder="Staré heslo" maxlength=31 />
-							<button id="changePasswordNext1" onclick="changePasswordStage2()">Dále</button>
+							<input class="text" id="changePasswordInputFieldOld" type=password placeholder="Staré heslo" maxlength=31 />
+							<button class="button" id="changePasswordNext1" onclick="changePasswordStage2()">Dále</button>
 						</div>
 						<div id="changePasswordInput2">
-							<input id="changePasswordInputFieldNew" type=password placeholder="Nové heslo" maxlength=31 />
-							<button id="changePasswordBack2" onclick="changePassword()">Zpět</button>
-							<button id="changePasswordNext2" onclick="changePasswordStage3()">Dále</button>
+							<input class="text" id="changePasswordInputFieldNew" type=password placeholder="Nové heslo" maxlength=31 />
+							<button class="button" id="changePasswordBack2" onclick="changePassword()">Zpět</button>
+							<button class="button" id="changePasswordNext2" onclick="changePasswordStage3()">Dále</button>
 						</div>
 						<div id="changePasswordInput3">
-							<input id="changePasswordInputFieldReNew" type=password placeholder="Nové heslo znovu" maxlength=31 />
-							<button id="changePasswordBack3" onclick="changePasswordStage2()">Zpět</button>
-							<button id="changePasswordConfirm" onclick="confirmPasswordChange()">Potvrdit</button>
+							<input class="text" id="changePasswordInputFieldReNew" type=password placeholder="Nové heslo znovu" maxlength=31 />
+							<button class="button" id="changePasswordBack3" onclick="changePasswordStage2()">Zpět</button>
+							<button class="button" id="changePasswordConfirm" onclick="confirmPasswordChange()">Potvrdit</button>
 						</div>
 					</td>
 				</tr>
@@ -70,10 +70,10 @@
 					<td class='table_left'>E-mail</td>
 					<td class='table_right' id="emailAddress"><?php echo $userdata['email']; ?></td>
 					<td class='table_action'>
-						<button id="changeEmailButton" onclick="changeEmail()">Změnit</button>
+						<button class="button" id="changeEmailButton" onclick="changeEmail()">Změnit</button>
 						<div id="changeEmailInput">
-							<input id="changeEmailInputField" type=text placeholder="Nový e-mail" maxlength=255 />
-							<button id="changeEmailConfirm" onclick="confirmEmailChange()">OK</button>
+							<input class="text" id="changeEmailInputField" type=text placeholder="Nový e-mail" maxlength=255 />
+							<button class="button" id="changeEmailConfirm" onclick="confirmEmailChange()">OK</button>
 						</div>
 					</td>
 				</tr>
@@ -90,7 +90,7 @@
 				<tr>
 					<td class='table_left'>Karma</td>
 					<td class='table_right'><?php echo $userdata['karma']; ?></td>
-					<td class='table_action'>Karmu získáte za činost vedoucí ke zlepšení služby</td>
+					<td class='table_action'>Karmu získáte za činnost vedoucí ke zlepšení služby</td>
 				</tr>
 				<tr>
 					<td class='table_left'>Status</td>
