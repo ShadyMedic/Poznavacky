@@ -54,8 +54,8 @@
     		<fieldset>
     			<table>
     				<tr>
-					<td>
-    						<button onclick="prevImg()" id="prevImg">
+					<td class=>
+    						<button onclick="prevImg()" class="learn_button" id="prevImg">
 							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
                             <kbd>[A]</kbd>
 						    </button>
@@ -64,7 +64,7 @@
     						<img id="image" class="img" src="imagePreview.png">
     					</td>
     					<td>
-    						<button onclick = "nextImg()" id="nextImg">
+    						<button onclick = "nextImg()" class="learn_button" id="nextImg">
 							<img src="arrow.png" /><br>
                             <kbd>[D]</kbd>
 						    </button>

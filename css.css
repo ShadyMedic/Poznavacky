@@ -153,7 +153,7 @@ div.prikaz {
 table {
     margin: auto;
     }
-td button {
+.learn_button{
 	height: 25vw;
 	text-align: center;
     margin: 0 6px;
@@ -331,7 +331,7 @@ form {
 #changelogMsg ul li {
 	margin: 0.4em;
 }
-/* zbytek str�nky */
+/* zbytek stránky */
 #listTable {
 	max-height: 80vh;
     border: 12px solid #fff;
