@@ -8,25 +8,11 @@
     $rePass = urldecode($_POST['reNew']);
     $token = $_POST['token'];
     
-    //Kontrola délky nového hesla
-    if (strlen($newPass) < 6)
-    {
-        filelog("Uživatel s ID $userId se pokusil změnit si heslo pomocí odkazu z e-mailu, avšak neuspěl kvůli krátkému novému heslu.");
-        echo "swal('Nové heslo musí být alespoň 6 znaků dlouhé.','','error')";
-        die();
-    }
-    if (strlen($newPass) > 31)
-    {
-        filelog("Uživatel s ID $userId se pokusil změnit si heslo pomocí odkazu z e-mailu, avšak neuspěl kvůli dlouhému novému heslu.");
-        echo "swal('Nové heslo nesmí být více než 31 znaků dlouhé.','','error')";
-        die();
-    }
-    
     //Ochrana před SQL injekcí
     /*  Není potřeba escapovat, protože hodnota je před použitím v SQL dotazu zahešována.
-    $newPass = mysqli_real_escape_string($connection, $newPass);
-    $rePass = mysqli_real_escape_string($connection, $rePass);
-    */
+     $newPass = mysqli_real_escape_string($connection, $newPass);
+     $rePass = mysqli_real_escape_string($connection, $rePass);
+     */
     $token = mysqli_real_escape_string($connection, $token);
     
     //Kontrola správnosti kódu (už sice bylo zkontrolováno v emailPasswordRecovery.php, ale pro případ modifikace cookies to raději zkontrolujeme znovu)
@@ -44,6 +30,20 @@
     }
     $userId = mysqli_fetch_array($result);
     $userId = $userId['uzivatel_id'];
+    
+    //Kontrola délky nového hesla
+    if (strlen($newPass) < 6)
+    {
+        filelog("Uživatel s ID $userId se pokusil změnit si heslo pomocí odkazu z e-mailu, avšak neuspěl kvůli krátkému novému heslu.");
+        echo "swal('Nové heslo musí být alespoň 6 znaků dlouhé.','','error')";
+        die();
+    }
+    if (strlen($newPass) > 31)
+    {
+        filelog("Uživatel s ID $userId se pokusil změnit si heslo pomocí odkazu z e-mailu, avšak neuspěl kvůli dlouhému novému heslu.");
+        echo "swal('Nové heslo nesmí být více než 31 znaků dlouhé.','','error')";
+        die();
+    }
     
     //Kontrola znaků v hesle
     if (strlen($newPass) !== strspn($newPass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\''))
