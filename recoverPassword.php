@@ -86,7 +86,8 @@
         die();
     }
     
-    filelog("Uživatel se zažádal o obnovu hesla prostřednictvím e-mailové adresy $email.");
+    $ip = $_SERVER['REMOTE_ADDR'];
+    filelog("Uživatel se zažádal o obnovu hesla prostřednictvím e-mailové adresy $email. z IP adresy $ip");
     
     //Poslat e-mail.
     include 'emailSender.php';
