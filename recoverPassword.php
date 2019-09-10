@@ -2,12 +2,14 @@
     session_start();
     
     include 'httpStats.php'; //Zahrnuje connect.php
+    include 'logger.php';
     
     $email = $_POST['email'];
     
     //Kontrola délky e-mailu (aby nevznikaly dlouhé SQL dotazy)
     if(strlen($email) > 255)
     {
+        filelog("Uživatel se pokusil zažádat o obnovu hesla, avšak neuspěl z důvodu dlouhé e-mailové adresy.");
         echo "<li>Email nesmí být delší než 255 znaků.</li>";
         die();
     }
@@ -18,6 +20,7 @@
     //Kontrola platného e-mailu
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
+        filelog("Uživatel se pokusil zažádat o obnovu hesla, avšak neuspěl z důvodu e-mailové adresy ($email) v neplatném formátu.");
         echo "<li>E-mail nemá platný formát.</li>";
         die();
     }
@@ -34,6 +37,7 @@
     }
     if (mysqli_num_rows($result) == 0)
     {
+        filelog("Uživatel se pokusil zažádat o obnovu hesla, avšak neuspěl z důvodu neznámé e-mailové adresy ($email).");
         echo "<li>K této e-mailové adrese není přidružen žádný účet.</li>";
         die();
     }
@@ -81,6 +85,8 @@
         echo "location.href = 'errSql.html';";
         die();
     }
+    
+    filelog("Uživatel se zažádal o obnovu hesla prostřednictvím e-mailové adresy $email.");
     
     //Poslat e-mail.
     include 'emailSender.php';
