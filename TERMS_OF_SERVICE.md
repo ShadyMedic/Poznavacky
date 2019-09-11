@@ -112,18 +112,18 @@ jeho uchování.
 
 6.3 Databáze je **zálohována**, pokud je významně ovlivněna (je-li do ní
 vloženo větší množství dat, nebo je-li jakýmkoliv jiným způsobem
-pozměněna). Obsah databáze (s výjimkou bodů 1, 2 a 3 popsaným níže) **je
+pozměněna). Obsah databáze (s výjimkou bodů 1, 2, 3 a 4 popsanými níže) **je
 veřejně přístupný** komukoliv na online úložišti projektu na GitHub.
 
 6.4 Úplný seznam uchovávaných dat je poskytnut zde:  
   - Data uchovávána v databázi  
     1.  Seznam všech uživatelských účtů obsahující pro každý účet přihlašovací jméno, e-mailovou adresu (pokud byla poskytnuta), datum a čas posledního přihlášení, počet přidaných obrázků, počet uhodnutých obrázků na testovací stránce, karma (body získávané za chování ve službě), status (host/člen/moderátor/správce) a heslo v zašifrované formě
     
-    2. Přihlašovací jména uživatelů, kteří zažádali o změnu jména a jejich žádost nebyla dosud vyřešena, jméno které požadují a časový údaj podání žádosti
+    2.  Přihlašovací jména uživatelů, kteří zažádali o změnu jména a jejich žádost nebyla dosud vyřešena, jméno které požadují a časový údaj podání žádosti
     
-    3. Seznam kódů sloužících k obnovení zapomenutých hesel v zašifrované formě, pro každý z nich ID uživatele, pro kterého bylo vytvořeno a časový údaj jeho vytvoření
+    3.  Seznam kódů sloužících k obnovení zapomenutých hesel v zašifrované formě, pro každý z nich ID uživatele, pro kterého bylo vytvořeno a časový údaj jeho vytvoření
     
-    4. Seznam všech souborů cookie, které se vytvoří při zaškrtnutí políčka "Zůstat přihlášen" na přihlašovací stránce, který obsahuje pro každý soubor cookie jeho obsah v zašifrované formě, ID uživatele, kterým je používáno a časový údaj jeho vytvoření
+    4.  Seznam všech souborů cookie, které se vytvoří při zaškrtnutí políčka "Zůstat přihlášen" na přihlašovací stránce, který obsahuje pro každý soubor cookie jeho obsah v zašifrované formě, ID uživatele, kterým je používáno a časový údaj jeho vytvoření
         
     5.  Seznam všech poznávaček, počet přírodnin, které obsahují a počet
         obrázků pod ně spadajících
@@ -140,7 +140,7 @@ veřejně přístupný** komukoliv na online úložišti projektu na GitHub.
     9.  Počet HTTP požadavků, které server vyřídil za posledních nejvíce
         15 minut (pro každou minutu zvlášť)
         
-    10.  Průměrný počet HTTP požadavků za minutu, které server vyřídil od
+    10. Průměrný počet HTTP požadavků za minutu, které server vyřídil od
         posledního výmazu statistiky\* (skupiny po 15 minutách)
         
   - Data uchovávána v logovacím souboru
@@ -184,14 +184,14 @@ veřejně přístupný** komukoliv na online úložišti projektu na GitHub.
     
     20. Časový údaj a ID uživatele při neúspěšném pokusu změnit si heslo pomocí obnovovacího odkazu z e-mailu společně s charakteristikou chyby (příliš krátké nebo dlouhé nové heslo, nepovolené znaky v novém hesle, neshodné nové heslo s heslem pro potvrzení)
     
-    21.  Časový údaj, ID uživatele a IP adresa při úspěšném obnovení hesla pomocí obnovovacího odkazu z e-mailu.
+    21. Časový údaj, ID uživatele a IP adresa při úspěšném obnovení hesla pomocí obnovovacího odkazu z e-mailu.
         
-    22.  Časový údaj, uživatelské jméno, zvolená poznávačka a přírodnina při úspěšném
+    22. Časový údaj, uživatelské jméno, zvolená poznávačka a přírodnina při úspěšném
         nahrání nového obrázku
         
-    23.  Časový údaj, uživatelské jméno, zvolená poznávačka, přírodnina a typ chyby při neúspěšném pokusu o nahrání nového obrázku (například duplicitního obrázku)
+    23. Časový údaj, uživatelské jméno, zvolená poznávačka, přírodnina a typ chyby při neúspěšném pokusu o nahrání nového obrázku (například duplicitního obrázku)
         
-    24.  Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
+    24. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
         na učící stránce
         
     25. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
