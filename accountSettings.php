@@ -17,7 +17,7 @@
 		  /*Toto jsou dočasné styly, které jsem vytvořil jenom provizorně.*/
 		  /*Až to budeš stylovat, smaž tenhle blok a přesuň stylování do css.css*/
 		  
-		  #changeNameInput, #changeEmailInput, #changePasswordInput1, #changePasswordInput2, #changePasswordInput3{
+		  #changeNameInput, #changeEmailInput, #changePasswordInput1, #changePasswordInput2, #changePasswordInput3, #deleteAccountInput1, #deleteAccountInput2{
 		      display: none;
 		  }
 		</style>
@@ -98,20 +98,33 @@
 					<td class='table_action'>Zažádejte o status moderátora na poznavacky@email.com</td>
 				</tr>
 			</table>
+			
+			<button id="deleteAccountButton" style="background-color: #FF4077;">Odstranit účet</button>
+			<div id="deleteAccountInput1">
+				<input id="deleteAccountInputField" type=password placeholder="Zadejte své heslo pro potvrzení" maxlength=31 />
+				<button class="button" id="deleteAccountConfirm" onclick="deleteAccountVerify()">OK</button>
+			</div>
+			<div id="deleteAccountInput2">
+				<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span>
+				<button class="button" id="deleteAccountFinalConfirm" onclick="deleteAccountFinal()">Ano, odstranit účet</button>
+				<button class="button" id="deleteAccountFinalCancel" onclick="deleteAccountCancel()">Ne, zrušit odstranění účtu</button>
+			</div>
+			<br>
+			
 			<a href="list.php"><button class="button">Zpět</button></a>
 		</main>
 	</div>
-		<footer>
-            <div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
-            <div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
-         	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
-         	
-         	<script>
-             	function showLogin()
-             	{
-             		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
-             	}
-         	</script>
-         </footer>
+	<footer>
+        <div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+        <div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
+     	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
+     	
+     	<script>
+         	function showLogin()
+         	{
+         		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
+         	}
+     	</script>
+     </footer>
 	</body>
 </html>
