@@ -17,10 +17,10 @@ window.onload = function ()
 	
 	//Obnova hesla
 	var recoveryBtn = document.getElementById("passRecovery_submit");
-	//TODO
+	setEnterTrigger(document.getElementById("passRecovery_input"), recoveryBtn);
 }
 
-function setEnterTrigger(input, button)
+function setEnterTrigger(input, button)	//Funkce používána ve window.onload k umožnění odeslání formulářů odentrováním jakéhokoliv textového pole
 {
 	input.addEventListener("keyup", function(event){
 		//13 = enter
