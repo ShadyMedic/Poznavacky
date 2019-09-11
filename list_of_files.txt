@@ -67,6 +67,9 @@ Přesměrovávací stránky:
 		Odhlašuje uživatele vymazáním dat ze $_SESSION a odstraňuje cookie zajišťující trvalé přihlášení (pokud je přítomno)
 
 AJAX serverové skripty:
+	deleteAccount.php
+		Spouští se v: accountSettings.js
+		Provádí odstranění účtu přihlášeného uživatele z databáze
 	deletePicture.php
 		Spouští se v: management.js
 		Provádí odstranění obrázku na základě hlášení. Dostupné pouze pro uživatele se statusem "administrator"
@@ -109,6 +112,9 @@ AJAX serverové skripty:
 	changeUsername.php
 		Spouští se v: accountSettings.js
 		Přidává nový požadavek na změnu uživatelského jména po jeho zadání uživatelem
+	checkPassword.php
+		Spouští se v accountSettings.js
+		Kontroluje zadané heslo při odstraňování vlastního účtu. Slouží pouze pro orientaci, heslo je později zkontrolováno detailněji
 	login.php
 		Spouští se v: index.js
 		Zpracovává data odeslaná z přihlašovacího formuláře a případně přihlašuje uživatele
@@ -148,7 +154,7 @@ Vložené serverové skripty:
 		Zahrnuje se do: všechny stránky a AJAX skripty
 		Zaznamenává HTTP požadavek do databáze pro statistické účely
 	logger.php
-		Zahrnuje se do: všechny skripty logující akce do souboru
+		Zahrnuje se do: všechny skripty logující akce do souboru, deleteAccount.php
 		Definuje funkci sloužící k logování zpráv do logovacího souboru
 	verification.php
 		Zahrnuje se do: všechny zobrazované stránky kromě emailPasswordRecovery.php

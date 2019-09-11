@@ -36,7 +36,7 @@
 				</tr>	
 				<tr>
 					<td class='table_left'>Jméno</td>
-					<td class='table_right'><?php echo $userdata['name']; ?></td>
+					<td class='table_right' id="username"><?php echo $userdata['name']; ?></td>
 					<td class='table_action'>
 						<button class="button" id="changeNameButton" onclick="changeName()">Vyžádat změnu</button>
 						<div id="changeNameInput">
@@ -105,7 +105,7 @@
 				<button class="button" id="deleteAccountConfirm" onclick="deleteAccountVerify()">OK</button>
 			</div>
 			<div id="deleteAccountInput2">
-				<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span>
+				<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span><br>
 				<button class="button" id="deleteAccountFinalConfirm" onclick="deleteAccountFinal()">Ano, odstranit účet</button>
 				<button class="button" id="deleteAccountFinalCancel" onclick="deleteAccountCancel()">Ne, zrušit odstranění účtu</button>
 			</div>
