@@ -186,21 +186,27 @@ veřejně přístupný** komukoliv na online úložišti projektu na GitHub.
     
     21. Časový údaj, ID uživatele a IP adresa při úspěšném obnovení hesla pomocí obnovovacího odkazu z e-mailu.
         
-    22. Časový údaj, uživatelské jméno, zvolená poznávačka a přírodnina při úspěšném
+    22. Časový údaj, uživatelské jméno, poskytnuté jméno a IP adresa při pokusu odstranit vlastní účet s použitím nevlastního přihlašovacího jména (v důsledku úpravy struktury stránky)
+    
+    23. Časový údaj, poskytnuté jméno a IP adresa při pokusu odstranit neexistující účet (obvykle v důsledku chyby na straně služby)
+    
+    24. Časový údaj, uživatelské jméno a IP adresa při odstraněnění vlastního uživatelského účtu
+        
+    25. Časový údaj, uživatelské jméno, zvolená poznávačka a přírodnina při úspěšném
         nahrání nového obrázku
         
-    23. Časový údaj, uživatelské jméno, zvolená poznávačka, přírodnina a typ chyby při neúspěšném pokusu o nahrání nového obrázku (například duplicitního obrázku)
+    26. Časový údaj, uživatelské jméno, zvolená poznávačka, přírodnina a typ chyby při neúspěšném pokusu o nahrání nového obrázku (například duplicitního obrázku)
         
-    24. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
+    27. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
         na učící stránce
         
-    25. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
+    28. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
         na testovací stránce
         
-    26. Časový údaj, uživatelské jméno, zvolená poznávačka a ID obrázku při jeho
+    29. Časový údaj, uživatelské jméno, zvolená poznávačka a ID obrázku při jeho
         nahlášení společně s udaným důvodem
         
-    27. Náhodná data způsobená chybami
+    30. Náhodná data způsobená chybami
     
 \* Výmaz statistiky probíhá v nepravidelných obdobích a statistika může
 být dále uchovávána mimo server.
@@ -217,4 +223,4 @@ povinnosti a závazky**.
 uchovávána** a v případě zjištění protiprávního jednání mohou být proti
 vám použita.
 
-##### *Platnost k 10. záři 2019*
+##### *Platnost k 11. záři 2019*
