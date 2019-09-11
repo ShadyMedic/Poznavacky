@@ -120,6 +120,28 @@ function updateEmail(newEmail)
 
 /*-----------------------------------------------------------------------------*/
 
+function deleteAccount()
+{
+	//TODO
+}
+
+function deleteAccountVerify()
+{
+	//TODO
+}
+
+function deleteAccountFinal()
+{
+	//TODO
+}
+
+function deleteAccountCancel()
+{
+	//TODO
+}
+
+/*-----------------------------------------------------------------------------*/
+
 function getRequest(url, success = null, error = null){
 	var req = false;
 	//Creating request
