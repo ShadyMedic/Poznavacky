@@ -41,7 +41,7 @@
     				    	<br>
     				    	<span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
     				    	<br>
-    				 		<button onclick='register()' class='confirm button'>Vytvořit účet</button>
+    				 		<button id='register_submit' onclick='register()' class='confirm button'>Vytvořit účet</button>
     				    </div>
     			        <span class='toggleForms'>Již máte účet? <a href="javascript:showLogin()">Přihlašte se</a>.</span>
     			        <ul id='registerErrors'>
@@ -72,7 +72,7 @@
                                 <span>Zůstat přihlášen</span>
                             </label>
     						<br>
-    				 		<button onclick='login()' class='confirm button'>Přihlásit se</button>
+    				 		<button id='login_submit' onclick='login()' class='confirm button'>Přihlásit se</button>
     			        </div>
     			        <span class='recoverPass'><a href="javascript:showPasswordRecovery()">Zapomněli jste heslo?</a></span>
     			        <br>
@@ -84,7 +84,7 @@
 				    	<span>Zadejte svojí e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
                 		<div>
                     		<input id='passRecovery_input' type=text name="email" maxlength=255 required=true />
-                    		<button onclick="recoverPassword()" class="button">Odeslat</button> 
+                    		<button id='recovery_submit' onclick="recoverPassword()" class="button">Odeslat</button> 
                 		</div>
                 		<span>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</span>
 				    	<br>
