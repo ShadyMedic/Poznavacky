@@ -12,7 +12,7 @@ window.onload = function ()
 	//TODO
 	
 	//Obnova hesla
-	var recoveryBtn = document.getElementById("recovery_submit");
+	var recoveryBtn = document.getElementById("passRecovery_submit");
 	//TODO
 }
 

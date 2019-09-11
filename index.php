@@ -84,7 +84,7 @@
 				    	<span>Zadejte svojí e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
                 		<div>
                     		<input id='passRecovery_input' type=text name="email" maxlength=255 required=true />
-                    		<button id='recovery_submit' onclick="recoverPassword()" class="button">Odeslat</button> 
+                    		<button id='passRecovery_submit' onclick="recoverPassword()" class="button">Odeslat</button> 
                 		</div>
                 		<span>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</span>
 				    	<br>
