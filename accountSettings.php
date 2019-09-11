@@ -14,12 +14,9 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Správa účtu</title>
 		<style>
-		  /*Toto jsou dočasné styly, které jsem vytvořil jenom provizorně.*/
-		  /*Až to budeš stylovat, smaž tenhle blok a přesuň stylování do css.css*/
-		  
-		  #changeNameInput, #changeEmailInput, #changePasswordInput1, #changePasswordInput2, #changePasswordInput3, #deleteAccountInput1, #deleteAccountInput2{
-		      display: none;
-		  }
+			#changeNameInput, #changeEmailInput, #changePasswordInput1, #changePasswordInput2, #changePasswordInput3, #deleteAccountInput1, #deleteAccountInput2 {
+    			display: none;
+				}
 		</style>
 	</head>
 	<body>
@@ -78,30 +75,30 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='table_left'>Přidané obrázky</td>
+					<td class='table_left' title="Pro zvýšení přidávejte obrázky">Přidané obrázky</td>
 					<td class='table_right'><?php echo $userdata['addedPics']; ?></td>
-					<td class='table_action'>Pro zvýšení přidávejte obrázky</td>
+					<!--<td class='table_action'>Pro zvýšení přidávejte obrázky</td>-->
 				</tr>
 				<tr>
-					<td class='table_left'>Uhodnuté obrázky</td>
+					<td class='table_left' title="Pro zvýšení se nechejte testovat">Uhodnuté obrázky</td>
 					<td class='table_right'><?php echo $userdata['guessedPics']; ?></td>
-					<td class='table_action'>Pro zvýšení se nechejte testovat</td>
+					<!--<td class='table_action'>Pro zvýšení se nechejte testovat</td>-->
 				</tr>
 				<tr>
-					<td class='table_left'>Karma</td>
+					<td class='table_left' title="Karmu získáte za činnost vedoucí ke zlepšení služby">Karma</td>
 					<td class='table_right'><?php echo $userdata['karma']; ?></td>
-					<td class='table_action'>Karmu získáte za činnost vedoucí ke zlepšení služby</td>
+					<!--<td class='table_action'>Karmu získáte za činnost vedoucí ke zlepšení služby</td>-->
 				</tr>
 				<tr>
 					<td class='table_left'>Status</td>
 					<td class='table_right'><?php echo $userdata['status']; ?></td>
-					<td class='table_action'>Zažádejte o status moderátora na poznavacky@email.com</td>
+					<!--<td class='table_action'>Zažádejte o status moderátora na poznavacky@email.com</td>-->
 				</tr>
 			</table>
 			
-			<button id="deleteAccountButton" onclick="deleteAccount()" style="background-color: #FF4077;">Odstranit účet</button>
+			<button class="button" id="deleteAccountButton" onclick="deleteAccount()" style="background-color: #FF4077;">Odstranit účet</button>
 			<div id="deleteAccountInput1">
-				<input id="deleteAccountInputField" type=password placeholder="Zadejte své heslo pro potvrzení" maxlength=31 />
+				<input class="tetx" id="deleteAccountInputField" type=password placeholder="Zadejte své heslo pro potvrzení" maxlength=31 />
 				<button class="button" id="deleteAccountConfirm" onclick="deleteAccountVerify()">OK</button>
 			</div>
 			<div id="deleteAccountInput2">

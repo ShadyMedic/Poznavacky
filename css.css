@@ -356,12 +356,14 @@ th {
     }
 /* ------------------------------------------------------------------accountSettings tabulka */
 #static_info td, #static_info th {
-    padding: 3px 4px;
+    padding: 4px 18px;
 }
+
 /* --------------------------------------------------------tlacitka, droplisty, textova okna */
 .button {
     background-color: #405d27;
     color: #fff;
+    box-sizing: border-box;
     height: 28px;
     font-family: Century Gothic, Verdana, sans-serif;
     padding: 4px 8px;
