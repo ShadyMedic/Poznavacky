@@ -1,3 +1,35 @@
+window.onload = function ()
+{
+	//Umožnit odeslání formulářů stisktnutím enteru
+	
+	//Přihlašování
+	var loginBtn = document.getElementById("login_submit");
+	setEnterTrigger(document.getElementById("login_name"), loginBtn);
+	setEnterTrigger(document.getElementById("login_pass"), loginBtn);
+	
+	//Registrace
+	var registerBtn = document.getElementById("register_submit");
+	//TODO
+	
+	//Obnova hesla
+	var recoveryBtn = document.getElementById("recovery_submit");
+	//TODO
+}
+
+function setEnterTrigger(input, button)
+{
+	input.addEventListener("keyup", function(event){
+		//13 = enter
+	  	if (event.keyCode === 13)
+		{
+	    	//Kliknout na tlačítko
+	    	button.click();
+		}
+	});
+}
+
+/*-----------------------------------------------------------------------*/
+
 function hideCookies()
 {
 	document.getElementById("cookiesAlert").style.visibility = "hidden"
