@@ -6,6 +6,7 @@ window.onload = function ()
 	var loginBtn = document.getElementById("login_submit");
 	setEnterTrigger(document.getElementById("login_name"), loginBtn);
 	setEnterTrigger(document.getElementById("login_pass"), loginBtn);
+	setEnterTrigger(document.getElementById("login_keep"), loginBtn);
 	
 	//Registrace
 	var registerBtn = document.getElementById("register_submit");
