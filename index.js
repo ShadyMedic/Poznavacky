@@ -9,7 +9,10 @@ window.onload = function ()
 	
 	//Registrace
 	var registerBtn = document.getElementById("register_submit");
-	//TODO
+	setEnterTrigger(document.getElementById("register_name"), registerBtn);
+	setEnterTrigger(document.getElementById("register_pass"), registerBtn);
+	setEnterTrigger(document.getElementById("register_repass"), registerBtn);
+	setEnterTrigger(document.getElementById("register_email"), registerBtn);
 	
 	//Obnova hesla
 	var recoveryBtn = document.getElementById("passRecovery_submit");
