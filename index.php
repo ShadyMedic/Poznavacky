@@ -96,7 +96,7 @@
 			</main>
 		</div>
 		<footer id="cookiesAlert">
-			<span>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíte s ukládáním souborů cookie na vašem zařízení.</span>
+			<div>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíte s ukládáním souborů cookie na vašem zařízení.</div>
 			<div id="cookiesAlertCloser" onclick="hideCookies()">×</div>
 		</footer>
 	</body>

@@ -250,30 +250,25 @@ form {
     text-align: left;
 }
 #cookiesAlert{
-	background-color: #7eb35c;
+	background-color: #3e4444;
 	font-size: 2vh;
-	height: 5vh;
-    line-height: 5vh;
+    line-height: 3vh;
     width: 100%;
     flex-shrink: 0;    
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-	font-weight: bold;
-    color: #000;
+    color: #fff;
+}
+#cookiesAlert div {
+    margin: 0.8vh 1vw;
+    padding: 0.2vh 0.5vw;
 }
 #cookiesAlertCloser{
-	display: block;
-    height: 5vh;
-    width: 5vh;
-    font-size: 5vh;
-  /*border: 2px outset #4e832c;*/
 	color: #900;
-	border-radius: 4vh;
-	cursor: pointer;
 }
 #cookiesAlertCloser:hover{
-	border: 2px inset #4e832c;
+    cursor: pointer;
 }
 #span_terms{
 	font-size: 12px;
@@ -382,15 +377,6 @@ th {
 #static_info tr#tr_end {
     border-bottom: 0px solid white;
 }
-/*.table_left {
-	min-width: 20vw;
-	}
-.table_right {
-	min-width: 10vw;
-	}
-.table_action {
-	min-width: 10vw;
-    }*/
 /* --------------------------------------------------------tlacitka, droplisty, textova okna */
 .button {
     background-color: #405d27;
