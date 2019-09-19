@@ -93,20 +93,35 @@ header {
     background-color: #405d27;
     display: block;
     color: #fff;
-    height: 7vh;  
+    /*height: 7vh;  */
     text-align: center;
     }
 h1 {
     font-size: 4vh;
     line-height: 7vh;
+    display: block;
+    background: #405d27
     }
 #menuHeading {
     line-height: 7vh;
     font-size: 4vh;
+    display: block;
+    background: #405d27
 	}
 #menuHeading a {
     color: #fff;
     }
+nav {
+    background: #4e792c;
+    padding: 6px;
+}
+nav a {
+    color: #fff;
+    margin: 0px 8px;
+}
+nav a:hover {
+    text-decoration: underline;
+}
 /* ----------------------------------------------------------------------footer styly */
 footer {
 	background-color: #405d27;
@@ -323,7 +338,7 @@ form {
 }
 /* -----------------------------------------------------zbytek stránky */
 #listTable {
-	max-height: 80vh;
+	/*max-height: 80vh;*/
     border: 12px solid #fff;
     margin: 4vh auto;
     background-color: #fff;
@@ -355,10 +370,27 @@ th {
 	min-width: 10vw;
     }
 /* ------------------------------------------------------------------accountSettings tabulka */
+#static_info {
+    margin: 6px auto;
+}
 #static_info td, #static_info th {
     padding: 4px 18px;
 }
-
+#static_info tr {
+    border-bottom: 1px solid #ccc;
+}
+#static_info tr#tr_end {
+    border-bottom: 0px solid white;
+}
+/*.table_left {
+	min-width: 20vw;
+	}
+.table_right {
+	min-width: 10vw;
+	}
+.table_action {
+	min-width: 10vw;
+    }*/
 /* --------------------------------------------------------tlacitka, droplisty, textova okna */
 .button {
     background-color: #405d27;
@@ -494,7 +526,7 @@ div.menu:hover {
     margin: auto;
     }
 /* ------------------------------------------------------------------@media */
-@media (max-aspect-ratio: 1/1) {
+@media (max-aspect-ratio: 6/5) {
     main.basic_main {
         width: 85vw;
         }
@@ -527,6 +559,9 @@ div.menu:hover {
         margin: 2.24vh auto;
         line-height: 27vh;
         }
+    #listTable {
+        margin: 7vh auto;
+    }
     .listNames {
     	min-width: 40vw;
     	}

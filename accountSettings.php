@@ -24,12 +24,12 @@
 		<header>
             <h1>Správa účtu</h1>
         </header>
-		<main class="basic_main">
+        <main class="basic_main">
 			<table id="static_info">
 				<tr>
 					<td class='table_left'>ID</td>
 					<td class='table_right'><?php echo $userdata['id']; ?></td>
-					<td class='table_action'><button disabled class="buttonDisabled">Nelze změnit</button></td>
+					<td class='table_action'><!--<button disabled class="buttonDisabled">Nelze změnit</button>--></td>
 				</tr>	
 				<tr>
 					<td class='table_left'>Jméno</td>
@@ -78,21 +78,25 @@
 					<td class='table_left' title="Pro zvýšení přidávejte obrázky">Přidané obrázky</td>
 					<td class='table_right'><?php echo $userdata['addedPics']; ?></td>
 					<!--<td class='table_action'>Pro zvýšení přidávejte obrázky</td>-->
+					<td class='table_action'></td>
 				</tr>
 				<tr>
 					<td class='table_left' title="Pro zvýšení se nechejte testovat">Uhodnuté obrázky</td>
 					<td class='table_right'><?php echo $userdata['guessedPics']; ?></td>
 					<!--<td class='table_action'>Pro zvýšení se nechejte testovat</td>-->
+					<td class='table_action'></td>
 				</tr>
 				<tr>
 					<td class='table_left' title="Karmu získáte za činnost vedoucí ke zlepšení služby">Karma</td>
 					<td class='table_right'><?php echo $userdata['karma']; ?></td>
 					<!--<td class='table_action'>Karmu získáte za činnost vedoucí ke zlepšení služby</td>-->
+					<td class='table_action'></td>
 				</tr>
-				<tr>
+				<tr id="tr_end">
 					<td class='table_left'>Status</td>
 					<td class='table_right'><?php echo $userdata['status']; ?></td>
 					<!--<td class='table_action'>Zažádejte o status moderátora na poznavacky@email.com</td>-->
+					<td class='table_action'></td>
 				</tr>
 			</table>
 			
