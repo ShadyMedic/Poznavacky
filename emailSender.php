@@ -48,9 +48,10 @@ $to = @$_POST['to'];
 $subject = @$_POST['sub'];
 $message = nl2br(@$_POST['msg']);
 
-if ($code !== EMAIL_CODE){die("alert('Neplatný bezpečnostní kód.');");}   //Kontrola, zda není tento skript vyvolán neoprávněne na straně klienta modifikací JS
 if (!($to === 'null' || $subject === 'null' || $message === 'null' || empty($to) || empty($subject) || empty($message)))
 {
+    if ($code !== EMAIL_CODE){die("alert('Neplatný bezpečnostní kód.');");}   //Kontrola, zda není tento skript vyvolán neoprávněne na straně klienta modifikací JS
+    
     $result = sendEmail($to, $subject, $message) === NULL;
     if($result)
     {
