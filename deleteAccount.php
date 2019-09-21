@@ -43,7 +43,6 @@
         $query .= "DELETE FROM sezeni WHERE uzivatel_id=$userId;";                  //Odstranění kódů instalogin cookies
         $query .= "DELETE FROM uzivatele WHERE jmeno='$user'; LIMIT 1";             //Odstranění samotného účtu
         
-        echo $query;
         $result = mysqli_multi_query($connection, $query);
         if (!$result)
         {
@@ -57,6 +56,6 @@
         else
         {
             filelog("Uživatel $user odstranil svůj účet z IP adresy $ip.");
-            header('Location: logout.php');
+            echo "location.href = 'logout.php';";
         }
     }
