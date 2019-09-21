@@ -93,20 +93,35 @@ header {
     background-color: #405d27;
     display: block;
     color: #fff;
-    height: 7vh;  
+    /*height: 7vh;  */
     text-align: center;
     }
 h1 {
     font-size: 4vh;
     line-height: 7vh;
+    display: block;
+    background: #405d27
     }
 #menuHeading {
     line-height: 7vh;
     font-size: 4vh;
+    display: block;
+    background: #405d27
 	}
 #menuHeading a {
     color: #fff;
     }
+nav {
+    background: #4e792c;
+    padding: 6px;
+}
+nav a {
+    color: #fff;
+    margin: 0px 8px;
+}
+nav a:hover {
+    text-decoration: underline;
+}
 /* ----------------------------------------------------------------------footer styly */
 footer {
 	background-color: #405d27;
@@ -235,30 +250,25 @@ form {
     text-align: left;
 }
 #cookiesAlert{
-	background-color: #7eb35c;
+	background-color: #3e4444;
 	font-size: 2vh;
-	height: 5vh;
-    line-height: 5vh;
+    line-height: 3vh;
     width: 100%;
     flex-shrink: 0;    
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-	font-weight: bold;
-    color: #000;
+    color: #fff;
+}
+#cookiesAlert div {
+    margin: 0.8vh 1vw;
+    padding: 0.2vh 0.5vw;
 }
 #cookiesAlertCloser{
-	display: block;
-    height: 5vh;
-    width: 5vh;
-    font-size: 5vh;
-  /*border: 2px outset #4e832c;*/
 	color: #900;
-	border-radius: 4vh;
-	cursor: pointer;
 }
 #cookiesAlertCloser:hover{
-	border: 2px inset #4e832c;
+    cursor: pointer;
 }
 #span_terms{
 	font-size: 12px;
@@ -323,7 +333,7 @@ form {
 }
 /* -----------------------------------------------------zbytek stránky */
 #listTable {
-	max-height: 80vh;
+	/*max-height: 80vh;*/
     border: 12px solid #fff;
     margin: 4vh auto;
     background-color: #fff;
@@ -355,10 +365,18 @@ th {
 	min-width: 10vw;
     }
 /* ------------------------------------------------------------------accountSettings tabulka */
+#static_info {
+    margin: 6px auto;
+}
 #static_info td, #static_info th {
     padding: 4px 18px;
 }
-
+#static_info tr {
+    border-bottom: 1px solid #ccc;
+}
+#static_info tr#tr_end {
+    border-bottom: 0px solid white;
+}
 /* --------------------------------------------------------tlacitka, droplisty, textova okna */
 .button {
     background-color: #405d27;
@@ -494,7 +512,7 @@ div.menu:hover {
     margin: auto;
     }
 /* ------------------------------------------------------------------@media */
-@media (max-aspect-ratio: 1/1) {
+@media (max-aspect-ratio: 6/5) {
     main.basic_main {
         width: 85vw;
         }
@@ -527,6 +545,9 @@ div.menu:hover {
         margin: 2.24vh auto;
         line-height: 27vh;
         }
+    #listTable {
+        margin: 7vh auto;
+    }
     .listNames {
     	min-width: 40vw;
     	}
