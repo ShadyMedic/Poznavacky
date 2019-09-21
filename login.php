@@ -99,3 +99,4 @@
     fileLog("Uživatel $name se pokusil přihlásit se špatným heslem z IP adresy $ip");
     
     echo "<span>Špatné heslo</span>";
+    

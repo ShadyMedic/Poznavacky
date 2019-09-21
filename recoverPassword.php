@@ -8,7 +8,7 @@
     //Kontrola délky e-mailu (aby nevznikaly dlouhé SQL dotazy)
     if(strlen($email) > 255)
     {
-        echo "<li>Email nesmí být delší než 255 znaků.</li>";
+        echo "<span>Email nesmí být delší než 255 znaků.</span>";
         die();
     }
     
@@ -18,7 +18,7 @@
     //Kontrola platného e-mailu
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
-        echo "<li>E-mail nemá platný formát.</li>";
+        echo "<span>E-mail nemá platný formát.</span>";
         die();
     }
     
@@ -34,7 +34,7 @@
     }
     if (mysqli_num_rows($result) == 0)
     {
-        echo "<li>K této e-mailové adrese není přidružen žádný účet.</li>";
+        echo "<span>K této e-mailové adrese není přidružen žádný účet.</span>";
         die();
     }
     
@@ -98,10 +98,10 @@
     
     if (empty($emailResult))
     {
-        echo "<li style='color: #009900'>E-mail byl úspěšně odeslán</li>";
+        echo "<span style='color: #009900'>E-mail byl úspěšně odeslán</span>";
     }
     else
     {
-        echo "<li>$emailResult</li>";
+        echo "<span>$emailResult</span>";
     }
     die();
