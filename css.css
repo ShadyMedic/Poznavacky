@@ -203,56 +203,105 @@ td kbd {
     border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
-#main_kod {
-    width: 360px;
-	height: fit-content;
+#main_register {
+    width: fit-content;
+    padding: 1em 2em;
     background-color: #fff;
     margin: 20vh auto;
     border-radius: 6px;
     }
+#main_register a{
+    color: #405d27;
+}
+#main_register a:hover{
+    text-decoration: underline;
+}
+.udaje {
+    margin: 0.2em;
+}
 #registrace, #prihlaseni, #obnoveniHesla{
     position: relative;
-    padding: 18px 0;
     margin: auto
-    }
-span#span_kod {
-    font-size: 24px;
-    }
-form {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    }
-#kod form {
-    margin: 6px auto;
-    }
-#kod_input {
-    width: 160px;
-	height: 28px;
-    font-size: 16px;
-    margin: 2px 0;
-    }
-.big_checkbox {
-	transform: scale(1.5);
 }
+.checkbox {
+    height: 0.2em;
+    margin: 0.2em;
+}
+/* --------------------------------- custom checkbox, credits: https://codepen.io/GeoffreyCrofte/pen/BiHzp */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 1.95em;
+  cursor: pointer;
+}
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 1em; height: 1em;
+  border: 2px solid #ccc;
+  background: #fff;
+}
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '\2713\0020';
+  position: absolute;
+  top: .15em; left: .15em;
+  font-size: 1.3em;
+  line-height: 0.8;
+  color: #3e4444;
+}
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+[type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+[type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+label:hover:before {
+  border: 2px solid #405d27!important;
+}
+
+#obnoveniHesla {
+    width: 50vw;
+    background-color: #fff;
+    border-radius: 6px;
+    margin: 20vh auto;
+    padding: 6px;
+}
+
 .confirm {
 	width: 160px;
 }
 #loginErrors, #registerErrors, #passwordRecoveryErrors{
-	padding-top: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
+    margin: 0.4em;
     color: red;
-    list-style: inside;
-    text-align: left;
+    text-align: center;
+    height: fit-content;
 }
 #cookiesAlert{
 	background-color: #3e4444;
-	font-size: 2vh;
-    line-height: 3vh;
+	font-size: 0.9em;
+    line-height: 6vh;
     width: 100%;
     flex-shrink: 0;    
     display: flex;
@@ -264,17 +313,11 @@ form {
     margin: 0.8vh 1vw;
     padding: 0.2vh 0.5vw;
 }
-#cookiesAlertCloser{
-	color: #900;
-}
 #cookiesAlertCloser:hover{
     cursor: pointer;
 }
 #span_terms{
 	font-size: 12px;
-}
-#span_terms a{
-	text-decoration: underline;
 }
 /* -----------------------------------------------------------------------------list stranka */
 /* ----------------------------------------------------changelog styly */
@@ -513,7 +556,7 @@ div.menu:hover {
     }
 /* ------------------------------------------------------------------@media */
 @media (max-aspect-ratio: 6/5) {
-    main.basic_main {
+    main.basic_main, #obnoveniHesla {
         width: 85vw;
         }
     .img {
@@ -565,7 +608,7 @@ div.menu:hover {
         }
     }    
 @media (max-aspect-ratio: 5/8) {
-    main.basic_main {
+    main.basic_main, #obnoveniHesla {
         width: 95vw;
         }
     .img {

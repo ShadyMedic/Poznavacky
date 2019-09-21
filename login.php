@@ -12,7 +12,7 @@
     {
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit s příliš dlouhým jménem z IP adresy $ip");
-        echo "<li>Jméno nesmí být více než 15 znaků dlouhé.</li>";
+        echo "<span>Jméno nesmí být více než 15 znaků dlouhé.</span>";
         die();
     }
     
@@ -22,7 +22,7 @@
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit s příliš dlouhým heslem z IP adresy $ip");
         
-        echo "<li>Heslo nesmí být více než 31 znaků dlouhé.</li>";
+        echo "<span>Heslo nesmí být více než 31 znaků dlouhé.</span>";
         die();
     }
     
@@ -38,7 +38,7 @@
         $ip = $_SERVER['REMOTE_ADDR'];
         fileLog("Uživatel se pokusil přihlásit k neexistujícímu účtu ($name) z IP adresy $ip");
         
-        echo "<li>Uživatel s tímto jménem neexistuje.</li>";
+        echo "<span>Uživatel s tímto jménem neexistuje.</span>";
         die();
     }
     
@@ -98,4 +98,4 @@
     $ip = $_SERVER['REMOTE_ADDR'];
     fileLog("Uživatel $name se pokusil přihlásit se špatným heslem z IP adresy $ip");
     
-    echo "<li>Špatné heslo</li>";
+    echo "<span>Špatné heslo</span>";

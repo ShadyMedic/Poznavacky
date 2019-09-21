@@ -7,6 +7,7 @@ function showLogin()
 {
 	document.getElementById("obnoveniHesla").style.display = "none";
 	document.getElementById("registrace").style.display = "none";
+	document.getElementById("main_register").style.display = "block";
 	document.getElementById("prihlaseni").style.display = "block";
 }
 
@@ -19,8 +20,9 @@ function showRegister()
 
 function showPasswordRecovery()
 {
-	document.getElementById("prihlaseni").style.display = "none";
-	document.getElementById("registrace").style.display = "none";
+	//document.getElementById("prihlaseni").style.display = "none";
+	//document.getElementById("registrace").style.display = "none";
+	document.getElementById("main_register").style.display = "none";
 	document.getElementById("obnoveniHesla").style.display = "block";
 }
 
