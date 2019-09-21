@@ -203,25 +203,22 @@ td kbd {
     border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
-#main_register {
+#registrace, #prihlaseni {
     width: fit-content;
+    max-width: 60vw;
     padding: 1em 2em;
     background-color: #fff;
     margin: 20vh auto;
     border-radius: 6px;
     }
-#main_register a{
+#registrace a, #prihlaseni a{
     color: #405d27;
 }
-#main_register a:hover{
+#registrace a:hover, #prihlaseni a:hover{
     text-decoration: underline;
 }
 .udaje {
     margin: 0.2em;
-}
-#registrace, #prihlaseni, #obnoveniHesla{
-    position: relative;
-    margin: auto
 }
 .checkbox {
     height: 0.2em;

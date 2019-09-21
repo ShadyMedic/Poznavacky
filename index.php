@@ -14,7 +14,7 @@
 	</head>
 	<body id="root">
 		<div class="container">
-			<main  id="main_register">
+			<main>
 				<?php
     			    //Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval, nebo zda existují chyby registrace k zobrazení
 			    if (isset($_SESSION['registerErrors']) || (!isset($_COOKIE['lastChangelog'])) && !isset($_SESSION['loginError']) && !isset($_SESSION['passwordRecoveryError']))
@@ -77,7 +77,7 @@
     			    <div id='loginErrors'>
 					</div>
 				</div>
-			</main>
+
 				<div id="obnoveniHesla" style="display: none;">
 				    <span>Zadejte svojí e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
                 	<div>
@@ -90,6 +90,7 @@
 					<div id='passwordRecoveryErrors'>
 					</div>
 				</div>
+			</main>
 		</div>
 		<footer id="cookiesAlert">
 			<div>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíte s ukládáním souborů cookie na vašem zařízení.</div>
