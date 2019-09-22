@@ -32,7 +32,8 @@
     			    	<input id='register_name' type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true class='text'>
     			    	<br>
     			    	<input id='register_pass' type='password' name='pass_input' maxlength=31 placeholder='Heslo' required=true class='text'>
-				    	<br>    				    	<input id='register_repass' type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
+				    	<br>    				    	
+						<input id='register_repass' type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true class='text'>
     				    <br>
     					<input id='register_email' type='email' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
     			    	<br>

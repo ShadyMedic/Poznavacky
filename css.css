@@ -203,7 +203,7 @@ td kbd {
     border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
-#registrace, #prihlaseni {
+#registrace, #prihlaseni, #pw_recovery {
     width: fit-content;
     max-width: 60vw;
     padding: 1em 2em;
