@@ -123,7 +123,7 @@ function updateEmail(newEmail)
 function deleteAccount()
 {
 	document.getElementById("deleteAccountButton").style.display = "none";
-	document.getElementById("deleteAccountInput1").style.display = "block";
+	document.getElementById("deleteAccountInput1").style.display = "inline-block";
 }
 
 function deleteAccountVerify()
@@ -137,7 +137,7 @@ function deleteAccountConfirm(response)
 {
 	if (response === "ok")
 	{
-	document.getElementById("deleteAccountInput2").style.display = "block";
+	document.getElementById("deleteAccountInput2").style.display = "inline-block";
 	document.getElementById("deleteAccountInput1").style.display = "none";
 	}
 	else
@@ -156,7 +156,7 @@ function deleteAccountFinal()
 
 function deleteAccountCancel()
 {
-	document.getElementById("deleteAccountButton").style.display = "block";
+	document.getElementById("deleteAccountButton").style.display = "inline-block";
 	document.getElementById("deleteAccountInput2").style.display = "none";
 }
 
