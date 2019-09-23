@@ -1,3 +1,39 @@
+window.onload = function ()
+{
+	//Umožnit odeslání formulářů stisktnutím enteru
+	
+	//Přihlašování
+	var loginBtn = document.getElementById("login_submit");
+	setEnterTrigger(document.getElementById("login_name"), loginBtn);
+	setEnterTrigger(document.getElementById("login_pass"), loginBtn);
+	setEnterTrigger(document.getElementById("login_keep"), loginBtn);
+	
+	//Registrace
+	var registerBtn = document.getElementById("register_submit");
+	setEnterTrigger(document.getElementById("register_name"), registerBtn);
+	setEnterTrigger(document.getElementById("register_pass"), registerBtn);
+	setEnterTrigger(document.getElementById("register_repass"), registerBtn);
+	setEnterTrigger(document.getElementById("register_email"), registerBtn);
+	
+	//Obnova hesla
+	var recoveryBtn = document.getElementById("passRecovery_submit");
+	setEnterTrigger(document.getElementById("passRecovery_input"), recoveryBtn);
+}
+
+function setEnterTrigger(input, button)	//Funkce používána ve window.onload k umožnění odeslání formulářů odentrováním jakéhokoliv textového pole
+{
+	input.addEventListener("keyup", function(event){
+		//13 = enter
+	  	if (event.keyCode === 13)
+		{
+	    	//Kliknout na tlačítko
+	    	button.click();
+		}
+	});
+}
+
+/*-----------------------------------------------------------------------*/
+
 function hideCookies()
 {
 	document.getElementById("cookiesAlert").style.visibility = "hidden"

@@ -11,8 +11,7 @@ informace o správci mohou být nalezeny na online úložišti projektu na
 1.2 Podmínky představují právně závaznou smlouvu mezi vámi a Správcem.
 
 1.3 Tyto podmínky se vztahují na **všechny** uživatele Služby, včetně všech
-vývojářů, přispěvatelů a kohokoliv, kdo se pokusil zadat a odeslat
-přístupový kód na výchozí stránce *poznavacky.chytrak.cz*.
+vývojářů, přispěvatelů a kohokoliv, kdo se zaregistroval, pokusil zaregistrovat nebo pokusil přihlásit na úvodní stránce *poznavacky.chytrak.cz*.
 
 ## 2\. Souhlas s podmínkami použití
 
@@ -20,12 +19,13 @@ přístupový kód na výchozí stránce *poznavacky.chytrak.cz*.
 Podmínkami. Pokud s Podmínkami nesouhlasíte, nesmíte tuto službu
 využívat.
 
-2.2 Svůj souhlas s Podmínkami vyjadřujete **zadáním a odesláním ověřovacího
-kódu** (ať již správného či špatného) na stránkách
+2.2 Svůj souhlas s Podmínkami vyjadřujete **registrací svého uživatelského účtu, nebo přihlášením se na jakýkoliv uživatelský účet** na stránkách
 *poznavacky.chytrak.cz*. Tím berete na vědomí obsah Podmínek a
 zavazujete se je dodržovat.
 
-2.3 Souhlas s Podmínkami nemůžete uzavřít a Službu tak nemůžete používat,
+2.3 Svůj souhlas s částečnými Podmínkami vyjadřujete **pokusem o registraci, přihlášení nebo odeslání formuláře pro obnovu hesla, který nemusí být úspěšný** na úvodní stránce *poznavacky.chytrak.cz*. V takovém případě se na Vás vztahují pouze body 6.4 - data uchovávána v logovacím souboru, podbody 1 až 7 a dále podbody 18 a 19
+
+2.4 Souhlas s Podmínkami (a to ani částečný) nemůžete uzavřít a Službu tak nemůžete používat,
 pokud (a) jste mladší 15 let a nemáte svolení svého zákonného zástupce,
 který by tak převzal zodpovědnost za dodržování těchto podmínek za vás;
 nebo (b) Jste osobou, pro kterou platí zamezení přístupu do Služby; nebo
@@ -37,12 +37,12 @@ zákonem
 3.1 Správce si vyhrazuje právo tyto podmínky příležitostně měnit, například
 z důvodu přidání nové funkce, nebo změnou státního zákona. Tyto změny
 mohou být ve výjimečných případech i neodůvodněné, ale v takovém případě
-budou na změnu všichni uživatelé **upozorněni**.
+budou na změnu všichni uživatelé **upozorněni** podle bodu 3.4.
 
 3.2 Změny podmínek, které mohou ovlivňovat uživatele jinak, než tomu bylo
-doposud, budou **vždy uživatelům oznámeny**, avšak menší změny, nebo
+doposud, budou **vždy uživatelům oznámeny** podle bodu 3.4, avšak menší změny, nebo
 změny, které se netýkají uživatelů přímo **nemusí být oznámeny**. Vždy
-však budou vypsány na této webové stránce.
+však budou vypsány v tomto veřejně dostupném dokumentu.
 
 3.3 Pokud s upravenými podmínkami nebudete souhlasit, musíte přestat službu
 využívat před datem, ve kterém vejdou podmínky v platnost (viz sekce
@@ -51,6 +51,8 @@ vstoupení upravených podmínek v platnost a nesouhlasíte s nimi, jste
 povinni kontaktovat Správce, který se situaci pokusí vyřešit a zbavit
 vás tak povinnosti upravené podmínky dodržovat (obvykle odstraněním
 vašich dat ze systému).
+
+3.4 Upozornění uživatelů na změny podmínek prostřednictvím e-mailu lze pochopitelně uskutečnit pouze v případě, že uživatel dal k dispozici svou e-mailovou adresu. V opačném případě se o změně uživatel dozví až po přihlášení ke svému uživatelskému účtu.
 
 ## 4\. Odstoupení od Podmínek
 
@@ -110,66 +112,101 @@ jeho uchování.
 
 6.3 Databáze je **zálohována**, pokud je významně ovlivněna (je-li do ní
 vloženo větší množství dat, nebo je-li jakýmkoliv jiným způsobem
-pozměněna). Obsah databáze (s výjimkou bodu 1 popsaným níže) **je
+pozměněna). Obsah databáze (s výjimkou bodů 1, 2, 3 a 4 popsanými níže) **je
 veřejně přístupný** komukoliv na online úložišti projektu na GitHub.
 
 6.4 Úplný seznam uchovávaných dat je poskytnut zde:  
   - Data uchovávána v databázi  
-    1.  IP adresa uživatele a časový údaj vyjadřující čas, ve kterém byl
-        naposled odeslán ověřovací kód
+    1.  Seznam všech uživatelských účtů obsahující pro každý účet přihlašovací jméno, e-mailovou adresu (pokud byla poskytnuta), datum a čas posledního přihlášení, počet přidaných obrázků, počet uhodnutých obrázků na testovací stránce, karma (body získávané za chování ve službě), status (host/člen/moderátor/správce) a heslo v zašifrované formě
+    
+    2.  Přihlašovací jména uživatelů, kteří zažádali o změnu jména a jejich žádost nebyla dosud vyřešena, jméno které požadují a časový údaj podání žádosti
+    
+    3.  Seznam kódů sloužících k obnovení zapomenutých hesel v zašifrované formě, pro každý z nich ID uživatele, pro kterého bylo vytvořeno a časový údaj jeho vytvoření
+    
+    4.  Seznam všech souborů cookie, které se vytvoří při zaškrtnutí políčka "Zůstat přihlášen" na přihlašovací stránce, který obsahuje pro každý soubor cookie jeho obsah v zašifrované formě, ID uživatele, kterým je používáno a časový údaj jeho vytvoření
         
-    2.  Seznam všech poznávaček, počet přírodnin, které obsahují a počet
+    5.  Seznam všech poznávaček, počet přírodnin, které obsahují a počet
         obrázků pod ně spadajících
         
-    3.  Seznam přírodnin pro každou poznávačku a počet obrázků pro
+    6.  Seznam přírodnin pro každou poznávačku a počet obrázků pro
         každou z nich
         
-    4.  Nahrané adresy k obrázkům (zvlášť pro každou poznávačku),
+    7.  Nahrané adresy k obrázkům (zvlášť pro každou poznávačku),
         společně s údajem určující přírodninu, kterou mají zobrazovat
         
-    5.  Seznam hlášení obsahující důvod, ID obrázku a počet hlášení
+    8.  Seznam hlášení obsahující důvod, ID obrázku a počet hlášení
         daného typu pro daný obrázek.
         
-    6.  Počet HTTP požadavků, které server vyřídil za posledních nejvíce
+    9.  Počet HTTP požadavků, které server vyřídil za posledních nejvíce
         15 minut (pro každou minutu zvlášť)
         
-    7.  Průměrný počet HTTP požadavků za minutu, které server vyřídil od
+    10. Průměrný počet HTTP požadavků za minutu, které server vyřídil od
         posledního výmazu statistiky\* (skupiny po 15 minutách)
         
   - Data uchovávána v logovacím souboru
-    1.  Časový údaj a IP adresa při zadání správného ověřovacího kódu
+    1.  Časový údaj, uživatelské jméno a IP adresa při úspěšném přihlášení do systému
     
-    2.  Časový údaj a IP adresa při zadání špatného ověřovacího kódu
+    2.  Časový údaj a IP adresa při pokusu o přihlášení se zadáním příliš dlouhých údajů
     
-    3.  Časový údaj a IP adresa při přesměrování do systému (pokud byl
-        již zadán správný ověřovací kód)
+    3.  Časový údaj, zadané uživatelské jméno a IP adresa při pokusu o přihlášení k neexistujícímu uživatelskému účtu
         
-    4.  Časový údaj a IP adresa při přesměrování na ověřovací stránku
-        (platnost dříve zadaného ověřovacího kódu vypršela, nebo byl
-        zadán špatný kód)
+    4.  Časový údaj, uživatelské jméno a IP adresa při pokusu o přihlášení k existujícímu účtu za použití špatného hesla
         
-    5.  Časový údaj a IP adresa při pokusu o zadání ověřovacího kódu z
-        dočasně zablokované IP adresy.
+    5.  Časový údaj, uživatelské jméno a IP adresa při úspěšné registraci do systému
+    
+    6.  Časový údaj a IP adresa při neúspěšném pokusu o registraci (obvykle kvůli zadání neplatných údajů)
+    
+    7.  Časový údaj a uživatelské jméno při automatickém přihlášení uživatele a případném přesměrování do systému společně se způsobem, jakým toho bylo docíleno (obnovení přihlášení pomocí souboru cookie uchovávající přihlášení, nalezen soubor cookie uchovávající přihlášení, uživatel je již přihlášen)
+    
+    8.  Časový údaj a uživatelské jméno při odhlášení se ze systému
+    
+    9.  Časový údaj a uživatelské jméno při pokusu o zažádání o změnu uživatelského jména na příliš krátké nebo dlouhé uživatelské jméno
+    
+    10. Časový údaj, uživatelské jméno a požadované uživatelské jméno při pokusu o změnu uživatelského jména na jméno používané jiným uživatelem
+    
+    11. Časový údaj, uživatelské jméno a požadované uživatelské jméno při úspěšném zažádání o změnu uživatelského jména, společně s informací, zda byla vytvořena nová žádost nebo přepsána žádost stávající
+    
+    12. Časový údaj a uživatelské jméno při pokusu o změnu e-mailové adresy na příliš dlouhý řetězec
+    
+    13. Časový údaj, uživatelské jméno a zadaná e-mailová adresa při pokusu o změnu e-mailové adresy na e-mailovou adresu používané jiným uživatelem nebo na neplatnou e-mailovou adresu
+    
+    14. Časový údaj, uživatelské jméno a IP adresa při odebrání e-mailové adresy z uživatelského profilu
+    
+    15. Časový údaj, uživatelské jméno, nová e-mailová adresa a IP adresa při úspěšné změně e-mailové adresy
+    
+    16. Časový údaj a uživatelské jméno při pokusu změnit si heslo a zadání neplatných údajů, společně s konkrétním typem chyby (příliš krátké nebo dlouhé staré nebo nové heslo, špatné staré heslo, nepovolené znaky v novém hesle, neshodné nové heslo s heslem pro potvrzení)
+    
+    17. Časový údaj, uživatelské jméno a IP adresa při úspěšné změně hesla
+    
+    18. Časový údaj a zadaná e-mailová adresa při pokusu o obnovení hesla a zadání e-mailové adresy, která je v neplatném formátu nebo není přidružena k žádnému účtu
+    
+    19. Časový údaj, zadaná e-mailová adresa a IP adresa při úspěšném požadavku na odeslání e-mailu s instrukcemi k obnově hesla
+    
+    20. Časový údaj a ID uživatele při neúspěšném pokusu změnit si heslo pomocí obnovovacího odkazu z e-mailu společně s charakteristikou chyby (příliš krátké nebo dlouhé nové heslo, nepovolené znaky v novém hesle, neshodné nové heslo s heslem pro potvrzení)
+    
+    21. Časový údaj, ID uživatele a IP adresa při úspěšném obnovení hesla pomocí obnovovacího odkazu z e-mailu.
         
-    6.  Časový údaj, IP adresa, zvolená poznávačka a přírodnina při
+    22. Časový údaj, uživatelské jméno, poskytnuté jméno a IP adresa při pokusu odstranit vlastní účet s použitím nevlastního přihlašovacího jména (v důsledku úpravy struktury stránky)
+    
+    23. Časový údaj, poskytnuté jméno a IP adresa při pokusu odstranit neexistující účet (obvykle v důsledku chyby na straně služby)
+    
+    24. Časový údaj, uživatelské jméno a IP adresa při odstraněnění vlastního uživatelského účtu
+        
+    25. Časový údaj, uživatelské jméno, zvolená poznávačka a přírodnina při úspěšném
         nahrání nového obrázku
         
-    7.  Časový údaj, IP adresa, zvolená poznávačka, zvolená přírodnina a
-        zadaná URL adresa při nahrání obrázku ve špatném formátu
+    26. Časový údaj, uživatelské jméno, zvolená poznávačka, přírodnina a typ chyby při neúspěšném pokusu o nahrání nového obrázku (například duplicitního obrázku)
         
-    8.  Časový údaj, IP adresa, zvolená poznávačka a ID přírodniny při
-        pokusu o nahrání duplicitního obrázku
-        
-    9.  Časový údaj, IP adresa a zvolená poznávačka při načtení obrázku
+    27. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
         na učící stránce
         
-    10. Časový údaj, IP adresa a zvolená poznávačka při načtení obrázku
+    28. Časový údaj, uživatelské jméno a zvolená poznávačka při načtení obrázku
         na testovací stránce
         
-    11. Časový údaj, IP adresa, zvolená poznávačka a ID obrázku při jeho
-        nahlášení
+    29. Časový údaj, uživatelské jméno, zvolená poznávačka a ID obrázku při jeho
+        nahlášení společně s udaným důvodem
         
-    12. Náhodná data způsobená chybami
+    30. Náhodná data způsobená chybami
     
 \* Výmaz statistiky probíhá v nepravidelných obdobích a statistika může
 být dále uchovávána mimo server.
@@ -186,4 +223,4 @@ povinnosti a závazky**.
 uchovávána** a v případě zjištění protiprávního jednání mohou být proti
 vám použita.
 
-##### *Platnost k 14. května 2019*
+##### *Platnost k 11. záři 2019*

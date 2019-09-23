@@ -13,7 +13,7 @@
     //Kontrola délky e-mailu
     if(mb_strlen($newEmail) > 255)
     {
-        filelog("Uživatel $username se pokusil změnit si e-mailovou adresu na $newEmail, avšak neuspěl z důvodu dlouhé nové e-mailové adresy.");
+        filelog("Uživatel $username se pokusil změnit si e-mailovou adresu, avšak neuspěl z důvodu dlouhé nové e-mailové adresy.");
         echo "swal('Email nesmí být delší než 255 znaků.','','error')";
         die();
     }

@@ -154,7 +154,7 @@ Vložené serverové skripty:
 		Zahrnuje se do: všechny stránky a AJAX skripty
 		Zaznamenává HTTP požadavek do databáze pro statistické účely
 	logger.php
-		Zahrnuje se do: všechny skripty logující akce do souboru, deleteAccount.php
+		Zahrnuje se do: deleteAccount.php, emailPasswordChange.php, getPics.php, getRandomPic.php, changeEmail.php, changePassword, changeUsername.php, login.php, logout.php, newPicture.php, newReport.php, recoverPassword.php, register.php, verification.php
 		Definuje funkci sloužící k logování zpráv do logovacího souboru
 	verification.php
 		Zahrnuje se do: všechny zobrazované stránky kromě emailPasswordRecovery.php
