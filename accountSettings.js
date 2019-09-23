@@ -120,6 +120,48 @@ function updateEmail(newEmail)
 
 /*-----------------------------------------------------------------------------*/
 
+function deleteAccount()
+{
+	document.getElementById("deleteAccountButton").style.display = "none";
+	document.getElementById("deleteAccountInput1").style.display = "inline-block";
+}
+
+function deleteAccountVerify()
+{
+	var password = document.getElementById("deleteAccountInputField").value;
+	
+	postRequest("checkPassword.php", deleteAccountConfirm, responseFunc, null, password);
+}
+
+function deleteAccountConfirm(response)
+{
+	if (response === "ok")
+	{
+	document.getElementById("deleteAccountInput2").style.display = "inline-block";
+	document.getElementById("deleteAccountInput1").style.display = "none";
+	}
+	else
+	{
+		swal("Špatné heslo.","","error");
+		document.getElementById("deleteAccountInputField").value = "";
+	}
+}
+
+function deleteAccountFinal()
+{
+	var pass = document.getElementById("deleteAccountInputField").value;
+	var username = document.getElementById("username").innerText;
+	postRequest("deleteAccount.php", responseFunc, null, username, pass);
+}
+
+function deleteAccountCancel()
+{
+	document.getElementById("deleteAccountButton").style.display = "inline-block";
+	document.getElementById("deleteAccountInput2").style.display = "none";
+}
+
+/*-----------------------------------------------------------------------------*/
+
 function getRequest(url, success = null, error = null){
 	var req = false;
 	//Creating request

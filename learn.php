@@ -43,31 +43,31 @@
     			</select>
     			<br>
     			<button onclick="prev(event)" class="button">
-				<kbd>S</kbd>
 				Předchozí přírodnina
+				<kbd>[S]</kbd>
 			</button>
     			<button onclick="next(event)" class="button">
-				<kbd>W</kbd>
 				Následující přírodnina
+				<kbd>[W]</kbd>
 			</button>
     		</fieldset>
     		<fieldset>
     			<table>
     				<tr>
-    					<td>
-    						<button onclick="prevImg()" id="prevImg">
-							<kbd>A</kbd>
-							<img src="arrow.png" style="transform: rotate(180deg);" />
-						</button>
+					<td class=>
+    						<button onclick="prevImg()" class="learn_button" id="prevImg">
+							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
+                            <kbd>[A]</kbd>
+						    </button>
     					</td>
     					<td>
     						<img id="image" class="img" src="imagePreview.png">
     					</td>
     					<td>
-    						<button onclick = "nextImg()" id="nextImg">
-							<kbd>D</kbd>
-							<img src="arrow.png" />
-						</button>
+    						<button onclick = "nextImg()" class="learn_button" id="nextImg">
+							<img src="arrow.png" /><br>
+                            <kbd>[D]</kbd>
+						    </button>
     					</td>
     				</tr>
     			</table>

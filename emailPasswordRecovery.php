@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<!-- <link rel="stylesheet" type="text/css" href="css.css"> -->
+		<link rel="stylesheet" type="text/css" href="css.css">
 		<script type="text/javascript" src="emailPasswordRecovery.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Obnova hesla</title>
@@ -47,10 +47,10 @@
     
     //KÓD JE OK
 ?>
-		<div>
-			<input type=password maxlength=31 placeholder="Nové heslo" id="pass" required=true />
-			<input type=password maxlength=31 placeholder="Nové heslo znovu" id="repass" required=true />
-			<button onclick="changePassword()">Změnit heslo</button>
-		</div>
+		<main id="pw_recovery">
+			<input class="text" type=password maxlength=31 placeholder="Nové heslo" id="pass" required=true /><br>
+			<input class="text" type=password maxlength=31 placeholder="Nové heslo znovu" id="repass" required=true /><br>
+			<button class="button" onclick="changePassword()">Změnit heslo</button>
+		</main>
 	</body>
 </html>

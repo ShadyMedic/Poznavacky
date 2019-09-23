@@ -93,20 +93,35 @@ header {
     background-color: #405d27;
     display: block;
     color: #fff;
-    height: 7vh;  
+    /*height: 7vh;  */
     text-align: center;
     }
 h1 {
     font-size: 4vh;
     line-height: 7vh;
+    display: block;
+    background: #405d27
     }
 #menuHeading {
     line-height: 7vh;
     font-size: 4vh;
+    display: block;
+    background: #405d27
 	}
 #menuHeading a {
     color: #fff;
     }
+nav {
+    background: #4e792c;
+    padding: 6px;
+}
+nav a {
+    color: #fff;
+    margin: 0px 8px;
+}
+nav a:hover {
+    text-decoration: underline;
+}
 /* ----------------------------------------------------------------------footer styly */
 footer {
 	background-color: #405d27;
@@ -153,7 +168,7 @@ div.prikaz {
 table {
     margin: auto;
     }
-td button {
+.learn_button{
 	height: 25vw;
 	text-align: center;
     margin: 0 6px;
@@ -188,86 +203,121 @@ td kbd {
     border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
-#main_kod {
-    width: 360px;
-	height: fit-content;
+#registrace, #prihlaseni, #pw_recovery {
+    width: fit-content;
+    max-width: 60vw;
+    padding: 1em 2em;
     background-color: #fff;
     margin: 20vh auto;
     border-radius: 6px;
     }
-#registrace, #prihlaseni, #obnoveniHesla{
-    position: relative;
-    padding: 18px 0;
-    margin: auto
-    }
-span#span_kod {
-    font-size: 24px;
-    }
-form {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    }
-#kod form {
-    margin: 6px auto;
-    }
-#kod_input {
-    width: 160px;
-	height: 28px;
-    font-size: 16px;
-    margin: 2px 0;
-    }
-.big_checkbox {
-	transform: scale(1.5);
+#registrace a, #prihlaseni a{
+    color: #405d27;
 }
+#registrace a:hover, #prihlaseni a:hover{
+    text-decoration: underline;
+}
+.udaje {
+    margin: 0.2em;
+}
+.checkbox {
+    height: 0.2em;
+    margin: 0.2em;
+}
+/* --------------------------------- custom checkbox, credits: https://codepen.io/GeoffreyCrofte/pen/BiHzp */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 1.95em;
+  cursor: pointer;
+}
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 1em; height: 1em;
+  border: 2px solid #ccc;
+  background: #fff;
+}
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '\2713\0020';
+  position: absolute;
+  top: .15em; left: .15em;
+  font-size: 1.3em;
+  line-height: 0.8;
+  color: #3e4444;
+}
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+[type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+[type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+label:hover:before {
+  border: 2px solid #405d27!important;
+}
+
+#obnoveniHesla {
+    width: 50vw;
+    background-color: #fff;
+    border-radius: 6px;
+    margin: 20vh auto;
+    padding: 6px;
+}
+
 .confirm {
 	width: 160px;
 }
 #loginErrors, #registerErrors, #passwordRecoveryErrors{
-	padding-top: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
+    margin: 0.4em;
     color: red;
-    list-style: inside;
-    text-align: left;
+    text-align: center;
+    height: fit-content;
 }
 #cookiesAlert{
-	background-color: #7eb35c;
-	font-size: 2vh;
-	height: 5vh;
-    line-height: 5vh;
+	background-color: #3e4444;
+	font-size: 0.9em;
+    line-height: 6vh;
     width: 100%;
     flex-shrink: 0;    
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-	font-weight: bold;
-    color: #000;
+    color: #fff;
 }
-#cookiesAlertCloser{
-	display: block;
-    height: 5vh;
-    width: 5vh;
-    font-size: 5vh;
-  /*border: 2px outset #4e832c;*/
-	color: #900;
-	border-radius: 4vh;
-	cursor: pointer;
+#cookiesAlert div {
+    margin: 0.8vh 1vw;
+    padding: 0.2vh 0.5vw;
 }
 #cookiesAlertCloser:hover{
-	border: 2px inset #4e832c;
+    cursor: pointer;
 }
 #span_terms{
 	font-size: 12px;
 }
-#span_terms a{
-	text-decoration: underline;
-}
 /* -----------------------------------------------------------------------------list stranka */
-/* changelog styly */
+/* ----------------------------------------------------changelog styly */
 #changelogOverlay {
 	z-index: 9;
 	position: absolute;
@@ -303,16 +353,6 @@ form {
     margin: 4px;
     text-align:center;
 }
-/*#changelog hr {
-	border-color: yellowgreen;
-	margin-top: 1px;
-	margin-bottom: 0.5em;
-}
-#changelogText hr{
-	border-color: yellowgreen;
-	margin-top: 0.5em;
-	margin-bottom: 1px;
-}*/
 #changelogMsg #general {
 	list-style-type: disc;
 	list-style-position: inside;
@@ -331,9 +371,9 @@ form {
 #changelogMsg ul li {
 	margin: 0.4em;
 }
-/* zbytek str�nky */
+/* -----------------------------------------------------zbytek stránky */
 #listTable {
-	max-height: 80vh;
+	/*max-height: 80vh;*/
     border: 12px solid #fff;
     margin: 4vh auto;
     background-color: #fff;
@@ -363,11 +403,25 @@ th {
 	}
 .listPics {
 	min-width: 10vw;
-	}
+    }
+/* ------------------------------------------------------------------accountSettings tabulka */
+#static_info {
+    margin: 6px auto;
+}
+#static_info td, #static_info th {
+    padding: 4px 18px;
+}
+#static_info tr {
+    border-bottom: 1px solid #ccc;
+}
+#static_info tr#tr_end {
+    border-bottom: 0px solid white;
+}
 /* --------------------------------------------------------tlacitka, droplisty, textova okna */
 .button {
     background-color: #405d27;
     color: #fff;
+    box-sizing: border-box;
     height: 28px;
     font-family: Century Gothic, Verdana, sans-serif;
     padding: 4px 8px;
@@ -498,8 +552,8 @@ div.menu:hover {
     margin: auto;
     }
 /* ------------------------------------------------------------------@media */
-@media (max-aspect-ratio: 1/1) {
-    main.basic_main {
+@media (max-aspect-ratio: 6/5) {
+    main.basic_main, #obnoveniHesla {
         width: 85vw;
         }
     .img {
@@ -531,6 +585,9 @@ div.menu:hover {
         margin: 2.24vh auto;
         line-height: 27vh;
         }
+    #listTable {
+        margin: 7vh auto;
+    }
     .listNames {
     	min-width: 40vw;
     	}
@@ -548,7 +605,7 @@ div.menu:hover {
         }
     }    
 @media (max-aspect-ratio: 5/8) {
-    main.basic_main {
+    main.basic_main, #obnoveniHesla {
         width: 95vw;
         }
     .img {

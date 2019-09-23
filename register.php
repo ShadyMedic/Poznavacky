@@ -125,7 +125,7 @@
         
         foreach ($errors as $err)
         {
-            echo "<li>$err</li>";
+            echo "<span>$err</span>";
         }
         die();
     }
