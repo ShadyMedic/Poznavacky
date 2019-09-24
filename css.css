@@ -80,9 +80,9 @@ body {
 main.basic_main {
     width: 50%;
     background-color: #fff;
-    border-radius: 6px;
+    border-radius: 0.375em;
     margin: 2.4vh auto;
-    padding: 6px;
+    padding: 0.375em;
     }   
 fieldset {
     width: 80%;
@@ -93,7 +93,6 @@ header {
     background-color: #405d27;
     display: block;
     color: #fff;
-    /*height: 7vh;  */
     text-align: center;
     }
 h1 {
@@ -113,11 +112,11 @@ h1 {
     }
 nav {
     background: #4e792c;
-    padding: 6px;
+    padding: 0.375em;
 }
 nav a {
     color: #fff;
-    margin: 0px 8px;
+    margin: 0 0.5em;
 }
 nav a:hover {
     text-decoration: underline;
@@ -154,15 +153,15 @@ footer {
     }  
 /* ------------------------------------------------styly obsahu hlavni casti */
 div.prikaz {
-    margin: 2px auto;
+    margin: 0.125em auto;
     }
 /* -------------------------------------------------obrazky + posun obrazku */
 .img{
 	width: 25vw;
 	height: 25vw;;
-    margin: 4px auto;
+    margin: 0.25em auto;
     box-sizing: border-box;
-    border: 2px solid #405d27;
+    border: 0.125em solid #405d27;
 	object-fit: contain;
 }
 table {
@@ -171,7 +170,7 @@ table {
 .learn_button{
 	height: 25vw;
 	text-align: center;
-    margin: 0 6px;
+    margin: 0 0.375em;
     background-color: #405d27;
     transition: background 0.2s;
 }
@@ -179,7 +178,7 @@ td button img {
 	height: 3vw;
 	width: 3vw;
     position: relative;
-    top: 10px;   
+    top: 0.625em;   
 }
 td {
 	vertical-align: middle;
@@ -187,20 +186,20 @@ td {
 kbd {
 	color: #fff;
     font-family: Century Gothic, Verdana, sans-serif;
-    line-height: 20px;
-    font-size: 16px;
-    height: 20px;
+    line-height: 1.25em;
+    font-size: 1em;
+    height: 1.25em;
 	display: inline-block;
     }
 td kbd {
     position: relative;
-    top: 10px;    
+    top: 0.625em;    
     }
 #prevImg {
-    border-radius: 6px 0 0 6px;
+    border-radius: 0.375em 0 0 0.375em;
     }
 #nextImg {
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 0.375em 0.375em 0;
     }
 /* -------------------------------------------------------------------index stranka */
 #registrace, #prihlaseni, #pw_recovery {
@@ -209,7 +208,7 @@ td kbd {
     padding: 1em 2em;
     background-color: #fff;
     margin: 20vh auto;
-    border-radius: 6px;
+    border-radius: 0.375em;
     }
 #registrace a, #prihlaseni a{
     color: #405d27;
@@ -281,13 +280,9 @@ label:hover:before {
 #obnoveniHesla {
     width: 50vw;
     background-color: #fff;
-    border-radius: 6px;
+    border-radius: 0.375em;
     margin: 20vh auto;
-    padding: 6px;
-}
-
-.confirm {
-	width: 160px;
+    padding: 0.375em;
 }
 #loginErrors, #registerErrors, #passwordRecoveryErrors{
     margin: 0.4em;
@@ -314,7 +309,7 @@ label:hover:before {
     cursor: pointer;
 }
 #span_terms{
-	font-size: 12px;
+	font-size: 0.75em;
 }
 /* -----------------------------------------------------------------------------list stranka */
 /* ----------------------------------------------------changelog styly */
@@ -335,8 +330,8 @@ label:hover:before {
     right: 0;
 	margin: auto;
 	border: 5px solid #405d27;
-	border-radius: 10px;
-	padding: 20px;
+	border-radius: 0.625em;
+	padding: 1.25em;
 	height: fit-content;
     width: 40vw;
 	color: #3e4444;
@@ -344,13 +339,13 @@ label:hover:before {
 	text-align: left;
 }
 #changelogMsg {
-	margin: 10px auto;
+	margin: 0.625em auto;
     overflow-y: auto;
     max-height: 40vh;
 }
 #changelogText h2 {
 	font-size: 1.5em;
-    margin: 4px;
+    margin: 0.25em;
     text-align:center;
 }
 #changelogMsg #general {
@@ -373,20 +368,18 @@ label:hover:before {
 }
 /* -----------------------------------------------------zbytek stránky */
 #listTable {
-	/*max-height: 80vh;*/
     border: 12px solid #fff;
     margin: 4vh auto;
     background-color: #fff;
-    border-radius: 6px;
+    border-radius: 0.375em;
     border-collapse: separate;
 	}  
 #listTable th, #listTable td {
-    padding: 2px;
+    padding: 0.125em;
     }
 .listRow {
 	margin: 0;
 	cursor: pointer;
-    border-radius: 6px;
 	}
 .listRow:hover {
 	background-color: #405d27;
@@ -406,10 +399,10 @@ th {
     }
 /* ------------------------------------------------------------------accountSettings tabulka */
 #static_info {
-    margin: 6px auto;
+    margin: 0.375em auto;
 }
 #static_info td, #static_info th {
-    padding: 4px 18px;
+    padding: 0.25em 1.125em;
 }
 #static_info tr {
     border-bottom: 1px solid #ccc;
@@ -422,12 +415,12 @@ th {
     background-color: #405d27;
     color: #fff;
     box-sizing: border-box;
-    height: 28px;
+    height: 1.75em;
     font-family: Century Gothic, Verdana, sans-serif;
-    padding: 4px 8px;
-    margin: 4px;
+    padding: 0.25em 0.5em;
+    margin: 0.25em;
     transition: background 0.2s;
-    font-size: 14px;
+    font-size: 0.9em;
     }
 .button:hover, button:hover, #duckLink_div:hover {
     background-color: #3e4444;
@@ -442,35 +435,35 @@ th {
     outline: none;
     }
 #duckLogo {
-    margin: 4px;
-    width: 20px;
-    height: 20px;
+    margin: 0.25em;
+    width: 1.25em;
+    height: 1.25em;
     position: relative;
     }
 #duckLink span {
     position: relative;
-    top: -10px;
+    top: -0.625em;
     }
 #duckLink_div {
     background: #406d27;
-    height: 28px;
-    width: 144px;
-    margin: 4px auto;
-    font-size: 14px;
+    height: 1.75em;
+    width: 9em;
+    margin: 0.25em auto;
+    font-size: 0.9em;
     transition: 0.2s;
     }
 #duckLink_div a {
     color: #fff;
-    font-size: 14px;
+    font-size: 0.9em;
     }
 .buttonDisabled {
     background-color: #aeaeae;
     color: #fff;
-    height: 28px;
+    height: 1.75em;
     font-family: Century Gothic, Verdana, sans-serif;
-    padding: 4px 8px;
-    margin: 4px;
-    font-size: 14px;
+    padding: 0.25em 0.5em;
+    margin: 0.25em;
+    font-size: 0.9em;
     }
 .buttonDisabled:hover, .buttonDisabled:active {
     background-color: #aeaeae;
@@ -480,21 +473,21 @@ th {
     box-sizing: border-box;
     font-family: Century Gothic, Verdana, sans-serif;
     color: #3e4444;
-    padding: 2px 6px;
-    height: 28px;
-    border: 2px solid #405d27;
-    margin: 4px;
-    font-size: 14px;
+    padding: 0.125em 0.375em;
+    height: 1.75em;
+    border: 0.125em solid #405d27;
+    margin: 0.25em;
+    font-size: 0.9em;
 }
 .text#dropList {
-    padding: 2px 2px;
+    padding: 0.125em 0.125em;
     }
 .text:focus {
     outline: none;
-    border: 2px solid #3e4444;
+    border: 0.125em solid #3e4444;
     }
 #dropList {
-    width: 180px;
+    width: 11.25em;
     }
 #dropList:hover{
     cursor: pointer;
@@ -521,7 +514,7 @@ div.menu{
     margin: 2.24vh auto;
     background-color: #fff;
     box-sizing: border-box;
-    border-radius: 6px;
+    border-radius: 0.375em;
     transition: background 0.2s;
     }
 div.menu:hover {
@@ -545,10 +538,10 @@ div.menu:hover {
 	}
 #nextButton{
 	display: none;
-	margin: 4px auto;
+	margin: 0.25em auto;
 	}
 #correctAnswer, #wrongAnswer {
-    padding: 4px;
+    padding: 0.25em;
     margin: auto;
     }
 /* ------------------------------------------------------------------@media */
@@ -605,6 +598,9 @@ div.menu:hover {
         }
     }    
 @media (max-aspect-ratio: 5/8) {
+    body{
+        font-size: 22px;
+        }
     main.basic_main, #obnoveniHesla {
         width: 95vw;
         }
