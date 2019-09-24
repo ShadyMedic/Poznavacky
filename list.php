@@ -12,7 +12,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<script type="text/javascript" src="list.js"></script>
 		<title>Poznávačky</title>

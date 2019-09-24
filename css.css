@@ -70,7 +70,7 @@ body {
     text-align: center;
     color: #3e4444;
     font-family: Century Gothic, Verdana, sans-serif;
-    font-size: 16px;
+    font-size: 100%;
     line-height: 1.3em;
     background: url(bg1.jpg) no-repeat center fixed;
     background-size: cover; 
@@ -78,9 +78,9 @@ body {
     flex-direction: column;   
     }
 main.basic_main {
-    width: 50%;
+    width: 50vw;
     background-color: #fff;
-    border-radius: 0.375rem;
+    border-radius: 6px;
     margin: 2.4vh auto;
     padding: 0.375rem;
     }   
@@ -96,7 +96,7 @@ header {
     text-align: center;
     }
 h1 {
-    font-size: 4vh;
+    font-size: 2em;
     line-height: 7vh;
     display: block;
     background: #405d27
@@ -164,7 +164,7 @@ div.prikaz {
 	height: 25vw;;
     margin: 0.25rem auto;
     box-sizing: border-box;
-    border: 0.125rem solid #405d27;
+    border: 2px solid #405d27;
 	object-fit: contain;
 }
 table {
@@ -199,10 +199,10 @@ td .key_short {
     top: 0.625rem;    
     }
 #prevImg {
-    border-radius: 0.375rem 0 0 0.375rem;
+    border-radius: 6px 0 0 6px;
     }
 #nextImg {
-    border-radius: 0 0.375rem 0.375rem 0;
+    border-radius: 0 6px 6px 0;
     }
 /* -------------------------------------------------------------------index stranka */
 #registrace, #prihlaseni, #pw_recovery {
@@ -211,7 +211,7 @@ td .key_short {
     padding: 1rem 2rem;
     background-color: #fff;
     margin: 20vh auto;
-    border-radius: 0.375rem;
+    border-radius: 6px;
     }
 #registrace a, #prihlaseni a{
     color: #405d27;
@@ -283,7 +283,7 @@ label:hover:before {
 #obnoveniHesla {
     width: 50vw;
     background-color: #fff;
-    border-radius: 0.375rem;
+    border-radius: 6px;
     margin: 20vh auto;
     padding: 0.375rem;
 }
@@ -333,7 +333,7 @@ label:hover:before {
     right: 0;
 	margin: auto;
 	border: 5px solid #405d27;
-	border-radius: 0.625rem;
+	border-radius: 10px;
 	padding: 1.25rem;
 	height: fit-content;
     width: 40vw;
@@ -371,18 +371,19 @@ label:hover:before {
 }
 /* -----------------------------------------------------zbytek stránky */
 #listTable {
+    width: 40vw;
     border: 0.75em solid #fff;
     margin: 4vh auto;
     background-color: #fff;
-    border-radius: 0.375rem;
+    border-radius: 6px;
     border-collapse: separate;
 	}  
 #listTable th, #listTable td {
     padding: 0.125rem;
     }
-.listRow {
+.listRow, {
 	margin: 0;
-	cursor: pointer;
+    cursor: pointer;
 	}
 .listRow:hover {
 	background-color: #405d27;
@@ -392,24 +393,27 @@ th {
 	font-weight: bold;
 	}
 .listNames {
-	min-width: 20vw;
+	min-width: 50%;
 	}
 .listNaturals {
-	min-width: 10vw;
+	min-width: 25%;
 	}
 .listPics {
-	min-width: 10vw;
+	min-width: 25%;
     }
 /* ------------------------------------------------------------------accountSettings tabulka */
 #static_info {
     margin: 0.375rem auto;
+    width: 95%;
 }
-#static_info td, #static_info th {
+#static_info td {
     padding: 0.25rem 1.125rem;
+    /*display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;*/
 }
 #static_info tr {
     border-bottom: 1px solid #ccc;
-    word-wrap: break-word;
 }
 #static_info tr#tr_end {
     border-bottom: 0px solid white;
@@ -479,7 +483,7 @@ th {
     color: #3e4444;
     padding: 0.125rem 0.375rem;
     line-height: 1.2rem;
-    border: 0.125rem solid #405d27;
+    border: 2px solid #405d27;
     margin: 0.25rem;
     font-size: 0.9rem;
 }
@@ -488,7 +492,7 @@ th {
     }
 .text:focus {
     outline: none;
-    border: 0.125rem solid #3e4444;
+    border: 2px solid #3e4444;
     }
 #dropList {
     width: 11.25rem;
@@ -518,7 +522,7 @@ div.menu{
     margin: 2.24vh auto;
     background-color: #fff;
     box-sizing: border-box;
-    border-radius: 0.375rem;
+    border-radius: 6px;
     transition: background 0.2s;
     }
 div.menu:hover {
@@ -549,17 +553,28 @@ div.menu:hover {
     margin: auto;
     }
 /* ------------------------------------------------------------------@media */
-@media (max-aspect-ratio: 6/5) {
-    main.basic_main, #obnoveniHesla {
-        width: 85vw;
+@media screen and (max-width: 960px) {
+    main.basic_main {
+        width: fit-content;
+    }
+    #listTable {
+        width: 50vw;
+    }
+}
+@media screen and (max-width: 768px) {
+    main.basic_main {
+        width: fit-content;
         }
+    #obnoveniHesla {
+        width: 80vw;
+    }
     .img {
 	    width: 55vw;
         height: 55vw;
        }
     .learn_button{
         height: 55vw;
-        }*/
+        }
     td button img {
         width: 4.5vw;
         height: 4.5vw;
@@ -568,7 +583,7 @@ div.menu:hover {
         height: 6vh;  
         }
     h1 {
-        font-size: 3vh;
+        font-size: 1.4em;
         line-height: 6vh;
         }
     #menuHeading {
@@ -584,16 +599,8 @@ div.menu:hover {
         }
     #listTable {
         margin: 7vh auto;
+        width: 60vw;
     }
-    .listNames {
-    	min-width: 40vw;
-    	}
-    .listNaturals {
-    	min-width: 20vw;
-    	}
-    .listPics {
-	    min-width: 20vw;
-        }
     #changelog {
         width: 60vw;
         }
@@ -601,12 +608,18 @@ div.menu:hover {
         max-height:50vh;
         }
     }    
-@media (max-aspect-ratio: 5/8) {
-    body{
-        font-size: 20px;
-        }
+@media only screen and (max-width: 576px) {
     main.basic_main, #obnoveniHesla {
-        width: 95vw;
+        width: 90vw;
+        }
+    #static_info {
+        width: 90%;
+    }
+    #static_info td {
+        padding: 0.25rem 1.125rem;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
         }
     .img {
 	    width: 60vw;
@@ -623,12 +636,12 @@ div.menu:hover {
         height: 6vh;  
         }
     h1 {
-        font-size: 2vh;
+        font-size: 1.2em;
         line-height: 6vh;
         }
     #menuHeading {
         line-height: 6vh;
-        font-size: 2vh;
+        font-size: 1em;
 	    }
     div.menu {
         font-size: 3vh;

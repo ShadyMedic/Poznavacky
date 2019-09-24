@@ -25,7 +25,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css.css">
         <title>Menu: <?php echo $_SESSION['current'][1]; ?></title>
     </head>
