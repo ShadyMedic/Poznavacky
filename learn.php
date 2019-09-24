@@ -44,11 +44,11 @@
     			<br>
     			<button onclick="prev(event)" class="button">
 				Předchozí přírodnina
-				<kbd>[S]</kbd>
+				<span class="key_short">[S]</span>
 			</button>
     			<button onclick="next(event)" class="button">
 				Následující přírodnina
-				<kbd>[W]</kbd>
+				<span class="key_short">[W]</span>
 			</button>
     		</fieldset>
     		<fieldset>
@@ -57,7 +57,7 @@
 					<td class=>
     						<button onclick="prevImg()" class="learn_button" id="prevImg">
 							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
-                            <kbd>[A]</kbd>
+                            <span class="key_short">[A]</span>
 						    </button>
     					</td>
     					<td>
@@ -66,7 +66,7 @@
     					<td>
     						<button onclick = "nextImg()" class="learn_button" id="nextImg">
 							<img src="arrow.png" /><br>
-                            <kbd>[D]</kbd>
+                            <span class="key_short">[D]</span>
 						    </button>
     					</td>
     				</tr>
