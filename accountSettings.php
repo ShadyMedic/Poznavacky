@@ -15,7 +15,7 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Správa účtu</title>
 		<style>
-			#changeNameInput, #changeEmailInput, #changePasswordInput1, #changePasswordInput2, #changePasswordInput3, #deleteAccountInput1, #deleteAccountInput2 {
+			#changeNameInput, #changePasswordInput1, #changePasswordInput2, #changePasswordInput3, #changeEmailInput1, #changeEmailInput2, #deleteAccountInput1, #deleteAccountInput2 {
     			display: none;
 				}
 		</style>
@@ -69,9 +69,14 @@
 					<td class='table_right' id="emailAddress"><?php echo $userdata['email']; ?></td>
 					<td class='table_action'>
 						<button class="button" id="changeEmailButton" onclick="changeEmail()">Změnit</button>
-						<div id="changeEmailInput">
+						<div id="changeEmailInput1">
+							<input class="text" id="changeEmailPasswordInputField" type=password placeholder="Heslo pro ověření" maxlength=31 />
+							<button class="button" id="changeEmailNext" onclick="changeEmailVerify()">Dále</button>
+						</div>
+						<div id="changeEmailInput2">
 							<input class="text" id="changeEmailInputField" type=text placeholder="Nový e-mail" maxlength=255 />
-							<button class="button" id="changeEmailConfirm" onclick="confirmEmailChange()">OK</button>
+							<button class="button" id="changeEmailBack" onclick="changeEmail()">Zpět</button>
+							<button class="button" id="changeEmailConfirm" onclick="confirmEmailChange()">Potvrdit</button>
 						</div>
 					</td>
 				</tr>

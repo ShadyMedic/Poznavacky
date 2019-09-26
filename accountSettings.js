@@ -79,7 +79,30 @@ function confirmPasswordChange()
 function changeEmail()
 {
 	document.getElementById("changeEmailButton").style.display = "none";
-	document.getElementById("changeEmailInput").style.display = "block";
+	document.getElementById("changeEmailInput2").style.display = "none";
+	document.getElementById("changeEmailInput1").style.display = "block";
+}
+
+function changeEmailVerify()
+{
+	var password = document.getElementById("changeEmailPasswordInputField").value;
+	
+	postRequest("checkPassword.php", changeEmailStage2, responseFunc, null, password);
+}
+
+function changeEmailStage2(response)
+{
+	if (response === "ok")
+	{
+		document.getElementById("changeEmailButton").style.display = "none";
+		document.getElementById("changeEmailInput1").style.display = "none";
+		document.getElementById("changeEmailInput2").style.display = "block";
+	}
+	else
+	{
+		swal("Špatné heslo.","","error");
+		document.getElementById("changeEmailPasswordInputField").value = "";
+	}
 }
 
 function confirmEmailChange()
