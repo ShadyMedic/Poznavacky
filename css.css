@@ -57,10 +57,13 @@ q:before, q:after {
 /* -------------------------------------------------------------------------------hlavni */
 :root {
     --hlbarva1: #405d27; /*paleta 1*/
-    --hlbarva2: #568630; /*paleta 2*/
+    --hlbarva2: #587e36; /*paleta 2*/
     --hlbarva3: #3e4444; /*text atd.*/
     --bila: #fff; /*pozadi*/
     --cervena: #a51919; /*chyby*/
+    --zelena: #427226; /*spravne*/
+    --seda: #aeaeae;
+    --seda2: #ccc;
 }
 html, body {
     margin: 0;
@@ -152,7 +155,7 @@ footer {
     text-decoration: underline;
     }
 .footerOption#about {
-    color: #ccc;
+    color: var(--seda2);
     }
 .footerOption#about:hover {
     cursor: auto;
@@ -221,7 +224,7 @@ td .key_short {
     border-radius: 6px;
     }
 #registrace a, #prihlaseni a{
-    color: var(--hlbarva2);
+    color: var(--hlbarva1);
 }
 #registrace a:hover, #prihlaseni a:hover{
     text-decoration: underline;
@@ -421,7 +424,7 @@ th {
     justify-content: space-around;*/
 }
 #static_info tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--seda2);
 }
 #static_info tr#tr_end {
     border-bottom: 0px solid var(--bila);
@@ -473,7 +476,7 @@ th {
     font-size: 0.9rem;
     }
 .buttonDisabled {
-    background-color: #aeaeae;
+    background-color: var(--seda);
     color: var(--bila);
     line-height: 1.2rem;
     font-family: Century Gothic, Verdana, sans-serif;
@@ -482,7 +485,7 @@ th {
     font-size: 0.9rem;
     }
 .buttonDisabled:hover, .buttonDisabled:active {
-    background-color: #aeaeae;
+    background-color: var(--seda);
     cursor: auto;
     }
 .text {
@@ -542,7 +545,7 @@ div.menu:hover {
 	display: block;
 	}
 #correctAnswer{
-	color: #00AA00;
+	color: var(--zelena);
 	display: none;
 	}
 #wrongAnswer{
@@ -620,6 +623,9 @@ div.menu:hover {
     main.basic_main, #obnoveniHesla {
         width: 90vw;
         }
+    #registrace, #prihlaseni, #pw_recovery {
+        margin: 10vh auto;
+    }
     #static_info {
         width: 90%;
     }
