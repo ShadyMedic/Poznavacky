@@ -61,9 +61,9 @@
     	</main>
     </div>
 		<footer>
-			<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a></div>
-			<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
-			<div class="footerOption"><a href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>Podmínky služby</a></div>
+			<div id="help" class="footerOption"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a></div>
+			<div id="issues" class="footerOption" onclick="showLogin()"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+			<div class="footerOption"><a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>Podmínky služby</a></div>
 			<div id="about" class="footerOption">&copy Štěchy a Eksyska, 2019</div>
          	<script>
              	function showLogin()
