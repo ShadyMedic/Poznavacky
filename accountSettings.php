@@ -106,7 +106,7 @@
 				</tr>
 			</table>
 			
-			<button class="button" id="deleteAccountButton" onclick="deleteAccount()" style="background-color: #FF4077;">Odstranit účet</button>
+			<button class="button" id="deleteAccountButton" onclick="deleteAccount()">Odstranit účet</button>
 			<div id="deleteAccountInput1">
 				<input class="text" id="deleteAccountInputField" type=password placeholder="Zadejte své heslo" maxlength=31 />
 				<button class="button" id="deleteAccountConfirm" onclick="deleteAccountVerify()">OK</button>
