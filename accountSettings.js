@@ -26,11 +26,26 @@ function changePassword()
 	document.getElementById("changePasswordInput1").style.display = "block";
 }
 
-function changePasswordStage2()
+function changePasswordVerify()
 {
-	document.getElementById("changePasswordInput1").style.display = "none";
-	document.getElementById("changePasswordInput3").style.display = "none";
-	document.getElementById("changePasswordInput2").style.display = "block";
+	var password = document.getElementById("changePasswordInputFieldOld").value;
+	
+	postRequest("checkPassword.php", changePasswordStage2, responseFunc, null, password);
+}
+
+function changePasswordStage2(response)
+{
+	if (response === "ok")
+	{
+		document.getElementById("changePasswordInput1").style.display = "none";
+		document.getElementById("changePasswordInput3").style.display = "none";
+		document.getElementById("changePasswordInput2").style.display = "block";
+	}
+	else
+	{
+		swal("Špatné heslo.","","error");
+		document.getElementById("changePasswordInputFieldOld").value = "";
+	}
 }
 
 function changePasswordStage3()

@@ -50,7 +50,7 @@
 						<button class="button" id="changePasswordButton" onclick="changePassword()">Změnit</button>
 						<div id="changePasswordInput1">
 							<input class="text" id="changePasswordInputFieldOld" type=password placeholder="Staré heslo" maxlength=31 />
-							<button class="button" id="changePasswordNext1" onclick="changePasswordStage2()">Dále</button>
+							<button class="button" id="changePasswordNext1" onclick="changePasswordVerify()">Dále</button>
 						</div>
 						<div id="changePasswordInput2">
 							<input class="text" id="changePasswordInputFieldNew" type=password placeholder="Nové heslo" maxlength=31 />
