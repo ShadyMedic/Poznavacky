@@ -39,7 +39,7 @@
 						<button class="button" id="changeNameButton" onclick="changeName()">Vyžádat změnu</button>
 						<div id="changeNameInput">
 							<input class="text" id="changeNameInputField" type=text placeholder="Nové jméno" maxlength=15 />
-							<button class="button" id="changeNameConfirm" onclick="confirmNameChange()">OK</button>
+							<button class="button" id="changeNameConfirm" onclick="confirmNameChange()">Potvrdit</button>
 						</div>
 					</td>
 				</tr>
@@ -54,13 +54,13 @@
 						</div>
 						<div id="changePasswordInput2">
 							<input class="text" id="changePasswordInputFieldNew" type=password placeholder="Nové heslo" maxlength=31 />
-							<button class="button" id="changePasswordBack2" onclick="changePassword()">Zpět</button>
 							<button class="button" id="changePasswordNext2" onclick="changePasswordStage3()">Dále</button>
+							<button class="button" id="changePasswordBack2" onclick="changePassword()">Zpět</button>
 						</div>
 						<div id="changePasswordInput3">
 							<input class="text" id="changePasswordInputFieldReNew" type=password placeholder="Nové heslo znovu" maxlength=31 />
-							<button class="button" id="changePasswordBack3" onclick="changePasswordStage2()">Zpět</button>
 							<button class="button" id="changePasswordConfirm" onclick="confirmPasswordChange()">Potvrdit</button>
+							<button class="button" id="changePasswordBack3" onclick="changePasswordStage2()">Zpět</button>
 						</div>
 					</td>
 				</tr>
@@ -75,8 +75,8 @@
 						</div>
 						<div id="changeEmailInput2">
 							<input class="text" id="changeEmailInputField" type=text placeholder="Nový e-mail" maxlength=255 />
-							<button class="button" id="changeEmailBack" onclick="changeEmail()">Zpět</button>
 							<button class="button" id="changeEmailConfirm" onclick="confirmEmailChange()">Potvrdit</button>
+							<button class="button" id="changeEmailBack" onclick="changeEmail()">Zpět</button>
 						</div>
 					</td>
 				</tr>
