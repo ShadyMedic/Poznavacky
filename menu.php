@@ -28,6 +28,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css.css">
+		<!--<script type="text/javascript" src="menu.js"></script>-->
         <title>Menu: <?php echo $_SESSION['current'][1]; ?></title>
     </head>
     <body>
@@ -38,10 +39,10 @@
 				(<a href="list.php">Změnit</a>)
 			</div>
         </header>
-        <main>
-    	   <a href="addPics.php">
+        <main id="main_menu">
+    	    <a href="addPics.php">
 	           <div id="btn1" class="menu" onclick="addPics()">Přidat obrázky</div>
-	       </a>
+	        </a>
 	           <a href="learn.php">
 	           <div id="btn2" class="menu" onclick="learn()">Učit se</div>
             </a>
@@ -51,10 +52,10 @@
         </main>
     </div>
         <footer>
-            <div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
-            <div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
-         	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
-         	
+			<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a></div>
+			<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+			<div class="footerOption"><a href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>Podmínky služby</a></div>
+			<div id="about" class="footerOption">&copy Štěchy a Eksyska, 2019</div>
          	<script>
              	function showLogin()
              	{
