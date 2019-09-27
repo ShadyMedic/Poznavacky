@@ -91,17 +91,8 @@
     
     //Poslat e-mail.
     include 'emailSender.php';
-    $emailResult = sendEmail(
-        $email, 
-        'Žádost o obnovu hesla na poznavacky.chytrak.cz', 
-        "<span>Pro obnovení vašeho hesla klikněte na tento odkaz: </span>".
-        "<a href='localhost/Poznavacky/emailPasswordRecovery.php?token=$code'>OBNOVIT HESLO</a>".
-        "<br>".
-        "<span>Tento odkaz bude platný po následujících 24 hodin, nebo do odeslání žádosti o nový kód.</span>".
-        "<br>".
-        "<span style='color: #990000; font-weight: bold;'>DŮLEŽITÉ: </span>".
-        "<span style='color: #990000;'>Tento e-mail nikomu nepřeposílejte! Mohl by získat přístup k vašemu účtu.</span>"
-        );
+    include 'composeEmail.php';
+    $emailResult = sendEmail($email, 'Žádost o obnovu hesla na poznavacky.chytrak.cz', getEmail(0, array("code" => $code)));
     
     if (empty($emailResult))
     {

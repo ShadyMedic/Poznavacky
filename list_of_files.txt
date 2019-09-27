@@ -141,6 +141,9 @@ AJAX serverové skripty:
 		Uklídá změněné konstanty do CONSTANTS.php. Dostupné pouze pro uživatele se statusem "administrator"
 
 Vložené serverové skripty:
+	composeEmail.php
+		Zahrnuje se do: recoverPassword.php, resolveNameChange.php
+		Skládá e-mailové HTML doplněním poskytnutými detaily skrz funkci
 	connect.php
 		Zahrnuje se do: všechny skripty pracující s databází
 		Zajišťuje připojení k databázi a nastavuje znakovou sadu
@@ -191,6 +194,9 @@ Obrázky:
 	imagePreview:
 		Používá se na: addPics.php
 		Obrázek zobrazující se místo náhledu, pokud není zadána adresa obrázku
+	logo.png:
+		Používá se na: composeEmail.php
+		Logo zobrazované v hlavičkách e-mailů. Shodné s favicon.ico
 	mail.gif:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro poslání e-mailu
