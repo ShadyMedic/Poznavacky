@@ -5,10 +5,31 @@
     include 'logger.php';
     
     $newEmail = urldecode($_POST['newEmail']);
+    $password = $_POST['oldPass'];
     
     $userdata = $_SESSION['user'];
     $username = $userdata['name'];
     $userId = $userdata['id'];
+    
+    //Hledání účtu se zadaným jménem
+    $query = "SELECT id,heslo FROM uzivatele WHERE jmeno='$username' LIMIT 1";
+    $result = mysqli_query($connection, $query);
+    if (empty(mysqli_num_rows($result)))    //Uživatel nenalezen
+    {
+        fileLog("Uživatel se pokusil odstranit neexistující účet ($user) z IP adresy $ip");
+        $ip = $_SERVER['REMOTE_ADDR'];
+        
+        echo "swal('Něco se pokazilo.','Zkuste to prosím později, nebo se zkuste odhlásit a znovu přihlásit.','error')";
+        filelog("Uživatel $username se pokusil změnit si e-mailovou adresu z IP adresy $ip, ale neuspěl kvůli neplatnému jménu.");
+        die();
+    }
+    
+    //Kontrola správnosti hesla
+    $result = mysqli_fetch_array($result);
+    if (!password_verify($password, $result['heslo']))  //Heslo je špatně
+    {
+        die();
+    }
     
     //Kontrola délky e-mailu
     if(mb_strlen($newEmail) > 255)

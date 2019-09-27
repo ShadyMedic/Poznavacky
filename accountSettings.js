@@ -142,8 +142,9 @@ function confirmEmailChange()
 	}
 	
 	newEmail = encodeURIComponent(newEmail);
+	var pass = document.getElementById("changeEmailPasswordInputField").value;
 	
-	postRequest("changeEmail.php", responseFunc, responseFunc, null, null, null, null, newEmail);
+	postRequest("changeEmail.php", responseFunc, responseFunc, null, pass, null, null, newEmail);
 	
 	//Reset HTML
 	document.getElementById("changeEmailInputField").value = "";
