@@ -137,7 +137,7 @@ nav a:hover {
 /* ----------------------------------------------------------------------footer styly */
 footer {
 	background-color: var(--hlbarva1);
-	font-size: 2vh;
+	font-size: 0.85rem;
     line-height: 3vh;
     width: 100%;
     flex-shrink: 0;    
@@ -147,8 +147,8 @@ footer {
     color: var(--bila);
 }
 .footerOption {
-    margin: 0.8vh 1vw;
-    padding: 0.2vh 0.5vw;
+    margin: 0.8vh 0.8em;
+    padding: 0.2vh 0.2em;
     }       
 .footerOption:hover {
     cursor: pointer;
