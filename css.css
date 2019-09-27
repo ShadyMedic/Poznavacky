@@ -327,7 +327,7 @@ label:hover:before {
 /* -----------------------------------------------------------------------------list stranka */
 /* ----------------------------------------------------changelog styly */
 #changelogOverlay {
-	z-index: 9;
+	z-index: 8;
 	position: absolute;
 	height: 100vh;
 	width: 100vw;
@@ -335,7 +335,7 @@ label:hover:before {
 	opacity: 0.5;
 }
 #changelog {
-    z-index: 10;
+    z-index: 9;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -361,24 +361,77 @@ label:hover:before {
     margin: 0.25rem;
     text-align:center;
 }
-#changelogMsg #general {
+/*#changelogMsg #general {
 	list-style-type: disc;
 	list-style-position: inside;
-	list-style-image: url('dot.gif');
+	list-style-image: url('duckLogo.png');
 }
 #changelogMsg #additions {
 	list-style-type: disc;
 	list-style-position: inside;
-	list-style-image: url('plus.gif');
+	list-style-image: url('plus2.svg');
 }
 #changelogMsg #deletions {
 	list-style-type: disc;
 	list-style-position: inside;
 	list-style-image: url('minus.gif');
 }
-#changelogMsg ul li {
-	margin: 0.4rem;
+*/
+#changelogMsg #general {
+	list-style-type: disc;
+    list-style-position: inside;
+    position: relative;
+	list-style: none;
+	margin-left: 0;
+	padding-left: 1em;
 }
+#general li:before {
+    content: "\2022";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    color: #d7da31;
+}
+#changelogMsg #additions {
+	list-style-type: disc;
+    list-style-position: inside;
+    position: relative;
+	list-style: none;
+	margin-left: 0;
+	padding-left: 1em;
+}
+#additions li:before {
+    content: "+";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    color: var(--zelena);
+}
+#changelogMsg #deletions {
+	list-style-type: disc;
+    list-style-position: inside;
+    position: relative;
+	list-style: none;
+	margin-left: 0;
+	padding-left: 1em;
+}
+#deletions li:before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    color: var(--cervena);
+}
+
+#changelogMsg {
+    padding: 1em;
+}
+
+#changelogMsg li {
+    margin: 0.4rem auto;
+    padding-left: 1.25rem;*/
+}
+
 /* -----------------------------------------------------zbytek stránky */
 #listTable {
     width: 40vw;
