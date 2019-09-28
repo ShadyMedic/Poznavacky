@@ -9,7 +9,7 @@
  * Řádky obsahující komentáře a prázné řádky jsou povoleny
  */
 
-define('VERSION', 3.2);
+define('VERSION', 4.0);
 define('DEFAULT_KARMA', 0);
 define('DEFAULT_RANK', 'member');
 define('EMAIL_CODE', 'f50cb941');
