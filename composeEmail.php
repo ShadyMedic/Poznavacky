@@ -15,11 +15,6 @@
             <tbody>
                 <tr>
                     <td align='center' bgcolor='#eeeeee'>
-                        <img style='width:143px' src='".$_SERVER['SERVER_NAME']."/logo.png' alt='Logo'>
-                    </td>
-                </tr>
-                <tr>
-                    <td align='center' bgcolor='#eeeeee'>
                         <table width='660' cellpadding='0' border='0' cellspacing='0' align='center' bgcolor='#FFFFFF' style='font-size:15px;font-family:Helvetica,Arial,sans-serif;line-height:25px;color:#445566;border-top: 10px solid #405d27;'>
                             <tbody>
                                 <tr>
@@ -41,7 +36,7 @@
             $email .= "
                 <p>Na základě vaší žádosti na <a href='poznavacky.chytrak.cz'>poznavacky.chytrak.cz</a> bylo změněno vaše uživatelské jméno na <b>".$data['newName']."</b>.
                 <br>Pod svým starým jménem (<b>".$data['oldName']."</b>) se od nynějška již nebudete moci přihlásit.</p>
-                <p>Pokud si přejete změnit jméno zpět na staré, nebo nějaké úplně jiné, můžete tak učinit odesláním další žádosti o změnu jména v nastavení vašeho uživatelského účtu.</p>
+                <p>Pokud si přejete změnit jméno zpět na staré nebo nějaké úplně jiné, můžete tak učinit odesláním další žádosti o změnu jména v nastavení vašeho uživatelského účtu.</p>
                 <p>Neodesílali jste žádnou žádost na změnu uživatelského jména? Je možné, že někdo získal přístup k vašemu účtu. Doporučujeme vám si co nejdříve změnit vaše heslo. Pokud se nemůžete přihlásit, kontaktujte nás prosím na e-mailové adrese <a href='mailto:poznavacky@email.com'>poznavacky@email.com</a>".
                 "</p>
             ";
