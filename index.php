@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<script type="text/javascript" src="index.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<link rel="icon" href="favicon.ico">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png">
