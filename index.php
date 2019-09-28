@@ -11,6 +11,12 @@
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<script type="text/javascript" src="index.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffc835">
+		<meta name="theme-color" content="#ffffff">
 		<title>Ověření</title>
 	</head>
 	<body id="root">
