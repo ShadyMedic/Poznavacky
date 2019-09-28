@@ -1,5 +1,5 @@
 /* CSS Document */
-/* CSS reset -----------------------------------------------------------------*/
+/* ------------------------------------------------------------ CSS reset */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -53,8 +53,8 @@ q:before, q:after {
 	content: '';
 	content: none;
 }
-/* moje styly ---------------------------------------------------------------------------*/
-/* -------------------------------------------------------------------------------hlavni */
+/* ---------------------------------------------------------------------- moje styly */
+/* ------------------------------------------------------------ hlavni */
 :root {
     --hlbarva1: #405d27; /*paleta 1*/
     --hlbarva2: #587e36; /*paleta 2*/
@@ -66,60 +66,55 @@ q:before, q:after {
     --seda2: #ccc;
 }
 html, body {
-    margin: 0;
-    padding: 0;
     height: 100%;
     min-height: 100%;
-    }
+}
 .container {           
     flex: 1 0 auto;
-    }
+}
 body {
-    background-color: var(--bila);
+    background: var(--bila);
     background: linear-gradient(var(--bila), var(--hlbarva1));
-    text-align: center;
-    color: var(--hlbarva3);
-    font-family: Century Gothic, Verdana, sans-serif;
-    font-size: 100%;
-    line-height: 1.3em;
     background: url(bg1.jpg) no-repeat center fixed;
     background-size: cover; 
     display: flex;
-    flex-direction: column;   
-    }
+    flex-direction: column; 
+    color: var(--hlbarva3);
+    font-family: Century Gothic, Verdana, sans-serif;
+    text-align: center;
+    font-size: 100%;
+    line-height: 1.3em;  
+}
 main.basic_main {
-    width: 50vw;
     background-color: var(--bila);
-    border-radius: 6px;
+    width: 50vw;
     margin: 2.4vh auto;
     padding: 0.375rem;
-    }   
+    border-radius: 6px;
+}   
 fieldset {
     width: 80%;
     margin: auto;
-    }
-/* ----------------------------------------------------------------------header styly */
+}
+/* ------------------------------------------------------------ header styly */
 header {
     background-color: var(--hlbarva1);
     display: block;
     color: var(--bila);
-    text-align: center;
-    }
+}
 h1 {
-    font-size: 2em;
-    line-height: 7vh;
     display: block;
-    background: var(--hlbarva1)
-    }
+    font-size: 2rem;
+    line-height: 7vh;
+}
 #menuHeading {
-    line-height: 7vh;
-    font-size: 4vh;
     display: block;
-    background: var(--hlbarva1)
-	}
+    font-size: 4vh;
+    line-height: 7vh;
+}
 #menuHeading a {
     color: var(--bila);
-    }
+}
 #menuHeading a:hover {
     text-decoration: underline;
 }
@@ -134,95 +129,52 @@ nav a {
 nav a:hover {
     text-decoration: underline;
 }
-/* ----------------------------------------------------------------------footer styly */
+/* ------------------------------------------------------------ footer styly */
 footer {
-	background-color: var(--hlbarva1);
-	font-size: 0.85rem;
-    line-height: 3vh;
-    width: 100%;
-    flex-shrink: 0;    
+    background-color: var(--hlbarva1);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    flex-shrink: 0;    
+    width: 100%;
     color: var(--bila);
+	font-size: 0.85rem;
+    line-height: 3vh;
 }
 .footerOption {
     margin: 0.8vh 0.8em;
     padding: 0.2vh 0.2em;
-    }       
+}       
 .footerOption:hover {
     cursor: pointer;
     text-decoration: underline;
-    }
+}
 .footerOption#about {
     color: var(--seda2);
-    }
+}
 .footerOption#about:hover {
     cursor: auto;
     text-decoration: none;
-    }
+}
 .footerOption a {                                                                                             
     color: var(--bila);
-    }  
-/* ------------------------------------------------styly obsahu hlavni casti */
-div.prikaz {
-    margin: 0.125rem auto;
-    }
-/* -------------------------------------------------obrazky + posun obrazku */
-.img{
-	width: 25vw;
-	height: 25vw;;
-    margin: 0.25rem auto;
-    box-sizing: border-box;
-    border: 2px solid var(--hlbarva1);
-	object-fit: contain;
-}
+}  
+/* ------------------------------------------------------------ ostatni */
 table {
     margin: auto;
-    }
-.learn_button{
-	height: 25vw;
-	text-align: center;
-    margin: 0 0.375rem;
-    background-color: var(--hlbarva1);
-    transition: background 0.2s;
 }
-td button img {
-	height: 3vw;
-	width: 3vw;
-    position: relative;
-    top: 0.625rem;   
+div.prikaz {
+    margin: 0.125rem auto;
 }
-td {
-	vertical-align: middle;
-}
-.key_short {
-	color: var(--bila);
-    font-family: Century Gothic, Verdana, sans-serif;
-    line-height: 1.25rem;
-    font-size: 1rem;
-    height: 1.25rem;
-	display: inline-block;
-    }
-td .key_short {
-    position: relative;
-    top: 0.625rem;    
-    }
-#prevImg {
-    border-radius: 6px 0 0 6px;
-    }
-#nextImg {
-    border-radius: 0 6px 6px 0;
-    }
-/* -------------------------------------------------------------------index stranka */
+/* -------------------------------------------------- index.php */
 #registrace, #prihlaseni, #pw_recovery {
+    background-color: var(--bila);
     width: fit-content;
     max-width: 60vw;
     padding: 1rem 2rem;
-    background-color: var(--bila);
     margin: 20vh auto;
     border-radius: 6px;
-    }
+}
 #registrace a, #prihlaseni a{
     color: var(--hlbarva1);
 }
@@ -236,7 +188,40 @@ td .key_short {
     height: 0.2rem;
     margin: 0.2rem;
 }
-/* --------------------------------- custom checkbox, credits: https://codepen.io/GeoffreyCrofte/pen/BiHzp */
+#obnoveniHesla {
+    background-color: var(--bila);
+    width: 50vw;
+    margin: 20vh auto;
+    padding: 0.375rem;
+    border-radius: 6px;
+}
+#loginErrors, #registerErrors, #passwordRecoveryErrors {
+    height: fit-content;
+    color: var(--cervena);
+    margin: 0.4rem;
+}
+#cookiesAlert{
+    background-color: var(--hlbarva3);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-shrink: 0;  
+    width: 100%;
+    color: var(--bila);
+	font-size: 0.9rem;
+    line-height: 4vh;  
+}
+#cookiesAlert div {
+    margin: 0.8vh 1vw;
+    padding: 0.2vh 0.5vw;
+}
+#cookiesAlertCloser:hover{
+    cursor: pointer;
+}
+#span_terms{
+	font-size: 0.75rem;
+}
+/* - - - - - - - - - - - - - - custom checkbox, credits: https://codepen.io/GeoffreyCrofte/pen/BiHzp */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
   position: absolute;
@@ -289,192 +274,129 @@ td .key_short {
 label:hover:before {
   border: 2px solid var(--hlbarva1)!important;
 }
-
-#obnoveniHesla {
-    width: 50vw;
-    background-color: var(--bila);
-    border-radius: 6px;
-    margin: 20vh auto;
-    padding: 0.375rem;
-}
-#loginErrors, #registerErrors, #passwordRecoveryErrors{
-    margin: 0.4rem;
-    color: var(--cervena);
-    text-align: center;
-    height: fit-content;
-}
-#cookiesAlert{
-	background-color: var(--hlbarva3);
-	font-size: 0.9rem;
-    line-height: 4vh;
-    width: 100%;
-    flex-shrink: 0;    
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    color: var(--bila);
-}
-#cookiesAlert div {
-    margin: 0.8vh 1vw;
-    padding: 0.2vh 0.5vw;
-}
-#cookiesAlertCloser:hover{
-    cursor: pointer;
-}
-#span_terms{
-	font-size: 0.75rem;
-}
-/* -----------------------------------------------------------------------------list stranka */
-/* ----------------------------------------------------changelog styly */
-#changelogOverlay {
-	z-index: 8;
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
-	background-color: black;
-	opacity: 0.5;
-}
+/* -------------------------------------------------- list.php */
+/* - - - - - - - - - - - - - - - - - - - - changelog */
 #changelog {
     z-index: 9;
+    background: var(--bila);
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-	margin: auto;
-	border: 5px solid var(--hlbarva1);
-	border-radius: 10px;
-	padding: 1.25rem;
-	height: fit-content;
+    height: fit-content;
     width: 40vw;
-	color: var(--hlbarva3);
-    background: var(--bila);
+    color: var(--hlbarva3);
 	text-align: left;
+    padding: 1.25rem;
+    margin: auto;
+    border: 5px solid var(--hlbarva1);
+    border-radius: 10px;;
+}
+#changelogOverlay {
+    z-index: 8;
+    background-color: #000;
+	opacity: 0.5;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
 }
 #changelogMsg {
+    max-height: 40vh;
 	margin: 0.625rem auto;
     overflow-y: auto;
-    max-height: 40vh;
 }
 #changelogText h2 {
+    text-align: center;
 	font-size: 1.5rem;
     margin: 0.25rem;
-    text-align:center;
 }
-/*#changelogMsg #general {
-	list-style-type: disc;
-	list-style-position: inside;
-	list-style-image: url('duckLogo.png');
-}
-#changelogMsg #additions {
-	list-style-type: disc;
-	list-style-position: inside;
-	list-style-image: url('plus2.svg');
-}
-#changelogMsg #deletions {
-	list-style-type: disc;
-	list-style-position: inside;
-	list-style-image: url('minus.gif');
-}
-*/
 #changelogMsg #general {
-	list-style-type: disc;
-    list-style-position: inside;
     position: relative;
-	list-style: none;
 	margin-left: 0;
-	padding-left: 1em;
+    padding-left: 1em;
+    list-style: none;
 }
 #general li:before {
     content: "\2022";
     position: absolute;
     left: 0;
-    font-weight: bold;
     color: #d7da31;
+    font-weight: bold;
 }
 #changelogMsg #additions {
-	list-style-type: disc;
-    list-style-position: inside;
     position: relative;
-	list-style: none;
 	margin-left: 0;
-	padding-left: 1em;
+    padding-left: 1em;
+    list-style: none;
 }
 #additions li:before {
     content: "+";
     position: absolute;
     left: 0;
-    font-weight: bold;
     color: var(--zelena);
+    font-weight: bold;
 }
-#changelogMsg #deletions {
-	list-style-type: disc;
-    list-style-position: inside;
+#changelogMsg #deletions {	
     position: relative;
-	list-style: none;
 	margin-left: 0;
-	padding-left: 1em;
+    padding-left: 1em;
+    list-style: none;
 }
 #deletions li:before {
     content: "-";
     position: absolute;
     left: 0;
-    font-weight: bold;
     color: var(--cervena);
+    font-weight: bold;
 }
-
 #changelogMsg {
     padding: 1em;
 }
-
 #changelogMsg li {
     margin: 0.4rem auto;
-    padding-left: 1.25rem;*/
+    padding-left: 1.25rem;
 }
-
-/* -----------------------------------------------------zbytek stránky */
+/* - - - - - - - - - - - - - - - - - - - - zbytek list.php */
 #listTable {
-    width: 40vw;
-    border: 0.75em solid var(--bila);
-    margin: 4vh auto;
     background-color: var(--bila);
+    width: 40vw;
+    margin: 4vh auto; 
+    border: 0.75em solid var(--bila);
     border-radius: 6px;
     border-collapse: separate;
-	}  
+}  
 #listTable th, #listTable td {
     padding: 0.125rem;
-    }
-.listRow, {
+}
+.listRow {
 	margin: 0;
     cursor: pointer;
-	}
+}
 .listRow:hover {
 	background: var(--hlbarva1);
     color: var(--bila); 
     cursor: pointer;
-	}
+}
 th {
 	font-weight: bold;
-	}
+}
 .listNames {
-	min-width: 50%;
-	}
+	min-width: 45%;
+}
 .listNaturals {
-	min-width: 25%;
+	min-width: 20%;
 	}
 .listPics {
-	min-width: 25%;
+	min-width: 20%;
     }
-/* ------------------------------------------------------------------accountSettings tabulka */
+/* -------------------------------------------------- accountSettings.php */
 #static_info {
-    margin: 0.375rem auto;
     width: 95%;
+    margin: 0.375rem auto;
 }
 #static_info td {
     padding: 0.25rem 1.125rem;
-    /*display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;*/
 }
 #static_info tr {
     border-bottom: 1px solid var(--seda2);
@@ -482,91 +404,132 @@ th {
 #static_info tr#tr_end {
     border-bottom: 0px solid var(--bila);
 }
-/* --------------------------------------------------------tlacitka, droplisty, textova okna */
-.button {
-    background-color: var(--hlbarva2);
-    color: var(--bila);
+/* -------------------------------------------------- obrazky + posun obrazku */
+.img {
     box-sizing: border-box;
-    line-height: 1.2rem;
+    object-fit: contain;
+	width: 25vw;
+	height: 25vw;;
+    margin: 0.25rem auto;
+    border: 2px solid var(--hlbarva1);
+}
+.learn_button{
+    background-color: var(--hlbarva1);
+	height: 25vw;
+    margin: 0 0.375rem;
+    transition: background 0.2s;
+}
+td button img {
+    position: relative;
+    top: 0.625rem;  
+	height: 3vw;
+	width: 3vw; 
+}
+td {
+	vertical-align: middle;
+}
+.key_short {
+    display: inline-block;
+    height: 1.25rem;
+	color: var(--bila);
     font-family: Century Gothic, Verdana, sans-serif;
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+td .key_short {
+    position: relative;
+    top: 0.625rem;    
+}
+#prevImg {
+    border-radius: 6px 0 0 6px;
+}
+#nextImg {
+    border-radius: 0 6px 6px 0;
+}
+/* -------------------------------------------------- tlacitka, droplisty, textova okna */
+.button {
+    background: var(--hlbarva2);
+    box-sizing: border-box;
+    color: var(--bila);
+    font-family: Century Gothic, Verdana, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.2rem;
     padding: 0.25rem 0.5rem;
     margin: 0.25rem;
     transition: background 0.2s;
-    font-size: 0.9rem;
-    }
+}
 .button:hover, button:hover, #duckLink_div:hover {
     background-color: var(--hlbarva3);
     cursor: pointer;
     transition: background 0.2s;
-    }
+}
 .button:active, button:active, #duckLink_div:active {
     outline: none;
     cursor: pointer;
-    }
+}
 .button:focus, button:focus, #duckLink_div:active {
     outline: none;
-    }
-#duckLogo {
-    margin: 0.25rem;
-    width: 1.25rem;
-    height: 1.25rem;
-    position: relative;
-    }
-#duckLink span {
-    position: relative;
-    top: -0.6rem;
-    }
+}
 #duckLink_div {
     background: var(--hlbarva2);
     height: 1.75rem;
     width: 9rem;
-    margin: 0.25rem auto;
     font-size: 0.9rem;
+    margin: 0.25rem auto;
     transition: 0.2s;
-    }
+}
 #duckLink_div a {
     color: var(--bila);
     font-size: 0.9rem;
-    }
+}
+#duckLogo {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0.25rem;
+}
+#duckLink span {
+    position: relative;
+    top: -0.6rem;
+}
 .buttonDisabled {
-    background-color: var(--seda);
+    background: var(--seda);
     color: var(--bila);
-    line-height: 1.2rem;
     font-family: Century Gothic, Verdana, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.2rem;
     padding: 0.25rem 0.5rem;
     margin: 0.25rem;
-    font-size: 0.9rem;
-    }
+}
 .buttonDisabled:hover, .buttonDisabled:active {
-    background-color: var(--seda);
+    background: var(--seda);
     cursor: auto;
-    }
+}
 .text {
     box-sizing: border-box;
     font-family: Century Gothic, Verdana, sans-serif;
     color: var(--hlbarva3);
-    padding: 0.125rem 0.375rem;
-    line-height: 1.2rem;
-    border: 2px solid var(--hlbarva2);
-    margin: 0.25rem;
     font-size: 0.9rem;
+    line-height: 1.2rem;
+    padding: 0.125rem 0.375rem;
+    margin: 0.25rem;
+    border: 2px solid var(--hlbarva2);
 }
 .text#dropList {
     padding: 0.125rem 0.125rem;
-    }
+}
 .text:focus {
-    outline: none;
     border: 2px solid var(--hlbarva3);
-    }
+    outline: none;
+}
 #dropList {
     width: 11.25rem;
-    }
+}
 #dropList:hover{
     cursor: pointer;
-    }
+}
 #urlInput {
     width: 80%;
-    }
+}
 #reportMenu{
 	display: none;
 }
@@ -576,50 +539,49 @@ th {
 #cancelReport{
 	display: none;
 }
-
-div.menu{
+div.menu {
+    background: var(--bila);
+    box-sizing: border-box;
     width: 98%;
     height: 26.33vh;
-    line-height: 26.33vh;
     font-size: 5vh;
     color: var(--hlbarva3);
+    line-height: 26.33vh;
     margin: 2.24vh auto;
-    background-color: var(--bila);
-    box-sizing: border-box;
     border-radius: 6px;
     transition: background 0.2s;
-    }
+}
 div.menu:hover {
+    background: var(--hlbarva2);
     color: var(--bila);
-    background-color: var(--hlbarva2);
     transition: 0.2s;
-    }
+}
 #answerForm{
 	display: block;
-	}
-#correctAnswer{
+}
+#correctAnswer {
+    display: none;
 	color: var(--zelena);
-	display: none;
-	}
-#wrongAnswer{
+}
+#wrongAnswer {
+    display: none;
 	color: var(--cervena);
-	display: none;
-	}
+}
 #wrong2, #serverResponse{
 	color: var(--hlbarva3);
-	}
+}
 #nextButton{
 	display: none;
 	margin: 0.25rem auto;
-	}
+}
 #correctAnswer, #wrongAnswer {
     padding: 0.25rem;
     margin: auto;
-    }
-/* ------------------------------------------------------------------@media */
+}
+/* ------------------------------------------------------------ @media */
 @media screen and (max-width: 960px) {
     main.basic_main {
-        width: fit-content;
+        width: 70vw;
     }
     #listTable {
         width: 50vw;
@@ -627,99 +589,96 @@ div.menu:hover {
 }
 @media screen and (max-width: 768px) {
     main.basic_main {
-        width: fit-content;
-        }
+        width: 80vw;
+    }
+    header {
+        height: 6vh;  
+    }
+    h1 {
+        font-size: 1.4em;
+        line-height: 6vh;
+    }
+    #menuHeading {
+        font-size: 3vh;
+        line-height: 6vh;
+    }
     #obnoveniHesla {
         width: 80vw;
+    }
+    #listTable {
+        width: 60vw;
+        margin: 7vh auto;
+    }
+    #changelog {
+        width: 60vw;
+    }
+    #changelogMsg {
+        max-height: 50vh;
     }
     .img {
 	    width: 55vw;
         height: 55vw;
-       }
+    }
+    div.menu {
+        width: 96vw;
+        font-size: 4vh;
+    }
     .learn_button{
         height: 55vw;
-        }
+    }
     td button img {
         width: 4.5vw;
         height: 4.5vw;
-        }
-    header {
-        height: 6vh;  
-        }
-    h1 {
-        font-size: 1.4em;
-        line-height: 6vh;
-        }
-    #menuHeading {
-        line-height: 6vh;
-        font-size: 3vh;
-	    }
-    div.menu {
-        font-size: 4vh;
-        height: 27vh;
-        width: 96vw;
-        margin: 2.24vh auto;
-        line-height: 27vh;
-        }
-    #listTable {
-        margin: 7vh auto;
-        width: 60vw;
     }
-    #changelog {
-        width: 60vw;
-        }
-    #changelogMsg {
-        max-height:50vh;
-        }
-    }    
+}    
 @media only screen and (max-width: 576px) {
     main.basic_main, #obnoveniHesla {
         width: 90vw;
-        }
+    }
+    header {
+        height: 6vh;  
+    }
+    h1 {
+        font-size: 1.2em;
+        line-height: 6vh;
+    }
+    #menuHeading {
+        font-size: 1em;
+        line-height: 6vh;
+    }
     #registrace, #prihlaseni, #pw_recovery {
         margin: 10vh auto;
+    }
+    #changelog {
+        width: 80vw;
+    }
+    #changelogMsg {
+        max-height: 60vh;
     }
     #static_info {
         width: 90%;
     }
     #static_info td {
-        padding: 0.25rem 1.125rem;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-around;
-        }
+        padding: 0.25rem 1.125rem;
+    }
     .img {
 	    width: 60vw;
         height: 60vw;
-       }
+    }
+    div.menu {
+        font-size: 3vh;
+    }
     .learn_button{
         height: 60vw;
-        }
+    }
     td button img {
         width: 6vw;
         height: 6vw;
-        }
-    header {
-        height: 6vh;  
-        }
-    h1 {
-        font-size: 1.2em;
-        line-height: 6vh;
-        }
-    #menuHeading {
-        line-height: 6vh;
-        font-size: 1em;
-	    }
-    div.menu {
-        font-size: 3vh;
-        }
-    #changelog {
-        width: 80vw;
-        }
-    #changelogMsg {
-        max-height:60vh;
-        }
     }
+}
 
     
     
