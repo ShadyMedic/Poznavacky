@@ -1,9 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';
-	
-	session_start();
+	require 'verification.php';    //Obsahuje session_start();
 		
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
@@ -13,9 +11,17 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<script type="text/javascript" src="learn.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<link rel="icon" href="favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffc835">
+		<meta name="theme-color" content="#ffffff">
 		<title>Učit se</title>
 	</head>
 	<body onkeypress="keyPressed(event)">
@@ -46,29 +52,29 @@
     			<br>
     			<button onclick="prev(event)" class="button">
 				Předchozí přírodnina
-                <kbd>[S]</kbd>
+				<span class="key_short">[S]</span>
 			</button>
     			<button onclick="next(event)" class="button">
 				Následující přírodnina
-                <kbd>[W]</kbd>
+				<span class="key_short">[W]</span>
 			</button>
     		</fieldset>
     		<fieldset>
     			<table>
     				<tr>
-    					<td>
-    						<button onclick="prevImg()" id="prevImg">
+					<td class=>
+    						<button onclick="prevImg()" class="learn_button" id="prevImg">
 							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
-                            <kbd>[A]</kbd>
+                            <span class="key_short">[A]</span>
 						    </button>
     					</td>
     					<td>
     						<img id="image" class="img" src="imagePreview.png">
     					</td>
     					<td>
-    						<button onclick = "nextImg()" id="nextImg">
+    						<button onclick = "nextImg()" class="learn_button" id="nextImg">
 							<img src="arrow.png" /><br>
-                            <kbd>[D]</kbd>
+                            <span class="key_short">[D]</span>
 						    </button>
     					</td>
     				</tr>
@@ -88,15 +94,16 @@
     	</main>
         </div>
 	    <footer>
-         	<div id="issues" class="footerOption" onclick="showLogin()"><a href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
-         	<div id="help" class="footerOption"><a href="https://github.com/HonzaSTECH/Poznavacky/wiki">Potřebujete pomoct?</a></div>
-         	<div id="about" class="footerOption">Vytvořili Štěchy a Eksyska v roce 2019</div>
+			<div id="help" class="footerOption"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a></div>
+			<div id="issues" class="footerOption" onclick="showLogin()"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
+			<div class="footerOption"><a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>Podmínky služby</a></div>
+			<div id="about" class="footerOption">&copy Štěchy a Eksyska, 2019</div>
          	<script>
              	function showLogin()
              	{
              		alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
              	}
          	</script>
-        </footer>
-	</body>
+         </footer>
+  </body>
 </html>
