@@ -145,7 +145,7 @@ footer {
     margin: 0.8vh 0.8em;
     padding: 0.2vh 0.2em;
 }       
-.footerOption:hover {
+.footerOption a:hover {
     cursor: pointer;
     text-decoration: underline;
 }

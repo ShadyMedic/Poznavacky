@@ -32,7 +32,7 @@
     	<main class="basic_main">
     		<fieldset>
     			<div class="prikaz">Vyberte si přírodninu, jejíž obrázky si chcete prohlížet. Na další nebo předchozí přírodninu můžete přejít rychle pomocí tlačítek.</div>
-    		  <select onchange="sel()" id="dropList" class="text">
+    		  	<select onchange="sel()" id="dropList" class="text">
     				<option value="" selected disabled hidden></option>
     				<?php 
     					//Vypisování přírodnin
@@ -97,7 +97,7 @@
 			<div id="help" class="footerOption"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a></div>
 			<div id="issues" class="footerOption" onclick="showLogin()"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
 			<div class="footerOption"><a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>Podmínky služby</a></div>
-			<div id="about" class="footerOption">&copy Štěchy a Eksyska, 2019</div>
+			<div id="about" class="footerOption">&copy Štěchy a Eksyska, 2019 - letní soutěž <a target='_blank' href="https://www.itnetwork.cz/">ITnetwork</a> 2019</div>
          	<script>
              	function showLogin()
              	{
