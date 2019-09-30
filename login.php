@@ -88,7 +88,7 @@
         $result = mysqli_query($connection, $query);
         
         $ip = $_SERVER['REMOTE_ADDR'];
-        $username = $result['jmeno'];
+        $username = $_SESSION['user']['name'];
         fileLog("Uživatel $username se přihlásil z IP adresy $ip");
         
         echo "location.href = 'list.php';";  //Přesměrování do systému

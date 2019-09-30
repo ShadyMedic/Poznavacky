@@ -15,10 +15,10 @@ function sendEmail($to, $subject, $message, $fromAddress = 'poznavacky@email.com
     $mail->isSMTP();
     $mail->SMTPAuth = true;
     $mail->SMTPSecure = 'tls';
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = 'free.mboxhosting.com';
     $mail->Port = '587';
     $mail->isHTML();
-    $mail->Username = 'webexamlist@gmail.com';
+    $mail->Username = 'noreply@poznavacky.dx.am';
     $mail->Password = 'SECRET';
     $mail->SetFrom($fromAddress, $fromName, true);
     $mail->Subject = $subject;
