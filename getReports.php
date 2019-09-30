@@ -39,7 +39,7 @@
                 $innerresult = mysqli_query($connection, $query);
                 $innerresult = mysqli_fetch_array($innerresult);
                 $url = $innerresult['zdroj'];
-                echo "<td><a href='$url'>$url</a></td>";
+                echo "<td><a href='$url' target='_blank'>$url</a></td>";
     
                 //Výpis důvodu
                 $reason = $report['duvod'];
