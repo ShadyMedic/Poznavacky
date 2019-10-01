@@ -7,7 +7,7 @@
 	<head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" href="css.css">
+		<link rel="stylesheet" type="text/css" href="css/css.css">
 		<script type="text/javascript" src="emailPasswordRecovery.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<title>Obnova hesla</title>
