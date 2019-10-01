@@ -64,7 +64,7 @@
     <head>
     <meta charset="UTF-8">
 	<script type="text/javascript" src="management.js"></script>
-	<link rel="stylesheet" type="text/css" href="private.css">
+	<link rel="stylesheet" type="text/css" href="css/private.css">
     <title>Správa služby</title>
 	</head>
     <body>
