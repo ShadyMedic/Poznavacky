@@ -9,7 +9,7 @@ Zobrazované stránky:
 		Formulář pro přidání obrázku
 	emailPasswordRecovery.php
 		JavaScript: emailPasswordRecovery.js
-		Stylesheet: -
+		Stylesheet: css.css
 		Změna hesla po kliknutí odkazu v e-mailu
 	err403.html
 		JavaScript: -
