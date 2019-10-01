@@ -64,7 +64,7 @@
     				<tr>
 					<td class=>
     						<button onclick="prevImg()" class="learn_button" id="prevImg">
-							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
+							<img src="images/arrow.png" style="transform: rotate(180deg);" /><br>
                             <span class="key_short">[A]</span>
 						    </button>
     					</td>
@@ -73,7 +73,7 @@
     					</td>
     					<td>
     						<button onclick = "nextImg()" class="learn_button" id="nextImg">
-							<img src="arrow.png" /><br>
+							<img src="images/arrow.png" /><br>
                             <span class="key_short">[D]</span>
 						    </button>
     					</td>
