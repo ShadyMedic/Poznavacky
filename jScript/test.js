@@ -75,7 +75,7 @@ function answer(event)
 	{
 		document.getElementById("correctAnswer").style.display = "block";
 		//Druhá kontrola správnosti odpovědi serverem a případné navýšení skóre uhodnutých obrázků
-		postRequest("testAnswerCheck.php", responseFunc, responseFunc, correct);
+		postRequest("../testAnswerCheck.php", responseFunc, responseFunc, correct);
 	}
 	else
 	{
@@ -99,7 +99,7 @@ function next()
 	document.getElementById("textfield").focus();
 	
 	
-	getRequest("getRandomPic.php", showPic);
+	getRequest("../getRandomPic.php", showPic);
 }
 function showPic(response)
 {
@@ -161,7 +161,7 @@ function submitReport(event)
 		return;
 	}
 	
-	getRequest("newReport.php?pic=" + picUrl + "&reason=" + reason, responseFunc);
+	getRequest("../newReport.php?pic=" + picUrl + "&reason=" + reason, responseFunc);
 }
 function cancelReport(event)
 {
