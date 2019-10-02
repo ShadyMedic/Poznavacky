@@ -88,7 +88,7 @@ function answer(event)
 }
 function next()
 {
-	document.getElementById("image").src = "imagePreview.png";
+	document.getElementById("image").src = "images/imagePreview.png";
 	
 	document.getElementById("nextButton").style.display = "none";
 	document.getElementById("correctAnswer").style.display = "none";
@@ -155,8 +155,8 @@ function submitReport(event)
 	//Kontrola obrázku
 	switch (picUrl)
 	{
-	case "noImage.png":
-	case "imagePreview":
+	case "images/noImage.png":
+	case "images/imagePreview.png":
 		swal("Neplatný obrázek!","","error");
 		return;
 	}
