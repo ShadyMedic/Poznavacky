@@ -167,8 +167,8 @@ Obrázky:
 	arrow.png
 		Používá se na: learn.php
 		Šipka zobrazovaná na tlačítkách další a předchozí
-	bg1.jpg
-		Používá se na: addPics.php, index.php, learn.php, list.php, test.php
+	background.jpg
+		Používá se na: accountSettings.php, addPics.php, emailPasswordRecovery.php, index.php, learn.php, list.php, test.php
 		Obrázek pozadí stránek
 	cross.gif:
 		Používá se na: getReports.php, management.php
