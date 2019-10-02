@@ -174,8 +174,8 @@ Obrázky:
 		Používá se na: getReports.php, management.php
 		Obrázek zobrazovaný na tlačítkách jako zamítnout, odstranit či zrušit
 	dot.gif:
-		Používá se na: getReports.php, changelog.html
-		Ikona listu ozančující obecné změny
+		Používá se na: getReports.php
+		Obrázek zobrazovaný na tlačítkách skrývání / vypínání
 	down.gif:
 		Používá se na: management.php
 		Šipka dolů zobrazovaná na tlačítkách pro posun položky dolů
@@ -201,8 +201,8 @@ Obrázky:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro poslání e-mailu
 	minus.gif:
-		Používá se na: getReports.php, changelog.html
-		Ikona listu ozančující odebrané funkce
+		Používá se na: getReports.php
+		Obrázek zobrazovaný na tlačítkách pro odebírání
 	noImage.png:
 		Používá se na: learn.php
 		Obrázek zobrazující se místo obrázku přírodniny, pokud není nalezen žádný obrázek
@@ -210,8 +210,8 @@ Obrázky:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro úpravy
 	plus.gif:
-		Používá se na: changelog.html, management.php
-		Ikona listu ozančující přidané funkce
+		Používá se na: management.php
+		Obrázek zobrazovaný na tlačítkách pro přidávání
 	tick.gif:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách jako přijmout či potvrdit
