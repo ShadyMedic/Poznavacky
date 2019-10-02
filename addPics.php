@@ -58,7 +58,7 @@
     				<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/>
     				<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button>
     			</fieldset>
-    				<img id="previewImg" class="img" src="imagePreview.png">
+    				<img id="previewImg" class="img" src="images/imagePreview.png">
     			<fieldset>
     				<input type=submit value="Přidat" onclick="add(event)" id="sendButton" class="buttonDisabled" disabled />
     				<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
