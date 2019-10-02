@@ -31,7 +31,7 @@ function urlTyped()
 		document.getElementById("urlConfirm").setAttribute("class","buttonDisabled");
 	}
 	
-	document.getElementById("previewImg").src = "imagePreview.png";
+	document.getElementById("previewImg").src = "images/imagePreview.png";
 }
 function selected2(event)
 {
@@ -47,7 +47,7 @@ function resetForm(event)
 	
 	document.getElementById("sendButton").setAttribute("disabled", true);
 	document.getElementById("sendButton").setAttribute("class","buttonDisabled");
-	document.getElementById("previewImg").src = "imagePreview.png";
+	document.getElementById("previewImg").src = "images/imagePreview.png";
 	document.getElementById("previewImg").style.display = "none";
 	document.getElementById("urlConfirm").setAttribute("disabled", true);
 	document.getElementById("urlConfirm").setAttribute("class","buttonDisabled");
@@ -129,7 +129,7 @@ function responseFunc(response)
 		
 		document.getElementById("sendButton").setAttribute("disabled", true);
 		document.getElementById("sendButton").setAttribute("class","buttonDisabled");
-		document.getElementById("previewImg").src = "imagePreview.png";
+		document.getElementById("previewImg").src = "images/imagePreview.png";
 		document.getElementById("urlConfirm").setAttribute("disabled", true);
 		document.getElementById("urlConfirm").setAttribute("class","buttonDisabled");
 		document.getElementById("urlInput").value = "";
