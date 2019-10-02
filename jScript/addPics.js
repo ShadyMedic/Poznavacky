@@ -64,7 +64,7 @@ function add(event)
 	name = encodeURI(name);
 	URL = encodeURI(URL);
 	
-	getRequest("newPicture.php?name=" + name + "&url=" + URL, responseFunc, responseFunc);
+	getRequest("../newPicture.php?name=" + name + "&url=" + URL, responseFunc, responseFunc);
 }
 function getRequest(url, success = null, error = null){
 	var req = false;
@@ -125,7 +125,7 @@ function responseFunc(response)
 		var newValue = Number(option.split("(")[1].split(")")[0]) + 1;
 		var name = option.split("(")[0];
 		var newOption = name + "(" + newValue + ")";
-		document.getElementById("dropList").options[i].innerHTML = newOption;//TODO
+		document.getElementById("dropList").options[i].innerHTML = newOption;
 		
 		document.getElementById("sendButton").setAttribute("disabled", true);
 		document.getElementById("sendButton").setAttribute("class","buttonDisabled");
