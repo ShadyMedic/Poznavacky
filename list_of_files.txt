@@ -204,7 +204,7 @@ Obrázky:
 		Používá se na: getReports.php
 		Obrázek zobrazovaný na tlačítkách pro odebírání
 	noImage.png:
-		Používá se na: learn.php
+		Používá se na: learn.php (odkaz se nachází v getPics.php)
 		Obrázek zobrazující se místo obrázku přírodniny, pokud není nalezen žádný obrázek
 	pencil.gif:
 		Používá se na: management.php
