@@ -230,8 +230,6 @@ Git a GitHub soubory:
 Ostatní:
 	.htaccess
 		Konfigurace Apache serveru. Zajišťuje přesměrování na vlastní chybové stránky
-	db.sql
-		Poslední záloha databáze
 	list_of_files.txt
 		Tento soubor. Popisuje funkci většiny souborů
 		
