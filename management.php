@@ -118,10 +118,10 @@
     				                    echo "<input type=text readonly value=$constantValue />";
     				                echo "</td>";
     				                echo "<td>";
-    				                    echo "<button class='editConstantButton activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button>";
-    				                    echo "<button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='up.gif'></button>";
-    				                    echo "<button class='moveDownButton activeBtn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='down.gif'></button>";
-    				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='cross.gif'></button>";
+    				                    echo "<button class='editConstantButton activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='images/pencil.gif'></button>";
+    				                    echo "<button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='images/up.gif'></button>";
+    				                    echo "<button class='moveDownButton activeBtn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='images/down.gif'></button>";
+    				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='images/cross.gif'></button>";
     				                echo "</td>";
     				            echo "</tr>";
     				        }
@@ -134,7 +134,7 @@
     			    </script>
     			    
     			    <div style="text-align: center;">
-        				<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='plus.gif'></button>
+        				<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='images/plus.gif'></button>
         				<br>
         				<button class='centerBtn' onclick='saveConstants()' title='Přidat novou konstantu'>Uložit konstanty</button>
     				</div>
@@ -196,7 +196,7 @@
 					               if ($row['id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
 					               {
     					               echo "<button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>";
-    					                   echo "<img src='pencil.gif'/>";
+    					                   echo "<img src='images/pencil.gif'/>";
                                        echo "</button>";
                                        //Kontrola, jestli má uživatel zadaný e-mail
                                        $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['jmeno']."' LIMIT 1";
@@ -214,10 +214,10 @@
                                        {
                                            echo "<button class='userAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
                                        }
-                                       echo "<img src='mail.gif'/>";
+                                       echo "<img src='images/mail.gif'/>";
                                        echo "</button>";
                                        echo "<button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>";
-                                            echo "<img src='cross.gif'/>";
+                                            echo "<img src='images/cross.gif'/>";
                                        echo "</button>";
 					               }
                                echo "</td>";
@@ -309,10 +309,10 @@
 					           echo "</td>";
 					           echo "<td>";
 					               echo "<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>";
-					                   echo "<img src='tick.gif'/>";
+					                   echo "<img src='images/tick.gif'/>";
                                    echo "</button>";
                                    echo "<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>";
-                                        echo "<img src='cross.gif'/>";
+                                        echo "<img src='images/cross.gif'/>";
                                    echo "</button>";
                                    //Kontrola, jestli má uživatel zadaný e-mail
                                    $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['puvodni']."' LIMIT 1";
@@ -330,7 +330,7 @@
                                    {
                                        echo "<button class='nameChangeAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
                                    }
-                                        echo "<img src='mail.gif'/>";
+                                        echo "<img src='images/mail.gif'/>";
                                    echo "</button>";
                                echo "</td>";
 					        echo "</tr>";
