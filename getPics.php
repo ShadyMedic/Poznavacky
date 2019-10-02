@@ -39,7 +39,7 @@
 
 	$query = "SELECT zdroj FROM $table WHERE prirodninaId=$id AND povoleno=1";
 	$result = mysqli_query($connection, $query);
-	if (gettype($result) !== "object" || mysqli_num_rows($result) <= 0){die("noImage.png");}
+	if (gettype($result) !== "object" || mysqli_num_rows($result) <= 0){die("images/noImage.png");}
 	for($i = 0; $i <= $number; $i++)
 	{
 		$resultArr = mysqli_fetch_array($result);
