@@ -14,7 +14,7 @@
 	$number = $_GET['number'];
 
 	//Kontrola zda je vybrána nějaká přírodnina
-	if ($name === "undefined"){die("imagePreview.png");}
+	if ($name === "undefined"){die("images/imagePreview.png");}
     
 	//Ochrana před SQL injekcí
 	$name = mysqli_real_escape_string($connection, $name);
