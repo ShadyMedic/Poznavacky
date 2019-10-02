@@ -168,7 +168,7 @@ Obrázky:
 		Používá se na: learn.php
 		Šipka zobrazovaná na tlačítkách další a předchozí
 	background.jpg
-		Používá se na: accountSettings.php, addPics.php, emailPasswordRecovery.php, index.php, learn.php, list.php, test.php
+		Používá se na: accountSettings.php, addPics.php, emailPasswordRecovery.php, index.php, learn.php, list.php, test.php (odkaz se nachází v css.css)
 		Obrázek pozadí stránek
 	cross.gif:
 		Používá se na: getReports.php, management.php
