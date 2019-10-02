@@ -30,7 +30,7 @@ function changePasswordVerify()
 {
 	var password = document.getElementById("changePasswordInputFieldOld").value;
 	
-	postRequest("checkPassword.php", changePasswordStage2, responseFunc, null, password);
+	postRequest("../checkPassword.php", changePasswordStage2, responseFunc, null, password);
 }
 
 function changePasswordStage2(response)
@@ -64,7 +64,7 @@ function confirmPasswordChange()
 	newPass = encodeURIComponent(newPass);
 	rePass = encodeURIComponent(rePass);
 	
-	postRequest("changePassword.php", responseFunc, responseFunc, null, oldPass, newPass, rePass);
+	postRequest("../changePassword.php", responseFunc, responseFunc, null, oldPass, newPass, rePass);
 	
 	//Reset HTML
 	document.getElementById("changePasswordInputFieldOld").value = "";
@@ -87,7 +87,7 @@ function changeEmailVerify()
 {
 	var password = document.getElementById("changeEmailPasswordInputField").value;
 	
-	postRequest("checkPassword.php", changeEmailStage2, responseFunc, null, password);
+	postRequest("../checkPassword.php", changeEmailStage2, responseFunc, null, password);
 }
 
 function changeEmailStage2(response)
@@ -144,7 +144,7 @@ function confirmEmailChange()
 	newEmail = encodeURIComponent(newEmail);
 	var pass = document.getElementById("changeEmailPasswordInputField").value;
 	
-	postRequest("changeEmail.php", responseFunc, responseFunc, null, pass, null, null, newEmail);
+	postRequest("../changeEmail.php", responseFunc, responseFunc, null, pass, null, null, newEmail);
 	
 	//Reset HTML
 	document.getElementById("changeEmailInputField").value = "";
@@ -169,7 +169,7 @@ function deleteAccountVerify()
 {
 	var password = document.getElementById("deleteAccountInputField").value;
 	
-	postRequest("checkPassword.php", deleteAccountConfirm, responseFunc, null, password);
+	postRequest("../checkPassword.php", deleteAccountConfirm, responseFunc, null, password);
 }
 
 function deleteAccountConfirm(response)
@@ -190,7 +190,7 @@ function deleteAccountFinal()
 {
 	var pass = document.getElementById("deleteAccountInputField").value;
 	var username = document.getElementById("username").innerText;
-	postRequest("deleteAccount.php", responseFunc, null, username, pass);
+	postRequest("../deleteAccount.php", responseFunc, null, username, pass);
 }
 
 function deleteAccountCancel()
