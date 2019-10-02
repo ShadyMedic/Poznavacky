@@ -69,7 +69,7 @@
 						    </button>
     					</td>
     					<td>
-    						<img id="image" class="img" src="imagePreview.png">
+    						<img id="image" class="img" src="images/imagePreview.png">
     					</td>
     					<td>
     						<button onclick = "nextImg()" class="learn_button" id="nextImg">
