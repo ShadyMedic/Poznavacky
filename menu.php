@@ -27,7 +27,7 @@
     <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" href="css.css">
+		<link rel="stylesheet" type="text/css" href="css/css.css">
 		<link rel="icon" href="favicon.ico">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png">
