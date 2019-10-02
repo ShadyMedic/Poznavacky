@@ -82,7 +82,7 @@ function showImg(response)
 		eval(response);
 		return;
 	}
-	else if (response != "noImage.png" && response != "imagePreview.png")
+	else if (response != "images/noImage.png" && response != "images/imagePreview.png")
 	{
 		document.getElementById("reportButton").removeAttribute("disabled");
 		document.getElementById("reportButton").removeAttribute("class");
@@ -137,8 +137,8 @@ function submitReport(event)
 	//Kontrola obrázku
 	switch (picUrl)
 	{
-	case "noImage.png":
-	case "imagePreview":
+	case "images/noImage.png":
+	case "images/imagePreview.png":
 		swal("Neplatný obrázek!","","error");
 		return;
 	}
