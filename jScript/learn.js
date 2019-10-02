@@ -5,7 +5,6 @@ var imageNumber = 0;
 function keyPressed(event)
 {
     var charCode = event.code || event.which;
-	console.log(charCode);
     switch (charCode)
 	{
 		case "KeyW":
@@ -73,7 +72,7 @@ function nextImg()
 }
 function getImage()
 {
-	getRequest("getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
+	getRequest("../getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
 }
 function showImg(response)
 {
@@ -143,7 +142,7 @@ function submitReport(event)
 		return;
 	}
 	
-	getRequest("newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
+	getRequest("../newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
 }
 function cancelReport(event)
 {
