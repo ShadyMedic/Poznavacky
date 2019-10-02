@@ -9,7 +9,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css/css.css">
-		<script type="text/javascript" src="index.js"></script>
+		<script type="text/javascript" src="jScript/index.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link rel="icon" href="favicon.ico">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
