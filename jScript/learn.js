@@ -72,7 +72,7 @@ function nextImg()
 }
 function getImage()
 {
-	getRequest("../getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
+	getRequest("getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
 }
 function showImg(response)
 {
@@ -142,7 +142,7 @@ function submitReport(event)
 		return;
 	}
 	
-	getRequest("../newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
+	getRequest("newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
 }
 function cancelReport(event)
 {

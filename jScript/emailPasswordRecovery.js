@@ -7,7 +7,7 @@ function changePassword()
 	newPass = encodeURIComponent(newPass);
 	rePass = encodeURIComponent(rePass);
 	
-	postRequest("../emailPasswordChange.php", responseFunc, responseFunc, newPass, rePass, token);
+	postRequest("emailPasswordChange.php", responseFunc, responseFunc, newPass, rePass, token);
 	
 	//Reset HTML
 	document.getElementById("pass").value="";
