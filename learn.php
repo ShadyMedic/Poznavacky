@@ -15,12 +15,12 @@
 		<link rel="stylesheet" type="text/css" href="css/css.css">
 		<script type="text/javascript" src="jScript/learn.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<link rel="icon" href="favicon.ico">
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png">
-		<link rel="manifest" href="/manifest.json">
-		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffc835">
+		<link rel="icon" href="images/favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="images/icon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/icon-16x16.png">
+		<link rel="manifest" href="manifest.json">
+		<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ffc835">
 		<meta name="theme-color" content="#ffffff">
 		<title>Učit se</title>
 	</head>
