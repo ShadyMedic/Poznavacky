@@ -164,6 +164,9 @@ Vložené serverové skripty:
 		Kontroluje, zda je nějaký uživatel přihlášen, pokud ne, pokusí se ho přihlásit pomocí cookie pro trvalé přihlášení, nebo jej přesměruje na úvodní stránku; také přesměrovává přihlášené uživatele na úvodní stránce do systému
 
 Obrázky:
+	apple-touch-icon-180.png
+		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
+		Ikona stránek zobrazovaná na záložce v Apple mobilu
 	arrow.png
 		Používá se na: learn.php
 		Šipka zobrazovaná na tlačítkách další a předchozí
@@ -191,9 +194,6 @@ Obrázky:
 	favicon.ico
 		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
 		Ikona stránek zobrazovaná na záložce v prohlížeči
-	apple-touch-icon-180.png
-		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
-		Ikona stránek zobrazovaná na záložce v Apple mobilu
 	favicon-16x16.png
 		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
 		Ikona stránek zobrazovaná na záložce v prohlížeči
@@ -203,12 +203,6 @@ Obrázky:
 	icon-192.png
 		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
 		Ikona stránek zobrazovaná v Chromu v nabídce nejpoužívanějších aplikací + v Androidu
-	mstile-150x150.png
-		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
-		Ikona stránek zobrazovaná v MS dlaždicích
-	safari-pinned-tab.svg
-		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
-		Ikona stránek zobrazovaná v Safari 
 	imagePreview:
 		Používá se na: addPics.php
 		Obrázek zobrazující se místo náhledu, pokud není zadána adresa obrázku
@@ -221,6 +215,9 @@ Obrázky:
 	minus.gif:
 		Používá se na: getReports.php
 		Obrázek zobrazovaný na tlačítkách pro odebírání
+	mstile-150x150.png
+		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
+		Ikona stránek zobrazovaná v MS dlaždicích
 	noImage.png:
 		Používá se na: learn.php (odkaz se nachází v getPics.php)
 		Obrázek zobrazující se místo obrázku přírodniny, pokud není nalezen žádný obrázek
@@ -230,6 +227,9 @@ Obrázky:
 	plus.gif:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro přidávání
+	safari-pinned-tab.svg
+		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
+		Ikona stránek zobrazovaná v Safari 
 	tick.gif:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách jako přijmout či potvrdit
@@ -248,13 +248,13 @@ Git a GitHub soubory:
 Ostatní:
 	.htaccess
 		Konfigurace Apache serveru. Zajišťuje přesměrování na vlastní chybové stránky
+	browserconfig.xml
+		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
+		Pro fungování mstile-150.png
 	list_of_files.txt
 		Tento soubor. Popisuje funkci většiny souborů
 	manifest.json
 		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
 		Pro fungování icon-192.png v Chromu
-	browserconfig.xml
-		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
-		Pro fungování mstile-150.png
 		
 Pro .js a .css soubory se podívejte do sekce "Zobrazované stránky", "Vložené stránky" a "Přesměrovávací stránky".
