@@ -75,7 +75,7 @@
 	    else
 	    {
 		//Přesměrovávání na autorizační stránku
-	    header("Location: index.php");
+	    	header("Location: index.php");
 		die();
 	    }
 	}
