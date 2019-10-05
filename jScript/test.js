@@ -75,7 +75,7 @@ function answer(event)
 	{
 		document.getElementById("correctAnswer").style.display = "block";
 		//Druhá kontrola správnosti odpovědi serverem a případné navýšení skóre uhodnutých obrázků
-		postRequest("testAnswerCheck.php", responseFunc, responseFunc, correct);
+		postRequest("php/ajax/testAnswerCheck.php", responseFunc, responseFunc, correct);
 	}
 	else
 	{
@@ -161,7 +161,7 @@ function submitReport(event)
 		return;
 	}
 	
-	getRequest("newReport.php?pic=" + picUrl + "&reason=" + reason, responseFunc);
+	getRequest("php/ajax/newReport.php?pic=" + picUrl + "&reason=" + reason, responseFunc);
 }
 function cancelReport(event)
 {
