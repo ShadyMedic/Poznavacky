@@ -1,8 +1,8 @@
 <?php
 	session_start();
 
-	include 'httpStats.php'; //Zahrnuje connect.php
-	include 'logger.php';
+	include '../included/httpStats.php'; //Zahrnuje connect.php
+	include '../included/logger.php';
 
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
