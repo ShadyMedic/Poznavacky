@@ -99,7 +99,7 @@ function next()
 	document.getElementById("textfield").focus();
 	
 	
-	getRequest("getRandomPic.php", showPic);
+	getRequest("php/ajax/getRandomPic.php", showPic);
 }
 function showPic(response)
 {
