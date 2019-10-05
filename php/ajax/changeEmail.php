@@ -1,8 +1,8 @@
 <?php
     session_start();
     
-    include 'httpStats.php'; //Zahrnuje connect.php
-    include 'logger.php';
+    include '../included/httpStats.php'; //Zahrnuje connect.php
+    include '../included/logger.php';
     
     $newEmail = urldecode($_POST['newEmail']);
     $password = $_POST['oldPass'];
