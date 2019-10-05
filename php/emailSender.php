@@ -3,9 +3,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 function sendEmail($to, $subject, $message, $fromAddress = 'poznavacky@email.com', $fromName = 'Poznávačky')
 {
-    require 'phpMailer/src/Exception.php';
-    require 'phpMailer/src/PHPMailer.php';
-    require 'phpMailer/src/SMTP.php';
+    require '../phpMailer/src/Exception.php';
+    require '../phpMailer/src/PHPMailer.php';
+    require '../phpMailer/src/SMTP.php';
     
     $mail = new PHPMailer();
     
@@ -39,7 +39,7 @@ function sendEmail($to, $subject, $message, $fromAddress = 'poznavacky@email.com
 
 /*-----------------------------------------------------------------*/
 
-require 'CONSTANTS.php';
+require 'included/CONSTANTS.php';
 
 //Kód pro odeslání e-mailu, pokud je tento skript použit v AJAX
 $emailCode = @$_POST['acc'];
