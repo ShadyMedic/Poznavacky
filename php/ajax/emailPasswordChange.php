@@ -1,8 +1,8 @@
 <?php
     session_start();
     
-    include 'httpStats.php'; //Zahrnuje connect.php
-    include 'logger.php';
+    include '../included/httpStats.php'; //Zahrnuje connect.php
+    include '../included/logger.php';
     
     $newPass = urldecode($_POST['new']);
     $rePass = urldecode($_POST['reNew']);
