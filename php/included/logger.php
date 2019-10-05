@@ -1,5 +1,5 @@
 <?php
-	function fileLog($message, $file='../../log.txt', $prefix='DATE')
+	function fileLog($message, $file='log.txt', $prefix='DATE')
 	{
 		//Checking for custom prefix and setting default one
 		if($prefix == 'DATE'){$prefix = '['.date('d. m. y - H:i:s').'] ';}
