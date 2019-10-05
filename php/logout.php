@@ -13,11 +13,11 @@ setcookie('instantLogin','',0,'/');
 $_COOKIE['instantLogin'] = NULL;
 
 //Odstraňování kódu z databáze
-include 'connect.php';
+include 'included/connect.php';
 $query = "DELETE FROM sezeni WHERE kod_cookie='".md5($cookie_code)."'";
 mysqli_query($connection, $query);
 
-include 'logger.php';
+include 'included/logger.php';
 fileLog("Uživatel $username se odhlásil");
 
-header("Location: index.php");
+header("Location: ../index.php");
