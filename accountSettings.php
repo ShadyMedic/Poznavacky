@@ -1,7 +1,7 @@
 <?php 
     $redirectIn = false;
     $redirectOut = true;
-    require 'verification.php';    //Obsahuje session_start();
+    require 'php/included/verification.php';    //Obsahuje session_start();
 
     $userdata = $_SESSION['user'];
 ?>
