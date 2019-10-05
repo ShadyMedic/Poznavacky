@@ -1,7 +1,7 @@
 <?php
     session_start();
     
-    include 'httpStats.php'; //Zahrnuje connect.php
+    include '../included/httpStats.php'; //Zahrnuje connect.php
 
     $input = $_POST['oldPass'];
     
