@@ -1,7 +1,7 @@
 <?php
-    include 'httpStats.php';
-    include 'emailSender.php';
-    include 'composeEmail.php';
+    include '../included/httpStats.php';
+    include '../emailSender.php';
+    include '../included/composeEmail.php';
     session_start();
     
     //Kontrola, zda je uživatel administrátorem.
