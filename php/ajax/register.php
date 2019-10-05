@@ -1,8 +1,8 @@
 <?php
     session_start();
     
-    include 'httpStats.php'; //Zahrnuje connect.php
-    include 'logger.php';
+    include '../included/httpStats.php'; //Zahrnuje connect.php
+    include '../included/logger.php';
     
     $name = urldecode(@$_POST['name']);
     $pass = urldecode(@$_POST['pass']);
