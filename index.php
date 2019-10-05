@@ -1,7 +1,7 @@
 <?php
 	$redirectIn = true;
 	$redirectOut = false;
-	include 'verification.php';    //Obsahuje session_start();
+	include 'php/included/verification.php';    //Obsahuje session_start();
 ?>
 <!DOCTYPE html>
 <html>
