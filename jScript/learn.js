@@ -142,7 +142,7 @@ function submitReport(event)
 		return;
 	}
 	
-	getRequest("newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
+	getRequest("php/ajax/newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
 }
 function cancelReport(event)
 {
