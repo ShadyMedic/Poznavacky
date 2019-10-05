@@ -316,7 +316,7 @@ function saveConstants()
 	requestString = requestString.substring(1);	//Odstraňování prvního oddělovače konstant
 	
 	//Odeslat konstanty na server
-	postRequest("updateConstants.php", responseFunc, responseFunc, null, null, null, null, null, requestString);
+	postRequest("php/ajax/updateConstants.php", responseFunc, responseFunc, null, null, null, null, null, requestString);
 }
 /*------------------------------------------------------------*/
 function editUser(event)
@@ -376,7 +376,7 @@ function confirmUserEdit(event)
 	}
 	
 	//Upravit data v databázi
-	postRequest("editUser.php", responseFunc, responseFunc, null, username, null, null, null, null, newAddedPics, newGuessedPics, newKarma, newStatus);
+	postRequest("php/ajax/editUser.php", responseFunc, responseFunc, null, username, null, null, null, null, newAddedPics, newGuessedPics, newKarma, newStatus);
 }
 function cancelUserEdit(event)
 {
@@ -400,7 +400,7 @@ function deleteUser(event)
 	{
 		//Ovlivnění databáze
 		var username = event.target.parentNode.parentNode.parentNode.childNodes[1].innerHTML;
-		postRequest("deleteUser.php", responseFunc, responseFunc, null, username);
+		postRequest("php/ajax/deleteUser.php", responseFunc, responseFunc, null, username);
 		
 		//Odstranění účtu z DOM
 		event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
@@ -410,7 +410,7 @@ function deleteUser(event)
 function getReports(pId)
 {
 	currentReports = pId;
-	postRequest('getReports.php', showRecords, responseFunc, null, pId);
+	postRequest('php/ajax/getReports.php', showRecords, responseFunc, null, pId);
 }
 function showRecords(response)
 {
@@ -451,7 +451,7 @@ function disablePicture(event)
 		}
 	}
 	
-	postRequest("disablePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
+	postRequest("php/ajax/disablePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
 }
 function deletePicture(event)
 {
@@ -474,7 +474,7 @@ function deletePicture(event)
 		}
 	}
 	
-	postRequest("deletePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
+	postRequest("php/ajax/deletePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
 }
 function deleteReport(event)
 {
@@ -504,7 +504,7 @@ function deleteReport(event)
 	//Odstranění hlášení z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	
-	postRequest("deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason);
+	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason);
 }
 /*------------------------------------------------------------*/
 function acceptNameChange(event)
@@ -516,7 +516,7 @@ function acceptNameChange(event)
 	var newName = event.target.parentNode.parentNode.parentNode.childNodes[1].innerHTML;
 	
 	//Posílání požadavku na ovlivnění databáze
-	postRequest("resolveNameChange.php", null, null, true, oldName, newName);
+	postRequest("php/ajax/resolveNameChange.php", null, null, true, oldName, newName);
 	
 	//Odstranění požadavku z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
@@ -531,7 +531,7 @@ function declineNameChange(event)
 	var oldName = event.target.parentNode.parentNode.parentNode.childNodes[0].innerHTML;
 	
 	//Posílání požadavku na ovlivnění databáze
-	postRequest("resolveNameChange.php", null, null, false, oldName, null, null, null, reason);
+	postRequest("php/ajax/resolveNameChange.php", null, null, false, oldName, null, null, null, reason);
 	
 	//Odstranění požadavku z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
@@ -562,14 +562,14 @@ function sendMail()
 	var subject = document.getElementById("emailSubject").value;
 	var message = document.getElementById("emailMessage").value;
 	
-	postRequest("emailSender.php", responseFunc, responseFunc, code, null, null, to, subject, message);
+	postRequest("php/emailSender.php", responseFunc, responseFunc, code, null, null, to, subject, message);
 }
 /*------------------------------------------------------------*/
 function sendSqlQuery()
 {
 	var query = document.getElementById("sqlQueryInput").value;
 	
-	postRequest("executeSqlQuery.php", printSqlResponse, responseFunc, null, null, null, null, null, query);
+	postRequest("php/ajax/executeSqlQuery.php", printSqlResponse, responseFunc, null, null, null, null, null, query);
 }
 function printSqlResponse(response)
 {
