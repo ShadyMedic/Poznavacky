@@ -1,8 +1,8 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';    //Obsahuje session_start();
-	require 'CONSTANTS.php';
+	require 'php/included/verification.php';    //Obsahuje session_start();
+	require 'php/included/CONSTANTS.php';
 	
 	//Mazání zvolené poznávačky ze sezení
 	unset($_SESSION['current']);
@@ -63,7 +63,7 @@
     		 	</tr>
     		 	<?php
     				//Seznam dostupných poznávaček
-    				include 'connect.php';
+    				include 'php/included/connect.php';
     				
     				$query = 'SELECT * FROM poznavacky';
     				$result = mysqli_query($connection,$query);
