@@ -148,7 +148,7 @@ Vložené serverové skripty:
 		Zahrnuje se do: všechny skripty pracující s databází
 		Zajišťuje připojení k databázi a nastavuje znakovou sadu
 	CONSTANTS.php
-		Zahrnuje se do: list.php, register.php
+		Zahrnuje se do: emailSender.php, list.php, register.php
 		Obsahuje všechny konstanty systému
 	emailSender.php
 		Zahrnuje se do: recoverPassword.php, resolveNameChange.php
