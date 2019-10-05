@@ -1,7 +1,7 @@
 <?php    
     $redirectIn = false;
     $redirectOut = true;
-    require 'verification.php';    //Obsahuje session_start();
+    require 'php/included/verification.php';    //Obsahuje session_start();
     
     //Kontrola, zda je uživatel administrátorem.
     $username = $_SESSION['user']['name'];
@@ -349,7 +349,7 @@
 					<textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
 					<br>
 					<span>Bezpečnostní kód: </span>
-					<input id="emailCode" type=text maxlength=8 value="<?php include 'CONSTANTS.php'; echo EMAIL_CODE;?>" />
+					<input id="emailCode" type=text maxlength=8 value="<?php include 'php/included/CONSTANTS.php'; echo EMAIL_CODE;?>" />
 					<br>
 					<button id="emailPreviewButton" onclick="updateEmailPreview()">Zobrazit náhled</button>
 					<button id="emailSendButton" onclick="sendMail()">Odeslat</button>
