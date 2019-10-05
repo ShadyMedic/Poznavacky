@@ -1,7 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';    //Obsahuje session_start();
+	require 'php/included/verification.php';    //Obsahuje session_start();
 	
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
@@ -39,7 +39,7 @@
     						//Vypisování přírodnin
     						$table = $_SESSION['current'][0].'seznam';
     							
-    						include 'connect.php';
+    						include 'php/included/connect.php';
     						$query = "SELECT * FROM $table ORDER BY nazev,obrazky,id";
     						$result = mysqli_query($connection, $query);
     						while($row = mysqli_fetch_array($result))
