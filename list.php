@@ -40,7 +40,7 @@
 				
         	    echo "<div id='changelog'>"; //Okno se zprávou
 					echo "<div id='changelogText'>"; //Prvek se zprávou
-						include 'changelog.html'; //Zpráva
+						include 'documents/changelog.html'; //Zpráva
 					echo "</div>";
 					echo "<div style='text-align:center'><button id='closeChangelog' class='button' onclick='closeChangelog()'>Zavřít</button></div>"; //Zavírací tlačítko
         	    echo "</div>";
@@ -51,7 +51,7 @@
 			<h1>Dostupné poznávačky</h1>
 			<nav>
 				<a href="accountSettings.php">Nastavení účtu</a>
-				<a href="logout.php">Odhlásit se</a>
+				<a href="php/logout.php">Odhlásit se</a>
 			</nav>
         </header>
         <main>
