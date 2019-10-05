@@ -72,7 +72,7 @@ function nextImg()
 }
 function getImage()
 {
-	getRequest("getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
+	getRequest("php/ajax/getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
 }
 function showImg(response)
 {
