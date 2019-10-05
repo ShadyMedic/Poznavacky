@@ -1,5 +1,5 @@
 <?php
-    include 'httpStats.php';
+    include '../included/httpStats.php';
     session_start();
     
     //Kontrola, zda je uživatel administrátorem.
