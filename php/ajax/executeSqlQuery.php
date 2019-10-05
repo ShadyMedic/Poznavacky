@@ -1,5 +1,5 @@
 <?php
-    include 'httpStats.php';
+    include '../included/httpStats.php';
     session_start();
 
     //Kontrola, zda je uživatel administrátorem.
@@ -50,7 +50,7 @@
     
     //Kontrola OK
     
-    include 'connect.php';
+    include '../included/connect.php';
     function executeQuery($query)
     {
         global $connection;
