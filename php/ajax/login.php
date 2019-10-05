@@ -4,8 +4,8 @@
     $name = urldecode(@$_POST['name']);
     $pass = urldecode(@$_POST['pass']);
     
-    include 'httpStats.php'; //Zahrnuje connect.php
-    include 'logger.php';
+    include '../included/httpStats.php'; //Zahrnuje connect.php
+    include '../included/logger.php';
     
     //Kontrola maximální délky jména (aby nevznikaly dlouhé SQL dotazy) - je potřeba provést před mysqli_real_escape_string
     if (mb_strlen($name) > 15)
