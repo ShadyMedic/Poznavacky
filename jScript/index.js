@@ -70,7 +70,7 @@ function login()
 	username = encodeURIComponent(username);
 	password = encodeURIComponent(password);
 	
-	postRequest("login.php", responseFunc, null, username, password, keepLogged);
+	postRequest("php/ajax/login.php", responseFunc, null, username, password, keepLogged);
 }
 
 function register()
@@ -89,7 +89,7 @@ function register()
 	rePassword = encodeURIComponent(rePassword);
 	email = encodeURIComponent(email);
 	
-	postRequest("register.php", responseFunc, null, username, password, rePassword, email);
+	postRequest("php/ajax/register.php", responseFunc, null, username, password, rePassword, email);
 }
 
 function recoverPassword()
@@ -98,7 +98,7 @@ function recoverPassword()
 	
 	email = encodeURIComponent(email);
 	
-	postRequest("recoverPassword.php", responseFunc, null, null, null, null, email);
+	postRequest("php/ajax/recoverPassword.php", responseFunc, null, null, null, null, email);
 }
 
 function postRequest(url, success = null, error = null, username, password, rePassword = null, email = null){
