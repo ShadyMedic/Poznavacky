@@ -4,7 +4,7 @@ include 'connect.php';
 function groupStats()
 {
 	global $connection;
-	$query = 'SELECT * FROM statistika ORDER BY id LIMIT 16';	//V tabulce statistika vždy musí zùstat zachována alespoò jedna øádka.
+	$query = 'SELECT * FROM statistika ORDER BY id LIMIT 16';	//V tabulce statistika vÅ¾dy musÃ­ zÅ¯stat zachovÃ¡na alespoÅˆ jedna Å™Ã¡dka.
 	$result = mysqli_query($connection, $query);
 	if (!$result){die('Error occured while executing '.$query);}
 	$numRows = mysqli_num_rows($result);
@@ -21,7 +21,7 @@ function groupStats()
 			$idTo = $row['id'];
 			$sum += $row['pozadavky'];
 		}
-		//Poèítání prùmìru
+		//PoÃ¨Ã­tÃ¡nÃ­ prÃ¹mÃ¬ru
 		$sum /= 15;
 		$sum = round($sum);
 		
@@ -38,18 +38,18 @@ function groupStats()
 	return false;
 }
 
-//Získat datum a èas (den-mìsíc-rok + hodiny:minuty)
+//ZÃ­skat datum a Ã¨as (den-mÃ¬sÃ­c-rok + hodiny:minuty)
 date_default_timezone_set("Europe/Prague");
 $date = date("d-m-Y");
 $time = date("H:i");
 
-//Kontrola, zda již existuje záznam pro danou minutu
+//Kontrola, zda jiÅ¾ existuje zÃ¡znam pro danou minutu
 $query = "SELECT id,pozadavky FROM statistika WHERE datum='$date' AND cas='$time'";
 $result = mysqli_query($connection, $query);
 if (!$result){die("An error occured while working with mysql server. Error code: ".mysqli_errno($connection).". Please, conntact administrator.");}
 if (mysqli_num_rows($result) == 0)
 {
-    //Vybírání posledního zaznamenaného èasu v tabulce statistika
+    //VybÃ­rÃ¡nÃ­ poslednÃ­ho zaznamenanÃ©ho Ã¨asu v tabulce statistika
     $query = "SELECT id,datum,cas FROM statistika ORDER BY id DESC LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result){die("An error occured while working with mysql server. Error code: ".mysqli_errno($connection).". Please, conntact administrator.");}
@@ -57,11 +57,11 @@ if (mysqli_num_rows($result) == 0)
     $currentDate = $result['datum'];
     $currentTime = $result['cas'];
     
-    //Zapisování èasù bez požadavkù do databáze
+    //ZapisovÃ¡nÃ­ Ã¨asÃ¹ bez poÅ¾adavkÃ¹ do databÃ¡ze
     while ($date != $currentDate || $time != $currentTime)
     {
         $dateObj = date_create_from_format("d-m-Y H:i",$currentDate." ".$currentTime);
-        date_add($dateObj, new DateInterval("PT1M"));    //Pøidání jedné minuty;
+        date_add($dateObj, new DateInterval("PT1M"));    //PÅ™idÃ¡nÃ­ jednÃ© minuty;
         $currentDate = $dateObj->format('d-m-Y');
         $currentTime = $dateObj->format('H:i');
         $query = "INSERT INTO statistika VALUES (NULL,'$currentDate','$currentTime',0)";
