@@ -64,7 +64,7 @@ function add(event)
 	name = encodeURI(name);
 	URL = encodeURI(URL);
 	
-	getRequest("newPicture.php?name=" + name + "&url=" + URL, responseFunc, responseFunc);
+	getRequest("php/ajax/newPicture.php?name=" + name + "&url=" + URL, responseFunc, responseFunc);
 }
 function getRequest(url, success = null, error = null){
 	var req = false;
