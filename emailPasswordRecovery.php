@@ -1,7 +1,7 @@
 <?php 
     session_start();
     
-    include 'httpStats.php'; //Zahrnuje connect.php
+    include 'php/included/httpStats.php'; //Zahrnuje connect.php
 ?>
 <html>
 	<head>
