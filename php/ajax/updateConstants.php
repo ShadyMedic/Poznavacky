@@ -48,10 +48,10 @@
     $textToWrite = array_reverse($textToWrite);
     
     //Načtení současného obsahu souboru
-    $fileContent = file('CONSTANTS.php');
+    $fileContent = file('../included/CONSTANTS.php');
     
     //Otevření souboru pro zápis (obsah je vymazán)
-    $file = fopen('CONSTANTS.php', 'w');
+    $file = fopen('../included/CONSTANTS.php', 'w');
     
     //Postupné projetí souboru a nahrazení řádků s konstantami novými
     foreach($fileContent as $fileLine)
