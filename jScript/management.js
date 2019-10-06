@@ -175,7 +175,7 @@ function editConstant(event)
 	event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].setAttribute("class", "constantField");
 	
 	//Změnit tlačítka akcí
-	event.target.parentNode.parentNode.innerHTML = "<button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='tick.gif'/></button><button class='activeBtn' onclick='cancelConstEdit(event)' title='Zrušit'><img src='cross.gif'/></button>";
+	event.target.parentNode.parentNode.innerHTML = "<button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='images/tick.gif'/></button><button class='activeBtn' onclick='cancelConstEdit(event)' title='Zrušit'><img src='images/cross.gif'/></button>";
 }
 function confirmConstEdit(event)
 {
@@ -268,11 +268,11 @@ function addConstant()
 	
 	//Tvorba a zobrazení nového řádku
 	var newTr = document.createElement("tr");
-	newTr.innerHTML = "<td>"+cName+"</td><td class='editableField'><input type='text' value='' class='userField'></td><td><button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='tick.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit'><img src='cross.gif'></button></td>";
+	newTr.innerHTML = "<td>"+cName+"</td><td class='editableField'><input type='text' value='' class='userField'></td><td><button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='images/tick.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit'><img src='images/cross.gif'></button></td>";
 	document.getElementById("constantsTable").childNodes[0].appendChild(newTr);
 	document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[1].childNodes[0].focus();
 	
-	constantTr = "<td>"+cName+"</td><td><input type='text' readonly value=''></td><td><button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='pencil.gif'></button><button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='up.gif'></button><button class='moveDownButton grayscale' disabled='true'><img src='down.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='cross.gif'></button></td>"
+	constantTr = "<td>"+cName+"</td><td><input type='text' readonly value=''></td><td><button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='images/pencil.gif'></button><button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='images/up.gif'></button><button class='moveDownButton grayscale' disabled='true'><img src='images/down.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='images/cross.gif'></button></td>"
 	
 	//Dočasně znemožnit editaci jiných konstant a jejich posouvání
 	var buttons = document.getElementsByClassName("editConstantButton");
@@ -346,7 +346,7 @@ function editUser(event)
 	event.target.parentNode.parentNode.parentNode.childNodes[7].setAttribute("class", "editableField");
 	
 	//Změnit tlačítka akcí
-	event.target.parentNode.parentNode.innerHTML = "<button class='nameChangeAction activeBtn' onclick='confirmUserEdit(event)' title='Uložit'><img src='tick.gif'/></button><button class='nameChangeAction activeBtn' onclick='cancelUserEdit(event)' title='Zrušit'><img src='cross.gif'/></button>";
+	event.target.parentNode.parentNode.innerHTML = "<button class='nameChangeAction activeBtn' onclick='confirmUserEdit(event)' title='Uložit'><img src='images/tick.gif'/></button><button class='nameChangeAction activeBtn' onclick='cancelUserEdit(event)' title='Zrušit'><img src='images/cross.gif'/></button>";
 }
 function confirmUserEdit(event)
 {
