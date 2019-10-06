@@ -56,6 +56,6 @@
         else
         {
             filelog("Uživatel $user odstranil svůj účet z IP adresy $ip.");
-            echo "location.href = 'logout.php';";
+            echo "location.href = 'php/logout.php';";
         }
     }
