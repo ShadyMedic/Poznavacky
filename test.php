@@ -73,6 +73,6 @@
          </footer>
 	</body>
 	<script>
-		getRequest("getRandomPic.php", showPic);
+		getRequest("php/ajax/getRandomPic.php", showPic);
 	</script>
 </html>
