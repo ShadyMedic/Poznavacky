@@ -82,7 +82,7 @@
 				<div id='constants'>
     				<h3>Správa systémových konstant</h3>
     				<?php 
-    				    $constantsFile = file('CONSTANTS.php');
+    				    $constantsFile = file('php/included/CONSTANTS.php');
     				    echo "<table id='constantsTable'>";
     				    foreach ($constantsFile as $fileLine)
     				    {
