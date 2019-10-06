@@ -18,6 +18,6 @@ $query = "DELETE FROM sezeni WHERE kod_cookie='".md5($cookie_code)."'";
 mysqli_query($connection, $query);
 
 include 'included/logger.php';
-fileLog("Uživatel $username se odhlásil");
+fileLog("Uživatel $username se odhlásil", "../log.txt");
 
 header("Location: ../index.php");
