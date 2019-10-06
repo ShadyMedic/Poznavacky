@@ -88,7 +88,7 @@
         }
         
         //Přihlášení
-        require 'CONSTANTS.php';
+        require '../included/CONSTANTS.php';
         $query = "SELECT id FROM uzivatele WHERE jmeno='$name'";
         $userId = mysqli_query($connection, $query);
         if (!$userId)
