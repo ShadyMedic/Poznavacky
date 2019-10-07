@@ -90,8 +90,8 @@
     filelog("Uživatel se zažádal o obnovu hesla prostřednictvím e-mailové adresy $email. z IP adresy $ip");
     
     //Poslat e-mail.
-    include 'emailSender.php';
-    include 'composeEmail.php';
+    include '../emailSender.php';
+    include '../included/composeEmail.php';
     $emailResult = sendEmail($email, 'Žádost o obnovu hesla na poznavacky.chytrak.cz', getEmail(0, array("code" => $code)));
     
     if (empty($emailResult))
