@@ -197,6 +197,7 @@ function deleteAccountFinal()
 
 function deleteAccountCancel()
 {
+	document.getElementById("deleteAccountInputField").value = "";
 	document.getElementById("deleteAccountButton").style.display = "inline-block";
 	document.getElementById("deleteAccountInput2").style.display = "none";
 }
