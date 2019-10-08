@@ -1,22 +1,22 @@
 <?php
 	$redirectIn = true;
 	$redirectOut = false;
-	include 'verification.php';    //Obsahuje session_start();
+	include 'php/included/verification.php';    //Obsahuje session_start();
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" href="css.css">
-		<script type="text/javascript" src="index.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<script type="text/javascript" src="jScript/index.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<link rel="icon" href="favicon.ico">
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png">
-		<link rel="manifest" href="/manifest.json">
-		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffc835">
+		<link rel="icon" href="images/favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="images/icon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/icon-16x16.png">
+		<link rel="manifest" href="manifest.json">
+		<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ffc835">
 		<meta name="theme-color" content="#ffffff">
 		<title>Ověření</title>
 	</head>
@@ -45,7 +45,7 @@
 						<br>
 						<input id='register_email' type='email' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)' class='text'>
 						<br>
-						<span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
+						<span id='span_terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
 						<br>
 						<button id='register_submit' onclick='register()' class='button' class='confirm button'>Vytvořit účet</button>
 					</div>

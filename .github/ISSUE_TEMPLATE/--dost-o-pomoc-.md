@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Před přispíváním si prosím přečtěte [tohoto](https://github.com/HonzaSTECH/Poznavacky/blob/master/CONTRIBUTING.md) stručného průvodce. Tento odstavec před odelsáním smažte.
+Před přispíváním si prosím přečtěte [tohoto](https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/CONTRIBUTING.md) stručného průvodce. Tento odstavec před odelsáním smažte.
 
 **Popište výstižně vaši otázku**
 Jasný a stručný popis informace, kterou požadujete.

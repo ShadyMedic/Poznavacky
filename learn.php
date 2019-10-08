@@ -1,7 +1,7 @@
 <?php
 	$redirectIn = false;
 	$redirectOut = true;
-	require 'verification.php';    //Obsahuje session_start();
+	require 'php/included/verification.php';    //Obsahuje session_start();
 		
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
@@ -12,15 +12,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" href="css.css">
-		<script type="text/javascript" src="learn.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<script type="text/javascript" src="jScript/learn.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<link rel="icon" href="favicon.ico">
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png">
-		<link rel="manifest" href="/manifest.json">
-		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffc835">
+		<link rel="icon" href="images/favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="images/icon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/icon-16x16.png">
+		<link rel="manifest" href="manifest.json">
+		<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ffc835">
 		<meta name="theme-color" content="#ffffff">
 		<title>Učit se</title>
 	</head>
@@ -38,7 +38,7 @@
     					//Vypisování přírodnin
     					$table = $_SESSION['current'][0].'seznam';
     						
-    					include 'connect.php';
+    					include 'php/included/connect.php';
     					$query = "SELECT * FROM $table";
     					$result = mysqli_query($connection, $query);
     					while($row = mysqli_fetch_array($result))
@@ -64,16 +64,16 @@
     				<tr>
 					<td class=>
     						<button onclick="prevImg()" class="learn_button" id="prevImg">
-							<img src="arrow.png" style="transform: rotate(180deg);" /><br>
+							<img src="images/arrow.png" style="transform: rotate(180deg);" /><br>
                             <span class="key_short">[A]</span>
 						    </button>
     					</td>
     					<td>
-    						<img id="image" class="img" src="imagePreview.png">
+    						<img id="image" class="img" src="images/imagePreview.png">
     					</td>
     					<td>
     						<button onclick = "nextImg()" class="learn_button" id="nextImg">
-							<img src="arrow.png" /><br>
+							<img src="images/arrow.png" /><br>
                             <span class="key_short">[D]</span>
 						    </button>
     					</td>
@@ -96,7 +96,7 @@
 	    <footer>
 			<div id="help" class="footerOption"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a></div>
 			<div id="issues" class="footerOption" onclick="showLogin()"><a target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a></div>
-			<div class="footerOption"><a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/TERMS_OF_SERVICE.md'>Podmínky služby</a></div>
+			<div class="footerOption"><a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>Podmínky služby</a></div>
 			<div id="about" class="footerOption">&copy Štěchy a Eksyska, 2019</div>
          	<script>
              	function showLogin()
