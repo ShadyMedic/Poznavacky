@@ -147,8 +147,10 @@ function confirmEmailChange()
 	postRequest("php/ajax/changeEmail.php", responseFunc, responseFunc, null, pass, null, null, newEmail);
 	
 	//Reset HTML
+	document.getElementById("changeEmailPasswordInputField").value = "";
 	document.getElementById("changeEmailInputField").value = "";
-	document.getElementById("changeEmailInput").style.display = "none";
+	document.getElementById("changeEmailInput1").style.display = "none";
+	document.getElementById("changeEmailInput2").style.display = "none";
 	document.getElementById("changeEmailButton").style.display = "inline-block";
 }
 
