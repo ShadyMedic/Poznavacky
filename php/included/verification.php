@@ -51,6 +51,16 @@
             return false;
         }
     }
+	
+	function renewLastLoginTime($userId)
+	{
+		//Aktualizace času posledního přihlášení
+		
+		global $connection;
+		
+		$query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
+		$result = mysqli_query($connection, $query);
+	}
 /*------------------------------------------------------------------------------------------------------*/
     session_start();
     
@@ -66,8 +76,7 @@
             
             //Aktualizace času posledního přihlášení
             $userId = $userdata['id'];
-            $query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
-            $result = mysqli_query($connection, $query);
+            renewLastLoginTime($userId);
             
             $username = $userdata['name'];
             filelog("Uživatel ($username) byl ověřen souborem cookie a bylo obnoveno jeho přihlášení");
@@ -75,7 +84,7 @@
 	    else
 	    {
 		//Přesměrovávání na autorizační stránku
-	    	header("Location: index.php");
+	    header("Location: index.php");
 		die();
 	    }
 	}
@@ -88,8 +97,7 @@
     		
     		//Aktualizace času posledního přihlášení
     		$userId = $userdata['id'];
-    		$query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
-    		$result = mysqli_query($connection, $query);
+    		renewLastLoginTime($userId);
     		
     		$username = $userdata['name'];
 	        filelog("Uživatel $username byl ověřen a přesměrován do systému.");
@@ -103,8 +111,7 @@
 	        
 	        //Aktualizace času posledního přihlášení
 	        $userId = $userData['id'];
-	        $query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
-	        $result = mysqli_query($connection, $query);
+	        renewLastLoginTime($userId);
 	        
 	        $username = $userdata['name'];
 	        filelog("Uživatel $username byl ověřen souborem cookie a přesměrován do systému.");
