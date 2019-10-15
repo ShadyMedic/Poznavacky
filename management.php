@@ -228,61 +228,76 @@
 			</div>
 			<div id="tab3">
 				<table border=1>
-					<tr>
-						<th>Název poznávačky</th>
-						<th>Počet hlášení</th>
-					</tr>
+			    	<th>Zdroj</th>
+			    	<th>Důvod</th>
+			    	<th>Počet nahlášení</th>
+			    	<th>Akce</th>
 					
 					<?php 
-					   $query = "SELECT id,nazev FROM poznavacky";
-					   $result = mysqli_query($connection, $query);
-					   if (!$result)
-					   {
-					       echo "Nastala chyba SQL: ".mysqli_error($connection);
-					   }
-					   
-					   $ids = array();
-					   $names = array();
-					   while ($row = mysqli_fetch_array($result))
-					   {
-					       array_push($ids, $row['id']);
-					       array_push($names, $row['nazev']);
-					   }
-					   
-					   foreach ($ids as $id)
-					   {
-					       //Získávání počtu řádek
-					       $query = "SHOW TABLE STATUS WHERE name='".$id."hlaseni'";
-					       $innerresult = mysqli_query($connection, $query);
-					       if (!$innerresult)
-					       {
-					           echo "Nastala chyba SQL: ".mysqli_error($connection);
-					       }
-					       $rowCount = mysqli_fetch_array($innerresult)['Rows'];
-					       
-					       echo "<tr>";
-					       echo "<td>";
-					           echo $names[$id - 1];
-					       echo "</td>";
-					       if ($rowCount == 0)
-					       {
-					           echo "<td style='color:#009900;'><b>";
-					               echo $rowCount;
-					       }
-					       else
-					       {
-					           echo "<td onclick='getReports($id)' style='color:#990000;'><b><u>";
-					               echo $rowCount."</u>";
-					       }
-					       echo "</b></td>";
-					       echo "</tr>";
-					   }
-					?>
+					$query = "SELECT obrazekId,duvod,pocet FROM hlaseni ORDER BY pocet DESC LIMIT 25";
+					$result = mysqli_query($connection, $query);
+					if (!$result)
+					{
+					    echo mysqli_error($connection);
+					}
+			       while ($report = mysqli_fetch_array($result))
+			       {
+			           echo "<tr>";
+			           //Získání URL obrázku
+			           $picId = $report['obrazekId'];
+			           $query = "SELECT zdroj FROM obrazky WHERE id=$picId";
+			           $innerresult = mysqli_query($connection, $query);
+			           $innerresult = mysqli_fetch_array($innerresult);
+			           $url = $innerresult['zdroj'];
+			           echo "<td><a href='$url' target='_blank'>$url</a></td>";
+			           
+			           //Výpis důvodu
+			           $reason = $report['duvod'];
+			           echo "<td>";
+			           switch ($reason)
+			           {
+			               case 0:
+			                   echo "Obrázek se nezobrazuje správně";
+			                   break;
+			               case 1:
+			                   echo "Obrázek zobrazuje nesprávnou přírodninu";
+			                   break;
+			               case 2:
+			                   echo "Obrázek obsahuje název přírodniny";
+			                   break;
+			               case 3:
+			                   echo "Obrázek má příliš špatné rozlišení";
+			                   break;
+			               case 4:
+			                   echo "Obrázek porušuje autorská práva";
+			                   break;
+			           }
+			           echo "</td>";
+			           
+			           //Výpis počtu nahlášení
+			           $reporters = $report['pocet'];
+			           echo "<td>$reporters</td>";
+			           
+			           //Výpis akcí
+			           echo "<td>";
+			               echo "<button class='reportAction activeBtn' onclick='showPicture(event)' title='Zobrazit obrázek'>";
+			                   echo "<img src='images/eye.gif'/>";
+			               echo "</button>";
+				           echo "<button class='reportAction activeBtn' onclick='disablePicture(event)' title='Skrýt obrázek'>";
+				               echo "<img src='images/dot.gif'/>";
+				           echo "</button>";
+				           echo "<button class='reportAction activeBtn' onclick='deletePicture(event)' title='Odstranit obrázek'>";
+				               echo "<img src='images/cross.gif'/>";
+				           echo "</button>";
+				           echo "<button class='reportAction activeBtn' onclick='deleteReport(event)' title='Odstranit hlášení'>";
+				               echo "<img src='images/minus.gif'/>";
+				           echo "</button>";
+			           echo "</td>";
+			           echo "</tr>";
+		             }
+                    ?>
 				</table>
-				<hr>
-				<div id="singleTestReports">
-					Klikněte na počet hlášení vyšší než 0 v horní tabulce pro zobrazení jednotlivých záznamů.
-				</div>
+				<div id="singleReport"></div>
 			</div>
 			<div id="tab4">
 				<table border=1>
