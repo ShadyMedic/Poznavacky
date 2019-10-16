@@ -4,41 +4,39 @@ function isCorrect(answer)
 	var a = removeDiacritic(answer.toLowerCase() + "××");
 	var b = removeDiacritic(correct.toLowerCase() + "××");
 	
-	var result = true;
+  if (a === b)
+  {
+    //Odpověď bez překlepů
+    return true;
+  }
+  
+	var result = "typo";
 	var errors = 0;
 	
 	for (var i = 0; i < b.length-2; i++)
 	{
-	    if (a[i] !== b[i])    //Unmatching character
+	    if (a[i] !== b[i])    //Neshodný znak
 	    {
-	        if (a[i] == b[i+1] && a[i+1] == b[i+2])    //Missing character
+	        if (a[i] == b[i+1] && a[i+1] == b[i+2])    //Chybějící znak
 	        {
-	            //console.log("Missing char: " + b[i]);
-	            a = a.slice(0, i) + b[i] + a.slice(i);    //Adding the missing character
-	            //console.log("Result: " + a);
+	            a = a.slice(0, i) + b[i] + a.slice(i);    //Přidávání chybějícího znaku
 	            errors++;
 	        }
 	        
-	        else if (a[i+1] == b[i] && a[i+2] == b[i+1])    //Sulprusing character
+	        else if (a[i+1] == b[i] && a[i+2] == b[i+1])    //Přebývající znak
 	        {
-	            //console.log("Sulprusing char: " + a[i]);
-	            a = a.slice(0, i) + a.slice(i+1);    //Removing the sulprusing character
-	            //console.log("Result: " + a);
+	            a = a.slice(0, i) + a.slice(i+1);    //Odstraňování přebývajícího znaku
 	            errors++;
 	        }
 	        
-	        else    //Wrong character
+	        else    //Špatný znak
 	        {
-	            //console.log("Wrong char: " + a[i] + " (should be " + b[i] +")");
-	            a = a.slice(0, i) + b[i] + a.slice(i+1);    //Replacing the wrong character
-	            //console.log("Result: " + a);
+	            a = a.slice(0, i) + b[i] + a.slice(i+1);    //Oprava špatného znaku
 	            errors++;
 	        }
 	    }
 	}
-	//console.log("Total spelling errors: " + errors);
 	var ratio = errors / (a.length - 2)
-	//console.log("Error ratio: " + ratio);
 	if (ratio > 0.334){result = false;}
 	
 	return result;
@@ -71,17 +69,25 @@ function answer(event)
 	
 	document.getElementById("answerForm").style.display = "none";
 	
-	if (isCorrect(ans))
+  var correctionTest = isCorrect(ans);
+	if (correctionTest === false)
+	{
+		document.getElementById("wrongAnswer").style.display = "block";
+		document.getElementById("wrong3").innerHTML = correct;
+	}
+	else if (correctionTest === true)
 	{
 		document.getElementById("correctAnswer").style.display = "block";
 		//Druhá kontrola správnosti odpovědi serverem a případné navýšení skóre uhodnutých obrázků
-		postRequest("php/ajax/testAnswerCheck.php", responseFunc, responseFunc, correct);
+		postRequest("php/ajax/testAnswerCheck.php", responseFunc, responseFunc, ans);
 	}
-	else
-	{
-		document.getElementById("wrongAnswer").style.display = "block";
-		document.getElementById("serverResponse").innerHTML = correct;
-	}
+  else
+  {
+    document.getElementById("typoAnswer").style.display = "block";
+    document.getElementById("typo2").innerHTML = correct;
+		//Druhá kontrola správnosti odpovědi serverem a případné navýšení skóre uhodnutých obrázků
+		postRequest("php/ajax/testAnswerCheck.php", responseFunc, responseFunc, ans);  
+  }
 	
 	document.getElementById("nextButton").style.display = "block";
 	document.getElementById("nextButton").focus();
@@ -92,6 +98,7 @@ function next()
 	
 	document.getElementById("nextButton").style.display = "none";
 	document.getElementById("correctAnswer").style.display = "none";
+  document.getElementById("typoAnswer").style.display = "none";
 	document.getElementById("wrongAnswer").style.display = "none";
 	
 	document.getElementById("answerForm").style.display = "block";
