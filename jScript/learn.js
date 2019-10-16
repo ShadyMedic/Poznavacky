@@ -72,6 +72,8 @@ function nextImg()
 }
 function getImage()
 {
+	document.getElementById("image").src = "images/loading.gif";
+	
 	getRequest("php/ajax/getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
 }
 function showImg(response)
@@ -138,6 +140,7 @@ function submitReport(event)
 	{
 	case "images/noImage.png":
 	case "images/imagePreview.png":
+	case "images/loading.gif":
 		swal("Neplatný obrázek!","","error");
 		return;
 	}
