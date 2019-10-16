@@ -162,6 +162,9 @@ function submitReport(event)
 	}
 	
 	getRequest("php/ajax/newReport.php?pic=" + picUrl + "&reason=" + reason, responseFunc);
+  
+  //Skrýt formulář pro nahlašování
+  cancelReport();
 }
 function cancelReport(event)
 {
@@ -169,6 +172,7 @@ function cancelReport(event)
 	document.getElementById("reportMenu").style.display = "none";
 	document.getElementById("submitReport").style.display = "none";
 	document.getElementById("cancelReport").style.display = "none";
+  document.getElementById("reportMenu").selectedIndex = 0;
 }
 function responseFunc(response)
 {
