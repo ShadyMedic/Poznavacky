@@ -38,10 +38,14 @@
     					<input type=submit class="button" value="OK" />
     				</form>
     				<span id="correctAnswer">Správně!</span>
+            <div id="typoAnswer">
+    					<span id="typo1">Správně, ale s překlepem!</span><br>
+    					<span id="typo2"></span>
+    			    </div>
     				<div id="wrongAnswer">
     					<span id="wrong1">Špatně!</span><br>
     					<span id="wrong2">Správná odpověď je </span>
-    					<span id="serverResponse"></span>
+    					<span id="wrong3"></span>
     			    </div>
     			<button onclick="next()" class="button" id="nextButton">Další</button>
     			</div>
