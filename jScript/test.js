@@ -94,7 +94,7 @@ function answer(event)
 }
 function next()
 {
-	document.getElementById("image").src = "images/imagePreview.png";
+	document.getElementById("image").src = "images/loading.gif";
 	
 	document.getElementById("nextButton").style.display = "none";
 	document.getElementById("correctAnswer").style.display = "none";
@@ -164,6 +164,7 @@ function submitReport(event)
 	{
 	case "images/noImage.png":
 	case "images/imagePreview.png":
+	case "images/loading.gif":
 		swal("Neplatný obrázek!","","error");
 		return;
 	}
