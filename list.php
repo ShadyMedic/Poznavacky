@@ -50,6 +50,12 @@
         <header>
 			<h1>Dostupné poznávačky</h1>
 			<nav>
+				<?php
+				    if ($_SESSION['user']['status'] === 'admin')
+				    {
+					echo "<a href='management.php'>Správa služby</a>";
+				    }
+				?>
 				<a href="accountSettings.php">Nastavení účtu</a>
 				<a href="php/logout.php">Odhlásit se</a>
 			</nav>

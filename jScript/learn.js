@@ -72,6 +72,8 @@ function nextImg()
 }
 function getImage()
 {
+	document.getElementById("image").src = "images/loading.gif";
+	
 	getRequest("php/ajax/getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
 }
 function showImg(response)
@@ -138,11 +140,15 @@ function submitReport(event)
 	{
 	case "images/noImage.png":
 	case "images/imagePreview.png":
+	case "images/loading.gif":
 		swal("Neplatný obrázek!","","error");
 		return;
 	}
 	
 	getRequest("php/ajax/newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
+  
+  //Skrýt formulář pro nahlašování
+  cancelReport();
 }
 function cancelReport(event)
 {
@@ -150,6 +156,7 @@ function cancelReport(event)
 	document.getElementById("reportMenu").style.display = "none";
 	document.getElementById("submitReport").style.display = "none";
 	document.getElementById("cancelReport").style.display = "none";
+  document.getElementById("reportMenu").selectedIndex = 0;
 }
 function reportResponse(response)
 {
