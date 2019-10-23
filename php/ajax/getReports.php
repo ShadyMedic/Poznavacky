@@ -50,17 +50,22 @@
                         echo "Obrázek se nezobrazuje správně";
                         break;
                     case 1:
-                        echo "Obrázek zobrazuje nesprávnou přírodninu";
+                        echo "Obrázek se načítá příliš dlouho";
                         break;
                     case 2:
-                        echo "Obrázek obsahuje název přírodniny";
+                        echo "Obrázek zobrazuje nesprávnou přírodninu";
                         break;
                     case 3:
-                        echo "Obrázek má příliš špatné rozlišení";
+                        echo "Obrázek obsahuje název přírodniny";
                         break;
                     case 4:
+                        echo "Obrázek má příliš špatné rozlišení";
+                        break;
+                    case 5:
                         echo "Obrázek porušuje autorská práva";
                         break;
+                    case 6:
+                        echo "Jiný důvod";
                 }
                 echo "</td>";
                 

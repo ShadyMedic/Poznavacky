@@ -19,7 +19,7 @@
 	$url = mysqli_real_escape_string($connection, $url);
 	$reason = mysqli_real_escape_string($connection, $reason);
 	
-	if ($reason !== "0" && $reason != 1 && $reason != 2 && $reason != 3 && $reason != 4)
+	if ($reason !== "0" && $reason != 1 && $reason != 2 && $reason != 3 && $reason != 4 && $reason != 5 && $reason != 6)
 	{
 		die("swal('Neplatný důvod!','','error');");
 	}

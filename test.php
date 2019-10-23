@@ -52,10 +52,12 @@
     			<button onclick="reportImg(event)" id="reportButton" class="button">Nahlásit</button>
     			<select id="reportMenu" class="text">
     				<option>Obrázek se nezobrazuje správně</option>
+            <option>Obrázek se načítá příliš dlouho</option>
     				<option>Obrázek zobrazuje nesprávnou přírodninu</option>
     				<option>Obrázek obsahuje název přírodniny</option>
     				<option>Obrázek má příliš špatné rozlišení</option>
     				<option>Obrázek porušuje autorská práva</option>
+            <option>Jiný důvod</option>
     			</select>
     			<button onclick="submitReport(event)" id="submitReport" class="button">Odeslat</button>
     			<button onclick="cancelReport(event)" id="cancelReport" class="button">Zrušit</button>

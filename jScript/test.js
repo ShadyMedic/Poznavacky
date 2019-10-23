@@ -142,18 +142,24 @@ function submitReport(event)
 	case "Obrázek se nezobrazuje správně":
 		reason = 0;
 		break;
+  case "Obrázek se načítá příliš dlouho":
+    reason = 1;
+    break;
 	case "Obrázek zobrazuje nesprávnou přírodninu":
-		reason = 1;
-		break;
-	case "Obrázek obsahuje název přírodniny":
 		reason = 2;
 		break;
-	case "Obrázek má příliš špatné rozlišení":
+	case "Obrázek obsahuje název přírodniny":
 		reason = 3;
 		break;
-	case "Obrázek porušuje autorská práva":
+	case "Obrázek má příliš špatné rozlišení":
 		reason = 4;
 		break;
+	case "Obrázek porušuje autorská práva":
+		reason = 5;
+		break;
+  case: "Jiný důvod":
+    reason = 6;
+    break;
 	default:
 		swal("Neplatný důvod!","","error");
 		return;
