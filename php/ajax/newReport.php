@@ -14,12 +14,24 @@
 
 	$url = $_GET['pic'];
 	$reason = $_GET['reason'];
+	$info = urldecode($_GET['info']);
 
 	//Ochrana před SQL injekcí
 	$url = mysqli_real_escape_string($connection, $url);
 	$reason = mysqli_real_escape_string($connection, $reason);
+	$info = mysqli_real_escape_string($connection, $info);
 	
-	if ($reason !== "0" && $reason != 1 && $reason != 2 && $reason != 3 && $reason != 4)
+	if ($info === 'undefined' || empty($info))
+	{
+	    $info = NULL;
+	}
+	
+	if (!((strlen($info) <= 255 && $reason == 6) ||(strlen($info) <= 31 && $reason == 2) || (strlen($info) === 4 && $reason == 1) || $info === NULL))
+	{
+	    die("swal('Špatná délka doplňkových informací!','','error');");
+	}
+	
+	if ($reason !== "0" && $reason != 1 && $reason != 2 && $reason != 3 && $reason != 4 && $reason != 5 && $reason != 6)
 	{
 		die("swal('Neplatný důvod!','','error');");
 	}
@@ -46,18 +58,18 @@
 	$table = $_SESSION['current'][0].'hlaseni';
 	$pName = $_SESSION['current'][1];
 
-	$query = "SELECT pocet FROM $table WHERE obrazekId=$picId AND duvod=$reason";
+	$query = "SELECT pocet FROM $table WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
 	$result = mysqli_query($connection, $query);
 	if (gettype($result) !== "object" || mysqli_num_rows($result) <= 0)
 	{
-		$query = "INSERT INTO $table VALUES (NULL, $picId, $reason, 1)";	//Přidávání nového hlášení do databáze
+		$query = "INSERT INTO $table VALUES (NULL, $picId, $reason, '$info', 1)";	//Přidávání nového hlášení do databáze
 	}
 	else
 	{
 		//Přičítání k počtu hlášení v existujícím záznamu
 		$result = mysqli_fetch_array($result);
 		$newCount = ++$result['pocet'];
-		$query = "UPDATE $table SET pocet = $newCount WHERE obrazekId=$picId AND duvod=$reason";
+		$query = "UPDATE $table SET pocet = $newCount WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
 	}
 
 	mysqli_query($connection, $query);

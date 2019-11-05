@@ -24,7 +24,7 @@
     $url = mysqli_real_escape_string($connection, $url);
     
     //Získávíní ID obrázku (aby bylo možné smazat všechna hlášení, která se k němu vztahují)
-    $query = "SELECT id FROM obrazky WHERE zdroj='$url' LIMIT 1";
+    $query = "SELECT id,prirodninaId FROM obrazky WHERE zdroj='$url' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -32,6 +32,7 @@
     }
     $result = mysqli_fetch_array($result);
     $picId = $result['id'];
+    $naturalId = $result['prirodninaId'];
     
     //Odstranění obrázku
     $query = "DELETE FROM obrazky WHERE zdroj='$url' LIMIT 1";
@@ -41,7 +42,22 @@
         echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
     }
     
+    //Snížit počet obrázků u přírodniny
+    $tableName = $pId.'seznam';
+    $query = "UPDATE $tableName SET obrazky = obrazky-1 WHERE id=$naturalId LIMIT 1";
+    $result = mysqli_query($connection, $query);
+    if (!$result)
+    {
+        echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
+    }
     
+    //Snížit počet obrázků u poznávačky
+    $query = "UPDATE poznavacky SET obrazky = obrazky-1 WHERE id=$pId LIMIT 1";
+    $result = mysqli_query($connection, $query);
+    if (!$result)
+    {
+        echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
+    }
     
     //Odstranění všech hlášení vztahujících se k obrázku
     $query = "DELETE FROM hlaseni WHERE obrazekId=$picId";

@@ -563,6 +563,10 @@ div.menu:hover {
     display: none;
 	color: var(--zelena);
 }
+#typoAnswer {
+    display: none;
+	color: var(--zelena);
+}
 #wrongAnswer {
     display: none;
 	color: var(--cervena);
