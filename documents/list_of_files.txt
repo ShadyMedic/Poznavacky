@@ -94,6 +94,15 @@ AJAX serverové skripty:
 	executeSqlQuery.php
 		Spouští se v: management.js
 		Provádí sql dotaz zadaný uživatelem. Dostupné pouze pro uživatele se statusem "administrátor"
+	getClasses.php
+		Spouští se v: list.js
+		Získává seznam všech tříd z databáze a vrací je javascriptu k zobrazení na stránce
+	getGroups.php
+		Spouští se v: list.js
+		Získává seznam skupin v jisté třídě z databáze a vrací je javascriptu k zobrazení na stránce
+	getParts.php
+		Spouští se v: list.js
+		Získává seznam částí v jisté skupině z databáze a vrací je javascriptu k zobrazení na stránce
 	getPics.php
 		Spouští se v: learn.js
 		Získává a odesílá odkaz obrázku, který si uživatel chce prohlédnout ve zvolené poznávačce

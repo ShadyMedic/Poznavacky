@@ -60,25 +60,25 @@
 				<a href="php/logout.php">Odhlásit se</a>
 			</nav>
         </header>
-        <main>
+        <main id="table">
             <table id="listTable">
 		 	    <tr>
-    		 		<th>Název</th>
-    		 		<th>Přírodniny</th>
-    		 		<th>Obrázky</th>
+    		 		<th>Název třídy</th>
+    		 		<th>Poznávačky</th>
+    		 		<th>Vstupní kód</th>
     		 	</tr>
     		 	<?php
     				//Seznam dostupných poznávaček
     				include 'php/included/connect.php';
     				
-    				$query = 'SELECT * FROM poznavacky';
+    				$query = 'SELECT * FROM tridy';
     				$result = mysqli_query($connection,$query);
     				while ($info = mysqli_fetch_array($result))
     				{
-    					echo '<tr class="listRow" onclick="choose(\''.$info['id'].'&'.$info['nazev'].'\')">';
+    					echo '<tr class="listRow" onclick="choose(0,'.$info['id'].')">';
     						echo '<td class="listNames">'.$info['nazev'].'</td>';
-    						echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
-    						echo '<td class="listPics">'.$info['obrazky'].'</td>';
+    						echo '<td class="listNaturals">'.$info['skupiny'].'</td>';
+    						echo '<td class="listPics">'.$info['kod'].'</td>';
     					echo '</tr>';
     				}
     			?> 
