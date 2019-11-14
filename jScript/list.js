@@ -8,15 +8,15 @@ function choose(depth, option = undefined)
     {
         //Vypsání všech tříd
         case -1:
-            getRequest("php/ajax/getClasses.php", replaceTable, errorResponse);
+            getRequest("php/getClasses.php", replaceTable, errorResponse);
             break;
         //Vybrání třídy
         case 0:
-            getRequest("php/ajax/getGroups.php?classId=" + option, replaceTable, errorResponse);
+            getRequest("php/getGroups.php?classId=" + option, replaceTable, errorResponse);
             break;
         //Vybrání skupiny
         case 1:
-            getRequest("php/ajax/getParts.php?groupId=" + option, replaceTable, errorResponse);
+            getRequest("php/getParts.php?groupId=" + option, replaceTable, errorResponse);
             break;
         //Vybrání části
         case 2:
