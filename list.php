@@ -73,15 +73,15 @@
                 switch ($level)
                 {
                     case 0:
-                        include 'php/ajax/getClasses.php';
+                        include 'php/getClasses.php';
                         break;
                     case 1:
                         $_GET['classId'] = $folder;
-                        include 'php/ajax/getGroups.php';
+                        include 'php/getGroups.php';
                         break;
                     case 2:
                         $_GET['groupId'] = $folder;
-                        include 'php/ajax/getParts.php';
+                        include 'php/getParts.php';
                         break;
                 }
             ?> 
