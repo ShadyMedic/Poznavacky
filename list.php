@@ -61,28 +61,9 @@
 			</nav>
         </header>
         <main id="table">
-            <table id="listTable">
-		 	    <tr>
-    		 		<th>Název třídy</th>
-    		 		<th>Poznávačky</th>
-    		 		<th>Vstupní kód</th>
-    		 	</tr>
-    		 	<?php
-    				//Seznam dostupných poznávaček
-    				include 'php/included/connect.php';
-    				
-    				$query = 'SELECT * FROM tridy';
-    				$result = mysqli_query($connection,$query);
-    				while ($info = mysqli_fetch_array($result))
-    				{
-    					echo '<tr class="listRow" onclick="choose(0,'.$info['id'].')">';
-    						echo '<td class="listNames">'.$info['nazev'].'</td>';
-    						echo '<td class="listNaturals">'.$info['skupiny'].'</td>';
-    						echo '<td class="listPics">'.$info['kod'].'</td>';
-    					echo '</tr>';
-    				}
-    			?> 
-            </table>
+            <?php
+                include 'php/ajax/getClasses.php';
+            ?> 
         </main>
     </div>
         <footer>
