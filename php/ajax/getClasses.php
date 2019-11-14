@@ -20,3 +20,11 @@
         echo '</tr>';
     }
     echo "</table>";
+    
+    //Aktualizovat uživateli poslední prohlíženou složku
+    if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
+    $userId = $_SESSION['user']['id'];
+    mysqli_real_escape_string($connection, $query);
+    $query = "UPDATE uzivatele SET posledniUroven = 0, posledniSlozka = NULL WHERE id=$userId LIMIT 1";
+    $result = mysqli_query($connection, $query);
+    

@@ -62,7 +62,28 @@
         </header>
         <main id="table">
             <?php
-                include 'php/ajax/getClasses.php';
+                $userId = $_SESSION['user']['id'];
+                mysqli_real_escape_string($connection, $query);
+                $query = "SELECT posledniUroven,posledniSlozka FROM uzivatele WHERE id=$userId LIMIT 1";
+                $result = mysqli_query($connection, $query);
+                $result = mysqli_fetch_array($result);
+                $level = $result['posledniUroven'];
+                $folder = $result['posledniSlozka'];
+                
+                switch ($level)
+                {
+                    case 0:
+                        include 'php/ajax/getClasses.php';
+                        break;
+                    case 1:
+                        $_GET['classId'] = $folder;
+                        include 'php/ajax/getGroups.php';
+                        break;
+                    case 2:
+                        $_GET['groupId'] = $folder;
+                        include 'php/ajax/getParts.php';
+                        break;
+                }
             ?> 
         </main>
     </div>
