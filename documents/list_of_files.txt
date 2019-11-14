@@ -162,6 +162,15 @@ Vložené serverové skripty:
 	emailSender.php
 		Zahrnuje se do: recoverPassword.php, resolveNameChange.php
 		Definuje funkci pro posílání e-mailu a umožňuje i okamžité poslání e-mailu pomocí dat z AJAX
+	getClasses.php
+		Zahrnuje se do: list.php
+		Získává seznam všech tříd z databáze a zobrazuje je při načítání stránky
+	getGroups.php
+		Zahrnuje se do: list.php
+		Získává seznam skupin v jisté třídě z databáze a zobrazuje je při načítání stránky
+	getParts.php
+		Zahrnuje se do: list.php
+		Získává seznam částí v jisté skupině z databáze a zobrazuje je při načítání stránky
 	httpStats.php
 		Zahrnuje se do: všechny stránky a AJAX skripty
 		Zaznamenává HTTP požadavek do databáze pro statistické účely
