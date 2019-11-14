@@ -3,10 +3,10 @@
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
 	
-	//Nastavování současné poznávačky
+	//Nastavování současné části
 	$cookieData = @$_COOKIE['current'];
 	$pId = @$cookieData;
-	//TODO zjistit jmeno poznavacky
+	//Zjištění jmena části
 	require 'php/included/connect.php';
 	$pId = mysqli_real_escape_string($connection, $pId);
 	$query = "SELECT nazev FROM casti WHERE id=$pId LIMIT 1";
@@ -17,12 +17,12 @@
 	//Mazání cookie current
 	setcookie("current", "", time()-3600);
 	
-	if (!empty($pId))	//Poznávačka zvolena
+	if (!empty($pId))	//Část zvolena
 	{
 		$pArr = array($pId, $pName);
 		$_SESSION['current'] = $pArr;
 	}
-	else if (!isset($_SESSION['current']))	//Poznávačka nezvolena ani nenastavena --> přesměrování na stránku s výběrem
+	else if (!isset($_SESSION['current']))	//Část nezvolena ani nenastavena --> přesměrování na stránku s výběrem
 	{
 		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
 	}
