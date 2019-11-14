@@ -7,19 +7,19 @@ function choose(depth, option = undefined)
     switch (depth)
     {
         //Vypsání všech tříd
-        case -1:
+        case 0:
             getRequest("php/getClasses.php", replaceTable, errorResponse);
             break;
         //Vybrání třídy
-        case 0:
+        case 1:
             getRequest("php/getGroups.php?classId=" + option, replaceTable, errorResponse);
             break;
         //Vybrání skupiny
-        case 1:
+        case 2:
             getRequest("php/getParts.php?groupId=" + option, replaceTable, errorResponse);
             break;
         //Vybrání části
-        case 2:
+        case 3:
             document.cookie="current=" + option;
             location.href = 'menu.php';
             break;

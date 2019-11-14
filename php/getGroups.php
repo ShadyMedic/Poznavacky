@@ -1,12 +1,12 @@
 <?php
-    @include '../included/httpStats.php';
+    @include 'included/httpStats.php';
     
     $classId = $_GET['classId'];
     
     $classId = mysqli_real_escape_string($connection, $classId);
     
     echo "<table id='listTable'>
-        <tr class='listRow' onclick='choose(-1)'>
+        <tr class='listRow' onclick='choose(0)'>
             <td class='listBack' colspan=2><i>Zpět na seznam tříd</i></td>
         </tr>
         <tr>
@@ -25,7 +25,7 @@
     }
     while ($info = mysqli_fetch_array($result))
     {
-    echo '<tr class="listRow" onclick="choose(1,'.$info['id'].')">';
+    echo '<tr class="listRow" onclick="choose(2,'.$info['id'].')">';
         echo '<td class="listNames">'.$info['nazev'].'</td>';
         echo '<td class="listNaturals">'.$info['casti'].'</td>';
     echo '</tr>';

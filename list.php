@@ -63,13 +63,12 @@
         <main id="table">
             <?php
                 $userId = $_SESSION['user']['id'];
-                mysqli_real_escape_string($connection, $query);
+                mysqli_real_escape_string($connection, $userId);
                 $query = "SELECT posledniUroven,posledniSlozka FROM uzivatele WHERE id=$userId LIMIT 1";
                 $result = mysqli_query($connection, $query);
                 $result = mysqli_fetch_array($result);
                 $level = $result['posledniUroven'];
                 $folder = $result['posledniSlozka'];
-                
                 switch ($level)
                 {
                     case 0:

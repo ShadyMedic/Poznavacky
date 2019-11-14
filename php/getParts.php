@@ -1,5 +1,5 @@
 <?php
-    @include '../included/httpStats.php';
+    @include 'included/httpStats.php';
     
     $groupId = $_GET['groupId'];
     
@@ -12,7 +12,7 @@
     $classId = $result['id'];
     
     echo "<table id='listTable'>
-        <tr class='listRow' onclick='choose(0, $classId)'>
+        <tr class='listRow' onclick='choose(1, $classId)'>
             <td class='listBack' colspan=3><i>Zpět na seznam poznávaček</i></td>
         </tr>
         <tr>
@@ -32,7 +32,7 @@
     }
     while ($info = mysqli_fetch_array($result))
     {
-        $txt = "choose(2,".$info['id'].")";
+        $txt = "choose(3,".$info['id'].")";
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames">'.$info['nazev'].'</td>';
         echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
