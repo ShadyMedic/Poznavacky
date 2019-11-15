@@ -9,10 +9,13 @@
 	//Zjištění jmena části
 	require 'php/included/connect.php';
 	$pId = mysqli_real_escape_string($connection, $pId);
-	$query = "SELECT nazev FROM casti WHERE id=$pId LIMIT 1";
-	$result = mysqli_query($connection, $query);
-	$pName = mysqli_fetch_array($result);
-	$pName = $pName['nazev'];
+	if (!empty($pId))
+	{
+    	$query = "SELECT nazev FROM casti WHERE id=$pId LIMIT 1";
+    	$result = mysqli_query($connection, $query);
+    	$pName = mysqli_fetch_array($result);
+    	$pName = $pName['nazev'];
+	}
 	
 	//Mazání cookie current
 	setcookie("current", "", time()-3600);
