@@ -20,8 +20,6 @@
 	$name = mysqli_real_escape_string($connection, $name);
 	
 	//Zjišťování počtu obrázků
-	$pName = $_SESSION['current'][1];
-
 	$query = "SELECT id,obrazky FROM prirodniny WHERE nazev='$name' LIMIT 1";
 	$result = mysqli_query($connection, $query);
 	if ($result && mysqli_num_rows($result) > 0){$result = mysqli_fetch_array($result);}
@@ -39,6 +37,8 @@
 	if (gettype($result) !== "object" || mysqli_num_rows($result) <= 0){die("images/noImage.png");}
 	$resultArr = mysqli_fetch_array($result);
 	$resultArr = $resultArr['zdroj'];
+	
 	$username = $_SESSION['user']['name'];
+	$pName = $_SESSION['current'][1];
 	filelog("K uživateli $username byl odeslán obrázek pro učící stránku pro poznávačku $pName.");
 	echo $resultArr;
