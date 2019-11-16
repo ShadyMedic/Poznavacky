@@ -18,7 +18,7 @@
 	if (empty($name)){die("swal('Neplatný název', '', 'error');");}
 	if (empty($url)){die("swal('Neplatná adresa', '', 'error');");}
 
-	$table = $_SESSION['current'][0];
+	$partId = $_SESSION['current'][0];
 	$pName = $_SESSION['current'][1];
 
 	//Získat název přírodniny.
@@ -29,7 +29,7 @@
 	$final = mysqli_real_escape_string($connection, $final);
 
 	//Získat ID přírodniny
-	$query = "SELECT id FROM ".$table.'seznam'." WHERE nazev='$final'";
+	$query = "SELECT id FROM prirodniny WHERE nazev='$final'";
 	$result = mysqli_query($connection, $query);
 	if (mysqli_num_rows($result) > 0)
 	{
@@ -53,7 +53,7 @@
 
 	//Kontrola duplicitního obrázku
 	$url = mysqli_real_escape_string($connection, $url);
-	$query = "SELECT id FROM ".$table.'obrazky'." WHERE zdroj='$url'";
+	$query = "SELECT id FROM obrazky WHERE zdroj='$url'";
 	$result = mysqli_query($connection, $query);
 	if (mysqli_num_rows($result) > 0)
 	{
@@ -62,7 +62,7 @@
 	}
 
 	//Vložit obrázek do databáze
-	$query = "INSERT INTO ".$table.'obrazky'." VALUES (NULL, $id, '$url', 1)";
+	$query = "INSERT INTO obrazky VALUES (NULL, $id, '$url', $partId, 1)";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
@@ -83,13 +83,8 @@
 	    die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 	
-	//Upravit počet obrázků dané přírodniny v tabulce seznam
-	$query = "SELECT obrazky FROM ".$table.'seznam'." WHERE id = $id";
-	$result = mysqli_query($connection, $query);
-	$result = mysqli_fetch_array($result);
-	$newAmount = $result['obrazky'];
-	$newAmount++;
-	$query = "UPDATE ".$table.'seznam'." SET obrazky = $newAmount WHERE id = $id";
+	//Upravit počet obrázků dané přírodniny v tabulce prirodniny
+	$query = "UPDATE prirodniny SET obrazky = (obrazky + 1) WHERE id = $id";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
@@ -98,13 +93,8 @@
 		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 
-	//Upravit počet obrázků dané přírodniny v tabulce poznavacky
-	$query = "SELECT obrazky FROM poznavacky WHERE id = $table";
-	$result = mysqli_query($connection, $query);
-	$result = mysqli_fetch_array($result);
-	$newAmount = $result['obrazky'];
-	$newAmount++;
-	$query = "UPDATE poznavacky SET obrazky = $newAmount WHERE id = $table";
+	//Upravit počet obrázků dané přírodniny v tabulce casti
+	$query = "UPDATE casti SET obrazky = (obrazky + 1) WHERE id = $partId";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
