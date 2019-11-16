@@ -60,8 +60,22 @@
 	           <a href="learn.php">
 	           <div id="btn2" class="menu" onclick="learn()">Učit se</div>
             </a>
-            <a href="test.php">
-	           <div id="btn3" class="menu" onclick="test()">Vyzkoušet se</div>
+                <?php 
+                    $query = "SELECT obrazky FROM casti WHERE id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+                    $result = mysqli_query($connection, $query);
+                    $result = mysqli_fetch_array($result);
+                    $result = $result['obrazky'];
+                    if (empty($result))
+                    {
+                        echo "<a>";
+                        echo "<div id='btn3' class='menu' style='background-color: #CCCCCC;text-decoration: line-through;transition: none;color:#FFFFFF;cursor: not-allowed;'>Vyzkoušet se</div>";
+                    }
+                    else
+                    {
+                        echo "<a href='test.php'>";
+                        echo "<div id='btn3' class='menu' onclick='test()'>Vyzkoušet se</div>";
+                    }
+                ?>
             </a>  
         </main>
     </div>

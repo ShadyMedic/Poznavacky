@@ -6,6 +6,19 @@
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
 		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+		die();
+	}
+	
+	include 'php/included/connect.php';
+	$query = "SELECT obrazky FROM casti WHERE id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	$result = mysqli_query($connection, $query);
+	$result = mysqli_fetch_array($result);
+	$result = $result['obrazky'];
+	if (empty($result))
+	{
+	    echo "<script type='text/javascript'>alert('Do této části dosud nebyly přidány žádné obrázky a testování tak nemůže probíhat');</script>";
+	    echo "<script type='text/javascript'>location.href = 'menu.php';</script>";
+	    die();
 	}
 ?>
 <html>
@@ -31,7 +44,7 @@
         </header>
     	<main class="basic_main">
     		<fieldset>
-    			<img id="image" class="img" src="images/imagePreview.png">
+    			<img id="image" class="img" src="images/noImage.png">
     			<div id="inputOutput">
     				<form onsubmit="answer(event)" id="answerForm">
     					<input type=text class="text" id="textfield" autocomplete="off" placeholder="Zadejte odpověď">
@@ -82,6 +95,6 @@
          </footer>
 	</body>
 	<script>
-		getRequest("php/ajax/getRandomPic.php", showPic);
+		next();
 	</script>
 </html>
