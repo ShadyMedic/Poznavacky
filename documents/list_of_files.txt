@@ -94,15 +94,21 @@ AJAX serverové skripty:
 	executeSqlQuery.php
 		Spouští se v: management.js
 		Provádí sql dotaz zadaný uživatelem. Dostupné pouze pro uživatele se statusem "administrátor"
+	getClasses.php
+		Spouští se v: list.js
+		Získává seznam všech tříd z databáze a vrací je javascriptu k zobrazení na stránce
+	getGroups.php
+		Spouští se v: list.js
+		Získává seznam skupin v jisté třídě z databáze a vrací je javascriptu k zobrazení na stránce
+	getParts.php
+		Spouští se v: list.js
+		Získává seznam částí v jisté skupině z databáze a vrací je javascriptu k zobrazení na stránce
 	getPics.php
 		Spouští se v: learn.js
 		Získává a odesílá odkaz obrázku, který si uživatel chce prohlédnout ve zvolené poznávačce
 	getRandomPic.php
 		Spouští se v: test.js
 		Získává a odesílá odkaz náhodného obrázku ze zvolené poznávačky
-	getReports.php
-		Spouští se v: management.js
-		Získává a odesílá seznam hlášení v určité poznávačce. Dostupné pouze pro uživatele se statusem "administrator"
 	changeEmail.php
 		Spouští se v: accountSettings.js
 		Provádí změnu e-mailové adresy uživatele po jejím zadání uživatelem
@@ -153,6 +159,18 @@ Vložené serverové skripty:
 	emailSender.php
 		Zahrnuje se do: recoverPassword.php, resolveNameChange.php
 		Definuje funkci pro posílání e-mailu a umožňuje i okamžité poslání e-mailu pomocí dat z AJAX
+	getClasses.php
+		Zahrnuje se do: list.php
+		Získává seznam všech tříd z databáze a zobrazuje je při načítání stránky
+	getGroups.php
+		Zahrnuje se do: list.php
+		Získává seznam skupin v jisté třídě z databáze a zobrazuje je při načítání stránky
+	getParts.php
+		Zahrnuje se do: list.php
+		Získává seznam částí v jisté skupině z databáze a zobrazuje je při načítání stránky
+	getReports.php
+		Zahrnuje se do: management.php
+		Získává a zobrazuje seznam prvních 25 hlášení. Dostupné pouze pro uživatele se statusem "administrator"
 	httpStats.php
 		Zahrnuje se do: všechny stránky a AJAX skripty
 		Zaznamenává HTTP požadavek do databáze pro statistické účely

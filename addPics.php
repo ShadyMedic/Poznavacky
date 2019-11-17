@@ -37,10 +37,10 @@
     					<option value="" selected disabled hidden></option>
     					<?php 
     						//Vypisování přírodnin
-    						$table = $_SESSION['current'][0].'seznam';
-    							
+    						$part = $_SESSION['current'][0];
+    						
     						include 'php/included/connect.php';
-    						$query = "SELECT * FROM $table ORDER BY nazev,obrazky,id";
+    						$query = "SELECT * FROM prirodniny WHERE cast = $part ORDER BY nazev,obrazky,id";
     						$result = mysqli_query($connection, $query);
     						while($row = mysqli_fetch_array($result))
     						{

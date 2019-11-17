@@ -6,6 +6,19 @@
 	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
 	{
 		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+		die();
+	}
+	
+	include 'php/included/connect.php';
+	$query = "SELECT obrazky FROM casti WHERE id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	$result = mysqli_query($connection, $query);
+	$result = mysqli_fetch_array($result);
+	$result = $result['obrazky'];
+	if (empty($result))
+	{
+	    echo "<script type='text/javascript'>alert('Do této části dosud nebyly přidány žádné obrázky a testování tak nemůže probíhat');</script>";
+	    echo "<script type='text/javascript'>location.href = 'menu.php';</script>";
+	    die();
 	}
 ?>
 <html>
@@ -31,28 +44,37 @@
         </header>
     	<main class="basic_main">
     		<fieldset>
-    			<img id="image" class="img" src="images/imagePreview.png">
+    			<img id="image" class="img" src="images/noImage.png">
     			<div id="inputOutput">
     				<form onsubmit="answer(event)" id="answerForm">
     					<input type=text class="text" id="textfield" autocomplete="off" placeholder="Zadejte odpověď">
     					<input type=submit class="button" value="OK" />
     				</form>
     				<span id="correctAnswer">Správně!</span>
+    				<div id="typoAnswer">
+    					<span id="typo1">Správně, ale s překlepem!</span><br>
+    					<span id="typo2"></span>
+    				</div>
     				<div id="wrongAnswer">
     					<span id="wrong1">Špatně!</span><br>
     					<span id="wrong2">Správná odpověď je </span>
-    					<span id="serverResponse"></span>
+    					<span id="wrong3"></span>
     			    </div>
     			<button onclick="next()" class="button" id="nextButton">Další</button>
     			</div>
     			<button onclick="reportImg(event)" id="reportButton" class="button">Nahlásit</button>
-    			<select id="reportMenu" class="text">
+    			<select id="reportMenu" class="text" onchange="updateReport()">
     				<option>Obrázek se nezobrazuje správně</option>
+    				<option>Obrázek se načítá příliš dlouho</option>
     				<option>Obrázek zobrazuje nesprávnou přírodninu</option>
     				<option>Obrázek obsahuje název přírodniny</option>
     				<option>Obrázek má příliš špatné rozlišení</option>
     				<option>Obrázek porušuje autorská práva</option>
+    				<option>Jiný důvod</option>
     			</select>
+    			<div id="additionalReportInfo">
+                    <!-- Zde se bude zobrazovat další vstupní pole při vybrání některých hlášení -->
+          		</div>
     			<button onclick="submitReport(event)" id="submitReport" class="button">Odeslat</button>
     			<button onclick="cancelReport(event)" id="cancelReport" class="button">Zrušit</button>
     		</fieldset>
@@ -73,6 +95,6 @@
          </footer>
 	</body>
 	<script>
-		getRequest("php/ajax/getRandomPic.php", showPic);
+		next();
 	</script>
 </html>

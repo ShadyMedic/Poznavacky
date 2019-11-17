@@ -4,6 +4,12 @@ var imageNumber = 0;
 
 function keyPressed(event)
 {
+	//Vypnutí klávesových zkratek, pokud uživatel zrovna píše důvod hlášení
+	if (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA")
+	{
+		return;
+	}
+	
     var charCode = event.code || event.which;
     switch (charCode)
 	{
@@ -72,6 +78,8 @@ function nextImg()
 }
 function getImage()
 {
+	document.getElementById("image").src = "images/loading.gif";
+	
 	getRequest("php/ajax/getPics.php?name=" + selected + "&number=" + imageNumber, showImg);
 }
 function showImg(response)
@@ -103,36 +111,65 @@ function reportImg(event)
 	document.getElementById("submitReport").style.display = "inline";
 	document.getElementById("cancelReport").style.display = "inline";
 }
+function updateReport()
+{
+  if (document.getElementById("reportMenu").selectedIndex === 1)  //Obrázek se načítá příliš dlouho
+  {
+    document.getElementById("additionalReportInfo").innerHTML = "<select><option>>2 s</option><option>>5 s</option><option>>10 s</option><option>>20 s</option></select>";
+  }
+  else if (document.getElementById("reportMenu").selectedIndex === 2) //Obrázek zobrazuje nesprávnou přírodninu
+  {
+    document.getElementById("additionalReportInfo").innerHTML = "<input type='text' placeholder='Přírodnina na obrázku' maxlength=31>";
+  }
+  else if (document.getElementById("reportMenu").selectedIndex === 6) //Jiný důvod
+  {
+    document.getElementById("additionalReportInfo").innerHTML = "<textarea placeholder='Specifikujte prosím důvod' maxlength=255></textarea>";
+  }
+  else
+  {
+	  document.getElementById("additionalReportInfo").innerHTML = "";
+  }
+}
 function submitReport(event)
 {
 	event.preventDefault();
 	
-	var reason = document.getElementById("reportMenu").value;
+	var reason = document.getElementById("reportMenu").selectedIndex;
 	var picUrl = document.getElementById("image").src;
+	var reasonInfo = "";
+	try{reasonInfo = document.getElementById("additionalReportInfo").childNodes[0].value;}catch(e){}
+  
+  //Kontrola důvodu
+  if (reason > 6)
+  {
+    swal("Neplatný důvod!","","error");
+    return;
+  }
 	
-	//Převedení důvodu na číslo
-	switch (reason)
-	{
-	case "Obrázek se nezobrazuje správně":
-		reason = 0;
-		break;
-	case "Obrázek zobrazuje nesprávnou přírodninu":
-		reason = 1;
-		break;
-	case "Obrázek obsahuje název přírodniny":
-		reason = 2;
-		break;
-	case "Obrázek má příliš špatné rozlišení":
-		reason = 3;
-		break;
-	case "Obrázek porušuje autorská práva":
-		reason = 4;
-		break;
-	default:
-		swal("Neplatný důvod!","","error");
-		return;
-	}
-	
+  //Získání a případná kontrola dalších informací
+  switch (reason)
+  {
+    case 1:
+      var info = document.getElementById("additionalReportInfo").childNodes[0].value;
+      if (!(info === ">2 s" || info === ">5 s" || info === ">10 s" || info === ">20 s"))
+      {
+        swal("Neplatná volba!","","error");
+        return;
+      }
+      break;
+    case 2:
+      var info = encodeURIComponent(document.getElementById("additionalReportInfo").childNodes[0].value);
+      break;
+    case 6:
+      var info = encodeURIComponent(document.getElementById("additionalReportInfo").childNodes[0].value);
+      if (info === "")
+      {
+        swal("Vyplňte prosím důvod hlášení.","","error");
+        return;
+      }
+      break;
+  }
+  
 	//Kontrola obrázku
 	switch (picUrl)
 	{
@@ -140,16 +177,27 @@ function submitReport(event)
 	case "images/imagePreview.png":
 		swal("Neplatný obrázek!","","error");
 		return;
+	case "images/loading.gif":
+		if (reason !== 1)
+		{
+			swal("Neplatný obrázek!","","error");
+			return;
+		}
 	}
 	
-	getRequest("php/ajax/newReport.php?pic=" + picUrl + "&reason=" + reason, reportResponse);
+	getRequest("php/ajax/newReport.php?pic=" + picUrl + "&reason=" + reason + "&info=" + info, reportResponse);
+  
+  //Skrýt formulář pro nahlašování
+  cancelReport();
 }
 function cancelReport(event)
 {
-	document.getElementById("reportButton").style.display = "inline";
-	document.getElementById("reportMenu").style.display = "none";
-	document.getElementById("submitReport").style.display = "none";
-	document.getElementById("cancelReport").style.display = "none";
+    document.getElementById("reportButton").style.display = "inline";
+    document.getElementById("reportMenu").style.display = "none";
+    document.getElementById("additionalReportInfo").innerHTML = "";
+    document.getElementById("submitReport").style.display = "none";
+    document.getElementById("cancelReport").style.display = "none";
+    document.getElementById("reportMenu").selectedIndex = 0;
 }
 function reportResponse(response)
 {
