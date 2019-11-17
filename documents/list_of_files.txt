@@ -109,9 +109,6 @@ AJAX serverové skripty:
 	getRandomPic.php
 		Spouští se v: test.js
 		Získává a odesílá odkaz náhodného obrázku ze zvolené poznávačky
-	getReports.php
-		Spouští se v: management.js
-		Získává a odesílá seznam hlášení v určité poznávačce. Dostupné pouze pro uživatele se statusem "administrator"
 	changeEmail.php
 		Spouští se v: accountSettings.js
 		Provádí změnu e-mailové adresy uživatele po jejím zadání uživatelem
@@ -171,6 +168,9 @@ Vložené serverové skripty:
 	getParts.php
 		Zahrnuje se do: list.php
 		Získává seznam částí v jisté skupině z databáze a zobrazuje je při načítání stránky
+	getReports.php
+		Zahrnuje se do: management.php
+		Získává a zobrazuje seznam prvních 25 hlášení. Dostupné pouze pro uživatele se statusem "administrator"
 	httpStats.php
 		Zahrnuje se do: všechny stránky a AJAX skripty
 		Zaznamenává HTTP požadavek do databáze pro statistické účely
