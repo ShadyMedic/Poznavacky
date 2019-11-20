@@ -30,9 +30,25 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
         echo '<td class="listNames" colspan=2>V této poznávačce zatím nejsou žádné skupiny</td>';
         echo '</tr>';
     }
+    $multiple = false;    //Určuje, jestli bude vygenerována řádka pro výběr všech částí (pokud je počet částí > 1)
+    $partsIds = array();  //Skladuje ID všech částí v této poznávačce, aby mohly být poslány při výběru všech částí
+    if (mysqli_num_rows($result) > 1)
+    {
+        $multiple = true;
+    }
     while ($info = mysqli_fetch_array($result))
     {
+        array_push($partsIds, $info['id']);
         $txt = "choose(3,".$info['id'].")";
+        echo "<tr class='listRow' onclick=$txt>";
+        echo '<td class="listNames">'.$info['nazev'].'</td>';
+        echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
+        echo '<td class="listPictures">'.$info['obrazky'].'</td>';
+        echo '</tr>';
+    }
+    if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
+    {
+        $txt = "choose(3,".implode($partsIds,',').")";
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames">'.$info['nazev'].'</td>';
         echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
