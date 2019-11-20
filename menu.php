@@ -4,19 +4,36 @@
 	require 'php/included/verification.php';    //Obsahuje session_start();
 	
 	//Nastavování současné části
-	$cookieData = @$_COOKIE['current'];
-	$pId = @$cookieData;
-	//Zjištění jmena části
-	require 'php/included/connect.php';
-	$pId = mysqli_real_escape_string($connection, $pId);
-	if (!empty($pId))
-	{
-    	$query = "SELECT nazev FROM casti WHERE id=$pId LIMIT 1";
-    	$result = mysqli_query($connection, $query);
-    	$pName = mysqli_fetch_array($result);
-    	$pName = $pName['nazev'];
+	$pId = @$_COOKIE['current'];
+  
+  //Zjištění, zda se nejedná o výběr všech částí v dané poznávačce
+  if (strpos($pId,',') === true)
+  {
+    //Zjištění jmena poznávačky
+  	include 'php/included/connect.php';
+  	$pId = mysqli_real_escape_string($connection, $pId);
+  	if (!empty($pId))
+  	{
+        $firstPartId = $pId[0];
+      	$query = "SELECT nazev FROM poznavacky WHERE id=(SELECT poznavacka FROM casti WHERE id=$pId LIMIT 1) LIMIT 1";
+      	$result = mysqli_query($connection, $query);
+      	$pName = mysqli_fetch_array($result);
+      	$pName = $pName['nazev'].' - Vše';
+  	}
+  }
+  else
+  {
+  	//Zjištění jmena části
+  	include 'php/included/connect.php';
+  	$pId = mysqli_real_escape_string($connection, $pId);
+  	if (!empty($pId))
+  	{
+      	$query = "SELECT nazev FROM casti WHERE id=$pId LIMIT 1";
+      	$result = mysqli_query($connection, $query);
+      	$pName = mysqli_fetch_array($result);
+      	$pName = $pName['nazev'];
+  	}
 	}
-	
 	//Mazání cookie current
 	setcookie("current", "", time()-3600);
 	
