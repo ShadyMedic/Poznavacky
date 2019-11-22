@@ -32,6 +32,8 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     }
     $multiple = false;    //Určuje, jestli bude vygenerována řádka pro výběr všech částí (pokud je počet částí > 1)
     $partsIds = array();  //Skladuje ID všech částí v této poznávačce, aby mohly být poslány při výběru všech částí
+    $totalNaturals = 0;   //Počítá celkový počet přírodnin v poznávačce, aby se číslo zobrazilo v řádce se všemi částmi
+    $totalPics = 0;       //Počítá celkový počet obrázků v poznávačce, aby se číslo zobrazilo v řádce se všemi částmi
     if (mysqli_num_rows($result) > 1)
     {
         $multiple = true;
@@ -39,6 +41,8 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     while ($info = mysqli_fetch_array($result))
     {
         array_push($partsIds, $info['id']);
+        $totalNaturals += $info['prirodniny'];
+        $totalPics += $info['obrazky'];
         $txt = "choose(3,".$info['id'].")";
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames">'.$info['nazev'].'</td>';
@@ -48,11 +52,13 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     }
     if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
     {
-        $txt = "choose(3,".implode($partsIds,',').")";
+        $txt = "choose(3,'".implode($partsIds,',')."')";
+        #$txt = "choose(3,".$info['id'].")";
+        
         echo "<tr class='listRow' onclick=$txt>";
-        echo '<td class="listNames">'.$info['nazev'].'</td>';
-        echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
-        echo '<td class="listPictures">'.$info['obrazky'].'</td>';
+        echo '<td class="listNames">Vše</td>';
+        echo '<td class="listNaturals">'.$totalNaturals.'</td>';
+        echo '<td class="listPictures">'.$totalPics.'</td>';
         echo '</tr>';
     }
     echo "</table>";
