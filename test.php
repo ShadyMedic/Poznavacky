@@ -10,7 +10,15 @@
 	}
 	
 	include 'php/included/connect.php';
-	$query = "SELECT obrazky FROM casti WHERE id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	$query = "";
+	if ($_SESSION['current'][2] === false)
+	{
+	    $query = "SELECT obrazky FROM casti WHERE id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
+	else
+	{
+	    $query = "SELECT SUM(obrazky) AS obrazky FROM casti WHERE poznavacka = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
 	$result = mysqli_query($connection, $query);
 	$result = mysqli_fetch_array($result);
 	$result = $result['obrazky'];
