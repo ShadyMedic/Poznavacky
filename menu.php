@@ -18,11 +18,12 @@
     {
       $everything = true;
       $firstPartId = $pId[0];
-      $query = "SELECT nazev FROM poznavacky WHERE id=(SELECT poznavacka FROM casti WHERE id=$firstPartId LIMIT 1) LIMIT 1";
+      $query = "SELECT id,nazev FROM poznavacky WHERE id=(SELECT poznavacka FROM casti WHERE id=$firstPartId LIMIT 1) LIMIT 1";
       $result = mysqli_query($connection, $query);
       if (!$result){echo mysqli_error($connection);}
-      $pName = mysqli_fetch_array($result);
-      $pName = $pName['nazev'].' - Vše';
+      $result = mysqli_fetch_array($result);
+      $pName = $result['nazev'].' - Vše';
+      $pId = $result['id'];
   	}
   }
   else
