@@ -14,8 +14,17 @@
 	$pId = mysqli_real_escape_string($connection, $pId);
 	
 	//Získání náhodného čísla v rozmezí 0 až počet přírodnin ve zvolené poznávačce, které mají alespoň jeden nahraný obrázek
-	$query = "SELECT CEIL(RAND() *(SELECT COUNT(*) FROM prirodniny WHERE cast = $pId AND obrazky > 0))AS randNum";
-	$result = mysqli_query($connection, $query);
+	if ($_SESSION['current'][2] === true)
+	{
+	    //Výběr ze všech částí poznávačky
+	   $query = "SELECT CEIL(RAND() *(SELECT COUNT(*) FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $pId) AND obrazky > 0))AS randNum";
+	}
+	else
+	{
+	    //Výběr přírodniny z konkrétní části
+	   $query = "SELECT CEIL(RAND() *(SELECT COUNT(*) FROM prirodniny WHERE cast = $pId AND obrazky > 0))AS randNum";
+	}
+    $result = mysqli_query($connection, $query);
 	if (!$result)
 	{
 	    echo $query;
@@ -27,7 +36,16 @@
 	$rand--;   //Odečtení jedničky, aby se zahrnula i první přírodnina a ne neexistující přírodnina po té poslední
 	
 	//Získání ID a názvu náhodné přírodniny patřící do zvolené poznávačky
-	$query = "SELECT id,nazev FROM prirodniny WHERE cast = $pId AND obrazky > 0 ORDER BY id ASC LIMIT 1 OFFSET $rand";
+	if ($_SESSION['current'][2] === true)
+	{
+	    //Výběr z přírodnin patřících do celé poznávačky
+	    $query = "SELECT id,nazev FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $pId) AND obrazky > 0 ORDER BY id ASC LIMIT 1 OFFSET $rand";
+	}
+	else
+	{
+	    //Výběr z přírodnin patřících pouze do konkrétní části
+	    $query = "SELECT id,nazev FROM prirodniny WHERE cast = $pId AND obrazky > 0 ORDER BY id ASC LIMIT 1 OFFSET $rand";
+	}
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
