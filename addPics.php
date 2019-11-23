@@ -40,7 +40,14 @@
     						$part = $_SESSION['current'][0];
     						
     						include 'php/included/connect.php';
-    						$query = "SELECT * FROM prirodniny WHERE cast = $part ORDER BY nazev,obrazky,id";
+    						if ($_SESSION['current'][2] === true)
+    						{
+    						    $query = "SELECT nazev,obrazky FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $part) ORDER BY nazev,obrazky,id";
+    						}
+    						else
+    						{
+    						    $query = "SELECT nazev,obrazky FROM prirodniny WHERE cast = $part ORDER BY nazev,obrazky,id";
+    						}
     						$result = mysqli_query($connection, $query);
     						while($row = mysqli_fetch_array($result))
     						{
