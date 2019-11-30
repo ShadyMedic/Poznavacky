@@ -17,10 +17,10 @@
 
 	if (empty($name)){die("swal('Neplatný název', '', 'error');");}
 	if (empty($url)){die("swal('Neplatná adresa', '', 'error');");}
-
+    
 	$partId = $_SESSION['current'][0];
 	$pName = $_SESSION['current'][1];
-
+	
 	//Získat název přírodniny.
 	$final = "";
 	$arr = str_split($name);
@@ -60,13 +60,23 @@
 		filelog("Uživatel $username se pokusil nahrát duplicitní obrázek k přírodnině id $id v poznávačce $pName");
 		die("swal('Tento obrázek je již přidán.', '', 'error');");
 	}
-
+	
+	//Získání ID konkrétní části, pokud byly vybrány všechny části poznávačky
+	if ($_SESSION['current'][2] === true)
+	{
+	    $query = "SELECT cast FROM prirodniny WHERE nazev = '$final' LIMIT 1";
+	    $result = mysqli_query($connection, $query);
+	    $result = mysqli_fetch_array($result);
+	    $partId = $result['cast'];
+	}
+	
 	//Vložit obrázek do databáze
 	$query = "INSERT INTO obrazky VALUES (NULL, $id, '$url', $partId, 1)";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
 		$err = mysqli_error($connection);
+		echo $query;
 		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
 		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}

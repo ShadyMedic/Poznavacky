@@ -32,7 +32,7 @@
 	if($amount > 0){$number %= $amount;}
 
 	//Získávání URL obrázku
-	$query = "SELECT * FROM (SELECT id,zdroj FROM obrazky WHERE prirodninaId=$id AND povoleno=1 LIMIT ".($number+1).") AS zdroje ORDER BY id DESC LIMIT 1";
+	$query = "SELECT zdroj FROM (SELECT id,zdroj FROM obrazky WHERE prirodninaId=$id AND povoleno=1 LIMIT ".($number+1).") AS zdroje ORDER BY id DESC LIMIT 1";
 	$result = mysqli_query($connection, $query);
 	if (gettype($result) !== "object" || mysqli_num_rows($result) <= 0){die("images/noImage.png");}
 	$resultArr = mysqli_fetch_array($result);
