@@ -154,7 +154,7 @@
     					<th>Akce</th>
     				</tr>
 					<?php
-					   $query = "SELECT id,jmeno,email,posledniPrihlaseni,pridaneObrazky,uhodnuteObrazky,karma,status FROM uzivatele ORDER BY posledniPrihlaseni DESC LIMIT 25";
+					   $query = "SELECT uzivatele_id,jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele ORDER BY posledni_prihlaseni DESC LIMIT 25";
 					   $result = mysqli_query($connection, $query);
 					   if (!$result)
 					   {
@@ -164,7 +164,7 @@
 					   {
 					        echo "<tr>";
 					           echo "<td>";
-					               echo $row['id'];
+					               echo $row['uzivatele_id'];
 					           echo "</td>";
 					           echo "<td>";
 					               echo $row['jmeno'];
@@ -173,13 +173,13 @@
 					               echo $row['email'];
 					           echo "</td>";
 					           echo "<td>";
-					               echo $row['posledniPrihlaseni'];
+					               echo $row['posledni_prihlaseni'];
 					           echo "</td>";
 					           echo "<td>";
-					               echo "<input type=number readonly value=".$row['pridaneObrazky']." class='userField'/>";
+					               echo "<input type=number readonly value=".$row['pridane_obrazky']." class='userField'/>";
 					           echo "</td>";
 					           echo "<td>";
-					               echo "<input type=number readonly value=".$row['uhodnuteObrazky']." class='userField'/>";
+					               echo "<input type=number readonly value=".$row['uhodnute_obrazky']." class='userField'/>";
 					           echo "</td>";
 					           echo "<td>";
 					               echo "<input type=number readonly value=".$row['karma']." class='userField'/>";
@@ -240,7 +240,7 @@
     					<th>Akce</th>
     				</tr>
 					<?php
-					   $query = "SELECT puvodni,nove FROM zadostijmena ORDER BY cas ASC LIMIT 25";
+					   $query = "SELECT uzivatele_jmeno,nove FROM zadostijmena ORDER BY cas ASC LIMIT 25";
 					   $result = mysqli_query($connection, $query);
 					   if (!$result)
 					   {
@@ -250,7 +250,7 @@
 					   {
 					        echo "<tr>";
 					           echo "<td>";
-					               echo $row['puvodni'];
+					               echo $row['uzivatele_jmeno'];
 					           echo "</td>";
 					           echo "<td>";
 					               echo $row['nove'];
@@ -263,7 +263,7 @@
                                         echo "<img src='images/cross.gif'/>";
                                    echo "</button>";
                                    //Kontrola, jestli má uživatel zadaný e-mail
-                                   $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['puvodni']."' LIMIT 1";
+                                   $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['uzivatele_jmeno']."' LIMIT 1";
                                    $email = mysqli_query($connection, $query);
                                    if (!$result)
                                    {
