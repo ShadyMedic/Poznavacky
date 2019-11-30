@@ -64,11 +64,11 @@
             <?php
                 $userId = $_SESSION['user']['id'];
                 mysqli_real_escape_string($connection, $userId);
-                $query = "SELECT posledniUroven,posledniSlozka FROM uzivatele WHERE id=$userId LIMIT 1";
+                $query = "SELECT posledni_uroven,posledni_slozka FROM uzivatele WHERE uzivatele_id=$userId LIMIT 1";
                 $result = mysqli_query($connection, $query);
                 $result = mysqli_fetch_array($result);
-                $level = $result['posledniUroven'];
-                $folder = $result['posledniSlozka'];
+                $level = $result['posledni_uroven'];
+                $folder = $result['posledni_slozka'];
                 switch ($level)
                 {
                     case 0:
