@@ -15,26 +15,26 @@
         
         //Kontrola správnosti instantLogin cookie
         $code = $_COOKIE['instantLogin'];
-        $query = "SELECT uzivatel_id FROM sezeni WHERE kod_cookie='".md5($code)."' LIMIT 1";
+        $query = "SELECT uzivatele_id FROM sezeni WHERE kod_cookie='".md5($code)."' LIMIT 1";
         $result = mysqli_query($connection, $query);
         if (mysqli_num_rows($result) > 0)
         {
             
-            $userId = mysqli_fetch_array($result)['uzivatel_id'];
+            $userId = mysqli_fetch_array($result)['uzivatele_id'];
             
             //Hledání dat o uživateli
-            $query = "SELECT id,jmeno,heslo,email,pridaneObrazky,uhodnuteObrazky,karma,status FROM uzivatele WHERE id = $userId LIMIT 1";
+            $query = "SELECT uzivatele_id,jmeno,heslo,email,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE uzivatele_id = $userId LIMIT 1";
             $result = mysqli_query($connection, $query);
             $result = mysqli_fetch_array($result);
             
             //Ukládání dat
             $userData = [
-                'id' => $result['id'],
+                'id' => $result['uzivatele_id'],
                 'name' => $result['jmeno'],
                 'hash' => $result['heslo'],
                 'email' => $result['email'],
-                'addedPics' => $result['pridaneObrazky'],
-                'guessedPics' => $result['uhodnuteObrazky'],
+                'addedPics' => $result['pridane_obrazky'],
+                'guessedPics' => $result['uhodnute_obrazky'],
                 'karma' => $result['karma'],
                 'status' => $result['status']
             ];
@@ -58,7 +58,7 @@
 		
 		global $connection;
 		
-		$query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
+		$query = "UPDATE uzivatele SET posledni_prihlaseni='".date('Y-m-d H:i:s')."' WHERE uzivatele_id=$userId";
 		$result = mysqli_query($connection, $query);
 	}
 /*------------------------------------------------------------------------------------------------------*/
