@@ -423,16 +423,13 @@ function hidePicture()
 function disablePicture(event)
 {
 	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
-		console.log(url);
+	
 	//Odstranění všech hlášení k danému obrázku z DOM
 	var rows = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
-		console.log(rows);
 	var cnt = rows.length - 1;
-		console.log(cnt);
 	var j = 1;	//Přeskočíme hlavičku tabulky s indexem 0
-	for (var i = 1; i < cnt; i++)
+	for (var i = 1; i <= cnt; i++)
 	{
-		console.log(rows[j]);
 		if (rows[j].childNodes[0].childNodes[0].innerHTML === url)
 		{
 			rows[j].parentNode.removeChild(rows[j]);
@@ -454,7 +451,7 @@ function deletePicture(event)
 	var rows = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
 	var cnt = rows.length - 1;
 	var j = 1;	//Přeskočíme hlavičku tabulky s indexem 0
-	for (var i = 1; i < cnt; i++)
+	for (var i = 1; i <= cnt; i++)
 	{
 		if (rows[j].childNodes[0].childNodes[0].innerHTML === url)
 		{
@@ -513,7 +510,8 @@ function deleteReport(event)
 	//Odstranění hlášení z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	
-	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason, info);
+	info = encodeURIComponent(info);
+	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, null, null, url, reason, info);
 }
 /*------------------------------------------------------------*/
 function acceptNameChange(event)

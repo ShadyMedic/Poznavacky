@@ -23,6 +23,12 @@
     $reason = $_POST['sub'];
     $info = $_POST['msg'];
     
+    //Pokud je v $info uložený časový údaj, odkódujeme symbol '>'
+    if ($reason === '1')
+    {
+        $info = str_replace('&gt;', '>', $info);
+    }
+    
     $picUrl = mysqli_real_escape_string($connection, $picUrl);
     $reason = mysqli_real_escape_string($connection, $reason);
     $info = mysqli_real_escape_string($connection, $info);

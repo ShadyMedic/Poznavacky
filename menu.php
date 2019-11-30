@@ -1,23 +1,53 @@
 <?php
-	$redirectIn = false;
-	$redirectOut = true;
-	require 'php/included/verification.php';    //Obsahuje session_start();
-	
-	//Nastavování současné poznávačky
-	$cookieData = @$_COOKIE['current'];
-	$cookieData = explode('&',$cookieData);
-	$pId = @$cookieData[0];
-	$pName = @$cookieData[1];
-	
+  $redirectIn = false;
+  $redirectOut = true;
+  require 'php/included/verification.php';    //Obsahuje session_start();
+  
+  //Nastavování současné části
+  $pId = @$_COOKIE['current'];
+  
+  $everything = false;
+  
+  //Zjištění, zda se nejedná o výběr všech částí v dané poznávačce
+  if (strpos($pId,','))
+  {
+    //Zjištění jmena poznávačky
+    include 'php/included/connect.php';
+    $pId = mysqli_real_escape_string($connection, $pId);
+    if (!empty($pId))
+    {
+      $everything = true;
+      $firstPartId = $pId[0];
+      $query = "SELECT id,nazev FROM poznavacky WHERE id=(SELECT poznavacka FROM casti WHERE id=$firstPartId LIMIT 1) LIMIT 1";
+      $result = mysqli_query($connection, $query);
+      if (!$result){echo mysqli_error($connection);}
+      $result = mysqli_fetch_array($result);
+      $pName = $result['nazev'].' - Vše';
+      $pId = $result['id'];
+  	}
+  }
+  else
+  {
+    //Zjištění jmena části
+    include 'php/included/connect.php';
+    $pId = mysqli_real_escape_string($connection, $pId);
+    if (!empty($pId))
+    {
+      $query = "SELECT nazev FROM casti WHERE id=$pId LIMIT 1";
+      $result = mysqli_query($connection, $query);
+      $pName = mysqli_fetch_array($result);
+      $pName = $pName['nazev'];
+    }
+  }
 	//Mazání cookie current
 	setcookie("current", "", time()-3600);
 	
-	if (!empty($pId))	//Poznávačka zvolena
+	if (!empty($pId))	//Část zvolena
 	{
-		$pArr = array($pId, $pName);
+		$pArr = array($pId, $pName, $everything);
 		$_SESSION['current'] = $pArr;
 	}
-	else if (!isset($_SESSION['current']))	//Poznávačka nezvolena ani nenastavena --> přesměrování na stránku s výběrem
+	else if (!isset($_SESSION['current']))	//Část nezvolena ani nenastavena --> přesměrování na stránku s výběrem
 	{
 		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
 	}
@@ -52,8 +82,30 @@
 	           <a href="learn.php">
 	           <div id="btn2" class="menu" onclick="learn()">Učit se</div>
             </a>
-            <a href="test.php">
-	           <div id="btn3" class="menu" onclick="test()">Vyzkoušet se</div>
+                <?php 
+                  if ($_SESSION['current'][2] !== true)
+                  {
+                    $query = "SELECT obrazky FROM casti WHERE id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+                    $result = mysqli_query($connection, $query);
+                    $result = mysqli_fetch_array($result);
+                    $result = $result['obrazky'];
+                    if (empty($result))
+                    {
+                        echo "<a>";
+                        echo "<div id='btn3' class='menu' style='background-color: #CCCCCC;text-decoration: line-through;transition: none;color:#FFFFFF;cursor: not-allowed;'>Vyzkoušet se</div>";
+                    }
+                    else
+                    {
+                        echo "<a href='test.php'>";
+                        echo "<div id='btn3' class='menu' onclick='test()'>Vyzkoušet se</div>";
+                    }
+                  }
+                  else
+                  {
+                      echo "<a href='test.php'>";
+                      echo "<div id='btn3' class='menu' onclick='test()'>Vyzkoušet se</div>";
+                  }
+                ?>
             </a>  
         </main>
     </div>
