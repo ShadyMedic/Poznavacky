@@ -193,7 +193,7 @@
 					               echo "</select>";
 					           echo "</td>";
 					           echo "<td>";
-					               if ($row['id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
+					               if ($row['uzivatele_id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
 					               {
     					               echo "<button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>";
     					                   echo "<img src='images/pencil.gif'/>";
@@ -240,7 +240,7 @@
     					<th>Akce</th>
     				</tr>
 					<?php
-					   $query = "SELECT uzivatele_jmeno,nove FROM zadostijmena ORDER BY cas ASC LIMIT 25";
+					   $query = "SELECT uzivatele_jmeno,nove FROM zadosti_jmena ORDER BY cas ASC LIMIT 25";
 					   $result = mysqli_query($connection, $query);
 					   if (!$result)
 					   {
