@@ -31,7 +31,7 @@
     //$pass = mysqli_real_escape_string($connection, $pass);    Nemusí být escapováno - hodnota není použita v SQL dotazu nezahešovaná
     
     //Hledání účtu se zadaným jménem
-    $query = "SELECT id,jmeno,heslo,email,pridaneObrazky,uhodnuteObrazky,karma,status FROM uzivatele WHERE jmeno='$name' LIMIT 1";
+    $query = "SELECT uzivatele_id,jmeno,heslo,email,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE jmeno='$name' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (empty(mysqli_num_rows($result)))    //Uživatel nenalezen
     {
@@ -53,8 +53,8 @@
             $code = bin2hex(random_bytes(7));   //56 bitů --> maximálně čtrnáctimístný kód
 
             //Uložit kód do databáze
-            $userId = $result['id'];
-            $query = "INSERT INTO sezeni (kod_cookie, uzivatel_id) VALUES ('".md5($code)."', $userId)";
+            $userId = $result['uzivatele_id'];
+            $query = "INSERT INTO sezeni (kod_cookie, uzivatele_id) VALUES ('".md5($code)."', $userId)";
             $innerResult = @mysqli_query($connection, $query);
             /* 
              *Poznámka: v případě, že by byl $code již někdy uložen, dotaz prostě selže a přihlášení se neuloží. Nic jiného se nestane.
@@ -71,12 +71,12 @@
         
         //Přihlašování
         $userData = [
-            'id' => $result['id'],
+            'id' => $result['uzivatele_id'],
             'name' => $result['jmeno'],
             'hash' => $result['heslo'],
             'email' => $result['email'],
-            'addedPics' => $result['pridaneObrazky'],
-            'guessedPics' => $result['uhodnuteObrazky'],
+            'addedPics' => $result['pridane_obrazky'],
+            'guessedPics' => $result['uhodnute_obrazky'],
             'karma' => $result['karma'],
             'status' => $result['status']
         ];
@@ -84,7 +84,7 @@
         
         //Aktualizace času posledního přihlášení
         $userId = $userData['id'];
-        $query = "UPDATE uzivatele SET posledniPrihlaseni='".date('Y-m-d H:i:s')."' WHERE id=$userId";
+        $query = "UPDATE uzivatele SET posledni_prihlaseni='".date('Y-m-d H:i:s')."' WHERE uzivatele_id=$userId";
         $result = mysqli_query($connection, $query);
         
         $ip = $_SERVER['REMOTE_ADDR'];
