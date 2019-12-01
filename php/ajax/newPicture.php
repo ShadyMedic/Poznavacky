@@ -29,12 +29,12 @@
 	$final = mysqli_real_escape_string($connection, $final);
 
 	//Získat ID přírodniny
-	$query = "SELECT id FROM prirodniny WHERE nazev='$final'";
+	$query = "SELECT prirodniny_id FROM prirodniny WHERE nazev='$final'";
 	$result = mysqli_query($connection, $query);
 	if (mysqli_num_rows($result) > 0)
 	{
 		$id = mysqli_fetch_array($result);
-		$id = $id['id'];
+		$id = $id['prirodniny_id'];
 	}
 	else
 	{
@@ -53,7 +53,7 @@
 
 	//Kontrola duplicitního obrázku
 	$url = mysqli_real_escape_string($connection, $url);
-	$query = "SELECT id FROM obrazky WHERE zdroj='$url'";
+	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url'";
 	$result = mysqli_query($connection, $query);
 	if (mysqli_num_rows($result) > 0)
 	{
@@ -64,7 +64,7 @@
 	//Získání ID konkrétní části, pokud byly vybrány všechny části poznávačky
 	if ($_SESSION['current'][2] === true)
 	{
-	    $query = "SELECT cast FROM prirodniny WHERE nazev = '$final' LIMIT 1";
+	    $query = "SELECT casti_id FROM prirodniny WHERE nazev = '$final' LIMIT 1";
 	    $result = mysqli_query($connection, $query);
 	    $result = mysqli_fetch_array($result);
 	    $partId = $result['cast'];
@@ -84,7 +84,7 @@
 	//Zvýšit autorovy obrázku počet nahraných obrázků v databázi
 	$_SESSION['user']['addedPics'] = ++$_SESSION['user']['addedPics'];
 	$newAmount = $_SESSION['user']['addedPics'];
-	$query = "UPDATE uzivatele SET pridaneObrazky = $newAmount WHERE jmeno = '$username'";
+	$query = "UPDATE uzivatele SET pridane_obrazky = $newAmount WHERE jmeno = '$username'";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
@@ -94,7 +94,7 @@
 	}
 	
 	//Upravit počet obrázků dané přírodniny v tabulce prirodniny
-	$query = "UPDATE prirodniny SET obrazky = (obrazky + 1) WHERE id = $id";
+	$query = "UPDATE prirodniny SET obrazky = (obrazky + 1) WHERE prirodniny_id = $id";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
@@ -104,7 +104,7 @@
 	}
 
 	//Upravit počet obrázků dané přírodniny v tabulce casti
-	$query = "UPDATE casti SET obrazky = (obrazky + 1) WHERE id = $partId";
+	$query = "UPDATE casti SET obrazky = (obrazky + 1) WHERE casti_id = $partId";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
