@@ -70,7 +70,7 @@
     
     //Aktualizace hesla
     $newPass = password_hash($newPass, PASSWORD_DEFAULT);
-    $query = "UPDATE uzivatele SET heslo = '$newPass' WHERE id = $userId";
+    $query = "UPDATE uzivatele SET heslo = '$newPass' WHERE uzivatele_id = $userId";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
