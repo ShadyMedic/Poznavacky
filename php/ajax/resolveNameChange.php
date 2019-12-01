@@ -83,7 +83,7 @@
     }
     
     //Odstraňování žádosti
-    $query = "DELETE FROM zadostijmena WHERE puvodni='$oldName'";
+    $query = "DELETE FROM zadosti_jmena WHERE uzivatele_jmeno='$oldName'";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {

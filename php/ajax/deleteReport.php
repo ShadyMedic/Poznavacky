@@ -34,17 +34,17 @@
     $info = mysqli_real_escape_string($connection, $info);
     
     //Získávíní ID obrázku
-    $query = "SELECT id FROM obrazky WHERE zdroj='$picUrl' LIMIT 1";
+    $query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$picUrl' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
         echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
     }
     $result = mysqli_fetch_array($result);
-    $picId = $result['id'];
+    $picId = $result['obrazky_id'];
     
     //Odstranění hlášení
-    $query = "DELETE FROM hlaseni WHERE obrazekId='$picId' AND duvod=$reason AND dalsiInformace='$info' LIMIT 1";
+    $query = "DELETE FROM hlaseni WHERE obrazky_id='$picId' AND duvod=$reason AND dalsi_informace='$info' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {

@@ -20,7 +20,7 @@
     $user = mysqli_real_escape_string($connection, $user);
     
     //Hledání účtu se zadaným jménem
-    $query = "SELECT id,heslo FROM uzivatele WHERE jmeno='$user' LIMIT 1";
+    $query = "SELECT uzivatele_id,heslo FROM uzivatele WHERE jmeno='$user' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (empty(mysqli_num_rows($result)))    //Uživatel nenalezen
     {
@@ -35,13 +35,13 @@
     $result = mysqli_fetch_array($result);
     if (password_verify($pass, $result['heslo']))   //Heslo je správné
     {
-        $userId = $result['id'];
+        $userId = $result['uzivatele_id'];
         
         $query = "";
-        $query .= "DELETE FROM zadostijmena WHERE puvodni='$user' LIMIT 1;";        //Odstranění podaných žádostí o změnu jména
-        $query .= "DELETE FROM obnovenihesel WHERE uzivatel_id=$userId LIMIT 1;";   //Odstranění kódů k obnovení hesla
-        $query .= "DELETE FROM sezeni WHERE uzivatel_id=$userId;";                  //Odstranění kódů instalogin cookies
-        $query .= "DELETE FROM uzivatele WHERE jmeno='$user'; LIMIT 1";             //Odstranění samotného účtu
+        $query .= "DELETE FROM zadosti_jmena WHERE uzivatele_jmeno='$user' LIMIT 1;";        //Odstranění podaných žádostí o změnu jména
+        $query .= "DELETE FROM obnoveni_hesel WHERE uzivatele_id=$userId LIMIT 1;";           //Odstranění kódů k obnovení hesla
+        $query .= "DELETE FROM sezeni WHERE uzivatele_id=$userId;";                          //Odstranění kódů instalogin cookies
+        $query .= "DELETE FROM uzivatele WHERE jmeno='$user'; LIMIT 1";                      //Odstranění samotného účtu
         
         $result = mysqli_multi_query($connection, $query);
         if (!$result)

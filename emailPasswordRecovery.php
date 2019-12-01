@@ -17,7 +17,7 @@
     $token = $_GET['token'];
     
     //Mazání vyexpirovaných kódů z databáze
-    $query = "DELETE FROM obnovenihesel WHERE (vytvoreno < (NOW() - INTERVAL 86400 SECOND))";   //86 400 s = 1 den
+    $query = "DELETE FROM obnoveni_hesel WHERE (vytvoreno < (NOW() - INTERVAL 86400 SECOND))";   //86 400 s = 1 den
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -33,7 +33,7 @@
     }
 
     //Kontrola správnosti kódu
-    $query = "SELECT uzivatel_id FROM obnovenihesel WHERE kod='".md5($token)."' LIMIT 1";
+    $query = "SELECT uzivatele_id FROM obnoveni_hesel WHERE kod='".md5($token)."' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {

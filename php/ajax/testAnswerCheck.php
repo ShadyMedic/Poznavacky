@@ -46,21 +46,21 @@
 
     function removeDiacritic($str)
     {
-        $str = str_replace('á','a');
-        $str = str_replace('ě','e');
-        $str = str_replace('é','e');
-        $str = str_replace('í','i');
-        $str = str_replace('ó','o');
-        $str = str_replace('ú','u');
-        $str = str_replace('ů','u');
-        $str = str_replace('ý','y');
-        $str = str_replace('č','c');
-        $str = str_replace('ď','d');
-        $str = str_replace('ň','n');
-        $str = str_replace('ř','r');
-        $str = str_replace('š','s');
-        $str = str_replace('ť','t');
-        $str = str_replace('ž','z');
+        $str = str_replace('á','a',$str);
+        $str = str_replace('ě','e',$str);
+        $str = str_replace('é','e',$str);
+        $str = str_replace('í','i',$str);
+        $str = str_replace('ó','o',$str);
+        $str = str_replace('ú','u',$str);
+        $str = str_replace('ů','u',$str);
+        $str = str_replace('ý','y',$str);
+        $str = str_replace('č','c',$str);
+        $str = str_replace('ď','d',$str);
+        $str = str_replace('ň','n',$str);
+        $str = str_replace('ř','r',$str);
+        $str = str_replace('š','s',$str);
+        $str = str_replace('ť','t',$str);
+        $str = str_replace('ž','z',$str);
         
         return $str;
     }
@@ -82,7 +82,7 @@
         $_SESSION['user']['guessedPics'] = ++$_SESSION['user']['guessedPics'];
         $newScore = $_SESSION['user']['guessedPics'];
         $username = $_SESSION['user']['name'];
-        $query = "UPDATE uzivatele SET uhodnuteObrazky = $newScore WHERE jmeno = '$username'";
+        $query = "UPDATE uzivatele SET uhodnute_obrazky = $newScore WHERE jmeno = '$username'";
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
