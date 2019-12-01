@@ -16,7 +16,7 @@
     $token = mysqli_real_escape_string($connection, $token);
     
     //Kontrola správnosti kódu (už sice bylo zkontrolováno v emailPasswordRecovery.php, ale pro případ modifikace cookies to raději zkontrolujeme znovu)
-    $query = "SELECT uzivatel_id FROM obnovenihesel WHERE kod='".md5($token)."' LIMIT 1";
+    $query = "SELECT uzivatele_id FROM obnoveni_hesel WHERE kod='".md5($token)."' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -29,7 +29,7 @@
         die();
     }
     $userId = mysqli_fetch_array($result);
-    $userId = $userId['uzivatel_id'];
+    $userId = $userId['uzivatele_id'];
     
     //Kontrola délky nového hesla
     if (strlen($newPass) < 6)
@@ -65,7 +65,7 @@
     
     //Aktualizace hesla
     $newPass = password_hash($newPass, PASSWORD_DEFAULT);
-    $query = "UPDATE uzivatele SET heslo = '$newPass' WHERE id = $userId";
+    $query = "UPDATE uzivatele SET heslo = '$newPass' WHERE uzivatele_id = $userId";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -79,7 +79,7 @@
     echo "swal('Heslo bylo úspěšně změněno.','','success').then(function() {window.location = 'index.php';})";
     
     //Odstraňování kódu z databáze.
-    $query = "DELETE FROM obnovenihesel WHERE kod='".md5($token)."'";
+    $query = "DELETE FROM obnoveni_hesel WHERE kod='".md5($token)."'";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
