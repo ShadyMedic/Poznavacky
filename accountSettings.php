@@ -118,12 +118,12 @@
 				<tr id="tr_end">
 					<td class='table_left' title="Přizpůsobte si vzhled stránek">Barevné schéma</td>
 					<td class='table_right' id="theme_td">
-						<button class="theme_option" onclick="changeTheme(1)" style="background: #405d27" id="theme_selected"></button>
-						<button class="theme_option" onclick="changeTheme(2)" style="background: #4521ae"></button>
-						<button class="theme_option" onclick="changeTheme(3)" style="background: #a51919"></button>
-						<button class="theme_option" onclick="changeTheme(4)" style="background: #a7a700"></button>
-						<button class="theme_option" onclick="changeTheme(5)" style="background: #a51919"></button>
-						<button class="theme_option" onclick="changeTheme(6)" style="background: #a7a700"></button>
+						<button class="theme_option" onclick="changeTheme(1)" style="background: #405d27" <?php if ($_SESSION['user']['theme'] === '1'){echo "id='theme_selected'";} ?> ></button>
+						<button class="theme_option" onclick="changeTheme(2)" style="background: #4521ae" <?php if ($_SESSION['user']['theme'] === '2'){echo "id='theme_selected'";} ?> ></button>
+						<button class="theme_option" onclick="changeTheme(3)" style="background: #a51919" <?php if ($_SESSION['user']['theme'] === '3'){echo "id='theme_selected'";} ?> ></button>
+						<button class="theme_option" onclick="changeTheme(4)" style="background: #a7a700" <?php if ($_SESSION['user']['theme'] === '4'){echo "id='theme_selected'";} ?> ></button>
+						<button class="theme_option" onclick="changeTheme(5)" style="background: #a51919" <?php if ($_SESSION['user']['theme'] === '5'){echo "id='theme_selected'";} ?> ></button>
+						<button class="theme_option" onclick="changeTheme(6)" style="background: #a7a700" <?php if ($_SESSION['user']['theme'] === '6'){echo "id='theme_selected'";} ?> ></button>
 					</td>
 					<td class='table_action'></td>
 				</tr>
