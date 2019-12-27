@@ -24,7 +24,7 @@
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
     $userId = $_SESSION['user']['id'];
-    mysqli_real_escape_string($connection, $query);
+    $userId = mysqli_real_escape_string($connection, $userId);
     $query = "UPDATE uzivatele SET posledni_uroven = 0, posledni_slozka = NULL WHERE uzivatele_id=$userId LIMIT 1";
     $result = mysqli_query($connection, $query);
     
