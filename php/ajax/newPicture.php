@@ -94,26 +94,10 @@
 	}
 	
 	//Upravit počet obrázků dané přírodniny v tabulce prirodniny
-	$query = "UPDATE prirodniny SET obrazky = (obrazky + 1) WHERE prirodniny_id = $id";
-	$result = mysqli_query($connection, $query);
-	if (!$result)
-	{
-		$err = mysqli_error($connection);
-		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
-	}
-
 	//Upravit počet obrázků dané přírodniny v tabulce casti
-	$query = "UPDATE casti SET obrazky = (obrazky + 1) WHERE casti_id = $partId";
-	$result = mysqli_query($connection, $query);
-	if (!$result)
-	{
-		$err = mysqli_error($connection);
-		filelog("Uživatel $username nemohl nahrát obrázek pro přírodninu $id v poznávačce $pName, protože se vyskytla neočekávaná chyba: $err.");
-		die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
-	}
-	else
-	{
-		filelog("Uživatel $username nahrál nový obrázek k přírodnině id $id v poznávačce $pName");
-		die("swal('Obrázek úspěšně přidán', '', 'success');");
-	}
+    
+	//Tyto dva úkony zajišťuje spoušť (trigger) nastavená na SQL serveru
+	
+	filelog("Uživatel $username nahrál nový obrázek k přírodnině id $id v poznávačce $pName");
+	die("swal('Obrázek úspěšně přidán', '', 'success');");
+

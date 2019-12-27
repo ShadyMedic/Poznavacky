@@ -37,13 +37,9 @@
     {
         $userId = $result['uzivatele_id'];
         
-        $query = "";
-        $query .= "DELETE FROM zadosti_jmena WHERE uzivatele_jmeno='$user' LIMIT 1;";        //Odstranění podaných žádostí o změnu jména
-        $query .= "DELETE FROM obnoveni_hesel WHERE uzivatele_id=$userId LIMIT 1;";           //Odstranění kódů k obnovení hesla
-        $query .= "DELETE FROM sezeni WHERE uzivatele_id=$userId;";                          //Odstranění kódů instalogin cookies
-        $query .= "DELETE FROM uzivatele WHERE jmeno='$user'; LIMIT 1";                      //Odstranění samotného účtu
+        $query = "DELETE FROM uzivatele WHERE uzivatele_id=$userId LIMIT 1";  //Odstranění samotného účtu
         
-        $result = mysqli_multi_query($connection, $query);
+        $result = mysqli_query($connection, $query);
         if (!$result)
         {
             echo "location.href = 'errSql.html';";
@@ -58,4 +54,10 @@
             filelog("Uživatel $user odstranil svůj účet z IP adresy $ip.");
             echo "location.href = 'php/logout.php';";
         }
+    }
+    else
+    {
+        //Toto by se nemělo zobrazit, pokud nedojde k nějakému problému na straně uživatele. Heslo se kontroluje hned po jeho zadání, ne až po potvrzení odstranění účtu
+        echo "swal('Špatné heslo.','','error')";
+        die();
     }
