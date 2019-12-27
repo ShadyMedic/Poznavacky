@@ -60,7 +60,7 @@
     }
     if (mysqli_num_rows($result) > 0)
     {
-        $requestId = mysqli_fetch_array($result)['id'];
+        $requestId = mysqli_fetch_array($result)['zadosti_jmena_id'];
         
         //Přepisování žádosti
         $query = "UPDATE zadosti_jmena SET nove = '$newName', cas = ".time()." WHERE zadosti_jmena_id = $requestId";
