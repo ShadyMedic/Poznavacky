@@ -19,6 +19,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
+		<style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<link rel="stylesheet" type="text/css" href="css/css.css">
 		<script type="text/javascript" src="jScript/list.js"></script>
 		<link rel="icon" href="images/favicon.ico">

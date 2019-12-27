@@ -33,6 +33,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
+		<style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<link rel="stylesheet" type="text/css" href="css/css.css">
 		<script type="text/javascript" src="jScript/test.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
