@@ -105,10 +105,21 @@
 					<!--<td class='table_action'>Karmu získáte za činnost vedoucí ke zlepšení služby</td>-->
 					<td class='table_action'></td>
 				</tr>
-				<tr id="tr_end">
+				<tr>
 					<td class='table_left'>Status</td>
 					<td class='table_right'><?php echo $userdata['status']; ?></td>
-					<!--<td class='table_action'>Zažádejte o status moderátora na poznavacky@email.com</td>-->
+					<td class='table_action'></td>
+				</tr>
+				<tr id="tr_end">
+					<td class='table_left' title="Přizpůsobte si vzhled stránek">Barevné schéma</td>
+					<td class='table_right' id="theme_td">
+						<button class="theme_option" onclick="changeTheme(1)" style="background: #405d27" id="theme_selected"></button>
+						<button class="theme_option" onclick="changeTheme(2)" style="background: #4521ae"></button>
+						<button class="theme_option" onclick="changeTheme(3)" style="background: #a51919"></button>
+						<button class="theme_option" onclick="changeTheme(4)" style="background: #a7a700"></button>
+						<button class="theme_option" onclick="changeTheme(5)" style="background: #a51919"></button>
+						<button class="theme_option" onclick="changeTheme(6)" style="background: #a7a700"></button>
+					</td>
 					<td class='table_action'></td>
 				</tr>
 			</table>
