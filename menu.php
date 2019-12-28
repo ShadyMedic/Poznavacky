@@ -57,7 +57,12 @@
     <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
-		<link rel="stylesheet" type="text/css" href="css/css.css">
+    <link rel="stylesheet" type="text/css" href="css/css.css">
+    <style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/icon-32x32.png">

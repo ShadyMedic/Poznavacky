@@ -23,7 +23,7 @@
             $userId = mysqli_fetch_array($result)['uzivatele_id'];
             
             //Hledání dat o uživateli
-            $query = "SELECT uzivatele_id,jmeno,heslo,email,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE uzivatele_id = $userId LIMIT 1";
+            $query = "SELECT uzivatele_id,jmeno,heslo,email,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE uzivatele_id = $userId LIMIT 1";
             $result = mysqli_query($connection, $query);
             $result = mysqli_fetch_array($result);
             
@@ -33,6 +33,7 @@
                 'name' => $result['jmeno'],
                 'hash' => $result['heslo'],
                 'email' => $result['email'],
+                'theme' => $result['vzhled'],
                 'addedPics' => $result['pridane_obrazky'],
                 'guessedPics' => $result['uhodnute_obrazky'],
                 'karma' => $result['karma'],

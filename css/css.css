@@ -56,14 +56,15 @@ q:before, q:after {
 /* ---------------------------------------------------------------------- moje styly */
 /* ------------------------------------------------------------ hlavni */
 :root {
-    --hlbarva1: #405d27; /*paleta 1*/
-    --hlbarva2: #587e36; /*paleta 2*/
-    --hlbarva3: #3e4444; /*text atd.*/
+    --hlbarva1: #56440c; /*paleta 1*/
+    --hlbarva2: #757575; /*paleta 2*/
+    --hlbarva3: #242424; /*text atd.*/
     --bila: #fff; /*pozadi*/
     --cervena: #a51919; /*chyby*/
     --zelena: #427226; /*spravne*/
     --seda: #aeaeae;
     --seda2: #ccc;
+    --bgPic: url(/images/bg0.jpg);
 }
 html, body {
     height: 100%;
@@ -75,7 +76,7 @@ html, body {
 body {
     background: var(--bila);
     background: linear-gradient(var(--bila), var(--hlbarva1));
-    background: url(../images/background.jpg) no-repeat center fixed;
+    background: no-repeat center fixed;
     background-size: cover; 
     display: flex;
     flex-direction: column; 
@@ -398,6 +399,9 @@ th {
 #static_info td {
     padding: 0.25rem 1.125rem;
 }
+#static_info #theme_td {
+    display: flex;
+}
 #static_info tr {
     border-bottom: 1px solid var(--seda2);
 }
@@ -469,6 +473,28 @@ td .key_short {
 }
 .button:focus, button:focus, #duckLink_div:active {
     outline: none;
+}
+.theme_option {
+    margin: 0.25rem 0;
+    height: 1.7rem;
+    padding: 0;
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+.theme_option:hover {
+    background-color: var(--hlbarva3);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.theme_option:active {
+    outline: none;
+    cursor: pointer;
+}
+.theme_option:focus {
+    outline: none;
+}
+#theme_selected {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.6);
 }
 #duckLink_div {
     background: var(--hlbarva2);

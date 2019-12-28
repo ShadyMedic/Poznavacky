@@ -9,6 +9,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<script type="text/javascript" src="jScript/index.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link rel="icon" href="images/favicon.ico">

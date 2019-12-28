@@ -10,6 +10,7 @@
  */
 
 define('VERSION', 4.0);
+define('DEFAULT_THEME', 0);
 define('DEFAULT_KARMA', 0);
 define('DEFAULT_RANK', 'member');
 define('EMAIL_CODE', 'f50cb941');
