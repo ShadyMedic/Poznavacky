@@ -154,7 +154,7 @@ Vložené serverové skripty:
 		Zahrnuje se do: všechny skripty pracující s databází
 		Zajišťuje připojení k databázi a nastavuje znakovou sadu
 	CONSTANTS.php
-		Zahrnuje se do: emailSender.php, list.php, register.php
+		Zahrnuje se do: emailSender.php, list.php, register.php, themeHandler.php
 		Obsahuje všechny konstanty systému
 	emailSender.php
 		Zahrnuje se do: recoverPassword.php, resolveNameChange.php
@@ -277,5 +277,8 @@ Ostatní:
 	manifest.json
 		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
 		Pro fungování icon-192.png v Chromu
-		
+	themes.xml
+		Používá se v: themeHandler.php
+		Obsahuje hodnoty CSS proměnných pro jednotlivé vzhledy
+	
 Pro .js a .css soubory se podívejte do sekce "Zobrazované stránky", "Vložené stránky" a "Přesměrovávací stránky".
