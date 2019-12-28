@@ -101,6 +101,7 @@ header {
     background-color: var(--hlbarva1);
     display: block;
     color: var(--bila);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 h1 {
     display: block;
