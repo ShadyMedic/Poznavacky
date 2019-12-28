@@ -11,7 +11,7 @@
     $userName = $userdata['name'];
     
     //Kontrola id vzhledu
-    if (!in_array($themeId, ['1','2','3','4','5','6'], true))
+    if (!in_array($themeId, ['0','1','2','3','4','5'], true))
     {
         filelog("Uživatel $userName se pokusil změnit vzhled stránek, ale zvolil neplatnou možnost.");
         echo "swal('Neplatná možnost.','','error')";
