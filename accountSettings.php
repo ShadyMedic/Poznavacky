@@ -118,12 +118,12 @@
 				<tr id="tr_end">
 					<td class='table_left' title="Přizpůsobte si vzhled stránek">Barevné schéma</td>
 					<td class='table_right' id="theme_td">
-						<button class="theme_option" style="background: #405d27" <?php if ($_SESSION['user']['theme'] === '0'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(0)'";} ?> ></button>
-						<button class="theme_option" style="background: #4521ae" <?php if ($_SESSION['user']['theme'] === '1'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(1)'";} ?> ></button>
-						<button class="theme_option" style="background: #a51919" <?php if ($_SESSION['user']['theme'] === '2'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(2)'";} ?> ></button>
-						<button class="theme_option" style="background: #a7a700" <?php if ($_SESSION['user']['theme'] === '3'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(3)'";} ?> ></button>
-						<button class="theme_option" style="background: #a51919" <?php if ($_SESSION['user']['theme'] === '4'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(4)'";} ?> ></button>
-						<button class="theme_option" style="background: #a7a700" <?php if ($_SESSION['user']['theme'] === '5'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(5)'";} ?> ></button>
+						<button class="theme_option" style="background: #486b00" <?php if ($_SESSION['user']['theme'] === '0'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(0)'";} ?> ></button>
+						<button class="theme_option" style="background: #1c213f" <?php if ($_SESSION['user']['theme'] === '1'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(1)'";} ?> ></button>
+						<button class="theme_option" style="background: #d6a726" <?php if ($_SESSION['user']['theme'] === '2'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(2)'";} ?> ></button>
+						<button class="theme_option" style="background: #671515" <?php if ($_SESSION['user']['theme'] === '3'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(3)'";} ?> ></button>
+						<button class="theme_option" style="background: #be9063" <?php if ($_SESSION['user']['theme'] === '4'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(4)'";} ?> ></button>
+						<button class="theme_option" style="background: #598daf" <?php if ($_SESSION['user']['theme'] === '5'){echo "id='theme_selected'";}else{echo "onclick='changeTheme(5)'";} ?> ></button>
 					</td>
 					<td class='table_action'></td>
 				</tr>
