@@ -56,14 +56,15 @@ q:before, q:after {
 /* ---------------------------------------------------------------------- moje styly */
 /* ------------------------------------------------------------ hlavni */
 :root {
-    --hlbarva1: #405d27; /*paleta 1*/
-    --hlbarva2: #587e36; /*paleta 2*/
-    --hlbarva3: #3e4444; /*text atd.*/
+    /*--hlbarva1: #56440c; /*paleta 1*/
+    /*--hlbarva2: #757575; /*paleta 2*/
+    /*--hlbarva3: #242424; /*text atd.*/
     --bila: #fff; /*pozadi*/
     --cervena: #a51919; /*chyby*/
     --zelena: #427226; /*spravne*/
     --seda: #aeaeae;
     --seda2: #ccc;
+    /*--bgPic: url(/images/bg0.jpg);*/
 }
 html, body {
     height: 100%;
@@ -75,7 +76,7 @@ html, body {
 body {
     background: var(--bila);
     background: linear-gradient(var(--bila), var(--hlbarva1));
-    background: url(../images/background.jpg) no-repeat center fixed;
+    background: var(--bgPic) no-repeat center fixed;
     background-size: cover; 
     display: flex;
     flex-direction: column; 
