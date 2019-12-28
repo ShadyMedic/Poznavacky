@@ -26,7 +26,7 @@
         if ($type === 0)
         {
             $email .= "
-                <p>Pro obnovení vašeho hesla klikněte na tento odkaz: <a href='localhost/Poznavacky/emailPasswordRecovery.php?token=".$data['code']."'>OBNOVIT HESLO</a></p>
+                <p>Pro obnovení vašeho hesla klikněte na tento odkaz: <a href='".$_SERVER['SERVER_NAME']."/emailPasswordRecovery.php?token=".$data['code']."'>OBNOVIT HESLO</a></p>
                 <p>Tento odkaz bude platný po následujících 24 hodin, nebo do odeslání žádosti o nový kód.</p>
                 <p style='color: #990000;'><span style='font-weight: bold;'>DŮLEŽITÉ: </span><span>Tento e-mail nikomu nepřeposílejte! Mohl by získat přístup k vašemu účtu.</span>
             ";
@@ -34,7 +34,7 @@
         if ($type === 1)
         {
             $email .= "
-                <p>Na základě vaší žádosti na <a href='poznavacky.chytrak.cz'>poznavacky.chytrak.cz</a> bylo změněno vaše uživatelské jméno na <b>".$data['newName']."</b>.
+                <p>Na základě vaší žádosti na <a href='".$_SERVER['SERVER_NAME']."'>".$_SERVER['SERVER_NAME']."</a> bylo změněno vaše uživatelské jméno na <b>".$data['newName']."</b>.
                 <br>Pod svým starým jménem (<b>".$data['oldName']."</b>) se od nynějška již nebudete moci přihlásit.</p>
                 <p>Pokud si přejete změnit jméno zpět na staré nebo nějaké úplně jiné, můžete tak učinit odesláním další žádosti o změnu jména v nastavení vašeho uživatelského účtu.</p>
                 <p>Neodesílali jste žádnou žádost na změnu uživatelského jména? Je možné, že někdo získal přístup k vašemu účtu. Doporučujeme vám si co nejdříve změnit vaše heslo. Pokud se nemůžete přihlásit, kontaktujte nás prosím na e-mailové adrese <a href='mailto:poznavacky@email.com'>poznavacky@email.com</a>".
@@ -44,7 +44,7 @@
         if ($type === 2)
         {
             $email .= "
-            <p>Vaše žádost o změnu uživatelského jména na <a href='poznavacky.chytrak.cz'>poznavacky.chytrak.cz</a> byla administrátorem zamítnuta.
+            <p>Vaše žádost o změnu uživatelského jména na <a href='".$_SERVER['SERVER_NAME']."'>".$_SERVER['SERVER_NAME']."</a> byla administrátorem zamítnuta.
             <br><b>Důvod zamítnutí: <span style='color:#990000'>".$data['reason']."</span>.</b><br>
             Vaše současné jméno (<b>".$data['oldName']."</b>) tak stále zůstává platným přihlašovacím údajem.</p>
             <p>Pokud si jméno stále chcete změnit, můžete odeslat novou žádost o změnu. Neodesílejte však prosím žádost o změnu na jméno, které bylo zamítnuto.</p>
