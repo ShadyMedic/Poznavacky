@@ -92,7 +92,7 @@
     //Poslat e-mail.
     include '../emailSender.php';
     include '../included/composeEmail.php';
-    $emailResult = sendEmail($email, 'Žádost o obnovu hesla na poznavacky.chytrak.cz', getEmail(0, array("code" => $code)));
+    $emailResult = sendEmail($email, 'Žádost o obnovu hesla na '.$_SERVER['SERVER_NAME'], getEmail(0, array("code" => $code)));
     
     if (empty($emailResult))
     {

@@ -82,8 +82,8 @@
         }
     }
     
-    //Odstraňování žádosti - klíč "uzivatele_jmeno" v tabulce "zadosti_jmena" se při aktualizaci sloupce "jmeno" v tabulce "uzivatele" neaktualizuje, a tak je zde použito staré jméno
-    $query = "DELETE FROM zadosti_jmena WHERE uzivatele_jmeno='$oldName'";
+    //Odstraňování žádosti - klíč "uzivatele_jmeno" v tabulce "zadosti_jmena" se při aktualizaci sloupce "jmeno" v tabulce "uzivatele" změní na NULL, a tak se zde odstraňují všechny žádosti "bez autora"
+    $query = "DELETE FROM zadosti_jmena WHERE uzivatele_jmeno IS NULL";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
