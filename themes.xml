@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <themes>
-	<theme id="1">
+	<theme id="0">
 		<color>#00ff00</color>
 		<color>#55ff55</color>
 		<color>#99ff99</color>
 		<picture>images/les.jpeg</picture>
 	</theme>
-	<theme id="2">
+	<theme id="1">
 		<color>#0000ff</color>
 		<color>#5555ff</color>
 		<color>#9999ff</color>
 		<picture>images/hory.jpeg</picture>
 	</theme>
-	<theme id="3">
+	<theme id="2">
 		<color>#ff0000</color>
 		<color>#ff5555</color>
 		<color>#ff9999</color>
 		<picture>images/maliny.jpeg</picture>
 	</theme>
-	<theme id="4">
+	<theme id="3">
 		<color>#ffff00</color>
 		<color>#ffff55</color>
 		<color>#ffff99</color>
 		<picture>images/slunecnice.jpeg</picture>
 	</theme>
-	<theme id="5">
+	<theme id="4">
 		<color>#4400ff</color>
 		<color>#9955ff</color>
 		<color>#dd99ff</color>
 		<picture>images/boruvky.jpeg</picture>
 	</theme>
-	<theme id="6">
+	<theme id="5">
 		<color>#555555</color>
 		<color>#999999</color>
 		<color>#dddddd</color>
