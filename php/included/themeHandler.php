@@ -16,7 +16,11 @@
         createCssVariable('hlbarva1', $xmlData->theme[$themeId]->color[0]);
         createCssVariable('hlbarva2', $xmlData->theme[$themeId]->color[1]);
         createCssVariable('hlbarva3', $xmlData->theme[$themeId]->color[2]);
-        createCssVariable('bgPic', $xmlData->theme[$themeId]->picture);
+        
+        echo "}";
+        
+        //Nastavení obrázku pozadí
+        echo "body{background-image: ".$xmlData->theme[$themeId]->picture.";}";
     }
     catch(Exception $e)
     {
@@ -25,6 +29,9 @@
         createCssVariable('hlbarva1', $xmlData->theme[DEFAULT_THEME]->color[0]);
         createCssVariable('hlbarva2', $xmlData->theme[DEFAULT_THEME]->color[1]);
         createCssVariable('hlbarva3', $xmlData->theme[DEFAULT_THEME]->color[2]);
-        createCssVariable('bgPic', $xmlData->theme[DEFAULT_THEME]->picture);
+        
+        echo "}";
+        
+        //Nastavení obrázku pozadí
+        echo "body {background-image: ".$xmlData->theme[DEFAULT_THEME]->picture.";}";
     }
-    echo "}";
