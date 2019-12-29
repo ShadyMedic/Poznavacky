@@ -104,6 +104,7 @@
             'name' => $name,
             'hash' => $pass,
             'email' => $email,
+            'lastChangelog' => 0,
             'addedPics' => 0,
             'guessedPics' => 0,
             'karma' => DEFAULT_KARMA,
