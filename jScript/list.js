@@ -1,4 +1,4 @@
-var table;	//Skladuje innerHTML tabulky během vybírání částí
+var selectedPartTR;	//Skladuje innerHTML řádku tabulky, který obsahuje právě vybranou část
 
 function closeChangelog()
 {
@@ -41,7 +41,25 @@ function choose(depth, option = undefined, type = undefined)
 function showOptions(event, option)
 {
     var row = event.target.parentNode;
-    if (!Number.isInteger(Number(row.childNodes[1].innerHTML))){return;}	//Tlačítka jsou již zobrazená
+    if (!Number.isInteger(Number(row.childNodes[1].innerHTML)))
+    {
+    	return; //Tlačítka jsou již zobrazená
+    }
+    else
+    {
+    	//Obnovení dříve vybraného řádku
+    	for (var i = 0; i < row.parentNode.childNodes.length; i++)
+    	{
+    		if (row.parentNode.childNodes[i].childNodes.length === 1)
+    		{
+    			row.parentNode.childNodes[i].innerHTML = selectedPartTR;
+    			break;
+    		} 
+    	}
+    	
+    	//Uložení současného řádku
+    	selectedPartTR = row.innerHTML;
+    }
     
     row.removeChild(row.childNodes[2]);
     row.removeChild(row.childNodes[1]);
