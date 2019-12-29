@@ -3,10 +3,7 @@
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
 	
-	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
-	{
-		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
-	}
+	require 'php/included/partSetter.php'; //Nastavení části nebo přesměrování na list.php
 ?>
 <html>
 	<head>
