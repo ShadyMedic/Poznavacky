@@ -31,7 +31,7 @@
     //$pass = mysqli_real_escape_string($connection, $pass);    Nemusí být escapováno - hodnota není použita v SQL dotazu nezahešovaná
     
     //Hledání účtu se zadaným jménem
-    $query = "SELECT uzivatele_id,jmeno,heslo,email,posledni_changelog,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE jmeno='$name' LIMIT 1";
+    $query = "SELECT uzivatele_id,jmeno,heslo,email,posledni_changelog,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE jmeno='$name' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (empty(mysqli_num_rows($result)))    //Uživatel nenalezen
     {
@@ -76,6 +76,7 @@
             'hash' => $result['heslo'],
             'email' => $result['email'],
             'lastChangelog' => $result['posledni_changelog'],
+            'theme' => $result['vzhled'],
             'addedPics' => $result['pridane_obrazky'],
             'guessedPics' => $result['uhodnute_obrazky'],
             'karma' => $result['karma'],

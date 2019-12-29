@@ -161,6 +161,13 @@ function updateEmail(newEmail)
 
 /*-----------------------------------------------------------------------------*/
 
+function changeTheme(themeId)
+{
+	postRequest("php/ajax/changeTheme.php", responseFunc, responseFunc, themeId);
+}
+
+/*-----------------------------------------------------------------------------*/
+
 function deleteAccount()
 {
 	document.getElementById("deleteAccountButton").style.display = "none";
