@@ -98,7 +98,7 @@ function next()
 	
 	document.getElementById("nextButton").style.display = "none";
 	document.getElementById("correctAnswer").style.display = "none";
-  document.getElementById("typoAnswer").style.display = "none";
+	document.getElementById("typoAnswer").style.display = "none";
 	document.getElementById("wrongAnswer").style.display = "none";
 	
 	document.getElementById("answerForm").style.display = "block";

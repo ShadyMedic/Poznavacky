@@ -1,6 +1,5 @@
 var userTr;		//Používá se při změně uživatelských údajů - ukládá se sem innerHTML řádku uživatele
 var constantTr;		//Používá se při změně konstant - ukládá se sem innerHTML řádku konstanty
-var currentReports	//Používá se pro uchování id poznávačky, od které jsou aktuálně zobrazena hlášení
 var reportsTable	//Používá se pro uchování tabulky s hlášeními, místo kterých se zobrazí náhled obrázku. Používáno funkcemi showPicture() a hidePicture()
 /*------------------------------------------------------------*/
 function firstTab()
@@ -407,28 +406,19 @@ function deleteUser(event)
 	}
 }
 /*------------------------------------------------------------*/
-function getReports(pId)
-{
-	currentReports = pId;
-	postRequest('php/ajax/getReports.php', showRecords, responseFunc, null, pId);
-}
-function showRecords(response)
-{
-	document.getElementById("singleTestReports").innerHTML = response;
-}
 function showPicture(event)
 {
 	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
 	
 	//Uchování současného stavu tabulky
-	reportsTable = document.getElementById("singleTestReports").innerHTML;
+	reportsTable = document.getElementById("singleReport").innerHTML;
 	
 	//Zobrazení obrázku
-	document.getElementById("singleTestReports").innerHTML = "<img src='"+ url +"' /><br><button onclick='hidePicture()'>Zpět</button>";
+	document.getElementById("singleReport").innerHTML = "<img src='"+ url +"' /><br><button onclick='hidePicture()'>Zpět</button>";
 }
 function hidePicture()
 {
-	document.getElementById("singleTestReports").innerHTML = reportsTable;
+	document.getElementById("singleReport").innerHTML = reportsTable;
 }
 function disablePicture(event)
 {
@@ -436,9 +426,9 @@ function disablePicture(event)
 	
 	//Odstranění všech hlášení k danému obrázku z DOM
 	var rows = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
-	var cnt = rows.length;
+	var cnt = rows.length - 1;
 	var j = 1;	//Přeskočíme hlavičku tabulky s indexem 0
-	for (var i = 1; i < cnt; i++)
+	for (var i = 1; i <= cnt; i++)
 	{
 		if (rows[j].childNodes[0].childNodes[0].innerHTML === url)
 		{
@@ -451,7 +441,7 @@ function disablePicture(event)
 		}
 	}
 	
-	postRequest("php/ajax/disablePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
+	postRequest("php/ajax/disablePicture.php", responseFunc, responseFunc, null, null, null, url);
 }
 function deletePicture(event)
 {
@@ -459,9 +449,9 @@ function deletePicture(event)
 	
 	//Odstranění všech hlášení k danému obrázku z DOM
 	var rows = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
-	var cnt = rows.length;
+	var cnt = rows.length - 1;
 	var j = 1;	//Přeskočíme hlavičku tabulky s indexem 0
-	for (var i = 1; i < cnt; i++)
+	for (var i = 1; i <= cnt; i++)
 	{
 		if (rows[j].childNodes[0].childNodes[0].innerHTML === url)
 		{
@@ -474,7 +464,7 @@ function deletePicture(event)
 		}
 	}
 	
-	postRequest("php/ajax/deletePicture.php", responseFunc, responseFunc, null, currentReports, null, url);
+	postRequest("php/ajax/deletePicture.php", responseFunc, responseFunc, null, null, null, url);
 }
 function deleteReport(event)
 {
@@ -520,7 +510,8 @@ function deleteReport(event)
 	//Odstranění hlášení z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	
-	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason, info);
+	info = encodeURIComponent(info);
+	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, null, null, url, reason, info);
 }
 /*------------------------------------------------------------*/
 function acceptNameChange(event)

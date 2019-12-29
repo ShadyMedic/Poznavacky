@@ -60,29 +60,30 @@
 				<a href="php/logout.php">Odhlásit se</a>
 			</nav>
         </header>
-        <main>
-            <table id="listTable">
-		 	    <tr>
-    		 		<th>Název</th>
-    		 		<th>Přírodniny</th>
-    		 		<th>Obrázky</th>
-    		 	</tr>
-    		 	<?php
-    				//Seznam dostupných poznávaček
-    				include 'php/included/connect.php';
-    				
-    				$query = 'SELECT * FROM poznavacky';
-    				$result = mysqli_query($connection,$query);
-    				while ($info = mysqli_fetch_array($result))
-    				{
-    					echo '<tr class="listRow" onclick="choose(\''.$info['id'].'&'.$info['nazev'].'\')">';
-    						echo '<td class="listNames">'.$info['nazev'].'</td>';
-    						echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
-    						echo '<td class="listPics">'.$info['obrazky'].'</td>';
-    					echo '</tr>';
-    				}
-    			?> 
-            </table>
+        <main id="table">
+            <?php
+                $userId = $_SESSION['user']['id'];
+                mysqli_real_escape_string($connection, $userId);
+                $query = "SELECT posledniUroven,posledniSlozka FROM uzivatele WHERE id=$userId LIMIT 1";
+                $result = mysqli_query($connection, $query);
+                $result = mysqli_fetch_array($result);
+                $level = $result['posledniUroven'];
+                $folder = $result['posledniSlozka'];
+                switch ($level)
+                {
+                    case 0:
+                        include 'php/getClasses.php';
+                        break;
+                    case 1:
+                        $_GET['classId'] = $folder;
+                        include 'php/getGroups.php';
+                        break;
+                    case 2:
+                        $_GET['groupId'] = $folder;
+                        include 'php/getParts.php';
+                        break;
+                }
+            ?> 
         </main>
     </div>
         <footer>

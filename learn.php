@@ -36,10 +36,19 @@
     				<option value="" selected disabled hidden></option>
     				<?php 
     					//Vypisování přírodnin
-    					$table = $_SESSION['current'][0].'seznam';
+    					$part = $_SESSION['current'][0];
     						
     					include 'php/included/connect.php';
-    					$query = "SELECT * FROM $table";
+    					if ($_SESSION['current'][2] === true)
+    					{
+    					    //Přírodniny ze všech částí zvolené poznávačky
+    					    $query = "SELECT nazev FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $part)";
+    					}
+    					else
+    					{
+    					    //Přírodniny z jedné konkrétní části
+    					    $query = "SELECT nazev FROM prirodniny WHERE cast = $part";
+    					}
     					$result = mysqli_query($connection, $query);
     					while($row = mysqli_fetch_array($result))
     					{
@@ -81,14 +90,14 @@
     			</table>
     			<button onclick="reportImg(event)" id="reportButton" class="buttonDisabled" disabled>Nahlásit</button>
     			<select id="reportMenu" class="text" onchange="updateReport()">
-    				<option>Obrázek se nezobrazuje správně</option>
-            <option>Obrázek se načítá příliš dlouho</option>
-    				<option>Obrázek zobrazuje nesprávnou přírodninu</option>
-    				<option>Obrázek obsahuje název přírodniny</option>
-    				<option>Obrázek má příliš špatné rozlišení</option>
-    				<option>Obrázek porušuje autorská práva</option>
-            <option>Jiný důvod</option>
-    			</select>
+                    <option>Obrázek se nezobrazuje správně</option>
+                    <option>Obrázek se načítá příliš dlouho</option>
+                    <option>Obrázek zobrazuje nesprávnou přírodninu</option>
+                    <option>Obrázek obsahuje název přírodniny</option>
+                    <option>Obrázek má příliš špatné rozlišení</option>
+                    <option>Obrázek porušuje autorská práva</option>
+                    <option>Jiný důvod</option>
+                </select>
           <div id="additionalReportInfo">
             <!-- Zde se bude zobrazovat další vstupní pole při vybrání některých hlášení -->
           </div>

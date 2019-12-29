@@ -5,7 +5,7 @@ var imageNumber = 0;
 function keyPressed(event)
 {
 	//Vypnutí klávesových zkratek, pokud uživatel zrovna píše důvod hlášení
-	if (document.activeElement.tagName === "INPUT")
+	if (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA")
 	{
 		return;
 	}

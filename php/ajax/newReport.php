@@ -26,7 +26,7 @@
 	    $info = NULL;
 	}
 	
-	if (!((strlen($info) <= 255 && $reason == 6) ||(strlen($info) <= 31 && $reason == 2) || (strlen($info) === 4 && $reason == 1) || $info === NULL))
+	if (!((strlen($info) <= 255 && $reason == 6) ||(strlen($info) <= 31 && $reason == 2) || (strlen($info) === 4 && $reason == 1) || (strlen($info) === 5 && $reason == 1) || $info === NULL))
 	{
 	    die("swal('Špatná délka doplňkových informací!','','error');");
 	}
@@ -37,9 +37,7 @@
 	}
 
 	//Získávání id obrázku
-	$table = $_SESSION['current'][0].'obrazky';
-
-	$query = "SELECT id FROM $table WHERE zdroj='$url'";
+	$query = "SELECT id FROM obrazky WHERE zdroj='$url'";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
@@ -55,21 +53,20 @@
 	
 	
 	//Zjišťování, zda je již obrázek nahlášen
-	$table = $_SESSION['current'][0].'hlaseni';
 	$pName = $_SESSION['current'][1];
 
-	$query = "SELECT pocet FROM $table WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
+	$query = "SELECT pocet FROM hlaseni WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
 	$result = mysqli_query($connection, $query);
 	if (gettype($result) !== "object" || mysqli_num_rows($result) <= 0)
 	{
-		$query = "INSERT INTO $table VALUES (NULL, $picId, $reason, '$info', 1)";	//Přidávání nového hlášení do databáze
+		$query = "INSERT INTO hlaseni VALUES (NULL, $picId, $reason, '$info', 1)";	//Přidávání nového hlášení do databáze
 	}
 	else
 	{
 		//Přičítání k počtu hlášení v existujícím záznamu
 		$result = mysqli_fetch_array($result);
 		$newCount = ++$result['pocet'];
-		$query = "UPDATE $table SET pocet = $newCount WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
+		$query = "UPDATE hlaseni SET pocet = $newCount WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
 	}
 
 	mysqli_query($connection, $query);
