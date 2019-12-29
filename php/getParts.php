@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
     
     $groupId = $_GET['groupId'];
@@ -53,7 +53,7 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
     {
         $txt = "choose(3,'".implode($partsIds,',')."')";
-        #$txt = "choose(3,".$info['id'].")";
+        //$txt = "choose(3,".$info['id'].")";
         
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames">Vše</td>';
