@@ -370,6 +370,7 @@ label:hover:before {
 #listTable {
     background-color: var(--bila);
     /*width: 90%;*/
+    min-width: 20rem;
     margin: 1vh auto; 
     /*border-collapse: separate;*/
 }  
@@ -382,6 +383,9 @@ label:hover:before {
 .listRow {
 	margin: 0;
     cursor: pointer;
+}
+#button_row:hover {
+    background: var(--bila);
 }
 .main_tr {
     border-bottom: 1px solid var(--seda2);
