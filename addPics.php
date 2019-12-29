@@ -73,7 +73,7 @@
     				<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
     			</fieldset>
     		</form>
-    		<a href="menu.php"><button class="button">Zpět</button></a>
+    		<a href="list.php"><button class="button">Zpět</button></a>
     	</main>
     </div>
 		<footer>
