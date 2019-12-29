@@ -2,10 +2,10 @@
     if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
     
     echo "<table id='listTable'>
-                <tr>
-                    <th>Název třídy</th>
-                    <th>Poznávačky</th>
-                    <th>Vstupní kód</th>
+                <tr  class='main_tr'>
+                    <td>Název třídy</td>
+                    <td>Poznávačky</td>
+                    <td>Vstupní kód</td>
                 </tr>
             ";
     

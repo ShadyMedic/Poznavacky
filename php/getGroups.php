@@ -6,12 +6,9 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     $classId = mysqli_real_escape_string($connection, $classId);
     
     echo "<table id='listTable'>
-        <tr class='listRow' onclick='choose(0)'>
-            <td class='listBack' colspan=2><i>Zpět na seznam tříd</i></td>
-        </tr>
-        <tr>
-            <th>Název poznávačky</th>
-            <th>Části</th>
+        <tr class='main_tr'>
+            <td>Název poznávačky</td>
+            <td>Části</td>
         </tr>
     ";
     
@@ -30,7 +27,8 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
         echo '<td class="listNaturals">'.$info['casti'].'</td>';
     echo '</tr>';
     }
-    echo "</table>";
+    echo "</table>
+    <button class='button' onclick='choose(0)'>Zpět na seznam tříd</button>";
     
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
