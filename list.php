@@ -7,11 +7,18 @@
 	//Mazání zvolené poznávačky ze sezení
 	unset($_SESSION['current']);
 	
+	//Nastavení cookie informující o skutečnosti, že se někdo nedávno přihlásil
+	//To se využívá při načítání index.php a rozhoduje, zda se zobrazí registrační nebo přihlašovací formulář
+	setcookie('recentLogin',1, time() + 60 * 60 * 24 * 365);
+	
 	$displayChangelog = false;
-	if (!(isset($_COOKIE['lastChangelog']) && $_COOKIE['lastChangelog'] == VERSION))
-    {
-		setcookie('lastChangelog',VERSION, time() + 60 * 60 * 24 * 365);
-		$displayChangelog = true;
+	if ($_SESSION['user']['lastChangelog'] < VERSION)
+	{
+	    $displayChangelog = true;
+	    $_SESSION['user']['lastChangelog'] = VERSION;
+	    $query = "UPDATE uzivatele SET posledni_changelog = ".VERSION." WHERE uzivatele_id = ".$_SESSION['user']['id'].";";
+	    $result = mysqli_query($connection, $query);
+	    if (!$result){header('Location: errSql.html');}
 	}
 ?>
 <!DOCTYPE html>

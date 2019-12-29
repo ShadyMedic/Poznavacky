@@ -104,6 +104,7 @@
             'name' => $name,
             'hash' => $pass,
             'email' => $email,
+            'lastChangelog' => 0,
             'theme' => DEFAULT_THEME,
             'addedPics' => 0,
             'guessedPics' => 0,
