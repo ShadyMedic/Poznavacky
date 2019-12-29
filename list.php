@@ -7,6 +7,10 @@
 	//Mazání zvolené poznávačky ze sezení
 	unset($_SESSION['current']);
 	
+	//Nastavení cookie informující o skutečnosti, že se někdo nedávno přihlásil
+	//To se využívá při načítání index.php a rozhoduje, zda se zobrazí registrační nebo přihlašovací formulář
+	setcookie('recentLogin',1, time() + 60 * 60 * 24 * 365);
+	
 	$displayChangelog = false;
 	if ($_SESSION['user']['lastChangelog'] < VERSION)
 	{
