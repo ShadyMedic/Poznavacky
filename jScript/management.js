@@ -487,24 +487,40 @@ function deleteReport(event)
 	case "Obrázek se nezobrazuje správně":
 		reason = 0;
 		break;
-	case "Obrázek zobrazuje nesprávnou přírodninu":
+	case "Obrázek se načítá příliš dlouho":
 		reason = 1;
 		break;
-	case "Obrázek obsahuje název přírodniny":
+	case "Obrázek zobrazuje nesprávnou přírodninu":
 		reason = 2;
 		break;
-	case "Obrázek má příliš špatné rozlišení":
+	case "Obrázek obsahuje název přírodniny":
 		reason = 3;
 		break;
-	case "Obrázek porušuje autorská práva":
+	case "Obrázek má příliš špatné rozlišení":
 		reason = 4;
 		break;
+	case "Obrázek porušuje autorská práva":
+		reason = 5;
+		break;
+	case "Jiný důvod":
+		reason = 6;
+		break;
+	}
+	
+	var info
+	if (reason === 6)
+	{
+		info = event.target.parentNode.parentNode.parentNode.childNodes[2].childNodes[0].title;
+	}
+	else
+	{
+		info = event.target.parentNode.parentNode.parentNode.childNodes[2].innerHTML;
 	}
 	
 	//Odstranění hlášení z DOM
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	
-	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason);
+	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, currentReports, null, url, reason, info);
 }
 /*------------------------------------------------------------*/
 function acceptNameChange(event)

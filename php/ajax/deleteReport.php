@@ -22,10 +22,12 @@
     $pId = $_POST['oldName'];
     $picUrl = $_POST['to'];
     $reason = $_POST['sub'];
+    $info = $_POST['msg'];
     
     $picUrl = mysqli_real_escape_string($connection, $picUrl);
     $pId = mysqli_real_escape_string($connection, $pId);
     $reason = mysqli_real_escape_string($connection, $reason);
+    $info = mysqli_real_escape_string($connection, $info);
     
     //Získávíní ID obrázku
     $query = "SELECT id FROM ".$pId."obrazky WHERE zdroj='$picUrl' LIMIT 1";
@@ -39,7 +41,7 @@
     
     //Odstranění hlášení
     $tableName = $pId.'hlaseni';
-    $query = "DELETE FROM $tableName WHERE obrazekId='$picId' AND duvod=$reason LIMIT 1";
+    $query = "DELETE FROM $tableName WHERE obrazekId='$picId' AND duvod=$reason AND dalsiInformace='$info' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
