@@ -41,6 +41,7 @@ function choose(depth, option = undefined, type = undefined)
 function showOptions(event, option)
 {
     var row = event.target.parentNode;
+    row.setAttribute("id","button_row");
     if (!Number.isInteger(Number(row.childNodes[1].innerHTML)))
     {
     	return; //Tlačítka jsou již zobrazená
@@ -52,7 +53,8 @@ function showOptions(event, option)
     	{
     		if (row.parentNode.childNodes[i].childNodes.length === 1)
     		{
-    			row.parentNode.childNodes[i].innerHTML = selectedPartTR;
+                row.parentNode.childNodes[i].innerHTML = selectedPartTR;
+                row.parentNode.childNodes[i].removeAttribute("id")
     			break;
     		} 
     	}
