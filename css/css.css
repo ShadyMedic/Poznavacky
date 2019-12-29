@@ -92,6 +92,13 @@ main.basic_main {
     padding: 0.375rem;
     border-radius: 6px;
 }   
+#table {
+    background-color: var(--bila);
+    margin: 2.4vh auto;
+    padding: 1rem;
+    border-radius: 6px;
+    width: fit-content;
+}
 fieldset {
     width: 80%;
     margin: auto;
@@ -101,7 +108,7 @@ header {
     background-color: var(--hlbarva1);
     display: block;
     color: var(--bila);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);*/
 }
 h1 {
     display: block;
@@ -361,21 +368,26 @@ label:hover:before {
 /* - - - - - - - - - - - - - - - - - - - - zbytek list.php */
 #listTable {
     background-color: var(--bila);
-    width: 40vw;
-    margin: 4vh auto; 
-    border: 0.75em solid var(--bila);
-    border-radius: 6px;
-    border-collapse: separate;
+    /*width: 90%;*/
+    margin: 1vh auto; 
+    /*border-collapse: separate;*/
 }  
 #listTable th, #listTable td {
-    padding: 0.125rem;
+    padding: 0.125rem 0.375rem;
 }
+/*.listRow:nth-child(odd)
+    {background-color: #f5f5f5;
+    }*/
 .listRow {
 	margin: 0;
     cursor: pointer;
 }
+.main_tr {
+    border-bottom: 1px solid var(--seda2);
+    font-weight: bold;
+}
 .listRow:hover {
-	background: var(--hlbarva1);
+	background: var(--hlbarva2);
     color: var(--bila); 
     cursor: pointer;
 }
@@ -383,13 +395,13 @@ th {
 	font-weight: bold;
 }
 .listNames {
-	min-width: 45%;
+	min-width: 0%;
 }
 .listNaturals {
-	min-width: 20%;
+	min-width: 0%;
 	}
 .listPics {
-	min-width: 20%;
+	min-width:0%;
     }
 /* -------------------------------------------------- accountSettings.php */
 #static_info {
@@ -588,16 +600,13 @@ div.menu:hover {
     main.basic_main {
         width: 70vw;
     }
-    #listTable {
+    /*#listTable {
         width: 50vw;
-    }
+    }*/
 }
 @media screen and (max-width: 768px) {
     main.basic_main {
         width: 80vw;
-    }
-    header {
-        height: 6vh;  
     }
     h1 {
         font-size: 1.4em;
@@ -609,10 +618,6 @@ div.menu:hover {
     }
     #obnoveniHesla {
         width: 80vw;
-    }
-    #listTable {
-        width: 60vw;
-        margin: 7vh auto;
     }
     #changelog {
         width: 60vw;
@@ -639,9 +644,6 @@ div.menu:hover {
 @media only screen and (max-width: 576px) {
     main.basic_main, #obnoveniHesla {
         width: 90vw;
-    }
-    header {
-        height: 6vh;  
     }
     h1 {
         font-size: 1.2em;
