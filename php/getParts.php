@@ -12,13 +12,10 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     $classId = $result['tridy_id'];
     
     echo "<table id='listTable'>
-        <tr class='listRow' onclick='choose(1, $classId)'>
-            <td class='listBack' colspan=3><i>Zpět na seznam poznávaček</i></td>
-        </tr>
-        <tr>
-            <th>Název části</th>
-            <th>Přírodniny</th>
-            <th>Obrázky</th>
+        <tr  class='main_tr'>
+            <td>Název části</td>
+            <td>Přírodniny</td>
+            <td>Obrázky</td>
         </tr>
         ";
     
@@ -61,7 +58,8 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
         echo '<td class="listPictures">'.$totalPics.'</td>';
         echo '</tr>';
     }
-    echo "</table>";
+    echo "</table>
+    <button class='button' onclick='choose(1, $classId)'>Zpět na seznam poznávaček</button>";
     
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
