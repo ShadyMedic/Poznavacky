@@ -32,7 +32,7 @@
     if(strlen($name) !== strspn($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ')){array_push($errors, "Jméno může obsahovat pouze písmena, číslice a mezery.");}
     
     //Kontrola volnosti jména
-    $query = "SELECT id FROM uzivatele WHERE jmeno = '$name'";
+    $query = "SELECT uzivatele_id FROM uzivatele WHERE jmeno = '$name'";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -63,7 +63,7 @@
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){array_push($errors, "E-mail nemá platný formát.");}
         
         //Kontrola volnosti e-mailu
-        $query = "SELECT id FROM uzivatele WHERE email = '$email'";
+        $query = "SELECT uzivatele_id FROM uzivatele WHERE email = '$email'";
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
@@ -79,7 +79,7 @@
     {
         //Ukládání dat do databáze
         $pass = password_hash($pass, PASSWORD_DEFAULT);
-        $query = "INSERT INTO uzivatele (jmeno, heslo, email, posledniPrihlaseni) VALUES ('$name', '$pass', '$email', '".date('Y-m-d H:i:s')."')";
+        $query = "INSERT INTO uzivatele (jmeno, heslo, email, posledni_prihlaseni) VALUES ('$name', '$pass', '$email', '".date('Y-m-d H:i:s')."')";
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
@@ -89,7 +89,7 @@
         
         //Přihlášení
         require '../included/CONSTANTS.php';
-        $query = "SELECT id FROM uzivatele WHERE jmeno='$name'";
+        $query = "SELECT uzivatele_id FROM uzivatele WHERE jmeno='$name'";
         $userId = mysqli_query($connection, $query);
         if (!$userId)
         {
@@ -97,7 +97,7 @@
             //echo "location.href = 'errSql.html'";
             die();
         }
-        $userId = mysqli_fetch_array($userId)['id'];
+        $userId = mysqli_fetch_array($userId)['uzivatele_id'];
         
         $userData = [
             'id' => $userId,

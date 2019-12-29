@@ -28,7 +28,7 @@
     //E-MAIL JE OK
     
     //Kontrola existence e-mailu v databázi
-    $query = "SELECT id FROM uzivatele WHERE email = '$email' LIMIT 1";
+    $query = "SELECT uzivatele_id FROM uzivatele WHERE email = '$email' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -44,7 +44,7 @@
     
     //Uživatel nalezen
     $result = mysqli_fetch_array($result);
-    $userId = $result['id'];
+    $userId = $result['uzivatele_id'];
     
     //Vygenerovat kód
     $done = false;
@@ -55,7 +55,7 @@
         $code = bin2hex(random_bytes(16));   //128 bitů --> maximálně třicetidvoumístný kód
         
         //Zkontrolovat, zda již kód v databázi neexistuje
-        $query = "SELECT uzivatel_id FROM obnovenihesel WHERE kod='$code' LIMIT 1";
+        $query = "SELECT uzivatele_id FROM obnoveni_hesel WHERE kod='$code' LIMIT 1";
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
@@ -69,7 +69,7 @@
     }while ($done == false);
     
     //Smazat starý kód z databáze (pokud existuje)
-    $query = "DELETE FROM obnovenihesel WHERE uzivatel_id=$userId";
+    $query = "DELETE FROM obnoveni_hesel WHERE uzivatele_id=$userId";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -78,7 +78,7 @@
     }
     
     //Uložit kód do databáze
-    $query = "INSERT INTO obnovenihesel (kod, uzivatel_id) VALUES ('".md5($code)."', $userId)";
+    $query = "INSERT INTO obnoveni_hesel (kod, uzivatele_id) VALUES ('".md5($code)."', $userId)";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -92,7 +92,7 @@
     //Poslat e-mail.
     include '../emailSender.php';
     include '../included/composeEmail.php';
-    $emailResult = sendEmail($email, 'Žádost o obnovu hesla na poznavacky.chytrak.cz', getEmail(0, array("code" => $code)));
+    $emailResult = sendEmail($email, 'Žádost o obnovu hesla na '.$_SERVER['SERVER_NAME'], getEmail(0, array("code" => $code)));
     
     if (empty($emailResult))
     {

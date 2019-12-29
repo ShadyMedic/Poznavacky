@@ -42,12 +42,12 @@
     					if ($_SESSION['current'][2] === true)
     					{
     					    //Přírodniny ze všech částí zvolené poznávačky
-    					    $query = "SELECT nazev FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $part)";
+    					    $query = "SELECT nazev FROM prirodniny WHERE casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = $part)";
     					}
     					else
     					{
     					    //Přírodniny z jedné konkrétní části
-    					    $query = "SELECT nazev FROM prirodniny WHERE cast = $part";
+    					    $query = "SELECT nazev FROM prirodniny WHERE casti_id = $part";
     					}
     					$result = mysqli_query($connection, $query);
     					while($row = mysqli_fetch_array($result))

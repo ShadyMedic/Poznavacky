@@ -6,10 +6,10 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     $groupId = mysqli_real_escape_string($connection, $groupId);
     
     //Získání id třídy pro tlačítko návrat
-    $query = "SELECT tridy.id FROM tridy INNER JOIN poznavacky ON poznavacky.trida = tridy.id WHERE poznavacky.id = $groupId";
+    $query = "SELECT tridy.tridy_id FROM tridy INNER JOIN poznavacky ON poznavacky.tridy_id = tridy.tridy_id WHERE poznavacky.poznavacky_id = $groupId";
     $result = mysqli_query($connection, $query);
     $result = mysqli_fetch_array($result);
-    $classId = $result['id'];
+    $classId = $result['tridy_id'];
     
     echo "<table id='listTable'>
         <tr class='listRow' onclick='choose(1, $classId)'>
@@ -22,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
         </tr>
         ";
     
-    $query = "SELECT * FROM casti WHERE poznavacka = $groupId";
+    $query = "SELECT * FROM casti WHERE poznavacky_id = $groupId";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) === 0)
     {
@@ -40,10 +40,10 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     }
     while ($info = mysqli_fetch_array($result))
     {
-        array_push($partsIds, $info['id']);
+        array_push($partsIds, $info['casti_id']);
         $totalNaturals += $info['prirodniny'];
         $totalPics += $info['obrazky'];
-        $txt = "choose(3,".$info['id'].")";
+        $txt = "choose(3,".$info['casti_id'].")";
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames">'.$info['nazev'].'</td>';
         echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
@@ -66,6 +66,7 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
     $userId = $_SESSION['user']['id'];
-    mysqli_real_escape_string($connection, $query);
-    $query = "UPDATE uzivatele SET posledniUroven = 2, posledniSlozka = $groupId WHERE id=$userId LIMIT 1";
+    $groupId = mysqli_real_escape_string($connection, $groupId);
+    $userId = mysqli_real_escape_string($connection, $userId);
+    $query = "UPDATE uzivatele SET posledni_uroven = 2, posledni_slozka = $groupId WHERE uzivatele_id=$userId LIMIT 1";
     $result = mysqli_query($connection, $query);

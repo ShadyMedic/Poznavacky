@@ -12,11 +12,11 @@
     $userId = $userdata['id'];
     
     //Hledání účtu se zadaným jménem
-    $query = "SELECT id,heslo FROM uzivatele WHERE jmeno='$username' LIMIT 1";
+    $query = "SELECT uzivatele_id,heslo FROM uzivatele WHERE jmeno='$username' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (empty(mysqli_num_rows($result)))    //Uživatel nenalezen
     {
-        fileLog("Uživatel se pokusil odstranit neexistující účet ($user) z IP adresy $ip");
+        fileLog("Uživatel se pokusil změnit e-mail k neexistujícímu účtu ($user) z IP adresy $ip");
         $ip = $_SERVER['REMOTE_ADDR'];
         
         echo "swal('Něco se pokazilo.','Zkuste to prosím později, nebo se zkuste odhlásit a znovu přihlásit.','error')";
@@ -71,7 +71,7 @@
     //KONTROLA DAT V POŘÁDKU
     
     //Aktualizace e-mailu
-    $query = "UPDATE uzivatele SET email = '$newEmail' WHERE id = $userId";
+    $query = "UPDATE uzivatele SET email = '$newEmail' WHERE uzivatele_id = $userId";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {

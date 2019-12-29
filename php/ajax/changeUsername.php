@@ -27,7 +27,7 @@
     $newName = mysqli_real_escape_string($connection, $newName);
     
     //Kontrola unikátnosti jména
-    $query = "SELECT jmeno FROM uzivatele WHERE jmeno='$newName' UNION SELECT nove FROM zadostijmena WHERE nove='$newName' LIMIT 1";
+    $query = "SELECT jmeno FROM uzivatele WHERE jmeno='$newName' UNION SELECT nove FROM zadosti_jmena WHERE nove='$newName' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -51,7 +51,7 @@
     //KONTROLA DAT V POŘÁDKU
 
     //Kontrola, zda již uživatel na nějakou nevyřízenou změnu nečeká
-    $query = "SELECT id FROM zadostijmena WHERE puvodni='$oldName' LIMIT 1";
+    $query = "SELECT zadosti_jmena_id FROM zadosti_jmena WHERE uzivatele_jmeno='$oldName' LIMIT 1";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -60,10 +60,10 @@
     }
     if (mysqli_num_rows($result) > 0)
     {
-        $requestId = mysqli_fetch_array($result)['id'];
+        $requestId = mysqli_fetch_array($result)['zadosti_jmena_id'];
         
         //Přepisování žádosti
-        $query = "UPDATE zadostijmena SET nove = '$newName', cas = ".time()." WHERE id = $requestId";
+        $query = "UPDATE zadosti_jmena SET nove = '$newName', cas = ".time()." WHERE zadosti_jmena_id = $requestId";
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
@@ -77,7 +77,7 @@
     else
     {
         //Ukládání žádosti
-        $query = "INSERT INTO zadostijmena (puvodni, nove, cas) VALUES ('$oldName', '$newName', ".time().")";
+        $query = "INSERT INTO zadosti_jmena (uzivatele_jmeno, nove, cas) VALUES ('$oldName', '$newName', ".time().")";
         $result = mysqli_query($connection, $query);
         if (!$result)
         {

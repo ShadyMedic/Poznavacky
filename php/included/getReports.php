@@ -15,7 +15,7 @@
         die();
     }
     
-    $query = "SELECT obrazekId,duvod,dalsiInformace,pocet FROM hlaseni ORDER BY pocet DESC LIMIT 25";
+    $query = "SELECT obrazky_id,duvod,dalsi_informace,pocet FROM hlaseni ORDER BY pocet DESC LIMIT 25";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -28,8 +28,8 @@
         {
             echo "<tr>";
                 //Získání URL obrázku
-                $picId = $report['obrazekId'];
-                $query = "SELECT zdroj FROM obrazky WHERE id=$picId";
+                $picId = $report['obrazky_id'];
+                $query = "SELECT zdroj FROM obrazky WHERE obrazky_id=$picId";
                 $innerresult = mysqli_query($connection, $query);
                 $innerresult = mysqli_fetch_array($innerresult);
                 $url = $innerresult['zdroj'];
@@ -64,7 +64,7 @@
                 echo "</td>";
                 
                 //Výpis přídavných informací
-                $info = $report['dalsiInformace'];
+                $info = $report['dalsi_informace'];
                 if ($reason == 6)
                 {
                     echo "<td><i title='$info'>Najedďte sem myší pro zobrazení důvodu</i></td>";

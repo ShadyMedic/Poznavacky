@@ -31,7 +31,7 @@
     $status = mysqli_real_escape_string($connection, $status);
     
     //Ovlivnění databáze
-    $query = "UPDATE uzivatele SET pridaneObrazky = '$addedPics', uhodnuteObrazky = '$guessedPics', karma = '$karma', status = '$status' WHERE jmeno  = '$username'";
+    $query = "UPDATE uzivatele SET pridane_obrazky = $addedPics, uhodnute_obrazky = $guessedPics, karma = $karma, status = '$status' WHERE jmeno  = '$username'";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {

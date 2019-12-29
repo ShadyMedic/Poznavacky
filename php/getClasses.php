@@ -13,7 +13,7 @@
     $result = mysqli_query($connection, $query);
     while ($info = mysqli_fetch_array($result))
     {
-        echo '<tr class="listRow" onclick="choose(1,'.$info['id'].')">';
+        echo '<tr class="listRow" onclick="choose(1,'.$info['tridy_id'].')">';
         echo '<td class="listNames">'.$info['nazev'].'</td>';
         echo '<td class="listNames">'.$info['skupiny'].'</td>';
         echo '<td class="listNaturals">'.$info['kod'].'</td>';
@@ -24,7 +24,7 @@
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
     $userId = $_SESSION['user']['id'];
-    mysqli_real_escape_string($connection, $query);
-    $query = "UPDATE uzivatele SET posledniUroven = 0, posledniSlozka = NULL WHERE id=$userId LIMIT 1";
+    $userId = mysqli_real_escape_string($connection, $userId);
+    $query = "UPDATE uzivatele SET posledni_uroven = 0, posledni_slozka = NULL WHERE uzivatele_id=$userId LIMIT 1";
     $result = mysqli_query($connection, $query);
     

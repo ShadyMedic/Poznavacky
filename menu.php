@@ -18,12 +18,12 @@
     {
       $everything = true;
       $firstPartId = $pId[0];
-      $query = "SELECT id,nazev FROM poznavacky WHERE id=(SELECT poznavacka FROM casti WHERE id=$firstPartId LIMIT 1) LIMIT 1";
+      $query = "SELECT poznavacky_id,nazev FROM poznavacky WHERE poznavacky_id=(SELECT poznavacky_id FROM casti WHERE casti_id=$firstPartId LIMIT 1) LIMIT 1";
       $result = mysqli_query($connection, $query);
       if (!$result){echo mysqli_error($connection);}
       $result = mysqli_fetch_array($result);
       $pName = $result['nazev'].' - Vše';
-      $pId = $result['id'];
+      $pId = $result['poznavacky_id'];
   	}
   }
   else
@@ -33,7 +33,7 @@
     $pId = mysqli_real_escape_string($connection, $pId);
     if (!empty($pId))
     {
-      $query = "SELECT nazev FROM casti WHERE id=$pId LIMIT 1";
+      $query = "SELECT nazev FROM casti WHERE casti_id=$pId LIMIT 1";
       $result = mysqli_query($connection, $query);
       $pName = mysqli_fetch_array($result);
       $pName = $pName['nazev'];
@@ -85,7 +85,7 @@
                 <?php 
                   if ($_SESSION['current'][2] !== true)
                   {
-                    $query = "SELECT obrazky FROM casti WHERE id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+                    $query = "SELECT obrazky FROM casti WHERE casti_id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
                     $result = mysqli_query($connection, $query);
                     $result = mysqli_fetch_array($result);
                     $result = $result['obrazky'];

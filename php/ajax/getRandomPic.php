@@ -17,12 +17,12 @@
 	if ($_SESSION['current'][2] === true)
 	{
 	    //Výběr ze všech částí poznávačky
-	   $query = "SELECT CEIL(RAND() *(SELECT COUNT(*) FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $pId) AND obrazky > 0))AS randNum";
+	   $query = "SELECT CEIL(RAND() *(SELECT COUNT(*) FROM prirodniny WHERE casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = $pId) AND obrazky > 0))AS randNum";
 	}
 	else
 	{
 	    //Výběr přírodniny z konkrétní části
-	   $query = "SELECT CEIL(RAND() *(SELECT COUNT(*) FROM prirodniny WHERE cast = $pId AND obrazky > 0))AS randNum";
+	   $query = "SELECT CEIL(RAND() *(SELECT COUNT(*) FROM prirodniny WHERE casti_id = $pId AND obrazky > 0))AS randNum";
 	}
     $result = mysqli_query($connection, $query);
 	if (!$result)
@@ -39,12 +39,12 @@
 	if ($_SESSION['current'][2] === true)
 	{
 	    //Výběr z přírodnin patřících do celé poznávačky
-	    $query = "SELECT id,nazev FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $pId) AND obrazky > 0 ORDER BY id ASC LIMIT 1 OFFSET $rand";
+	    $query = "SELECT prirodniny_id,nazev FROM prirodniny WHERE casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = $pId) AND obrazky > 0 ORDER BY prirodniny_id ASC LIMIT 1 OFFSET $rand";
 	}
 	else
 	{
 	    //Výběr z přírodnin patřících pouze do konkrétní části
-	    $query = "SELECT id,nazev FROM prirodniny WHERE cast = $pId AND obrazky > 0 ORDER BY id ASC LIMIT 1 OFFSET $rand";
+	    $query = "SELECT prirodniny_id,nazev FROM prirodniny WHERE casti_id = $pId AND obrazky > 0 ORDER BY prirodniny_id ASC LIMIT 1 OFFSET $rand";
 	}
 	$result = mysqli_query($connection, $query);
 	if (!$result)
@@ -54,11 +54,11 @@
 	    echo mysqli_error($connection);
 	}
 	$result = mysqli_fetch_array($result);
-	$id = $result['id'];
+	$id = $result['prirodniny_id'];
 	$answer = $result['nazev'];
 	
 	//Získávání náhodného obrázků dané přírodniny
-	$query = "SELECT zdroj FROM obrazky WHERE prirodninaId = $id AND povoleno = 1 ORDER BY RAND() LIMIT 1";
+	$query = "SELECT zdroj FROM obrazky WHERE prirodniny_id = $id AND povoleno = 1 ORDER BY RAND() LIMIT 1";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{

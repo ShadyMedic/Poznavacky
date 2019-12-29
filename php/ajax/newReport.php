@@ -37,7 +37,7 @@
 	}
 
 	//Získávání id obrázku
-	$query = "SELECT id FROM obrazky WHERE zdroj='$url'";
+	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url'";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
@@ -45,7 +45,7 @@
 	    die("swal('Vyskytla se neočekávaná chyba. Kontaktujte prosím správce a uveďte tuto chybu ve svém hlášení:','".mysqli_real_escape_string($connection, $err)."', 'error');");
 	}
 	$result = mysqli_fetch_array($result);
-	$picId = $result['id'];
+	$picId = $result['obrazky_id'];
 	if(empty($picId))
 	{
 	    die("swal('Neplatný obrázek','','error');");
@@ -55,7 +55,7 @@
 	//Zjišťování, zda je již obrázek nahlášen
 	$pName = $_SESSION['current'][1];
 
-	$query = "SELECT pocet FROM hlaseni WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
+	$query = "SELECT pocet FROM hlaseni WHERE obrazky_id=$picId AND duvod=$reason AND dalsi_informace='$info'";
 	$result = mysqli_query($connection, $query);
 	if (gettype($result) !== "object" || mysqli_num_rows($result) <= 0)
 	{
@@ -66,7 +66,7 @@
 		//Přičítání k počtu hlášení v existujícím záznamu
 		$result = mysqli_fetch_array($result);
 		$newCount = ++$result['pocet'];
-		$query = "UPDATE hlaseni SET pocet = $newCount WHERE obrazekId=$picId AND duvod=$reason AND dalsiInformace='$info'";
+		$query = "UPDATE hlaseni SET pocet = $newCount WHERE obrazky_id=$picId AND duvod=$reason AND dalsi_informace='$info'";
 	}
 
 	mysqli_query($connection, $query);

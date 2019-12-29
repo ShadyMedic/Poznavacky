@@ -42,11 +42,11 @@
     						include 'php/included/connect.php';
     						if ($_SESSION['current'][2] === true)
     						{
-    						    $query = "SELECT nazev,obrazky FROM prirodniny WHERE cast IN (SELECT id FROM casti WHERE poznavacka = $part) ORDER BY nazev,obrazky,id";
+    						    $query = "SELECT nazev,obrazky FROM prirodniny WHERE casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = $part) ORDER BY nazev,obrazky,prirodniny_id";
     						}
     						else
     						{
-    						    $query = "SELECT nazev,obrazky FROM prirodniny WHERE cast = $part ORDER BY nazev,obrazky,id";
+    						    $query = "SELECT nazev,obrazky FROM prirodniny WHERE casti_id = $part ORDER BY nazev,obrazky,prirodniny_id";
     						}
     						$result = mysqli_query($connection, $query);
     						while($row = mysqli_fetch_array($result))
