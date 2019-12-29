@@ -8,10 +8,13 @@
 	unset($_SESSION['current']);
 	
 	$displayChangelog = false;
-	if (!(isset($_COOKIE['lastChangelog']) && $_COOKIE['lastChangelog'] == VERSION))
-    {
-		setcookie('lastChangelog',VERSION, time() + 60 * 60 * 24 * 365);
-		$displayChangelog = true;
+	if ($_SESSION['user']['lastChangelog'] < VERSION)
+	{
+	    $displayChangelog = true;
+	    $_SESSION['user']['lastChangelog'] = VERSION;
+	    $query = "UPDATE uzivatele SET posledni_changelog = ".VERSION." WHERE uzivatele_id = ".$_SESSION['user']['id'].";";
+	    $result = mysqli_query($connection, $query);
+	    if (!$result){header('Location: errSql.html');}
 	}
 ?>
 <!DOCTYPE html>
