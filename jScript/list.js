@@ -1,8 +1,10 @@
+var table;	//Skladuje innerHTML tabulky během vybírání částí
+
 function closeChangelog()
 {
     document.getElementById("changelogContainer").style.display = "none";
 }
-function choose(depth, option = undefined)
+function choose(depth, option = undefined, type = undefined)
 {
     switch (depth)
     {
@@ -21,9 +23,30 @@ function choose(depth, option = undefined)
         //Vybrání části
         case 3:
             document.cookie="current=" + option;
-            location.href = 'menu.php';
+            switch (type)
+            {
+                case 0:
+                	location.href = 'addPics.php';
+                    break;
+                case 1:
+                	location.href = 'learn.php';
+                    break;
+                case 2:
+                	location.href = 'test.php';
+                    break;
+            }
             break;
     }
+}
+function showOptions(event, option)
+{
+    var row = event.target.parentNode;
+    if (!Number.isInteger(Number(row.childNodes[1].innerHTML))){return;}	//Tlačítka jsou již zobrazená
+    
+    row.removeChild(row.childNodes[2]);
+    row.removeChild(row.childNodes[1]);
+    row.childNodes[0].setAttribute("colspan",3);
+    row.childNodes[0].innerHTML = "<button class='button' onclick='choose(3,\""+option+"\""+",0)'>Přidat obrázky</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",1)'>Učit se</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",2)'>Vyzkoušet se</button>";
 }
 function replaceTable(response)
 {

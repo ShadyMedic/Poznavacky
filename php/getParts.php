@@ -40,7 +40,7 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
         array_push($partsIds, $info['casti_id']);
         $totalNaturals += $info['prirodniny'];
         $totalPics += $info['obrazky'];
-        $txt = "choose(3,".$info['casti_id'].")";
+        $txt = "showOptions(event,".$info['casti_id'].")";
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames">'.$info['nazev'].'</td>';
         echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
@@ -49,7 +49,7 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     }
     if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
     {
-        $txt = "choose(3,'".implode($partsIds,',')."')";
+        $txt = "showOptions(event,'".implode($partsIds,',')."')";
         //$txt = "choose(3,".$info['id'].")";
         
         echo "<tr class='listRow' onclick=$txt>";
