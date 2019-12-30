@@ -75,7 +75,7 @@
         <main id="table">
             <?php
                 $userId = $_SESSION['user']['id'];
-                mysqli_real_escape_string($connection, $userId);
+                $userId = mysqli_real_escape_string($connection, $userId);
                 $query = "SELECT posledni_uroven,posledni_slozka FROM uzivatele WHERE uzivatele_id=$userId LIMIT 1";
                 $result = mysqli_query($connection, $query);
                 $result = mysqli_fetch_array($result);
@@ -95,7 +95,7 @@
                         include 'php/getParts.php';
                         break;
                 }
-            ?> 
+            ?>
         </main>
     </div>
         <footer>
