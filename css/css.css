@@ -109,17 +109,6 @@ h1 {
     font-size: 2rem;
     line-height: 7vh;
 }
-#menuHeading {
-    display: block;
-    font-size: 4vh;
-    line-height: 7vh;
-}
-#menuHeading a {
-    color: var(--bila);
-}
-#menuHeading a:hover {
-    text-decoration: underline;
-}
 nav {
     background: var(--hlbarva2);
     padding: 0.375rem;
@@ -377,9 +366,11 @@ label:hover:before {
 #listTable td {
     padding: 0.125rem 0.375rem;
 }
-/*.listRow:nth-child(odd)
-    {background-color: #f5f5f5;
-    }*/
+/*
+.listRow:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+*/
 .listRow {
 	margin: 0;
     height: 2rem;
@@ -405,15 +396,6 @@ label:hover:before {
 th {
 	font-weight: bold;
 }
-/*.listNames {
-	min-width: 0%;
-}
-.listNaturals {
-	min-width: 0%;
-	}
-.listPics {
-	min-width:0%;
-    }*/
 .listNames.listPoznavacky {
     width: 70%;
 }
@@ -597,23 +579,6 @@ td .key_short {
 #cancelReport{
 	display: none;
 }
-div.menu {
-    background: var(--bila);
-    box-sizing: border-box;
-    width: 98%;
-    height: 26.33vh;
-    font-size: 5vh;
-    color: var(--hlbarva3);
-    line-height: 26.33vh;
-    margin: 2.24vh auto;
-    border-radius: 6px;
-    transition: background 0.2s;
-}
-div.menu:hover {
-    background: var(--hlbarva2);
-    color: var(--bila);
-    transition: 0.2s;
-}
 #answerForm{
 	display: block;
 }
@@ -660,10 +625,6 @@ div.menu:hover {
         font-size: 1.4em;
         line-height: 6vh;
     }
-    #menuHeading {
-        font-size: 3vh;
-        line-height: 6vh;
-    }
     #obnoveniHesla {
         width: 80vw;
     }
@@ -676,10 +637,6 @@ div.menu:hover {
     .img {
 	    width: 55vw;
         height: 55vw;
-    }
-    div.menu {
-        width: 96vw;
-        font-size: 4vh;
     }
     .learn_button{
         height: 55vw;
@@ -698,10 +655,6 @@ div.menu:hover {
     }
     h1 {
         font-size: 1.2em;
-        line-height: 6vh;
-    }
-    #menuHeading {
-        font-size: 1em;
         line-height: 6vh;
     }
     #registrace, #prihlaseni, #pw_recovery {
@@ -725,9 +678,6 @@ div.menu:hover {
     .img {
 	    width: 60vw;
         height: 60vw;
-    }
-    div.menu {
-        font-size: 3vh;
     }
     .learn_button{
         height: 60vw;
