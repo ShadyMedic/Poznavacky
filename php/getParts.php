@@ -40,7 +40,8 @@
         array_push($partsIds, $info['casti_id']);
         $totalNaturals += $info['prirodniny'];
         $totalPics += $info['obrazky'];
-        $txt = "showOptions(event,".$info['casti_id'].")";
+        $hasPictures = ($info['obrazky'] > 0)? "true" : "false";
+        $txt = "showOptions(event,".$info['casti_id'].",$hasPictures)";
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames listPoznavacky">'.$info['nazev'].'</td>';
         echo '<td class="listNaturals listPoznavacky">'.$info['prirodniny'].'</td>';
@@ -49,7 +50,7 @@
     }
     if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
     {
-        $txt = "showOptions(event,'".implode($partsIds,',')."')";
+        $txt = "showOptions(event,'".implode($partsIds,',')."',true)";
         //$txt = "choose(3,".$info['id'].")";
         
         echo "<tr class='listRow' onclick=$txt>";

@@ -40,7 +40,7 @@ function choose(depth, option = undefined, type = undefined)
             break;
     }
 }
-function showOptions(event, option)
+function showOptions(event, option, allowAll)
 {
     var row = event.target.parentNode;
     row.setAttribute("id","button_row");
@@ -68,7 +68,15 @@ function showOptions(event, option)
     row.removeChild(row.childNodes[2]);
     row.removeChild(row.childNodes[1]);
     row.childNodes[0].setAttribute("colspan",3);
-    row.childNodes[0].innerHTML = "<button class='button' onclick='choose(3,\""+option+"\""+",0)'>Přidat obrázky</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",1)'>Učit se</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",2)'>Vyzkoušet se</button>";
+    if (allowAll === true)
+    {
+    
+        row.childNodes[0].innerHTML = "<button class='button' onclick='choose(3,\""+option+"\""+",0)'>Přidat obrázky</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",1)'>Učit se</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",2)'>Vyzkoušet se</button>";
+    }
+    else
+    {
+        row.childNodes[0].innerHTML = "<button class='button' onclick='choose(3,\""+option+"\""+",0)'>Přidat obrázky</button><button class='button buttonDisabled' style='cursor: not-allowed;' title='Na tuto část se nemůžete učit,\nprotože zatím neobsahuje žádné obrázky'>Učit se</button><button class='button buttonDisabled' style='cursor: not-allowed;' title='Z této části se nemůžete nechat testovat,\nprotože zatím neobsahuje žádné obrázky'>Vyzkoušet se</button>";
+    }
 }
 function setSolidDimensions()
 {
