@@ -102,22 +102,12 @@ header {
     background-color: var(--hlbarva1);
     display: block;
     color: var(--bila);
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);*/
 }
 h1 {
     display: block;
     font-size: 2rem;
     line-height: 7vh;
-}
-#menuHeading {
-    display: block;
-    font-size: 4vh;
-    line-height: 7vh;
-}
-#menuHeading a {
-    color: var(--bila);
-}
-#menuHeading a:hover {
-    text-decoration: underline;
 }
 nav {
     background: var(--hlbarva2);
@@ -359,37 +349,64 @@ label:hover:before {
     padding-left: 1.25rem;
 }
 /* - - - - - - - - - - - - - - - - - - - - zbytek list.php */
+#table {
+    background-color: var(--bila);
+    margin: 2.4vh auto;
+    padding: 1rem;
+    border-radius: 6px;
+    width: fit-content;
+}
 #listTable {
     background-color: var(--bila);
-    width: 40vw;
-    margin: 4vh auto; 
-    border: 0.75em solid var(--bila);
-    border-radius: 6px;
-    border-collapse: separate;
+    width: 100%;
+    min-width: 20rem;
+    margin: 1vh auto; 
+    /*border-collapse: separate;*/
 }  
-#listTable th, #listTable td {
-    padding: 0.125rem;
+#listTable td {
+    padding: 0.125rem 0.375rem;
 }
+/*
+.listRow:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+*/
 .listRow {
 	margin: 0;
-    cursor: pointer;
+    height: 2rem;
+}
+#button_row:hover {
+    background: var(--bila);
+}
+#button_row .button {
+    margin: 0 0.25rem;
+}
+.listEmpty {
+    width: 100%;
+}
+.main_tr {
+    border-bottom: 1px solid var(--seda2);
+    font-weight: bold;
+    padding: 0.25rem 0;
+    margin: 0;
+    height: 2rem;
 }
 .listRow:hover {
-	background: var(--hlbarva1);
+	background: var(--hlbarva2);
     color: var(--bila); 
     cursor: pointer;
 }
 th {
 	font-weight: bold;
 }
-.listNames {
-	min-width: 45%;
+.listNames.listPoznavacky {
+    width: 70%;
 }
-.listNaturals {
-	min-width: 20%;
-	}
-.listPics {
-	min-width: 20%;
+.listNaturals.listPoznavacky {
+    width: 15%;
+    }
+.listPics.listPoznavacky {
+    width: 15%;
     }
 /* -------------------------------------------------- accountSettings.php */
 #static_info {
@@ -565,23 +582,6 @@ td .key_short {
 #cancelReport{
 	display: none;
 }
-div.menu {
-    background: var(--bila);
-    box-sizing: border-box;
-    width: 98%;
-    height: 26.33vh;
-    font-size: 5vh;
-    color: var(--hlbarva3);
-    line-height: 26.33vh;
-    margin: 2.24vh auto;
-    border-radius: 6px;
-    transition: background 0.2s;
-}
-div.menu:hover {
-    background: var(--hlbarva2);
-    color: var(--bila);
-    transition: 0.2s;
-}
 #answerForm{
 	display: block;
 }
@@ -614,30 +614,22 @@ div.menu:hover {
         width: 70vw;
     }
     #listTable {
-        width: 50vw;
+        max-width: 70vw;
     }
 }
 @media screen and (max-width: 768px) {
     main.basic_main {
         width: 80vw;
     }
-    header {
-        height: 6vh;  
+    #listTable {
+        max-width: 80vw;
     }
     h1 {
         font-size: 1.4em;
         line-height: 6vh;
     }
-    #menuHeading {
-        font-size: 3vh;
-        line-height: 6vh;
-    }
     #obnoveniHesla {
         width: 80vw;
-    }
-    #listTable {
-        width: 60vw;
-        margin: 7vh auto;
     }
     #changelog {
         width: 60vw;
@@ -648,10 +640,6 @@ div.menu:hover {
     .img {
 	    width: 55vw;
         height: 55vw;
-    }
-    div.menu {
-        width: 96vw;
-        font-size: 4vh;
     }
     .learn_button{
         height: 55vw;
@@ -665,15 +653,11 @@ div.menu:hover {
     main.basic_main, #obnoveniHesla {
         width: 90vw;
     }
-    header {
-        height: 6vh;  
+    #listTable {
+        max-width: 90vw;
     }
     h1 {
         font-size: 1.2em;
-        line-height: 6vh;
-    }
-    #menuHeading {
-        font-size: 1em;
         line-height: 6vh;
     }
     #registrace, #prihlaseni, #pw_recovery {
@@ -697,9 +681,6 @@ div.menu:hover {
     .img {
 	    width: 60vw;
         height: 60vw;
-    }
-    div.menu {
-        font-size: 3vh;
     }
     .learn_button{
         height: 60vw;

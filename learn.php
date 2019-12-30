@@ -2,10 +2,26 @@
 	$redirectIn = false;
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
-		
-	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
+	
+	require 'php/included/partSetter.php'; //Nastavení části nebo přesměrování na list.php
+	
+	$query = "";
+	if ($_SESSION['current'][2] === false)
 	{
-		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	    $query = "SELECT obrazky FROM casti WHERE casti_id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
+	else
+	{
+	    $query = "SELECT SUM(obrazky) AS obrazky FROM casti WHERE poznavacky_id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
+	$result = mysqli_query($connection, $query);
+	$result = mysqli_fetch_array($result);
+	$result = $result['obrazky'];
+	if (empty($result))
+	{
+	    echo "<script type='text/javascript'>alert('Do této části dosud nebyly přidány žádné obrázky a učení se tak nemůže probíhat');</script>";
+	    echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	    die();
 	}
 ?>
 <html>
@@ -109,7 +125,7 @@
     			<button onclick="submitReport(event)" id="submitReport" class="button">Odeslat</button>
     			<button onclick="cancelReport(event)" id="cancelReport" class="button">Zrušit</button>
     		</fieldset>
-    		<a href="menu.php"><button class="button">Zpět</button></a>
+    		<a href="list.php"><button class="button">Zpět</button></a>
     	</main>
         </div>
 	    <footer>

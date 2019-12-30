@@ -3,10 +3,7 @@
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
 	
-	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
-	{
-		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
-	}
+	require 'php/included/partSetter.php'; //Nastavení části nebo přesměrování na list.php
 ?>
 <html>
 	<head>
@@ -76,7 +73,7 @@
     				<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
     			</fieldset>
     		</form>
-    		<a href="menu.php"><button class="button">Zpět</button></a>
+    		<a href="list.php"><button class="button">Zpět</button></a>
     	</main>
     </div>
 		<footer>

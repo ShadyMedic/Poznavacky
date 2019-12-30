@@ -1,17 +1,14 @@
 <?php
-if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
+    if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
     
     $classId = $_GET['classId'];
     
     $classId = mysqli_real_escape_string($connection, $classId);
     
     echo "<table id='listTable'>
-        <tr class='listRow' onclick='choose(0)'>
-            <td class='listBack' colspan=2><i>Zpět na seznam tříd</i></td>
-        </tr>
-        <tr>
-            <th>Název poznávačky</th>
-            <th>Části</th>
+        <tr class='main_tr'>
+            <td>Název poznávačky</td>
+            <td>Části</td>
         </tr>
     ";
     
@@ -20,7 +17,7 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     if (mysqli_num_rows($result) === 0)
     {
         echo '<tr class="infoRow">';
-            echo '<td class="listNames" colspan=2>V této třídě zatím nejsou žádné poznávačky</td>';
+            echo '<td class="listNames listEmpty" colspan=3>V této třídě zatím nejsou žádné poznávačky.</td>';
         echo '</tr>';
     }
     while ($info = mysqli_fetch_array($result))
@@ -30,7 +27,8 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
         echo '<td class="listNaturals">'.$info['casti'].'</td>';
     echo '</tr>';
     }
-    echo "</table>";
+    echo "</table>
+    <button class='button' onclick='choose(0)'>Zpět na seznam tříd</button>";
     
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX

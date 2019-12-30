@@ -3,13 +3,8 @@
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
     
-	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
-	{
-		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
-		die();
-	}
+	require 'php/included/partSetter.php'; //Nastavení části nebo přesměrování na list.php
 	
-	include 'php/included/connect.php';
 	$query = "";
 	if ($_SESSION['current'][2] === false)
 	{
@@ -25,7 +20,7 @@
 	if (empty($result))
 	{
 	    echo "<script type='text/javascript'>alert('Do této části dosud nebyly přidány žádné obrázky a testování tak nemůže probíhat');</script>";
-	    echo "<script type='text/javascript'>location.href = 'menu.php';</script>";
+	    echo "<script type='text/javascript'>location.href = 'list.php';</script>";
 	    die();
 	}
 ?>
@@ -91,7 +86,7 @@
     			<button onclick="submitReport(event)" id="submitReport" class="button">Odeslat</button>
     			<button onclick="cancelReport(event)" id="cancelReport" class="button">Zrušit</button>
     		</fieldset>
-    		<a href="menu.php"><button class="button">Zpět</button></a>
+    		<a href="list.php"><button class="button">Zpět</button></a>
 		</main>
     </div>
 		<footer>
