@@ -12,10 +12,10 @@
     $classId = $result['tridy_id'];
     
     echo "<table id='listTable'>
-        <tr  class='main_tr'>
-            <td>Název části</td>
-            <td>Přírodniny</td>
-            <td>Obrázky</td>
+        <tr class='main_tr'>
+            <td class='listNames listPoznavacky'>Název části</td>
+            <td class='listNaturals listPoznavacky'>Přírodniny</td>
+            <td class='listPics listPoznavacky'>Obrázky</td>
         </tr>
         ";
     
@@ -42,9 +42,9 @@
         $totalPics += $info['obrazky'];
         $txt = "showOptions(event,".$info['casti_id'].")";
         echo "<tr class='listRow' onclick=$txt>";
-        echo '<td class="listNames">'.$info['nazev'].'</td>';
-        echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
-        echo '<td class="listPictures">'.$info['obrazky'].'</td>';
+        echo '<td class="listNames listPoznavacky">'.$info['nazev'].'</td>';
+        echo '<td class="listNaturals listPoznavacky">'.$info['prirodniny'].'</td>';
+        echo '<td class="listPictures listPoznavacky">'.$info['obrazky'].'</td>';
         echo '</tr>';
     }
     if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
@@ -53,9 +53,9 @@
         //$txt = "choose(3,".$info['id'].")";
         
         echo "<tr class='listRow' onclick=$txt>";
-        echo '<td class="listNames">Vše</td>';
-        echo '<td class="listNaturals">'.$totalNaturals.'</td>';
-        echo '<td class="listPictures">'.$totalPics.'</td>';
+        echo '<td class="listNames listPoznavacky">Vše</td>';
+        echo '<td class="listNaturals listPoznavacky">'.$totalNaturals.'</td>';
+        echo '<td class="listPictures listPoznavacky">'.$totalPics.'</td>';
         echo '</tr>';
     }
     echo "</table>
