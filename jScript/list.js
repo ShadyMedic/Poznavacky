@@ -1,5 +1,11 @@
 var selectedPartTR;	//Skladuje innerHTML řádku tabulky, který obsahuje právě vybranou část
 
+window.onload = function()
+{
+    //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek
+    document.getElementById('table').setAttribute("style","width:"+window.getComputedStyle(document.getElementById('table')).width+";");
+}
+
 function closeChangelog()
 {
     document.getElementById("changelogContainer").style.display = "none";
