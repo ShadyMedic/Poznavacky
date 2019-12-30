@@ -2,8 +2,27 @@
 	$redirectIn = false;
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
-		
+	
 	require 'php/included/partSetter.php'; //Nastavení části nebo přesměrování na list.php
+	
+	$query = "";
+	if ($_SESSION['current'][2] === false)
+	{
+	    $query = "SELECT obrazky FROM casti WHERE casti_id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
+	else
+	{
+	    $query = "SELECT SUM(obrazky) AS obrazky FROM casti WHERE poznavacky_id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
+	$result = mysqli_query($connection, $query);
+	$result = mysqli_fetch_array($result);
+	$result = $result['obrazky'];
+	if (empty($result))
+	{
+	    echo "<script type='text/javascript'>alert('Do této části dosud nebyly přidány žádné obrázky a učení se tak nemůže probíhat');</script>";
+	    echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	    die();
+	}
 ?>
 <html>
 	<head>
