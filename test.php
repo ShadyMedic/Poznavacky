@@ -20,7 +20,7 @@
 	if (empty($result))
 	{
 	    echo "<script type='text/javascript'>alert('Do této části dosud nebyly přidány žádné obrázky a testování tak nemůže probíhat');</script>";
-	    echo "<script type='text/javascript'>location.href = 'menu.php';</script>";
+	    echo "<script type='text/javascript'>location.href = 'list.php';</script>";
 	    die();
 	}
 ?>
