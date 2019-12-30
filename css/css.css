@@ -571,6 +571,10 @@ td .key_short {
 .dropList:hover{
     cursor: pointer;
 }
+textarea {
+    max-width: 40vw;
+    max-height: 7rem;
+}
 #urlInput {
     width: 80%;
 }
@@ -617,6 +621,10 @@ td .key_short {
     #listTable {
         max-width: 70vw;
     }
+    textarea {
+        max-width: 55vw;
+        max-height: 7rem;
+    }
 }
 @media screen and (max-width: 768px) {
     main.basic_main {
@@ -624,6 +632,10 @@ td .key_short {
     }
     #listTable {
         max-width: 80vw;
+    }
+    textarea {
+        max-width: 65vw;
+        max-height: 7rem;
     }
     h1 {
         font-size: 1.4em;
@@ -659,6 +671,10 @@ td .key_short {
     }
     #listTable {
         max-width: 90vw;
+    }
+    textarea {
+        max-width: 80vw;
+        max-height: 7rem;
     }
     h1 {
         font-size: 1.2em;
