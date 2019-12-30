@@ -93,13 +93,6 @@ main.basic_main {
     padding: 0.375rem;
     border-radius: 6px;
 }   
-#table {
-    background-color: var(--bila);
-    margin: 2.4vh auto;
-    padding: 1rem;
-    border-radius: 6px;
-    width: fit-content;
-}
 fieldset {
     width: 80%;
     margin: auto;
@@ -367,9 +360,16 @@ label:hover:before {
     padding-left: 1.25rem;
 }
 /* - - - - - - - - - - - - - - - - - - - - zbytek list.php */
+#table {
+    background-color: var(--bila);
+    margin: 2.4vh auto;
+    padding: 1rem;
+    border-radius: 6px;
+    width: fit-content;
+}
 #listTable {
     background-color: var(--bila);
-    /*width: 90%;*/
+    width: 100%;
     min-width: 20rem;
     margin: 1vh auto; 
     /*border-collapse: separate;*/
@@ -405,7 +405,7 @@ label:hover:before {
 th {
 	font-weight: bold;
 }
-.listNames {
+/*.listNames {
 	min-width: 0%;
 }
 .listNaturals {
@@ -413,6 +413,15 @@ th {
 	}
 .listPics {
 	min-width:0%;
+    }*/
+.listNames.listPoznavacky {
+    width: 70%;
+}
+.listNaturals.listPoznavacky {
+    width: 15%;
+    }
+.listPics.listPoznavacky {
+    width: 15%;
     }
 /* -------------------------------------------------- accountSettings.php */
 #static_info {
@@ -636,13 +645,16 @@ div.menu:hover {
     main.basic_main {
         width: 70vw;
     }
-    /*#listTable {
-        width: 50vw;
-    }*/
+    #listTable {
+        max-width: 70vw;
+    }
 }
 @media screen and (max-width: 768px) {
     main.basic_main {
         width: 80vw;
+    }
+    #listTable {
+        max-width: 80vw;
     }
     h1 {
         font-size: 1.4em;
@@ -680,6 +692,9 @@ div.menu:hover {
 @media only screen and (max-width: 576px) {
     main.basic_main, #obnoveniHesla {
         width: 90vw;
+    }
+    #listTable {
+        max-width: 90vw;
     }
     h1 {
         font-size: 1.2em;
