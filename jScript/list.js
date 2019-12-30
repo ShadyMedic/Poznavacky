@@ -4,6 +4,12 @@ window.onload = function()
 {
     //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek
     document.getElementById('table').setAttribute("style","width:"+window.getComputedStyle(document.getElementById('table')).width+";");
+    
+  //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek (přeskakujeme hlavičku tabulky)
+    for (var i = 1; i < document.getElementsByTagName("tr").length; i++)
+    {
+        document.getElementsByTagName("tr")[i].setAttribute("style","height:"+window.getComputedStyle(document.getElementsByTagName("tr")[i]).height+";");
+    }
 }
 
 function closeChangelog()
