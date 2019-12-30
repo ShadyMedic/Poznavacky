@@ -93,6 +93,7 @@
                     case 2:
                         $_GET['groupId'] = $folder;
                         include 'php/getParts.php';
+                        echo "<script>setSolidDimensions();</script>";
                         break;
                 }
             ?>

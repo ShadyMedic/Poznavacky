@@ -1,17 +1,5 @@
 var selectedPartTR;	//Skladuje innerHTML řádku tabulky, který obsahuje právě vybranou část
 
-window.onload = function()
-{
-    //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek
-    document.getElementById('table').setAttribute("style","width:"+window.getComputedStyle(document.getElementById('table')).width+";");
-    
-  //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek (přeskakujeme hlavičku tabulky)
-    for (var i = 1; i < document.getElementsByTagName("tr").length; i++)
-    {
-        document.getElementsByTagName("tr")[i].setAttribute("style","height:"+window.getComputedStyle(document.getElementsByTagName("tr")[i]).height+";");
-    }
-}
-
 function closeChangelog()
 {
     document.getElementById("changelogContainer").style.display = "none";
@@ -23,14 +11,16 @@ function choose(depth, option = undefined, type = undefined)
         //Vypsání všech tříd
         case 0:
             getRequest("php/getClasses.php", replaceTable, errorResponse);
+            setDynamicDimensions();
             break;
         //Vybrání třídy
         case 1:
             getRequest("php/getGroups.php?classId=" + option, replaceTable, errorResponse);
+            setDynamicDimensions();
             break;
         //Vybrání skupiny
         case 2:
-            getRequest("php/getParts.php?groupId=" + option, replaceTable, errorResponse);
+            getRequest("php/getParts.php?groupId=" + option, loadParts, errorResponse);
             break;
         //Vybrání části
         case 3:
@@ -80,9 +70,36 @@ function showOptions(event, option)
     row.childNodes[0].setAttribute("colspan",3);
     row.childNodes[0].innerHTML = "<button class='button' onclick='choose(3,\""+option+"\""+",0)'>Přidat obrázky</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",1)'>Učit se</button><button class='button' onclick='choose(3,"+"\""+option+"\""+",2)'>Vyzkoušet se</button>";
 }
+function setSolidDimensions()
+{
+    //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek
+    document.getElementById('table').setAttribute("style","width:"+window.getComputedStyle(document.getElementById('table')).width+";");
+    
+  //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek (přeskakujeme hlavičku tabulky)
+    for (var i = 1; i < document.getElementsByTagName("tr").length; i++)
+    {
+        document.getElementsByTagName("tr")[i].setAttribute("style","height:"+window.getComputedStyle(document.getElementsByTagName("tr")[i]).height+";");
+    }
+}
+function setDynamicDimensions()
+{
+	//Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek
+    document.getElementById('table').removeAttribute("style");
+    
+    //Nastavení pevné šířky pro tabulku, aby se její šířka neměnila při zobrazování tlačítek (přeskakujeme hlavičku tabulky)
+    for (var i = 1; i < document.getElementsByTagName("tr").length; i++)
+    {
+        document.getElementsByTagName("tr")[i].removeAttribute("style");
+    }
+}
 function replaceTable(response)
 {
     document.getElementById("table").innerHTML = response;
+}
+function loadParts(response)
+{
+    replaceTable(response);
+    setSolidDimensions();
 }
 function getRequest(url, success = null, error = null){
     var req = false;
