@@ -83,8 +83,7 @@
     
 	//Zvýšit autorovy obrázku počet nahraných obrázků v databázi
 	$_SESSION['user']['addedPics'] = ++$_SESSION['user']['addedPics'];
-	$newAmount = $_SESSION['user']['addedPics'];
-	$query = "UPDATE uzivatele SET pridane_obrazky = $newAmount WHERE jmeno = '$username'";
+	$query = "UPDATE uzivatele SET pridane_obrazky = pridane_obrazky + 1 WHERE jmeno = '$username'";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{
