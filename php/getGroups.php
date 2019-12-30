@@ -17,7 +17,7 @@
     if (mysqli_num_rows($result) === 0)
     {
         echo '<tr class="infoRow">';
-            echo '<td class="listNames" colspan=2>V této třídě zatím nejsou žádné poznávačky</td>';
+            echo '<td class="listNames listEmpty" colspan=3>V této třídě zatím nejsou žádné poznávačky.</td>';
         echo '</tr>';
     }
     while ($info = mysqli_fetch_array($result))

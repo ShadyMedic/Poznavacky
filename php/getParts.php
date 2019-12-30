@@ -24,7 +24,7 @@
     if (mysqli_num_rows($result) === 0)
     {
         echo '<tr class="infoRow">';
-        echo '<td class="listNames" colspan=2>V této poznávačce zatím nejsou žádné skupiny</td>';
+        echo '<td class="listNames listEmpty" colspan=3>V této poznávačce zatím nejsou žádné skupiny.</td>';
         echo '</tr>';
     }
     $multiple = false;    //Určuje, jestli bude vygenerována řádka pro výběr všech částí (pokud je počet částí > 1)
