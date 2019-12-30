@@ -53,7 +53,7 @@
     	<main class="basic_main">
     		<fieldset>
     			<div class="prikaz">Vyberte si přírodninu, jejíž obrázky si chcete prohlížet. Na další nebo předchozí přírodninu můžete přejít rychle pomocí tlačítek.</div>
-    		  <select onchange="sel()" id="dropList" class="text">
+    		  <select onchange="sel()" id="dropList" class="text dropList">
     				<option value="" selected disabled hidden></option>
     				<?php 
     					//Vypisování přírodnin
@@ -110,7 +110,7 @@
     				</tr>
     			</table>
     			<button onclick="reportImg(event)" id="reportButton" class="buttonDisabled" disabled>Nahlásit</button>
-    			<select id="reportMenu" class="text" onchange="updateReport()">
+    			<select id="reportMenu" class="text dropList" onchange="updateReport()">
                     <option>Obrázek se nezobrazuje správně</option>
                     <option>Obrázek se načítá příliš dlouho</option>
                     <option>Obrázek zobrazuje nesprávnou přírodninu</option>

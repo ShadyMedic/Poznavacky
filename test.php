@@ -71,7 +71,7 @@
     			<button onclick="next()" class="button" id="nextButton">Další</button>
     			</div>
     			<button onclick="reportImg(event)" id="reportButton" class="button">Nahlásit</button>
-    			<select id="reportMenu" class="text" onchange="updateReport()">
+    			<select id="reportMenu" class="text dropList" onchange="updateReport()">
     				<option>Obrázek se nezobrazuje správně</option>
     				<option>Obrázek se načítá příliš dlouho</option>
     				<option>Obrázek zobrazuje nesprávnou přírodninu</option>

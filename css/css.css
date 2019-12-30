@@ -557,17 +557,14 @@ td .key_short {
     margin: 0.25rem;
     border: 2px solid var(--hlbarva2);
 }
-.text#dropList {
-    padding: 0.125rem 0.125rem;
-}
 .text:focus {
     border: 2px solid var(--hlbarva3);
     outline: none;
 }
-#dropList {
-    width: 11.25rem;
+.dropList {
+    padding: 0.125rem 0.125rem;
 }
-#dropList:hover{
+.dropList:hover{
     cursor: pointer;
 }
 #urlInput {
