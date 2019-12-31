@@ -9,6 +9,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<script type="text/javascript" src="jScript/index.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link rel="icon" href="images/favicon.ico">
@@ -25,10 +30,11 @@
 			<main>
 				<?php
     			//Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval, nebo zda existují chyby registrace k zobrazení
-			    if (isset($_SESSION['registerErrors']) || (!isset($_COOKIE['lastChangelog'])) && !isset($_SESSION['loginError']) && !isset($_SESSION['passwordRecoveryError']))
+			    if (isset($_SESSION['registerErrors']) || (!isset($_COOKIE['recentLogin'])) && !isset($_SESSION['loginError']) && !isset($_SESSION['passwordRecoveryError']))
 					{
 						//Podmínka splněna --> nechat zobrazený registrační formulář
-						echo "<div id='registrace' style='display:block'>";    				    }
+						echo "<div id='registrace' style='display:block'>";
+					}
 					else
 					{
 						//Podmínka nesplněna --> skrýt registrační formulář
@@ -56,7 +62,7 @@
     		
 				<?php
 					//Zjistit, zda se již na tomto počítači někdo nedávno přihlašoval
-					if (isset($_COOKIE['lastChangelog']))
+					if (isset($_COOKIE['recentLogin']))
 					{
 						//Podmínka splněna --> nechat zobrazený přihlašovací formulář
 						echo "<div id='prihlaseni' style='display:block'>";

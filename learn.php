@@ -2,10 +2,26 @@
 	$redirectIn = false;
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
-		
-	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
+	
+	require 'php/included/partSetter.php'; //Nastavení části nebo přesměrování na list.php
+	
+	$query = "";
+	if ($_SESSION['current'][2] === false)
 	{
-		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	    $query = "SELECT obrazky FROM casti WHERE casti_id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
+	else
+	{
+	    $query = "SELECT SUM(obrazky) AS obrazky FROM casti WHERE poznavacky_id = ".mysqli_real_escape_string($connection, $_SESSION['current'][0]);
+	}
+	$result = mysqli_query($connection, $query);
+	$result = mysqli_fetch_array($result);
+	$result = $result['obrazky'];
+	if (empty($result))
+	{
+	    echo "<script type='text/javascript'>alert('Do této části dosud nebyly přidány žádné obrázky a učení se tak nemůže probíhat');</script>";
+	    echo "<script type='text/javascript'>location.href = 'list.php';</script>";
+	    die();
 	}
 ?>
 <html>
@@ -13,6 +29,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<script type="text/javascript" src="jScript/learn.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link rel="icon" href="images/favicon.ico">
@@ -32,7 +53,7 @@
     	<main class="basic_main">
     		<fieldset>
     			<div class="prikaz">Vyberte si přírodninu, jejíž obrázky si chcete prohlížet. Na další nebo předchozí přírodninu můžete přejít rychle pomocí tlačítek.</div>
-    		  <select onchange="sel()" id="dropList" class="text">
+    		  <select onchange="sel()" id="dropList" class="text dropList">
     				<option value="" selected disabled hidden></option>
     				<?php 
     					//Vypisování přírodnin
@@ -89,7 +110,7 @@
     				</tr>
     			</table>
     			<button onclick="reportImg(event)" id="reportButton" class="buttonDisabled" disabled>Nahlásit</button>
-    			<select id="reportMenu" class="text" onchange="updateReport()">
+    			<select id="reportMenu" class="text dropList" onchange="updateReport()">
                     <option>Obrázek se nezobrazuje správně</option>
                     <option>Obrázek se načítá příliš dlouho</option>
                     <option>Obrázek zobrazuje nesprávnou přírodninu</option>
@@ -104,7 +125,7 @@
     			<button onclick="submitReport(event)" id="submitReport" class="button">Odeslat</button>
     			<button onclick="cancelReport(event)" id="cancelReport" class="button">Zrušit</button>
     		</fieldset>
-    		<a href="menu.php"><button class="button">Zpět</button></a>
+    		<a href="list.php"><button class="button">Zpět</button></a>
     	</main>
         </div>
 	    <footer>

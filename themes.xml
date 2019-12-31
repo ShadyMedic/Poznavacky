@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themes>
+	<theme id="0">
+		<color>#2e4600</color>
+		<color>#486b00</color>
+		<color>#3e4444</color>
+		<picture>url(images/bg0.jpg) </picture>
+	</theme>
+	<theme id="1">
+		<color>#1c213f</color>
+		<color>#4d648d</color>
+		<color>#1e1f26</color>
+		<picture>url(images/bg1.jpg) </picture>
+	</theme>
+	<theme id="2">
+		<color>#905f00</color>
+		<color>#d6a726</color>
+		<color>#44413e</color>
+		<picture>url(images/bg2.jpg)</picture>
+	</theme>
+	<theme id="3">
+		<color>#671515</color>
+		<color>#a0a0a0</color>
+		<color>#320000</color>
+		<picture>url(images/bg3.jpg)</picture>
+	</theme>
+	<theme id="4">
+		<color>#222222</color>
+		<color>#be9063</color>
+		<color>#040c0e</color>
+		<picture>url(images/bg4.jpg)</picture>
+	</theme>
+	<theme id="5">
+		<color>#2a536e</color>
+		<color>#598daf</color>
+		<color>#630e0a</color>
+		<picture>url(images/bg5.jpg)</picture>
+	</theme>
+</themes>

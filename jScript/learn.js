@@ -115,15 +115,15 @@ function updateReport()
 {
   if (document.getElementById("reportMenu").selectedIndex === 1)  //Obrázek se načítá příliš dlouho
   {
-    document.getElementById("additionalReportInfo").innerHTML = "<select><option>>2 s</option><option>>5 s</option><option>>10 s</option><option>>20 s</option></select>";
+    document.getElementById("additionalReportInfo").innerHTML = "<select class='text dropList'><option>>2 s</option><option>>5 s</option><option>>10 s</option><option>>20 s</option></select>";
   }
   else if (document.getElementById("reportMenu").selectedIndex === 2) //Obrázek zobrazuje nesprávnou přírodninu
   {
-    document.getElementById("additionalReportInfo").innerHTML = "<input type='text' placeholder='Přírodnina na obrázku' maxlength=31>";
+    document.getElementById("additionalReportInfo").innerHTML = "<input type='text' class='text' placeholder='Přírodnina na obrázku' maxlength=31>";
   }
   else if (document.getElementById("reportMenu").selectedIndex === 6) //Jiný důvod
   {
-    document.getElementById("additionalReportInfo").innerHTML = "<textarea placeholder='Specifikujte prosím důvod' maxlength=255></textarea>";
+    document.getElementById("additionalReportInfo").innerHTML = "<textarea class='text' placeholder='Specifikujte prosím důvod' maxlength=255></textarea>";
   }
   else
   {

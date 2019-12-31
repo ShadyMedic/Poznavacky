@@ -7,11 +7,18 @@
 	//Mazání zvolené poznávačky ze sezení
 	unset($_SESSION['current']);
 	
+	//Nastavení cookie informující o skutečnosti, že se někdo nedávno přihlásil
+	//To se využívá při načítání index.php a rozhoduje, zda se zobrazí registrační nebo přihlašovací formulář
+	setcookie('recentLogin',1, time() + 60 * 60 * 24 * 365);
+	
 	$displayChangelog = false;
-	if (!(isset($_COOKIE['lastChangelog']) && $_COOKIE['lastChangelog'] == VERSION))
-    {
-		setcookie('lastChangelog',VERSION, time() + 60 * 60 * 24 * 365);
-		$displayChangelog = true;
+	if ($_SESSION['user']['lastChangelog'] < VERSION)
+	{
+	    $displayChangelog = true;
+	    $_SESSION['user']['lastChangelog'] = VERSION;
+	    $query = "UPDATE uzivatele SET posledni_changelog = ".VERSION." WHERE uzivatele_id = ".$_SESSION['user']['id'].";";
+	    $result = mysqli_query($connection, $query);
+	    if (!$result){header('Location: errSql.html');}
 	}
 ?>
 <!DOCTYPE html>
@@ -20,6 +27,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<script type="text/javascript" src="jScript/list.js"></script>
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -63,7 +75,7 @@
         <main id="table">
             <?php
                 $userId = $_SESSION['user']['id'];
-                mysqli_real_escape_string($connection, $userId);
+                $userId = mysqli_real_escape_string($connection, $userId);
                 $query = "SELECT posledni_uroven,posledni_slozka FROM uzivatele WHERE uzivatele_id=$userId LIMIT 1";
                 $result = mysqli_query($connection, $query);
                 $result = mysqli_fetch_array($result);
@@ -81,9 +93,10 @@
                     case 2:
                         $_GET['groupId'] = $folder;
                         include 'php/getParts.php';
+                        echo "<script>setSolidDimensions();</script>";
                         break;
                 }
-            ?> 
+            ?>
         </main>
     </div>
         <footer>

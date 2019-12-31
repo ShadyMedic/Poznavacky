@@ -1,5 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
+    if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
     
     $groupId = $_GET['groupId'];
     
@@ -12,13 +12,10 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     $classId = $result['tridy_id'];
     
     echo "<table id='listTable'>
-        <tr class='listRow' onclick='choose(1, $classId)'>
-            <td class='listBack' colspan=3><i>Zpět na seznam poznávaček</i></td>
-        </tr>
-        <tr>
-            <th>Název části</th>
-            <th>Přírodniny</th>
-            <th>Obrázky</th>
+        <tr class='main_tr'>
+            <td class='listNames listPoznavacky'>Název části</td>
+            <td class='listNaturals listPoznavacky'>Přírodniny</td>
+            <td class='listPics listPoznavacky'>Obrázky</td>
         </tr>
         ";
     
@@ -27,7 +24,7 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
     if (mysqli_num_rows($result) === 0)
     {
         echo '<tr class="infoRow">';
-        echo '<td class="listNames" colspan=2>V této poznávačce zatím nejsou žádné skupiny</td>';
+        echo '<td class="listNames listEmpty" colspan=3>V této poznávačce zatím nejsou žádné skupiny.</td>';
         echo '</tr>';
     }
     $multiple = false;    //Určuje, jestli bude vygenerována řádka pro výběr všech částí (pokud je počet částí > 1)
@@ -43,25 +40,27 @@ if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //S
         array_push($partsIds, $info['casti_id']);
         $totalNaturals += $info['prirodniny'];
         $totalPics += $info['obrazky'];
-        $txt = "choose(3,".$info['casti_id'].")";
+        $hasPictures = ($info['obrazky'] > 0)? "true" : "false";
+        $txt = "showOptions(event,".$info['casti_id'].",$hasPictures)";
         echo "<tr class='listRow' onclick=$txt>";
-        echo '<td class="listNames">'.$info['nazev'].'</td>';
-        echo '<td class="listNaturals">'.$info['prirodniny'].'</td>';
-        echo '<td class="listPictures">'.$info['obrazky'].'</td>';
+        echo '<td class="listNames listPoznavacky">'.$info['nazev'].'</td>';
+        echo '<td class="listNaturals listPoznavacky">'.$info['prirodniny'].'</td>';
+        echo '<td class="listPictures listPoznavacky">'.$info['obrazky'].'</td>';
         echo '</tr>';
     }
     if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
     {
-        $txt = "choose(3,'".implode($partsIds,',')."')";
-        #$txt = "choose(3,".$info['id'].")";
+        $txt = "showOptions(event,'".implode($partsIds,',')."',true)";
+        //$txt = "choose(3,".$info['id'].")";
         
         echo "<tr class='listRow' onclick=$txt>";
-        echo '<td class="listNames">Vše</td>';
-        echo '<td class="listNaturals">'.$totalNaturals.'</td>';
-        echo '<td class="listPictures">'.$totalPics.'</td>';
+        echo '<td class="listNames listPoznavacky">Vše</td>';
+        echo '<td class="listNaturals listPoznavacky">'.$totalNaturals.'</td>';
+        echo '<td class="listPictures listPoznavacky">'.$totalPics.'</td>';
         echo '</tr>';
     }
-    echo "</table>";
+    echo "</table>
+    <button class='button' onclick='choose(1, $classId)'>Zpět na seznam poznávaček</button>";
     
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX

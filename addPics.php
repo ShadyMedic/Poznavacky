@@ -3,16 +3,18 @@
 	$redirectOut = true;
 	require 'php/included/verification.php';    //Obsahuje session_start();
 	
-	if (!isset($_SESSION['current']))	//Poznávačka nenastavena --> přesměrování na stránku s výběrem
-	{
-		echo "<script type='text/javascript'>location.href = 'list.php';</script>";
-	}
+	require 'php/included/partSetter.php'; //Nastavení části nebo přesměrování na list.php
 ?>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<style>
+		    <?php 
+		        require 'php/included/themeHandler.php';
+		    ?>
+		</style>
 		<script type="text/javascript" src="jScript/addPics.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<link rel="icon" href="images/favicon.ico">
@@ -71,7 +73,7 @@
     				<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
     			</fieldset>
     		</form>
-    		<a href="menu.php"><button class="button">Zpět</button></a>
+    		<a href="list.php"><button class="button">Zpět</button></a>
     	</main>
     </div>
 		<footer>

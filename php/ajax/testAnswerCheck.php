@@ -80,9 +80,8 @@
     {
         //Uživatel odpověděl správně
         $_SESSION['user']['guessedPics'] = ++$_SESSION['user']['guessedPics'];
-        $newScore = $_SESSION['user']['guessedPics'];
         $username = $_SESSION['user']['name'];
-        $query = "UPDATE uzivatele SET uhodnute_obrazky = $newScore WHERE jmeno = '$username'";
+        $query = "UPDATE uzivatele SET uhodnute_obrazky = uhodnute_obrazky + 1 WHERE jmeno = '$username'";
         $result = mysqli_query($connection, $query);
         if (!$result)
         {
