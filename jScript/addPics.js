@@ -114,7 +114,7 @@ function getRequest(url, success = null, error = null){
 function responseFunc(response)
 {
 	eval(response);
-	if (response === "swal('Obrázek úspěšně přidán', '', 'success');")
+	if (response === "swal('Obrázek úspěšně přidán', '', 'success');")		//Úspěšné přidání obrázku
 	{
 		var options = document.getElementById("dropList").options;
 		for (var i = 0; i < options.length; i++)
@@ -127,6 +127,15 @@ function responseFunc(response)
 		var newOption = name + "(" + newValue + ")";
 		document.getElementById("dropList").options[i].innerHTML = newOption;
 		
+		document.getElementById("sendButton").setAttribute("disabled", true);
+		document.getElementById("sendButton").setAttribute("class","buttonDisabled");
+		document.getElementById("previewImg").src = "images/imagePreview.png";
+		document.getElementById("urlConfirm").setAttribute("disabled", true);
+		document.getElementById("urlConfirm").setAttribute("class","buttonDisabled");
+		document.getElementById("urlInput").value = "";
+	}
+	else		//Nějaká chyba při přidávání obrázku
+	{
 		document.getElementById("sendButton").setAttribute("disabled", true);
 		document.getElementById("sendButton").setAttribute("class","buttonDisabled");
 		document.getElementById("previewImg").src = "images/imagePreview.png";
