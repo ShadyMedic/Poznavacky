@@ -13,7 +13,7 @@
         if (!empty($pId))
         {
             $everything = true;
-            $firstPartId = $pId[0];
+            $firstPartId = explode(',',$pId)[0];
             $query = "SELECT poznavacky_id,nazev FROM poznavacky WHERE poznavacky_id=(SELECT poznavacky_id FROM casti WHERE casti_id=$firstPartId LIMIT 1) LIMIT 1";
             $result = mysqli_query($connection, $query);
             if (!$result){echo mysqli_error($connection);}
