@@ -50,8 +50,8 @@
     }
     if ($multiple === true)     //Vypsání řádky pro výběr všech poznávaček (argument funkce je seznam ID částí oddělený čárkami)
     {
-        $txt = "showOptions(event,'".implode($partsIds,',')."',true)";
-        //$txt = "choose(3,".$info['id'].")";
+        $hasPictures = ($totalPics > 0)? "true" : "false";
+        $txt = "showOptions(event,'".implode($partsIds,',')."',$hasPictures)";
         
         echo "<tr class='listRow' onclick=$txt>";
         echo '<td class="listNames listPoznavacky">Vše</td>';
