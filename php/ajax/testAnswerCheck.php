@@ -2,11 +2,12 @@
     function isCorrect($userAnswer, $correctAnswer)
     {
         $userAnswer = removeDiacritic(strtolower($userAnswer)."××");
-        $correctAnswer = removeDiacritic(strtoupper($correctAnswer)."××");
+        $correctAnswer = removeDiacritic(strtolower($correctAnswer)."××");
         
         if ($userAnswer === $correctAnswer)
         {
             //Odpověď bez překlepů
+            //echo "NO TYPOS<br>";
             return true;
         }
         
@@ -16,20 +17,23 @@
         {
             if ($userAnswer[$i] !== $correctAnswer[$i])    //Neshodný znak
             {
-                if ($userAnswer[$i] == $correctAnswer[$i+1] && $userAnswer[$i+1] == $correctAnswer[i+2])    //Chybějící znak
+                if ($userAnswer[$i] == $correctAnswer[$i+1] && $userAnswer[$i+1] == $correctAnswer[$i+2])    //Chybějící znak
                 {
+                    //echo "Missing character on position $i<br>";
                     $userAnswer = substr($userAnswer, 0, $i).$correctAnswer[$i].substr($userAnswer,$i);
                     $errors++;
                 }
                 
                 else if ($userAnswer[$i+1] == $correctAnswer[$i] && $userAnswer[$i+2] == $correctAnswer[$i+1])    //Přebývající znak
                 {
+                    //echo "Unneccessary character on position $i<br>";
                     $userAnswer = substr($userAnswer, 0, $i).substr($userAnswer, $i+1);    //Odstraňování přebývajícího znaku
                     $errors++;
                 }
                 
                 else    //Špatný znak
                 {
+                    //echo "Wrong character on position $i<br>";
                     $userAnswer = substr($userAnswer, 0, $i).$correctAnswer[$i].substr($userAnswer, $i+1);    //Oprava špatného znaku
                     $errors++;
                 }
@@ -38,29 +42,17 @@
         
         if (($errors / (strlen($userAnswer) - 2)) > 0.334)
         {
+            //echo "TOO MANY TYPOS<br>";
             return false;
         }
         
+        //echo "FEW TYPOS<br>";
         return true;
     }
 
     function removeDiacritic($str)
     {
-        $str = str_replace('á','a',$str);
-        $str = str_replace('ě','e',$str);
-        $str = str_replace('é','e',$str);
-        $str = str_replace('í','i',$str);
-        $str = str_replace('ó','o',$str);
-        $str = str_replace('ú','u',$str);
-        $str = str_replace('ů','u',$str);
-        $str = str_replace('ý','y',$str);
-        $str = str_replace('č','c',$str);
-        $str = str_replace('ď','d',$str);
-        $str = str_replace('ň','n',$str);
-        $str = str_replace('ř','r',$str);
-        $str = str_replace('š','s',$str);
-        $str = str_replace('ť','t',$str);
-        $str = str_replace('ž','z',$str);
+        $str = str_ireplace(['á','ě','é','í','ó','ú','ů','ý','č','ď','ň','ř','š','ť','ž'],['a','e','e','i','o','u','u','y','c','d','n','r','s','t','z'],$str);
         
         return $str;
     }
@@ -76,6 +68,10 @@
     //Nulování správné odpovědi (aby nebylo možné farmit body za uhodnuté obrázky opakováním requestu)
     unset($_SESSION['testAnswer']);
     
+    if (empty($correctAnswer))      //Pokud není žádná správná odpověď, odpověď není správná
+    {
+        die();
+    }
     if (isCorrect($userAnswer, $correctAnswer))
     {
         //Uživatel odpověděl správně
