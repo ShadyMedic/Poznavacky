@@ -66,7 +66,7 @@
 
 	//Kontrola duplicitního obrázku
 	$url = mysqli_real_escape_string($connection, $url);
-	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url' AND casti_id = $partId";
+	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url' AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM casti WHERE casti_id = $partId))";
 	$result = mysqli_query($connection, $query);
 	if (mysqli_num_rows($result) > 0)
 	{
