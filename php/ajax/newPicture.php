@@ -27,14 +27,27 @@
 	for ($i = count($arr) - 1; $arr[$i] != '('; $i--){}
 	for ($j = 0; $j < $i - 1; $j++){$final .= $arr[$j];}
 	$final = mysqli_real_escape_string($connection, $final);
-
+	
+	//Získání ID konkrétní části, pokud byly vybrány všechny části poznávačky
+	if ($_SESSION['current'][2] === true)
+	{
+	    $query = "SELECT casti_id FROM prirodniny WHERE nazev = '$final' AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = $partId) LIMIT 1";
+	    $result = mysqli_query($connection, $query);
+	    $result = mysqli_fetch_array($result);
+	    $partId = $result['casti_id'];
+	}
+	
 	//Získat ID přírodniny
-	$query = "SELECT prirodniny_id FROM prirodniny WHERE nazev='$final'";
+	$query = "SELECT prirodniny_id FROM prirodniny WHERE nazev='$final' AND casti_id = $partId;";
 	$result = mysqli_query($connection, $query);
-	if (mysqli_num_rows($result) > 0)
+	if (mysqli_num_rows($result) == 1)
 	{
 		$id = mysqli_fetch_array($result);
 		$id = $id['prirodniny_id'];
+	}
+	else if (mysqli_num_rows($result) > 1)
+	{
+	    die("swal('Neunikátní přírodnina', 'Kontaktujte prosím správce.', 'error');");
 	}
 	else
 	{
@@ -53,21 +66,12 @@
 
 	//Kontrola duplicitního obrázku
 	$url = mysqli_real_escape_string($connection, $url);
-	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url'";
+	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url' AND casti_id = $partId";
 	$result = mysqli_query($connection, $query);
 	if (mysqli_num_rows($result) > 0)
 	{
 		filelog("Uživatel $username se pokusil nahrát duplicitní obrázek k přírodnině id $id v poznávačce $pName");
 		die("swal('Tento obrázek je již přidán.', '', 'error');");
-	}
-	
-	//Získání ID konkrétní části, pokud byly vybrány všechny části poznávačky
-	if ($_SESSION['current'][2] === true)
-	{
-	    $query = "SELECT casti_id FROM prirodniny WHERE nazev = '$final' LIMIT 1";
-	    $result = mysqli_query($connection, $query);
-	    $result = mysqli_fetch_array($result);
-	    $partId = $result['cast'];
 	}
 	
 	//Vložit obrázek do databáze
