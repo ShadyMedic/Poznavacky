@@ -68,6 +68,8 @@
     <title>Správa služby</title>
 	</head>
     <body>
+	<div id="container">
+		<header>
 		<nav>
 			<a id="tab1link" onclick="firstTab()" style="background-color: #9999FF;">Nastavení</a>
 			<a id="tab2link" onclick="secondTab()">Správa účtů</a>
@@ -77,7 +79,8 @@
 			<a id="tab6link" onclick="sixthTab()">Ovládání databáze</a>
 			<a href="list.php" style="background-color: #FFFF99">Návrat</a>
 		</nav>
-		<div id="container">
+		</header>
+		<main>
 			<div id="tab1">
 				<div id='constants'>
     				<h3>Správa systémových konstant</h3>
@@ -321,6 +324,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</main>
+	</div>
 	</body>
 </html>
