@@ -139,7 +139,7 @@
     			    <div>
         				<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='images/plus.gif'></button>
         				<br>
-        				<button class='centerBtn' onclick='saveConstants()' title='Přidat novou konstantu'>Uložit konstanty</button>
+        				<button class='centerBtn borderBtn' onclick='saveConstants()' title='Přidat novou konstantu'>Uložit konstanty</button>
     				</div>
     			</div>
 			</div>
