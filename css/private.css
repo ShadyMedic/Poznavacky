@@ -57,6 +57,7 @@ html,
 body {
   height: 100%;
   margin: 0;
+  line-height: 1.2rem;
 }
 #container {
 	display: flex;
@@ -69,52 +70,38 @@ main {
 	border: 1px solid #000;
 }
 header {
-	border-bottom: 1px solid #000;
-	line-height: 2rem;
-	font-size: 1.4rem;
+	border: 1px solid #000;
+	margin: 1rem 1rem 0 1rem;
+	line-height: 2.2rem;
+	font-size: 1.2rem;
 	flex: 0 1 auto;
 }
 nav {
-	margin: 0 1rem;
 	display: flex;
 	flex-wrap: wrap;
 }
 nav a {
-	padding: 0 0.5rem;
+	padding: 0 0.6rem;
 }
-/*
-nav
-{
-	height: 4vh;
-	z-index: -1;
-	overflow: hidden;
+table {
+	margin: auto;
+	border-collapse: collapse;
+	text-align: center;
+	vertical-align: middle;
 }
-nav a
-{
-	border-radius: 1vh;
-	font-size: 3vh;
-	text-decoration: none;
-    color: black;
-	border: 1px solid black;
-	display: block;
-	float: left;
-	min-height: 5vh;
-	padding-left: 10px;
-	padding-right: 10px;
-}*/
-/*
-#container
-{
-	padding-top: 1vh;
-	padding-left: 1vw;
-	padding-bottom: 1vh;
-	padding-right: 1vw;
-	overflow: auto;
-	border: 1px solid black;
-	z-index: 1;
+tr {
+	box-sizing: border-box;
 }
-/*---------------------------*/
-
+td {
+	box-sizing: border-box;
+	padding: 2px;
+}
+input {
+	box-sizing: border-box;
+	line-height: 1.2rem;
+	padding-left: 0.2rem;
+	padding-right: 0.2rem;
+}
 #tab1
 {
 	display: block;
@@ -123,28 +110,33 @@ nav a
 {
 	display: none;
 }
+button {
+	background: #fff;
+}
+.borderBtn {
+	border: 1px solid #aaa;
+	box-sizing: border-box;
+	padding: 2px 4px;
+}
 /*-----------Tab1------------*/
-
-#constants
-{
+#constants {
+	margin: auto;
 	text-align: center;
 }
-.constantField
-{
-	border: 0;
-    background-color: inherit;
+h3 {
+	text-align: center;
+	margin: 0.4rem;
+	font-size: 1.2rem;
 }
-.centerBtn
-{
-	margin: auto;
-    margin-top: 20px;
-    /*position: fixed;*/
-    left: 0;
-    right: 0;
+.constantField {
+	border: 0;
+}
+#constants table {
+	margin-bottom: 1rem;
 }
 /*-----------Tab2------------*/
 
-.userField
+/*.userField
 {
 	border: 0;
     text-align: center;
@@ -156,12 +148,12 @@ nav a
 }
 /*-----------Tab3------------*/
 
-#singleReport
+/*#singleReport
 {
 	text-align: center;
 }
 /*-----------Tab4------------*/
-
+/*
 table
 {
 	border-collapse: collapse;
@@ -175,10 +167,10 @@ td th
 }
 td img
 {
-	/*
+	
 	padding-left: 10px;
 	padding-right: 10px;
-	*/
+	
 }
 
 td button, .actionButton
@@ -201,13 +193,13 @@ td button, .actionButton
 	filter: grayscale(1);
 }
 /*-----------Tab5------------*/
-#emailPreview
+/* #emailPreview
 {
 	margin: 20px;
 	border: 1px solid black;
 }
 /*-----------Tab6------------*/
-#sql
+/* #sql
 {
 	text-align: center;
 }
