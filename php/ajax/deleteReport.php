@@ -19,7 +19,7 @@
     }
     
     //Získání dat
-    $picUrl = $_POST['to'];
+    $picId = $_POST['to'];
     $reason = $_POST['sub'];
     $info = $_POST['msg'];
     
@@ -29,19 +29,9 @@
         $info = str_replace('&gt;', '>', $info);
     }
     
-    $picUrl = mysqli_real_escape_string($connection, $picUrl);
+    $picId = mysqli_real_escape_string($connection, $picId);
     $reason = mysqli_real_escape_string($connection, $reason);
     $info = mysqli_real_escape_string($connection, $info);
-    
-    //Získávíní ID obrázku
-    $query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$picUrl' LIMIT 1";
-    $result = mysqli_query($connection, $query);
-    if (!$result)
-    {
-        echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
-    }
-    $result = mysqli_fetch_array($result);
-    $picId = $result['obrazky_id'];
     
     //Odstranění hlášení
     $query = "DELETE FROM hlaseni WHERE obrazky_id='$picId' AND duvod=$reason AND dalsi_informace='$info' LIMIT 1";
