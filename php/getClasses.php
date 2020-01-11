@@ -19,7 +19,8 @@
         echo '<td class="listNaturals">'.$info['kod'].'</td>';
         echo '</tr>';
     }
-    echo "</table>";
+    echo "</table>
+    <button class='button' onclick='newClass()'>Zažádat o vytvoření nové třídy</button>";
     
     //Aktualizovat uživateli poslední prohlíženou složku
     if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX

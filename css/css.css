@@ -270,8 +270,17 @@ label:hover:before {
   border: 2px solid var(--hlbarva1)!important;
 }
 /* -------------------------------------------------- list.php */
+#listOverlay {
+	visibility: hidden;
+    z-index: 8;
+    background-color: #000;
+	opacity: 0.5;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+}
 /* - - - - - - - - - - - - - - - - - - - - changelog */
-#changelog {
+#changelog, #newClassFormContainer {
     z-index: 9;
     background: var(--bila);
     position: absolute;
@@ -282,19 +291,11 @@ label:hover:before {
     height: fit-content;
     width: 40vw;
     color: var(--hlbarva3);
-	text-align: left;
+    text-align: left;
     padding: 1.25rem;
     margin: auto;
     border: 5px solid var(--hlbarva1);
     border-radius: 10px;;
-}
-#changelogOverlay {
-    z-index: 8;
-    background-color: #000;
-	opacity: 0.5;
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
 }
 #changelogMsg {
     max-height: 40vh;
@@ -351,6 +352,10 @@ label:hover:before {
 #changelogMsg li {
     margin: 0.4rem auto;
     padding-left: 1.25rem;
+}
+/* - - - - - - - - - - - - - - - - - - - - changelog */
+#newClassFormContainer {
+    display: none;
 }
 /* - - - - - - - - - - - - - - - - - - - - zbytek list.php */
 #table {
