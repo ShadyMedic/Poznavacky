@@ -69,7 +69,7 @@
                         echo "
                         <span>Kontaktní e-mailová adresa</span>
                         <br>
-                        <input id='newClassFormEmail' type=email, length=255 required />
+                        <input class='text' id='newClassFormEmail' type=email, length=255 required />
                         <br>
                         ";
                     }
