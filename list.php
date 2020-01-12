@@ -74,20 +74,20 @@
                         ";
                     }
                 ?>
-                <span>Požadovaný název třídy</span><img src="images/info.png" title="Název nesmí kolidovat s jakoukoliv jinou třídou, která se později na stránkách může objevit. Proto vám doporučujeme zahrnout i název školy." style="width: 1rem; height: 1rem; padding-left: 0.5rem; padding-top: 0.75; display: inline;"/>
+                <span>Požadovaný název třídy</span><img src="images/info.svg" title="Název nesmí kolidovat s jakoukoliv jinou třídou, která se později na stránkách může objevit. Proto vám doporučujeme zahrnout i název školy."/>
                 <br>
-                <input id='newClassFormName' type=text length=31 required />
+                <input id='newClassFormName' class="text" type=text length=31 required />
                 <br>
-                <span>Kód třídy</span><img src="images/info.png" title="Třída bude po vytvoření nastavena jako soukromá. Pro přístup do třídy budou muset uživatelé nejprve zadat čtyřciferný vstupní kód. Tím se jim třída trvale odemkne. Kód si můžete později změnit v nastavení třídy nebo jej odebrat a udělat třídu veřejnou nebo jí naopak uzamknout pro nové uživatele úplně." style="width: 1rem; height: 1rem; padding-left: 0.5rem; padding-top: 0.75; display: inline;"/>
+                <span>Kód třídy</span><img src="images/info.svg" title="Třída bude po vytvoření nastavena jako soukromá. Pro přístup do třídy budou muset uživatelé nejprve zadat čtyřciferný vstupní kód. Tím se jim třída trvale odemkne. Kód si můžete později v nastavení třídy změnit. Můžete ho také odebrat a udělat třídu veřejnou nebo ji naopak uzamknout pro nové uživatele úplně."/>
                 <br>
-                <input id='newClassFormCode' type=number min=0 max=9999 length=31 required />
+                <input id='newClassFormCode' class="text" type=number min=0 max=9999 length=31 required />
                 <br>
                 <span>Je ještě něco, co bychom měli vědět?</span>
                 <br>
-                <textarea id='newClassFormInfo'></textarea>
+                <textarea class="text" id='newClassFormInfo'></textarea>
                 <br>
-                <input type=submit value="Odeslat žádost" />
-                <input type=button onclick="closeNewClassForm()" value="Zpět">
+                <input type=submit class="button" value="Odeslat žádost" />
+                <input type=button class="button" onclick="closeNewClassForm()" value="Zpět">
             </form>
         </div>
         <header>
