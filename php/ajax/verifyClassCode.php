@@ -6,6 +6,7 @@
     
     //Vybrat třídy, ve kterých je již uživatel členem, aby nevznikali duplikovaná členství a třídy, do kterých se nedá dostat pomocí kódu (zamčené třídy) a třídy, do kterých není kód potřeba (veřejné třídy).
     $userId = $_SESSION['user']['id'];
+    $userName = $_SESSION['user']['name'];
     $userId = mysqli_real_escape_string($connection, $userId);
     $query = "SELECT `tridy_id` FROM `clenstvi` WHERE `uzivatele_id` = $userId UNION SELECT tridy_id FROM tridy WHERE status IN ('locked','public')";
     $result = mysqli_query($connection, $query);
@@ -22,6 +23,7 @@
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) < 1)
     {
+        fileLog("Uživatel $userName se pokusil stát členem jiné třídy, avšak zadal neplatný vstupní kód ($code).");
         die("Žádná třída se zadaným vstupním kódem nebyla nalezena");
     }
     $classIds = array();
@@ -45,6 +47,8 @@
         echo mysqli_error($connection);
         echo $query;
     }
+    
+    fileLog("Uživatel $userName se stal členem tříd(y) s ID ".implode(',', $classIds)." zadáním vstupního kódu.");
     
     if (count($classNames) < 2)
     {
