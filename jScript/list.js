@@ -22,7 +22,22 @@ function applicationSubmit(event)
     var className = document.getElementById("newClassFormName").value;
     var classCode = document.getElementById("newClassFormCode").value;
     var info = document.getElementById("newClassFormInfo").value;
-    postRequest("php/ajax/newClassApply.php", applicationSent, errorResponse, email, className, classCode, info);
+    postRequest("php/ajax/newClassApply.php", applicationSent, alertResponse, email, className, classCode, info);
+}
+function enterClassCode()
+{
+    document.getElementById("classCodeBtn").style.display = "none";
+    document.getElementById("classCodeForm").style.display = "block";
+}
+function closeClassCode()
+{
+    document.getElementById("classCodeForm").style.display = "none";
+	document.getElementById("classCodeBtn").style.display = "block";
+}
+function submitClassCode()
+{
+    var code = document.getElementById("classCodeInput").value;
+    postRequest("php/ajax/verifyClassCode.php", newClasses, alertResponse, null, null, code, null);
 }
 function choose(depth, option = undefined, type = undefined)
 {
@@ -30,17 +45,17 @@ function choose(depth, option = undefined, type = undefined)
     {
         //Vypsání všech tříd
         case 0:
-            getRequest("php/getClasses.php", replaceTable, errorResponse);
+            getRequest("php/getClasses.php", replaceTable, alertResponse);
             setDynamicDimensions();
             break;
         //Vybrání třídy
         case 1:
-            getRequest("php/getGroups.php?classId=" + option, replaceTable, errorResponse);
+            getRequest("php/getGroups.php?classId=" + option, replaceTable, alertResponse);
             setDynamicDimensions();
             break;
         //Vybrání skupiny
         case 2:
-            getRequest("php/getParts.php?groupId=" + option, loadParts, errorResponse);
+            getRequest("php/getParts.php?groupId=" + option, loadParts, alertResponse);
             break;
         //Vybrání části
         case 3:
@@ -220,7 +235,7 @@ function postRequest(url, success = null, error = null, email, cName, cCode, inf
 	req.send("email="+email+"&name="+cName+"&code="+cCode+"&info="+info);
 	return req;
 }
-function errorResponse(response)
+function alertResponse(response)
 {
     alert(response);
 }
@@ -228,4 +243,9 @@ function applicationSent(response)
 {
     closeNewClassForm();
     alert("Formulář byl úspěšně odeslán\nSledujte prosím svou e-mailovou schránku, obdržíte do ní informace, až bude třída připravená.");
+}
+function newClasses(response)
+{
+    alert(response);
+    choose(0);
 }
