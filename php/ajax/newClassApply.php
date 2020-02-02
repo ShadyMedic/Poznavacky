@@ -27,3 +27,4 @@
     $message .= "<br><span>Email pro odpověď: <a href='mailto:$email'>$email</a></span>";
     
     sendEmail(ADMIN_EMAIL, $subject, $message, $email, $username);
+    fileLog("Uživatel $username zažádal o vytvoření nové třídy jménem $name.");
