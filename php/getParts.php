@@ -1,15 +1,48 @@
 <?php
-    if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
+    if (session_status() == PHP_SESSION_NONE)
+    {
+        include 'included/httpStats.php'; //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
+        session_start(); //Sezení se zahajuje pouze v případě, že již nebylo zahájeno
+    }
     
+    $userId = $_SESSION['user']['id'];
     $groupId = $_GET['groupId'];
     
-    $groupId = mysqli_real_escape_string($connection, $groupId);
+    if (empty($_SESSION['class']))
+    {
+        global $classId;
+        
+        //Získání ID třídy, do které patří zvolená poznávačka
+        $query = "SELECT tridy_id FROM poznavacky WHERE poznavacky_id = $groupId LIMIT 1";
+        $result = mysqli_query($connection, $query);
+        $cId = mysqli_fetch_array($result)['tridy_id'];
+        
+        //Kontrola, zda je přihlášený uživatel členem dané třídy
+        $query = "SELECT COUNT(*) AS 'cnt' FROM tridy WHERE tridy_id = $cId AND (status = 'public' OR (SELECT COUNT(*) FROM clenstvi WHERE uzivatele_id = $userId AND tridy_id = $cId) > 0);";
+        $result = mysqli_query($connection, $query);
+        $count = mysqli_fetch_array($result)['cnt'];
+        if ($count < 1)
+        {
+            //Zamítnutí přístupu
+            die("<div style='color: #990000; font-weight: bold;'>Přístup do třídy s touto poznávačkou odepřen!</div><br><button class='button' onclick='choose(0)'>Zpět na seznam tříd</button>");
+        }
+        else
+        {
+            $_SESSION['class'] = $cId;
+        }
+    }
     
-    //Získání id třídy pro tlačítko návrat
-    $query = "SELECT tridy.tridy_id FROM tridy INNER JOIN poznavacky ON poznavacky.tridy_id = tridy.tridy_id WHERE poznavacky.poznavacky_id = $groupId";
+    $classId = $_SESSION['class'];
+    
+    $userId = mysqli_real_escape_string($connection, $userId);
+    $groupId = mysqli_real_escape_string($connection, $groupId);
+    $classId = mysqli_real_escape_string($connection, $classId);
+    
+    //Získávání částí - v SQL dotazu se dotazujeme na části, které patří do poznávačky, která byla zvolen uživatelem A ZÁROVEŇ patří do dříve zvolené třídy
+    //Tím je znemožněn výběr částí, které patří do poznávaček, které patří do třídy jejíž není uživatel členem
+    $query = "SELECT * FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE poznavacky_id = $groupId AND tridy_id = $classId LIMIT 1);";
     $result = mysqli_query($connection, $query);
-    $result = mysqli_fetch_array($result);
-    $classId = $result['tridy_id'];
+    if(!$result){die($query);}
     
     echo "<table id='listTable'>
         <tr class='main_tr'>
@@ -17,10 +50,8 @@
             <td class='listNaturals listPoznavacky'>Přírodniny</td>
             <td class='listPics listPoznavacky'>Obrázky</td>
         </tr>
-        ";
+        "; 
     
-    $query = "SELECT * FROM casti WHERE poznavacky_id = $groupId";
-    $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) === 0)
     {
         echo '<tr class="infoRow">';
@@ -63,9 +94,5 @@
     <button class='button' onclick='choose(1, $classId)'>Zpět na seznam poznávaček</button>";
     
     //Aktualizovat uživateli poslední prohlíženou složku
-    if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
-    $userId = $_SESSION['user']['id'];
-    $groupId = mysqli_real_escape_string($connection, $groupId);
-    $userId = mysqli_real_escape_string($connection, $userId);
     $query = "UPDATE uzivatele SET posledni_uroven = 2, posledni_slozka = $groupId WHERE uzivatele_id=$userId LIMIT 1";
     $result = mysqli_query($connection, $query);

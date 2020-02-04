@@ -1,6 +1,7 @@
 <?php
     //Nastavování současné části
     $pId = @$_COOKIE['current'];
+    $classId = $_SESSION['class'];
     
     $everything = false;
     
@@ -20,6 +21,16 @@
             $result = mysqli_fetch_array($result);
             $pName = $result['nazev'].' - Vše';
             $pId = $result['poznavacky_id'];
+            
+            //Kontrola, zda zvolená poznávačka patří do dříve zvolené třídy
+            //Tím je znemožněn výběr poznávačky patřící do třídy, v níž uživatel není členem
+            $query = "SELECT COUNT(*) AS 'cnt' FROM poznavacky WHERE poznavacky_id = $pId AND tridy_id = $classId";
+            if (mysqli_fetch_array(mysqli_query($connection, $query))['cnt'] < 1)
+            {
+                //Zamítnutí přístupu
+                header("Location: err403.html");
+                die();
+            }
         }
     }
     else
@@ -33,6 +44,16 @@
             $result = mysqli_query($connection, $query);
             $pName = mysqli_fetch_array($result);
             $pName = $pName['nazev'];
+            
+            //Kontrola, zda zvolená část patří do poznávačky patřící do dříve zvolené třídy
+            //Tím je znemožněn výběr části patřící poznávačky, která je součástí třídy, v níž uživatel není členem
+            $query = "SELECT COUNT(*) AS 'cnt' FROM casti WHERE casti_id = $pId AND poznavacky_id IN (SELECT poznavacky_id FROM poznavacky WHERE tridy_id = $classId)";
+            if (mysqli_fetch_array(mysqli_query($connection, $query))['cnt'] < 1)
+            {
+                //Zamítnutí přístupu
+                header("Location: err403.html");
+                die();
+            }
         }
     }
     //Mazání cookie current
