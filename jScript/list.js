@@ -18,7 +18,12 @@ function closeNewClassForm()
 function applicationSubmit(event)
 {
     event.preventDefault();
-    var email = document.getElementById("newClassFormEmail").value;
+    var emailField = document.getElementById("newClassFormEmail");
+    var email = null;
+    if (emailField !== null)
+    {
+    	email = emailField.value;
+    }
     var className = document.getElementById("newClassFormName").value;
     var classCode = document.getElementById("newClassFormCode").value;
     var info = document.getElementById("newClassFormInfo").value;
@@ -242,7 +247,14 @@ function alertResponse(response)
 function applicationSent(response)
 {
     closeNewClassForm();
-    alert("Formulář byl úspěšně odeslán\nSledujte prosím svou e-mailovou schránku, obdržíte do ní informace, až bude třída připravená.");
+    if (response.length > 0)
+    {
+    	alert(response);
+    }
+    else
+    {
+    	alert("Formulář byl úspěšně odeslán\nSledujte prosím svou e-mailovou schránku, obdržíte do ní informace, až bude třída připravená.");
+    }
 }
 function newClasses(response)
 {

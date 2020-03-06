@@ -10,7 +10,7 @@
     $code = $_POST['code'];
     $info = nl2br($_POST['info']);
     
-    if (empty($email))
+    if (empty($email) || $email === 'null')
     {
         $email = $_SESSION['user']['email'];
     }
@@ -26,5 +26,10 @@
     $message .= "<fieldset style='width: fit-content; height: fit-content;'>$info</fieldset><br>";
     $message .= "<br><span>Email pro odpověď: <a href='mailto:$email'>$email</a></span>";
     
-    sendEmail(ADMIN_EMAIL, $subject, $message, $email, $username);
+    $result = sendEmail(ADMIN_EMAIL, $subject, $message, $email, $username);
+    if (isset($result))
+    {
+        //Při odesílání e-mailu došlo k chybě
+        echo "E-mail nemohl být z nějakého důvodu odeslán.\nZkuste to prosím později znovu, nebo pošlete žádost na GitHub jako hlášení problému (viz patička stránky --> Nalezli jste problém?";
+    }
     fileLog("Uživatel $username zažádal o vytvoření nové třídy jménem $name.");
