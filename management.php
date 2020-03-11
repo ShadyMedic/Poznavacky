@@ -65,6 +65,7 @@
     <meta charset="UTF-8">
 	<script type="text/javascript" src="jScript/management.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/private.css">
+	<link rel="icon" href="images/favicon.ico">
     <title>Správa služby</title>
 	</head>
     <body>
@@ -227,9 +228,9 @@
 				</table>
 			</div>
 			<div id="tab3">
-					<?php 
-					    include 'php/included/getReports.php';
-                    ?>
+				<?php 
+				    include 'php/included/getReports.php';
+                ?>
 				<div id="singleReport"></div>
 			</div>
 			<div id="tab4">
