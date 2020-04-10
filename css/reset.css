@@ -60,4 +60,9 @@ q:before, q:after {
   content: '';
   content: none;
 }
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 /*# sourceMappingURL=reset.css.map */
