@@ -132,7 +132,8 @@ textarea {
   padding: 0.2rem;
   resize: vertical;
   min-height: 3.8rem;
-  max-height: 50vh;
+  max-height: 40vh;
+  margin-bottom: -0.24rem;
 }
 
 td,
@@ -282,7 +283,7 @@ img {
 }
 
 #tab5 table {
-  margin: 0.2rem;
+  margin: 0.2rem 0;
 }
 
 #tab5 table tr {
@@ -292,6 +293,14 @@ img {
 }
 
 #tab5 table tr td {
-  padding: 0.1rem;
+  padding: 0.1rem 0.2rem 0.1rem 0;
+}
+
+#tab5 .borderBtn {
+  margin: 0 0.2rem 0 0;
+}
+
+#tab5 #emailPreview {
+  margin: 0.4rem 0;
 }
 /*# sourceMappingURL=private.css.map */

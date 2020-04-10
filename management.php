@@ -300,14 +300,16 @@
 						</tr>
 					</table>
 					<textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
-					<br>
-					<span>Bezpečnostní kód: </span>
-					<input id="emailCode" type=text maxlength=8 value="<?php include 'php/included/CONSTANTS.php'; echo EMAIL_CODE;?>" />
-					<br>
-					<button id="emailPreviewButton" onclick="updateEmailPreview()">Zobrazit náhled</button>
-					<button id="emailSendButton" onclick="sendMail()">Odeslat</button>
+					<table>
+						<tr>
+							<td><span>Bezpečnostní kód: </span></td>
+							<td><input id="emailCode" type=text maxlength=8 value="<?php include 'php/included/CONSTANTS.php'; echo EMAIL_CODE;?>" /></td>
+						</tr>
+					<table>
+					<button id="emailPreviewButton" class="borderBtn" onclick="updateEmailPreview()">Zobrazit náhled</button>
+					<button id="emailSendButton" class="borderBtn" onclick="sendMail()">Odeslat</button>
 					<div id="emailPreview">
-					Náhled e-mailu se zobrazí zde
+					Náhled e-mailu se zobrazí zde:
 					</div>
 				</div>
 			</div>
