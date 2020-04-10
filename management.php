@@ -122,8 +122,8 @@
     				                echo "</td>";
     				                echo "<td>";
     				                    echo "<button class='editConstantButton activeBtn icon-btn' onclick='editConstant(event)' title='Upravit konstantu'><img src='images/pencil.svg'></button>";
-    				                    echo "<button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='images/up.gif'></button>";
-    				                    echo "<button class='moveDownButton activeBtn icon-btn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='images/down.gif'></button>";
+    				                    echo "<button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='images/up.svg'></button>";
+    				                    echo "<button class='moveDownButton activeBtn icon-btn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='images/down.svg'></button>";
     				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='images/cross.svg'></button>";
     				                echo "</td>";
     				            echo "</tr>";
@@ -197,7 +197,7 @@
 					               if ($row['uzivatele_id'] !== $_SESSION['user']['id']) //U přihlášeného administrátora nezobrazuj akce
 					               {
     					               echo "<button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>";
-    					                   echo "<img src='images/pencil.gif'/>";
+    					                   echo "<img src='images/pencil.svg'/>";
                                        echo "</button>";
                                        //Kontrola, jestli má uživatel zadaný e-mail
                                        $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['jmeno']."' LIMIT 1";
@@ -218,7 +218,7 @@
                                        echo "<img src='images/mail.gif'/>";
                                        echo "</button>";
                                        echo "<button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>";
-                                            echo "<img src='images/cross.gif'/>";
+                                            echo "<img src='images/cross.svg'/>";
                                        echo "</button>";
 					               }
                                echo "</td>";
@@ -258,10 +258,10 @@
 					           echo "</td>";
 					           echo "<td>";
 					               echo "<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>";
-					                   echo "<img src='images/tick.gif'/>";
+					                   echo "<img src='images/tick.svg'/>";
                                    echo "</button>";
                                    echo "<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>";
-                                        echo "<img src='images/cross.gif'/>";
+                                        echo "<img src='images/cross.svg'/>";
                                    echo "</button>";
                                    //Kontrola, jestli má uživatel zadaný e-mail
                                    $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['uzivatele_jmeno']."' LIMIT 1";

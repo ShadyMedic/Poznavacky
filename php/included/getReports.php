@@ -87,10 +87,10 @@
                         echo "<img src='images/dot.gif'/>";
                     echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='deletePicture(event)' title='Odstranit obrázek'>";
-                        echo "<img src='images/cross.gif'/>";
+                        echo "<img src='images/cross.svg'/>";
                     echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='deleteReport(event)' title='Odstranit hlášení'>";
-                        echo "<img src='images/minus.gif'/>";
+                        echo "<img src='images/minus.svg'/>";
                     echo "</button>";
                 echo "</td>";
             echo "</tr>";
