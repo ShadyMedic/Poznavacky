@@ -81,10 +81,10 @@
                 //Výpis akcí
                 echo "<td>";
                     echo "<button class='reportAction activeBtn' onclick='showPicture(event)' title='Zobrazit obrázek'>";
-                        echo "<img src='images/eye.gif'/>";
+                        echo "<img src='images/eye.svg'/>";
                     echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='disablePicture(event)' title='Skrýt obrázek'>";
-                        echo "<img src='images/dot.gif'/>";
+                        echo "<img src='images/dot.svg'/>";
                     echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='deletePicture(event)' title='Odstranit obrázek'>";
                         echo "<img src='images/cross.svg'/>";

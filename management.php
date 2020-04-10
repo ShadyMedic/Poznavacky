@@ -215,7 +215,7 @@
                                        {
                                            echo "<button class='userAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
                                        }
-                                       echo "<img src='images/mail.gif'/>";
+                                       echo "<img src='images/mail.svg'/>";
                                        echo "</button>";
                                        echo "<button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>";
                                             echo "<img src='images/cross.svg'/>";
@@ -279,7 +279,7 @@
                                    {
                                        echo "<button class='nameChangeAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
                                    }
-                                        echo "<img src='images/mail.gif'/>";
+                                        echo "<img src='images/mail.svg'/>";
                                    echo "</button>";
                                echo "</td>";
 					        echo "</tr>";
