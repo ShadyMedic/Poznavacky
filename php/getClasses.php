@@ -40,6 +40,9 @@
         <button class='button' onclick='closeClassCode()'>Zpět</button>
     </div>";
     
+    //Vymazat zvolenou třídu ze $_SESSION
+    $_SESSION['class'] = 0;
+    
     //Aktualizovat uživateli poslední prohlíženou složku
     $userId = $_SESSION['user']['id'];
     $userId = mysqli_real_escape_string($connection, $userId);
