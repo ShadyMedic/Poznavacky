@@ -67,7 +67,7 @@
                 $info = $report['dalsi_informace'];
                 if ($reason == 6)
                 {
-                    echo "<td><i title='$info'>Najedďte sem myší pro zobrazení důvodu</i></td>";
+                    echo "<td><i title='$info'>Najeďte myší pro zobrazení důvodu</i></td>";
                 }
                 else
                 {
