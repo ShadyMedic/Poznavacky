@@ -306,9 +306,9 @@
 							<td><input id="emailCode" type=text maxlength=8 value="<?php include 'php/included/CONSTANTS.php'; echo EMAIL_CODE;?>" /></td>
 						</tr>
 					</table>
-					<button id="emailPreviewButton" class="borderBtn" onclick="updateEmailPreview()">Zobrazit náhled</button>
+					<button id="emailPreviewButton" class="borderBtn" onclick="previewEmailMessage()">Zobrazit náhled</button>
 					<button id="emailSendButton" class="borderBtn" onclick="sendMail()">Odeslat</button>
-					<div id="emailPreview">
+					<div id="emailPreview" style="display:none;">
 					Náhled e-mailu se zobrazí zde:
 					</div>
 				</div>

@@ -549,8 +549,13 @@ function sendMailNameChange(email)
 	document.getElementById("emailAddressee").value = email;
 }
 /*------------------------------------------------------------*/
-function updateEmailPreview()
+function previewEmailMessage()
 {
+	document.getElementById("emailMessage").style.display = "none";
+	document.getElementById("emailPreview").style.display = "block";
+	document.getElementById("emailPreviewButton").innerHTML = "Upravit zprávu";
+	document.getElementById("emailPreviewButton").setAttribute("onclick", "editEmailMessage()");
+	
 	var msg = document.getElementById("emailMessage").value;
 	if (msg !== "")
 	{
@@ -561,6 +566,13 @@ function updateEmailPreview()
 		msg = msg.replace("\n", "<br>");
 		document.getElementById("emailPreview").innerHTML = "Náhled e-mailu se zobrazí zde";
 	}
+}
+function editEmailMessage()
+{
+	document.getElementById("emailPreview").style.dispay = "none";
+	document.getElementById("emailMessage").style.display = "block";
+	document.getElementById("emailPreviewButton").innerHTML = "Zobrazit náhled";
+	document.getElementById("emailPreviewButton").setAttribute("onclick", "previewEmailMessage()");
 }
 function sendMail()
 {
