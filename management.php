@@ -77,7 +77,7 @@
 			<a id="tab4link" onclick="fourthTab()">Správa změn jmen</a>
 			<a id="tab5link" onclick="fifthTab()">Poslat e-mail</a>
 			<a id="tab6link" onclick="sixthTab()">Ovládání databáze</a>
-			<a href="list.php" style="background-color: #FFFF99">Návrat</a>
+			<a href="list.php">Návrat</a>
 		</nav>
 		</header>
 		<main>
@@ -142,7 +142,7 @@
     			</div>
 			</div>
 			<div id="tab2">
-				<table border=1>
+				<table>
 					<tr>
     					<th>ID</th>
     					<th>Jméno</th>
@@ -234,7 +234,7 @@
 				<div id="singleReport"></div>
 			</div>
 			<div id="tab4">
-				<table border=1>
+				<table>
 					<tr>
     					<th>Současné jméno</th>
     					<th>Požadované jméno</th>
