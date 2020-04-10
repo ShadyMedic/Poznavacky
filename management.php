@@ -289,12 +289,16 @@
 			</div>
 			<div id="tab5">
 				<div id="email">
-					<span>Adresát: </span>
-					<input id="emailAddressee" type=email maxlength=255 />
-					<br>
-					<span>Předmět: </span>
-					<input id="emailSubject" type=text maxlength=70 />
-					<br>
+					<table>
+						<tr>
+							<td><span>Adresát:</span></td>
+							<td><input id="emailAddressee" type=email maxlength=255 /></td>
+						</tr>
+						<tr>
+							<td><span>Předmět:</span></td>
+							<td><input id="emailSubject" type=text maxlength=70 /></td>
+						</tr>
+					</table>
 					<textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
 					<br>
 					<span>Bezpečnostní kód: </span>
