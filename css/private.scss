@@ -4,6 +4,7 @@ body {
   height: 100%;
   margin: 0;
   line-height: 1.2rem;
+  overflow: hidden;
 }
 #container {
 	display: flex;
@@ -14,6 +15,7 @@ main {
 	margin: 1rem;
 	flex: 1 1 auto;
 	border: 1px solid #000;
+	overflow-y: auto;
 }
 header {
 	border: 1px solid #000;
@@ -25,9 +27,9 @@ header {
 nav {
 	display: flex;
 	flex-wrap: wrap;
-}
-nav a {
-	padding: 0 0.6rem;
+	a {
+		padding: 0 0.6rem;
+	}
 }
 table {
 	margin: auto;
@@ -39,8 +41,11 @@ input {
 	line-height: 1.2rem;
 	padding-left: 0.2rem;
 	padding-right: 0.2rem;
+	background: none;
+	border: 1px solid gray;
 }
-td {
+td,
+th {
 	padding: 0 0.2rem;
 	margin: 0;
 	vertical-align: middle;
@@ -57,13 +62,18 @@ tr {
 	display: none;
 }
 button {
-	background: #fff;
+	background: transparent;
+	&:hover {
+		cursor: pointer;
+	}
 }
 .borderBtn {
-	border: 1px solid #aaa;
-	box-sizing: border-box;
-	padding: 0.16rem 0.2rem 0.1rem 0.2rem;
+	border: 1px solid gray;
+	padding: 0.26rem 0.4rem 0.2rem 0.4rem;
 	margin: 0.3rem auto;
+	&:hover {
+		background-color: rgba(black, 0.1);
+	}
 }
 .activeBtn,
 .grayscale {
@@ -77,16 +87,52 @@ img {
 	height: 1.2rem;
 	width: 1.2rem;
 }
+:focus {
+	outline: none;
+	border: 1px solid red;
+}
 /*-----------Tab1------------*/
-#constants {
-	margin: auto;
-	text-align: center;
+#tab1 {
+	#constants {
+		margin: auto;
+		text-align: center;
+	}
+	h3 {
+		text-align: center;
+		margin: 0.4rem;
+		font-size: 1.2rem;
+	}
+	.constantField {
+		border: 0;
+	}
 }
-h3 {
-	text-align: center;
-	margin: 0.4rem;
-	font-size: 1.2rem;
-}
-.constantField {
-	border: 0;
+/*-----------Tab2------------*/
+#tab2,
+#tab3 {
+	table {
+		position: relative;
+		max-width: 100%;
+	}
+	th {
+		position:sticky;
+		top: 0;
+		background: lightgray;
+	}
+	tr:nth-child(odd) {
+		background: #eee;
+	}
+	td {
+		padding: 0.1rem 0.4rem;
+		&:not(:last-child) {
+			border-right: 1px solid lightgray;
+		}
+	}
+	input {
+		border: none;
+		text-align: center;
+	}
+	select {
+		border: none;
+		background: transparent;
+	}
 }
