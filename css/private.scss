@@ -1,0 +1,82 @@
+@import "reset.scss";
+html,
+body {
+  height: 100%;
+  margin: 0;
+  line-height: 1.2rem;
+}
+#container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+main {
+	margin: 1rem;
+	flex: 1 1 auto;
+	border: 1px solid #000;
+}
+header {
+	border: 1px solid #000;
+	margin: 1rem 1rem 0 1rem;
+	line-height: 2.2rem;
+	font-size: 1.2rem;
+	flex: 0 1 auto;
+}
+nav {
+	display: flex;
+	flex-wrap: wrap;
+}
+nav a {
+	padding: 0 0.6rem;
+}
+table {
+	margin: auto;
+	border-collapse: collapse;
+	text-align: center;
+	vertical-align: middle;
+}
+tr {
+	box-sizing: border-box;
+}
+td {
+	box-sizing: border-box;
+	padding: 2px;
+}
+input {
+	box-sizing: border-box;
+	line-height: 1.2rem;
+	padding-left: 0.2rem;
+	padding-right: 0.2rem;
+}
+#tab1
+{
+	display: block;
+}
+#tab2, #tab3, #tab4, #tab5, #tab6
+{
+	display: none;
+}
+button {
+	background: #fff;
+}
+.borderBtn {
+	border: 1px solid #aaa;
+	box-sizing: border-box;
+	padding: 2px 4px;
+}
+/*-----------Tab1------------*/
+#constants {
+	margin: auto;
+	text-align: center;
+}
+h3 {
+	text-align: center;
+	margin: 0.4rem;
+	font-size: 1.2rem;
+}
+.constantField {
+	border: 0;
+}
+#constants table {
+	margin-bottom: 1rem;
+}
