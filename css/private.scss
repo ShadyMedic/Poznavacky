@@ -91,7 +91,7 @@ img {
 	outline: none;
 	border: 1px solid red;
 }
-/*-----------Tab1------------*/
+/*----------- Tab1 ------------*/
 #tab1 {
 	#constants {
 		margin: auto;
@@ -106,9 +106,10 @@ img {
 		border: 0;
 	}
 }
-/*-----------Tab2------------*/
+/*----------- Tab2, Tab3, Tab4 ------------*/
 #tab2,
-#tab3 {
+#tab3,
+#tab4 {
 	table {
 		position: relative;
 		max-width: 100%;

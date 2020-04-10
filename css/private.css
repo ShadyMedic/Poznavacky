@@ -183,7 +183,7 @@ img {
   border: 1px solid red;
 }
 
-/*-----------Tab1------------*/
+/*----------- Tab1 ------------*/
 #tab1 #constants {
   margin: auto;
   text-align: center;
@@ -199,15 +199,17 @@ img {
   border: 0;
 }
 
-/*-----------Tab2------------*/
+/*----------- Tab2, Tab3, Tab4 ------------*/
 #tab2 table,
-#tab3 table {
+#tab3 table,
+#tab4 table {
   position: relative;
   max-width: 100%;
 }
 
 #tab2 th,
-#tab3 th {
+#tab3 th,
+#tab4 th {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -215,28 +217,33 @@ img {
 }
 
 #tab2 tr:nth-child(odd),
-#tab3 tr:nth-child(odd) {
+#tab3 tr:nth-child(odd),
+#tab4 tr:nth-child(odd) {
   background: #eee;
 }
 
 #tab2 td,
-#tab3 td {
+#tab3 td,
+#tab4 td {
   padding: 0.1rem 0.4rem;
 }
 
 #tab2 td:not(:last-child),
-#tab3 td:not(:last-child) {
+#tab3 td:not(:last-child),
+#tab4 td:not(:last-child) {
   border-right: 1px solid lightgray;
 }
 
 #tab2 input,
-#tab3 input {
+#tab3 input,
+#tab4 input {
   border: none;
   text-align: center;
 }
 
 #tab2 select,
-#tab3 select {
+#tab3 select,
+#tab4 select {
   border: none;
   background: transparent;
 }
