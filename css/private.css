@@ -61,6 +61,11 @@ q:before, q:after {
   content: none;
 }
 
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -112,19 +117,22 @@ nav a {
 }
 
 table {
-  margin: auto;
   border-collapse: collapse;
-  text-align: center;
 }
 
 input {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  line-height: 1.2rem;
   padding-left: 0.2rem;
   padding-right: 0.2rem;
   background: none;
   border: 1px solid gray;
+}
+
+textarea {
+  border: 1px solid gray;
+  padding: 0.2rem;
+  resize: vertical;
+  min-height: 3.8rem;
+  max-height: 50vh;
 }
 
 td,
@@ -183,7 +191,21 @@ img {
   border: 1px solid red;
 }
 
+.grayscale {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+
+.grayscale:hover {
+  cursor: auto;
+}
+
 /*----------- Tab1 ------------*/
+#tab1 table {
+  margin: auto;
+  text-align: center;
+}
+
 #tab1 #constants {
   margin: auto;
   text-align: center;
@@ -204,7 +226,8 @@ img {
 #tab3 table,
 #tab4 table {
   position: relative;
-  max-width: 100%;
+  margin: auto;
+  text-align: center;
 }
 
 #tab2 th,
@@ -214,6 +237,7 @@ img {
   position: sticky;
   top: 0;
   background: lightgray;
+  padding: 0.1rem 0.4rem;
 }
 
 #tab2 tr:nth-child(odd),
@@ -246,5 +270,28 @@ img {
 #tab4 select {
   border: none;
   background: transparent;
+}
+
+/*----------- Tab5 ------------*/
+#tab5 #email {
+  margin: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  position: relative;
+}
+
+#tab5 table {
+  margin: 0.2rem;
+}
+
+#tab5 table tr {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+#tab5 table tr td {
+  padding: 0.1rem;
 }
 /*# sourceMappingURL=private.css.map */
