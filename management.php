@@ -121,10 +121,10 @@
     				                    echo "<input type=text readonly value=$constantValue />";
     				                echo "</td>";
     				                echo "<td>";
-    				                    echo "<button class='editConstantButton activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='images/pencil.gif'></button>";
+    				                    echo "<button class='editConstantButton activeBtn icon-btn' onclick='editConstant(event)' title='Upravit konstantu'><img src='images/pencil.svg'></button>";
     				                    echo "<button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='images/up.gif'></button>";
-    				                    echo "<button class='moveDownButton activeBtn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='images/down.gif'></button>";
-    				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='images/cross.gif'></button>";
+    				                    echo "<button class='moveDownButton activeBtn icon-btn' onclick='moveConstantDown(event)' title='Posunout dolů'><img src='images/down.gif'></button>";
+    				                    echo "<button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='images/cross.svg'></button>";
     				                echo "</td>";
     				            echo "</tr>";
     				        }
@@ -136,11 +136,9 @@
 						reevaluateMoveButtons();
     			    </script>
     			    
-    			    <div>
-        				<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='images/plus.gif'></button>
-        				<br>
-        				<button class='centerBtn borderBtn' onclick='saveConstants()' title='Přidat novou konstantu'>Uložit konstanty</button>
-    				</div>
+        			<button class='actionButton activeBtn centerBtn' onclick='addConstant()' title='Přidat novou konstantu'><img src='images/plus.svg'></button>
+        			<br>
+        			<button class='centerBtn borderBtn' onclick='saveConstants()' title='Přidat novou konstantu'>Uložit konstanty</button>
     			</div>
 			</div>
 			<div id="tab2">

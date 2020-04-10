@@ -113,18 +113,6 @@ table {
   margin: auto;
   border-collapse: collapse;
   text-align: center;
-  vertical-align: middle;
-}
-
-tr {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-td {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 2px;
 }
 
 input {
@@ -133,6 +121,16 @@ input {
   line-height: 1.2rem;
   padding-left: 0.2rem;
   padding-right: 0.2rem;
+}
+
+td {
+  padding: 0 0.2rem;
+  margin: 0;
+  vertical-align: middle;
+}
+
+tr {
+  height: 2rem;
 }
 
 #tab1 {
@@ -151,7 +149,22 @@ button {
   border: 1px solid #aaa;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 2px 4px;
+  padding: 0.16rem 0.2rem 0.1rem 0.2rem;
+  margin: 0.3rem auto;
+}
+
+.activeBtn,
+.grayscale {
+  height: 1.2rem;
+  width: 1.2rem;
+  padding: 0;
+  margin: 0 0.2rem;
+  vertical-align: middle;
+}
+
+img {
+  height: 1.2rem;
+  width: 1.2rem;
 }
 
 /*-----------Tab1------------*/
@@ -168,9 +181,5 @@ h3 {
 
 .constantField {
   border: 0;
-}
-
-#constants table {
-  margin-bottom: 1rem;
 }
 /*# sourceMappingURL=private.css.map */
