@@ -306,6 +306,13 @@ button:hover {
   text-align: center;
 }
 
+#tab2 input[type='number'],
+#tab3 input[type='number'],
+#tab4 input[type='number'] {
+  width: 5.4rem;
+  padding-left: 1.2rem;
+}
+
 #tab2 select,
 #tab3 select,
 #tab4 select {

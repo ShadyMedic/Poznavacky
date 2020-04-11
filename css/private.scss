@@ -182,6 +182,10 @@ button {
 	input {
 		border: none;
 		text-align: center;
+		&[type='number'] {
+			width: 5.4rem;
+			padding-left: 1.2rem;
+		}
 	}
 	select {
 		border: none;
