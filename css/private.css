@@ -221,6 +221,26 @@ button:hover {
   cursor: auto;
 }
 
+/*----------- AdminCheck ------------*/
+#adminCheck {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+#wrongAdminPassword {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
+  display: block;
+}
+
 /*----------- Tab1 ------------*/
 #tab1 table {
   margin: auto;
