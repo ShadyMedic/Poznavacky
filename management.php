@@ -310,19 +310,19 @@
 					<button id="emailPreviewButton" class="borderBtn" onclick="previewEmailMessage()">Zobrazit náhled</button>
 					<button id="emailSendButton" class="borderBtn" onclick="sendMail()">Odeslat</button>
 					<div id="emailPreview" style="display:none;">
-					Náhled e-mailu se zobrazí zde:
+						Náhled e-mailu se zobrazí zde:
 					</div>
 				</div>
 			</div>
 			<div id="tab6">
 				<div id="sql">
 					<div id="sqlWarning">
-						<span>Neuvědomělé používání tohoto nástroje může mít destruktivní účinky. Používejte tento nástroj pouze v případě, že jste si naprosto jistí tím, co děláte!</span>
+						Neuvědomělé používání tohoto nástroje může mít destruktivní účinky. Používejte tento nástroj pouze v případě, že jste si naprosto jistí tím, co děláte!
 					</div>
 					<div id="sqlQuery">
 						<textarea id="sqlQueryInput" rows=5 cols=150 placeholder="Zadejte příkazy. Každý příkaz musí být ukončen středníkem (;)"></textarea>
 						<br>
-						<button onclick="sendSqlQuery()">Odeslat</button>
+						<button class="borderBtn" onclick="sendSqlQuery()">Odeslat</button>
 					</div>
 					<div id="sqlResult">
 						Žádný výstup

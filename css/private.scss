@@ -203,7 +203,6 @@ button {
 	position: relative;
 	#email {
 		margin: auto;
-		width: 100%;
 		width: 95%;
 		@media screen and (min-width: $mobile) {
 			width: 85%;
@@ -239,5 +238,34 @@ button {
 	#emailPreview {
 		width: 100%;
 	}
-	
+}
+/*----------- Tab6 ------------*/
+#tab6 {
+	position: relative;
+	#sql {
+		margin: auto;
+		width: 96%;
+		@media screen and (min-width: $mobile) {
+			width: 88%;
+		}
+		@media screen and (min-width: $tablet) {
+			width: 72%;
+		}
+		@media screen and (min-width: $smallDesktop) {
+			width: 56%;
+		}
+	}
+	#sqlWarning {
+		margin: 0.2rem 0 0.3rem 0;
+		text-align: justify;
+	}
+	textarea {
+		border: 1px solid gray;
+		padding: 0.2rem;
+		resize: vertical;
+		min-height: 3.8rem;
+		max-height: 40vh;
+		margin-bottom: -0.24rem;
+		width: 100%;
+	}
 }

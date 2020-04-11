@@ -339,7 +339,6 @@ button:hover {
 
 #tab5 #email {
   margin: auto;
-  width: 100%;
   width: 95%;
 }
 
@@ -390,6 +389,49 @@ button:hover {
 }
 
 #tab5 #emailPreview {
+  width: 100%;
+}
+
+/*----------- Tab6 ------------*/
+#tab6 {
+  position: relative;
+}
+
+#tab6 #sql {
+  margin: auto;
+  width: 96%;
+}
+
+@media screen and (min-width: 576px) {
+  #tab6 #sql {
+    width: 88%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #tab6 #sql {
+    width: 72%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #tab6 #sql {
+    width: 56%;
+  }
+}
+
+#tab6 #sqlWarning {
+  margin: 0.2rem 0 0.3rem 0;
+  text-align: justify;
+}
+
+#tab6 textarea {
+  border: 1px solid gray;
+  padding: 0.2rem;
+  resize: vertical;
+  min-height: 3.8rem;
+  max-height: 40vh;
+  margin-bottom: -0.24rem;
   width: 100%;
 }
 /*# sourceMappingURL=private.css.map */
