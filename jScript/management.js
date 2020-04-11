@@ -414,11 +414,13 @@ function showPicture(event)
 	reportsTable = document.getElementById("singleReport").innerHTML;
 	
 	//Zobrazení obrázku
-	document.getElementById("singleReport").innerHTML = "<img src='"+ url +"' /><br><button onclick='hidePicture()'>Zpět</button>";
+	document.getElementById("singleReport").innerHTML = "<img src='"+ url +"' /><br><button class='borderBtn' onclick='hidePicture()'>Zpět</button>";
+	document.querySelector(".overlay").style.display = "block";
 }
 function hidePicture()
 {
 	document.getElementById("singleReport").innerHTML = reportsTable;
+	document.querySelector(".overlay").style.display = "none";
 }
 function disablePicture(event)
 {

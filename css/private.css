@@ -72,9 +72,10 @@ body {
   margin: 0;
   line-height: 1.2rem;
   overflow: hidden;
+  position: relative;
 }
 
-#container {
+.container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -83,6 +84,17 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   height: 100%;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
 }
 
 main {
@@ -187,7 +199,8 @@ button:hover {
   vertical-align: middle;
 }
 
-img {
+.activeBtn img,
+.grayscale img {
   height: 1.2rem;
   width: 1.2rem;
 }
@@ -278,6 +291,45 @@ img {
 #tab4 select {
   border: none;
   background: transparent;
+}
+
+#singleReport {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 90%;
+}
+
+@media screen and (min-width: 576px) {
+  #singleReport {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #singleReport {
+    width: 65%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #singleReport {
+    width: 45%;
+  }
+}
+
+#singleReport img {
+  width: 100%;
+}
+
+#singleReport .borderBtn {
+  display: block;
+  margin: auto;
+  background: white;
+  border: 1px solid black;
 }
 
 /*----------- Tab5 ------------*/

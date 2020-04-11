@@ -68,7 +68,8 @@
     <title>Správa služby</title>
 	</head>
     <body>
-	<div id="container">
+		<div class="overlay"></div>
+	<div class="container">
 		<header>
 		<nav>
 			<a id="tab1link" onclick="firstTab()" class="activeTab">Nastavení</a>
