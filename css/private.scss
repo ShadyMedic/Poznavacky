@@ -1,4 +1,6 @@
-@import "reset.scss";
+@import "_reset.scss";
+@import "_variables.scss";
+
 html,
 body {
   height: 100%;
@@ -20,7 +22,6 @@ main {
 header {
 	border: 1px solid #000;
 	margin: 1rem 1rem 0 1rem;
-	line-height: 2.2rem;
 	font-size: 1.2rem;
 	flex: 0 1 auto;
 }
@@ -28,7 +29,21 @@ nav {
 	display: flex;
 	flex-wrap: wrap;
 	a {
-		padding: 0 0.6rem;
+		padding: 0.6rem;
+		height: 2.4rem;
+		&:last-child {
+			color: gray;
+		}
+	}
+	.activeTab {
+		background: lightgray;
+		cursor: default;
+	}
+	:not(.activeTab) {
+		&:hover {
+			cursor: pointer;
+			background:#eee;
+		}
 	}
 }
 table {
@@ -39,14 +54,6 @@ input {
 	padding-right: 0.2rem;
 	background: none;
 	border: 1px solid gray;
-}
-textarea {
-	border: 1px solid gray;
-	padding: 0.2rem;
-	resize: vertical;
-	min-height: 3.8rem;
-	max-height: 40vh;
-	margin-bottom: -0.24rem;
 }
 td,
 th {
@@ -93,7 +100,8 @@ img {
 }
 :focus {
 	outline: none;
-	border: 1px solid red;
+	border: 1px dotted black;
+	box-sizing: border-box;
 }
 .grayscale {
 	filter: grayscale(100%);
@@ -155,10 +163,20 @@ img {
 }
 /*----------- Tab5 ------------*/
 #tab5 {
+	position: relative;
 	#email {
 		margin: auto;
-		width: fit-content;
-		position: relative;
+		width: 100%;
+		width: 95%;
+		@media screen and (min-width: $mobile) {
+			width: 85%;
+		}
+		@media screen and (min-width: $tablet) {
+			width: 65%;
+		}
+		@media screen and (min-width: $smallDesktop) {
+			width: 45%;
+		}
 	}
 	table {
 		margin: 0.2rem 0;
@@ -172,7 +190,17 @@ img {
 	.borderBtn {
 		margin: 0 0.2rem 0 0;
 	}
-	#emailPreview {
-		margin: 0.4rem 0;
+	textarea {
+		border: 1px solid gray;
+		padding: 0.2rem;
+		resize: vertical;
+		min-height: 3.8rem;
+		max-height: 40vh;
+		margin-bottom: -0.24rem;
+		width: 100%;
 	}
+	#emailPreview {
+		width: 100%;
+	}
+	
 }

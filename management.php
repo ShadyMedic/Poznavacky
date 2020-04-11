@@ -71,7 +71,7 @@
 	<div id="container">
 		<header>
 		<nav>
-			<a id="tab1link" onclick="firstTab()" style="background-color: #9999FF;">Nastavení</a>
+			<a id="tab1link" onclick="firstTab()" class="activeTab">Nastavení</a>
 			<a id="tab2link" onclick="secondTab()">Správa účtů</a>
 			<a id="tab3link" onclick="thirdTab()">Správa hlášení</a>
 			<a id="tab4link" onclick="fourthTab()">Správa změn jmen</a>

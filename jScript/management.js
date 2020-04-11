@@ -10,14 +10,14 @@ function firstTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab1").style.display = "block";
-	document.getElementById("tab1link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab1link").setAttribute("class", "activeTab");
 }
 function secondTab()
 {
@@ -27,14 +27,14 @@ function secondTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab2").style.display = "block";
-	document.getElementById("tab2link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab2link").setAttribute("class", "activeTab");
 }
 function thirdTab()
 {
@@ -44,14 +44,14 @@ function thirdTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab3").style.display = "block";
-	document.getElementById("tab3link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab3link").setAttribute("class", "activeTab");
 }
 function fourthTab()
 {
@@ -61,14 +61,14 @@ function fourthTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab4").style.display = "block";
-	document.getElementById("tab4link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab4link").setAttribute("class", "activeTab");
 }
 function fifthTab()
 {
@@ -78,14 +78,14 @@ function fifthTab()
 	document.getElementById("tab4").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab5").style.display = "block";
-	document.getElementById("tab5link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab5link").setAttribute("class", "activeTab");
 }
 function sixthTab()
 {
@@ -95,14 +95,14 @@ function sixthTab()
 	document.getElementById("tab4").style.display = "none";
 	document.getElementById("tab5").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab6").style.display = "block";
-	document.getElementById("tab6link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab6link").setAttribute("class", "activeTab");
 }
 /*------------------------------------------------------------*/
 function reevaluateMoveButtons()
