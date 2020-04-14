@@ -561,17 +561,17 @@ function previewEmailMessage()
 	var msg = document.getElementById("emailMessage").value;
 	if (msg !== "")
 	{
-		document.getElementById("emailPreview").innerHTML = msg;
+		document.getElementById("emailPreview").innerHTML = "Náhled e-mailu: <br>" + msg;
 	}
 	else
 	{
 		msg = msg.replace("\n", "<br>");
-		document.getElementById("emailPreview").innerHTML = "Náhled e-mailu se zobrazí zde";
+		document.getElementById("emailPreview").innerHTML = "Zde se zobrazí náhled e-mailu";
 	}
 }
 function editEmailMessage()
 {
-	document.getElementById("emailPreview").style.dispay = "none";
+	document.getElementById("emailPreview").style.display = "none";
 	document.getElementById("emailMessage").style.display = "block";
 	document.getElementById("emailPreviewButton").innerHTML = "Zobrazit náhled";
 	document.getElementById("emailPreviewButton").setAttribute("onclick", "previewEmailMessage()");

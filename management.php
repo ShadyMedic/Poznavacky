@@ -300,6 +300,9 @@
 						</tr>
 					</table>
 					<textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
+					<div id="emailPreview" style="display:none;">
+						Zde se zobrazí náhled e-mailu
+					</div>
 					<table>
 						<tr>
 							<td><span>Bezpečnostní kód: </span></td>
@@ -308,9 +311,6 @@
 					</table>
 					<button id="emailPreviewButton" class="borderBtn" onclick="previewEmailMessage()">Zobrazit náhled</button>
 					<button id="emailSendButton" class="borderBtn" onclick="sendMail()">Odeslat</button>
-					<div id="emailPreview" style="display:none;">
-						Náhled e-mailu se zobrazí zde:
-					</div>
 				</div>
 			</div>
 			<div id="tab6">
