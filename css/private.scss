@@ -263,7 +263,12 @@ button {
 #tab6 {
 	position: relative;
 	#sql {
+		width: 100%;
+	}
+	.sqlCenter {
+		display: block;
 		margin: auto;
+		text-align: justify;
 		width: 96%;
 		@media screen and (min-width: $mobile) {
 			width: 88%;
@@ -276,9 +281,8 @@ button {
 		}
 	}
 	#sqlWarning {
-		margin: 0.2rem 0 0.3rem 0;
-		text-align: justify;
-	}
+		margin: 0.2rem auto 0.3rem auto;
+	}	
 	textarea {
 		border: 1px solid gray;
 		padding: 0.2rem;
@@ -287,5 +291,18 @@ button {
 		max-height: 40vh;
 		margin-bottom: -0.24rem;
 		width: 100%;
+	}
+	table {
+		border-collapse: collapse;
+		margin: 0.2rem auto;
+		tr:nth-child(even) {
+			background: #eee;
+		}
+		td {
+			padding: 0.1rem 0.4rem;
+			&:not(:last-child) {
+				border-right: 1px solid lightgray;
+			}
+		}
 	}
 }

@@ -56,22 +56,22 @@
         global $connection;
         $result = mysqli_query($connection, $query);
         
-        echo "<span>Provádím $query...</span><br>";
+        echo "<span class='sqlCenter'>Provádím $query...</span>";
         if (gettype($result) == 'boolean')  //Výsledek není tabulka
         {
             if ($result)
             {
-                echo "<span style='color:#009900;'>Příkaz úspěšně vykonán.</span><br>";
+                echo "<span class='sqlCenter' style='color:#009900;'>Příkaz úspěšně vykonán.</span>";
             }
             else
             {
-                echo "<span style='color:#990000;'>Nastala chyba: ".mysqli_error($connection)."</span><br>";
+                echo "<span class='sqlCenter' style='color:#990000;'>Nastala chyba: ".mysqli_error($connection)."</span>";
             }
         }
         else                                //Výsledek je tabulka
         {
-            echo "<span style='color:#009900;'>Příkaz úspěšně vykonán. Byly navráceny následující výsledky:</span><br>";
-            echo "<table border=1 style='border-collapse: collapse;'>";
+            echo "<span class='sqlCenter' style='color:#009900;'>Příkaz úspěšně vykonán. Byly navráceny následující výsledky:</span>";
+            echo "<table>";
             while ($row = mysqli_fetch_array($result))
             {
                 echo "<tr>";

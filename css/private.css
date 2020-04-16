@@ -425,31 +425,36 @@ button:hover {
 }
 
 #tab6 #sql {
+  width: 100%;
+}
+
+#tab6 .sqlCenter {
+  display: block;
   margin: auto;
+  text-align: justify;
   width: 96%;
 }
 
 @media screen and (min-width: 576px) {
-  #tab6 #sql {
+  #tab6 .sqlCenter {
     width: 88%;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #tab6 #sql {
+  #tab6 .sqlCenter {
     width: 72%;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #tab6 #sql {
+  #tab6 .sqlCenter {
     width: 56%;
   }
 }
 
 #tab6 #sqlWarning {
-  margin: 0.2rem 0 0.3rem 0;
-  text-align: justify;
+  margin: 0.2rem auto 0.3rem auto;
 }
 
 #tab6 textarea {
@@ -460,5 +465,22 @@ button:hover {
   max-height: 40vh;
   margin-bottom: -0.24rem;
   width: 100%;
+}
+
+#tab6 table {
+  border-collapse: collapse;
+  margin: 0.2rem auto;
+}
+
+#tab6 table tr:nth-child(even) {
+  background: #eee;
+}
+
+#tab6 table td {
+  padding: 0.1rem 0.4rem;
+}
+
+#tab6 table td:not(:last-child) {
+  border-right: 1px solid lightgray;
 }
 /*# sourceMappingURL=private.css.map */

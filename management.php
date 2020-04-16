@@ -315,16 +315,16 @@
 			</div>
 			<div id="tab6">
 				<div id="sql">
-					<div id="sqlWarning">
+					<div id="sqlWarning" class="sqlCenter">
 						Neuvědomělé používání tohoto nástroje může mít destruktivní účinky. Používejte tento nástroj pouze v případě, že jste si naprosto jistí tím, co děláte!
 					</div>
-					<div id="sqlQuery">
+					<div id="sqlQuery" class="sqlCenter">
 						<textarea id="sqlQueryInput" rows=5 cols=150 placeholder="Zadejte příkazy. Každý příkaz musí být ukončen středníkem (;)"></textarea>
 						<br>
 						<button class="borderBtn" onclick="sendSqlQuery()">Odeslat</button>
 					</div>
 					<div id="sqlResult">
-						Žádný výstup
+						<span class='sqlCenter'>Žádný výstup</span>
 					</div>
 				</div>
 			</div>
