@@ -561,12 +561,12 @@ function previewEmailMessage()
 	var msg = document.getElementById("emailMessage").value;
 	if (msg !== "")
 	{
-		document.getElementById("emailPreview").innerHTML = "Náhled e-mailu: <br>" + msg;
+		document.getElementById("emailPreview").innerHTML = "<span>Náhled e-mailu:</span><br><br>" + msg;
 	}
 	else
 	{
 		msg = msg.replace("\n", "<br>");
-		document.getElementById("emailPreview").innerHTML = "Zde se zobrazí náhled e-mailu";
+		document.getElementById("emailPreview").innerHTML = "<span>Zde se zobrazí náhled e-mailu</span>";
 	}
 }
 function editEmailMessage()

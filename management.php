@@ -301,7 +301,7 @@
 					</table>
 					<textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
 					<div id="emailPreview" style="display:none;">
-						Zde se zobrazí náhled e-mailu
+						<span>Zde se zobrazí náhled e-mailu:</span>
 					</div>
 					<table>
 						<tr>
