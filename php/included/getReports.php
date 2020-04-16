@@ -67,7 +67,7 @@
                 $info = $report['dalsi_informace'];
                 if ($reason == 6)
                 {
-                    echo "<td><i title='$info'>Najedďte sem myší pro zobrazení důvodu</i></td>";
+                    echo "<td><i title='$info'>Najeďte myší pro zobrazení důvodu</i></td>";
                 }
                 else
                 {
@@ -81,16 +81,16 @@
                 //Výpis akcí
                 echo "<td>";
                     echo "<button class='reportAction activeBtn' onclick='showPicture(event)' title='Zobrazit obrázek'>";
-                        echo "<img src='images/eye.gif'/>";
+                        echo "<img src='images/eye.svg'/>";
                     echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='disablePicture(event, $picId)' title='Skrýt obrázek'>";
-                        echo "<img src='images/dot.gif'/>";
+                        echo "<img src='images/dot.svg'/>";
                     echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='deletePicture(event, $picId)' title='Odstranit obrázek'>";
-                        echo "<img src='images/cross.gif'/>";
+                        echo "<img src='images/cross.svg'/>";
                     echo "</button>";
                     echo "<button class='reportAction activeBtn' onclick='deleteReport(event, $picId)' title='Odstranit hlášení'>";
-                        echo "<img src='images/minus.gif'/>";
+                        echo "<img src='images/minus.svg'/>";
                     echo "</button>";
                 echo "</td>";
             echo "</tr>";

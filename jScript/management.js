@@ -10,14 +10,14 @@ function firstTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab1").style.display = "block";
-	document.getElementById("tab1link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab1link").setAttribute("class", "activeTab");
 }
 function secondTab()
 {
@@ -27,14 +27,14 @@ function secondTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab2").style.display = "block";
-	document.getElementById("tab2link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab2link").setAttribute("class", "activeTab");
 }
 function thirdTab()
 {
@@ -44,14 +44,14 @@ function thirdTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab3").style.display = "block";
-	document.getElementById("tab3link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab3link").setAttribute("class", "activeTab");
 }
 function fourthTab()
 {
@@ -61,14 +61,14 @@ function fourthTab()
 	document.getElementById("tab5").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab4").style.display = "block";
-	document.getElementById("tab4link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab4link").setAttribute("class", "activeTab");
 }
 function fifthTab()
 {
@@ -78,14 +78,14 @@ function fifthTab()
 	document.getElementById("tab4").style.display = "none";
 	document.getElementById("tab6").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab6link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab6link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab5").style.display = "block";
-	document.getElementById("tab5link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab5link").setAttribute("class", "activeTab");
 }
 function sixthTab()
 {
@@ -95,14 +95,14 @@ function sixthTab()
 	document.getElementById("tab4").style.display = "none";
 	document.getElementById("tab5").style.display = "none";
 	
-	document.getElementById("tab1link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab2link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab3link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab4link").style.backgroundColor = "#FFFFFF";
-	document.getElementById("tab5link").style.backgroundColor = "#FFFFFF";
+	document.getElementById("tab1link").removeAttribute("class", "activeTab");
+	document.getElementById("tab2link").removeAttribute("class", "activeTab");
+	document.getElementById("tab3link").removeAttribute("class", "activeTab");
+	document.getElementById("tab4link").removeAttribute("class", "activeTab");
+	document.getElementById("tab5link").removeAttribute("class", "activeTab");
 	
 	document.getElementById("tab6").style.display = "block";
-	document.getElementById("tab6link").style.backgroundColor = "#9999FF";
+	document.getElementById("tab6link").setAttribute("class", "activeTab");
 }
 /*------------------------------------------------------------*/
 function reevaluateMoveButtons()
@@ -174,7 +174,7 @@ function editConstant(event)
 	event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].setAttribute("class", "constantField");
 	
 	//Změnit tlačítka akcí
-	event.target.parentNode.parentNode.innerHTML = "<button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='images/tick.gif'/></button><button class='activeBtn' onclick='cancelConstEdit(event)' title='Zrušit'><img src='images/cross.gif'/></button>";
+	event.target.parentNode.parentNode.innerHTML = "<button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='images/tick.svg'/></button><button class='activeBtn' onclick='cancelConstEdit(event)' title='Zrušit'><img src='images/cross.svg'/></button>";
 }
 function confirmConstEdit(event)
 {
@@ -267,11 +267,11 @@ function addConstant()
 	
 	//Tvorba a zobrazení nového řádku
 	var newTr = document.createElement("tr");
-	newTr.innerHTML = "<td>"+cName+"</td><td class='editableField'><input type='text' value='' class='userField'></td><td><button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='images/tick.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit'><img src='images/cross.gif'></button></td>";
+	newTr.innerHTML = "<td>"+cName+"</td><td class='editableField'><input type='text' value='' class='userField'></td><td><button class='activeBtn' onclick='confirmConstEdit(event)' title='Uložit'><img src='images/tick.svg'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit'><img src='images/cross.svg'></button></td>";
 	document.getElementById("constantsTable").childNodes[0].appendChild(newTr);
 	document.getElementById("constantsTable").childNodes[0].childNodes[document.getElementById("constantsTable").childNodes[0].childNodes.length - 1].childNodes[1].childNodes[0].focus();
 	
-	constantTr = "<td>"+cName+"</td><td><input type='text' readonly value=''></td><td><button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='images/pencil.gif'></button><button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='images/up.gif'></button><button class='moveDownButton grayscale' disabled='true'><img src='images/down.gif'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='images/cross.gif'></button></td>"
+	constantTr = "<td>"+cName+"</td><td><input type='text' readonly value=''></td><td><button class='activeBtn' onclick='editConstant(event)' title='Upravit konstantu'><img src='images/pencil.svg'></button><button class='moveUpButton activeBtn' onclick='moveConstantUp(event)' title='Posunout nahoru'><img src='images/up.svg'></button><button class='moveDownButton grayscale' disabled='true'><img src='images/down.svg'></button><button class='activeBtn' onclick='deleteConstant(event)' title='Odstranit konstantu'><img src='images/cross.svg'></button></td>"
 	
 	//Dočasně znemožnit editaci jiných konstant a jejich posouvání
 	var buttons = document.getElementsByClassName("editConstantButton");
@@ -345,7 +345,7 @@ function editUser(event)
 	event.target.parentNode.parentNode.parentNode.childNodes[7].setAttribute("class", "editableField");
 	
 	//Změnit tlačítka akcí
-	event.target.parentNode.parentNode.innerHTML = "<button class='nameChangeAction activeBtn' onclick='confirmUserEdit(event)' title='Uložit'><img src='images/tick.gif'/></button><button class='nameChangeAction activeBtn' onclick='cancelUserEdit(event)' title='Zrušit'><img src='images/cross.gif'/></button>";
+	event.target.parentNode.parentNode.innerHTML = "<button class='nameChangeAction activeBtn' onclick='confirmUserEdit(event)' title='Uložit'><img src='images/tick.svg'/></button><button class='nameChangeAction activeBtn' onclick='cancelUserEdit(event)' title='Zrušit'><img src='images/cross.svg'/></button>";
 }
 function confirmUserEdit(event)
 {
@@ -414,11 +414,13 @@ function showPicture(event)
 	reportsTable = document.getElementById("singleReport").innerHTML;
 	
 	//Zobrazení obrázku
-	document.getElementById("singleReport").innerHTML = "<img src='"+ url +"' /><br><button onclick='hidePicture()'>Zpět</button>";
+	document.getElementById("singleReport").innerHTML = "<img src='"+ url +"' /><br><button class='borderBtn' onclick='hidePicture()'>Zpět</button>";
+	document.querySelector(".overlay").style.display = "block";
 }
 function hidePicture()
 {
 	document.getElementById("singleReport").innerHTML = reportsTable;
+	document.querySelector(".overlay").style.display = "none";
 }
 function disablePicture(event, pictureId)
 {
@@ -549,18 +551,30 @@ function sendMailNameChange(email)
 	document.getElementById("emailAddressee").value = email;
 }
 /*------------------------------------------------------------*/
-function updateEmailPreview()
+function previewEmailMessage()
 {
+	document.getElementById("emailMessage").style.display = "none";
+	document.getElementById("emailPreview").style.display = "block";
+	document.getElementById("emailPreviewButton").innerHTML = "Upravit zprávu";
+	document.getElementById("emailPreviewButton").setAttribute("onclick", "editEmailMessage()");
+	
 	var msg = document.getElementById("emailMessage").value;
 	if (msg !== "")
 	{
-		document.getElementById("emailPreview").innerHTML = msg;
+		document.getElementById("emailPreview").innerHTML = "<span>Náhled e-mailu:</span><br><br>" + msg;
 	}
 	else
 	{
 		msg = msg.replace("\n", "<br>");
-		document.getElementById("emailPreview").innerHTML = "Náhled e-mailu se zobrazí zde";
+		document.getElementById("emailPreview").innerHTML = "<span>Zde se zobrazí náhled e-mailu</span>";
 	}
+}
+function editEmailMessage()
+{
+	document.getElementById("emailPreview").style.display = "none";
+	document.getElementById("emailMessage").style.display = "block";
+	document.getElementById("emailPreviewButton").innerHTML = "Zobrazit náhled";
+	document.getElementById("emailPreviewButton").setAttribute("onclick", "previewEmailMessage()");
 }
 function sendMail()
 {

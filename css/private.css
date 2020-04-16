@@ -1,165 +1,430 @@
-nav
-{
-	height: 4vh;
-	z-index: -1;
-	overflow: hidden;
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
-nav a
-{
-	border-radius: 1vh;
-	font-size: 3vh;
-	text-decoration: none;
-    color: black;
-	border: 1px solid black;
-	display: block;
-	float: left;
-	min-height: 5vh;
-	padding-left: 10px;
-	padding-right: 10px;
+
+html,
+body {
+  height: 100%;
+  line-height: 1.2rem;
+  overflow: hidden;
+  position: relative;
 }
-#container
-{
-	padding-top: 1vh;
-	padding-left: 1vw;
-	padding-bottom: 1vh;
-	padding-right: 1vw;
-	height: 91vh;
-	width: 95.984%;
-	overflow: auto;
-	border: 1px solid black;
-	z-index: 1;
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
 }
-/*---------------------------*/
-#tab1
-{
-	display: block;
-	position: absolute;
-	overflow: auto;
-	width: 96vw;
-	max-height: 89vh;
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
 }
-#tab2, #tab3, #tab4, #tab5, #tab6
-{
-	display: none;
-	position: absolute;
-	overflow: auto;
-	width: 96vw;
-	max-height: 89vh;
+
+main {
+  margin: 1rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  border: 1px solid #000;
+  overflow-y: auto;
 }
-/*-----------Tab1------------*/
-#constants
-{
-	text-align: center;
+
+header {
+  border: 1px solid #000;
+  margin: 1rem 1rem 0 1rem;
+  font-size: 1.2rem;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
 }
-.constantField
-{
-	border: 0;
-    background-color: inherit;
+
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
-.centerBtn
-{
-	margin: auto;
-    margin-top: 20px;
-    /*position: fixed;*/
-    left: 0;
-    right: 0;
+
+nav a {
+  padding: 0.6rem;
+  height: 2.4rem;
 }
-/*-----------Tab2------------*/
-.userField
-{
-	border: 0;
-    text-align: center;
-    background-color: inherit;
+
+nav a:last-child {
+  color: gray;
 }
-.editableField
-{
-	background-color: #CCCCFF;
+
+nav .activeTab {
+  background: lightgray;
+  cursor: default;
 }
-/*-----------Tab3------------*/
-#singleReport
-{
-	text-align: center;
+
+nav :not(.activeTab):hover {
+  cursor: pointer;
+  background: #eee;
 }
-/*-----------Tab4------------*/
-table
-{
-	border-collapse: collapse;
-	text-align: center;
-	vertical-align: middle;
-	margin: auto;
+
+table {
+  border-collapse: collapse;
 }
-td th
-{
-	width: 150px;
+
+input {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  background: none;
+  border: 1px solid gray;
 }
-td img
-{
-	/*
-	padding-left: 10px;
-	padding-right: 10px;
-	*/
+
+td,
+th {
+  padding: 0 0.2rem;
+  margin: 0;
+  vertical-align: middle;
 }
-td button, .actionButton
-{
-    margin-left: 10px;
-    margin-right: 10px;
-    border: 0;
-    padding: 0;
-    background-color: #FFF;
-    height: 16px;
-    width: 16px;
-	transition: 0s;
+
+tr {
+  height: 2rem;
 }
-.activeBtn:hover
-{
-	background-color: #CCCCFF;
+
+#tab1 {
+  display: block;
 }
-.grayscale
-{
-	filter: grayscale(1);
+
+#tab2, #tab3, #tab4, #tab5, #tab6 {
+  display: none;
 }
-/*-----------Tab5------------*/
-#emailPreview
-{
-	margin: 20px;
-	border: 1px solid black;
+
+button {
+  background: transparent;
 }
-/*-----------Tab6------------*/
-#sql
-{
-	text-align: center;
+
+button:hover {
+  cursor: pointer;
 }
-#sqlWarning
-{
-	border: 1px solid #FF9900;
-	background-color: #FFFF77;
-	color: #774400;
-	text-align: center;
-	font-weight: bold;
-	width: fit-content;
-	display: inline-block;
-	margin: 5px;
+
+.borderBtn {
+  border: 1px solid gray;
+  padding: 0.26rem 0.4rem 0.2rem 0.4rem;
+  margin: 0.3rem auto;
 }
-#sqlQuery
-{
-	width: 50vw;
-	display: inline-block;
+
+.borderBtn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
-#sqlQuery textarea
-{
-	width: 100%;
+
+.activeBtn,
+.grayscale {
+  height: 1.2rem;
+  width: 1.2rem;
+  padding: 0;
+  margin: 0 0.2rem;
+  vertical-align: middle;
 }
-#sqlQuery button
-{
-	width: 100%;
+
+.activeBtn img,
+.grayscale img {
+  height: 1.2rem;
+  width: 1.2rem;
 }
-#sqlResult
-{
-	margin: 5px;
-	border: 1px solid black;
-	width: 50vw;
-	overflow: auto;
-	display: inline-block;
-	min-height: 200px;
-	text-align: left;
+
+:focus {
+  outline: none;
+  border: 1px dotted black;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
+
+.grayscale {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+
+.grayscale:hover {
+  cursor: auto;
+}
+
+/*----------- AdminCheck ------------*/
+#adminCheck {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+#wrongAdminPassword {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
+  display: block;
+}
+
+/*----------- Tab1 ------------*/
+#tab1 table {
+  margin: auto;
+  text-align: center;
+}
+
+#tab1 #constants {
+  margin: auto;
+  text-align: center;
+}
+
+#tab1 h3 {
+  text-align: center;
+  margin: 0.4rem;
+  font-size: 1.2rem;
+}
+
+#tab1 .constantField {
+  border: 0;
+}
+
+/*----------- Tab2, Tab3, Tab4 ------------*/
+#tab2 table,
+#tab3 table,
+#tab4 table {
+  position: relative;
+  margin: auto;
+  text-align: center;
+}
+
+#tab2 th,
+#tab3 th,
+#tab4 th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background: lightgray;
+  padding: 0.1rem 0.4rem;
+}
+
+#tab2 tr:nth-child(odd),
+#tab3 tr:nth-child(odd),
+#tab4 tr:nth-child(odd) {
+  background: #eee;
+}
+
+#tab2 td,
+#tab3 td,
+#tab4 td {
+  padding: 0.1rem 0.4rem;
+}
+
+#tab2 td:not(:last-child),
+#tab3 td:not(:last-child),
+#tab4 td:not(:last-child) {
+  border-right: 1px solid lightgray;
+}
+
+#tab2 input,
+#tab3 input,
+#tab4 input {
+  border: none;
+  text-align: center;
+}
+
+#tab2 input[type='number'],
+#tab3 input[type='number'],
+#tab4 input[type='number'] {
+  width: 5.4rem;
+  padding-left: 1.2rem;
+}
+
+#tab2 select,
+#tab3 select,
+#tab4 select {
+  border: none;
+  background: transparent;
+}
+
+#singleReport {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 90%;
+}
+
+@media screen and (min-width: 576px) {
+  #singleReport {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #singleReport {
+    width: 65%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #singleReport {
+    width: 45%;
+  }
+}
+
+#singleReport img {
+  width: 100%;
+}
+
+#singleReport .borderBtn {
+  display: block;
+  margin: auto;
+  background: white;
+  border: 1px solid black;
+}
+
+/*----------- Tab5 ------------*/
+#tab5 {
+  position: relative;
+}
+
+#tab5 #email {
+  margin: auto;
+  width: 95%;
+}
+
+@media screen and (min-width: 576px) {
+  #tab5 #email {
+    width: 85%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #tab5 #email {
+    width: 65%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #tab5 #email {
+    width: 45%;
+  }
+}
+
+#tab5 table {
+  margin: 0.2rem 0;
+}
+
+#tab5 table tr {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+#tab5 table tr td {
+  padding: 0.1rem 0.2rem 0.1rem 0;
+}
+
+#tab5 .borderBtn {
+  margin: 0 0.2rem 0 0;
+}
+
+#tab5 textarea {
+  border: 1px solid gray;
+  padding: 0.2rem;
+  resize: vertical;
+  min-height: 3.8rem;
+  max-height: 40vh;
+  margin-bottom: -0.24rem;
+  width: 100%;
+}
+
+#tab5 #emailPreview {
+  width: 100%;
+  margin: 1rem auto;
+}
+
+#tab5 #emailPreview span {
+  margin-bottom: 1rem;
+}
+
+/*----------- Tab6 ------------*/
+#tab6 {
+  position: relative;
+}
+
+#tab6 #sql {
+  width: 100%;
+}
+
+#tab6 .sqlCenter {
+  display: block;
+  margin: auto;
+  text-align: justify;
+  width: 96%;
+}
+
+@media screen and (min-width: 576px) {
+  #tab6 .sqlCenter {
+    width: 88%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #tab6 .sqlCenter {
+    width: 72%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #tab6 .sqlCenter {
+    width: 56%;
+  }
+}
+
+#tab6 #sqlWarning {
+  margin: 0.2rem auto 0.3rem auto;
+}
+
+#tab6 textarea {
+  border: 1px solid gray;
+  padding: 0.2rem;
+  resize: vertical;
+  min-height: 3.8rem;
+  max-height: 40vh;
+  margin-bottom: -0.24rem;
+  width: 100%;
+}
+
+#tab6 table {
+  border-collapse: collapse;
+  margin: 0.2rem auto;
+}
+
+#tab6 table tr:nth-child(even) {
+  background: #eee;
+}
+
+#tab6 table td {
+  padding: 0.1rem 0.4rem;
+}
+
+#tab6 table td:not(:last-child) {
+  border-right: 1px solid lightgray;
+}
+/*# sourceMappingURL=private.css.map */
