@@ -19,19 +19,9 @@
     }
     
     //Získání dat
-    $url = $_POST['to'];
+    $picId = $_POST['sub'];
     
-    $url = mysqli_real_escape_string($connection, $url);
-    
-    //Získávíní ID obrázku (aby bylo možné smazat všechna hlášení, která se k němu vztahují)
-    $query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url' LIMIT 1";
-    $result = mysqli_query($connection, $query);
-    if (!$result)
-    {
-        echo "alert('Nastala chyba SQL: ".mysqli_error($connection)."');";
-    }
-    $result = mysqli_fetch_array($result);
-    $picId = $result['obrazky_id'];
+    $picId = mysqli_real_escape_string($connection, $picId);
     
     //Odstavení obrázku
     $query = "UPDATE obrazky SET povoleno = 0 WHERE obrazky_id=$picId LIMIT 1";

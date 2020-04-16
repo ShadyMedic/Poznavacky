@@ -21,6 +21,7 @@ function sendEmail($to, $subject, $message, $fromAddress = 'poznavacky@email.com
     $mail->Username = 'webexamlist@gmail.com';
     $mail->Password = 'SECRET';
     $mail->SetFrom($fromAddress, $fromName, true);
+    $mail->addReplyTo($fromAddress, $fromName);
     $mail->Subject = $subject;
     $mail->Body = $message;
     $mail->AddAddress($to);

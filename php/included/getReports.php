@@ -15,7 +15,7 @@
         die();
     }
     
-    $query = "SELECT obrazky_id,duvod,dalsi_informace,pocet FROM hlaseni ORDER BY pocet DESC LIMIT 25";
+    $query = "SELECT * FROM hlaseni ORDER BY pocet DESC LIMIT 25";
     $result = mysqli_query($connection, $query);
     if (!$result)
     {
@@ -34,7 +34,7 @@
                 $innerresult = mysqli_fetch_array($innerresult);
                 $url = $innerresult['zdroj'];
                 echo "<td><a href='$url' target='_blank'>$url</a></td>";
-    
+                
                 //Výpis důvodu
                 $reason = $report['duvod'];
                 echo "<td>";
@@ -83,13 +83,13 @@
                     echo "<button class='reportAction activeBtn' onclick='showPicture(event)' title='Zobrazit obrázek'>";
                         echo "<img src='images/eye.svg'/>";
                     echo "</button>";
-                    echo "<button class='reportAction activeBtn' onclick='disablePicture(event)' title='Skrýt obrázek'>";
+                    echo "<button class='reportAction activeBtn' onclick='disablePicture(event, $picId)' title='Skrýt obrázek'>";
                         echo "<img src='images/dot.svg'/>";
                     echo "</button>";
-                    echo "<button class='reportAction activeBtn' onclick='deletePicture(event)' title='Odstranit obrázek'>";
+                    echo "<button class='reportAction activeBtn' onclick='deletePicture(event, $picId)' title='Odstranit obrázek'>";
                         echo "<img src='images/cross.svg'/>";
                     echo "</button>";
-                    echo "<button class='reportAction activeBtn' onclick='deleteReport(event)' title='Odstranit hlášení'>";
+                    echo "<button class='reportAction activeBtn' onclick='deleteReport(event, $picId)' title='Odstranit hlášení'>";
                         echo "<img src='images/minus.svg'/>";
                     echo "</button>";
                 echo "</td>";

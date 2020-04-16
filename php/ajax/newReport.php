@@ -15,6 +15,7 @@
 	$url = $_GET['pic'];
 	$reason = $_GET['reason'];
 	$info = urldecode($_GET['info']);
+	$partId = $_SESSION['current'][0];
 
 	//Ochrana před SQL injekcí
 	$url = mysqli_real_escape_string($connection, $url);
@@ -35,9 +36,18 @@
 	{
 		die("swal('Neplatný důvod!','','error');");
 	}
-
+	
+	//Získání ID konkrétní části, pokud byly vybrány všechny části poznávačky
+	if ($_SESSION['current'][2] === true)
+	{
+	    $query = "SELECT casti_id FROM obrazky WHERE zdroj = '$url' AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = $partId) LIMIT 1";
+	    $result = mysqli_query($connection, $query);
+	    $result = mysqli_fetch_array($result);
+	    $partId = $result['casti_id'];
+	}
+	
 	//Získávání id obrázku
-	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url'";
+	$query = "SELECT obrazky_id FROM obrazky WHERE zdroj='$url' AND casti_id = $partId";
 	$result = mysqli_query($connection, $query);
 	if (!$result)
 	{

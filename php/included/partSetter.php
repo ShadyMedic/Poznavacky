@@ -25,8 +25,8 @@
     else
     {
         //Zjištění jmena části
-        include 'php/included/connect.php';
         $pId = mysqli_real_escape_string($connection, $pId);
+        include 'php/included/connect.php';
         if (!empty($pId))
         {
             $query = "SELECT nazev FROM casti WHERE casti_id=$pId LIMIT 1";

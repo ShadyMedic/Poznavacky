@@ -1,9 +1,27 @@
 <?php
-    if (session_status() == PHP_SESSION_NONE){include 'included/httpStats.php';} //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
+    if (session_status() == PHP_SESSION_NONE)
+    {
+        include 'included/httpStats.php';  //Statistika se zaznamenává, pouze pokud je skript zavolán jako AJAX
+        session_start(); //Sezení se zahajuje pouze v případě, že již nebylo zahájeno
+    }
     
     $classId = $_GET['classId'];
+    $userId = $_SESSION['user']['id'];
     
     $classId = mysqli_real_escape_string($connection, $classId);
+    $userId = mysqli_real_escape_string($connection, $userId);
+    
+    //Kontrola, zda má uživatel do třídy přístup
+    $query = "SELECT COUNT(*) AS 'cnt' FROM tridy WHERE tridy_id = $classId AND (status = 'public' OR (SELECT COUNT(*) FROM clenstvi WHERE uzivatele_id = $userId AND clenstvi.tridy_id = tridy.tridy_id) > 0);";
+    $result = mysqli_query($connection, $query);
+    $result = mysqli_fetch_array($result);
+    if ($result['cnt'] < 1)
+    {
+        //Odepření přístupu
+        die("<div style='color: #990000; font-weight: bold;'>Přístup do třídy odepřen!</div><br><button class='button' onclick='choose(0)'>Zpět na seznam tříd</button>");
+    }
+    //Nastavování zvolené třídy do $_SESSION
+    $_SESSION['class'] = $classId;
     
     echo "<table id='listTable'>
         <tr class='main_tr'>
@@ -31,10 +49,6 @@
     <button class='button' onclick='choose(0)'>Zpět na seznam tříd</button>";
     
     //Aktualizovat uživateli poslední prohlíženou složku
-    if (session_status() == PHP_SESSION_NONE){session_start();} //Session se startuje, pouze pokud je skript zavolán jako AJAX
-    $userId = $_SESSION['user']['id'];
-    $classId = mysqli_real_escape_string($connection, $classId);
-    $userId = mysqli_real_escape_string($connection, $userId);
     $query = "UPDATE uzivatele SET posledni_uroven = 1, posledni_slozka = $classId WHERE uzivatele_id=$userId LIMIT 1";
     $result = mysqli_query($connection, $query);
     

@@ -422,7 +422,7 @@ function hidePicture()
 	document.getElementById("singleReport").innerHTML = reportsTable;
 	document.querySelector(".overlay").style.display = "none";
 }
-function disablePicture(event)
+function disablePicture(event, pictureId)
 {
 	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
 	
@@ -443,9 +443,9 @@ function disablePicture(event)
 		}
 	}
 	
-	postRequest("php/ajax/disablePicture.php", responseFunc, responseFunc, null, null, null, url);
+	postRequest("php/ajax/disablePicture.php", responseFunc, responseFunc, null, null, null, null, pictureId);
 }
-function deletePicture(event)
+function deletePicture(event, pictureId)
 {
 	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
 	
@@ -466,9 +466,9 @@ function deletePicture(event)
 		}
 	}
 	
-	postRequest("php/ajax/deletePicture.php", responseFunc, responseFunc, null, null, null, url);
+	postRequest("php/ajax/deletePicture.php", responseFunc, responseFunc, null, null, null, null, pictureId);
 }
-function deleteReport(event)
+function deleteReport(event, pictureId)
 {
 	var url = event.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
 	var reason = event.target.parentNode.parentNode.parentNode.childNodes[1].innerHTML;
@@ -513,7 +513,7 @@ function deleteReport(event)
 	event.target.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode);
 	
 	info = encodeURIComponent(info);
-	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, null, null, url, reason, info);
+	postRequest("php/ajax/deleteReport.php", responseFunc, responseFunc, null, null, null, pictureId, reason, info);
 }
 /*------------------------------------------------------------*/
 function acceptNameChange(event)
