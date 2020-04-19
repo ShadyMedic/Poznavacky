@@ -194,13 +194,13 @@ Obrázky:
 	background.jpg
 		Používá se na: accountSettings.php, addPics.php, emailPasswordRecovery.php, index.php, learn.php, list.php, test.php (odkaz se nachází v css.css)
 		Obrázek pozadí stránek
-	cross.gif:
+	cross.svg:
 		Používá se na: getReports.php, management.php
 		Obrázek zobrazovaný na tlačítkách jako zamítnout, odstranit či zrušit
-	dot.gif:
+	dot.svg:
 		Používá se na: getReports.php
 		Obrázek zobrazovaný na tlačítkách skrývání / vypínání
-	down.gif:
+	down.svg:
 		Používá se na: management.php
 		Šipka dolů zobrazovaná na tlačítkách pro posun položky dolů
 	duckLogo.png:
@@ -209,7 +209,7 @@ Obrázky:
 	error.png:
 		Používá se na: err403.html, err404.html, err500.html. err503.html a errSql.html
 		Obrázek pozadí chybových stránek
-	eye.gif:
+	eye.svg:
 		Používá se na: getReports.php
 		Obrázek zobrazovaný na tlačítku pro zobrazení obrázku
 	favicon.ico
@@ -230,10 +230,10 @@ Obrázky:
 	logo.png:
 		Používá se na: composeEmail.php
 		Logo zobrazované v hlavičkách e-mailů. Shodné s favicon.ico
-	mail.gif:
+	mail.svg:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro poslání e-mailu
-	minus.gif:
+	minus.svg:
 		Používá se na: getReports.php
 		Obrázek zobrazovaný na tlačítkách pro odebírání
 	mstile-150x150.png
@@ -242,19 +242,19 @@ Obrázky:
 	noImage.png:
 		Používá se na: learn.php (odkaz se nachází v getPics.php)
 		Obrázek zobrazující se místo obrázku přírodniny, pokud není nalezen žádný obrázek
-	pencil.gif:
+	pencil.svg:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro úpravy
-	plus.gif:
+	plus.svg:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách pro přidávání
 	safari-pinned-tab.svg
 		Používá se na: Všechny zobrazované stránky kromě err403.html, err404.html, err500.html. err503.html a errSql.html
 		Ikona stránek zobrazovaná v Safari 
-	tick.gif:
+	tick.svg:
 		Používá se na: management.php
 		Obrázek zobrazovaný na tlačítkách jako přijmout či potvrdit
-	up.gif:
+	up.svg:
 		Používá se na: management.php
 		Šipka nahoru zobrazovaná na tlačítkách pro posun položky nahoru
 
