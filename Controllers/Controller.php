@@ -1,6 +1,4 @@
 <?php
-namespace Poznavacky;
-
 /** 
  * Obecný kontroler pro MVC architekturu
  * Mateřská třída všech kontrolerů
@@ -16,7 +14,7 @@ abstract class Controller
     
     protected $data = array();
     protected $view = '';
-    protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', description => '');
+    protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '');
     
     /**
      * Funkce zpracovávající parametry z URL adresy
