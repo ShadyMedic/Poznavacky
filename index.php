@@ -9,6 +9,5 @@ function autoloader($name)
 
 spl_autoload_register('autoloader');
 
-?>
-
-<p>Index stránka...</p>
+$rooter = new RooterController();
+$rooter->process(array($_SERVER['REQUEST_URI']));
