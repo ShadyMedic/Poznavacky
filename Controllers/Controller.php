@@ -8,6 +8,12 @@ namespace Poznavacky;
  */
 abstract class Controller
 {
+    const ControllerExtension = 'Controller';
+    const ModelExtension = 'Model';
+    const ControllerFolder = 'Controllers';
+    const ModelFolder = 'Models';
+    const ViewFolder = 'Views';
+    
     protected $data = array();
     protected $view = '';
     protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', description => '');
@@ -26,7 +32,7 @@ abstract class Controller
         if ($this->view)
         {
             extract($this->data);
-            require 'Views/'.$this->view.'.phtml';
+            require self::ViewFolder.'/'.$this->view.'.phtml';
         }
     }
     /**
