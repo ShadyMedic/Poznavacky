@@ -7,7 +7,7 @@ class IndexController extends Controller
 {
 
     /**
-     * TODO
+     * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @see Controller::process()
      */
     public function process(array $paremeters)

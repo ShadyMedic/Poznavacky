@@ -72,4 +72,3 @@ class RooterController extends Controller
         return $camel;
     }
 }
-
