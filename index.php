@@ -11,3 +11,4 @@ spl_autoload_register('autoloader');
 
 $rooter = new RooterController();
 $rooter->process(array($_SERVER['REQUEST_URI']));
+$rooter->displayView();

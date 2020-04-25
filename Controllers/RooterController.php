@@ -14,11 +14,33 @@ class RooterController extends Controller
     public function process(array $parameters)
     {
         $urlArguments = $this->parseURL($parameters[0]);
-        $controllerName = $this->kebabToCamelCase(array_shift($urlArguments)).self::ControllerExtension;
+        $controllerName;
         
-        echo $controllerName;
-        echo '<br>';
-        print_r($urlArguments);
+        //Úvodní stránka
+        if (empty($urlArguments[0])){$controllerName = 'Index'.self::ControllerExtension;}
+        //Jiná kontroler je specifikován
+        else {$controllerName = $this->kebabToCamelCase(array_shift($urlArguments)).self::ControllerExtension;}
+        
+        //Zjištění, zda kontroler existuje
+        if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+        {
+            $this->controllerToCall = new $controllerName();
+        }
+        else
+        {
+            //Neexistující kontroler --> error 404
+            $this->redirect('Error404');
+        }
+        
+        $this->controllerToCall->process($urlArguments);
+        
+        $this->data['title'] = $this->controllerToCall->pageHeader['title'];
+        $this->data['description'] = $this->controllerToCall->pageHeader['description'];
+        $this->data['keywords'] = $this->controllerToCall->pageHeader['keywords'];
+        $this->data['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
+        $this->data['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
+        
+        $this->view = 'head';
     }
     
     /**
