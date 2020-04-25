@@ -15,7 +15,7 @@ class Error404Controller extends Controller
         header('HTTP/1.0 404 Not Found');
         
         $this->pageHeader['title'] = 'Chyba 404';
-        $this->pageHeader['cssFile'] = 'structured_version/css/errors.css';
+        $this->pageHeader['cssFile'] = 'css/errors.css';
         
         $this->view = 'error404';
     }
