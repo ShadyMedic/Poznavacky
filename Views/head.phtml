@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    	<base href="/" />
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
+		<title><?= $title ?></title>
+		<meta name="description" content="<?= $description ?>" />
+		<meta name="keywords" content="<?= $keywords ?>" />
+		<!-- Ikony -->
+		<link rel="icon" href="images/favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="images/icon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/icon-16x16.png">
+		<link rel="manifest" href="manifest.json">
+		<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ffc835">
+		<meta name="theme-color" content="#ffffff">
+		<!-- Styly -->
+		<link rel="stylesheet" type="text/css" href="<?= $cssFile ?>">
+		<!-- JavaScript -->
+		<script type="text/javascript" src="<?= $jsFile?>"></script>
+	</head>
+    <body>
+    	<?php $this->controllerToCall->displayView(); ?>
+    </body>
+</html>
