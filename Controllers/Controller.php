@@ -14,7 +14,7 @@ abstract class Controller
     
     protected $data = array();
     protected $view = '';
-    protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '');
+    protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => '', 'jsFile' => '');
     
     /**
      * Funkce zpracovávající parametry z URL adresy
