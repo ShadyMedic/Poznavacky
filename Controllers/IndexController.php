@@ -21,4 +21,3 @@ class IndexController extends Controller
         $this->view = 'index';
     }
 }
-
