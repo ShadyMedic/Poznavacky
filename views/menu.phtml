@@ -1,0 +1,18 @@
+<header>
+	<h1>Poznávačky</h1>
+	<div class="login-info">
+		<span>Přihlášen: <?= ?> <!-- KDO JE PŘIHLÁŠEN --></span>
+		<button>Odhlásit se</button>
+	</div>
+</header>
+<aside class="aside-left">
+	<nav>
+		<a>Nastavení účtu</a>
+		<?= ?> <!-- RYCHLÁ NAVIGACE -->
+	</nav>
+</aside>
+<main>
+	<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
+</main>
+<aside class="aside-right">
+</aside>
