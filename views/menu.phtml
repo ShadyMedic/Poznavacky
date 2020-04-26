@@ -1,14 +1,14 @@
 <header>
 	<h1>Poznávačky</h1>
 	<div class="login-info">
-		<span>Přihlášen: <?= ?> <!-- KDO JE PŘIHLÁŠEN --></span>
+		<span>Přihlášen: <?= $loggedUserName ?></span>
 		<button>Odhlásit se</button>
 	</div>
 </header>
 <aside class="aside-left">
 	<nav>
 		<a>Nastavení účtu</a>
-		<?= ?> <!-- RYCHLÁ NAVIGACE -->
+		<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
 	</nav>
 </aside>
 <main>
