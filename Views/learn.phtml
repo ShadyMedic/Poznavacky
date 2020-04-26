@@ -1,21 +1,23 @@
 <h2>Učit se</h2>
 <section>
 	<select onchange="sel()">
-	<script>naturalList.push('$name');</script> <?= ?><!-- Z PHP -->
-	<option>$name</option> <?= ?><!-- Z PHP (nutno zabalit do cyklu) -->
+	<?php foreach ($naturalsNames as $name) : ?>
+        <script>naturalList.push('<?=  $name ?>');</script>
+        <option><?= $name ?></option>
+	<?php endforeach; ?>
 </section>
 <section>
 	<button onclick="prevImg()">
 		<img src="images/arrow.png" style="transform: rotate(180deg);" />
 		<span>[A]</span>
 	</button>
-	<img <?= ?>> <!-- VYGENEROVÁNÍ OBRÁZKU -->
+	<img src="images/imagePreview.png"> <!-- Adresa bude dodána JavaScriptem -->
 	<button onclick="prevImg()">
-		<img src="images/arrow.png"/>
+		<img src="images/arrow.png" />
 		<span>[D]</span>
 	</button>
 	<button onclick="reportImg(event)"></button>
 	<div>
-		<?= ?> <!-- ZOBRAZENÍ REPORT FORM -->
+		<?php require 'Views/reportForm.phtml'; ?>
 	</div>
 </section>

@@ -1,9 +1,9 @@
 <h2>Vyzkoušet se</h2>
 <section>
-	<img <?= ?>> <!-- VYGENEROVÁNÍ OBRÁZKU -->
+	<img src="images/imagePreview.png" /> <!-- Adresa bude dodána JavaScriptem -->
 	<button onclick="reportImg(event)"></button>
 	<div>
-		<?= ?> <!-- ZOBRAZENÍ REPORT FORM -->
+		<?= require 'Views/reportForm.phtml'; ?> <!-- ZOBRAZENÍ REPORT FORM -->
 	</div>
 </section>
 <section>
@@ -12,6 +12,6 @@
 		<input type=submit value="OK" />
     </form>
 	<div>
-		<?= ?> <!-- ZHODNOCENÍ ODPOVĚDI -->
+		<!-- ZHODNOCENÍ ODPOVĚDI (BUDE DODÁNO JAVASCRIPTEM)-->
 	</div>
 </section>
