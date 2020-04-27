@@ -6,6 +6,9 @@
  */
 class UserManager
 {
+    /**
+     * Metoda kontrolující existenci sezení a popřípadě zakládající nové
+     */
     private static function checkSession()
     {
         if (session_status() !== PHP_SESSION_ACTIVE)
@@ -14,6 +17,11 @@ class UserManager
         }
     }
     
+    /**
+     * Metoda získávající ID aktuálně přihlášeného uživatele
+     * @throws AccessDeniedException Pokud není žádný uživatel přihlášen
+     * @return int ID přihlášeného uživatele
+     */
     public static function getId()
     {
         self::checkSession();
@@ -23,10 +31,15 @@ class UserManager
         }
         else
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null, array('originFile' => 'UserManager.php', 'displayOnView' => 'menu.phtml', 'requestedIndex' => 'id'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null, array('originFile' => 'UserManager.php', 'requestedIndex' => 'id'));
         }
     }
     
+    /**
+     * Metoda získávající jméno aktuálně přihlášeného uživatele
+     * @throws AccessDeniedException Pokud není žádný uživatel přihlášen
+     * @return string Jméno přihlášeného uživatele
+     */
     public static function getName()
     {
         self::checkSession();
@@ -36,7 +49,7 @@ class UserManager
         }
         else
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null, array('originFile' => 'UserManager.php', 'displayOnView' => 'menu.phtml', 'requestedIndex' => 'name'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null, array('originFile' => 'UserManager.php', 'requestedIndex' => 'name'));
         }
     }
 }
