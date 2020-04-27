@@ -34,7 +34,7 @@ class MenuController extends Controller
             $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::ControllerExtension.'.php';
             if (file_exists(self::ControllerFolder.'/'.$controllerName) && $argumentCount === 1)
             {
-                //ManagementController
+                //AdministrateController
                 $this->controllerToCall = $controllerName;
             }
             else
