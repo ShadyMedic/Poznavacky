@@ -12,6 +12,7 @@ abstract class Controller
     const ModelFolder = 'Models';
     const ViewFolder = 'Views';
     
+    protected $controllerToCall;
     protected $data = array();
     protected $view = '';
     protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => '', 'jsFile' => '');
@@ -42,5 +43,20 @@ abstract class Controller
         header('Location: /'.$url);
         header('Connection: close');
         exit();
+    }
+    
+    /**
+     * Metoda konvertující řetězec v kebab-case do CamelCase
+     * @param string $str Řetězec ke konverzi
+     * @param bool $capitalizeFirst Má být první písmeno velké (default TRUE)
+     * @return string Řetězec konvertovaný do CamelCase
+     */
+    protected function kebabToCamelCase(string $str, bool $capitalizeFirst = true)
+    {
+        $camel = str_replace('-', ' ', $str);
+        $camel = ucwords($camel);
+        $camel = str_replace(' ', '', $camel);
+        if (!$capitalizeFirst){ $camel = lcfirst($camel); }
+        return $camel;
     }
 }

@@ -4,9 +4,7 @@
  * @author Jan Štěch       
  */
 class RooterController extends Controller
-{
-    protected $controllerToCall;
-    
+{    
     /**
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
      * @param array $parameters Pole parametrů, na indexu 0 musí být nezpracovaná URL adresa
@@ -55,20 +53,5 @@ class RooterController extends Controller
         $parsedURL = trim($parsedURL);          # Odstranění mezer na začátku a na konci
         $urlArray = explode('/', $parsedURL);   # Rozbití řetězce do pole podle lomítek
         return $urlArray;
-    }
-    
-    /**
-     * Metoda konvertující řetězec v kebab-case do CamelCase
-     * @param string $str Řetězec ke konverzi
-     * @param bool $capitalizeFirst Má být první písmeno velké (default TRUE)
-     * @return string Řetězec konvertovaný do CamelCase
-     */
-    private function kebabToCamelCase(string $str, bool $capitalizeFirst = true)
-    {
-        $camel = str_replace('-', ' ', $str);
-        $camel = ucwords($camel);
-        $camel = str_replace(' ', '', $camel);
-        if (!$capitalizeFirst){ $camel = lcfirst($camel); }
-        return $camel;
     }
 }
