@@ -12,7 +12,7 @@ class RooterController extends Controller
     public function process(array $parameters)
     {
         $urlArguments = $this->parseURL($parameters[0]);
-        $controllerName;
+        $controllerName = NULL;
         
         //Úvodní stránka
         if (empty($urlArguments[0])){$controllerName = 'Index'.self::ControllerExtension;}
@@ -38,6 +38,7 @@ class RooterController extends Controller
         $this->data['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
         $this->data['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
         $this->data['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
+        $this->data['currentYear'] = date('Y');
         
         $this->view = 'head';
     }
