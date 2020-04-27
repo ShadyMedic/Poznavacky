@@ -17,6 +17,7 @@ class IndexController extends Controller
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda';
         $this->pageHeader['cssFile'] = 'css/css.css';
         $this->pageHeader['jsFile'] = 'js/index.js';
+        $this->pageHeader['bodyId'] = 'index';
         
         $this->view = 'index';
     }

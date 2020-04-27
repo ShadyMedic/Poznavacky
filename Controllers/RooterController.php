@@ -37,6 +37,7 @@ class RooterController extends Controller
         $this->data['keywords'] = $this->controllerToCall->pageHeader['keywords'];
         $this->data['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
         $this->data['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
+        $this->data['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
         
         $this->view = 'head';
     }
