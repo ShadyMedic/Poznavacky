@@ -74,7 +74,7 @@ class Db
      * @param string $query Dotaz pro provedení s otazníky místo parametrů
      * @param array $parameters Pole parametrů, které budou doplněny místo otazníků do dotazu
      * @param bool $all TRUE, pokud se mají navrátit všechny řádky, FALSE pokud pouze první řádek
-     * @return array Jednorozměrné nebo dvourozměrné pole obsahující výsledky dotazu
+     * @return array|boolean Jednorozměrné nebo dvourozměrné pole obsahující výsledky dotazu, FALSE v případě prázdného výsledku
      * @throws DatabaseException V případě selhání dotazu
      */
     public static function fetchQuery(string $query, array $parameters = array(), bool $all = false)
@@ -88,7 +88,11 @@ class Db
         {
             throw new DatabaseException('Database query wasn\'t executed successfully.', null, $e, $query, $e->getCode(), $e->errorInfo[2]);
         }
-
+        
+        if ($statement->rowCount() === 0)
+        {
+            return false;
+        }
         if ($all)
         {
             return $statement->fetchAll();
