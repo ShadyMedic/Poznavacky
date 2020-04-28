@@ -42,10 +42,10 @@ class TestGroupsManager
      */
     static function getParts(string $className, string $groupName)
     {
-        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($name)))
+        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
         {        
             Db::connect();
-            return Db::fetchQuery('SELECT * FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($testName, $className), true);
+            return Db::fetchQuery('SELECT * FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($groupName, $className), true);
         }
         else
         {
