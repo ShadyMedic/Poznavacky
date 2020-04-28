@@ -26,7 +26,8 @@ class IndexFormsController extends Controller
                     break;
                 //Registrace
                 case 'r':
-                    //TODO
+                    RegisterUser::processRegister($_POST);
+                    $this->redirect('menu');
                     break;
                 //Obnova hesla
                 case 'p':

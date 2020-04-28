@@ -9,6 +9,17 @@ class AccessDeniedException extends Exception
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
     const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
     const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem neexistuje';
+    const REASON_REGISTER_NAME_TOO_SHORT = 'Jméno musí být alespoň 4 znaky dlouhé';
+    const REASON_REGISTER_NAME_TOO_LONG = 'Jméno nesmí být více než 15 znaků dlouhé';
+    const REASON_REGISTER_PASSWORD_TOO_SHORT = 'Heslo musí být alespoň 6 znaků dlouhé';
+    const REASON_REGISTER_PASSWORD_TOO_LONG = 'Heslo nesmí být více než 31 znaků dlouhé';
+    const REASON_REGISTER_EMAIL_TOO_LONG = 'E-mail nesmí být delší než 255 znaků';
+    const REASON_REGISTER_NAME_INVALID_CHARACTERS = 'Jméno může obsahovat pouze písmena, číslice a mezery';
+    const REASON_REGISTER_DUPLICATE_NAME = 'Toto jméno je již používáno jiným uživatelem';
+    const REASON_REGISTER_PASSWORD_INVALID_CHARACTERS = 'Vaše heslo obsahuje nepovolený znak.';
+    const REASON_REGISTER_DIFFERENT_PASSWORDS = 'Hesla se neshodují';
+    const REASON_REGISTER_INVALID_EMAIL = 'E-mail nemá platný formát';
+    const REASON_REGISTER_DUPLICATE_EMAIL = 'Tento e-mail již používá jiný uživatel';
     const REASON_USER_NOT_MEMBER_IN_CLASS = 'Nemáte přístup do této třídy';
     const REASON_USER_NOT_HAVING_ACCESS_TO_GROUP = 'Nemáte přístup do třídy do které patří tato poznávačka';
     const REASON_CLASS_NOT_CHOSEN = 'Nebyla vybrána žádná třída';
