@@ -7,6 +7,8 @@
 class AccessDeniedException extends Exception
 {
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
+    const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
+    const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem neexistuje';
     const REASON_USER_NOT_MEMBER_IN_CLASS = 'Nemáte přístup do této třídy';
     const REASON_USER_NOT_HAVING_ACCESS_TO_GROUP = 'Nemáte přístup do třídy do které patří tato poznávačka';
     const REASON_CLASS_NOT_CHOSEN = 'Nebyla vybrána žádná třída';
