@@ -1,0 +1,11 @@
+<table>
+	<?php foreach ($tableData as $tableRow) : ?>
+	<tr>
+		<?php for ($i = 0; $i < $tableColumns; $i++) : ?>
+		<td>
+			<?= $tableRow[$i] ?>
+		</td>
+		<?php endfor; ?>
+	</tr>
+	<?php endforeach; ?>
+</table>

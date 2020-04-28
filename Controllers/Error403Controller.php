@@ -1,9 +1,9 @@
 <?php
 /**
- * Kontroler chybové stránky 404
+ * Kontroler chybové stránky 403
  * @author Jan Štěch
  */
-class Error404Controller extends Controller
+class Error403Controller extends Controller
 {
 
     /**
@@ -12,13 +12,12 @@ class Error404Controller extends Controller
      */
     public function process(array $paremeters)
     {
-        header('HTTP/1.0 404 Not Found');
+        header('HTTP/1.0 403 Forbidden');
         
-        $this->pageHeader['title'] = 'Chyba 404';
+        $this->pageHeader['title'] = 'Chyba 403';
         $this->pageHeader['cssFile'] = 'css/errors.css';
-        $this->pageHeader['bodyId'] = 'error404';
+        $this->pageHeader['bodyId'] = 'error403';
         
-        $this->view = 'error404';
+        $this->view = 'error403';
     }
 }
-
