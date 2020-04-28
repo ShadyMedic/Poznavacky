@@ -19,6 +19,24 @@ class IndexController extends Controller
         $this->pageHeader['jsFile'] = 'js/index.js';
         $this->pageHeader['bodyId'] = 'index';
         
+        //Práce s chybovými hláškami
+        $this->data['loginError'] = '';
+        $this->data['registerError'] = '';
+        $this->fata['passRecoveryError'] = '';
+        
+        //Zkontrolovat, zda nejsou nějaké chybové hlášky k zobrazení
+        if (isset($_COOKIE['errorForm']))
+        {
+            $index = $_COOKIE['errorForm'].'Error';
+            $this->data[$index] = $_COOKIE['errorMessage'];
+            
+            //Vymazání cookies
+            unset($_COOKIE['errorForm']);
+            unset($_COOKIE['errorMessage']);
+            setcookie('errorForm', null, -1);
+            setcookie('errorMessage', null, -1);
+        }
+        
         $this->view = 'index';
     }
 }
