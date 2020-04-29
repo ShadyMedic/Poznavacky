@@ -55,7 +55,7 @@ class TestGroupsManager
         if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
         {        
             Db::connect();
-            $parts = Db::fetchQuery('SELECT * FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($groupName, $className), true);
+            $parts = Db::fetchQuery('SELECT * FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND poznavacky_id IN (SELECT poznavacky_id FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?));', array($groupName, $className), true);
             if (!$parts)
             {
                 throw new NoDataException(NoDataException::NO_PARTS, null, null, 2);

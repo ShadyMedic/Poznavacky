@@ -40,7 +40,7 @@ class MenuController extends Controller
             else
             {
                 //Název třídy
-                $this->chosenFolder[] = $menuArguments[0];
+                $this->chosenFolder[] = urldecode($menuArguments[0]);
             }
         }
         if ($argumentCount > 1)
@@ -54,13 +54,13 @@ class MenuController extends Controller
             else
             {
                 //Název poznávačky
-                $this->chosenFolder[] = $menuArguments[1];
+                $this->chosenFolder[] = urldecode($menuArguments[1]);
             }
         }
         if ($argumentCount > 2)
         {
             //Nastavení části
-            $this->chosenFolder[] = $menuArguments[2];
+            $this->chosenFolder[] = urldecode($menuArguments[2]);
         }
         if ($argumentCount > 3)
         {
