@@ -75,9 +75,15 @@ class MenuTableController extends Controller
             {
                 //Uživatel nemá přístup do třídy nebo poznávačky
                 $this->data['tableColumns'] = 1;
-                $this->data['tableData'] = $e->getMessage();
+                $this->data['tableData'] = array(0 => array(0 => $e->getMessage()));
                 $this->data['tableLevel'] = $e->getAdditionalInfo('menuTableLevel');
             }
+        }
+        catch (NoDataException $e)
+        {
+            $this->data['tableColumns'] = 1;
+            $this->data['tableData'] = array(0 => array(0 => $e->getMessage()));
+            $this->data['tableLevel'] = $e->getTableLevel();
         }
     }
 }
