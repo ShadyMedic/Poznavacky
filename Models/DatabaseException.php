@@ -51,4 +51,14 @@ class DatabaseException extends Exception
     {
         return array('query' => $this->query, 'code' => $this->dbErrorCode, 'message' => $this->dbErrorMessage);
     }
+    
+    /**
+     * Metoda zajišťující, že při neočekávaném výskytu výjimky nebudou vypsány citlivé informace z $previous DBOexception
+     * {@inheritDoc}
+     * @see Exception::__toString()
+     */
+    public function __toString()
+    {
+        return $this->getSafeInfo(true, true);
+    }
 }
