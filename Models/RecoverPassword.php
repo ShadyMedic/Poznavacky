@@ -23,29 +23,14 @@ class RecoverPassword
         }
         $email = $POSTdata['passRecoveryEmail'];
         
-        $userId = self::getUserIdByEmail($email);
+        $validator = new DataValidator();
+        $userId = $validator->getUserIdByEmail($email);
         
         $code = self::generateCode();
         self::saveCode($code, $userId);
         self::sendCode($code, $email);
         
         return true;
-    }
-    
-    /**
-     * Metoda získávající ID uživatele přidruženého k e-mailové adrese
-     * @param string $email E-mailová adresa, jejíhož vlastníka chceme najít
-     * @throws AccessDeniedException Pokud taková adresa nepatří žádnému zaregistrovanému uživateli
-     */
-    private static function getUserIdByEmail(string $email)
-    {
-        Db::connect();
-        $userId = Db::fetchQuery('SELECT uzivatele_id FROM uzivatele WHERE email = ? LIMIT 1', array($email), false);
-        if (!$userId)
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_ACCOUNT, null, null, array('originFile' => 'RecoverPassword.php', 'displayOnView' => 'index.phtml', 'form' => 'passRecovery'));
-        }
-        return $userId['uzivatele_id'];
     }
     
     /**

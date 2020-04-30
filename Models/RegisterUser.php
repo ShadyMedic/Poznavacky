@@ -39,6 +39,8 @@ class RegisterUser
      */
     private static function validateData($name, $pass, $repass, $email)
     {
+        $validator = new DataValidator();
+        
         //Kontrola existence vyplněných dat
         if (!isset($name)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
         if (!isset($pass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
@@ -47,9 +49,9 @@ class RegisterUser
         //Kontrola délky jména, hesla a e-mailu
         try
         {
-            self::checkLength($name, 4, 15, 0);
-            self::checkLength($pass, 6, 31, 1);
-            self::checkLength($email, 0, 255, 2);
+            $validator->checkLength($name, 4, 15, 0);
+            $validator->checkLength($pass, 6, 31, 1);
+            $validator->checkLength($email, 0, 255, 2);
         }
         catch(RangeException $e)
         {
@@ -85,8 +87,8 @@ class RegisterUser
         //Kontrola znaků ve jméně a hesle
         try
         {
-            self::checkCharacters($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ', 0);
-            self::checkCharacters($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'', 1);
+            $validator->checkCharacters($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ', 0);
+            $validator->checkCharacters($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'', 1);
         }
         catch (InvalidArgumentException $e)
         {
@@ -104,8 +106,8 @@ class RegisterUser
         //Kontrola unikátnosti jména a e-mailu
         try
         {
-            self::checkUniqueness($name, 0);
-            self::checkUniqueness($email, 2);
+            $validator->checkUniqueness($name, 0);
+            $validator->checkUniqueness($email, 2);
         }
         catch (InvalidArgumentException $e)
         {
@@ -132,86 +134,6 @@ class RegisterUser
             throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
         }
         
-        return true;
-    }
-    
-    /**
-     * Metoda ověřující, zda se délka řetězce nachází mezi minimální a maximální hodnotou.
-     * @param string $subject Řetězec, jehož délku ověřujeme
-     * @param int $min Minimální povolená délka řetězce (včetně)
-     * @param int $max Maximální povolená délka řetězce (včetně)
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail
-     * @throws LengthException Pokud délka řetězce nespadá mezi $min a $max. Zpráva výjimky je 'long' nebo 'short' podle toho, jaká hranice byla přesažena
-     * @return boolean TRUE, pokud délka řetězce spadá mezi $min a $max
-     */
-    private static function checkLength($subject, int $min, int $max, int $stringType = null)
-    {
-        if ($stringType === 2 && empty($subject))
-        {
-            //Nevyplněný e-mail
-            return true;
-        }
-        
-        if (mb_strlen($subject) > $max)
-        {
-            throw new RangeException('long', $stringType);
-        }
-        if (mb_strlen($subject) < $min)
-        {
-            throw new RangeException('short', $stringType);
-        }
-        return true;
-    }
-    
-    /**
-     * Metoda ověřující, zda se řetězec skládá pouze z povolených znaků
-     * @param string $subject Řetězec, jehož znaky ověřujeme
-     * @param string $allowedChars Řetězec skládající se z výčtu všech povolených znaků
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo
-     * @throws InvalidArgumentException Pokud se řetězec skládá i z jiných než povolených znaků
-     * @returns boolean TRUE, pokud se řetězec skládá pouze z povolených znaků
-     */
-    private static function checkCharacters(string $subject, string $allowedChars, int $stringType = null)
-    {
-        if(mb_strlen($subject) !== strspn($subject, $allowedChars))
-        {
-            throw new InvalidArgumentException(null, $stringType);
-        }
-        return true;
-    }
-    
-    /**
-     * Metoda ověřující, zda se již řetězec v databázi (v tabulce uzivatele) nevyskytuje
-     * @param string $subject Řetězec jehož unikátnost chceme zjistit
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 2 pro e-mail
-     * @throws InvalidArgumentException Pokud se již řetězec v databázi vyskytuje
-     * @return boolean TRUE, pokud se řetězec zatím v databázi nevyskytuje
-     */
-    private static function checkUniqueness($subject, int $stringType)
-    {
-        Db::connect();
-        switch ($stringType)
-        {   
-            case 0:
-                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE jmeno = ?', array($subject), false);
-                if ($result['cnt'] > 0)
-                {
-                    throw new InvalidArgumentException(null, $stringType);
-                }
-                break;
-            case 2:
-                if (empty($subject))
-                {
-                    //Nevyplněný e-mail
-                    return true;
-                }
-                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE email = ?', array($subject), false);
-                if ($result['cnt'] > 0)
-                {
-                    throw new InvalidArgumentException(null, $stringType);
-                }
-                break;
-        }
         return true;
     }
     
