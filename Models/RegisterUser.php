@@ -39,6 +39,11 @@ class RegisterUser
      */
     private static function validateData($name, $pass, $repass, $email)
     {
+        //Kontrola existence vyplněných dat
+        if (!isset($name)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (!isset($pass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (!isset($repass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        
         //Kontrola délky jména, hesla a e-mailu
         try
         {

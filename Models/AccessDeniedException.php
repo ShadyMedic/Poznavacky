@@ -11,6 +11,9 @@ class AccessDeniedException extends Exception
     const REASON_LOGIN_NO_PASSWORD = 'Musíte zadat své heslo';
     const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
     const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem neexistuje';
+    const REASON_REGISTER_NO_NAME = 'Musíte vyplnit své jméno';
+    const REASON_REGISTER_NO_PASSWORD = 'Musíte vyplnit své heslo';
+    const REASON_REGISTER_NO_REPEATED_PASSWORD = 'Musíte své heslo vyplnit znovu';
     const REASON_REGISTER_NAME_TOO_SHORT = 'Jméno musí být alespoň 4 znaky dlouhé';
     const REASON_REGISTER_NAME_TOO_LONG = 'Jméno nesmí být více než 15 znaků dlouhé';
     const REASON_REGISTER_PASSWORD_TOO_SHORT = 'Heslo musí být alespoň 6 znaků dlouhé';
