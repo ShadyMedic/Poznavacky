@@ -25,6 +25,10 @@ class AccessDeniedException extends Exception
     const REASON_REGISTER_DIFFERENT_PASSWORDS = 'Hesla se neshodují';
     const REASON_REGISTER_INVALID_EMAIL = 'E-mail nemá platný formát';
     const REASON_REGISTER_DUPLICATE_EMAIL = 'Tento e-mail již používá jiný uživatel';
+    const REASON_PASSWORD_RECOVERY_NO_EMAIL = 'Musíte zadat e-mailovou adresu přidruženou k vašemu účtu';
+    const REASON_PASSWORD_RECOVERY_NO_ACCOUNT = 'K této e-mailové adrese není přidružen žádný účet';
+    const REASON_RECOVER_NO_TOKEN = 'V adrese není přítomen kód pro obnovení hesla';
+    const REASON_RECOVER_INVALID_TOKEN = 'Váš kód pro obnovu hesla je buď neplatný nebo zastaralý';
     const REASON_USER_NOT_MEMBER_IN_CLASS = 'Nemáte přístup do této třídy';
     const REASON_USER_NOT_HAVING_ACCESS_TO_GROUP = 'Nemáte přístup do třídy do které patří tato poznávačka';
     const REASON_CLASS_NOT_CHOSEN = 'Nebyla vybrána žádná třída';

@@ -31,7 +31,12 @@ class IndexFormsController extends Controller
                     break;
                 //Obnova hesla
                 case 'p':
-                    //TODO
+                    if (RecoverPassword::processRecovery($_POST))
+                    {
+                        setcookie('successMessage', 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problému prosíme kontaktujte správce.');
+                        setcookie('successForm', 'passRecovery');
+                    }
+                    $this->redirect('');
                     break;
             }
         }
