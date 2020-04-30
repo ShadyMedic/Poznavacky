@@ -7,6 +7,8 @@
 class AccessDeniedException extends Exception
 {
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
+    const REASON_LOGIN_NO_NAME = 'Musíte zadat své přihlašovací jméno';
+    const REASON_LOGIN_NO_PASSWORD = 'Musíte zadat své heslo';
     const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
     const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem neexistuje';
     const REASON_REGISTER_NAME_TOO_SHORT = 'Jméno musí být alespoň 4 znaky dlouhé';
