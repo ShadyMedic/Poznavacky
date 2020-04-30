@@ -19,14 +19,32 @@ class EmailSender
     private const EMAIL_PASSWORD = 'SECRET';
     
     /**
+     * Metoda odesílající e-mailovou zprávu na specifikovanou adresu
+     * @param string $to Adresát e-mailu
+     * @param string $subject Předmět e-mailu
+     * @param string $message Obsah e-mailu
+     * @param string $fromAddress Adresa odesílatele e-maulu (defaultně poznavacky@email.com)
+     * @param string $fromName Jméno odesílatele e-mailu (defaultně Poznávačky)
+     * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
+     * @return boolean TRUE, pokud se odeslání e-mailu zdařilo
      */
-    public function sendMail($to, $subject, $message, $fromAddress = 'poznavacky@email.com', $fromName = 'Poznávačky', $isHTML = true)
+    public function sendMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true)
     {
         $mail = $this->setMail($to, $subject, $message, $fromAddress, $fromName, $isHTML);
         return $this->sendPreparedEmail($mail);
     }
     
-    public function setMail($to, $subject, $message, $fromAddress = 'poznavacky@email.com', $fromName = 'Poznávačky', $isHTML = true)
+    /**
+     * Metoda nastavující e-mailový objekt a navracející jeho instanci
+     * @param string $to Adresát e-mailu
+     * @param string $subject Předmět e-mailu
+     * @param string $message Obsah e-mailu
+     * @param string $fromAddress Adresa odesílatele e-maulu (defaultně poznavacky@email.com)
+     * @param string $fromName Jméno odesílatele e-mailu (defaultně Poznávačky)
+     * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
+     * @return \PHPMailer\PHPMailer Nastavený e-mailový objekt
+     */
+    public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true)
     {
         $mail = new PHPMailer();
         
@@ -51,6 +69,12 @@ class EmailSender
         return $mail;
     }
     
+    /**
+     * Metoda odesílající přednastavený e-mailový objekt
+     * @param \PHPMailer\PHPMailer $mail Nastavený e-mailový objekt
+     * @throws Exception Pokud selže odeslání e-mailu
+     * @return boolean TRUE, pokud se odeslání e-mailu zdaří
+     */
     public function sendPreparedEmail($mail)
     {
         $result = $mail->Send();
