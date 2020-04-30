@@ -22,9 +22,10 @@ class IndexController extends Controller
         //Práce s chybovými hláškami
         $this->data['loginError'] = '';
         $this->data['registerError'] = '';
-        $this->fata['passRecoveryError'] = '';
+        $this->data['passRecoveryError'] = '';
+        $this->data['passRecoverySuccess'] = '';
         
-        //Zkontrolovat, zda nejsou nějaké chybové hlášky k zobrazení
+        //Zkontrolovat, zda nejsou nějaké chybové nebo úspěchové hlášky k zobrazení
         if (isset($_COOKIE['errorForm']))
         {
             $index = $_COOKIE['errorForm'].'Error';
@@ -35,6 +36,17 @@ class IndexController extends Controller
             unset($_COOKIE['errorMessage']);
             setcookie('errorForm', null, -1);
             setcookie('errorMessage', null, -1);
+        }
+        if (isset($_COOKIE['successForm']))
+        {
+            $index = $_COOKIE['successForm'].'Success';
+            $this->data[$index] = $_COOKIE['successMessage'];
+            
+            //Vymazání cookies
+            unset($_COOKIE['successForm']);
+            unset($_COOKIE['successMessage']);
+            setcookie('successForm', null, -1);
+            setcookie('successMessage', null, -1);
         }
         
         $this->view = 'index';
