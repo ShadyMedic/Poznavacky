@@ -16,8 +16,8 @@
 			<h2>Přihlašte se</h2>
 			<form method="POST" action="index-forms">
 				<input id='login-hidden' type='hidden' name='type' value='l'>
-				<input id='login-name' type='text' name='name_input' maxlength=15 placeholder='Jméno'>
-				<input id='login-pass' type='password' name='pass_input' maxlength=31 placeholder='Heslo'>
+				<input id='login-name' type='text' name='loginName' maxlength=15 placeholder='Jméno' value='<?= $loginName ?>'>
+				<input id='login-pass' type='password' name='loginPass' maxlength=31 placeholder='Heslo'>
 				<div class="checkbox">
 					<input type="checkbox" name='stay_logged'/>
 					<label for="login_keep">Zůstat přihlášen</label>
@@ -34,10 +34,10 @@
 			<h2>Zaregistrujte se</h2>
 			<form method="POST" action="index-forms">
 				<input id='register-hidden' type='hidden' name='type' value='r'>
-				<input id='register-name' type='text' name='name_input' maxlength=15 placeholder='Jméno' required=true>
-				<input id='register-pass' type='password' name='pass_input' maxlength=31 placeholder='Heslo' required=true> 				    	
-				<input id='register-repass' type='password' name='repass_input' maxlength=31 placeholder='Heslo znovu' required=true>
-				<input id='register-email' type='email' name='email_input' maxlength=255 placeholder='E-mail (nepovinné)'>
+				<input id='register-name' type='text' name='registerName' maxlength=15 placeholder='Jméno' value='<?= $registerName ?>' required=true>
+				<input id='register-pass' type='password' name='registerPass' maxlength=31 placeholder='Heslo' value='<?= $registerPass ?>' required=true> 				    	
+				<input id='register-repass' type='password' name='registerRepass' maxlength=31 placeholder='Heslo znovu' value='<?= $registerRepass ?>' required=true>
+				<input id='register-email' type='email' name='registerEmail' maxlength=255 value='<?= $registerEmail ?>' placeholder='E-mail (nepovinné)'>
 				<span id='span-terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
 				<button id='register-submit' onclick='register()'>Vytvořit účet</button>
 			</form>
@@ -50,7 +50,7 @@
 			<span>Zadejte svoji e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
 			<form method="POST" action="index-forms">
 				<input id='password-recovery-hidden' type='hidden' name='type' value='p'>
-				<input id='password-recovery-input' type=text name="email_input" maxlength=255 required=true />
+				<input id='password-recovery-input' type='email' name="passRecoveryEmail" value='<?= $passRecoveryEmail ?>' maxlength=255 required=true />
 				<button id='password-recovery-submit' onclick="recoverPassword()">Odeslat</button> 
 			</form>
 			<span>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</span>

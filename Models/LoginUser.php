@@ -10,16 +10,16 @@ class LoginUser
     
     /**
      * Metoda která se stará o všechny kroky přihlašování
-     * @param array $POSTdata Data odeslaná přihlašovacím formulářem, pole s klíči name_input, pass_input a popřípadě stay_logged
+     * @param array $POSTdata Data odeslaná přihlašovacím formulářem, pole s klíči loginName, loginPass a popřípadě stay_logged
      */
     public static function processLogin(array $POSTdata)
     {
         //Ověřit vyplněnost dat
-        if (!isset($POSTdata['name_input'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
-        if (!isset($POSTdata['pass_input'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (!isset($POSTdata['loginName'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (!isset($POSTdata['loginPass'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         
         //Pokusit se přihlásit
-        $userData = self::authenticate($POSTdata['name_input'], $POSTdata['pass_input']);
+        $userData = self::authenticate($POSTdata['loginName'], $POSTdata['loginPass']);
         
         //Je přihlášen úspěšně?
         if ($userData)

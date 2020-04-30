@@ -49,6 +49,31 @@ class IndexController extends Controller
             setcookie('successMessage', null, -1);
         }
         
+        //Práce s dříve vyplněnými formuláři
+        $this->data['loginName'] = '';
+        $this->data['loginPass'] = '';
+        $this->data['registerName'] = '';
+        $this->data['registerPass'] = '';
+        $this->data['registerRepass'] = '';
+        $this->data['registerEmail'] = '';
+        $this->data['passRecoveryEmail'] = '';
+        
+        if (isset($_COOKIE['previousAnswers']))
+        {
+            //Atributa name ve formulářích na index stránce je u každého pole nastavena na stejný název jako proměnná ze které se vypisuje hodnota atributy value
+            $previousAnswers = unserialize($_COOKIE['previousAnswers']);
+            $this->data['loginName'] = @$previousAnswers['loginName'];
+            $this->data['loginPass'] = @$previousAnswers['loginPass'];
+            $this->data['registerName'] = @$previousAnswers['registerName'];
+            $this->data['registerPass'] = @$previousAnswers['registerPass'];
+            $this->data['registerRepass'] = @$previousAnswers['registerRepass'];
+            $this->data['registerEmail'] = @$previousAnswers['registerEmail'];
+            $this->data['passRecoveryEmail'] = @$previousAnswers['passRecoveryEmail'];
+            
+            unset($_COOKIE['previousAnswers']);
+            setcookie('previousAnswers', null, -1);
+        }
+        
         $this->view = 'index';
     }
 }

@@ -11,10 +11,10 @@ class RegisterUser
     
     public static function processRegister(array $POSTdata)
     {
-        $name = $POSTdata['name_input'];
-        $pass = $POSTdata['pass_input'];
-        $repass = $POSTdata['repass_input'];
-        $email = $POSTdata['email_input'];
+        $name = $POSTdata['registerName'];
+        $pass = $POSTdata['registerPass'];
+        $repass = $POSTdata['registerRepass'];
+        $email = $POSTdata['registerEmail'];
         
         if (empty($email)){$email = null;}
         
@@ -41,8 +41,8 @@ class RegisterUser
     {
         //Kontrola existence vyplněných dat
         if (!isset($name)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (!isset($pass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (!isset($repass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (!isset($pass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (!isset($repass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
         
         //Kontrola délky jména, hesla a e-mailu
         try

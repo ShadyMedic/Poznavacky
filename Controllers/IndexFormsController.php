@@ -44,6 +44,7 @@ class IndexFormsController extends Controller
         {
             setcookie('errorMessage', $e->getMessage());
             setcookie('errorForm', $e->getAdditionalInfo('form'));
+            setcookie('previousAnswers', serialize($_POST));
             $this->redirect('');
         }
     }
