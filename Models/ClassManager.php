@@ -13,6 +13,7 @@ class ClassManager
      */
     public static function getIdByName(string $name)
     {
+        Db::connect();
         $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE nazev = ?', array($name), false);
         return $result['tridy_id'];
     }
@@ -24,6 +25,7 @@ class ClassManager
      */
     public static function getNameById(int $id)
     {
+        Db::connect();
         $result = Db::fetchQuery('SELECT nazev FROM tridy WHERE tridy_id = ?', array($id), false);
         return $result['nazev'];
     }

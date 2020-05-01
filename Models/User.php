@@ -10,14 +10,14 @@ class User implements ArrayAccess
     const STATUS_CLASS_OWNER = 'Class Owner';
     const STATUS_ADMIN = 'Administrator';
     
-    private $id;
+    protected $id;
     public $name;
-    private $email;
-    private $lastLogin;
-    private $addedPictures;
-    private $guessedPictures;
-    private $karma;
-    private $status;
+    protected $email;
+    protected $lastLogin;
+    protected $addedPictures;
+    protected $guessedPictures;
+    protected $karma;
+    protected $status;
     
     /**
      * Konstruktor pro nového uživatele

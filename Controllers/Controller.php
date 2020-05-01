@@ -19,9 +19,9 @@ abstract class Controller
     
     /**
      * Funkce zpracovávající parametry z URL adresy
-     * @param array $paremeters Paremetry ke zpracování jako pole
+     * @param array $parameters Paremetry ke zpracování jako pole
      */
-    abstract function process(array $paremeters);
+    abstract function process(array $parameters);
     
     /**
      * Funkce zahrnující pohled a vypysující do něj proměnné z vlastnosti $data

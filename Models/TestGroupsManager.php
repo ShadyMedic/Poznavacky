@@ -13,7 +13,12 @@ class TestGroupsManager
     static function getClasses()
     {
         Db::connect();
-        return Db::fetchQuery('SELECT * FROM `tridy` WHERE status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        $classes = Db::fetchQuery('SELECT * FROM `tridy` WHERE status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        if (!$classes)
+        {
+            throw new NoDataException(NoDataException::NO_CLASSES, null, null, 0);
+        }
+        return $classes;
     }
     
     /**
@@ -26,7 +31,12 @@ class TestGroupsManager
         if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
         {
             Db::connect();
-            return Db::fetchQuery('SELECT * FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($className), true);
+            $groups = Db::fetchQuery('SELECT * FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($className), true);
+            if (!$groups)
+            {
+                throw new NoDataException(NoDataException::NO_GROUPS, null, null, 1);
+            }
+            return $groups;
         }
         else
         {
@@ -42,10 +52,15 @@ class TestGroupsManager
      */
     static function getParts(string $className, string $groupName)
     {
-        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($name)))
+        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
         {        
             Db::connect();
-            return Db::fetchQuery('SELECT * FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($testName, $className), true);
+            $parts = Db::fetchQuery('SELECT * FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND poznavacky_id IN (SELECT poznavacky_id FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?));', array($groupName, $className), true);
+            if (!$parts)
+            {
+                throw new NoDataException(NoDataException::NO_PARTS, null, null, 2);
+            }
+            return $parts;
         }
         else
         {
