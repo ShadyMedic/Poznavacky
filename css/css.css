@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url(//fonts.googleapis.com/css?family=Roboto);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -50,5 +51,358 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+.button {
+  border: solid 2px white;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.6rem;
+  margin: 0.6rem 0;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.button.transparent {
+  background: transparent;
+  color: white;
+}
+
+.button.rounded {
+  border-radius: 1em;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+body#index {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: #151;
+  color: white;
+  font-size: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  /*
+	:focus {
+		outline: none;
+		box-shadow: 0 8px 6px -4px rgba(white, 0.6);
+	}
+	button::-moz-focus-inner {
+		border: 0;
+	}
+	*/
+}
+
+body#index .container {
+  min-height: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
+}
+
+body#index #background {
+  position: fixed;
+  background-image: url("../images/indexbg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
+  z-index: -2;
+}
+
+body#index #background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #001000;
+  opacity: 0;
+  z-index: -1;
+}
+
+body#index main {
+  padding: 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  body#index main {
+    padding: 1rem 2rem;
+  }
+}
+
+body#index main h1 {
+  padding: 1rem 0;
+  font-size: 3.2rem;
+  font-weight: 1000;
+  text-align: center;
+}
+
+body#index main p {
+  padding: 0.6rem 0;
+  font-size: 1.6rem;
+  line-height: 1.25em;
+  text-align: justify;
+}
+
+body#index section {
+  opacity: 0;
+  -webkit-transform: translateY(5%);
+          transform: translateY(5%);
+}
+
+body#index #index-buttons-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body#index #index-buttons-section .button {
+  width: 10em;
+}
+
+body#index #index-text-section {
+  margin-bottom: 1rem;
+}
+
+body#index #index-text-section .button {
+  display: block;
+  margin: auto;
+  border: none;
+  background: none;
+  color: white;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+body#index #index-text-section .button img {
+  height: 1em;
+  width: 1em;
+  padding-left: 0.8rem;
+  position: relative;
+  top: 0.12em;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+body#index #index-text-section .button:hover {
+  -webkit-transform: translateX(-0.2rem);
+          transform: translateX(-0.2rem);
+}
+
+body#index #index-text-section .button:hover img {
+  -webkit-transform: translateX(0.4rem);
+          transform: translateX(0.4rem);
+}
+
+body#index .button {
+  font-size: 1.8rem;
+}
+
+body#index footer {
+  -ms-grid-row: 3;
+  -ms-grid-row-span: 1;
+  grid-row: 3/4;
+  padding: 0.6rem 1rem;
+  opacity: 0;
+  -webkit-transform: translateY(5%);
+          transform: translateY(5%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 576px) {
+  body#index footer {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+
+body#index footer a, body#index footer span {
+  margin: 0.4rem 0.4rem;
+  display: inline;
+}
+
+body#index footer a {
+  position: relative;
+  text-decoration: none;
+  color: white;
+}
+
+body#index footer a:after {
+  content: "";
+  display: block;
+  width: 0%;
+  left: 50%;
+  height: 1px;
+  position: absolute;
+  bottom: -0.1rem;
+  background: white;
+  -webkit-transition: all 0.16s ease-in;
+  transition: all 0.16s ease-in;
+}
+
+body#index footer a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+body#index #cookies-alert {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  background: #222;
+  display: block;
+  text-align: justify;
+  z-index: 5;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-transition: -webkit-transform 0.6s ease-in-out;
+  transition: -webkit-transform 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
+}
+
+body#index #cookies-alert span {
+  padding-right: 0.8rem;
+}
+
+body#index #cookies-alert button {
+  height: 1rem;
+  width: 1rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+body#index.load #background {
+  -webkit-animation: blur 1s ease-out 0s forwards;
+          animation: blur 1s ease-out 0s forwards;
+}
+
+body#index.load #background-overlay {
+  -webkit-animation: darken-blur 1.6s ease-in-out 0s forwards;
+          animation: darken-blur 1.6s ease-in-out 0s forwards;
+}
+
+body#index.load #index-text-section {
+  pointer-events: none;
+  -webkit-animation: display-content 1s ease-in-out 1.6s forwards;
+          animation: display-content 1s ease-in-out 1.6s forwards;
+}
+
+body#index.load #index-buttons-section {
+  pointer-events: none;
+  -webkit-animation: display-content 1s ease-in-out 2s forwards;
+          animation: display-content 1s ease-in-out 2s forwards;
+}
+
+body#index.load footer {
+  pointer-events: none;
+  -webkit-animation: display-content 1s ease-in-out 2.4s forwards;
+          animation: display-content 1s ease-in-out 2.4s forwards;
+}
+
+@-webkit-keyframes blur {
+  100% {
+    -webkit-filter: blur(4px);
+            filter: blur(4px);
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+}
+
+@keyframes blur {
+  100% {
+    -webkit-filter: blur(4px);
+            filter: blur(4px);
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+}
+
+@-webkit-keyframes darken-blur {
+  100% {
+    opacity: 0.68;
+  }
+}
+
+@keyframes darken-blur {
+  100% {
+    opacity: 0.68;
+  }
+}
+
+@-webkit-keyframes display-content {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+@keyframes display-content {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    pointer-events: auto;
+  }
 }
 /*# sourceMappingURL=css.css.map */

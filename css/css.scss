@@ -1,4 +1,211 @@
 @import "_reset.scss";
 @import "_generic.scss";
 @import "_menu.scss";
-@import "_index.scss";
+//@import "_index.scss";
+@import "_variables.scss";
+
+body#index {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	background: #151;
+	color: white;
+	font-size: 100%;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	.container {
+		min-height: 100%;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+	}
+	#background {
+		position: fixed;
+		background-image: url("../images/indexbg.jpg");
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		height: 100%;
+		width: 100%;
+		transform: scale(1.02);
+		z-index: -2;
+	}
+	#background-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		height: 100vh;
+		width: 100vw;
+		background: #001000;
+		opacity: 0;
+		z-index: -1;
+	}
+	main {
+		padding: 1rem;
+		@media screen and (min-width: $mobile){
+			padding: 1rem 2rem;
+		}
+		h1 {
+			padding: 1rem 0;
+			font-size: 3.2rem;
+			font-weight: 1000;
+			text-align: center;
+		}
+		p {
+			padding: 0.6rem 0;
+			font-size: 1.6rem;
+			line-height: 1.25em;
+			text-align: justify;
+		}
+	}
+	section {
+		opacity: 0;
+		transform: translateY(5%);
+	}
+	#index-buttons-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.button {
+			width: 10em;
+		}
+	}
+	#index-text-section {
+		margin-bottom: 1rem;
+		.button {
+			display: block;
+			margin: auto;
+			border: none;
+			background: none;
+			color: white;
+			transition: transform 0.2s ease-out;
+			img {
+				height: 1em;
+				width: 1em;
+				padding-left: 0.8rem;
+				position: relative;
+				top: 0.12em;
+				transition: transform 0.2s ease-out;
+			}
+			&:hover {
+				transform: translateX(-0.2rem);
+				img {
+					transform: translateX(0.4rem);
+				}
+			}
+		}
+	}
+	.button {
+		font-size: 1.8rem;
+	}
+	footer {
+		grid-row: 3/4;
+		padding: 0.6rem 1rem;
+		opacity: 0;
+		transform: translateY(5%);
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		flex-direction: column;
+		@media screen and (min-width: $mobile) {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		a, span {
+			margin: 0.4rem 0.4rem;
+			display: inline;
+		}
+		a {
+			position: relative;
+			text-decoration: none;
+			color: white;
+			&:after {
+				content: "";
+				display: block;
+				width: 0%;
+				left: 50%;
+				height: 1px;
+				position: absolute;
+				bottom: -0.1rem;
+				background: white;
+				transition: all 0.16s ease-in;
+				//transition: position 0.2s ease-in;
+			}
+			&:hover:after {
+				width: 100%;
+				left: 0;
+			}
+		}
+	}
+	#cookies-alert {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		transform: translateY(100%);
+		background: #222;
+		display: block;
+		text-align: justify;
+		z-index: 5;
+		padding: 1rem;
+		display: flex;
+		justify-content: space-between;
+		transition: transform 0.6s ease-in-out;
+		span {
+			padding-right: 0.8rem;
+		}
+		button {
+			height: 1rem;
+			width: 1rem;
+			flex-shrink: 0;
+		}
+	}
+
+	&.load {
+		#background {
+			animation: blur 1s ease-out 0s forwards; 
+		}
+		#background-overlay {
+			animation: darken-blur 1.6s ease-in-out 0s forwards;
+		}
+		#index-text-section {
+			pointer-events: none;
+			animation: display-content 1s ease-in-out 1.6s forwards;
+		}
+		#index-buttons-section {
+			pointer-events: none;
+			animation: display-content 1s ease-in-out 2s forwards;
+		}
+		footer {
+			pointer-events: none;
+			animation: display-content 1s ease-in-out 2.4s forwards;
+		}
+	}
+	@keyframes blur {
+		100% {
+			filter: blur(4px);
+			transform: scale(1.08);
+		}
+	}
+	@keyframes darken-blur {
+		100% {
+			opacity: 0.68;
+		}
+	}
+	@keyframes display-content {
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
+		}
+	}
+	/*
+	:focus {
+		outline: none;
+		box-shadow: 0 8px 6px -4px rgba(white, 0.6);
+	}
+	button::-moz-focus-inner {
+		border: 0;
+	}
+	*/
+}

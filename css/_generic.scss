@@ -1,1 +1,31 @@
+@import url(//fonts.googleapis.com/css?family=Roboto);
 @import "_variables.scss";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 100%;
+	min-width: 100vw;
+	min-height: 100vh;
+}
+.button {
+	border: solid 2px white;
+	font-size: 1.2rem;
+	padding: 0.8rem 1.6rem;
+	margin: 0.6rem 0;
+	width: fit-content;
+	&.transparent {
+		background: transparent;
+		color: white;
+	}
+	&.rounded {
+		border-radius: 1em;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+}
