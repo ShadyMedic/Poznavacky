@@ -266,7 +266,7 @@ input {
   background: black;
 }
 
-.pseudo-container:hover + .pseudo-container:before {
+.pseudo-container:hover:before {
   width: 100%;
   background: blue;
 }
