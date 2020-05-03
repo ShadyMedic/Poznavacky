@@ -1,0 +1,178 @@
+//scss partial soubor, který má na starost styly vyskytující se všude
+
+@import url(//fonts.googleapis.com/css?family=Roboto);
+@import "_variables.scss";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	font-family: 'Roboto', sans-serif;
+	line-height: 1.25em;
+	font-size: 100%;
+	min-width: 100vw;
+	min-height: 100vh;
+	:focus {
+		outline: none;
+	}
+	button::-moz-focus-inner {
+		border: 0;
+	}
+	&.tab {
+		:focus {
+			box-shadow: 0 0 5px 5px rgba(gray, 0.5);
+		}
+	}
+}
+
+.hidden {
+	display: none;
+}
+
+h2 {
+	font-size: 1.8rem;
+	line-height: 1.25em;
+}
+
+.btn {
+	background: none;
+	border: none;
+	font-size: 1rem;
+	transition: transform 0.1s ease-in;
+	&:hover {
+		cursor: pointer;
+	}
+	&.border-btn {
+		font-size: 1.2rem;
+		position: relative;
+		padding: 0.8rem 1.6rem;
+		margin: 0.6rem 0;
+		&.non-transparent {
+			&.white {
+				background: white;
+				color: black;
+				border: 2px solid white;
+				&:after {
+					background: rgba(black, 0.06);
+				}
+			}
+			&.black {
+				background: black;
+				color: white;
+				border: 2px solid black;
+				&:after {
+					background: rgba(white, 0.06);
+				}
+			}
+		}
+		&.transparent {
+			background: transparent;
+			&.white {
+				color: white;
+				border: 2px solid white;
+				&:after {
+					background: rgba(white, 0.06);
+				}
+			}
+			&.black {
+				color: black;
+				border: 2px solid black;
+				&:after {
+					background: rgba(black, 0.06);
+				}
+			}
+		}
+		&.rounded {
+			border-radius: 1em;
+			&:after {
+				border-radius: 1em;
+			}
+		}
+		&:after {
+			content:"";
+			position: absolute;
+			width: calc(100% + 4px);
+			height: calc(100% + 4px);
+			transform: scale(0);
+			top: -2px;
+			left: -2px;
+			transition: transform 0.1s ease-out;
+			}
+		&:hover {
+			&:after {
+				transform: scale(1);
+			}
+		}
+		&:active {
+			transform: scale(0.98);
+		}
+	}
+	&.arrow-btn {
+		font-size: 1.2rem;
+		transition: transform 0.2s ease-out;
+		&.white {
+			color: white;
+		}
+		&.black {
+			color: black;
+		}
+		img {
+			height: 1em;
+			width: 1em;
+			padding-left: 0.48em;
+			position: relative;
+			top: 0.12em;
+			transition: transform 0.2s ease-out;
+		}
+		&:hover {
+			transform: translateX(-0.16em);
+			img {
+				transform: translateX(0.32em);
+			}
+		}
+	}
+	&.inline {
+		font-size: 1em;
+		&.white {
+			color: white;
+		}
+		&.black {
+			color: black;
+		}
+	}
+}
+
+.cross {
+	width: 1em;
+	height: 1em;
+}
+
+input {
+	border: none;
+}
+
+.pseudo-container {
+	position: relative;
+	width: fit-content;
+	&:after, &:before {
+		content: "";
+		position: absolute;
+		height: 2px;
+		bottom: -0.1rem;
+		left: 0;
+	}
+	&:before {
+		width: 100%;
+		background: red;
+	}
+	&:after {
+		width: 0;
+		background: black;
+	}
+	&:hover:before {
+		width: 100%;
+		background: blue;
+	}
+}

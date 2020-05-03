@@ -18,21 +18,24 @@
         <!-- Styly -->
         <link rel="stylesheet" type="text/css" href="<?= $cssFile ?>">
         <!-- JavaScript -->
+		<script type="text/javascript" src="../js/generic.js"></script>
         <script type="text/javascript" src="<?= $jsFile ?>"></script>
     </head>
     <body id="<?= $bodyId ?>">
-        <?php $this->controllerToCall->displayView(); ?>
-		<footer>
-			<a id="help" class="footer-option" target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a>
-			<a id="issues" class="footer-option" onclick="showLogin()" target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a>
-			<a id="terms" class="footer-option" target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>Podmínky služby</a>
-			<span id="about" class="footer-option">&copy Štěchy a Eksyska, <?= $currentYear ?></span>
-			<!--<script>
-				function showLogin()
-				{
-					alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
-				}
-			</script>--> <!-- BUDE PŘEDĚLÁNO -->
-		</footer>
+		<div class="container">
+			<?php $this->controllerToCall->displayView(); ?>
+			<footer>
+				<a id="help" class="footer-option" target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a>
+				<a id="issues" class="footer-option" onclick="showLogin()" target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/issues/new/choose">Nalezli jste problém?</a>
+				<a id="terms" class="footer-option" target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>Podmínky služby</a>
+				<span id="about" class="footer-option">&copy Štěchy a Eksyska, <?= $currentYear ?></span>
+				<!--<script>
+					function showLogin()
+					{
+						alert("Přihlašovací údaje pro nahlašování chyby:\nJméno: gjvj\nHeslo: poznavacky71");
+					}
+				</script>--> <!-- BUDE PŘEDĚLÁNO -->
+			</footer>
+		</div>
 	</body>
 </html>

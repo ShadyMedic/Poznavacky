@@ -1,3 +1,630 @@
-body{
-    text-align: center;
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url(//fonts.googleapis.com/css?family=Roboto);
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  line-height: inherit;
+  vertical-align: baseline;
 }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.25em;
+  font-size: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+body :focus {
+  outline: none;
+}
+
+body button::-moz-focus-inner {
+  border: 0;
+}
+
+body.tab :focus {
+  -webkit-box-shadow: 0 0 5px 5px rgba(128, 128, 128, 0.5);
+          box-shadow: 0 0 5px 5px rgba(128, 128, 128, 0.5);
+}
+
+.hidden {
+  display: none;
+}
+
+h2 {
+  font-size: 1.8rem;
+  line-height: 1.25em;
+}
+
+.btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  -webkit-transition: -webkit-transform 0.1s ease-in;
+  transition: -webkit-transform 0.1s ease-in;
+  transition: transform 0.1s ease-in;
+  transition: transform 0.1s ease-in, -webkit-transform 0.1s ease-in;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn.border-btn {
+  font-size: 1.2rem;
+  position: relative;
+  padding: 0.8rem 1.6rem;
+  margin: 0.6rem 0;
+}
+
+.btn.border-btn.non-transparent.white {
+  background: white;
+  color: black;
+  border: 2px solid white;
+}
+
+.btn.border-btn.non-transparent.white:after {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.non-transparent.black {
+  background: black;
+  color: white;
+  border: 2px solid black;
+}
+
+.btn.border-btn.non-transparent.black:after {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn.border-btn.transparent {
+  background: transparent;
+}
+
+.btn.border-btn.transparent.white {
+  color: white;
+  border: 2px solid white;
+}
+
+.btn.border-btn.transparent.white:after {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn.border-btn.transparent.black {
+  color: black;
+  border: 2px solid black;
+}
+
+.btn.border-btn.transparent.black:after {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.rounded {
+  border-radius: 1em;
+}
+
+.btn.border-btn.rounded:after {
+  border-radius: 1em;
+}
+
+.btn.border-btn:after {
+  content: "";
+  position: absolute;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  top: -2px;
+  left: -2px;
+  -webkit-transition: -webkit-transform 0.1s ease-out;
+  transition: -webkit-transform 0.1s ease-out;
+  transition: transform 0.1s ease-out;
+  transition: transform 0.1s ease-out, -webkit-transform 0.1s ease-out;
+}
+
+.btn.border-btn:hover:after {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.btn.border-btn:active {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+
+.btn.arrow-btn {
+  font-size: 1.2rem;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+.btn.arrow-btn.white {
+  color: white;
+}
+
+.btn.arrow-btn.black {
+  color: black;
+}
+
+.btn.arrow-btn img {
+  height: 1em;
+  width: 1em;
+  padding-left: 0.48em;
+  position: relative;
+  top: 0.12em;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+.btn.arrow-btn:hover {
+  -webkit-transform: translateX(-0.16em);
+          transform: translateX(-0.16em);
+}
+
+.btn.arrow-btn:hover img {
+  -webkit-transform: translateX(0.32em);
+          transform: translateX(0.32em);
+}
+
+.btn.inline {
+  font-size: 1em;
+}
+
+.btn.inline.white {
+  color: white;
+}
+
+.btn.inline.black {
+  color: black;
+}
+
+.cross {
+  width: 1em;
+  height: 1em;
+}
+
+input {
+  border: none;
+}
+
+.pseudo-container {
+  position: relative;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.pseudo-container:after, .pseudo-container:before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  bottom: -0.1rem;
+  left: 0;
+}
+
+.pseudo-container:before {
+  width: 100%;
+  background: red;
+}
+
+.pseudo-container:after {
+  width: 0;
+  background: black;
+}
+
+.pseudo-container:hover:before {
+  width: 100%;
+  background: blue;
+}
+
+body#index {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: #151;
+  color: white;
+  font-size: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+body#index .container {
+  min-height: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
+}
+
+body#index #background {
+  position: fixed;
+  background-image: url("../images/indexbg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
+  z-index: -2;
+}
+
+body#index #background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #001000;
+  opacity: 0;
+  z-index: -1;
+}
+
+body#index main {
+  padding: 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  body#index main {
+    padding: 1rem 2rem;
+  }
+}
+
+body#index main h1 {
+  padding: 1rem 0;
+  font-size: 3.2rem;
+  font-weight: 1000;
+  text-align: center;
+}
+
+body#index main p {
+  padding: 0.6rem 0;
+  font-size: 1.6rem;
+  line-height: 1.25em;
+  text-align: justify;
+}
+
+body#index #index-buttons-section,
+body#index #index-text-section {
+  opacity: 0;
+  -webkit-transform: translateY(5%);
+          transform: translateY(5%);
+}
+
+body#index #index-buttons-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body#index #index-buttons-section .btn {
+  width: 10em;
+}
+
+body#index #index-text-section {
+  margin-bottom: 2.4rem;
+}
+
+body#index #index-text-section .btn {
+  display: block;
+  margin: auto;
+}
+
+body#index #index-login-section {
+  border-right: 12px solid #222;
+  position: fixed;
+  overflow: auto;
+  color: black;
+  padding: 1rem;
+  font-size: 1.4rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: white;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  -webkit-transition: -webkit-transform 0.32s ease-out;
+  transition: -webkit-transform 0.32s ease-out;
+  transition: transform 0.32s ease-out;
+  transition: transform 0.32s ease-out, -webkit-transform 0.32s ease-out;
+}
+
+body#index #index-login-section .user-data {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 1fr;
+      grid-template-columns: auto 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body#index #index-login-section .user-data label {
+  margin: 0.2rem 0.2rem 0.2rem 0;
+}
+
+body#index #index-login-section .user-data .pseudo-container {
+  margin: 0.2rem 0 0.2rem 0.2rem;
+  font-size: 1.6rem;
+}
+
+body#index #index-login-section .user-data input {
+  font-size: 1.4rem;
+}
+
+body#index .btn.non-transparent,
+body#index .btn.transparent,
+body#index .btn.arrow-btn {
+  font-size: 1.8rem;
+}
+
+body#index footer {
+  -ms-grid-row: 3;
+  -ms-grid-row-span: 1;
+  grid-row: 3/4;
+  padding: 0.6rem 1rem;
+  opacity: 0;
+  -webkit-transform: translateY(5%);
+          transform: translateY(5%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 576px) {
+  body#index footer {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+
+body#index footer a, body#index footer span {
+  margin: 0.4rem 0.4rem;
+  display: inline;
+}
+
+body#index footer a {
+  position: relative;
+  text-decoration: none;
+  color: white;
+}
+
+body#index footer a:after {
+  content: "";
+  display: block;
+  width: 0%;
+  left: 50%;
+  height: 1px;
+  position: absolute;
+  bottom: -0.1rem;
+  background: white;
+  -webkit-transition: all 0.16s ease-in;
+  transition: all 0.16s ease-in;
+}
+
+body#index footer a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+body#index #cookies-alert {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  background: #222;
+  display: block;
+  text-align: justify;
+  z-index: 5;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-transition: -webkit-transform 0.6s ease-in-out;
+  transition: -webkit-transform 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
+}
+
+body#index #cookies-alert span {
+  padding-right: 0.8rem;
+}
+
+body#index #cookies-alert button {
+  height: 1rem;
+  width: 1rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+body#index.loaded #background {
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+  -webkit-transform: scale(1.08);
+          transform: scale(1.08);
+}
+
+body#index.loaded #background-overlay {
+  opacity: 0.68;
+}
+
+body#index.loaded #index-text-section {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  pointer-events: auto;
+}
+
+body#index.loaded #index-buttons-section {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  pointer-events: auto;
+}
+
+body#index.loaded footer {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  pointer-events: auto;
+}
+
+body#index.load #background {
+  -webkit-animation: blur 1s ease-out 0s forwards;
+          animation: blur 1s ease-out 0s forwards;
+}
+
+body#index.load #background-overlay {
+  -webkit-animation: darken-blur 1.6s ease-in-out 0s forwards;
+          animation: darken-blur 1.6s ease-in-out 0s forwards;
+}
+
+body#index.load #index-text-section {
+  pointer-events: none;
+  -webkit-animation: display-content 1s ease-in-out 1.6s forwards;
+          animation: display-content 1s ease-in-out 1.6s forwards;
+}
+
+body#index.load #index-buttons-section {
+  pointer-events: none;
+  -webkit-animation: display-content 1s ease-in-out 2s forwards;
+          animation: display-content 1s ease-in-out 2s forwards;
+}
+
+body#index.load footer {
+  pointer-events: none;
+  -webkit-animation: display-content 1s ease-in-out 2.4s forwards;
+          animation: display-content 1s ease-in-out 2.4s forwards;
+}
+
+@-webkit-keyframes blur {
+  100% {
+    -webkit-filter: blur(4px);
+            filter: blur(4px);
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+}
+
+@keyframes blur {
+  100% {
+    -webkit-filter: blur(4px);
+            filter: blur(4px);
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+}
+
+@-webkit-keyframes darken-blur {
+  100% {
+    opacity: 0.68;
+  }
+}
+
+@keyframes darken-blur {
+  100% {
+    opacity: 0.68;
+  }
+}
+
+@-webkit-keyframes display-content {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+@keyframes display-content {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+/*# sourceMappingURL=css.css.map */
