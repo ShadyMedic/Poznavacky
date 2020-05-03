@@ -8,6 +8,7 @@
 }
 body {
 	font-family: 'Roboto', sans-serif;
+	line-height: 1.25em;
 	font-size: 100%;
 	min-width: 100vw;
 	min-height: 100vh;
@@ -28,15 +29,21 @@ body {
 	display: none;
 }
 
+h2 {
+	font-size: 1.8rem;
+	line-height: 1.25em;
+}
+
 .btn {
 	background: none;
 	border: none;
-	font-size: 1.2rem;
+	font-size: 1rem;
 	transition: transform 0.1s ease-in;
 	&:hover {
 		cursor: pointer;
 	}
 	&.border-btn {
+		font-size: 1.2rem;
 		position: relative;
 		padding: 0.8rem 1.6rem;
 		margin: 0.6rem 0;
@@ -101,6 +108,7 @@ body {
 		}
 	}
 	&.arrow-btn {
+		font-size: 1.2rem;
 		transition: transform 0.2s ease-out;
 		&.white {
 			color: white;
@@ -122,5 +130,47 @@ body {
 				transform: translateX(0.32em);
 			}
 		}
+	}
+	&.inline {
+		font-size: 1em;
+		&.white {
+			color: white;
+		}
+		&.black {
+			color: black;
+		}
+	}
+}
+
+.cross {
+	width: 1em;
+	height: 1em;
+}
+
+input {
+	border: none;
+}
+
+.pseudo-container {
+	position: relative;
+	width: fit-content;
+	&:after, &:before {
+		content: "";
+		position: absolute;
+		height: 2px;
+		bottom: -0.1rem;
+		left: 0;
+	}
+	&:before {
+		width: 100%;
+		background: red;
+	}
+	&:after {
+		width: 0;
+		background: black;
+	}
+	&:hover:before {
+		width: 100%;
+		background: blue;
 	}
 }

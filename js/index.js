@@ -28,6 +28,7 @@ function hideDown(elementId)
 function showLoginSection(specification)
 {
 	document.getElementById('index-login-section').style.transform = "translateX(0)";
+	document.body.style.overflowY="hidden";
 	let divId = specification;
 	showLoginDiv(divId);
 }
@@ -39,4 +40,10 @@ function showLoginDiv(divId)
 	document.getElementById('login').classList.add("hidden");
 	document.getElementById('password-recovery').classList.add("hidden");
 	document.getElementById(divId).classList.remove("hidden");
+}
+
+function hideLoginSection() 
+{
+	document.getElementById('index-login-section').style.transform = "translateX(-100%)";
+	document.body.style.overflowY="auto";
 }

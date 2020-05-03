@@ -74,17 +74,39 @@ body#index {
 		}
 	}
 	#index-login-section {
-		position: absolute;
+		border-right: 12px solid $gray1;
+		position: fixed;
+		overflow: auto;
+		color: black;
+		padding: 1rem;
+		font-size: 1.4rem;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
 		z-index: 2;
-		background: $gray1;
+		background: white;
 		transform: translateX(-100%);
-		transition: transform 0.4s ease-in;
+		transition: transform 0.32s ease-out;
+		.user-data {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			align-items: center;
+			label {
+				margin: 0.2rem 0.2rem 0.2rem 0;
+			}
+			.pseudo-container {
+				margin: 0.2rem 0 0.2rem 0.2rem;
+				font-size: 1.6rem;
+			}
+			input {
+				font-size: 1.4rem;
+			}
+		}
 	}
-	.btn {
+	.btn.non-transparent,
+	.btn.transparent,
+	.btn.arrow-btn {
 		font-size: 1.8rem;
 	}
 	footer {
