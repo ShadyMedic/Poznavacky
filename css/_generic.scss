@@ -11,21 +11,96 @@ body {
 	font-size: 100%;
 	min-width: 100vw;
 	min-height: 100vh;
+	
 }
-.button {
-	border: solid 2px white;
+.btn {
+	background: none;
+	border: none;
 	font-size: 1.2rem;
-	padding: 0.8rem 1.6rem;
-	margin: 0.6rem 0;
-	width: fit-content;
-	&.transparent {
-		background: transparent;
-		color: white;
-	}
-	&.rounded {
-		border-radius: 1em;
-	}
+	transition: transform 0.1s ease-in;
 	&:hover {
 		cursor: pointer;
+	}
+	&.border-btn {
+		position: relative;
+		padding: 0.8rem 1.6rem;
+		margin: 0.6rem 0;
+		&.non-transparent {
+			&.white {
+				background: white;
+				color: black;
+				border: 2px solid white;
+				&:after {
+					background: rgba(black, 0.06);
+				}
+			}
+			&.black {
+				background: black;
+				color: white;
+				border: 2px solid black;
+				&:after {
+					background: rgba(white, 0.06);
+				}
+			}
+		}
+		&.transparent {
+			background: transparent;
+			&.white {
+				color: white;
+				border: 2px solid white;
+				&:after {
+					background: rgba(white, 0.06);
+				}
+			}
+			&.black {
+				color: black;
+				border: 2px solid black;
+				&:after {
+					background: rgba(black, 0.06);
+				}
+			}
+		}
+		&.rounded {
+			border-radius: 1em;
+			&:after {
+				border-radius: 1em;
+			}
+		}
+		&:after {
+			content:"";
+			position: absolute;
+			width: calc(100% + 4px);
+			height: calc(100% + 4px);
+			transform: scale(0);
+			top: -2px;
+			left: -2px;
+			transition: transform 0.1s ease-out;
+			}
+		&:hover {
+			&:after {
+				transform: scale(1);
+			}
+		}
+		&:active {
+			transform: scale(0.98);
+		}
+	}
+	&.arrow-btn {
+		color: white;
+		transition: transform 0.2s ease-out;
+		img {
+			height: 1em;
+			width: 1em;
+			padding-left: 0.8rem;
+			position: relative;
+			top: 0.12em;
+			transition: transform 0.2s ease-out;
+		}
+		&:hover {
+			transform: translateX(-0.2rem);
+			img {
+				transform: translateX(0.4rem);
+			}
+		}
 	}
 }

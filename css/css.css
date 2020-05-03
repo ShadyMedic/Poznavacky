@@ -67,27 +67,142 @@ body {
   min-height: 100vh;
 }
 
-.button {
-  border: solid 2px white;
+body :focus {
+  outline: none;
+}
+
+body button::-moz-focus-inner {
+  border: 0;
+}
+
+body.tab :focus {
+  -webkit-box-shadow: 0 0 5px 5px rgba(128, 128, 128, 0.5);
+          box-shadow: 0 0 5px 5px rgba(128, 128, 128, 0.5);
+}
+
+.btn {
+  background: none;
+  border: none;
   font-size: 1.2rem;
+  -webkit-transition: -webkit-transform 0.1s ease-in;
+  transition: -webkit-transform 0.1s ease-in;
+  transition: transform 0.1s ease-in;
+  transition: transform 0.1s ease-in, -webkit-transform 0.1s ease-in;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn.border-btn {
+  position: relative;
   padding: 0.8rem 1.6rem;
   margin: 0.6rem 0;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
-.button.transparent {
-  background: transparent;
+.btn.border-btn.non-transparent.white {
+  background: white;
+  color: black;
+  border: 2px solid white;
+}
+
+.btn.border-btn.non-transparent.white:after {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.non-transparent.black {
+  background: black;
   color: white;
+  border: 2px solid black;
 }
 
-.button.rounded {
+.btn.border-btn.non-transparent.black:after {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn.border-btn.transparent {
+  background: transparent;
+}
+
+.btn.border-btn.transparent.white {
+  color: white;
+  border: 2px solid white;
+}
+
+.btn.border-btn.transparent.white:after {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn.border-btn.transparent.black {
+  color: black;
+  border: 2px solid black;
+}
+
+.btn.border-btn.transparent.black:after {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.rounded {
   border-radius: 1em;
 }
 
-.button:hover {
-  cursor: pointer;
+.btn.border-btn.rounded:after {
+  border-radius: 1em;
+}
+
+.btn.border-btn:after {
+  content: "";
+  position: absolute;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  top: -2px;
+  left: -2px;
+  -webkit-transition: -webkit-transform 0.1s ease-out;
+  transition: -webkit-transform 0.1s ease-out;
+  transition: transform 0.1s ease-out;
+  transition: transform 0.1s ease-out, -webkit-transform 0.1s ease-out;
+}
+
+.btn.border-btn:hover:after {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.btn.border-btn:active {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+
+.btn.arrow-btn {
+  color: white;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+.btn.arrow-btn img {
+  height: 1em;
+  width: 1em;
+  padding-left: 0.8rem;
+  position: relative;
+  top: 0.12em;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+.btn.arrow-btn:hover {
+  -webkit-transform: translateX(-0.2rem);
+          transform: translateX(-0.2rem);
+}
+
+.btn.arrow-btn:hover img {
+  -webkit-transform: translateX(0.4rem);
+          transform: translateX(0.4rem);
 }
 
 body#index {
@@ -187,7 +302,7 @@ body#index #index-buttons-section {
           align-items: center;
 }
 
-body#index #index-buttons-section .button {
+body#index #index-buttons-section .btn {
   width: 10em;
 }
 
@@ -195,41 +310,12 @@ body#index #index-text-section {
   margin-bottom: 1rem;
 }
 
-body#index #index-text-section .button {
+body#index #index-text-section .btn {
   display: block;
   margin: auto;
-  border: none;
-  background: none;
-  color: white;
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  transition: -webkit-transform 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
 }
 
-body#index #index-text-section .button img {
-  height: 1em;
-  width: 1em;
-  padding-left: 0.8rem;
-  position: relative;
-  top: 0.12em;
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  transition: -webkit-transform 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
-}
-
-body#index #index-text-section .button:hover {
-  -webkit-transform: translateX(-0.2rem);
-          transform: translateX(-0.2rem);
-}
-
-body#index #index-text-section .button:hover img {
-  -webkit-transform: translateX(0.4rem);
-          transform: translateX(0.4rem);
-}
-
-body#index .button {
+body#index .btn {
   font-size: 1.8rem;
 }
 
@@ -328,6 +414,38 @@ body#index #cookies-alert button {
   width: 1rem;
   -ms-flex-negative: 0;
       flex-shrink: 0;
+}
+
+body#index.loaded #background {
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+  -webkit-transform: scale(1.08);
+          transform: scale(1.08);
+}
+
+body#index.loaded #background-overlay {
+  opacity: 0.68;
+}
+
+body#index.loaded #index-text-section {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  pointer-events: auto;
+}
+
+body#index.loaded #index-buttons-section {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  pointer-events: auto;
+}
+
+body#index.loaded footer {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  pointer-events: auto;
 }
 
 body#index.load #background {

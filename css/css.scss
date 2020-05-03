@@ -67,36 +67,18 @@ body#index {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		.button {
+		.btn {
 			width: 10em;
 		}
 	}
 	#index-text-section {
 		margin-bottom: 1rem;
-		.button {
+		.btn {
 			display: block;
 			margin: auto;
-			border: none;
-			background: none;
-			color: white;
-			transition: transform 0.2s ease-out;
-			img {
-				height: 1em;
-				width: 1em;
-				padding-left: 0.8rem;
-				position: relative;
-				top: 0.12em;
-				transition: transform 0.2s ease-out;
-			}
-			&:hover {
-				transform: translateX(-0.2rem);
-				img {
-					transform: translateX(0.4rem);
-				}
-			}
 		}
 	}
-	.button {
+	.btn {
 		font-size: 1.8rem;
 	}
 	footer {
@@ -160,7 +142,30 @@ body#index {
 			flex-shrink: 0;
 		}
 	}
-
+	&.loaded {
+		#background {
+			filter: blur(4px);
+			transform: scale(1.08);
+		}
+		#background-overlay {
+			opacity: 0.68;
+		}
+		#index-text-section {
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
+		}
+		#index-buttons-section {
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
+		}
+		footer {
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
+		}	
+	}
 	&.load {
 		#background {
 			animation: blur 1s ease-out 0s forwards; 

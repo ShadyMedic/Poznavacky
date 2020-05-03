@@ -61,13 +61,13 @@ body#index {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		.button {
+		.btn {
 			width: 10em;
 		}
 	}
 	#index-text-section {
 		margin-bottom: 1rem;
-		.button {
+		.btn {
 			display: block;
 			margin: auto;
 			border: none;
@@ -90,7 +90,7 @@ body#index {
 			}
 		}
 	}
-	.button {
+	.btn {
 		font-size: 1.8rem;
 	}
 	footer {
@@ -154,7 +154,30 @@ body#index {
 			flex-shrink: 0;
 		}
 	}
-
+	&.loaded {
+		#background {
+			filter: blur(4px);
+			transform: scale(1.08);
+		}
+		#background-overlay {
+			opacity: 0.68;
+		}
+		#index-text-section {
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
+		}
+		#index-buttons-section {
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
+		}
+		footer {
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
+		}	
+	}
 	&.load {
 		#background {
 			animation: blur 1s ease-out 0s forwards; 
