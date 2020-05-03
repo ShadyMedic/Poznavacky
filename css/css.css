@@ -176,17 +176,24 @@ body.tab :focus {
 }
 
 .btn.arrow-btn {
-  color: white;
   -webkit-transition: -webkit-transform 0.2s ease-out;
   transition: -webkit-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
 }
 
+.btn.arrow-btn.white {
+  color: white;
+}
+
+.btn.arrow-btn.black {
+  color: black;
+}
+
 .btn.arrow-btn img {
   height: 1em;
   width: 1em;
-  padding-left: 0.8rem;
+  padding-left: 0.48em;
   position: relative;
   top: 0.12em;
   -webkit-transition: -webkit-transform 0.2s ease-out;
@@ -196,13 +203,13 @@ body.tab :focus {
 }
 
 .btn.arrow-btn:hover {
-  -webkit-transform: translateX(-0.2rem);
-          transform: translateX(-0.2rem);
+  -webkit-transform: translateX(-0.16em);
+          transform: translateX(-0.16em);
 }
 
 .btn.arrow-btn:hover img {
-  -webkit-transform: translateX(0.4rem);
-          transform: translateX(0.4rem);
+  -webkit-transform: translateX(0.32em);
+          transform: translateX(0.32em);
 }
 
 body#index {
@@ -214,15 +221,6 @@ body#index {
   font-size: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-  /*
-	:focus {
-		outline: none;
-		box-shadow: 0 8px 6px -4px rgba(white, 0.6);
-	}
-	button::-moz-focus-inner {
-		border: 0;
-	}
-	*/
 }
 
 body#index .container {
@@ -307,7 +305,7 @@ body#index #index-buttons-section .btn {
 }
 
 body#index #index-text-section {
-  margin-bottom: 1rem;
+  margin-bottom: 2.4rem;
 }
 
 body#index #index-text-section .btn {

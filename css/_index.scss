@@ -66,28 +66,10 @@ body#index {
 		}
 	}
 	#index-text-section {
-		margin-bottom: 1rem;
+		margin-bottom: 2.4rem;
 		.btn {
 			display: block;
 			margin: auto;
-			border: none;
-			background: none;
-			color: white;
-			transition: transform 0.2s ease-out;
-			img {
-				height: 1em;
-				width: 1em;
-				padding-left: 0.8rem;
-				position: relative;
-				top: 0.12em;
-				transition: transform 0.2s ease-out;
-			}
-			&:hover {
-				transform: translateX(-0.2rem);
-				img {
-					transform: translateX(0.4rem);
-				}
-			}
 		}
 	}
 	.btn {
@@ -137,7 +119,7 @@ body#index {
 		bottom: 0;
 		width: 100%;
 		transform: translateY(100%);
-		background: #222;
+		background: $gray1;
 		display: block;
 		text-align: justify;
 		z-index: 5;
@@ -154,6 +136,8 @@ body#index {
 			flex-shrink: 0;
 		}
 	}
+
+
 	&.loaded {
 		#background {
 			filter: blur(4px);
@@ -216,13 +200,4 @@ body#index {
 			pointer-events: auto;
 		}
 	}
-	/*
-	:focus {
-		outline: none;
-		box-shadow: 0 8px 6px -4px rgba(white, 0.6);
-	}
-	button::-moz-focus-inner {
-		border: 0;
-	}
-	*/
 }

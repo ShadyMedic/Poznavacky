@@ -96,20 +96,25 @@ body {
 		}
 	}
 	&.arrow-btn {
-		color: white;
 		transition: transform 0.2s ease-out;
+		&.white {
+			color: white;
+		}
+		&.black {
+			color: black;
+		}
 		img {
 			height: 1em;
 			width: 1em;
-			padding-left: 0.8rem;
+			padding-left: 0.48em;
 			position: relative;
 			top: 0.12em;
 			transition: transform 0.2s ease-out;
 		}
 		&:hover {
-			transform: translateX(-0.2rem);
+			transform: translateX(-0.16em);
 			img {
-				transform: translateX(0.4rem);
+				transform: translateX(0.32em);
 			}
 		}
 	}
