@@ -1,7 +1,8 @@
 <?php
-
 /** 
- * Kontroler starající se o výpis tabulky tříd, poznávaček nebo částí na menu stránce
+ * Kontroler starající se o rozhodnutí, jaká tabulka se bude zobrazovat na menu stránce
+ * Tato třída nastavuje pohled obsahující poze tlačítko pro návrat a/nebo chybovou hlášku
+ * Pohled obsahující samotnou tabulku a její obsah je nastavován kontrolerem MenuTableContentController
  * @author Jan Štěch
  */
 class MenuTableController extends Controller
@@ -26,49 +27,31 @@ class MenuTableController extends Controller
             if (!isset($chosenFolder[$i])){$chosenFolder[$i] = '';}
         }
         
-        //Získání dat
-        $this->getData($chosenFolder[0], $chosenFolder[1]);
+        $className = $chosenFolder[0];
+        $groupName = $chosenFolder[1];
         
-        $this->data['currentAddress'] = $_SERVER['REQUEST_URI'];
-    }
-    
-    /**
-     * Metoda získávající data pro tabulku na menu stránku
-     * @param string $className Jméno třídy (pokud byla zvolena)
-     * @param string $groupName Jméno poznávačky (pokud byla zvolena)
-     */
-    private function getData(string $className = '', string $groupName = '')
-    {
+        //Získání dat
         try
         {
             if (empty($className))
             {
-                $this->view = 'classesTable';
-                
+                $this->view = 'inherit';
                 $classes = TestGroupsManager::getClasses();
-                $this->data['tableColumns'] = 2;
-                $this->data['tableData'] = $classes;
-                $this->data['tableLevel'] = 0;
+                $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
             else if (empty($groupName))
             {
                 $this->data['returnButtonLink'] = 'menu';
-                $this->view = 'groupsTable';
-                
+                $this->view = 'menuGroupsButton';
                 $groups = TestGroupsManager::getGroups($className);
-                $this->data['tableColumns'] = 2;
-                $this->data['tableData'] = $groups;
-                $this->data['tableLevel'] = 1;
+                $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
             }
             else
             {
                 $this->data['returnButtonLink'] = 'menu/'.$className;
-                $this->view = 'partsTable';
-                
+                $this->view = 'menuPartsButton';
                 $parts = TestGroupsManager::getParts($className, $groupName);
-                $this->data['tableColumns'] = 3;
-                $this->data['tableData'] = $parts;
-                $this->data['tableLevel'] = 2;
+                $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
             }
         }
         catch (AccessDeniedException $e)
@@ -82,16 +65,15 @@ class MenuTableController extends Controller
             else
             {
                 //Uživatel nemá přístup do třídy nebo poznávačky
-                $this->data['tableColumns'] = 1;
-                $this->data['tableData'] = array(0 => array(0 => $e->getMessage()));
-                $this->data['tableLevel'] = $e->getAdditionalInfo('menuTableLevel');
+                $this->controllerToCall = new MenuTableContentController('menuTableMessage', $e->getMessage());
             }
         }
         catch (NoDataException $e)
         {
-            $this->data['tableColumns'] = 1;
-            $this->data['tableData'] = array(0 => array(0 => $e->getMessage()));
-            $this->data['tableLevel'] = $e->getTableLevel();
+            $this->controllerToCall = new MenuTableContentController('menuTableMessage', $e->getMessage());
         }
+        
+        //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
+        $this->controllerToCall->process(array());
     }
 }
