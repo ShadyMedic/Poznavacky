@@ -29,6 +29,7 @@ class MenuTableController extends Controller
         //Získání dat
         $this->getData($chosenFolder[0], $chosenFolder[1]);
         
+        $this->data['currentAddress'] = $_SERVER['REQUEST_URI'];
         $this->view = 'menuTable';
     }
     
