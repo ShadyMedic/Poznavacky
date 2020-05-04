@@ -3,11 +3,10 @@
 		<tr>
     		<?php for ($i = 0; $i < $tableColumns; $i++) : ?>
     		<td>
-    			<a href="<?= $currentAddress ?>/<?= $tableRow[0] ?>"><!-- na nultém indexu je název třídy/poznávačky/části -->
     			<?= $tableRow[$i] ?>
-				</a>
     		</td>
     		<?php endfor; ?>
     	</tr>
 	<?php endforeach; ?>
 </table>
+<a href="<?= $returnButtonLink ?>">Zpět na seznam poznávaček</a>

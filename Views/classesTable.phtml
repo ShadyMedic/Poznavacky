@@ -1,0 +1,13 @@
+<table>
+	<?php foreach ($tableData as $tableRow) : ?>
+		<tr>
+    		<?php for ($i = 0; $i < $tableColumns; $i++) : ?>
+    		<td>
+    			<a href="<?= $currentAddress ?>/<?= $tableRow[0] ?>"><!-- na nultém indexu je název třídy -->
+    			<?= $tableRow[$i] ?>
+				</a>
+    		</td>
+    		<?php endfor; ?>
+    	</tr>
+	<?php endforeach; ?>
+</table>

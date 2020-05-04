@@ -30,7 +30,6 @@ class MenuTableController extends Controller
         $this->getData($chosenFolder[0], $chosenFolder[1]);
         
         $this->data['currentAddress'] = $_SERVER['REQUEST_URI'];
-        $this->view = 'menuTable';
     }
     
     /**
@@ -44,6 +43,8 @@ class MenuTableController extends Controller
         {
             if (empty($className))
             {
+                $this->view = 'classesTable';
+                
                 $classes = TestGroupsManager::getClasses();
                 $this->data['tableColumns'] = 2;
                 $this->data['tableData'] = $classes;
@@ -51,6 +52,9 @@ class MenuTableController extends Controller
             }
             else if (empty($groupName))
             {
+                $this->data['returnButtonLink'] = 'menu';
+                $this->view = 'groupsTable';
+                
                 $groups = TestGroupsManager::getGroups($className);
                 $this->data['tableColumns'] = 2;
                 $this->data['tableData'] = $groups;
@@ -58,6 +62,9 @@ class MenuTableController extends Controller
             }
             else
             {
+                $this->data['returnButtonLink'] = 'menu/'.$className;
+                $this->view = 'partsTable';
+                
                 $parts = TestGroupsManager::getParts($className, $groupName);
                 $this->data['tableColumns'] = 3;
                 $this->data['tableData'] = $parts;
