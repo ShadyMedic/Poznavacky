@@ -44,7 +44,7 @@ class MenuTableController extends Controller
             if (empty($className))
             {
                 $classes = TestGroupsManager::getClasses();
-                $this->data['tableColumns'] = 3;
+                $this->data['tableColumns'] = 2;
                 $this->data['tableData'] = $classes;
                 $this->data['tableLevel'] = 0;
             }
