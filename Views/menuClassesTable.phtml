@@ -1,7 +1,12 @@
 <table>
+	<tr>
+		<th>Název třídy</th>
+		<th>Poznávačky</th>
+		<th>Akce</th>
+	</tr>
 	<?php foreach ($tableData as $tableRow) : ?>
 		<tr>
-    		<?php for ($i = 0; $i < $tableColumns; $i++) : ?>
+    		<?php for ($i = 0; $i < 3; $i++) : ?>
     		<td>
     			<a href="<?= $currentAddress ?>/<?= $tableRow[0] ?>"><!-- na nultém indexu je název třídy -->
     			<?= $tableRow[$i] ?>

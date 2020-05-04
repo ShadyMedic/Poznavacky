@@ -1,7 +1,11 @@
 <table>
+	<tr>
+		<th>Název poznávačky</th>
+		<th>Části</th>
+	</tr>
 	<?php foreach ($tableData as $tableRow) : ?>
 		<tr>
-    		<?php for ($i = 0; $i < $tableColumns; $i++) : ?>
+    		<?php for ($i = 0; $i < 2; $i++) : ?>
     		<td>
     			<a href="<?= $currentAddress ?>/<?= $tableRow[0] ?>"><!-- na nultém indexu je název poznávačky -->
     			<?= $tableRow[$i] ?>
@@ -11,4 +15,3 @@
     	</tr>
 	<?php endforeach; ?>
 </table>
-<a href="<?= $returnButtonLink ?>">Zpět na seznam tříd</a>
