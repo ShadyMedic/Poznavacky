@@ -66,14 +66,12 @@ body#index {
 		align-items: center;
 		.btn {
 			width: 10em;
+			margin: 0.6rem 0;
 		}
 	}
 	#index-text-section {
 		margin-bottom: 2.4rem;
-		.btn {
-			display: block;
-			margin: auto;
-		}
+		
 	}
 	#index-login-section {
 		border-right: 12px solid $gray1;
@@ -87,22 +85,32 @@ body#index {
 		width: 100%;
 		height: 100%;
 		z-index: 2;
-		background: white;
+		background: $gray2;
 		transform: translateX(-100%);
 		transition: transform 0.32s ease-out;
+		h2 {
+			padding: 0.2rem 0.8rem;	
+		}
 		.user-data {
-			display: grid;
-			grid-template-columns: auto 1fr;
-			align-items: center;
-			label {
-				margin: 0.2rem 0.2rem 0.2rem 0;
+			display: flex;
+			flex-direction: column;
+			margin: 0.8rem 0;
+			label, input {
+				margin: 0.4rem 0;
 			}
-			.pseudo-container {
-				margin: 0.2rem 0 0.2rem 0.2rem;
-				font-size: 1.6rem;
+			label {
+				padding: 0.2rem 0.8rem;
+				margin-top: 0.8rem;
 			}
 			input {
+				padding: 0.6rem 0.8rem;
+				color: $gray1;
+				font-family: 'Roboto', sans-serif;
 				font-size: 1.4rem;
+				background: white;
+				&:focus {
+					box-shadow: 0 2px 0 0 darkblue;
+				}
 			}
 		}
 	}
