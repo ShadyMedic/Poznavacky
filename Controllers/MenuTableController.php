@@ -70,6 +70,10 @@ class MenuTableController extends Controller
         }
         catch (NoDataException $e)
         {
+            if ($e->getMessage() === NoDataException::UNKNOWN_CLASS || $e->getMessage() === NoDataException::UNKNOWN_GROUP || $e->getMessage() === NoDataException::UNKNOWN_PART)
+            {
+                $this->redirect('error404');
+            }
             $this->controllerToCall = new MenuTableContentController('menuTableMessage', $e->getMessage());
         }
         

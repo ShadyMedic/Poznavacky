@@ -8,6 +8,9 @@ class NoDataException extends Exception
     const NO_CLASSES = 'Zatím nemáš přístup do žádných tříd';
     const NO_GROUPS = 'V této třídě nejsou žádné poznávačky';
     const NO_PARTS = 'V této poznávačce nejsou žádné části';
+    const UNKNOWN_CLASS = 'Třída nenalezena';
+    const UNKNOWN_GROUP = 'Poznávačka nenalezena';
+    const UNKNOWN_PART = 'Část nenalezena';
     
     /**
      * Konstruktor podmínky

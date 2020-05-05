@@ -60,10 +60,15 @@ class TestGroupsManager
      */
     public static function getGroups(string $className)
     {
-        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
+        //Zkontroluj, zda třída existuje
+        if (!ClassManager::classExists($className))
         {
+            throw new NoDataException(NoDataException::UNKNOWN_CLASS);
+        }
+        
+        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
+        {   
             //Získej data
-            Db::connect();
             $groups = Db::fetchQuery('SELECT nazev,casti FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($className), true);
             if (!$groups)
             {
@@ -98,8 +103,20 @@ class TestGroupsManager
      */
     public static function getParts(string $className, string $groupName)
     {
-        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
+        //Zkontroluj, zda třída existuje
+        if (!ClassManager::classExists($className))
         {
+            throw new NoDataException(NoDataException::UNKNOWN_CLASS);
+        }
+        
+        //Zkontroluj, zda poznávačka existuje
+        if (!ClassManager::groupExists($className, $groupName))
+        {
+            throw new NoDataException(NoDataException::UNKNOWN_GROUP);
+        }
+        
+        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
+        {            
             //Získej data
             Db::connect();
             $parts = Db::fetchQuery('SELECT nazev,prirodniny,obrazky FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND poznavacky_id IN (SELECT poznavacky_id FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?));', array($groupName, $className), true);
