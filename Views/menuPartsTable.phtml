@@ -4,13 +4,20 @@
 		<th>Přírodniny</th>
 		<th>Obrázky</th>
 	</tr>
-	<?php foreach ($tableData as $tableRow) : ?>
+	<?php foreach ($table as $tableRow) : ?>
 		<tr>
-    		<?php for ($i = 0; $i < 3; $i++) : ?>
-    		<td>
+			<?php for ($i = 0; $i < 3; $i++) : ?>
+    		<td style="display:inline">
+    			<a onclick="displayButtons()">
     			<?= $tableRow[$i] ?>
+				</a>
     		</td>
-    		<?php endfor; ?>
-    	</tr>
+    		<?php endfor ?>
+    		<td style="display:none">
+    			<a href="<?= $tableRow['rowLink'].'/add-pictures' ?>"><button>Přidat obrázky</button></a>
+    			<a href="<?= $tableRow['rowLink'].'/learn' ?>"><button>Učit se</button></a>
+    			<a href="<?= $tableRow['rowLink'].'/test' ?>"><button>Vyzkoušet se</button></a>
+			</td>
+		</tr>
 	<?php endforeach; ?>
 </table>

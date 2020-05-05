@@ -22,8 +22,7 @@ class MenuTableContentController extends Controller
             return;
         }
         
-        //TODO - nastav data pro výpis tabulek
-        return;
+        $this->data['table'] = $this->aquiredData;
     }
 }
 

@@ -3,15 +3,15 @@
 		<th>Název poznávačky</th>
 		<th>Části</th>
 	</tr>
-	<?php foreach ($tableData as $tableRow) : ?>
+	<?php foreach ($table as $tableRow) : ?>
 		<tr>
     		<?php for ($i = 0; $i < 2; $i++) : ?>
     		<td>
-    			<a href="<?= $currentAddress ?>/<?= $tableRow[0] ?>"><!-- na nultém indexu je název poznávačky -->
+    			<a href="<?= $tableRow['rowLink'] ?>">
     			<?= $tableRow[$i] ?>
 				</a>
     		</td>
-    		<?php endfor; ?>
-    	</tr>
-	<?php endforeach; ?>
+    		<?php endfor ?>
+		</tr>
+	<?php endforeach ?>
 </table>
