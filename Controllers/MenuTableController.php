@@ -35,7 +35,7 @@ class MenuTableController extends Controller
         {
             if (empty($className))
             {
-                $this->view = 'inherit';
+                $this->view = 'menuClassesForms';
                 $classes = TestGroupsManager::getClasses();
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
