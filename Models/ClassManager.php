@@ -55,21 +55,12 @@ class ClassManager
      */
     public static function groupExists(string $className, string $groupName)
     {
-        $handle = fopen('log.txt', 'a');
-        fwrite($handle, 'Kontroluji existenci poznávačky '.$groupName.' ve třídě '.$className.'...');
-        fclose($handle);
         Db::connect();
         $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM poznavacky WHERE nazev = ? AND tridy_id = ?', array($groupName, self::getIdByName($className)), false);
         if ($cnt['cnt'] > 0)
         {
-           $handle = fopen('log.txt', 'a');
-           fwrite($handle, 'Úspěch : '.$cnt['cnt']);
-           fclose($handle);
            return true;
         }
-        $handle = fopen('log.txt', 'a');
-        fwrite($handle, 'Selhání : '.$cnt['cnt']);
-        fclose($handle);
         return false;
     }
 }
