@@ -13,7 +13,6 @@ class LogoutController extends Controller
     public function process(array $paremeters)
     {
         //Vymaž současné odhlášení uživatele
-        session_start();
         unset($_SESSION['user']);
         
         //Odstraň trvalé přihlášení

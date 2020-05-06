@@ -33,8 +33,8 @@ class IndexFormsController extends Controller
                 case 'p':
                     if (RecoverPassword::processRecovery($_POST))
                     {
-                        setcookie('successMessage', 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problému prosíme kontaktujte správce.');
-                        setcookie('successForm', 'passRecovery');
+                        $_SESSION['success']['form'] = 'passRecovery';
+                        $_SESSION['success']['message'] = 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problému prosíme kontaktujte správce.';
                     }
                     $this->redirect('');
                     break;
@@ -42,9 +42,9 @@ class IndexFormsController extends Controller
         }
         catch (AccessDeniedException $e)
         {
-            setcookie('errorMessage', $e->getMessage());
-            setcookie('errorForm', $e->getAdditionalInfo('form'));
-            setcookie('previousAnswers', serialize($_POST));
+            $_SESSION['error']['form'] = $e->getAdditionalInfo('form');
+            $_SESSION['error']['message'] = $e->getMessage();
+            $_SESSION['previousAnswers'] = serialize($_POST);
             $this->redirect('');
         }
     }

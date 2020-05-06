@@ -55,12 +55,10 @@ class RecoverPasswordController extends Controller
         if (isset($this->data['username']))
         {
             //Kontrola chybových hlášek
-            if (isset($_COOKIE['recoveryErrorMessage']))
+            if (isset($_SESSION['recoveryErrorMessage']))
             {
-                $errMsg = $_COOKIE['recoveryErrorMessage'];
-                
-                unset($_COOKIE['recoveryErrorMessage']);
-                setcookie('recoveryErrorMessage', null, -1);
+                $errMsg = $_SESSION['recoveryErrorMessage'];
+                unset($_SESSION['recoveryErrorMessage']);
             }
             else
             {

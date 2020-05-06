@@ -27,7 +27,7 @@ class TokenPasswordChangeController extends Controller
         }
         catch (AccessDeniedException $e)
         {
-            setcookie('recoveryErrorMessage', $e->getMessage());
+            $_SESSION['recoveryErrorMessage'] = $e->getMessage();
             $this->redirect('recoverPassword/'.$token);
         }
         
