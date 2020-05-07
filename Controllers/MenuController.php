@@ -30,13 +30,16 @@ class MenuController extends Controller
                 {
                     //Chybný kód
                     //Vymaž cookie s neplatným kódem
-                    setcookie('instantLogin', null, -1);
+                    setcookie('instantLogin', null, -1, '/');
                     unset($_COOKIE['instantLogin']);
                     
                     $this->redirect('');
                 }
             }
-            $this->redirect('');
+            else
+            {
+                $this->redirect('');
+            }
         }
         
         //Načtení argumentů vztahujících se k této stránkce
