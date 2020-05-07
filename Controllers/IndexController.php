@@ -27,6 +27,10 @@ class IndexController extends Controller
                 //Kód nebyl platný
                 $_SESSION['error']['form'] = $e->getAdditionalInfo('form');
                 $_SESSION['error']['message'] = $e->getMessage();
+                
+                //Vymaž cookie s neplatným kódem
+                setcookie('instantLogin', null, -1);
+                unset($_COOKIE['instantLogin']);
             }
         }
         
