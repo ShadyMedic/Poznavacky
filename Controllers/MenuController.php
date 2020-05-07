@@ -13,7 +13,32 @@ class MenuController extends Controller
      * @see Controller::process()
      */
     public function process(array $parameters)
-    {   
+    {
+        //Kontrola, zda je uživatel přihlášen
+        if (!isset($_SESSION['user']))
+        {
+            //Přihlášení uživatele vypršelo
+            //Kontrola instantcookie sezení
+            if (isset($_COOKIE['instantLogin']))
+            {
+                try
+                {
+                    LoginUser::processCookieLogin($_COOKIE['instantLogin']);
+                    //Přihlášení obnoveno
+                }
+                catch(AccessDeniedException $e)
+                {
+                    //Chybný kód
+                    //Vymaž cookie s neplatným kódem
+                    setcookie('instantLogin', null, -1);
+                    unset($_COOKIE['instantLogin']);
+                    
+                    $this->redirect('');
+                }
+            }
+            $this->redirect('');
+        }
+        
         //Načtení argumentů vztahujících se k této stránkce
         //Minimálně 0 (v případě domena.cz/menu)
         //Maximálně 4 (v případě domena.cz/menu/nazev-tridy/nazev-poznavacky/nazev-casti/akce)
