@@ -36,6 +36,21 @@ class LoginUser
     }
     
     /**
+     * Metoda, která se stará o všechny kroky přihlášení pomocí kódu ze souboru cookie pro trvalé přihlášení
+     * @param string $code Kód uložený v souboru cookie
+     */
+    public static function processCookieLogin(string $code)
+    {
+        //Kontrola správnosti kódu
+        $userData = self::verifyCode($code);
+        
+        if ($userData)
+        {
+            self::login($userData);
+        }
+    }
+    
+    /**
      * Metoda ověřující existenci uživatele a správnost hesla.
      * @param string $username
      * @param string $password
@@ -49,6 +64,22 @@ class LoginUser
         if ($userData === FALSE){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NONEXISTANT_USER, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         if (!password_verify($password, $userData['heslo'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_WRONG_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         else {return $userData;}
+        return false;
+    }
+    
+    /**
+     * Metoda kontrolující, zda je v databázi uložen hash kódu obdrženého z instalogin cookie
+     * @param string $code Nezahešovaný kód obsažený v souboru cookie
+     * @throws AccessDeniedException Pokud není kód platný
+     * @return array|boolean Data o uživateli uložená v databázi, k jehož účtu se lze pomocí daného kódu přihlásit nebo FALSE, pokud je kód neplatný
+     */
+    private static function verifyCode(string $code)
+    {
+        DebugLogger::debugLog('Kontroluji kód '.$code);
+        Db::connect();
+        $userData = Db::fetchQuery('SELECT * FROM uzivatele WHERE uzivatele_id = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
+        if ($userData === FALSE) {DebugLogger::debugLog('Selhání'); throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login'));}
+        else {DebugLogger::debugLog('Úspěch'); return $userData;}
         return false;
     }
     

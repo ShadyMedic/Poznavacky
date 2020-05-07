@@ -12,6 +12,24 @@ class IndexController extends Controller
      */
     public function process(array $paremeters)
     {
+        //Kontrola automatického přihlášení
+        if (isset($_COOKIE['instantLogin']))
+        {
+            try
+            {
+                LoginUser::processCookieLogin($_COOKIE['instantLogin']);
+                
+                //Přihlášení proběhlo úspěšně
+                $this->redirect('menu');
+            }
+            catch(AccessDeniedException $e)
+            {
+                //Kód nebyl platný
+                $_SESSION['error']['form'] = $e->getAdditionalInfo('form');
+                $_SESSION['error']['message'] = $e->getMessage();
+            }
+        }
+        
         $this->pageHeader['title'] = 'Poznávačky';
         $this->pageHeader['description'] = 'Čeká vás poznávačka z biologie? Není lepší způsob, jak se na ni naučit, než použitím této webové aplikace. Vytvořte si vlastní poznávačku, společně do ní přidávejte obrázky, učte se z nich a nechte si generovat náhodné testy.';
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda, poznávačka, přírodopis, přírodověda, test, výuka, naučit, učit, testy, učení';
