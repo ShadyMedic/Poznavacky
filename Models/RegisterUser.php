@@ -156,7 +156,6 @@ class RegisterUser
         $id = Db::fetchQuery('SELECT uzivatele_id FROM uzivatele WHERE jmeno=? LIMIT 1', array($name), false);
         $id = $id['uzivatele_id'];
         
-        session_start();
         $user = new LoggedUser($id, $name, $password, $email, new DateTime(null, new DateTimeZone('EUROPE/PRAGUE')), 0, 0, null, self::DEFAULT_THEME, 0, 0, self::DEFAULT_KARMA, self::DEFAULT_STATUS);
         $_SESSION['user'] = $user;
         

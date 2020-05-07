@@ -58,7 +58,6 @@ class LoginUser
      */
     private static function login(array $userData)
     {
-        session_start();
         $user = new LoggedUser($userData['uzivatele_id'], $userData['jmeno'], $userData['heslo'], $userData['email'], new Datetime($userData['posledni_prihlaseni']), $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
         $_SESSION['user'] = $user;
     }
