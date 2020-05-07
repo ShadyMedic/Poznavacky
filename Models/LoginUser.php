@@ -75,11 +75,10 @@ class LoginUser
      */
     private static function verifyCode(string $code)
     {
-        DebugLogger::debugLog('Kontroluji kód '.$code);
         Db::connect();
         $userData = Db::fetchQuery('SELECT * FROM uzivatele WHERE uzivatele_id = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
-        if ($userData === FALSE) {DebugLogger::debugLog('Selhání'); throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login'));}
-        else {DebugLogger::debugLog('Úspěch'); return $userData;}
+        if ($userData === FALSE) {throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login'));}
+        else {return $userData;}
         return false;
     }
     
