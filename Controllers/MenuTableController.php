@@ -59,7 +59,7 @@ class MenuTableController extends Controller
             if ($e->getMessage() === AccessDeniedException::REASON_USER_NOT_LOGGED_IN)
             {
                 //Uživatel není přihlášen
-                $this->redirect('Error403');
+                $this->redirect('error403');
                 return;
             }
             else

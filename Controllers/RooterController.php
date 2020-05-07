@@ -27,7 +27,7 @@ class RooterController extends Controller
         else
         {
             //Neexistující kontroler --> error 404
-            $this->redirect('Error404');
+            $this->redirect('error404');
         }
         
         $this->controllerToCall->process($urlArguments);
