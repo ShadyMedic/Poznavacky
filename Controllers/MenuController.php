@@ -59,11 +59,11 @@ class MenuController extends Controller
         #}
         if ($argumentCount > 0)
         {
-            $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::ControllerExtension.'.php';
-            if (file_exists(self::ControllerFolder.'/'.$controllerName) && $argumentCount === 1)
+            $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::ControllerExtension;
+            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 1)
             {
                 //AdministrateController
-                $this->controllerToCall = $controllerName;
+                $this->controllerToCall = new $controllerName;
             }
             else
             {
@@ -73,11 +73,11 @@ class MenuController extends Controller
         }
         if ($argumentCount > 1)
         {
-            $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::ControllerExtension.'.php';
-            if (file_exists(self::ControllerFolder.'/'.$controllerName) && $argumentCount === 2)
+            $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::ControllerExtension;
+            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 2)
             {
                 //ManageController
-                $this->controllerToCall = $controllerName;
+                $this->controllerToCall = new $controllerName;
             }
             else
             {
@@ -89,21 +89,31 @@ class MenuController extends Controller
         {
             //Nastavení části
             $this->chosenFolder[] = urldecode($menuArguments[2]);
+            if ($argumentCount === 3)
+            {
+                //Je zvolena část, ale ne akce
+                $this->redirect('menu/'.$this->chosenFolder[0].'/'.$this->chosenFolder[1]);
+            }
         }
         if ($argumentCount > 3)
         {
             //Akce pro část
-            $controllerName = $this->kebabToCamelCase($menuArguments[3]).self::ControllerExtension.'.php';
-            if (file_exists(self::ControllerFolder.'/'.$controllerName))
+            $controllerName = $this->kebabToCamelCase($menuArguments[3]).self::ControllerExtension;
+            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
             {
-                $this->controllerToCall = $controllerName;
+                $this->controllerToCall = new $controllerName;
+            }
+            else
+            {
+                //Neplatný kontroler
+                $this->redirect('error404');
             }
         }
         
         if (isset($this->controllerToCall))
         {
             //Kontroler je nastaven --> předat posbírané argumenty dál
-            $this->controllerToCall->process($parameters, $this->chosenFolder);
+            $this->controllerToCall->process($this->chosenFolder);
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
         }
         else
