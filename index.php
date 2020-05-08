@@ -7,9 +7,6 @@ function autoloader($name)
 }
 spl_autoload_register('autoloader');
 
-//Načti třídy objektů ukládaných do $_SESSION
-autoloader('LoggedUser');
-
 //Obnov session a nastav kódování
 session_start();
 mb_internal_encoding('UTF-8');
