@@ -87,13 +87,22 @@ class MenuController extends Controller
         }
         if ($argumentCount > 2)
         {
-            //Nastavení části
-            $this->chosenFolder[] = urldecode($menuArguments[2]);
             if ($argumentCount === 3)
             {
-                //Je zvolena část, ale ne akce
-                $this->redirect('menu/'.$this->chosenFolder[0].'/'.$this->chosenFolder[1]);
+                //Jsou zvoleny všechny části najednou?
+                $controllerName = $this->kebabToCamelCase($menuArguments[2]).self::ControllerExtension;
+                if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+                {
+                    $this->controllerToCall = new $controllerName;
+                }
+                else
+                {
+                    //Je zvolena část, ale ne akce
+                    $this->redirect('menu/'.$this->chosenFolder[0].'/'.$this->chosenFolder[1]);
+                }
             }
+            //Nastavení části
+            $this->chosenFolder[] = urldecode($menuArguments[2]);
         }
         if ($argumentCount > 3)
         {

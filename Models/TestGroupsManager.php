@@ -116,7 +116,7 @@ class TestGroupsManager
         }
         
         if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
-        {            
+        {
             //Získej data
             Db::connect();
             $parts = Db::fetchQuery('SELECT nazev,prirodniny,obrazky FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND poznavacky_id IN (SELECT poznavacky_id FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?));', array($groupName, $className), true);
@@ -126,6 +126,8 @@ class TestGroupsManager
             }
             
             //Vytvoř tabulku
+            $totalNaturals = 0;
+            $totalPictures = 0;
             $table = array();
             foreach ($parts as $dataRow)
             {
@@ -134,6 +136,20 @@ class TestGroupsManager
                 $tableRow[0] = $dataRow['nazev'];
                 $tableRow[1] = $dataRow['prirodniny'];
                 $tableRow[2] = $dataRow['obrazky'];
+                
+                $totalNaturals += $dataRow['prirodniny'];
+                $totalPictures += $dataRow['obrazky'];
+                
+                array_push($table, $tableRow);
+            }
+            //Přidej řádku pro výběr všech částí, pokud jich existuje více
+            if (count($parts) > 1)
+            {
+                $tableRow = array();
+                $tableRow['rowLink'] = ltrim($_SERVER['REQUEST_URI'], '/');
+                $tableRow[0] = 'Vše';
+                $tableRow[1] = $totalNaturals;
+                $tableRow[2] = $totalPictures;
                 
                 array_push($table, $tableRow);
             }
