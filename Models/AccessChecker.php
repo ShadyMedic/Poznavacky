@@ -39,7 +39,7 @@ class AccessChecker
     public static function checkSystemAdmin(int $userId)
     {
         Db::connect();
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE uzivatel_id = ? AND status = "admin"', array($userId), false);
+        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE uzivatele_id = ? AND status = "admin"', array($userId), false);
         return ($result['cnt'] === 1) ? true : false;
     }
 }
