@@ -11,11 +11,11 @@ class ManageController extends Controller
      * Metoda ověřující, zda má uživatel do správy třídy přístup a nastavující hlavičku stránky a pohled
      * @see Controller::process()
      */
-    public function process(array $paremeters, array $folder)
+    public function process(array $parameters)
     {
         try
         {
-            if (empty($folder[0]))
+            if (empty($parameters[0]))
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN, null, null, array('originFile' => 'ManageController.php', 'displayOnView' => 'manage.phtml'));
             }
@@ -24,7 +24,8 @@ class ManageController extends Controller
         {
             $this->redirect('error404');
         }
-        $className = $folder[0];
+        $className = $parameters[0];
+        
         if (!AccessChecker::checkAdmin(UserManager::getId(), ClassManager::getIdByName($className)))
         {
             $this->redirect('error403');
