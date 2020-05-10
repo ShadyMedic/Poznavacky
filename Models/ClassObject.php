@@ -38,6 +38,15 @@ class ClassObject
     }
     
     /**
+     * Metoda navracející jméno této třídy
+     * @return string Jméno třídy
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    /**
      * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
      * @param int $userId ID ověřovaného uživatele
      * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
@@ -75,6 +84,40 @@ class ClassObject
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Metoda přidávající uživatele do třídy (přidává spojení uživatele a třídy do tabulky "clenstvi")
+     * Pokud je tato třída veřejná nebo uzamčená, nic se nestane
+     * @param int $userId ID uživatele získávajícího členství
+     * @return boolean TRUE, pokud je členství ve třídě úspěšně přidáno, FALSE, pokud ne (například z důvodu zamknutí třídy)
+     */
+    public function addMember(int $userId)
+    {
+        //Zkontroluj, zda je třída soukromá
+        if (!$this->status === self::CLASS_STATUS_PRIVATE)
+        {
+            //Nelze získat členství ve veřejné nebo uzamčené třídě
+            return false;
+        }
+        
+        Db::connect();
+        
+        //Zkontroluj, zda již uživatel není členem této třídy
+        if ($this->checkAccess($userId))
+        {
+            //Nelze získat členství ve třídě vícekrát
+            return false;
+        }
+        
+        if (Db::executeQuery('INSERT INTO clenstvi(uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id)))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     /**

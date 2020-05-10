@@ -46,4 +46,26 @@ class ClassManager
         }
         return false;
     }
+    
+    /**
+     * Metoda získávající z databáze seznam ID všech tříd, jejichž přístupový kód je nastaven na specifikovanou hodnotu
+     * POZNÁMKA: V případě velkého množství tříd je možné omezit dotaz tak, aby navracel pouze soukromé třídy, jelikož do veřejných a uzamčených tříd se nedá získat členství
+     * @param int $code Kód podle kterého vyhledáváme
+     * @return array|boolean Pole ID tříd, které používají daný přístupový kód nebo FALSE, pokud žádné takové třídy neexistují
+     */
+    public static function getClassesByAccessCode($code)
+    {
+        Db::connect();
+        $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE kod = ?', array($code), true);
+       #$result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE kod = ? AND status = ?', array($code, ClassObject::CLASS_STATUS_PRIVATE), true);
+        
+        //Kontrola, zda je navrácen alespoň jeden výsledek
+        if (!$result)
+        {
+            return false;
+        }
+        
+        //Převod dvourozměrného pole obsahujícím v každém řádku jednu hodnotu (id) do jednorozměrného (numerického)
+        return array_map('current', $result);
+    }
 }
