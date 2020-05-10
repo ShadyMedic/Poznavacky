@@ -39,4 +39,29 @@ class UserManager
             throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null, array('originFile' => 'UserManager.php', 'requestedIndex' => 'name'));
         }
     }
+    
+    /**
+     * Metoda získávající e-mail aktuálně přihlášeného uživatele (pokud jej zadal)
+     * @throws AccessDeniedException Pokud není žádný uživatel přihlášen
+     * @return string|false E-mail přihlášeného uživatele nebo FALSE, pokud žádný nezadal
+     */
+    public static function getEmail()
+    {
+        if (AccessChecker::checkUser())
+        {
+            $email = $_SESSION['user']['email'];
+            if (!empty($email))
+            {
+                return $email;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null, array('originFile' => 'UserManager.php', 'requestedIndex' => 'name'));
+        }
+    }
 }
