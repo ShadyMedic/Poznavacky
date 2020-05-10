@@ -20,10 +20,10 @@
     <br>
     <span>Prokažte prosím, že nejste robot opsáním následujícího čísla pomocí číslic: <?= $antispamCode ?></span>
     <br>
-    <input id='newClassFormAntispam' class="text" name="antispam" type=number min=0 max=99 maxlength=3 required />
+    <input id='newClassFormAntispam' class="text" name="antispam" type=number min=0 max=99 maxlength=2 required />
     <br>
     <input type=submit class="button" value="Odeslat žádost" />
-    <a href="menu"><button>Zpět</button></a>
+    <a href="menu">Zpět</a>
     <br>
     <span><?= @$errorMessage ?></span>
 </form>
