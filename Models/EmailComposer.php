@@ -9,6 +9,7 @@ class EmailComposer
     public const EMAIL_TYPE_PASSWORD_RECOVERY = 1;
     public const EMAIL_TYPE_NAME_CHANGE_APPROVED = 2;
     public const EMAIL_TYPE_NAME_CHANGE_DECLINED = 3;
+    public const EMAIL_TYPE_NEW_CLASS_REQUEST = 4;
     
     private $message;
     
@@ -43,6 +44,15 @@ class EmailComposer
                 $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
                 $template = str_replace('<?= $oldName ?>', $oldName, $template);
                 $template = str_replace('<?= $declineReason ?>', $declineReason, $template);
+                break;
+            case self::EMAIL_TYPE_NEW_CLASS_REQUEST:
+                $template = file_get_contents('Views/EmailTemplates/newClassRequest.phtml');
+                $template = str_replace('<?= $username ?>', $username, $template);
+                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
+                $template = str_replace('<?= $name ?>', $name, $template);
+                $template = str_replace('<?= $code ?>', $code, $template);
+                $template = str_replace('<?= $message ?>', $message, $template);
+                $template = str_replace('<?= $email ?>', $email, $template);
                 break;
             default:
                 throw new InvalidArgumentException('Neznámá e-mailová šablona');
