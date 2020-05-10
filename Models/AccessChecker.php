@@ -18,6 +18,7 @@ class AccessChecker
     /**
      * Metoda kontrolující, zda je určitý uživatel systémovým správcem
      * @param int $userId ID ověřovaného uživatele
+     * @return boolean TRUE, pokud je daný uživatelem systémovým správcem, FALSE, pokud ne
      */
     public static function checkSystemAdmin(int $userId)
     {
