@@ -12,7 +12,8 @@ class TestController extends Controller
      */
     public function process(array $parameters)
     {
-        if (!AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($parameters[0])))
+        $class = new ClassObject(0, $parameters[0]);
+        if (!$class->checkAccess(UserManager::getId()))
         {
             $this->redirect('error403');
         }

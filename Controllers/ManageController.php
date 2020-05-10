@@ -24,9 +24,9 @@ class ManageController extends Controller
         {
             $this->redirect('error404');
         }
-        $className = $parameters[0];
         
-        if (!AccessChecker::checkAdmin(UserManager::getId(), ClassManager::getIdByName($className)))
+        $class = new ClassObject(0, $parameters[0]);
+        if (!$class->checkAdmin(UserManager::getId()))
         {
             $this->redirect('error403');
         }

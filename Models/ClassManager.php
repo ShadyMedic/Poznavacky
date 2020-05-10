@@ -46,21 +46,4 @@ class ClassManager
         }
         return false;
     }
-    
-    /**
-     * Metoda kontrolující, zda v dané třídě existuje specifikovaná poznávačka
-     * @param string $className Jméno třídy
-     * @param string $groupName Jméno poznávačky
-     * @return boolean TRUE, pokud byla poznávačka nalezene, FALSE, pokud ne
-     */
-    public static function groupExists(string $className, string $groupName)
-    {
-        Db::connect();
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM poznavacky WHERE nazev = ? AND tridy_id = ?', array($groupName, self::getIdByName($className)), false);
-        if ($cnt['cnt'] > 0)
-        {
-           return true;
-        }
-        return false;
-    }
 }

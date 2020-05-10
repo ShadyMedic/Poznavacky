@@ -13,7 +13,7 @@ class UserManager
      */
     public static function getId()
     {
-        if (isset($_SESSION['user']))
+        if (AccessChecker::checkUser())
         {
             return $_SESSION['user']['id'];
         }
@@ -30,7 +30,7 @@ class UserManager
      */
     public static function getName()
     {
-        if (isset($_SESSION['user']))
+        if (AccessChecker::checkUser())
         {
             return $_SESSION['user']['name'];
         }

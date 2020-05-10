@@ -10,12 +10,13 @@ class MenuController extends Controller
     
     /**
      * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
+     * Metoda nejprve zkontroluje, zda je uživatel přihlášen
      * @see Controller::process()
      */
     public function process(array $parameters)
     {
         //Kontrola, zda je uživatel přihlášen
-        if (!isset($_SESSION['user']))
+        if (!AccessChecker::checkUser())
         {
             //Přihlášení uživatele vypršelo
             //Kontrola instantcookie sezení
@@ -76,7 +77,7 @@ class MenuController extends Controller
             $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::ControllerExtension;
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 2)
             {
-                //ManageController
+                //ManageController / LeaveController
                 $this->controllerToCall = new $controllerName;
             }
             else

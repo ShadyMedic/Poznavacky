@@ -66,7 +66,8 @@ class TestGroupsManager
             throw new NoDataException(NoDataException::UNKNOWN_CLASS);
         }
         
-        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
+        $class = new ClassObject(0, $className);
+        if ($class->checkAccess(UserManager::getId()))
         {   
             //Získej data
             $groups = Db::fetchQuery('SELECT nazev,casti FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($className), true);
@@ -110,12 +111,13 @@ class TestGroupsManager
         }
         
         //Zkontroluj, zda poznávačka existuje
-        if (!ClassManager::groupExists($className, $groupName))
+        $class = new ClassObject(0, $className);
+        if (!$class->groupExists($groupName))
         {
             throw new NoDataException(NoDataException::UNKNOWN_GROUP);
         }
         
-        if (AccessChecker::checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
+        if ($class->checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
         {
             //Získej data
             Db::connect();
