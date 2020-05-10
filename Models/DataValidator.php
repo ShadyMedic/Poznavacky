@@ -12,7 +12,7 @@ class DataValidator
      * @param int $min Minimální povolená délka řetězce (včetně)
      * @param int $max Maximální povolená délka řetězce (včetně)
      * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail
-     * @throws LengthException Pokud délka řetězce nespadá mezi $min a $max. Zpráva výjimky je 'long' nebo 'short' podle toho, jaká hranice byla přesažena
+     * @throws RangeException Pokud délka řetězce nespadá mezi $min a $max. Zpráva výjimky je 'long' nebo 'short' podle toho, jaká hranice byla přesažena
      * @return boolean TRUE, pokud délka řetězce spadá mezi $min a $max
      */
     public function checkLength($subject, int $min, int $max, int $stringType = null)
@@ -54,7 +54,7 @@ class DataValidator
     /**
      * Metoda ověřující, zda se již řetězec v databázi (v tabulce uzivatele) nevyskytuje
      * @param string $subject Řetězec jehož unikátnost chceme zjistit
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 2 pro e-mail
+     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno uživatele, 2 pro e-mail, 3 pro jméno třídy
      * @throws InvalidArgumentException Pokud se již řetězec v databázi vyskytuje
      * @return boolean TRUE, pokud se řetězec zatím v databázi nevyskytuje
      */
@@ -64,7 +64,7 @@ class DataValidator
         switch ($stringType)
         {
             case 0:
-                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE jmeno = ?', array($subject), false);
+                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE jmeno = ? LIMIT 1', array($subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
@@ -76,12 +76,18 @@ class DataValidator
                     //Nevyplněný e-mail
                     return true;
                 }
-                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE email = ?', array($subject), false);
+                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE email = ? LIMIT 1', array($subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
                 }
                 break;
+            case 3:
+                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE nazev = ? LIMIT 1', array($subject), false);
+                if ($result['cnt'] > 0)
+                {
+                    throw new InvalidArgumentException(null, $stringType);
+                }
         }
         return true;
     }
