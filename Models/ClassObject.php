@@ -5,8 +5,13 @@
  */
 class ClassObject
 {
+    public const CLASS_STATUS_PUBLIC = "public";
+    public const CLASS_STATUS_PRIVATE = "private";
+    public const CLASS_STATUS_LOCKED = "locked";
+    
     private $id;
     private $name;
+    private $status;
     
     /**
      * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i jméno, má ID přednost
@@ -80,6 +85,12 @@ class ClassObject
      */
     public function removeMember(int $userId)
     {
+        if ($this->status == self::CLASS_STATUS_PUBLIC)
+        {
+            //Nelze odstranit člena z veřejné třídy
+            return false;
+        }
+        
         Db::connect();
         if (Db::executeQuery('DELETE FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1', array($this->id, $userId)))
         {
@@ -88,6 +99,35 @@ class ClassObject
         else
         {
             return false;
+        }
+    }
+    
+    /**
+     * Metoda navracející uložený status této třídy.
+     * Pokud status není uložen, je načten z databáze, uložen a poté navrácen
+     * @return string Status třídy (viz konstanty třídy)
+     */
+    private function getStatus()
+    {
+        if (isset($this->status))
+        {
+            return $this->status;
+        }
+        return $this->loadStatus();
+    }
+    
+    /**
+     * Metoda získávající z databáze status této třídy a nastavující jej jako vlastnost "status"
+     * @return string Status třídy (viz konstanty třídy)
+     */
+    private function loadStatus()
+    {
+        Db::connect();
+        $result = Db::fetchQuery('SELECT status FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id), false);
+        if ($result)
+        {
+            $this->status = $result['status'];
+            return $result['status'];
         }
     }
 }
