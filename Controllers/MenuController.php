@@ -1,6 +1,5 @@
 <?php
-
-/** 
+/**
  * Kontroler starající se o zobrazení layoutu pro všechny stránky kromě indexu
  * @author Jan Štěch
  */
@@ -142,6 +141,7 @@ class MenuController extends Controller
         $this->pageHeader['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
         
         $this->data['loggedUserName'] = UserManager::getName();
+        $this->data['adminLogged'] = AccessChecker::checkSystemAdmin(UserManager::getId());
         
         $this->view = 'menu';
     }

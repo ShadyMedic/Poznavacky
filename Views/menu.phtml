@@ -7,6 +7,9 @@
 </header>
 <aside class="aside-left">
 	<nav>
+		<?php if ($adminLogged) : ?>
+			<a href="menu/administrate">Správa systému</a>
+		<?php endif ?>
 		<a href="menu/account-settings">Nastavení účtu</a>
 		<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
 	</nav>
