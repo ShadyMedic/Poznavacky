@@ -31,7 +31,7 @@ class NewClassRequester
             
             //Odeslat e-mail
             $composer = new EmailComposer();
-            $composer->composeMail(EmailComposer::EMAIL_TYPE_NEW_CLASS_REQUEST, array('username' => UserManager::getName(), 'websiteAddress' => $_SERVER['SERVER_NAME'], 'name' => $name, 'code' => $code, 'message' => $text, 'email' => $email));
+            $composer->composeMail(EmailComposer::EMAIL_TYPE_NEW_CLASS_REQUEST, array('username' => UserManager::getName(), 'websiteAddress' => $_SERVER['SERVER_NAME'], 'name' => htmlspecialchars($name), 'code' => htmlspecialchars($code), 'message' => nl2br(htmlspecialchars($text)), 'email' => htmlspecialchars($email)));
             
             $sender = new EmailSender();
             $result = $sender->sendMail(self::ADMIN_EMAIL, 'Žádost o založení nové třídy od '.UserManager::getName(), $composer->getMail());
