@@ -48,7 +48,7 @@ class RooterController extends Controller
      * Metoda načítající hlášky pro uživatele uložené v $_SESSION a přidávající jejich obsah do dat, které jsou později předány pohledu
      * Hlášky jsou poté ze sezení vymazány
      */
-    private function getMessages()
+    protected function getMessages()
     {
         if (isset($_SESSION['messages']))
         {
@@ -70,7 +70,7 @@ class RooterController extends Controller
     /**
      * Metoda odstraňující všechny hlášky pro uživatele uloženy v $_SESSION
      */
-    private function clearMessages()
+    protected function clearMessages()
     {
         unset($_SESSION['messages']);
     }

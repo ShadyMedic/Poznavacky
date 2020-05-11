@@ -65,7 +65,7 @@ abstract class Controller
      * @param int $type
      * @param string $msg
      */
-    public function addMessage(int $type, string $msg)
+    protected function addMessage(int $type, string $msg)
     {
         $messageBox = new MessageBox($type, $msg);
         if (isset($_SESSION['messages']))
