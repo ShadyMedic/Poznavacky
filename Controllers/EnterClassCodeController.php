@@ -45,7 +45,7 @@ class EnterClassCodeController extends Controller
         }
         else
         {
-            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Žádné třídy s tímto přístupovým kódem nebyly nalezeny.');
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Žádné třídy s tímto přístupovým kódem nebyly nalezeny');
         }
         
         $this->redirect('menu');
