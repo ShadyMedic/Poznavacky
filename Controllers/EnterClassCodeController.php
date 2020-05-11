@@ -27,19 +27,26 @@ class EnterClassCodeController extends Controller
             $this->redirect('menu');
         }
         
-        #$accessedClasses = array();
+        $accessedClasses = array();
         foreach($classIds as $classId)
         {
             $class = new ClassObject($classId);
-            $class->addMember($userId);
-            #if ($class->addMember($userId))
-            #{
-            #    $accessedClasses[] = $class->getName();
-            #}
+            if ($class->addMember($userId))
+            {
+                $accessedClasses[] = $class->getName();
+            }
             unset($class);
         }
         
-        #Vypsat do zprávy pro uživatele jména tříd do kterých získal přístup uložená v $accessedClasses
+        if (count($accessedClasses) > 0)
+        {
+            //Vypsat do zprávy pro uživatele jména tříd do kterých získal přístup uložená v $accessedClasses
+            $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Získali jste přístup do následujících tříd: '.implode(', ',$accessedClasses));
+        }
+        else
+        {
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Žádné třídy s tímto přístupovým kódem nebyly nalezeny.');
+        }
         
         $this->redirect('menu');
     }
