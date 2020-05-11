@@ -30,9 +30,6 @@
 			</form>
 			<span><button class="btn inline black" onclick="showLoginDiv('password-recovery')">Zapomněli jste heslo?</button></span>
 			<span>Ještě nemáte účet? <button class="btn inline black" onclick="showLoginDiv('register')">Zaregistrujte se</button>.</span>
-			<div id="login-errors">
-				<?= $loginError ?>
-			</div>
 		</div>
 		<div id="register" class="hidden">
 			<h2>Zaregistrujte se</h2>
@@ -52,9 +49,6 @@
 				<button id='register-submit' onclick='register()'>Vytvořit účet</button>
 			</form>
 			<span>Již máte účet? <button class="btn inline black" onclick="showLoginDiv('login')">Přihlašte se</button>.</span>
-			<div id="register-errors">
-				<?= $registerError ?>
-			</div>
 		</div>
 		<div id="password-recovery" class="hidden">
 			<span>Zadejte svoji e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
@@ -65,12 +59,6 @@
 			</form>
 			<span>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</span>
 			<button class="btn inline black" onclick="showLoginDiv('login')">Zpět</button>
-			<div id='password-recovery-errors'>
-				<?= $passRecoveryError ?>
-			</div>
-			<div id='password-recovery-successes'>
-				<?= $passRecoverySuccess ?>
-			</div>
 		</div>
 	</section>
 </main>
