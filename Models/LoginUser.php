@@ -16,8 +16,8 @@ class LoginUser
     public static function processLogin(array $POSTdata)
     {
         //Ověřit vyplněnost dat
-        if (!isset($POSTdata['loginName'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
-        if (!isset($POSTdata['loginPass'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (empty($POSTdata['loginName'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (empty($POSTdata['loginPass'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         
         //Pokusit se přihlásit
         $userData = self::authenticate($POSTdata['loginName'], $POSTdata['loginPass']);
