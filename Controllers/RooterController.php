@@ -38,9 +38,41 @@ class RooterController extends Controller
         $this->data['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
         $this->data['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
         $this->data['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
+        $this->data['messages'] = $this->getMessages();
         $this->data['currentYear'] = date('Y');
         
         $this->view = 'head';
+    }
+    
+    /**
+     * Metoda načítající hlášky pro uživatele uložené v $_SESSION a přidávající jejich obsah do dat, které jsou později předány pohledu
+     * Hlášky jsou poté ze sezení vymazány
+     */
+    private function getMessages()
+    {
+        if (isset($_SESSION['messages']))
+        {
+            $messages = $_SESSION['messages'];
+            $messagesData = array();
+            foreach ($messages as $messageBox)
+            {
+                $messagesData[] = $messageBox->getData();
+            }
+            $this->clearMessages();
+            return $messagesData;
+        }
+        else
+        {
+            return array();
+        }
+    }
+    
+    /**
+     * Metoda odstraňující všechny hlášky pro uživatele uloženy v $_SESSION
+     */
+    private function clearMessages()
+    {
+        unset($_SESSION['messages']);
     }
     
     /**

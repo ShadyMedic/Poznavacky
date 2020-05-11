@@ -23,6 +23,11 @@
     </head>
     <body id="<?= $bodyId ?>">
 		<div class="container">
+			<div id="messages">
+			<?php foreach ($messages as $messageBox) : ?>
+				<div class="<?= $messageBox['messageClass'] ?>"><?= $messageBox['message'] ?></div>
+			<?php endforeach ?>
+			</div>
 			<?php $this->controllerToCall->displayView(); ?>
 			<footer>
 				<a id="help" class="footer-option" target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a>
