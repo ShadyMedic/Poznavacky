@@ -27,13 +27,12 @@ class TokenPasswordChangeController extends Controller
         }
         catch (AccessDeniedException $e)
         {
-            setcookie('recoveryErrorMessage', $e->getMessage());
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
             $this->redirect('recoverPassword/'.$token);
         }
         
-        $this->data['message'] = 'Heslo bylo úspěšně změněno';
-        $this->pageHeader['bodyId'] = 'recoverPasswordMessage';
-        $this->view = 'recoverPasswordMessage';
+        $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno');
+        $this->redirect('');
     }
 }
 

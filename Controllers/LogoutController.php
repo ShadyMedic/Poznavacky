@@ -13,7 +13,6 @@ class LogoutController extends Controller
     public function process(array $paremeters)
     {
         //Vymaž současné odhlášení uživatele
-        session_start();
         unset($_SESSION['user']);
         
         //Odstraň trvalé přihlášení
@@ -30,6 +29,11 @@ class LogoutController extends Controller
             Db::executeQuery('DELETE FROM sezeni WHERE kod_cookie = ? LIMIT 1', array(md5($code)));
             unset($code);
         }
+        
+        //Nastav cookie zabraňující přehrání animace na index stránce
+        LoginUser::setRecentLoginCookie();
+        
+        $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Byli jste úspěšně odhlášeni');
         
         //Přesměrování na index
         $this->redirect('');

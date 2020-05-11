@@ -3,3 +3,5 @@
 .settings/*
 local/*
 log.txt
+debug.txt
+Models/DebugLogger.php

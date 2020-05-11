@@ -12,6 +12,28 @@ class IndexController extends Controller
      */
     public function process(array $paremeters)
     {
+        //Kontrola automatického přihlášení
+        if (isset($_COOKIE['instantLogin']))
+        {
+            try
+            {
+                LoginUser::processCookieLogin($_COOKIE['instantLogin']);
+                
+                //Přihlášení proběhlo úspěšně
+                $this->redirect('menu');
+            }
+            catch(AccessDeniedException $e)
+            {
+                //Kód nebyl platný
+                $_SESSION['error']['form'] = $e->getAdditionalInfo('form');
+                $_SESSION['error']['message'] = $e->getMessage();
+                
+                //Vymaž cookie s neplatným kódem
+                setcookie('instantLogin', null, -1);
+                unset($_COOKIE['instantLogin']);
+            }
+        }
+        
         $this->pageHeader['title'] = 'Poznávačky';
         $this->pageHeader['description'] = 'Čeká vás poznávačka z biologie? Není lepší způsob, jak se na ni naučit, než použitím této webové aplikace. Vytvořte si vlastní poznávačku, společně do ní přidávejte obrázky, učte se z nich a nechte si generovat náhodné testy.';
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda, poznávačka, přírodopis, přírodověda, test, výuka, naučit, učit, testy, učení';
@@ -26,27 +48,17 @@ class IndexController extends Controller
         $this->data['passRecoverySuccess'] = '';
         
         //Zkontrolovat, zda nejsou nějaké chybové nebo úspěchové hlášky k zobrazení
-        if (isset($_COOKIE['errorForm']))
+        if (isset($_SESSION['error']))
         {
-            $index = $_COOKIE['errorForm'].'Error';
-            $this->data[$index] = $_COOKIE['errorMessage'];
-            
-            //Vymazání cookies
-            unset($_COOKIE['errorForm']);
-            unset($_COOKIE['errorMessage']);
-            setcookie('errorForm', null, -1);
-            setcookie('errorMessage', null, -1);
+            $index = $_SESSION['error']['form'].'Error';
+            $this->data[$index] = $_SESSION['error']['message'];
+            unset($_SESSION['error']);
         }
-        if (isset($_COOKIE['successForm']))
+        if (isset($_SESSION['success']))
         {
-            $index = $_COOKIE['successForm'].'Success';
-            $this->data[$index] = $_COOKIE['successMessage'];
-            
-            //Vymazání cookies
-            unset($_COOKIE['successForm']);
-            unset($_COOKIE['successMessage']);
-            setcookie('successForm', null, -1);
-            setcookie('successMessage', null, -1);
+            $index = $_SESSION['success']['form'].'Success';
+            $this->data[$index] = $_SESSION['success']['message'];
+            unset($_SESSION['success']);
         }
         
         //Práce s dříve vyplněnými formuláři
@@ -58,10 +70,10 @@ class IndexController extends Controller
         $this->data['registerEmail'] = '';
         $this->data['passRecoveryEmail'] = '';
         
-        if (isset($_COOKIE['previousAnswers']))
+        if (isset($_SESSION['previousAnswers']))
         {
             //Atributa name ve formulářích na index stránce je u každého pole nastavena na stejný název jako proměnná ze které se vypisuje hodnota atributy value
-            $previousAnswers = unserialize($_COOKIE['previousAnswers']);
+            $previousAnswers = unserialize($_SESSION['previousAnswers']);
             $this->data['loginName'] = @$previousAnswers['loginName'];
             $this->data['loginPass'] = @$previousAnswers['loginPass'];
             $this->data['registerName'] = @$previousAnswers['registerName'];
@@ -70,8 +82,7 @@ class IndexController extends Controller
             $this->data['registerEmail'] = @$previousAnswers['registerEmail'];
             $this->data['passRecoveryEmail'] = @$previousAnswers['passRecoveryEmail'];
             
-            unset($_COOKIE['previousAnswers']);
-            setcookie('previousAnswers', null, -1);
+            unset($_SESSION['previousAnswers']);
         }
         
         $this->view = 'index';

@@ -11,6 +11,7 @@ class AccessDeniedException extends Exception
     const REASON_LOGIN_NO_PASSWORD = 'Musíte zadat své heslo';
     const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
     const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem neexistuje';
+    const REASON_LOGIN_INVALID_COOKIE_CODE = 'Kód pro trvalé přihlášení není platný';
     const REASON_REGISTER_NO_NAME = 'Musíte vyplnit své jméno';
     const REASON_REGISTER_NO_PASSWORD = 'Musíte vyplnit své heslo';
     const REASON_REGISTER_NO_REPEATED_PASSWORD = 'Musíte své heslo vyplnit znovu';
@@ -32,6 +33,16 @@ class AccessDeniedException extends Exception
     const REASON_USER_NOT_MEMBER_IN_CLASS = 'Nemáte přístup do této třídy';
     const REASON_USER_NOT_HAVING_ACCESS_TO_GROUP = 'Nemáte přístup do třídy do které patří tato poznávačka';
     const REASON_CLASS_NOT_CHOSEN = 'Nebyla vybrána žádná třída';
+    const REASON_NEW_CLASS_REQUEST_NO_EMAIL = 'Musíte zadat svůj e-mail, abychom vás mohli kontaktovat';
+    const REASON_NEW_CLASS_REQUEST_NO_NAME = 'Musíte zadat název nové třídy';
+    const REASON_NEW_CLASS_REQUEST_NO_CODE = 'Musíte zadat přístupový kód nové třídy';
+    const REASON_NEW_CLASS_REQUEST_NO_ANTISPAM = 'Musíte vyplnit ochranu proti robotům';
+    const REASON_NEW_CLASS_REQUEST_INVALID_EMAIL = 'E-mail nemá platný formát';
+    const REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT = 'Název nové třídy musí být alespoň 5 znaků dlouhé';
+    const REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG = 'Název nové třídy nesmí být více než 31 znaků dlouhé';
+    const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto názvem již existuje';
+    const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód pro novou třídu nemá platný formát - musí to být čtyři číslice';
+    const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';
     
     private $additionalInfo = array();
     

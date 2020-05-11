@@ -7,6 +7,7 @@ class LoginUser
 {
     //Čas po jaký není nutné znovu přidávat heslo, pokud je při přihlášení zaškrtnuto políčko "Zůstat přihlášen"
     private const INSTALOGIN_COOKIE_LIFESPAN = 2592000;    //2 592 000‬ s = 30 dní
+    private const RECENTLOGIN_COOKIE_LIFESPAN = 28800;     //28 800 s = 8 hodin
     
     /**
      * Metoda která se stará o všechny kroky přihlašování
@@ -15,8 +16,8 @@ class LoginUser
     public static function processLogin(array $POSTdata)
     {
         //Ověřit vyplněnost dat
-        if (!isset($POSTdata['loginName'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
-        if (!isset($POSTdata['loginPass'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (empty($POSTdata['loginName'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (empty($POSTdata['loginPass'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         
         //Pokusit se přihlásit
         $userData = self::authenticate($POSTdata['loginName'], $POSTdata['loginPass']);
@@ -32,6 +33,21 @@ class LoginUser
             {
                 self::setLoginCookie($userData['uzivatele_id']);
             }
+        }
+    }
+    
+    /**
+     * Metoda, která se stará o všechny kroky přihlášení pomocí kódu ze souboru cookie pro trvalé přihlášení
+     * @param string $code Kód uložený v souboru cookie
+     */
+    public static function processCookieLogin(string $code)
+    {
+        //Kontrola správnosti kódu
+        $userData = self::verifyCode($code);
+        
+        if ($userData)
+        {
+            self::login($userData);
         }
     }
     
@@ -53,14 +69,31 @@ class LoginUser
     }
     
     /**
+     * Metoda kontrolující, zda je v databázi uložen hash kódu obdrženého z instalogin cookie
+     * @param string $code Nezahešovaný kód obsažený v souboru cookie
+     * @throws AccessDeniedException Pokud není kód platný
+     * @return array|boolean Data o uživateli uložená v databázi, k jehož účtu se lze pomocí daného kódu přihlásit nebo FALSE, pokud je kód neplatný
+     */
+    private static function verifyCode(string $code)
+    {
+        Db::connect();
+        $userData = Db::fetchQuery('SELECT * FROM uzivatele WHERE uzivatele_id = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
+        if ($userData === FALSE) {throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login'));}
+        else {return $userData;}
+        return false;
+    }
+    
+    /**
      * Metoda ukládající data o uživateli z databáze do $_SESSION
      * @param array $userData
      */
     private static function login(array $userData)
     {
-        session_start();
         $user = new LoggedUser($userData['uzivatele_id'], $userData['jmeno'], $userData['heslo'], $userData['email'], new Datetime($userData['posledni_prihlaseni']), $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
         $_SESSION['user'] = $user;
+        
+        //Nastavení cookie pro zabránění přehrávání animace
+        self::setRecentLoginCookie();
     }
     
     /**
@@ -85,6 +118,15 @@ class LoginUser
         }
         setcookie('instantLogin', $code, time() + self::INSTALOGIN_COOKIE_LIFESPAN, '/');
         $_COOKIE['instantLogin'] = $code;
+    }
+    
+    /**
+     * Metoda nastavující cookie indukující, že se z tohoto počítače nedávno přihlásil nějaký uživatel a zabraňuje tak přehrávání animace na index stránce
+     * Metoda je využívána i modelem Register.php a kontrolerem LogoutController.php
+     */
+    public static function setRecentLoginCookie()
+    {
+        setcookie('recentLogin', true, time() + self::RECENTLOGIN_COOKIE_LIFESPAN, '/');
     }
 }
 

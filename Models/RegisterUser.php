@@ -42,9 +42,9 @@ class RegisterUser
         $validator = new DataValidator();
         
         //Kontrola existence vyplněných dat
-        if (!isset($name)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (!isset($pass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (!isset($repass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (empty($name)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (empty($pass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (empty($repass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
         
         //Kontrola délky jména, hesla a e-mailu
         try
@@ -156,9 +156,11 @@ class RegisterUser
         $id = Db::fetchQuery('SELECT uzivatele_id FROM uzivatele WHERE jmeno=? LIMIT 1', array($name), false);
         $id = $id['uzivatele_id'];
         
-        session_start();
         $user = new LoggedUser($id, $name, $password, $email, new DateTime(null, new DateTimeZone('EUROPE/PRAGUE')), 0, 0, null, self::DEFAULT_THEME, 0, 0, self::DEFAULT_KARMA, self::DEFAULT_STATUS);
         $_SESSION['user'] = $user;
+        
+        //Nastavení cookie pro zabránění přehrávání animace
+        LoginUser::setRecentLoginCookie();
         
         return true;
     }

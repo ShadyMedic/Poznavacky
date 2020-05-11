@@ -1,0 +1,25 @@
+<table width='100%' cellpadding='0' border='0' cellspacing='0'>
+    <tbody>
+        <tr>
+            <td align='center' bgcolor='#eeeeee'>
+                <table width='660' cellpadding='0' border='0' cellspacing='0' align='center' bgcolor='#FFFFFF' style='font-size:15px;font-family:Helvetica,Arial,sans-serif;line-height:25px;color:#445566;border-top: 10px solid #405d27;'>
+                    <tbody>
+                        <tr>
+                            <td align='left' style='padding:45px 50px 45px 50px'>
+                                <div>
+                                    <p>Uživatel <?= $username ?> zažádal o zaožení nové třídy na <a href="<?= $websiteAddress ?>"><?= $websiteAddress ?></a></p>
+                                    <h3>Poskytnuté údaje:</h3>
+                                    <p><b>Jméno třídy:</b> <?= $name ?></p>
+                                    <p><b>Kód třídy:</b> <?= $code ?></p>
+                                    <p><b>Další informace:</b></p>
+                                    <p><fieldset style='width: fit-content; height: fit-content;'><?= $message ?></fieldset></p>
+                                    <p>Email pro odpověď: <a href='mailto:<?= $email ?>'><?= $email ?></a></p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

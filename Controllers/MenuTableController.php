@@ -1,7 +1,8 @@
 <?php
-
 /** 
- * Kontroler starající se o výpis tabulky tříd, poznávaček nebo částí na menu stránce
+ * Kontroler starající se o rozhodnutí, jaká tabulka se bude zobrazovat na menu stránce
+ * Tato třída nastavuje pohled obsahující poze tlačítko pro návrat a/nebo chybovou hlášku
+ * Pohled obsahující samotnou tabulku a její obsah je nastavován kontrolerem MenuTableContentController
  * @author Jan Štěch
  */
 class MenuTableController extends Controller
@@ -26,41 +27,31 @@ class MenuTableController extends Controller
             if (!isset($chosenFolder[$i])){$chosenFolder[$i] = '';}
         }
         
-        //Získání dat
-        $this->getData($chosenFolder[0], $chosenFolder[1]);
+        $className = $chosenFolder[0];
+        $groupName = $chosenFolder[1];
         
-        $this->view = 'menuTable';
-    }
-    
-    /**
-     * Metoda získávající data pro tabulku na menu stránku
-     * @param string $className Jméno třídy (pokud byla zvolena)
-     * @param string $groupName Jméno poznávačky (pokud byla zvolena)
-     */
-    private function getData(string $className = '', string $groupName = '')
-    {
+        //Získání dat
         try
         {
             if (empty($className))
             {
+                $this->view = 'menuClassesForms';
                 $classes = TestGroupsManager::getClasses();
-                $this->data['tableColumns'] = 3;
-                $this->data['tableData'] = $classes;
-                $this->data['tableLevel'] = 0;
+                $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
             else if (empty($groupName))
             {
+                $this->data['returnButtonLink'] = 'menu';
+                $this->view = 'menuGroupsButton';
                 $groups = TestGroupsManager::getGroups($className);
-                $this->data['tableColumns'] = 2;
-                $this->data['tableData'] = $groups;
-                $this->data['tableLevel'] = 1;
+                $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
             }
             else
             {
+                $this->data['returnButtonLink'] = 'menu/'.$className;
+                $this->view = 'menuPartsButton';
                 $parts = TestGroupsManager::getParts($className, $groupName);
-                $this->data['tableColumns'] = 3;
-                $this->data['tableData'] = $parts;
-                $this->data['tableLevel'] = 2;
+                $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
             }
         }
         catch (AccessDeniedException $e)
@@ -68,22 +59,25 @@ class MenuTableController extends Controller
             if ($e->getMessage() === AccessDeniedException::REASON_USER_NOT_LOGGED_IN)
             {
                 //Uživatel není přihlášen
-                $this->redirect('Error403');
+                $this->redirect('error403');
                 return;
             }
             else
             {
                 //Uživatel nemá přístup do třídy nebo poznávačky
-                $this->data['tableColumns'] = 1;
-                $this->data['tableData'] = array(0 => array(0 => $e->getMessage()));
-                $this->data['tableLevel'] = $e->getAdditionalInfo('menuTableLevel');
+                $this->controllerToCall = new MenuTableContentController('menuTableMessage', $e->getMessage());
             }
         }
         catch (NoDataException $e)
         {
-            $this->data['tableColumns'] = 1;
-            $this->data['tableData'] = array(0 => array(0 => $e->getMessage()));
-            $this->data['tableLevel'] = $e->getTableLevel();
+            if ($e->getMessage() === NoDataException::UNKNOWN_CLASS || $e->getMessage() === NoDataException::UNKNOWN_GROUP || $e->getMessage() === NoDataException::UNKNOWN_PART)
+            {
+                $this->redirect('error404');
+            }
+            $this->controllerToCall = new MenuTableContentController('menuTableMessage', $e->getMessage());
         }
+        
+        //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
+        $this->controllerToCall->process(array());
     }
 }

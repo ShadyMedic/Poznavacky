@@ -59,4 +59,22 @@ abstract class Controller
         if (!$capitalizeFirst){ $camel = lcfirst($camel); }
         return $camel;
     }
+    
+    /**
+     * Metoda přidávající do sezení nový objekt s hláškou pro uživatele pro zobrazení na příští načtené stránce
+     * @param int $type
+     * @param string $msg
+     */
+    protected function addMessage(int $type, string $msg)
+    {
+        $messageBox = new MessageBox($type, $msg);
+        if (isset($_SESSION['messages']))
+        {
+            $_SESSION['messages'][] = $messageBox;
+        }
+        else
+        {
+            $_SESSION['messages'] = array($messageBox);
+        }
+    }
 }

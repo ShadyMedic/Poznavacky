@@ -1,0 +1,17 @@
+<table>
+	<tr>
+		<th>Název poznávačky</th>
+		<th>Části</th>
+	</tr>
+	<?php foreach ($table as $tableRow) : ?>
+		<tr>
+    		<?php for ($i = 0; $i < 2; $i++) : ?>
+    		<td>
+    			<a href="<?= $tableRow['rowLink'] ?>">
+    			<?= $tableRow[$i] ?>
+				</a>
+    		</td>
+    		<?php endfor ?>
+		</tr>
+	<?php endforeach ?>
+</table>

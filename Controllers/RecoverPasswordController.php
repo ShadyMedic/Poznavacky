@@ -43,32 +43,15 @@ class RecoverPasswordController extends Controller
         }
         catch (AccessDeniedException $e)
         {
-            $this->data['message'] = $e->getMessage();
-            $this->view = 'recoverPasswordMessage';
-        }
-        catch (DatabaseException $e)
-        {
-            $this->data['message'] = $e->getDbInfo()['message'];
-            $this->view = 'recoverPasswordMessage';
+            //Chybný kód
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
+            $this->redirect('');
         }
         
         if (isset($this->data['username']))
         {
-            //Kontrola chybových hlášek
-            if (isset($_COOKIE['recoveryErrorMessage']))
-            {
-                $errMsg = $_COOKIE['recoveryErrorMessage'];
-                
-                unset($_COOKIE['recoveryErrorMessage']);
-                setcookie('recoveryErrorMessage', null, -1);
-            }
-            else
-            {
-                $errMsg = '';
-            }
-            $this->data['recoveryErrorMessage'] = $errMsg;
+            //Kód nalezen a uživatel identifikován
             $this->view = 'recoverPassword';
         }
     }
 }
-
