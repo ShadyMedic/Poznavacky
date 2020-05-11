@@ -159,6 +159,9 @@ class RegisterUser
         $user = new LoggedUser($id, $name, $password, $email, new DateTime(null, new DateTimeZone('EUROPE/PRAGUE')), 0, 0, null, self::DEFAULT_THEME, 0, 0, self::DEFAULT_KARMA, self::DEFAULT_STATUS);
         $_SESSION['user'] = $user;
         
+        //Nastavení cookie pro zabránění přehrávání animace
+        LoginUser::setRecentLoginCookie();
+        
         return true;
     }
 }

@@ -7,6 +7,7 @@ class LoginUser
 {
     //Čas po jaký není nutné znovu přidávat heslo, pokud je při přihlášení zaškrtnuto políčko "Zůstat přihlášen"
     private const INSTALOGIN_COOKIE_LIFESPAN = 2592000;    //2 592 000‬ s = 30 dní
+    private const RECENTLOGIN_COOKIE_LIFESPAN = 28800;     //28 800 s = 8 hodin
     
     /**
      * Metoda která se stará o všechny kroky přihlašování
@@ -90,6 +91,9 @@ class LoginUser
     {
         $user = new LoggedUser($userData['uzivatele_id'], $userData['jmeno'], $userData['heslo'], $userData['email'], new Datetime($userData['posledni_prihlaseni']), $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
         $_SESSION['user'] = $user;
+        
+        //Nastavení cookie pro zabránění přehrávání animace
+        self::setRecentLoginCookie();
     }
     
     /**
@@ -114,6 +118,15 @@ class LoginUser
         }
         setcookie('instantLogin', $code, time() + self::INSTALOGIN_COOKIE_LIFESPAN, '/');
         $_COOKIE['instantLogin'] = $code;
+    }
+    
+    /**
+     * Metoda nastavující cookie indukující, že se z tohoto počítače nedávno přihlásil nějaký uživatel a zabraňuje tak přehrávání animace na index stránce
+     * Metoda je využívána i modelem Register.php a kontrolerem LogoutController.php
+     */
+    public static function setRecentLoginCookie()
+    {
+        setcookie('recentLogin', true, time() + self::RECENTLOGIN_COOKIE_LIFESPAN, '/');
     }
 }
 

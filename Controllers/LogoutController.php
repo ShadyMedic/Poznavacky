@@ -30,6 +30,9 @@ class LogoutController extends Controller
             unset($code);
         }
         
+        //Nastav cookie zabraňující přehrání animace na index stránce
+        LoginUser::setRecentLoginCookie();
+        
         //Přesměrování na index
         $this->redirect('');
     }
