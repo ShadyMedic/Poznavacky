@@ -19,24 +19,25 @@ class RequestNewClassController extends Controller
             {
                 if ($requester->processFormData($_POST))
                 {
-                    //TODO - přidat zprávu o úspěšném odeslání žádosti
+                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Žádost o založení nové třídy byla úspěšně odeslána. Sledujte prosím pravidelně svou e-mailovou schránku a očekávejte naši odpověď.');
                     $this->redirect('menu');
                 }
                 else
                 {
                     //E-mail se nepodařilo odeslat
-                    throw new AccessDeniedException('E-mail se nepodařilo odeslat. Zkuste to prosím později, nebo pošlete svou žádost jako issue na GitHub (viz odkaz "Nalezli jste problém" v patičce stránky)');
+                    $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'E-mail se nepodařilo odeslat. Zkuste to prosím později, nebo pošlete svou žádost jako issue na GitHub (viz odkaz "Nalezli jste problém" v patičce stránky)');
                 }
             }
             catch (AccessDeniedException $e)
             {
-                $this->data['errorMessage'] = $e->getMessage();
-                
-                $this->data['emailValue'] = @$_POST['email'];
-                $this->data['classNameValue'] = @$_POST['className'];
-                $this->data['classCodeValue'] = @$_POST['classCode'];
-                $this->data['textValue'] = @$_POST['text'];
+                $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
             }
+            
+            //Obnov data
+            $this->data['emailValue'] = @$_POST['email'];
+            $this->data['classNameValue'] = @$_POST['className'];
+            $this->data['classCodeValue'] = @$_POST['classCode'];
+            $this->data['textValue'] = @$_POST['text'];
             
         }
         
