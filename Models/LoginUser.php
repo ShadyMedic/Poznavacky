@@ -16,11 +16,11 @@ class LoginUser
     public static function processLogin(array $POSTdata)
     {
         //Ověřit vyplněnost dat
-        if (empty($POSTdata['loginName'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
-        if (empty($POSTdata['loginPass'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (empty($POSTdata['name'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (empty($POSTdata['pass'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         
         //Pokusit se přihlásit
-        $userData = self::authenticate($POSTdata['loginName'], $POSTdata['loginPass']);
+        $userData = self::authenticate($POSTdata['name'], $POSTdata['pass']);
         
         //Je přihlášen úspěšně?
         if ($userData)
@@ -29,7 +29,7 @@ class LoginUser
             self::login($userData);
             
             //Vygenerovat a uložit token pro trvalé přihlášení
-            if (isset($POSTdata['stay_logged']))
+            if (isset($POSTdata['stayLogged']))
             {
                 self::setLoginCookie($userData['uzivatele_id']);
             }

@@ -15,7 +15,7 @@
 		<button onclick="hideLoginSection()" class="cross"></button>
 		<div id="login" class="hidden">
 			<h2>Přihlašte se</h2>
-			<form method="POST" action="index-forms">
+			<form id="login-form" onsubmit="formSumbitted(event)">
 				<div class="user-data">
 					<input id='login-hidden' type='hidden' name='type' value='l'>
 					<label for='login-name'>Jméno</label>
@@ -24,16 +24,16 @@
 					<div class="pseudo-container"><input id='login-pass' type='password' name='loginPass' maxlength=31 placeholder='Heslo'></div>
 				</div>
 				<div class="checkbox">
-				<input type="checkbox" name='stay_logged'/>
+				<input id="login-persist" type="checkbox" name='stay_logged'/>
 				<label for="login_keep">Zůstat přihlášen</label>
-				<button id='login-submit' onclick='login()'>Přihlásit se</button>
+				<input id='login-submit' type="submit" value="Přihlásit se" />
 			</form>
 			<span><button class="btn inline black" onclick="showLoginDiv('password-recovery')">Zapomněli jste heslo?</button></span>
 			<span>Ještě nemáte účet? <button class="btn inline black" onclick="showLoginDiv('register')">Zaregistrujte se</button>.</span>
 		</div>
 		<div id="register" class="hidden">
 			<h2>Zaregistrujte se</h2>
-			<form method="POST" action="index-forms">
+			<form id="register-form" onsubmit="formSubmitted(event)">
 				<div class="user-data">
 					<input id='register-hidden' type='hidden' name='type' value='r'>
 					<label for="register-name">Jméno</label>
@@ -46,16 +46,16 @@
 					<input id='register-email' type='email' name='registerEmail' maxlength=255 value='<?= $registerEmail ?>' placeholder='E-mail (nepovinné)'>
 				</div>
 				<span id='span-terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
-				<button id='register-submit' onclick='register()'>Vytvořit účet</button>
+				<input id='register-submit' type="submit" value="Vytvořit účet" />
 			</form>
 			<span>Již máte účet? <button class="btn inline black" onclick="showLoginDiv('login')">Přihlašte se</button>.</span>
 		</div>
 		<div id="password-recovery" class="hidden">
 			<span>Zadejte svoji e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</span>
-			<form method="POST" action="index-forms">
+			<form id="pass-recovery-form" onsubmit="formSubmitted(event)">
 				<input id='password-recovery-hidden' type='hidden' name='type' value='p'>
-				<input id='password-recovery-input' type='email' name="passRecoveryEmail" value='<?= $passRecoveryEmail ?>' maxlength=255 required=true />
-				<button id='password-recovery-submit' onclick="recoverPassword()">Odeslat</button> 
+				<input id='password-recovery-email' type='email' name="passRecoveryEmail" value='<?= $passRecoveryEmail ?>' maxlength=255 required=true />
+				<input id='password-recovery-submit' type="submit" value= "Odeslat" /> 
 			</form>
 			<span>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</span>
 			<button class="btn inline black" onclick="showLoginDiv('login')">Zpět</button>

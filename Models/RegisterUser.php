@@ -11,10 +11,10 @@ class RegisterUser
     
     public static function processRegister(array $POSTdata)
     {
-        $name = $POSTdata['registerName'];
-        $pass = $POSTdata['registerPass'];
-        $repass = $POSTdata['registerRepass'];
-        $email = $POSTdata['registerEmail'];
+        $name = $POSTdata['name'];
+        $pass = $POSTdata['pass'];
+        $repass = $POSTdata['repass'];
+        $email = $POSTdata['email'];
         
         if (empty($email)){$email = null;}
         

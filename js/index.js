@@ -47,3 +47,65 @@ function hideLoginSection()
 	document.getElementById('index-login-section').style.transform = "translateX(-100%)";
 	document.body.style.overflowY="auto";
 }
+
+/*--------------------------------------------------------------------------*/
+/* Odesílání dat z formulářů na server */
+function formSumbitted(event)
+{
+	event.preventDefault();
+	
+	var formId = event.target.id;
+	var type = $("#"+formId).find('*').filter(':input:first').val();	//Hodnota prvního <input> prvku (identifikátor formuláře)
+	var name = "";
+	var pass = "";
+	var repass = "";
+	var email = "";
+	switch (type)
+	{
+		//Přihlašovací formulář
+		case 'l':
+			name = $("#login-name").val();
+			pass = $("#login-pass").val();
+			stayLogged = $("#login-persist").val();
+			break;
+		//Registrační formulář
+		case 'r':
+			name = $("#register-name").val();
+			pass = $("#register-pass").val();
+			repass = $("#register-repass").val();
+			email = $("#register-email").val();
+			break;
+		//Formulář pro obnovu hesla
+		case 'p':
+			email = $("#password-recovery-email");
+			break;
+	}
+	
+	//Odeslání dat
+	$.post("index-forms", {
+		type: type,
+		name: name,
+		pass: pass,
+		repass: repass,
+		email: email,
+		stayLogged: stayLogged
+	}, serverResponse);
+}
+
+function serverResponse(data, status)
+{
+	var response = JSON.parse(data);
+	//Přesměrování
+	if (response.hasOwnProperty("redirect"))
+	{
+		window.location = response.redirect;
+		return;
+	}
+	
+	//Zobrazení hlášky
+	var messageType = response.messageType;	//success / info / warning / error
+	var message = response.message; //Chybová hláška
+	var form = response.origin; //Formulář z něhož byla odeslána data - login / register / passRecovery
+	
+	//TODO - zobrazení chybové nebo úspěchové hlášky
+}
