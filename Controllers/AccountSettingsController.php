@@ -12,6 +12,15 @@ class AccountSettingsController extends Controller
     */
     public function process(array $parameters)
     {
+        $this->data['userId'] = UserManager::getId();
+        $this->data['userName'] = UserManager::getName();
+        $this->data['userEmail'] = UserManager::getEmail();
+        $otherData = UserManager::getOtherInformation();
+        $this->data['addedPictures'] = $otherData['addedPictures'];
+        $this->data['guessedPictures'] = $otherData['guessedPictures'];
+        $this->data['karma'] = $otherData['karma'];
+        $this->data['status'] = $otherData['status'];
+        
         $this->pageHeader['title'] = 'Nastavení účtu';
         $this->pageHeader['description'] = 'Přizpůsobte si poznávačky podle svého gusta a podívejte se na své statistiky';
         $this->pageHeader['keywords'] = '';
