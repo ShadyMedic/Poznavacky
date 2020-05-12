@@ -17,11 +17,11 @@ class RecoverPassword
      */
     public static function processRecovery(array $POSTdata)
     {
-        if (!isset($POSTdata['passRecoveryEmail']))
+        if (!isset($POSTdata['email']))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_EMAIL, null, null, array('originFile' => 'RecoverPassword.php', 'displayOnView' => 'index.phtml', 'form' => 'passRecovery'));
         }
-        $email = $POSTdata['passRecoveryEmail'];
+        $email = $POSTdata['email'];
         
         $validator = new DataValidator();
         $userId = $validator->getUserIdByEmail($email);
