@@ -36,7 +36,6 @@ class IndexFormsController extends Controller
                     $form = 'passRecovery';
                     if (RecoverPassword::processRecovery($_POST))
                     {
-                        //$this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.');
                         header('HTTP/1.0 401 Unauthorized');
                         echo json_encode(array('messageType' => 'success', 'message' => 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', 'origin' => $form));
                     }
@@ -46,9 +45,6 @@ class IndexFormsController extends Controller
         catch (AccessDeniedException $e)
         {
             echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $form));
-            //$this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
-            //$_SESSION['previousAnswers'] = serialize($_POST);
-            //$this->redirect('');
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona
