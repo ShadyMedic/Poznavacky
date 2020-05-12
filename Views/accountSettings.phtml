@@ -9,7 +9,7 @@
 		<td class='table_right' id="username"><?= $userName ?></td>
 		<td class='table_action'>
 			<button class="button" id="changeNameButton" onclick="changeName()">Vyžádat změnu</button>
-			<div id="changeNameInput">
+			<div id="changeNameInput" style="display:none;">
 				<input class="text" id="changeNameInputField" type=text placeholder="Nové jméno" maxlength=15 />
 				<button class="button" id="changeNameConfirm" onclick="confirmNameChange()">Potvrdit</button>
 			</div>
@@ -20,16 +20,16 @@
 		<td class='table_right'>[Skryto]</td>
 		<td class='table_action'>
 			<button class="button" id="changePasswordButton" onclick="changePassword()">Změnit</button>
-			<div id="changePasswordInput1">
+			<div id="changePasswordInput1" style="display:none;">
 				<input class="text" id="changePasswordInputFieldOld" type=password placeholder="Staré heslo" maxlength=31 />
 				<button class="button" id="changePasswordNext1" onclick="changePasswordVerify()">Dále</button>
 			</div>
-			<div id="changePasswordInput2">
+			<div id="changePasswordInput2" style="display:none;">
 				<input class="text" id="changePasswordInputFieldNew" type=password placeholder="Nové heslo" maxlength=31 />
 				<button class="button" id="changePasswordNext2" onclick="changePasswordStage3()">Dále</button>
 				<button class="button" id="changePasswordBack2" onclick="changePassword()">Zpět</button>
 			</div>
-			<div id="changePasswordInput3">
+			<div id="changePasswordInput3" style="display:none;">
 				<input class="text" id="changePasswordInputFieldReNew" type=password placeholder="Nové heslo znovu" maxlength=31 />
 				<button class="button" id="changePasswordConfirm" onclick="confirmPasswordChange()">Potvrdit</button>
 				<button class="button" id="changePasswordBack3" onclick="changePasswordStage2()">Zpět</button>
@@ -41,11 +41,11 @@
 		<td class='table_right' id="emailAddress"><?= $userEmail ?></td>
 		<td class='table_action'>
 			<button class="button" id="changeEmailButton" onclick="changeEmail()">Změnit</button>
-			<div id="changeEmailInput1">
+			<div id="changeEmailInput1" style="display:none;">
 				<input class="text" id="changeEmailPasswordInputField" type=password placeholder="Heslo pro ověření" maxlength=31 />
 				<button class="button" id="changeEmailNext" onclick="changeEmailVerify()">Dále</button>
 			</div>
-			<div id="changeEmailInput2">
+			<div id="changeEmailInput2" style="display:none;">
 				<input class="text" id="changeEmailInputField" type=text placeholder="Nový e-mail" maxlength=255 />
 				<button class="button" id="changeEmailConfirm" onclick="confirmEmailChange()">Potvrdit</button>
 				<button class="button" id="changeEmailBack" onclick="changeEmail()">Zpět</button>
@@ -75,11 +75,11 @@
 </table>
 
 <button class="button" id="deleteAccountButton" onclick="deleteAccount()">Odstranit účet</button>
-<div id="deleteAccountInput1">
+<div id="deleteAccountInput1" style="display:none;">
 	<input class="text" id="deleteAccountInputField" type=password placeholder="Zadejte své heslo" maxlength=31 />
 	<button class="button" id="deleteAccountConfirm" onclick="deleteAccountVerify()">OK</button>
 </div>
-<div id="deleteAccountInput2">
+<div id="deleteAccountInput2" style="display:none;">
 	<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span><br>
 	<button class="button" id="deleteAccountFinalConfirm" onclick="deleteAccountFinal()">Ano, odstranit účet</button>
 	<button class="button" id="deleteAccountFinalCancel" onclick="deleteAccountCancel()">Ne, zrušit odstranění účtu</button>
