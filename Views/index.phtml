@@ -4,7 +4,7 @@
 	<section id="index-text-section">
 		<h1>Poznávačky</h1>
 		<p>Potřebujete se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistrujte se, vytvořte si seznam přírodnin, sdílejte ho se svou třídou a učte se rychleji!</p>
-		<button class="btn arrow-btn white"><span>Zjistit více</span><img src="../images/arrow.svg"></button>
+		<button class="btn arrow-btn center white"><span>Zjistit více</span><img src="../images/arrow.svg"></button>
 	</section>
 	<section id="index-buttons-section">
 		<button class="btn border-btn rounded non-transparent white" onclick="showLoginSection('register')">Zaregistrovat se</button>
@@ -19,14 +19,14 @@
 				<div class="user-data">
 					<input id='login-hidden' type='hidden' name='type' value='l'>
 					<label for='login-name'>Jméno</label>
-					<div class="pseudo-container"><input id='login-name' type='text' name='loginName' maxlength=15 placeholder='Jméno' value='<?= $loginName ?>'></div>
+					<input id='login-name' type='text' name='loginName' maxlength=15 value='<?= $loginName ?>'>
 					<label for='login-pass'>Heslo</label>
-					<div class="pseudo-container"><input id='login-pass' type='password' name='loginPass' maxlength=31 placeholder='Heslo'></div>
+					<input id='login-pass' type='password' name='loginPass' maxlength=31>
 				</div>
 				<div class="checkbox">
 				<input id="login-persist" type="checkbox" name='stay_logged'/>
 				<label for="login_keep">Zůstat přihlášen</label>
-				<input id='login-submit' type="submit" value="Přihlásit se" />
+				<input id='login-submit' class="btn border-btn center rounded non-transparent black" type="submit" value="Přihlásit se" />
 			</form>
 			<span><button class="btn inline black" onclick="showLoginDiv('password-recovery')">Zapomněli jste heslo?</button></span>
 			<span>Ještě nemáte účet? <button class="btn inline black" onclick="showLoginDiv('register')">Zaregistrujte se</button>.</span>
@@ -36,17 +36,17 @@
 			<form id="register-form" onsubmit="formSubmitted(event)">
 				<div class="user-data">
 					<input id='register-hidden' type='hidden' name='type' value='r'>
-					<label for="register-name">Jméno</label>
-					<input id='register-name' type='text' name='registerName' maxlength=15 placeholder='Jméno' value='<?= $registerName ?>' required=true>
-					<label for="register-pass">Heslo</label>
-					<input id='register-pass' type='password' name='registerPass' maxlength=31 placeholder='Heslo' value='<?= $registerPass ?>' required=true> 				    	
-					<label for="register-repass">Heslo znovu</label>
-					<input id='register-repass' type='password' name='registerRepass' maxlength=31 placeholder='Heslo znovu' value='<?= $registerRepass ?>' required=true>
+					<label for="register-name" class="obligatory">Jméno</label>
+					<input id='register-name' type='text' name='registerName' maxlength=15 value='<?= $registerName ?>' required=true>
+					<label for="register-pass" class="obligatory">Heslo</label>
+					<input id='register-pass' type='password' name='registerPass' maxlength=31 value='<?= $registerPass ?>' required=true> 				    	
+					<label for="register-repass" class="obligatory">Heslo znovu</label>
+					<input id='register-repass' type='password' name='registerRepass' maxlength=31 value='<?= $registerRepass ?>' required=true>
 					<label for="register-email">E-mail</label>
-					<input id='register-email' type='email' name='registerEmail' maxlength=255 value='<?= $registerEmail ?>' placeholder='E-mail (nepovinné)'>
+					<input id='register-email' type='email' name='registerEmail' maxlength=255 value='<?= $registerEmail ?>'>
 				</div>
 				<span id='span-terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</span>
-				<input id='register-submit' type="submit" value="Vytvořit účet" />
+				<input id='register-submit' class="btn border-btn center rounded non-transparent black" type="submit" value="Vytvořit účet" />
 			</form>
 			<span>Již máte účet? <button class="btn inline black" onclick="showLoginDiv('login')">Přihlašte se</button>.</span>
 		</div>

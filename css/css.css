@@ -64,7 +64,7 @@ body {
   min-height: 100vh;
 }
 
-body :focus {
+body button:focus {
   outline: none;
 }
 
@@ -82,7 +82,7 @@ body.tab :focus {
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   line-height: 1.25em;
 }
 
@@ -104,7 +104,6 @@ h2 {
   font-size: 1.2rem;
   position: relative;
   padding: 0.8rem 1.6rem;
-  margin: 0.6rem 0;
 }
 
 .btn.border-btn.non-transparent.white {
@@ -118,9 +117,9 @@ h2 {
 }
 
 .btn.border-btn.non-transparent.black {
-  background: black;
+  background: #101010;
   color: white;
-  border: 2px solid black;
+  border: 2px solid #101010;
 }
 
 .btn.border-btn.non-transparent.black:after {
@@ -141,8 +140,8 @@ h2 {
 }
 
 .btn.border-btn.transparent.black {
-  color: black;
-  border: 2px solid black;
+  color: #101010;
+  border: 2px solid #101010;
 }
 
 .btn.border-btn.transparent.black:after {
@@ -232,6 +231,11 @@ h2 {
   color: black;
 }
 
+.center {
+  display: block;
+  margin: auto;
+}
+
 .cross {
   width: 1em;
   height: 1em;
@@ -241,34 +245,9 @@ input {
   border: none;
 }
 
-.pseudo-container {
-  position: relative;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-}
-
-.pseudo-container:after, .pseudo-container:before {
-  content: "";
-  position: absolute;
-  height: 2px;
-  bottom: -0.1rem;
-  left: 0;
-}
-
-.pseudo-container:before {
-  width: 100%;
-  background: red;
-}
-
-.pseudo-container:after {
-  width: 0;
-  background: black;
-}
-
-.pseudo-container:hover:before {
-  width: 100%;
-  background: blue;
+label.obligatory:after {
+  content: " *";
+  color: #a00;
 }
 
 body#index {
@@ -362,15 +341,11 @@ body#index #index-buttons-section {
 
 body#index #index-buttons-section .btn {
   width: 10em;
+  margin: 0.6rem 0;
 }
 
 body#index #index-text-section {
   margin-bottom: 2.4rem;
-}
-
-body#index #index-text-section .btn {
-  display: block;
-  margin: auto;
 }
 
 body#index #index-login-section {
@@ -385,7 +360,7 @@ body#index #index-login-section {
   width: 100%;
   height: 100%;
   z-index: 2;
-  background: white;
+  background: #eee;
   -webkit-transform: translateX(-100%);
           transform: translateX(-100%);
   -webkit-transition: -webkit-transform 0.32s ease-out;
@@ -394,27 +369,41 @@ body#index #index-login-section {
   transition: transform 0.32s ease-out, -webkit-transform 0.32s ease-out;
 }
 
+body#index #index-login-section h2 {
+  padding: 0.2rem 0.8rem;
+}
+
 body#index #index-login-section .user-data {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: auto 1fr;
-      grid-template-columns: auto 1fr;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0.8rem 0;
+}
+
+body#index #index-login-section .user-data label, body#index #index-login-section .user-data input {
+  margin: 0.4rem 0;
 }
 
 body#index #index-login-section .user-data label {
-  margin: 0.2rem 0.2rem 0.2rem 0;
-}
-
-body#index #index-login-section .user-data .pseudo-container {
-  margin: 0.2rem 0 0.2rem 0.2rem;
-  font-size: 1.6rem;
+  padding: 0.2rem 0.8rem;
+  margin-top: 0.8rem;
 }
 
 body#index #index-login-section .user-data input {
+  padding: 0.6rem 0.8rem;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
   font-size: 1.4rem;
+  background: white;
+}
+
+body#index #index-login-section .user-data input:focus {
+  -webkit-box-shadow: 0 2px 0 0 darkblue;
+          box-shadow: 0 2px 0 0 darkblue;
 }
 
 body#index .btn.non-transparent,
