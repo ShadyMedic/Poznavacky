@@ -64,7 +64,7 @@ class DataValidator
         switch ($stringType)
         {
             case 0:
-                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE jmeno = ? LIMIT 1', array($subject), false);
+                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT(jmeno) AS "items" FROM uzivatele WHERE jmeno= ? UNION ALL SELECT COUNT(nove) FROM zadosti_jmena WHERE nove= ?) AS tmp', array($subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
