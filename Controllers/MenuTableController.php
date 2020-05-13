@@ -33,13 +33,13 @@ class MenuTableController extends Controller
         //Získání dat
         try
         {
-            if (empty($className))
+            if (mb_strlen($className) === 0)
             {
                 $this->view = 'menuClassesForms';
                 $classes = TestGroupsManager::getClasses();
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
-            else if (empty($groupName))
+            else if (mb_strlen($groupName) === 0)
             {
                 $this->data['returnButtonLink'] = 'menu';
                 $this->view = 'menuGroupsButton';

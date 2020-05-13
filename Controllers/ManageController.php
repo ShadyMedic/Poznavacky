@@ -15,7 +15,7 @@ class ManageController extends Controller
     {
         try
         {
-            if (empty($parameters[0]))
+            if (mb_strlen($parameters[0]) === 0)
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN, null, null, array('originFile' => 'ManageController.php', 'displayOnView' => 'manage.phtml'));
             }

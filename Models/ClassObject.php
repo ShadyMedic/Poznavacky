@@ -21,7 +21,7 @@ class ClassObject
      */
     public function __construct(int $id, string $name = "")
     {
-        if (!empty($name))
+        if (mb_strlen($name) !== 0)
         {
             $id = ClassManager::getIdByName($name);
         }
