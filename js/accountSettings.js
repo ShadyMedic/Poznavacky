@@ -1,12 +1,12 @@
 function changeName()
 {
-	$("#changeNameButton").hide()
-	$("#changeNameInput").show();
+	$("#change-name-button").hide()
+	$("#change-name-input").show();
 }
 
 function confirmNameChange()
 {
-	var newName = $("#changeNameInputField").val();
+	var newName = $("#change-name-input-field").val();
 	newName = encodeURIComponent(newName);
 	
 	$.post("account-update",{
@@ -15,23 +15,23 @@ function confirmNameChange()
 	}, evaluateResponse);
 	
 	//Reset HTML
-	$("#changeNameInputField").val("");
-	$("#changeNameInput").hide();
-	$("#changeNameButton").show();
+	$("#change-name-input-field").val("");
+	$("#change-name-input").hide();
+	$("#change-name-button").show();
 }
 
 /*-----------------------------------------------------------------------------*/
 
 function changePassword()
 {
-	$("#changePasswordButton").hide();
-	$("#changePasswordInput2").hide();
-	$("#changePasswordInput1").show();
+	$("#change-password-button").hide();
+	$("#change-password-input2").hide();
+	$("#change-password-input1").show();
 }
 
 function changePasswordVerify()
 {
-	var password = $("#changePasswordInputFieldOld").val();
+	var password = $("#change-password-input-field-old").val();
 	
 	$.post("account-update",{
 		action: "verify password",
@@ -44,30 +44,30 @@ function changePasswordStage2(response)
 	response = JSON.parse(response);
 	if (response.verified === true)
 	{
-		$("#changePasswordInput1").hide();
-		$("#changePasswordInput3").hide();
-		$("#changePasswordInput2").show();
+		$("#change-password-input1").hide();
+		$("#change-password-input3").hide();
+		$("#change-password-input2").show();
 	}
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 		//swal("Špatné heslo.","","error");
 		
-		$("#changePasswordInputFieldOld").val("");
+		$("#change-password-input-field-old").val("");
 	}
 }
 
 function changePasswordStage3()
 {
-	$("#changePasswordInput2").hide();
-	$("#changePasswordInput3").show();
+	$("#change-password-input2").hide();
+	$("#change-password-input3").show();
 }
 
 function confirmPasswordChange()
 {
-	var oldPass = $("#changePasswordInputFieldOld").val();
-	var newPass = $("#changePasswordInputFieldNew").val();
-	var rePass = $("#changePasswordInputFieldReNew").val();
+	var oldPass = $("#change-password-input-field-old").val();
+	var newPass = $("#change-password-input-field-new").val();
+	var rePass = $("#change-password-input-field-re-new").val();
 	
 	oldPass = encodeURIComponent(oldPass);
 	newPass = encodeURIComponent(newPass);
@@ -81,25 +81,25 @@ function confirmPasswordChange()
 	}, evaluateResponse);
 	
 	//Reset HTML
-	$("#changePasswordInputFieldOld").val("");
-	$("#changePasswordInputFieldNew").val("");
-	$("#changePasswordInputFieldReNew").val("");
-	$("#changePasswordInput3").hide();
-	$("#changePasswordButton").show();
+	$("#change-password-input-field-old").val("");
+	$("#change-password-input-field-new").val("");
+	$("#change-password-input-field-re-new").val("");
+	$("#change-password-input3").hide();
+	$("#change-password-button").show();
 }
 
 /*-----------------------------------------------------------------------------*/
 
 function changeEmail()
 {
-	$("#changeEmailButton").hide();
-	$("#changeEmailInput2").hide();
-	$("#changeEmailInput1").show();
+	$("#change-email-button").hide();
+	$("#change-email-input2").hide();
+	$("#change-email-input1").show();
 }
 
 function changeEmailVerify()
 {
-	var password = $("#changeEmailPasswordInputField").val();
+	var password = $("#change-email-password-input-field").val();
 	
 	$.post("account-update",{
 		action: "verify password",
@@ -112,22 +112,22 @@ function changeEmailStage2(response)
 	response = JSON.parse(response);
 	if (response.verified === true)
 	{
-		$("#changeEmailButton").hide();
-		$("#changeEmailInput1").hide();
-		$("#changeEmailInput2").show();
+		$("#change-email-button").hide();
+		$("#change-email-input1").hide();
+		$("#change-email-input2").show();
 	}
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 		//swal("Špatné heslo.","","error");
 		
-		$("#changeEmailPasswordInputField").val("");
+		$("#change-email-password-input-field").val("");
 	}
 }
 
 function confirmEmailChange()
 {
-	var newEmail = $("#changeEmailInputField").val();
+	var newEmail = $("#change-email-input-field").val();
 	
 	if (newEmail.length == 0)
 	{
@@ -136,7 +136,7 @@ function confirmEmailChange()
 	}
 	
 	newEmail = encodeURIComponent(newEmail);
-	var pass = $("#changeEmailPasswordInputField").val();
+	var pass = $("#change-email-password-input-field").val();
 	
 	$.post("account-update",{
 		action: "change email",
@@ -145,29 +145,29 @@ function confirmEmailChange()
 	}, evaluateResponse);
 	
 	//Reset HTML
-	$("#changeEmailPasswordInputField").val("");
-	$("#changeEmailInputField").val("");
-	$("#changeEmailInput1").hide();
-	$("#changeEmailInput2").hide();
-	$("#changeEmailButton").show();
+	$("#change-email-password-input-field").val("");
+	$("#change-email-input-field").val("");
+	$("#change-email-input1").hide();
+	$("#change-email-input2").hide();
+	$("#change-email-button").show();
 }
 
 function updateEmail(newEmail)
 {
-	$("#emailAddress").innerHTML = newEmail;
+	$("#email-address").innerHTML = newEmail;
 }
 
 /*-----------------------------------------------------------------------------*/
 
 function deleteAccount()
 {
-	$("#deleteAccountButton").hide();
-	$("#deleteAccountInput1").show();
+	$("#delete-account-button").hide();
+	$("#delete-account-input1").show();
 }
 
 function deleteAccountVerify()
 {
-	var password = $("#deleteAccountInputField").val();
+	var password = $("#delete-account-input-field").val();
 	
 	$.post("account-update",{
 		action: "verify password",
@@ -180,21 +180,21 @@ function deleteAccountConfirm(response)
 	response = JSON.parse(response);
 	if (response.verified === true)
 	{
-		$("#deleteAccountInput2").show();
-		$("#deleteAccountInput1").hide();
+		$("#delete-account-input2").show();
+		$("#delete-account-input1").hide();
 	}
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 		//swal("Špatné heslo.","","error");
 		
-		$("#deleteAccountInputField").val("");
+		$("#delete-account-input-field").val("");
 	}
 }
 
 function deleteAccountFinal()
 {
-	var password = $("#deleteAccountInputField").val();
+	var password = $("#delete-account-input-field").val();
 	
 	$.post("account-update",{
 		action: "delete account",
@@ -204,9 +204,9 @@ function deleteAccountFinal()
 
 function deleteAccountCancel()
 {
-	$("#deleteAccountInputField").val("");
-	$("#deleteAccountButton").show();
-	$("#deleteAccountInput2").hide();
+	$("#delete-account-input-field").val("");
+	$("#delete-account-button").show();
+	$("#delete-account-input2").hide();
 }
 
 /**
