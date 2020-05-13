@@ -44,9 +44,7 @@ function changePasswordStage2(response)
 	response = JSON.parse(response);
 	if (response.verified === true)
 	{
-		$("#change-password-input1").hide();
-		$("#change-password-input3").hide();
-		$("#change-password-input2").show();
+		displayChangePasswordStage2();
 	}
 	else
 	{
@@ -55,6 +53,13 @@ function changePasswordStage2(response)
 		
 		$("#change-password-input-field-old").val("");
 	}
+}
+
+function displayChangePasswordStage2()
+{
+	$("#change-password-input1").hide();
+	$("#change-password-input3").hide();
+	$("#change-password-input2").show();
 }
 
 function changePasswordStage3()
@@ -77,7 +82,7 @@ function confirmPasswordChange()
 		action: "change password",
 		oldPassword: oldPass,
 		newPassword: newPass,
-		rePassword: repass
+		rePassword: rePass
 	}, evaluateResponse);
 	
 	//Reset HTML
@@ -127,6 +132,7 @@ function changeEmailStage2(response)
 
 function confirmEmailChange()
 {
+	var password = $("#change-email-password-input-field").val();
 	var newEmail = $("#change-email-input-field").val();
 	
 	if (newEmail.length == 0)
@@ -214,6 +220,20 @@ function deleteAccountCancel()
  */
 function evaluateResponse(response, status)
 {
-	//TODO
-	alert(response);
+	var response = JSON.parse(response);
+	//Přesměrování
+	if (response.hasOwnProperty("redirect"))
+	{
+		window.location = response.redirect;
+		return;
+	}
+	
+	//Zobrazení hlášky
+	var messageType = response.messageType;	//success / info / warning / error
+	var message = response.message; //Chybová hláška
+	var origin = response.origin; //Akce která vyvolala požadavek
+	
+	//TODO - zobrazení chybové nebo úspěchové hlášky
+	console.log("["+messageType+" - " + origin + "] " + message);
+	alert("["+messageType+" - " + origin + "] " + message);
 }
