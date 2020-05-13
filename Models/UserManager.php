@@ -25,6 +25,15 @@ class UserManager
     }
     
     /**
+     * Metoda získávající hash hesla aktuálně přihlášeného uživatele
+     * @return string Hash hesla přihlášeného uživatele
+     */
+    public static function getHash()
+    {
+        return self::getData('hash');
+    }
+    
+    /**
      * Metoda získávající e-mail aktuálně přihlášeného uživatele (pokud jej zadal)
      * @return string|boolean E-mail přihlášeného uživatele nebo FALSE, pokud žádný nezadal
      */
