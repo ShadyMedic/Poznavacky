@@ -7,6 +7,8 @@
 class AccessDeniedException extends Exception
 {
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
+    const REASON_NO_PASSWORD_GENERAL = 'Musíte zadat své heslo';
+    const REASON_WRONG_PASSWORD_GENERAL = 'Špatné heslo';
     const REASON_LOGIN_NO_NAME = 'Musíte zadat své přihlašovací jméno';
     const REASON_LOGIN_NO_PASSWORD = 'Musíte zadat své heslo';
     const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
@@ -37,12 +39,33 @@ class AccessDeniedException extends Exception
     const REASON_NEW_CLASS_REQUEST_NO_NAME = 'Musíte zadat název nové třídy';
     const REASON_NEW_CLASS_REQUEST_NO_CODE = 'Musíte zadat přístupový kód nové třídy';
     const REASON_NEW_CLASS_REQUEST_NO_ANTISPAM = 'Musíte vyplnit ochranu proti robotům';
-    const REASON_NEW_CLASS_REQUEST_INVALID_EMAIL = 'E-mail nemá platný formát';
+    const REASON_NEW_CLASS_REQUEST_INVALID_EMAIL = self::REASON_REGISTER_INVALID_EMAIL;
     const REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT = 'Název nové třídy musí být alespoň 5 znaků dlouhé';
     const REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG = 'Název nové třídy nesmí být více než 31 znaků dlouhé';
     const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto názvem již existuje';
     const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód pro novou třídu nemá platný formát - musí to být čtyři číslice';
     const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';
+    const REASON_NAME_CHANGE_NO_NAME = self::REASON_REGISTER_NO_NAME;
+    const REASON_NAME_CHANGE_NAME_TOO_LONG = self::REASON_REGISTER_NAME_TOO_LONG;
+    const REASON_NAME_CHANGE_NAME_TOO_SHORT = self::REASON_REGISTER_NAME_TOO_SHORT;
+    const REASON_NAME_CHANGE_INVALID_CHARACTERS = self::REASON_REGISTER_NAME_INVALID_CHARACTERS;
+    const REASON_NAME_CHANGE_DUPLICATE_NAME = 'Toto jméno již používá jiný uživatel nebo o změnu na něj zažádal';
+    const REASON_PASSWORD_CHANGE_NO_OLD_PASSWORD = 'Musíte vyplnit své staré heslo';
+    const REASON_PASSWORD_CHANGE_WRONG_PASSWORD = 'Vaše staré heslo je chybné';
+    const REASON_PASSWORD_CHANGE_NO_PASSWORD = 'Musíte vyplnit své nové heslo';
+    const REASON_PASSWORD_CHANGE_NO_REPEATED_PASSWORD = 'Musíte vyplnit své nové heslo znovu';
+    const REASON_PASSWORD_CHANGE_TOO_LONG = self::REASON_REGISTER_PASSWORD_TOO_LONG;
+    const REASON_PASSWORD_CHANGE_TOO_SHORT = self::REASON_REGISTER_PASSWORD_TOO_SHORT;
+    const REASON_PASSWORD_CHANGE_INVALID_CHARACTERS = self::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS;
+    const REASON_PASSWORD_CHANGE_DIFFERENT_PASSWORDS = self::REASON_REGISTER_DIFFERENT_PASSWORDS;
+    const REASON_EMAIL_CHANGE_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
+    const REASON_EMAIL_CHANGE_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
+    const REASON_EMAIL_CHANGE_EMAIL_TOO_LONG = self::REASON_REGISTER_EMAIL_TOO_LONG;
+    const REASON_EMAIL_CHANGE_INVALID_EMAIL = self::REASON_REGISTER_INVALID_EMAIL;
+    const REASON_EMAIL_CHANGE_DUPLICATE_EMAIL = self::REASON_REGISTER_DUPLICATE_EMAIL;
+    const REASON_ACCOUNT_DELETION_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
+    const REASON_ACCOUNT_DELETION_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
+    const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžete odstranit svůj účet, protože spravujete nějakou třídu. Předejte správu tříd, které spravujete, jiným uživatelům pro uvolnění možnosti odstranit svůj účet';
     
     private $additionalInfo = array();
     

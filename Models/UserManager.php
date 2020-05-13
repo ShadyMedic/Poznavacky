@@ -7,6 +7,15 @@
 class UserManager
 {
     /**
+     * Metoda navracející objekt s vlastnostmi přihlášeného uživatele uložený v $_SESSION
+     * @return LoggedUser Objekt obsahující data přihlášeného uživatele
+     */
+    public static function getUser()
+    {
+        return $_SESSION['user'];
+    }
+    
+    /**
      * Metoda získávající ID aktuálně přihlášeného uživatele
      * @return int ID přihlášeného uživatele
      */

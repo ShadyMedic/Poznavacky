@@ -43,6 +43,154 @@ class User implements ArrayAccess
     }
     
     /**
+     * Metoda ukládající do databáze nový požadavek na změnu jména od přihlášeného uživatele, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
+     * Data jsou předem ověřena
+     * @param string $newName Požadované nové jméno
+     * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
+     * @return boolean TRUE, pokud je žádost úspěšně vytvořena/aktualizována
+     */
+    public function requestNameChange(string $newName)
+    {
+        if (mb_strlen($newName) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NO_NAME);}
+        
+        //Kontrola délky jména
+        $validator = new DataValidator();
+        try
+        {
+            $validator->checkLength($newName, 4, 15, 0);
+        }
+        catch(RangeException $e)
+        {
+            if ($e->getMessage() === 'long')
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NAME_TOO_LONG, null, $e);
+            }
+            else if ($e->getMessage() === 'short')
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NAME_TOO_SHORT, null, $e);
+            }
+        }
+        
+        //Kontrola znaků ve jméně
+        try
+        {
+            $validator->checkCharacters($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ', 0);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_INVALID_CHARACTERS, null, $e);
+        }
+        
+        //Kontrola dostupnosti jména
+        try
+        {
+            $validator->checkUniqueness($newName, 0);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_DUPLICATE_NAME, null, $e);
+        }
+        
+        //Kontrola dat OK
+        
+        //Zkontrolovat, zda již existuje žádost o změnu jména od přihlášeného uživatele
+        $applications = Db::fetchQuery('SELECT zadosti_jmena_id FROM zadosti_jmena WHERE uzivatele_jmeno = ?', array(UserManager::getName()));
+        if (!empty($applications['zadosti_jmena_id']))
+        {
+            DebugLogger::debugLog($applications['zadosti_jmena_id']);
+            //Přepsání existující žádosti
+            Db::executeQuery('UPDATE zadosti_jmena SET nove = ?, cas = ? WHERE zadosti_jmena_id = ? LIMIT 1', array($newName, time(), $applications['zadosti_jmena_id']));
+        }
+        else
+        {
+            //Uložení nové žádosti
+            Db::executeQuery('INSERT INTO zadosti_jmena (uzivatele_jmeno,nove,cas) VALUES (?,?,?)', array($this->name, $newName, time()));
+        }
+        return true;
+    }
+    
+    /**
+     * Metoda ověřující heslo uživatele a v případě úspěchu měnící e-mailovou adresu přihlášeného uživatele v databázi
+     * Data jsou předtím ověřena
+     * @param string $password Heslo přihlášeného uživatele pro ověření
+     * @param string $newEmail Nový e-mail
+     * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
+     * @return boolean TRUE, pokud je e-mail úspěšně změněn
+     */
+    public function changeEmail(string $password, string $newEmail)
+    {
+        if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_NO_PASSWORD);}
+        if (mb_strlen($newEmail) === 0){$newEmail = NULL;}
+        
+        //Kontrola hesla
+        if (!AccessChecker::recheckPassword($password))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_WRONG_PASSWORD);
+        }
+        
+        //Kontrola délky a unikátnosti e-mailu (pokud ho uživatel nechce odstranit)
+        if ($newEmail !== NULL)
+        {
+            $validator = new DataValidator();
+            try
+            {
+                $validator->checkLength($newEmail, 0, 255, 2);
+                $validator->checkUniqueness($newEmail, 2);
+            }
+            catch (RangeException $e)
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_EMAIL_TOO_LONG, null, $e);
+            }
+            catch (InvalidArgumentException $e)
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_DUPLICATE_EMAIL, null, $e);
+            }
+            
+            //Kontrola platnosti e-mailu
+            if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL) && !empty($newEmail))
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL);
+            }
+        }
+        
+        //Kontrola dat OK
+        
+        //Aktualizovat databáz
+        Db::connect();
+        Db::executeQuery('UPDATE uzivatele SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
+        $this->email = $newEmail;
+        return true;
+    }
+    
+    public function deleteAccount(string $password)
+    {
+        if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_NO_PASSWORD);}
+        
+        //Kontrola hesla
+        if (!AccessChecker::recheckPassword($password))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_WRONG_PASSWORD);
+        }
+        
+        //Kontrola, zda uživatel není správcem žádné třídy
+        Db::connect();
+        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array(UserManager::getId()));
+        if ($administratedClasses > 0)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR);
+        }
+        
+        //Kontrola dat OK
+        
+        //Odstranit uživatele z databáze
+        Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array(UserManager::getId()));
+        
+        //Odhlásit uživatele
+        unset($_SESSION['user']);
+        return true;
+    }
+    
+    /**
      * Metoda pro zjišťování existence některé vlastnosti uživatele
      * {@inheritDoc}
      * @see ArrayAccess::offsetExists()
