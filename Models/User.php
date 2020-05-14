@@ -97,7 +97,6 @@ class User implements ArrayAccess
         $applications = Db::fetchQuery('SELECT zadosti_jmena_id FROM zadosti_jmena WHERE uzivatele_jmeno = ?', array(UserManager::getName()));
         if (!empty($applications['zadosti_jmena_id']))
         {
-            DebugLogger::debugLog($applications['zadosti_jmena_id']);
             //Přepsání existující žádosti
             Db::executeQuery('UPDATE zadosti_jmena SET nove = ?, cas = ? WHERE zadosti_jmena_id = ? LIMIT 1', array($newName, time(), $applications['zadosti_jmena_id']));
         }
