@@ -84,13 +84,15 @@ class LoginUser
     }
     
     /**
-     * Metoda ukládající data o uživateli z databáze do $_SESSION
+     * Metoda ukládající data o uživateli z databáze do $_SESSION a aktualizující datum posledního přihlášení v databázi
      * @param array $userData
      */
     private static function login(array $userData)
     {
-        $user = new LoggedUser($userData['uzivatele_id'], $userData['jmeno'], $userData['heslo'], $userData['email'], new Datetime($userData['posledni_prihlaseni']), $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
+        $user = new LoggedUser($userData['uzivatele_id'], $userData['jmeno'], $userData['heslo'], $userData['email'], new Datetime(), $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
         $_SESSION['user'] = $user;
+        
+        Db::executeQuery('UPDATE uzivatele SET posledni_prihlaseni = NOW() WHERE uzivatele_id = ?', array($userData['uzivatele_id']));
         
         //Nastavení cookie pro zabránění přehrávání animace
         self::setRecentLoginCookie();
