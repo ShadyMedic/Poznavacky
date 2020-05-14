@@ -3,7 +3,8 @@
 
 //přidává třídu na zpracování úvodních animací
 window.addEventListener("load", () => {
-	if (1==1) { // pokud je aktivní cookie, že se stránka načetla po odhlášení - PŘIDAT
+	//Je aktivní cookie, že se uživatel nedávno přihláasil nebo se právě odhlásil? --> přeskoč animace
+	if (getCookie("recentLogin") == 1) {
 		document.body.classList.add("loaded");
 		document.body.style.overflowY="auto";
 	}
