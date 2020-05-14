@@ -16,6 +16,23 @@ class AccessChecker
     }
     
     /**
+     * Metoda ověřující, zda je řetězec heslem aktuálně přihlášeného uživatele
+     * @param string $password Heslo k ověření
+     * @return boolean TRUE, pokud je specifikované heslo správné, FALSE, pokud ne
+     */
+    public static function recheckPassword(string $password)
+    {
+        if (password_verify($password, UserManager::getHash()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
      * Metoda kontrolující, zda je určitý uživatel systémovým správcem
      * @param int $userId ID ověřovaného uživatele
      * @return boolean TRUE, pokud je daný uživatelem systémovým správcem, FALSE, pokud ne

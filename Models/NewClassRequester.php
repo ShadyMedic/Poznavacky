@@ -27,7 +27,7 @@ class NewClassRequester
             //Kontrola dat v pořádku (jinak by byla vyhozena podmínka)
             
             //Pokud nemusela být zadána e-mailová adresa, získej ji
-            if (empty($email)){$email = UserManager::getEmail();}
+            if (mb_strlen($email) === 0){$email = UserManager::getEmail();}
             
             //Odeslat e-mail
             $composer = new EmailComposer();
@@ -54,10 +54,10 @@ class NewClassRequester
     private function validate($email, string $name, $code, $text, $antispam)
     {
         //Kontrola, zda jsou všechna povinná pole vyplněna
-        if (empty($email) && empty(UserManager::getEmail())){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_EMAIL, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
-        if (empty($name)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_NAME, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
-        if (empty($code)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_CODE, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
-        if (empty($antispam)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_ANTISPAM, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (mb_strlen($email) === 0 && empty(UserManager::getEmail())){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_EMAIL, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (mb_strlen($name) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_NAME, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (mb_strlen($code) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_CODE, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (mb_strlen($antispam) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_ANTISPAM, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
         
         //Kontrola formátu e-mailu
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_EMAIL, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}

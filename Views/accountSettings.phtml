@@ -1,2 +1,87 @@
-<h1>Správa účtu</h1>
-<p>Obsah bude teprve přidán</p>
+<table id="static-info">
+	<tr>
+		<td class='table-left'>ID</td>
+		<td class='table-right'><?= $userId ?></td>
+		<td class='table-action'></td>
+	</tr>	
+	<tr>
+		<td class='table-left'>Jméno</td>
+		<td class='table-right' id="username"><?= $userName ?></td>
+		<td class='table-action'>
+			<button class="button" id="change-name-button" onclick="changeName()">Vyžádat změnu</button>
+			<div id="change-name-input" style="display:none;">
+				<input class="text" id="change-name-input-field" type=text placeholder="Nové jméno" maxlength=15 />
+				<button class="button" id="change-name-confirm" onclick="confirmNameChange()">Potvrdit</button>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class='table-left'>Heslo</td>
+		<td class='table-right'>[Skryto]</td>
+		<td class='table-action'>
+			<button class="button" id="change-password-button" onclick="changePassword()">Změnit</button>
+			<div id="change-password-input1" style="display:none;">
+				<input class="text" id="change-password-input-field-old" type=password placeholder="Staré heslo" maxlength=31 />
+				<button class="button" id="change-password-next1" onclick="changePasswordVerify()">Dále</button>
+			</div>
+			<div id="change-password-input2" style="display:none;">
+				<input class="text" id="change-password-input-field-new" type=password placeholder="Nové heslo" maxlength=31 />
+				<button class="button" id="change-password-next2" onclick="changePasswordStage3()">Dále</button>
+				<button class="button" id="change-password-back2" onclick="changePassword()">Zpět</button>
+			</div>
+			<div id="change-password-input3" style="display:none;">
+				<input class="text" id="change-password-input-field-re-new" type=password placeholder="Nové heslo znovu" maxlength=31 />
+				<button class="button" id="change-password-confirm" onclick="confirmPasswordChange()">Potvrdit</button>
+				<button class="button" id="change-password-back3" onclick="displayChangePasswordStage2()">Zpět</button>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class='table-left'>E-mail</td>
+		<td class='table-right' id="email-address"><?= $userEmail ?></td>
+		<td class='table-action'>
+			<button class="button" id="change-email-button" onclick="changeEmail()">Změnit</button>
+			<div id="change-email-input1" style="display:none;">
+				<input class="text" id="change-email-password-input-field" type=password placeholder="Heslo pro ověření" maxlength=31 />
+				<button class="button" id="change-email-next" onclick="changeEmailVerify()">Dále</button>
+			</div>
+			<div id="change-email-input2" style="display:none;">
+				<input class="text" id="change-email-input-field" type=text placeholder="Nový e-mail" maxlength=255 />
+				<button class="button" id="change-email-confirm" onclick="confirmEmailChange()">Potvrdit</button>
+				<button class="button" id="change-email-back" onclick="changeEmail()">Zpět</button>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class='table-left' title="Pro zvýšení přidávejte obrázky">Přidané obrázky</td>
+		<td class='table-right'><?= $addedPictures ?></td>
+		<td class='table-action'></td>
+	</tr>
+	<tr>
+		<td class='table-left' title="Pro zvýšení se nechejte testovat">Uhodnuté obrázky</td>
+		<td class='table-right'><?= $guessedPictures ?></td>
+		<td class='table-action'></td>
+	</tr>
+	<tr>
+		<td class='table-left' title="Karmu získáte za činnost vedoucí ke zlepšení služby">Karma</td>
+		<td class='table-right'><?= $karma ?></td>
+		<td class='table-action'></td>
+	</tr>
+	<tr>
+		<td class='table-left'>Status</td>
+		<td class='table-right'><?= $status ?></td>
+		<td class='table-action'></td>
+	</tr>
+</table>
+
+<button class="button" id="delete-account-button" onclick="deleteAccount()">Odstranit účet</button>
+<div id="delete-account-input1" style="display:none;">
+	<input class="text" id="delete-account-input-field" type=password placeholder="Zadejte své heslo" maxlength=31 />
+	<button class="button" id="delete-account-confirm" onclick="deleteAccountVerify()">OK</button>
+</div>
+<div id="delete-account-input2" style="display:none;">
+	<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span><br>
+	<button class="button" id="delete-account-final-confirm" onclick="deleteAccountFinal()">Ano, odstranit účet</button>
+	<button class="button" id="delete-account-final-cancel" onclick="deleteAccountCancel()">Ne, zrušit odstranění účtu</button>
+</div>
+<a href="menu"><button class="button">Zpět</button></a>

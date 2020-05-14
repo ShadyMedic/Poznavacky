@@ -16,7 +16,7 @@ class RegisterUser
         $repass = $POSTdata['repass'];
         $email = $POSTdata['email'];
         
-        if (empty($email)){$email = null;}
+        if (mb_strlen($email) === 0){$email = null;}
         
         //Ověření dat
         if (self::validateData($name, $pass, $repass, $email))
@@ -42,9 +42,9 @@ class RegisterUser
         $validator = new DataValidator();
         
         //Kontrola existence vyplněných dat
-        if (empty($name)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (empty($pass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (empty($repass)) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (mb_strlen($name) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (mb_strlen($pass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (mb_strlen($repass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
         
         //Kontrola délky jména, hesla a e-mailu
         try
@@ -150,7 +150,7 @@ class RegisterUser
         
         //Uložení dat do databáze
         $password = password_hash($password, PASSWORD_DEFAULT);
-        Db::executeQuery('INSERT INTO uzivatele (jmeno, heslo, email, posledni_prihlaseni) VALUES (?,?,?,?)', array($name, $password, $email, date('Y-m-d H:i:s')));
+        Db::executeQuery('INSERT INTO uzivatele (jmeno, heslo, email, posledni_prihlaseni) VALUES (?,?,?,NOW())', array($name, $password, $email));
         
         //Přihlášení
         $id = Db::fetchQuery('SELECT uzivatele_id FROM uzivatele WHERE jmeno=? LIMIT 1', array($name), false);
