@@ -49,7 +49,11 @@ function changePasswordStage2(response)
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		//swal("Špatné heslo.","","error");
+		var messageType = response.messageType;
+		var message = response.message;
+		var origin = response.origin;
+		console.log("["+messageType+" - " + origin + "] " + message);
+		alert("["+messageType+" - " + origin + "] " + message);
 		
 		$("#change-password-input-field-old").val("");
 	}
@@ -124,7 +128,11 @@ function changeEmailStage2(response)
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		//swal("Špatné heslo.","","error");
+		var messageType = response.messageType;
+		var message = response.message;
+		var origin = response.origin;
+		console.log("["+messageType+" - " + origin + "] " + message);
+		alert("["+messageType+" - " + origin + "] " + message);
 		
 		$("#change-email-password-input-field").val("");
 	}
@@ -192,7 +200,11 @@ function deleteAccountConfirm(response)
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		//swal("Špatné heslo.","","error");
+		var messageType = response.messageType;
+		var message = response.message;
+		var origin = response.origin;
+		console.log("["+messageType+" - " + origin + "] " + message);
+		alert("["+messageType+" - " + origin + "] " + message);
 		
 		$("#delete-account-input-field").val("");
 	}
@@ -206,6 +218,9 @@ function deleteAccountFinal()
 		action: "delete account",
 		password: password
 	}, evaluateResponse);
+	
+	//Uvedení HTML do původního stavu (má smysl pouze v případě selhání)
+	deleteAccountCancel();
 }
 
 function deleteAccountCancel()
