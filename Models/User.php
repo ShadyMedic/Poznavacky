@@ -161,6 +161,13 @@ class User implements ArrayAccess
         return true;
     }
     
+    /**
+     * Metoda ověřující heslo přihlášeného uživatele a v případě úspěchu odstraňující jeho uživatelský účet
+     * Po odstranění z databáze jsou uživatelova data vymazána i ze $_SESSION
+     * @param string $password Heslo přihlášeného uživatele pro ověření
+     * @throws AccessDeniedException Pokud není heslo správné, vyplněné nebo uživatel nemůže smazat svůj účet
+     * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze a odhlášen
+     */
     public function deleteAccount(string $password)
     {
         if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_NO_PASSWORD);}
