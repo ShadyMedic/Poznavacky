@@ -12,6 +12,13 @@ class IndexController extends Controller
      */
     public function process(array $paremeters)
     {
+        //Kontrola, zda již uživatel není přihlášen
+        if (AccessChecker::checkUser())
+        {
+            //Uživatel je již přihlášen
+            $this->redirect('menu');
+        }
+        
         //Kontrola automatického přihlášení
         if (isset($_COOKIE['instantLogin']))
         {
