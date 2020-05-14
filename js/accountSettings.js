@@ -156,7 +156,14 @@ function confirmEmailChange()
 		action: "change email",
 		password: password,
 		newEmail: newEmail
-	}, evaluateResponse);
+	}, function (response, code){
+		//Funkce zajišťující změnu e-mailu v DOM v případě úspěšné změny
+		if (JSON.parse(response).messageType === 'success')
+		{
+			$("#email-address").text(decodeURIComponent(newEmail));
+		}
+		evaluateResponse(response, code);
+	});
 	
 	//Reset HTML
 	$("#change-email-password-input-field").val("");
