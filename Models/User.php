@@ -174,7 +174,7 @@ class User implements ArrayAccess
         //Kontrola, zda uživatel není správcem žádné třídy
         Db::connect();
         $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array(UserManager::getId()));
-        if ($administratedClasses > 0)
+        if ($administratedClasses['cnt'] > 0)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR);
         }
