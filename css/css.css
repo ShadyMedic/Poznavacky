@@ -77,8 +77,59 @@ body.tab :focus {
           box-shadow: 0 0 5px 5px rgba(128, 128, 128, 0.5);
 }
 
-.hidden {
-  display: none;
+footer {
+  padding: 0.6rem 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 576px) {
+  footer {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+
+footer a, footer span {
+  margin: 0.4rem 0.4rem;
+  display: inline;
+}
+
+footer a {
+  position: relative;
+  text-decoration: none;
+}
+
+footer a:after {
+  content: "";
+  display: block;
+  width: 0%;
+  left: 50%;
+  height: 2px;
+  position: absolute;
+  bottom: -0.1rem;
+  -webkit-transition: all 0.16s ease-in;
+  transition: all 0.16s ease-in;
+}
+
+footer a:hover:after {
+  width: 100%;
+  left: 0;
 }
 
 h2 {
@@ -87,6 +138,7 @@ h2 {
 }
 
 .btn {
+  font-family: 'Roboto', sans-serif;
   background: none;
   border: none;
   font-size: 1rem;
@@ -101,6 +153,7 @@ h2 {
 }
 
 .btn.border-btn {
+  margin: 0.6rem;
   font-size: 1.2rem;
   position: relative;
   padding: 0.8rem 1.6rem;
@@ -221,14 +274,42 @@ h2 {
 
 .btn.inline {
   font-size: 1em;
+  position: relative;
+  text-decoration: none;
+  color: white;
+}
+
+.btn.inline:after {
+  content: "";
+  display: block;
+  width: 0%;
+  left: 50%;
+  height: 2px;
+  position: absolute;
+  bottom: -0.1rem;
+  -webkit-transition: all 0.16s ease-in;
+  transition: all 0.16s ease-in;
+}
+
+.btn.inline:hover:after {
+  width: 100%;
+  left: 0;
 }
 
 .btn.inline.white {
   color: white;
 }
 
+.btn.inline.white:after {
+  background: white;
+}
+
 .btn.inline.black {
   color: black;
+}
+
+.btn.inline.black:after {
+  background: black;
 }
 
 .center {
@@ -245,7 +326,26 @@ input {
   border: none;
 }
 
-label.obligatory:after {
+input.text-field {
+  padding: 0.48em 0.6em;
+}
+
+input.text-field:focus {
+  -webkit-box-shadow: 0 2px 0 0 darkblue;
+          box-shadow: 0 2px 0 0 darkblue;
+  outline: none;
+}
+
+input.text-field:invalid {
+  -webkit-box-shadow: 0 2px 0 0 #a00;
+          box-shadow: 0 2px 0 0 #a00;
+}
+
+label:not([for=login-persist]) {
+  padding: 0.32em 0.6em;
+}
+
+label.required:after {
   content: " *";
   color: #a00;
 }
@@ -258,7 +358,7 @@ body#index {
   color: white;
   font-size: 100%;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 body#index .container {
@@ -354,7 +454,7 @@ body#index #index-login-section {
   overflow: auto;
   color: black;
   padding: 1rem;
-  font-size: 1.4rem;
+  font-size: 1.32rem;
   top: 0;
   left: 0;
   width: 100%;
@@ -384,26 +484,30 @@ body#index #index-login-section .user-data {
   margin: 0.8rem 0;
 }
 
-body#index #index-login-section .user-data label, body#index #index-login-section .user-data input {
-  margin: 0.4rem 0;
+body#index #index-login-section .user-data label,
+body#index #index-login-section .user-data input.text-field {
+  margin: 0.2rem 0;
 }
 
-body#index #index-login-section .user-data label {
-  padding: 0.2rem 0.8rem;
-  margin-top: 0.8rem;
+body#index #index-login-section .user-data label:not(:nth-of-type(1)) {
+  margin-top: 0.72rem;
 }
 
-body#index #index-login-section .user-data input {
-  padding: 0.6rem 0.8rem;
+body#index #index-login-section .user-data input.text-field {
   color: #222;
   font-family: 'Roboto', sans-serif;
   font-size: 1.4rem;
   background: white;
 }
 
-body#index #index-login-section .user-data input:focus {
-  -webkit-box-shadow: 0 2px 0 0 darkblue;
-          box-shadow: 0 2px 0 0 darkblue;
+body#index #index-login-section .btn.inline,
+body#index #index-login-section p {
+  font-size: inherit;
+}
+
+body#index #index-login-section p {
+  padding: 0.2rem 0.8rem;
+  text-align: left;
 }
 
 body#index .btn.non-transparent,
@@ -416,63 +520,17 @@ body#index footer {
   -ms-grid-row: 3;
   -ms-grid-row-span: 1;
   grid-row: 3/4;
-  padding: 0.6rem 1rem;
   opacity: 0;
   -webkit-transform: translateY(5%);
           transform: translateY(5%);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-@media screen and (min-width: 576px) {
-  body#index footer {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-  }
-}
-
-body#index footer a, body#index footer span {
-  margin: 0.4rem 0.4rem;
-  display: inline;
 }
 
 body#index footer a {
-  position: relative;
-  text-decoration: none;
   color: white;
 }
 
 body#index footer a:after {
-  content: "";
-  display: block;
-  width: 0%;
-  left: 50%;
-  height: 1px;
-  position: absolute;
-  bottom: -0.1rem;
   background: white;
-  -webkit-transition: all 0.16s ease-in;
-  transition: all 0.16s ease-in;
-}
-
-body#index footer a:hover:after {
-  width: 100%;
-  left: 0;
 }
 
 body#index #cookies-alert {
