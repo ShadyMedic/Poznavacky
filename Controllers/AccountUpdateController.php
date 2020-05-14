@@ -13,7 +13,7 @@ class AccountUpdateController extends Controller
     {
         if (empty($_POST))
         {
-            header('HTTP/1.0 417 Expectation Failed');
+            header('HTTP/1.0 400 Bad Request');
             exit();
         }
         
