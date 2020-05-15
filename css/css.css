@@ -64,11 +64,11 @@ body {
   min-height: 100vh;
 }
 
-body button:focus {
+body .btn:focus {
   outline: none;
 }
 
-body button::-moz-focus-inner {
+body .btn::-moz-focus-inner {
   border: 0;
 }
 

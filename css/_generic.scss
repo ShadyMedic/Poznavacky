@@ -14,10 +14,10 @@ body {
 	font-size: 100%;
 	min-width: 100vw;
 	min-height: 100vh;
-	button:focus {
+	.btn:focus {
 		outline: none;
 	}
-	button::-moz-focus-inner {
+	.btn::-moz-focus-inner {
 		border: 0;
 	}
 	&.tab {
