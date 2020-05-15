@@ -63,7 +63,7 @@ function formSumbitted(event)
 		case 'l':
 			name = $("#login-name").val();
 			pass = $("#login-pass").val();
-			stayLogged = $("#login-persist").val();
+			stayLogged = $("#login-persist").is(":checked");
 			break;
 		//Registrační formulář
 		case 'r':
