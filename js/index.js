@@ -57,6 +57,7 @@ function formSubmitted(event)
 	var pass = "";
 	var repass = "";
 	var email = "";
+	var stayLogged = "";
 	switch (type)
 	{
 		//Přihlašovací formulář

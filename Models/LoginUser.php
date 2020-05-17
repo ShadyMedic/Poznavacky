@@ -29,7 +29,7 @@ class LoginUser
             self::login($userData);
             
             //Vygenerovat a uložit token pro trvalé přihlášení
-            if (isset($POSTdata['stayLogged']))
+            if ($POSTdata['stayLogged'] === 'true')
             {
                 self::setLoginCookie($userData['uzivatele_id']);
             }
