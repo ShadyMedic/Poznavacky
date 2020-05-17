@@ -75,8 +75,10 @@ function formSubmitted(event)
 			break;
 		//Formulář pro obnovu hesla
 		case 'p':
-			email = $("#password-recovery-email");
+			email = $("#password-recovery-email").val();
 			break;
+		default:
+			return;
 	}
 	
 	//Odeslání dat
