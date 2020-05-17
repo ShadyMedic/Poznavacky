@@ -47,7 +47,7 @@ function hideLoginSection()
 
 /*--------------------------------------------------------------------------*/
 /* Odesílání dat z formulářů na server */
-function formSumbitted(event)
+function formSubmitted(event)
 {
 	event.preventDefault();
 	
