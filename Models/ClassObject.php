@@ -14,7 +14,7 @@ class ClassObject
     private $status;
     
     /**
-     * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i jméno, má ID přednost
+     * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i název, má jméno přednost
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
      * @throws BadMethodCallException
@@ -23,11 +23,15 @@ class ClassObject
     {
         if (mb_strlen($name) !== 0)
         {
-            $id = ClassManager::getIdByName($name);
+            Db::connect();
+            $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE nazev = ? LIMIT 1', array($name), false);
+            $id = $result['tridy_id'];
         }
         else if (!empty($id))
         {
-            $name = ClassManager::getNameById($id);
+            Db::connect();
+            $result = Db::fetchQuery('SELECT nazev FROM tridy WHERE tridy_id = ? LIMIT 1', array($id), false);
+            $name = $result['nazev'];
         }
         else
         {
