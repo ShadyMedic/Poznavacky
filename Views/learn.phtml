@@ -1,9 +1,8 @@
 <h2>Učit se</h2>
 <section>
 	<select onchange="sel()">
-	<?php foreach ($naturalsNames as $name) : ?>
-        <script>naturalList.push('<?=  $name ?>');</script>
-        <option><?= $name ?></option>
+	<?php foreach ($naturals as $natural) : ?>
+        <option><?= $natural->getName() ?></option>
 	<?php endforeach; ?>
 	</select>
 </section>
