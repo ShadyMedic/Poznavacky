@@ -101,8 +101,11 @@ class MenuController extends Controller
                     $this->redirect('menu/'.$this->chosenFolder[0].'/'.$this->chosenFolder[1]);
                 }
             }
-            //Nastavení části
-            $this->chosenFolder[] = urldecode($menuArguments[2]);
+            else
+            {
+                //Nastavení části
+                $this->chosenFolder[] = urldecode($menuArguments[2]);
+            }
         }
         if ($argumentCount > 3)
         {
