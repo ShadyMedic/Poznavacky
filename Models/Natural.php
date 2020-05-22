@@ -53,7 +53,7 @@ class Natural
      * Metoda navracející počet obrázků této přírodniny
      * @return int Počet obrázků této přírodniny uložené v databázi
      */
-    public function getPictureCount()
+    public function getPicturesCount()
     {
         return $this->pictureCount;
     }
