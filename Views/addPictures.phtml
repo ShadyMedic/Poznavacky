@@ -1,2 +1,24 @@
-<h1>Přidat obrázky</h1>
-<p>Obsah bude teprve přidán</p>
+<form>
+	<fieldset id="field1">
+		<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div>
+		<select onchange="selected1()" id="dropList" class="text">
+			<option value="" selected disabled hidden></option>
+			<?php foreach ($naturals as $natural) : ?>
+			<option><?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)</option>
+			<?php endforeach ?>
+		</select>
+	</fieldset>
+	<fieldset id="field2">
+		<div id="duckLink_div"><a id="duckLink" target=_blank>  
+			<div><span>Vyhledat na </span><img id="duckLogo" src="images/duckLogo.png"></div>       
+		</a></div>       
+		<input type=url placeholder="Vložte URL obrázku" id="urlInput" class="text" onkeyup="urlTyped()"/>
+		<button id="urlConfirm" onclick="selected2(event)" class="buttonDisabled" disabled>OK</button>
+	</fieldset>
+		<img id="previewImg" class="img" src="images/imagePreview.png">
+	<fieldset>
+		<input type=submit value="Přidat" onclick="add(event)" id="sendButton" class="buttonDisabled" disabled />
+		<button id="resetButton" onclick="resetForm(event)" class="button">Reset</button>
+	</fieldset>
+</form>
+<a href="<?= $returnUrl ?>"><button class="button">Zpět</button></a>
