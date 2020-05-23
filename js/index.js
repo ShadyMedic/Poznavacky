@@ -15,6 +15,19 @@ $(function() { //až po načtení stránky
 	}, 4000);
 });
 
+var documentHeight = $(window).height();
+var scrollOffset = 50;
+$(window).scroll(function(event) {
+	var scrolled = $(window).scrollTop();
+	console.log(scrolled);
+	if (scrolled > (documentHeight + scrollOffset)) {
+		$("#backToTop").removeClass("hidden");
+	}
+	else if (scrolled <= (documentHeight + scrollOffset)) {
+		$("#backToTop").addClass("hidden");
+	}
+})
+
 //zasunutí elementu dolů
 function hideDown(elementId)
 {	
