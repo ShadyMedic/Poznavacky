@@ -148,6 +148,21 @@ body#index {
 	}
 	#index-info-section {
 		padding: 3rem;
+		@media screen and (min-width: $mobile) {
+			padding: 4rem;
+		}
+		@media screen and (min-width: $tablet) {
+			padding: 4rem 6rem;
+		}
+		@media screen and (min-width: $smallDesktop) {
+			padding: 4rem 16vw;
+		}
+		@media screen and (min-width: $desktop) {
+			padding: 4rem 20vw;
+		}
+		p {
+			font-size: 1.32rem;
+		}
 	}	
 	#index-login-section {
 		border-right: 12px solid $gray1;
@@ -253,7 +268,7 @@ body#index {
 			bottom: 3rem;
 			right: 3rem;
 		}
-		z-index: 5;
+		z-index: 4;
 		img {
 			width: 100%;
 			height: 100%;

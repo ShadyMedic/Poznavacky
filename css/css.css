@@ -140,9 +140,30 @@ footer .content a:hover:after {
   left: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.3rem;
+  font-weight: bold;
+  margin: 0.8em 0 0.4em 0;
+}
+
 h2 {
   font-size: 2rem;
-  line-height: 1.25em;
+}
+
+h3 {
+  font-size: 1.6rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+h5 {
+  font-size: 1.32rem;
 }
 
 .btn {
@@ -589,6 +610,34 @@ body#index #index-info-section {
   padding: 3rem;
 }
 
+@media screen and (min-width: 576px) {
+  body#index #index-info-section {
+    padding: 4rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  body#index #index-info-section {
+    padding: 4rem 6rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  body#index #index-info-section {
+    padding: 4rem 16vw;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  body#index #index-info-section {
+    padding: 4rem 20vw;
+  }
+}
+
+body#index #index-info-section p {
+  font-size: 1.32rem;
+}
+
 body#index #index-login-section {
   border-right: 12px solid #222;
   position: fixed;
@@ -723,7 +772,7 @@ body#index #backToTop {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  z-index: 5;
+  z-index: 4;
 }
 
 body#index #backToTop.hidden {
