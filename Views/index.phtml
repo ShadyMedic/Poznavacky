@@ -1,15 +1,26 @@
-<div id="background"></div>
-<div id="background-overlay"></div>
+<!--<div id="background"></div>
+<div id="background-overlay"></div>-->
+<header>
+	<div class="content">
+		<button class="btn inline white" onclick="showLoginSection('login')">Přihlásit se</button>
+		<button class="btn inline white" onclick="showLoginSection('register')">Zaregistrovat se</button>
+	</div>
+</header>
 <main>
 	<section id="index-text-section">
-		<h1>Poznávačky</h1>
-		<p>Potřebujete se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistrujte se, vytvořte si seznam přírodnin, sdílejte ho se svou třídou a učte se rychleji!</p>
-		<button class="btn arrow-btn center white"><span>Zjistit více</span><img src="../images/arrow.svg"></button>
+		<div class="content">
+			<h1>Poznávačky</h1>
+			<p>Potřebujete se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistrujte se, vytvořte si seznam přírodnin, sdílejte ho se svou třídou a učte se rychleji!</p>
+			<a href="#index-info-section"><button class="btn arrow-btn black"><span>Zjistit více</span><img src="../images/arrowBlack.svg"></button></a>
+		</div>
+		<img src="../images/leafGuyLight.svg">
 	</section>
 	<section id="index-buttons-section">
-		<button class="btn border-btn rounded non-transparent white" onclick="showLoginSection('register')">Zaregistrovat se</button>
-		<button class="btn border-btn rounded non-transparent white" onclick="showLoginSection('login')">Přihlásit se</button>
-		<button class="btn border-btn rounded transparent white">Vyzkoušet demo</button>
+		<div class="content">
+			<button class="btn border-btn rounded non-transparent white" onclick="showLoginSection('register')">Zaregistrovat se</button>
+			<button class="btn border-btn rounded non-transparent white" onclick="showLoginSection('login')">Přihlásit se</button>
+			<button class="btn border-btn rounded transparent white">Vyzkoušet demo</button>
+		</div>
 	</section>
 	<section id="index-login-section">
 		<button onclick="hideLoginSection()" class="cross"></button>
@@ -61,6 +72,9 @@
 			<p>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</p>
 			<button class="btn inline black" onclick="showLoginDiv('login')">Zpět</button>
 		</div>
+	</section>
+	<section id="index-info-section">
+		<?php require 'Views/appInfo.phtml'; ?>
 	</section>
 </main>
 <div id="cookies-alert">
