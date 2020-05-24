@@ -8,16 +8,19 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+html {
+	scroll-behavior: smooth;
+}
 body {
 	font-family: 'Roboto', sans-serif;
 	line-height: 1.25em;
 	font-size: 100%;
 	min-width: 100vw;
 	min-height: 100vh;
-	button:focus {
+	.btn:focus {
 		outline: none;
 	}
-	button::-moz-focus-inner {
+	.btn::-moz-focus-inner {
 		border: 0;
 	}
 	&.tab {
@@ -27,25 +30,76 @@ body {
 	}
 }
 
-.hidden {
-	display: none;
+footer {
+	padding: 0.6rem 1rem;
+	background: $gray1;
+	.content {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		flex-direction: column;
+		@media screen and (min-width: $mobile) {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		a, span {
+			margin: 0.4rem 0.4rem;
+			display: inline;
+		}
+		a {
+			position: relative;
+			text-decoration: none;
+			&:after {
+				content: "";
+				display: block;
+				width: 0%;
+				left: 50%;
+				height: 2px;
+				position: absolute;
+				bottom: -0.1rem;
+				transition: all 0.16s ease-in;
+			}
+			&:hover:after {
+				width: 100%;
+				left: 0;
+			}
+		}
+	}
+
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+	line-height: 1.3rem;
+	font-weight: bold;
+	margin: 0.8em 0 0.4em 0;
+}
 h2 {
 	font-size: 2rem;
-	line-height: 1.25em;
+}
+h3 {
+	font-size: 1.6rem;
+}
+h4 {
+	font-size: 1.4rem;
+}
+h5 {
+	font-size: 1.32rem;
 }
 
 .btn {
+	font-family: 'Roboto', sans-serif;
 	background: none;
 	border: none;
-	font-size: 1rem;
+	font-size: 1em;
 	transition: transform 0.1s ease-in;
 	&:hover {
 		cursor: pointer;
 	}
 	&.border-btn {
-		font-size: 1.2rem;
 		position: relative;
 		padding: 0.8rem 1.6rem;
 		&.non-transparent {
@@ -84,9 +138,9 @@ h2 {
 			}
 		}
 		&.rounded {
-			border-radius: 1em;
+			border-radius: 4em;
 			&:after {
-				border-radius: 1em;
+				border-radius: 4em;
 			}
 		}
 		&:after {
@@ -115,7 +169,7 @@ h2 {
 			color: white;
 		}
 		&.black {
-			color: black;
+			color: $gray1;
 		}
 		img {
 			height: 1em;
@@ -134,11 +188,34 @@ h2 {
 	}
 	&.inline {
 		font-size: 1em;
+		position: relative;
+			text-decoration: none;
+			color: white;
+			&:after {
+				content: "";
+				display: block;
+				width: 0%;
+				left: 50%;
+				height: 2px;
+				position: absolute;
+				bottom: -0.1rem;
+				transition: all 0.1s ease-in;
+			}
+			&:hover:after {
+				width: 100%;
+				left: 0;
+			}
 		&.white {
 			color: white;
+			&:after {
+				background: white;
+			}
 		}
 		&.black {
 			color: black;
+			&:after {
+				background: black;
+			}
 		}
 	}
 }
@@ -155,10 +232,23 @@ h2 {
 
 input {
 	border: none;
+	&.text-field {
+		padding: 0.48em 0.6em;
+		&:focus {
+			box-shadow: 0 2px 0 0 darkblue;
+			outline: none;
+		}
+		&:invalid {
+			box-shadow: 0 2px 0 0 $red1;
+		}
+	}
 }
 
 label {
-	&.obligatory {
+	&:not([for=login-persist]) {
+		padding: 0.32em 0.6em;
+	}
+	&.required {
 		&:after {
 			content: " *";
 			color: $red1;

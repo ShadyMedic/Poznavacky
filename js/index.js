@@ -1,35 +1,44 @@
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
 
-//přidává třídu na zpracování úvodních animací
-window.addEventListener("load", () => {
-	//Je aktivní cookie, že se uživatel nedávno přihláasil nebo se právě odhlásil? --> přeskoč animace
-	if (getCookie("recentLogin") == 1) {
-		document.body.classList.add("loaded");
-		document.body.style.overflowY="auto";
+$(function() { //až po načtení stránky
+
+	//přidává třídu na zpracování úvodních animací
+	if (getCookie("recentLogin") == 1) { //Je aktivní cookie, že se uživatel nedávno přihlásil nebo se právě odhlásil? --> přeskoč animace
+		$("body").addClass("loaded");
 	}
 	else {
-		document.body.classList.add("load"); 
-		setTimeout(() => {
-			document.body.style.overflowY="auto";
-		}, 3400);
+		$("body").addClass("load");
 	}
 	setTimeout(() => {
-		document.getElementById("cookies-alert").style.transform = "translateY(0)"
+		$("#cookies-alert").css("transform", "translateY(0)");
 	}, 4000);
 });
+
+var documentHeight = $(window).height();
+var scrollOffset = 50;
+$(window).scroll(function(event) {
+	var scrolled = $(window).scrollTop();
+	console.log(scrolled);
+	if (scrolled > (documentHeight + scrollOffset)) {
+		$("#backToTop").removeClass("hidden");
+	}
+	else if (scrolled <= (documentHeight + scrollOffset)) {
+		$("#backToTop").addClass("hidden");
+	}
+})
 
 //zasunutí elementu dolů
 function hideDown(elementId)
 {	
-	document.getElementById(elementId).style.transform = "translateY(100%)";
+	$("#" + elementId).css("transform", "translateY(100%)");
 }
 
 //vysunutí sekce s přihlašováním, registrací a obnovou hesla
 function showLoginSection(specification)
 {
-	document.getElementById('index-login-section').style.transform = "translateX(0)";
-	document.body.style.overflowY="hidden";
+	$("#index-login-section").css("transform", "translateX(0)");
+	$("body").css("overflowY", "hidden");
 	let divId = specification;
 	showLoginDiv(divId);
 }
@@ -37,21 +46,21 @@ function showLoginSection(specification)
 //zobrazení požadované části v přihlašovací sekci
 function showLoginDiv(divId)
 {
-	document.getElementById('register').classList.add("hidden");
-	document.getElementById('login').classList.add("hidden");
-	document.getElementById('password-recovery').classList.add("hidden");
-	document.getElementById(divId).classList.remove("hidden");
+	$("#register").hide();
+	$("#login").hide();
+	$("#password-recovery").hide();
+	$("#" + divId).show();
 }
 
 function hideLoginSection() 
 {
-	document.getElementById('index-login-section').style.transform = "translateX(-100%)";
-	document.body.style.overflowY="auto";
+	$("#index-login-section").css("transform", "translateX(-100%)");
+	$("body").css("overflowY", "auto");
 }
 
 /*--------------------------------------------------------------------------*/
 /* Odesílání dat z formulářů na server */
-function formSumbitted(event)
+function formSubmitted(event)
 {
 	event.preventDefault();
 	
@@ -61,13 +70,14 @@ function formSumbitted(event)
 	var pass = "";
 	var repass = "";
 	var email = "";
+	var stayLogged = "";
 	switch (type)
 	{
 		//Přihlašovací formulář
 		case 'l':
 			name = $("#login-name").val();
 			pass = $("#login-pass").val();
-			stayLogged = $("#login-persist").val();
+			stayLogged = $("#login-persist").is(":checked");
 			break;
 		//Registrační formulář
 		case 'r':
@@ -78,8 +88,10 @@ function formSumbitted(event)
 			break;
 		//Formulář pro obnovu hesla
 		case 'p':
-			email = $("#password-recovery-email");
+			email = $("#password-recovery-email").val();
 			break;
+		default:
+			return;
 	}
 	
 	//Odeslání dat
@@ -110,3 +122,4 @@ function serverResponse(data, status)
 	
 	//TODO - zobrazení chybové nebo úspěchové hlášky
 }
+

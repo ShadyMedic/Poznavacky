@@ -1,10 +1,10 @@
 //přidává třídu podle toho, jestli uživatel používá myš nebo tabulátor -> úprava pseudotřídy :focus
-window.addEventListener("keydown", (event) => { 
+$(window).on("keydown", function(event) { 
 	if (event.keyCode === 9)
-		document.body.classList.add("tab");
+		$("body").addClass("tab");
 })
-window.addEventListener("mousedown", (event) => {
-	document.body.classList.remove("tab");	
+$(window).on("mousedown", function() {
+	$("body").removeClass("tab");	
 })
 
 //Funkce pro získání hodnoty cookie
