@@ -12,6 +12,9 @@
 			"role" : "Front-end developer"
 		}
 	],
+	"require" : {
+		"phpmailer/phpmailer" : "^6.1"
+	},
 	"minimum-stability" : "dev",
 	"homepage" : "http://poznavacky.epizy.com/",
 	"description" : "Project containing PHP application for easy and effective learning for recognizion tests",
