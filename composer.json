@@ -1,0 +1,38 @@
+{
+	"name" : "honzastech/poznavacky",
+	"type" : "project",
+	"license" : "proprietary",
+	"authors" : [{
+			"name" : "Jan Stech",
+			"email" : "honza.stech@gmail.com",
+			"role" : "Back-end developer"
+		}, {
+			"name" : "Eliska Korcova",
+			"email" : "eli.korcova@gmail.com",
+			"role" : "Front-end developer"
+		}
+	],
+	"require" : {
+		"phpmailer/phpmailer" : "^6.1"
+	},
+	"minimum-stability" : "dev",
+	"homepage" : "http://poznavacky.epizy.com/",
+	"description" : "Project containing PHP application for easy and effective learning for recognizion tests",
+	"support" : {
+		"email" : "poznavacky@email.com",
+		"issues" : "https://github.com/HonzaSTECH/Poznavacky/issues",
+		"wiki" : "https://github.com/HonzaSTECH/Poznavacky/wiki",
+		"source" : "https://github.com/HonzaSTECH/Poznavacky"
+	},
+	"keywords" : [
+		"recognizion-test",
+		"biology",
+		"nature",
+		"animal",
+		"plant",
+		"organism",
+		"education",
+		"school",
+		"test"
+	]
+}

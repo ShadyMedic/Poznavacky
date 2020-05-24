@@ -1,4 +1,7 @@
 <?php
+//Nastav dependencies pomocí composeru
+require __DIR__.'/vendor/autoload.php';
+
 //Definuj a nastav autoloader tříd
 function autoloader($name)
 {

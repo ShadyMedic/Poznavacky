@@ -1,7 +1,8 @@
 .buildpath
 .project
-.settings/*
-local/*
+.settings/
+vendor/
+local/
 log.txt
 debug.txt
 Models/DebugLogger.php
