@@ -1,5 +1,4 @@
 <?php
-
 /** 
  * Třída získávající seznamy tříd, skupin a částí
  * @author Jan Štěch
@@ -70,20 +69,20 @@ class TestGroupsManager
         if ($class->checkAccess(UserManager::getId()))
         {   
             //Získej data
-            $groups = Db::fetchQuery('SELECT nazev,casti FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?);', array($className), true);
-            if (!$groups)
+            $groups = $class->getGroups();
+            if (empty($groups))
             {
                 throw new NoDataException(NoDataException::NO_GROUPS, null, null, 1);
             }
             
             //Vytvoř tabulku
             $table = array();
-            foreach ($groups as $dataRow)
+            foreach ($groups as $group)
             {
                 $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($dataRow['nazev']);
-                $tableRow[0] = $dataRow['nazev'];
-                $tableRow[1] = $dataRow['casti'];
+                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($group->getName());
+                $tableRow[0] = $group->getName();
+                $tableRow[1] = $group->getPartsCount();
                 
                 array_push($table, $tableRow);
             }
@@ -117,12 +116,12 @@ class TestGroupsManager
             throw new NoDataException(NoDataException::UNKNOWN_GROUP);
         }
         
-        if ($class->checkAccess(UserManager::getId(), ClassManager::getIdByName($className)))
+        $group = new Group(0, $groupName, $class);
+        if ($class->checkAccess(UserManager::getId(), $class->getId()))
         {
             //Získej data
-            Db::connect();
-            $parts = Db::fetchQuery('SELECT nazev,prirodniny,obrazky FROM casti WHERE poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?) AND poznavacky_id IN (SELECT poznavacky_id FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?));', array($groupName, $className), true);
-            if (!$parts)
+            $parts = $group->getParts();
+            if (empty($parts))
             {
                 throw new NoDataException(NoDataException::NO_PARTS, null, null, 2);
             }
@@ -131,16 +130,16 @@ class TestGroupsManager
             $totalNaturals = 0;
             $totalPictures = 0;
             $table = array();
-            foreach ($parts as $dataRow)
+            foreach ($parts as $part)
             {
                 $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($dataRow['nazev']);
-                $tableRow[0] = $dataRow['nazev'];
-                $tableRow[1] = $dataRow['prirodniny'];
-                $tableRow[2] = $dataRow['obrazky'];
+                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getName());
+                $tableRow[0] = $part->getName();
+                $tableRow[1] = $part->getNaturalsCount();
+                $tableRow[2] = $part->getPicturesCount();
                 
-                $totalNaturals += $dataRow['prirodniny'];
-                $totalPictures += $dataRow['obrazky'];
+                $totalNaturals += $part->getNaturalsCount();
+                $totalPictures += $part->getPicturesCount();
                 
                 array_push($table, $tableRow);
             }

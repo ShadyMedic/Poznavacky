@@ -13,10 +13,25 @@ class LearnController extends Controller
     public function process(array $parameters)
     {
         $class = new ClassObject(0, $parameters[0]);
+        $group = new Group(0, $parameters[1], $class);
+        if (isset($parameters[2]))
+        {
+            $part = new Part(0, $parameters[2], $group);
+            $allParts = false;
+        }
+        else
+        {
+            $allParts = true;
+        }
+        
+        //Kontrola přístupu
         if (!$class->checkAccess(UserManager::getId()))
         {
             $this->redirect('error403');
         }
+        
+        if ($allParts){ $this->data['naturals'] = $group->getNaturals(); }
+        else { $this->data['naturals'] = $part->getNaturals(); }
         
         $this->pageHeader['title'] = 'Učit se';
         $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';

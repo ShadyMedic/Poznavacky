@@ -12,9 +12,10 @@ class ClassObject
     private $id;
     private $name;
     private $status;
+    private $groups;
     
     /**
-     * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i jméno, má ID přednost
+     * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i název, má jméno přednost
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
      * @throws BadMethodCallException
@@ -23,11 +24,15 @@ class ClassObject
     {
         if (mb_strlen($name) !== 0)
         {
-            $id = ClassManager::getIdByName($name);
+            Db::connect();
+            $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE nazev = ? LIMIT 1', array($name), false);
+            $id = $result['tridy_id'];
         }
         else if (!empty($id))
         {
-            $name = ClassManager::getNameById($id);
+            Db::connect();
+            $result = Db::fetchQuery('SELECT nazev FROM tridy WHERE tridy_id = ? LIMIT 1', array($id), false);
+            $name = $result['nazev'];
         }
         else
         {
@@ -38,12 +43,50 @@ class ClassObject
     }
     
     /**
+     * Metoda navrecející ID této třídy
+     * @return int ID třídy
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Metoda navracející jméno této třídy
      * @return string Jméno třídy
      */
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Metoda navracející pole poznávaček patřících do této třídy jako objekty
+     * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
+     * @return array Pole poznávaček patřících do této třídy jako objekty
+     */
+    public function getGroups()
+    {
+        if (!isset($this->groups))
+        {
+            $this->loadGroups();
+        }
+        return $this->groups;
+    }
+    
+    /**
+     * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
+     */
+    private function loadGroups()
+    {
+        $this->groups = array();
+        
+        Db::connect();
+        $result = Db::fetchQuery('SELECT poznavacky_id FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
+        foreach ($result as $groupData)
+        {
+            $this->groups[] = new Group($groupData['poznavacky_id'], "", $this);
+        }
     }
     
     /**
