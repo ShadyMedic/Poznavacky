@@ -43,7 +43,7 @@ body#index {
 		.content {
 			display: flex;
 			flex-wrap: wrap;
-			justify-content: end;
+			justify-content: flex-end;
 			.btn {
 				margin-left: 1.2rem;
 			}
@@ -111,7 +111,13 @@ body#index {
 				margin-bottom: 0.4rem;
 			}
 			.btn {
-				font-size: 1.8rem;
+				font-size: 1.6rem;
+				@media screen and (min-width: $tablet) {
+					font-size: 1.8rem;
+				}
+				@media screen and (min-width: $smallDesktop) {
+					font-size: 2rem;
+				}
 				padding: 0.4rem;
 				text-decoration: none;
 				color: $gray1;
@@ -259,8 +265,8 @@ body#index {
 		height: 4rem;
 		width: 4rem;
 		padding: 0.8rem;
-		background: #ddd;
-		border: 2px solid #ddd;
+		background: rgba(#ddd, 0.96);
+		border: 2px solid rgba(#ddd, 0.96);
 		position: fixed; 
 		bottom: 2rem;
 		right: 2rem;

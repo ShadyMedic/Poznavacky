@@ -437,7 +437,7 @@ body#index header .content {
       flex-wrap: wrap;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
-          justify-content: end;
+          justify-content: flex-end;
 }
 
 body#index header .content .btn {
@@ -549,10 +549,22 @@ body#index #index-text-section > .content p {
 }
 
 body#index #index-text-section > .content .btn {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   padding: 0.4rem;
   text-decoration: none;
   color: #222;
+}
+
+@media screen and (min-width: 768px) {
+  body#index #index-text-section > .content .btn {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  body#index #index-text-section > .content .btn {
+    font-size: 2rem;
+  }
 }
 
 body#index #index-text-section > img {
@@ -767,8 +779,8 @@ body#index #backToTop {
   height: 4rem;
   width: 4rem;
   padding: 0.8rem;
-  background: #ddd;
-  border: 2px solid #ddd;
+  background: rgba(221, 221, 221, 0.96);
+  border: 2px solid rgba(221, 221, 221, 0.96);
   position: fixed;
   bottom: 2rem;
   right: 2rem;
