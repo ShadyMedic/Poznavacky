@@ -6,6 +6,7 @@
 class MenuController extends Controller
 {
     private $chosenFolder = array();
+    private $argumentsToPass = array();
     
     /**
      * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
@@ -44,9 +45,9 @@ class MenuController extends Controller
         
         //Načtení argumentů vztahujících se k této stránkce
         //Minimálně 0 (v případě domena.cz/menu)
-        //Maximálně 4 (v případě domena.cz/menu/nazev-tridy/nazev-poznavacky/nazev-casti/akce)
+        //Maximálně 5 (v případě domena.cz/menu/nazev-tridy/nazev-poznavacky/nazev-casti/akce/ajax-kontroller)
         $menuArguments = array();
-        for ($i = 0; $i < 4 && $arg = array_shift($parameters); $i++)
+        for ($i = 0; $i < 5 && $arg = array_shift($parameters); $i++)
         {
             $menuArguments[] = $arg;
         }
@@ -68,7 +69,7 @@ class MenuController extends Controller
             else
             {
                 //Název třídy
-                $this->chosenFolder[] = urldecode($menuArguments[0]);
+                $this->chosenFolder['class'] = urldecode($menuArguments[0]);
             }
         }
         if ($argumentCount > 1)
@@ -82,29 +83,30 @@ class MenuController extends Controller
             else
             {
                 //Název poznávačky
-                $this->chosenFolder[] = urldecode($menuArguments[1]);
+                $this->chosenFolder['group'] = urldecode($menuArguments[1]);
             }
         }
         if ($argumentCount > 2)
         {
-            if ($argumentCount === 3)
+            //Jsou zvoleny všechny části najednou?
+            $controllerName = $this->kebabToCamelCase($menuArguments[2]).self::ControllerExtension;
+            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
             {
-                //Jsou zvoleny všechny části najednou?
-                $controllerName = $this->kebabToCamelCase($menuArguments[2]).self::ControllerExtension;
-                if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
-                {
-                    $this->controllerToCall = new $controllerName;
-                }
-                else
-                {
-                    //Je zvolena část, ale ne akce
-                    $this->redirect('menu/'.$this->chosenFolder[0].'/'.$this->chosenFolder[1]);
-                }
+                //Ano
+                $this->controllerToCall = new $controllerName;
+                $this->argumentsToPass = array_slice($menuArguments, 3);
             }
             else
             {
-                //Nastavení části
-                $this->chosenFolder[] = urldecode($menuArguments[2]);
+                //Ne --> v dalším argumentu musí být specifikována akce
+                if ($argumentCount === 3)
+                {
+                    //Je specifikována část, ale ne akce --> návrat na seznam částí
+                    $this->redirect('menu/'.$this->chosenFolder['class'].'/'.$this->chosenFolder['group']);
+                }
+                
+                //Nastavení části (pouze, pokud nejsou vybrány všechny části najednou)
+                $this->chosenFolder['part'] = urldecode($menuArguments[2]);
             }
         }
         if ($argumentCount > 3)
@@ -114,6 +116,7 @@ class MenuController extends Controller
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
             {
                 $this->controllerToCall = new $controllerName;
+                $this->argumentsToPass = array_slice($menuArguments, 4);
             }
             else
             {
@@ -125,7 +128,7 @@ class MenuController extends Controller
         if (isset($this->controllerToCall))
         {
             //Kontroler je nastaven --> předat posbírané argumenty dál
-            $this->controllerToCall->process($this->chosenFolder);
+            $this->controllerToCall->process(array_merge($this->argumentsToPass, $this->chosenFolder));
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
         }
         else

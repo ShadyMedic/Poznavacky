@@ -22,13 +22,12 @@ class MenuTableController extends Controller
         $this->pageHeader['bodyId'] = 'menu';
         
         //Doplnění argumentů práznými řetězci
-        for ($i = 0; $i < 3; $i++)
-        {
-            if (!isset($chosenFolder[$i])){$chosenFolder[$i] = '';}
-        }
+        if (!isset($chosenFolder['class'])){$chosenFolder['class'] = '';}
+        if (!isset($chosenFolder['group'])){$chosenFolder['group'] = '';}
+        if (!isset($chosenFolder['part'])){$chosenFolder['part'] = '';}
         
-        $className = $chosenFolder[0];
-        $groupName = $chosenFolder[1];
+        $className = $chosenFolder['class'];
+        $groupName = $chosenFolder['group'];
         
         //Získání dat
         try
