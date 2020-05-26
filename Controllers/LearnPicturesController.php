@@ -1,12 +1,14 @@
 <?php
 /** 
- * @author Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázku pro učební stránku
+ * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro učební stránku
+ * @author Jan Štěch
  */
 class LearnPicturesController extends Controller
 {
 
     /**
-     * Metoda přijímající název přírodniny a získávající zdroje všech jejích obrázků z databáze
+     * Metoda přijímající název přírodniny skrz $_POST a získávající zdroje všech jejích obrázků z databáze
+     * Adresy jsou odeslány jako pole v JSON formátu
      * @see Controller::process()
      */
     public function process(array $parameters)
@@ -24,6 +26,8 @@ class LearnPicturesController extends Controller
             $picturesArr[] = $picture['zdroj'];
         }
         echo json_encode($picturesArr);
+        
+        //Zastav zpracování PHP, aby se nevypsala šablona
         exit();
     }
 }
