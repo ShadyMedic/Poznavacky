@@ -78,7 +78,40 @@ $(function()
 	
 	//Nastav první přírodninu
 	sel();
+	
+	//Nastav focus na hlavní <div>, aby fungovali klávesové zkratky
+	$("main>div:eq(0)").focus();
 })
+
+/**
+ * Funkce, která se spouští vždy, když je stisknuta nějaká klávesa zatímco má focus jediný <div> v <main> obsahující vše důležité ze stránky
+ * @param event
+ */
+function keyPressed(event)
+{
+	//Vypnutí klávesových zkratek, pokud uživatel zrovna píše důvod hlášení
+	if ($(document.activeElement).is('INPUT') || $(document.activeElement).is('TEXTAREA'))
+	{
+		return;
+	}
+	
+    var charCode = event.code || event.which;
+    switch (charCode)
+	{
+		case "KeyW":
+			updateNatural(1);
+			return;
+		case "KeyS":
+			updateNatural(-1);
+			return;
+		case "KeyD":
+			updatePicture(1);
+			return;
+		case "KeyA":
+			updatePicture(-1);
+			return;
+	}
+}
 
 /**
  * Funkce nastavující nový obrázek
