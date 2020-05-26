@@ -1,18 +1,18 @@
 <h2>Učit se</h2>
 <section>
-	<select onchange="sel()">
+	<select id="selectBox" onchange="sel()">
 	<?php foreach ($naturals as $natural) : ?>
         <option><?= $natural->getName() ?></option>
 	<?php endforeach; ?>
 	</select>
 </section>
 <section>
-	<button onclick="prevImg()">
+	<button onclick="updatePicture(-1)">
 		<img src="images/arrow.png" style="transform: rotate(180deg);" />
 		<span>[A]</span>
 	</button>
-	<img src="images/imagePreview.png"> <!-- Adresa bude dodána JavaScriptem -->
-	<button onclick="prevImg()">
+	<img id="mainImg" src="images/imagePreview.png"> <!-- Adresa bude dodána JavaScriptem -->
+	<button onclick="updatePicture(1)">
 		<img src="images/arrow.png" />
 		<span>[D]</span>
 	</button>
