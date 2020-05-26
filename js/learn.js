@@ -91,7 +91,6 @@ function updatePicture(offset)
 
 /**
  * Funkce přenastavující odkaz na vybranou přírodninu a nastavující její obrázek
- * @returns
  */
 function sel()
 {
@@ -99,6 +98,31 @@ function sel()
 	for (i = 0; i < naturals.length && naturals[i].name !== $("#selectBox").val(); i++){}
 	selectedNatural = naturals[i];
 	
+	updatePicture(0);
+}
+
+/**
+ * Funkce nastavující novou přírodninu relativně k nyní vybrané přírodnině (využívané tlačítky)
+ * @param offset Posun v poli dostupných přírodnin (-1 pro předchozí, 1 pro následující)
+ */
+function updateNatural(offset)
+{
+	let currentNaturalIndex = naturals.indexOf(selectedNatural);
+	currentNaturalIndex += offset;
+	
+	if (currentNaturalIndex > naturals.length - 1)
+	{
+		currentNaturalIndex %= naturals.length;
+	}
+	if (currentNaturalIndex < 0)
+	{
+		currentNaturalIndex += naturals.length;
+	}
+	
+	$("#selectBox").prop("selectedIndex", currentNaturalIndex);
+	
+	//Úprava currentNatural a obrázeku
+	selectedNatural = naturals[currentNaturalIndex];
 	updatePicture(0);
 }
 

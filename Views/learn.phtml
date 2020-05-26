@@ -5,6 +5,15 @@
         <option><?= $natural->getName() ?></option>
 	<?php endforeach; ?>
 	</select>
+	<br>
+	<button onclick="updateNatural(-1)" class="button">
+		Předchozí přírodnina
+		<span class="key_short">[S]</span>
+	</button>
+		<button onclick="updateNatural(1)" class="button">
+		Následující přírodnina
+		<span class="key_short">[W]</span>
+	</button>
 </section>
 <section>
 	<button onclick="updatePicture(-1)">
