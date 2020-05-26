@@ -44,7 +44,7 @@ function natural(name)
 	{
 		//Odeslání AJAX požadavku
 		selectedNatural.status = "loading";
-		$.post("learn-picture", {
+		$.post(document.location.href+"/learn-pictures", {
 			name: this.name
 		}, function(response)
 		{

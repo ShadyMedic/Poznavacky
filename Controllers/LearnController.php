@@ -30,16 +30,34 @@ class LearnController extends Controller
             $this->redirect('error403');
         }
         
-        if ($allParts){ $this->data['naturals'] = $group->getNaturals(); }
-        else { $this->data['naturals'] = $part->getNaturals(); }
-        
-        $this->pageHeader['title'] = 'Učit se';
-        $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
-        $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        $this->pageHeader['jsFile'] = 'js/learn.js';
-        $this->pageHeader['bodyId'] = 'learn';
-        
-        $this->view = 'learn';
+        $controllerName = "nonexistant-controller";
+        if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::ControllerExtension; }
+        if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+        {
+            //URL obsajuje požadavek na další kontroler používaný na menu stránce
+            $this->controllerToCall = new $controllerName;
+            $this->controllerToCall->process($parameters);
+            
+            $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
+            $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
+            $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
+            $this->pageHeader['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
+            $this->pageHeader['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
+            $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
+        }
+        else
+        {
+            if ($allParts){ $this->data['naturals'] = $group->getNaturals(); }
+            else { $this->data['naturals'] = $part->getNaturals(); }
+            
+            $this->pageHeader['title'] = 'Učit se';
+            $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
+            $this->pageHeader['keywords'] = '';
+            $this->pageHeader['cssFile'] = 'css/css.css';
+            $this->pageHeader['jsFile'] = 'js/learn.js';
+            $this->pageHeader['bodyId'] = 'learn';
+            
+            $this->view = 'learn';
+        }
     }
 }
