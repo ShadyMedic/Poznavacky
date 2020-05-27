@@ -10,6 +10,7 @@ class Natural
     private $pictureCount;
     private $pictures;
     private $group;
+    private $part;
     
     /**
      * Konstruktor přírodniny nastavující její ID, název a poznávačku do které patří (pokud je specifikována). Pokud je specifikováno ID i název, má název přednost.
@@ -23,17 +24,20 @@ class Natural
         if (mb_strlen($name) !== 0 && (!empty($group)))
         {
             Db::connect();
-            $result = Db::fetchQuery('SELECT prirodniny_id,obrazky FROM prirodniny WHERE nazev = ? AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = ?) LIMIT 1',array($name, $group->getId()));
+            $result = Db::fetchQuery('SELECT prirodniny_id,obrazky,casti_id FROM prirodniny WHERE nazev = ? AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = ?) LIMIT 1',array($name, $group->getId()));
             $id = $result['prirodniny_id'];
             $this->pictureCount = $result['obrazky'];
             $this->group = $group;
+            $this->part = new Part($result['casti_id']);
         }
         else if (!empty($id))
         {
             Db::connect();
-            $result = Db::fetchQuery('SELECT nazev,obrazky FROM prirodniny WHERE prirodniny_id = ? LIMIT 1',array($id));
+            $result = Db::fetchQuery('SELECT nazev,obrazky,casti_id FROM prirodniny WHERE prirodniny_id = ? LIMIT 1',array($id));
             $name = $result['nazev'];
             $this->pictureCount = $result['obrazky'];
+            $this->part = new Part($result['casti_id']);
+            $this->group = $this->part->getGroup();
         }
         else
         {
@@ -75,6 +79,9 @@ class Natural
         return $this->pictures;
     }
     
+    /**
+     * Metoda načítající z databáze obrázky přírodnin a ukládající je jako vlastnost objektu
+     */
     private function loadPictures()
     {
         $this->pictures = array();
@@ -88,9 +95,45 @@ class Natural
         }
     }
     
+    /**
+     * Metoda přidávající do databáze i do instance třídy nový obrázek této přírodniny
+     * @param string $url Ošetřená adresa obrázku
+     * @return boolean TRUE, pokud je obrázek přidán úspěšně, FALSE, pokud ne
+     */
     public function addPicture(string $url)
     {
-        //TODO
+        Db::connect();
+        $result = Db::executeQuery('INSERT INTO obrazky (prirodniny_id,zdroj,casti_id) VALUES (?,?,?)', array($this->id, $url, $this->part->getId()), true);
+        if ($result)
+        {
+            $this->pictureCount++;
+            $this->pictures[] = new Picture($result, $url, $this, true);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Metoda kontrolující, zda je u této přírodniny již nahrán obrázek s danou adresou
+     * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
+     * @param string $url Adresa obrázku, kterou hledáme
+     * @return boolean TRUE, pokud tato přírodnina již má tento obrázek přidaný, FALSE, pokud ne
+     */
+    public function pictureExists(string $url)
+    {
+        if (!isset($this->pictures))
+        {
+            $this->loadPictures();
+        }
+        
+        foreach ($this->pictures as $picture)
+        {
+            if ($picture['src'] === $url)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
