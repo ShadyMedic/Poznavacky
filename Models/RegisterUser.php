@@ -150,12 +150,9 @@ class RegisterUser
         
         //Uložení dat do databáze
         $password = password_hash($password, PASSWORD_DEFAULT);
-        Db::executeQuery('INSERT INTO uzivatele (jmeno, heslo, email, posledni_prihlaseni) VALUES (?,?,?,NOW())', array($name, $password, $email));
+        $id = Db::executeQuery('INSERT INTO uzivatele (jmeno, heslo, email, posledni_prihlaseni) VALUES (?,?,?,NOW())', array($name, $password, $email), true);
         
         //Přihlášení
-        $id = Db::fetchQuery('SELECT uzivatele_id FROM uzivatele WHERE jmeno=? LIMIT 1', array($name), false);
-        $id = $id['uzivatele_id'];
-        
         $user = new LoggedUser($id, $name, $password, $email, new DateTime(null, new DateTimeZone('EUROPE/PRAGUE')), 0, 0, null, self::DEFAULT_THEME, 0, 0, self::DEFAULT_KARMA, self::DEFAULT_STATUS);
         $_SESSION['user'] = $user;
         

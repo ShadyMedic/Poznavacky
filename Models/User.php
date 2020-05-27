@@ -154,7 +154,7 @@ class User implements ArrayAccess
         
         //Kontrola dat OK
         
-        //Aktualizovat databáz
+        //Aktualizovat databázi
         Db::connect();
         Db::executeQuery('UPDATE uzivatele SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;

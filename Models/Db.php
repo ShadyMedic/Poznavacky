@@ -49,16 +49,22 @@ class Db
      * 
      * Vhodné pro dotazy jako INSERT, UPDATE a DELETE
      * @param string $query Dotaz pro provedení s otazníky místo parametrů
-     * @param array $parameters Pole parametrů, které budou doplněny místo otazníků do dotazu¨
-     * @return bool TRUE, pokud dotaz neselhal
+     * @param array $parameters Pole parametrů, které budou doplněny místo otazníků do dotazu
+     * @param bool $returnLastId TRUE, pokud má metoda navracet ID posledního vloženého řádku (vhodné pouze pro INSERT dotazy), defaultně FALSE (navrátí TRUE v případě, že dotaz neselže)
+     * @return bool|int TRUE, pokud dotaz neselhal a pokud je třetí parametr nastaven na FALSE, jinak ID posledního vloženého řádku
      * @throws DatabaseException V případě selhání dotazu
      */
-    public static function executeQuery(string $query, array $parameters = array())
+    public static function executeQuery(string $query, array $parameters = array(), bool $returnLastId = false)
     {
         try
         {
             $statement = self::$connection->prepare($query);
             $result = $statement->execute($parameters);
+            
+            if ($returnLastId)
+            {
+                return self::$connection->lastInsertId();
+            }
         }
         catch(PDOException $e)
         {
