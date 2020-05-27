@@ -1,18 +1,28 @@
 <h2>Učit se</h2>
+<div tabindex="-1" onkeypress="keyPressed(event)">
 <section>
-	<select onchange="sel()">
+	<select id="selectBox" onchange="sel()">
 	<?php foreach ($naturals as $natural) : ?>
         <option><?= $natural->getName() ?></option>
 	<?php endforeach; ?>
 	</select>
+	<br>
+	<button onclick="updateNatural(-1)" class="button">
+		Předchozí přírodnina
+		<span class="key_short">[S]</span>
+	</button>
+		<button onclick="updateNatural(1)" class="button">
+		Následující přírodnina
+		<span class="key_short">[W]</span>
+	</button>
 </section>
 <section>
-	<button onclick="prevImg()">
+	<button onclick="updatePicture(-1)">
 		<img src="images/arrow.png" style="transform: rotate(180deg);" />
 		<span>[A]</span>
 	</button>
-	<img src="images/imagePreview.png"> <!-- Adresa bude dodána JavaScriptem -->
-	<button onclick="prevImg()">
+	<img id="mainImg" src="images/imagePreview.png"> <!-- Adresa bude dodána JavaScriptem -->
+	<button onclick="updatePicture(1)">
 		<img src="images/arrow.png" />
 		<span>[D]</span>
 	</button>
@@ -21,3 +31,4 @@
 		<?php require 'Views/reportForm.phtml'; ?>
 	</div>
 </section>
+</div>

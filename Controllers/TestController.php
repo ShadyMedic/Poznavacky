@@ -12,7 +12,7 @@ class TestController extends Controller
      */
     public function process(array $parameters)
     {
-        $class = new ClassObject(0, $parameters[0]);
+        $class = new ClassObject(0, $parameters['class']);
         if (!$class->checkAccess(UserManager::getId()))
         {
             $this->redirect('error403');

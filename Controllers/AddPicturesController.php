@@ -12,17 +12,17 @@ class AddPicturesController extends Controller
      */
     public function process(array $parameters)
     {
-        $class = new ClassObject(0, $parameters[0]);
+        $class = new ClassObject(0, $parameters['class']);
         if (!$class->checkAccess(UserManager::getId()))
         {
             $this->redirect('error403');
         }
         
-        $class = new ClassObject(0, $parameters[0]);
-        $group = new Group(0, $parameters[1], $class);
-        if (isset($parameters[2]))
+        $class = new ClassObject(0, $parameters['class']);
+        $group = new Group(0, $parameters['group'], $class);
+        if (isset($parameters['part']))
         {
-            $part = new Part(0, $parameters[2], $group);
+            $part = new Part(0, $parameters['part'], $group);
             $allParts = false;
         }
         else
