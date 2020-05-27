@@ -92,7 +92,7 @@ class Group
     /**
      * Metoda navracející objekty přírodnin ze všech částí této poznávačky
      * Pokud zatím nebyly načteny části této poznávačky, budou načteny z databáze
-     * @return array Pole přírodnin patřících do této poznávačky jako objekty
+     * @return Natural[] Pole přírodnin patřících do této poznávačky jako objekty
      */
     public function getNaturals()
     {
