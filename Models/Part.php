@@ -51,9 +51,18 @@ class Part
         else
         {
             Db::connect();
-            $result = Db::fetchQuery('SELECT poznavaky_id FROM casti WHERE casti_id = ? LIMIT 1', array($this->id), false);
+            $result = Db::fetchQuery('SELECT poznavacky_id FROM casti WHERE casti_id = ? LIMIT 1', array($this->id), false);
             $this->group = new Group($result['poznavacky_id']);
         }
+    }
+    
+    /**
+     * Metoda navracející ID této části
+     * @return int ID části
+     */
+    public function getId()
+    {
+        return $this->id;
     }
     
     /**
