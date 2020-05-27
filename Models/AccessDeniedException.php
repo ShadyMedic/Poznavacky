@@ -6,6 +6,7 @@
  */
 class AccessDeniedException extends Exception
 {
+    const REASON_UNEXPECTED = 'Něco se pokazilo. Opakujte prosím akci později a pokud problém přetrvá, kontaktujte správce';
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
     const REASON_NO_PASSWORD_GENERAL = 'Musíte zadat své heslo';
     const REASON_WRONG_PASSWORD_GENERAL = 'Špatné heslo';
@@ -66,6 +67,9 @@ class AccessDeniedException extends Exception
     const REASON_ACCOUNT_DELETION_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
     const REASON_ACCOUNT_DELETION_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
     const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžete odstranit svůj účet, protože spravujete nějakou třídu. Předejte správu tříd, které spravujete, jiným uživatelům pro uvolnění možnosti odstranit svůj účet';
+    const REASON_ADD_PICTURE_UNKNOWN_NATURAL = 'Pokoušíte se přidat obrázek k neznámé přírodnině';
+    const REASON_ADD_PICTURE_DUPLICATE_PICTURE = 'Tento obrázek je již k této přírodnině přidán';
+    const REASON_ADD_PICTURE_INVALID_FORMAT = 'Zadaná URL adresa nevede na obrázek v platném formátu';
     
     private $additionalInfo = array();
     
