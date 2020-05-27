@@ -55,6 +55,14 @@ class Group
     }
     
     /**
+     * Metoda navracející ID této poznávačky
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Metoda navracející jméno této poztnávačky
      * @return string Jméno poznávačky
      */
