@@ -41,7 +41,7 @@ class Natural
         }
         else
         {
-            throw new BadMethodCallException('At least one of the arguments must be specified.', null, null);
+            throw new BadMethodCallException('Either ID or name and group must be specified.', null, null);
         }
         $this->id = $id;
         $this->name = $name;
