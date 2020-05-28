@@ -43,6 +43,16 @@ class User implements ArrayAccess
     }
     
     /**
+     * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli přidaných obrázků
+     * @return boolean TRUE, pokud vše proběhne hladce
+     */
+    public function incrementAddedPictures()
+    {
+        $this->addedPictures++;
+        return Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = (pridane_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
+    }
+    
+    /**
      * Metoda ukládající do databáze nový požadavek na změnu jména od přihlášeného uživatele, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
      * Data jsou předem ověřena
      * @param string $newName Požadované nové jméno
@@ -154,7 +164,7 @@ class User implements ArrayAccess
         
         //Kontrola dat OK
         
-        //Aktualizovat databáz
+        //Aktualizovat databázi
         Db::connect();
         Db::executeQuery('UPDATE uzivatele SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;

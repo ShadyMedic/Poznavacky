@@ -17,13 +17,13 @@ class LearnPicturesController extends Controller
         $groupName = $parameters['group'];
         $naturalName = $_POST['name'];
         
-        Db::connect();
-        $pictures = Db::fetchQuery('SELECT zdroj FROM obrazky WHERE prirodniny_id = (SELECT prirodniny_id FROM prirodniny WHERE nazev = ? AND poznavacky_id = (SELECT poznavacky_id FROM poznavacky WHERE nazev = ?)AND poznavacky_id IN (SELECT poznavacky_id FROM poznavacky WHERE tridy_id = (SELECT tridy_id FROM tridy WHERE nazev = ?)) LIMIT 1);', array($naturalName, $groupName, $className), true);
+        $natural = new Natural(0, $naturalName, new Group(0, $groupName, new ClassObject(0, $className)));
+        $pictures = $natural->getPictures();
         
         $picturesArr = array();
         foreach ($pictures as $picture)
         {
-            $picturesArr[] = $picture['zdroj'];
+            $picturesArr[] = $picture['src'];
         }
         echo json_encode($picturesArr);
         

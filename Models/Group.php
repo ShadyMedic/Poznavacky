@@ -23,35 +23,57 @@ class Group
         if (mb_strlen($name) !== 0)
         {
             Db::connect();
-            $result = Db::fetchQuery('SELECT poznavacky_id,casti FROM poznavacky WHERE nazev = ? LIMIT 1',array($name));
+            $result = Db::fetchQuery('SELECT poznavacky_id,casti,tridy_id FROM poznavacky WHERE nazev = ? LIMIT 1',array($name));
+            if (!$result)
+            {
+                //Poznávačka nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_FOUND);
+            }
             $id = $result['poznavacky_id'];
             $this->partsCount = $result['casti'];
+            $classId = $result['tridy_id'];
         }
         else if (!empty($id))
         {
             Db::connect();
-            $result = Db::fetchQuery('SELECT nazev,casti FROM poznavacky WHERE poznavacky_id = ? LIMIT 1',array($id));
+            $result = Db::fetchQuery('SELECT nazev,casti,tridy_id FROM poznavacky WHERE poznavacky_id = ? LIMIT 1',array($id));
+            if (!$result)
+            {
+                //Poznávačka nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_FOUND);
+            }
             $name = $result['nazev'];
             $this->partsCount = $result['casti'];
+            $classId = $result['tridy_id'];
         }
         else
         {
-            throw new BadMethodCallException('At least one of the arguments must be specified.', null, null);
+            throw new BadMethodCallException('Either ID or name must be specified.', null, null);
         }
+        
         $this->id = $id;
         $this->name = $name;
         
         //Nastavit nebo zjistit třídu
-        if (!empty($class))
+        if (!empty($class) && $class->getId() === $classId)
         {
+            //ID souhlasí a objekt je poskytnut --> nastavit
             $this->class = $class;
         }
         else
         {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT tridy_id FROM poznavacky WHERE poznavacky_id = ? LIMIT 1', array($this->id), false);
-            $this->class = new ClassObject($result['tridy_id']);
+            //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
+            $this->class = new ClassObject($classId);
         }
+    }
+    
+    /**
+     * Metoda navracející ID této poznávačky
+     * @return int ID poznávačky
+     */
+    public function getId()
+    {
+        return $this->id;
     }
     
     /**
@@ -84,7 +106,7 @@ class Group
     /**
      * Metoda navracející objekty přírodnin ze všech částí této poznávačky
      * Pokud zatím nebyly načteny části této poznávačky, budou načteny z databáze
-     * @return array Pole přírodnin patřících do této poznávačky jako objekty
+     * @return Natural[] Pole přírodnin patřících do této poznávačky jako objekty
      */
     public function getNaturals()
     {

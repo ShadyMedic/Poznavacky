@@ -23,37 +23,59 @@ class Part
         if (mb_strlen($name) !== 0)
         {
             Db::connect();
-            $result = Db::fetchQuery('SELECT casti_id,prirodniny,obrazky FROM casti WHERE nazev = ? LIMIT 1',array($name));
+            $result = Db::fetchQuery('SELECT casti_id,prirodniny,obrazky,poznavacky_id FROM casti WHERE nazev = ? LIMIT 1',array($name));
+            if (!$result)
+            {
+                //Část nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_PART_NOT_FOUND);
+            }
             $id = $result['casti_id'];
             $this->naturalsCount = $result['prirodniny'];
             $this->picturesCount = $result['obrazky'];
+            $groupId = $result['poznavacky_id'];
         }
         else if (!empty($id))
         {
             Db::connect();
-            $result = Db::fetchQuery('SELECT nazev,prirodniny,obrazky FROM casti WHERE casti_id = ? LIMIT 1',array($id));
+            $result = Db::fetchQuery('SELECT nazev,prirodniny,obrazky,poznavacky_id FROM casti WHERE casti_id = ? LIMIT 1',array($id));
+            if (!$result)
+            {
+                //Část nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_PART_NOT_FOUND);
+            }
             $name = $result['nazev'];
             $this->naturalsCount = $result['prirodniny'];
             $this->picturesCount = $result['obrazky'];
+            $groupId = $result['poznavacky_id'];
         }
         else
         {
-            throw new BadMethodCallException('At least one of the arguments must be specified.', null, null);
+            throw new BadMethodCallException('Either ID or name and group must be specified.', null, null);
         }
+        
         $this->id = $id;
         $this->name = $name;
         
         //Nastavit nebo zjistit poznávačku
-        if (!empty($group))
+        if (!empty($group) && $group->getId() === $groupId)
         {
+            //ID souhlasí a objekt je poskytnut --> nastavit
             $this->group = $group;
         }
         else
         {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT poznavaky_id FROM casti WHERE casti_id = ? LIMIT 1', array($this->id), false);
-            $this->group = new Group($result['poznavacky_id']);
+            //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
+            $this->group = new Group($groupId);
         }
+    }
+    
+    /**
+     * Metoda navracející ID této části
+     * @return int ID části
+     */
+    public function getId()
+    {
+        return $this->id;
     }
     
     /**
