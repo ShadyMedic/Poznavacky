@@ -222,21 +222,19 @@ body#index {
 		bottom: 0;
 		width: 100%;
 		transform: translateY(100%);
-		background: $gray1;
+		background: #444;
 		color: white;
 		display: block;
 		text-align: justify;
 		z-index: 5;
-		padding: 1rem;
+		padding: 2rem 3rem;
 		display: flex;
 		justify-content: space-between;
 		transition: transform 0.6s ease-in-out;
 		span {
-			padding-right: 0.8rem;
+			padding-right: 2rem;
 		}
 		button {
-			height: 1rem;
-			width: 1rem;
 			flex-shrink: 0;
 		}
 	}

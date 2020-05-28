@@ -321,6 +321,21 @@ h5 {
   background: black;
 }
 
+.btn.cross {
+  height: 1em;
+  width: 1em;
+}
+
+.btn.cross > img {
+  height: 100%;
+  width: 100%;
+}
+
+.btn.cross:active {
+  -webkit-transform: scale(0.88);
+          transform: scale(0.88);
+}
+
 .center {
   display: block;
   margin: auto;
@@ -746,12 +761,12 @@ body#index #cookies-alert {
   width: 100%;
   -webkit-transform: translateY(100%);
           transform: translateY(100%);
-  background: #222;
+  background: #444;
   color: white;
   display: block;
   text-align: justify;
   z-index: 5;
-  padding: 1rem;
+  padding: 2rem 3rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -765,12 +780,10 @@ body#index #cookies-alert {
 }
 
 body#index #cookies-alert span {
-  padding-right: 0.8rem;
+  padding-right: 2rem;
 }
 
 body#index #cookies-alert button {
-  height: 1rem;
-  width: 1rem;
   -ms-flex-negative: 0;
       flex-shrink: 0;
 }

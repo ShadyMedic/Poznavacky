@@ -205,6 +205,17 @@ h5 {
 			}
 		}
 	}
+	&.cross {
+		height: 1em;
+		width: 1em;
+		> img {
+			height: 100%;
+			width: 100%;
+		}
+		&:active {
+			transform: scale(0.88);
+		}
+	}
 }
 
 .center {

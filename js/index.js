@@ -12,7 +12,7 @@ $(function() { //až po načtení stránky
 	}
 	setTimeout(() => {
 		$("#cookies-alert").css("transform", "translateY(0)");
-	}, 4000);
+	}, 1000);
 });
 
 var documentHeight = $(window).height();
