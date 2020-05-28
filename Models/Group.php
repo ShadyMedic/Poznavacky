@@ -56,6 +56,7 @@ class Group
     
     /**
      * Metoda navracející ID této poznávačky
+     * @return int ID poznávačky
      */
     public function getId()
     {
