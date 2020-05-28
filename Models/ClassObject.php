@@ -26,18 +26,29 @@ class ClassObject
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE nazev = ? LIMIT 1', array($name), false);
+            if (!$result)
+            {
+                //Třída nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_FOUND);
+            }
             $id = $result['tridy_id'];
         }
         else if (!empty($id))
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT nazev FROM tridy WHERE tridy_id = ? LIMIT 1', array($id), false);
+            if (!$result)
+            {
+                //Třída nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_FOUND);
+            }
             $name = $result['nazev'];
         }
         else
         {
             throw new BadMethodCallException('At least one of the arguments must be specified.', null, null);
         }
+        
         $this->id = $id;
         $this->name = $name;
     }

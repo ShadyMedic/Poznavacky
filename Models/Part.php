@@ -24,6 +24,11 @@ class Part
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT casti_id,prirodniny,obrazky,poznavacky_id FROM casti WHERE nazev = ? LIMIT 1',array($name));
+            if (!$result)
+            {
+                //Část nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_PART_NOT_FOUND);
+            }
             $id = $result['casti_id'];
             $this->naturalsCount = $result['prirodniny'];
             $this->picturesCount = $result['obrazky'];
@@ -33,6 +38,11 @@ class Part
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT nazev,prirodniny,obrazky,poznavacky_id FROM casti WHERE casti_id = ? LIMIT 1',array($id));
+            if (!$result)
+            {
+                //Část nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_PART_NOT_FOUND);
+            }
             $name = $result['nazev'];
             $this->naturalsCount = $result['prirodniny'];
             $this->picturesCount = $result['obrazky'];
@@ -42,6 +52,7 @@ class Part
         {
             throw new BadMethodCallException('Either ID or name and group must be specified.', null, null);
         }
+        
         $this->id = $id;
         $this->name = $name;
         

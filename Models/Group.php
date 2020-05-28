@@ -24,6 +24,11 @@ class Group
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT poznavacky_id,casti,tridy_id FROM poznavacky WHERE nazev = ? LIMIT 1',array($name));
+            if (!$result)
+            {
+                //Poznávačka nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_FOUND);
+            }
             $id = $result['poznavacky_id'];
             $this->partsCount = $result['casti'];
             $classId = $result['tridy_id'];
@@ -32,6 +37,11 @@ class Group
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT nazev,casti,tridy_id FROM poznavacky WHERE poznavacky_id = ? LIMIT 1',array($id));
+            if (!$result)
+            {
+                //Poznávačka nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_FOUND);
+            }
             $name = $result['nazev'];
             $this->partsCount = $result['casti'];
             $classId = $result['tridy_id'];
@@ -40,6 +50,7 @@ class Group
         {
             throw new BadMethodCallException('Either ID or name must be specified.', null, null);
         }
+        
         $this->id = $id;
         $this->name = $name;
         

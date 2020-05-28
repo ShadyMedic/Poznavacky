@@ -25,6 +25,11 @@ class Natural
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT prirodniny_id,obrazky,casti_id FROM prirodniny WHERE nazev = ? AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = ?) LIMIT 1',array($name, $group->getId()));
+            if (!$result)
+            {
+                //Přírodnina nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_NATURAL_NOT_FOUND);
+            }
             $id = $result['prirodniny_id'];
             $this->pictureCount = $result['obrazky'];
             $this->group = $group;
@@ -34,6 +39,11 @@ class Natural
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT nazev,obrazky,casti_id FROM prirodniny WHERE prirodniny_id = ? LIMIT 1',array($id));
+            if (!$result)
+            {
+                //Přírodnina nebyla v databázi nalezena
+                throw new AccessDeniedException(AccessDeniedException::REASON_NATURAL_NOT_FOUND);
+            }
             $name = $result['nazev'];
             $this->pictureCount = $result['obrazky'];
             $this->part = new Part($result['casti_id']);

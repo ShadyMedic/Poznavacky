@@ -36,6 +36,10 @@ class AccessDeniedException extends Exception
     const REASON_USER_NOT_MEMBER_IN_CLASS = 'Nemáte přístup do této třídy';
     const REASON_USER_NOT_HAVING_ACCESS_TO_GROUP = 'Nemáte přístup do třídy do které patří tato poznávačka';
     const REASON_CLASS_NOT_CHOSEN = 'Nebyla vybrána žádná třída';
+    const REASON_CLASS_NOT_FOUND = 'Tato třída nebyla nalezena';
+    const REASON_GROUP_NOT_FOUND = 'Tato poznávačka nebyla nalezena';
+    const REASON_PART_NOT_FOUND = 'Tato část nebyla nalezena';
+    const REASON_NATURAL_NOT_FOUND = 'Tato přírodnina nebyla nalezena';
     const REASON_NEW_CLASS_REQUEST_NO_EMAIL = 'Musíte zadat svůj e-mail, abychom vás mohli kontaktovat';
     const REASON_NEW_CLASS_REQUEST_NO_NAME = 'Musíte zadat název nové třídy';
     const REASON_NEW_CLASS_REQUEST_NO_CODE = 'Musíte zadat přístupový kód nové třídy';
