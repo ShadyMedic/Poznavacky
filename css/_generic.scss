@@ -31,6 +31,7 @@ body {
 }
 
 footer {
+	color: white;
 	padding: 0.6rem 1rem;
 	background: $gray1;
 	.content {
@@ -44,24 +45,10 @@ footer {
 		}
 		a, span {
 			margin: 0.4rem 0.4rem;
-			display: inline;
 		}
 		a {
-			position: relative;
-			text-decoration: none;
 			&:after {
-				content: "";
-				display: block;
-				width: 0%;
-				left: 50%;
-				height: 2px;
-				position: absolute;
-				bottom: -0.1rem;
-				transition: all 0.16s ease-in;
-			}
-			&:hover:after {
-				width: 100%;
-				left: 0;
+				background: white;
 			}
 		}
 	}

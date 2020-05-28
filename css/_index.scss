@@ -66,11 +66,6 @@ body#index {
 			text-align: justify;
 		}
 	}
-	#index-buttons-section .content,
-	#index-text-section .content {
-		opacity: 0;
-		//transform: translateY(5%);
-	}
 
 	#index-text-section {
 		background: white;
@@ -136,8 +131,8 @@ body#index {
 				bottom: -5px;
 			}
 		}
-		
 	}
+
 	#index-buttons-section {
 		background: $gray1;
 		padding: 3rem;
@@ -152,6 +147,7 @@ body#index {
 			}
 		}
 	}
+
 	#index-info-section {
 		padding: 3rem;
 		@media screen and (min-width: $mobile) {
@@ -170,6 +166,7 @@ body#index {
 			font-size: 1.32rem;
 		}
 	}	
+
 	#index-login-section {
 		border-right: 12px solid $gray1;
 		position: fixed;
@@ -215,20 +212,11 @@ body#index {
 			text-align: left;
 		}
 	}
+
 	footer {
-		color: white;
 		grid-row: 4/5;
-		.content {
-			opacity: 0;
-			//transform: translateY(5%);
-			a {
-				color: white;
-				&:after {
-					background: white;
-				}
-			}
-		}
 	}
+
 	#cookies-alert {
 		position: fixed;
 		bottom: 0;
@@ -283,6 +271,7 @@ body#index {
 		}
 	}
 
+	/*
 	&.loaded {
 		#index-text-section .content {
 			opacity: 1;
@@ -326,4 +315,5 @@ body#index {
 			pointer-events: auto;
 		}
 	}
+	*/
 }
