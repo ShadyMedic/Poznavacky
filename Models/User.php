@@ -49,7 +49,19 @@ class User implements ArrayAccess
     public function incrementAddedPictures()
     {
         $this->addedPictures++;
+        Db::connect();
         return Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = (pridane_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
+    }
+    
+    /**
+     * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli uhodnutých obrázků
+     * @return boolean TRUE, pokud vše proběhne hladce
+     */
+    public function incrementGuessedPictures()
+    {
+        $this->guessedPictures++;
+        Db::connect();
+        return Db::executeQuery('UPDATE uzivatele SET uhodnute_obrazky = (uhodnute_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
     }
     
     /**
