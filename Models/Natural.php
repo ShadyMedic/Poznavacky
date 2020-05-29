@@ -78,7 +78,7 @@ class Natural
     /**
      * Metoda navracející pole všech obrázků této přírodniny jako objekty
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
-     * @return array Pole obrázků této přírodniny z databáze jako objekty
+     * @return Picture[] Pole obrázků této přírodniny z databáze jako objekty
      */
     public function getPictures()
     {
@@ -87,6 +87,20 @@ class Natural
             $this->loadPictures();
         }
         return $this->pictures;
+    }
+    
+    /**
+     * Metoda navracející náhodný obrázek této příodniny jako objekt
+     * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
+     * @return Picture Náhodný obrázek této přírodniny
+     */
+    public function getRandomPicture()
+    {
+        if (!isset($this->pictures))
+        {
+            $this->loadPictures();
+        }
+        return $this->pictures[rand(0, $this->pictureCount - 1)];
     }
     
     /**

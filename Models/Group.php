@@ -104,6 +104,28 @@ class Group
     }
     
     /**
+     * Metoda navracející objekt náhodně zvoleného obrázku z nějaké části této poznávačky
+     * Šance na výběr části je přímo úměrná počtu přírodnin, které obsahuje
+     * Všechny přírodniny této poznávačky tak mají stejnou šanci, že jejich obrázek bude vybrán
+     * Počet obrázků u jednotlivých přírodniny nemá na výběr vliv
+     * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
+     */
+    public function getRandomPictures(int $count)
+    {
+        $result = array();
+        
+        $naturals = $this->getNaturals();
+        $naturalsCount = count($naturals);
+        for ($i = 0; $i < $count; $i++)
+        {
+            $randomNaturalNum = rand(0, $naturalsCount - 1);
+            $result[] = $naturals[$randomNaturalNum]->getRandomPicture();
+        }
+        
+        return $result;
+    }
+    
+    /**
      * Metoda navracející objekty přírodnin ze všech částí této poznávačky
      * Pokud zatím nebyly načteny části této poznávačky, budou načteny z databáze
      * @return Natural[] Pole přírodnin patřících do této poznávačky jako objekty
