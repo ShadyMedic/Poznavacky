@@ -130,10 +130,17 @@ function displayResult(response)
 			//TODO - zobrazit někam něco jako "Správně, ale s překlepem - správná odpověď: <hodnota proměnné response.answer>"
 		}
 	}
-	else
+	else if (response.result === "wrong")
 	{
 		//Odpověď nebyla uznána
 		//TODO - zobrazit někam něco jako "Špatně - správná odpověď: <hodnota proměnné response.answer>"
+	}
+	else
+	{
+		//Vyskytla se chyba - v response.result je "error" nebo něco úplně jiného
+		//V response.answer je cybová hláška
+		//TODO - tohle asi budeš chtít udělat jinak, nebo to přesunout úplně jinam
+		$("#resultText").text("Vyskytla se chyba: " + response.answer);
 	}
 	
 	/*

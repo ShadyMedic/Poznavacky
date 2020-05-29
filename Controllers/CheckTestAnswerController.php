@@ -15,7 +15,18 @@ class CheckTestAnswerController extends Controller
         $answer = $_POST['ans'];
         
         $checker = new AnswerChecker();
-        if ($checker->verify($answer, $questionNum))
+        try
+        {
+            $result = $checker->verify($answer, $questionNum);
+        }
+        catch(AccessDeniedException $e)
+        {
+            //Neplatné číslo otázky nebo jiná chyba při ověřování odpovědi
+            echo json_encode(array('result' => 'error', 'answer' => $e->getMessage()));
+            exit();
+        }
+        
+        if ($result)
         {
             UserManager::getUser()->incrementGuessedPictures();
             echo json_encode(array('result' => 'correct', 'answer' => $checker->lastSavedAnswer));
@@ -24,6 +35,10 @@ class CheckTestAnswerController extends Controller
         {
             echo json_encode(array('result' => 'wrong', 'answer' => $checker->lastSavedAnswer));
         }
+        
+        //Vymaž využitou odpověď ze $_SESSION['testAnswers']
+        //Tak nebude možné odpověď odeslat znovu a farmit tak uhodnuté obrázky
+        unset($_SESSION['testAnswers'][$questionNum]);
         
         //Zastav zpracování skriptu, aby se nevypsaly pohledy
         exit();
