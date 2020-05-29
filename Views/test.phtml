@@ -1,6 +1,6 @@
 <h2>Vyzkoušet se</h2>
 <section>
-	<img src="images/imagePreview.png" /> <!-- Adresa bude dodána JavaScriptem -->
+	<img id="image" src="images/imagePreview.png" /> <!-- Adresa bude dodána JavaScriptem -->
 	<button onclick="reportImg(event)"></button>
 	<div>
 		<?= require 'Views/reportForm.phtml'; ?> <!-- ZOBRAZENÍ REPORT FORM -->
@@ -8,7 +8,8 @@
 </section>
 <section>
 	<form onsubmit="answer(event)">
-		<input type=text autocomplete="off" placeholder="Zadejte odpověď">
+		<input type=text autocomplete="off" placeholder="Zadejte odpověď" id="textfield" />
+		<input type=hidden id="hiddenInput" />
 		<input type=submit value="OK" />
     </form>
 	<div>
