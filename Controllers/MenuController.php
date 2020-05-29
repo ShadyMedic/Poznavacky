@@ -143,8 +143,8 @@ class MenuController extends Controller
         $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
         $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
         $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-        $this->pageHeader['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
-        $this->pageHeader['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
+        $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
+        $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
         
         $this->data['loggedUserName'] = UserManager::getName();
         $this->data['adminLogged'] = AccessChecker::checkSystemAdmin(UserManager::getId());

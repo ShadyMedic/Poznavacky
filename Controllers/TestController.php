@@ -23,8 +23,8 @@ class TestController extends Controller
         $this->pageHeader['title'] = 'Testovat';
         $this->pageHeader['description'] = 'Vyzkoušejte si, jak dobře znáte přírodniny v poznávačce pomocí náhodného testování';
         $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        $this->pageHeader['jsFile'] = 'js/test.js';
+        $this->pageHeader['cssFiles'] = array('css/css.css');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/test.js');
         $this->pageHeader['bodyId'] = 'test';
         
         $controllerName = "nonexistant-controller";
@@ -38,8 +38,8 @@ class TestController extends Controller
             $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
             $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
             $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-            $this->pageHeader['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
-            $this->pageHeader['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
+            $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
+            $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
         }
         

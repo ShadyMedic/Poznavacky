@@ -36,8 +36,8 @@ class LearnController extends Controller
         $this->pageHeader['title'] = 'Učit se';
         $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
         $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        $this->pageHeader['jsFile'] = 'js/learn.js';
+        $this->pageHeader['cssFiles'] = array('css/css.css');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/learn.js');
         $this->pageHeader['bodyId'] = 'learn';
         
         $controllerName = "nonexistant-controller";
@@ -51,8 +51,8 @@ class LearnController extends Controller
             $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
             $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
             $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-            $this->pageHeader['cssFile'] = $this->controllerToCall->pageHeader['cssFile'];
-            $this->pageHeader['jsFile'] = $this->controllerToCall->pageHeader['jsFile'];
+            $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
+            $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
         }
         

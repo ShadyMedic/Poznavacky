@@ -17,8 +17,8 @@ class MenuTableController extends Controller
         $this->pageHeader['title'] = 'Volba poznávačky';
         $this->pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        $this->pageHeader['jsFile'] = 'js/menu.js';
+        $this->pageHeader['cssFiles'] = array('css/css.css');
+        $this->pageHeader['jsFiles'] = array('js/generic.js');
         $this->pageHeader['bodyId'] = 'menu';
         
         //Doplnění argumentů práznými řetězci
