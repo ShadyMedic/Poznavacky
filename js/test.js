@@ -122,18 +122,21 @@ function displayResult(response)
 		if (softCheck($("#textfield").val(), response.answer))
 		{
 			//Odpověď bez překlepů
-			//TODO - zobrazit někam něco jako "Správná odpověď"
+			//TODO - tohle asi budeš chtít nějak líp nastylovat
+			$("#resultText").text("Správně!");
 		}
 		else
 		{
 			//Odpověď s překlepy
-			//TODO - zobrazit někam něco jako "Správně, ale s překlepem - správná odpověď: <hodnota proměnné response.answer>"
+			//TODO - tohle asi budeš chtít nějak líp nastylovat
+			$("#resultText").text("Správně, ale s překlepem. Správná odpověď: " + response.answer);
 		}
 	}
 	else if (response.result === "wrong")
 	{
 		//Odpověď nebyla uznána
-		//TODO - zobrazit někam něco jako "Špatně - správná odpověď: <hodnota proměnné response.answer>"
+		//TODO - tohle asi budeš chtít nějak líp nastylovat
+		$("#resultText").text("Špatně. Správná odpověď: " + response.answer);
 	}
 	else
 	{
@@ -143,13 +146,8 @@ function displayResult(response)
 		$("#resultText").text("Vyskytla se chyba: " + response.answer);
 	}
 	
-	/*
-	TODO - přidat někam do test.phtml tlačítko, které po kliknutí na něj zobrazí obrázek další přírodniny
-	Tlačítko musí mít následující atributy: "id='nextButton' onclick='next()'"
-	Následně odkomentovat dva řádky pod tímto komentářem
-	*/
-	// $("#nextButton").show();
-	// $("#nextButton").focus();
+	$("#result").show();
+	$("#nextButton").focus();
 }
 
 /**
@@ -177,14 +175,10 @@ function next()
 	//Nastavení načítání
 	$("#image").attr("src","images/loading.gif");
 	
-	/*
-	TODO - skrýt vyhodnocení předchozí odpovědi a obnovit <input>y pro odpověď a jeho odeslání úpravou řádků pod tímto komentářem
-	*/
-	// $("#nextButton").hide()
-	// $("#correctAnswer").hide();
-	// $("#answerForm").show();
-	// $("#textfield").value = "";
-	// $("#textfield").focus();
+	$("#result").hide();
+	$("#answerForm").show();
+	$("#textfield").val("");
+	$("#textfield").focus();
 	
 	
 	//Získání dalšího obrázku

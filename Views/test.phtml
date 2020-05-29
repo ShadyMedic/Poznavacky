@@ -7,12 +7,14 @@
 	</div>
 </section>
 <section>
-	<form onsubmit="answer(event)">
+	<form onsubmit="answer(event)" id="answerForm">
 		<input type=text autocomplete="off" placeholder="Zadejte odpověď" id="textfield" />
 		<input type=hidden id="hiddenInput" />
 		<input type=submit value="OK" />
     </form>
-	<div>
-		<!-- ZHODNOCENÍ ODPOVĚDI (BUDE DODÁNO JAVASCRIPTEM)-->
+	<div id="result">
+		<!-- ZHODNOCENÍ ODPOVĚDI -->
+		<span id="resultText"></span>
+		<button onclick="next()" id="nextButton">Další obrázek</button>
 	</div>
 </section>
