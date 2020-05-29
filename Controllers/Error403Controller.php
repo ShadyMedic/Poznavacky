@@ -15,7 +15,7 @@ class Error403Controller extends Controller
         header('HTTP/1.0 403 Forbidden');
         
         $this->pageHeader['title'] = 'Chyba 403';
-        $this->pageHeader['cssFile'] = 'css/errors.css';
+        $this->pageHeader['cssFiles'] = array('css/errors.css');
         $this->pageHeader['bodyId'] = 'error403';
         
         $this->view = 'error403';

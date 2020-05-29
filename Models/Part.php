@@ -106,6 +106,31 @@ class Part
     }
     
     /**
+     * Metoda navracející objekt náhodně vybraného obrázku náhodné přírodniny patřící do této části
+     * Všechny přírodniny mají stejnou šanci, že jejich obrázek bude vybrán
+     * Počet obrázků u jednotlivých přírodniny nemá na výběr vliv
+     * Pokud nejsou při volání této funkce načteny přírodniny této části, budou načteny
+     * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
+     */
+    public function getRandomPictures(int $count)
+    {
+        if (!isset($this->naturals))
+        {
+            $this->loadNaturals();
+        }
+        
+        $result = array();
+        
+        for ($i = 0; $i < $count; $i++)
+        {
+            $randomNaturalNum = rand(0, $this->naturalsCount - 1);
+            $result[] = $this->naturals[$randomNaturalNum]->getRandomPicture();
+        }
+        
+        return $result;
+    }
+    
+    /**
      * Metoda navracející počet přírodnin patřících do této části
      * @return int Počet přírodnin v části
      */

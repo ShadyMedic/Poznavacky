@@ -13,6 +13,8 @@ class TestController extends Controller
     public function process(array $parameters)
     {
         $class = new ClassObject(0, $parameters['class']);
+        
+        //Kontrola přístupu
         if (!$class->checkAccess(UserManager::getId()))
         {
             $this->redirect('error403');
@@ -21,9 +23,25 @@ class TestController extends Controller
         $this->pageHeader['title'] = 'Testovat';
         $this->pageHeader['description'] = 'Vyzkoušejte si, jak dobře znáte přírodniny v poznávačce pomocí náhodného testování';
         $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        $this->pageHeader['jsFile'] = 'js/test.js';
+        $this->pageHeader['cssFiles'] = array('css/css.css');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/test.js');
         $this->pageHeader['bodyId'] = 'test';
+        
+        $controllerName = "nonexistant-controller";
+        if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::ControllerExtension; }
+        if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+        {
+            //URL obsajuje požadavek na další kontroler používaný na menu stránce
+            $this->controllerToCall = new $controllerName;
+            $this->controllerToCall->process($parameters);
+            
+            $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
+            $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
+            $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
+            $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
+            $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
+            $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
+        }
         
         $this->view = 'test';
     }

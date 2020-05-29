@@ -67,8 +67,8 @@ class AddPicturesController extends Controller
         $this->pageHeader['title'] = 'Přidat obrázky';
         $this->pageHeader['description'] = 'Přidávejte obrázky do své poznávačky, aby se z nich mohli učit všichni členové třídy';
         $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        $this->pageHeader['jsFile'] = 'js/addPictures.js';
+        $this->pageHeader['cssFiles'] = array('css/css.css');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/addPictures.js');
         $this->pageHeader['bodyId'] = 'addPictures';
         
         if ($allParts)

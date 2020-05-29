@@ -1,17 +1,20 @@
 <h2>Vyzkoušet se</h2>
 <section>
-	<img src="images/imagePreview.png" /> <!-- Adresa bude dodána JavaScriptem -->
+	<img id="image" src="images/imagePreview.png" /> <!-- Adresa bude dodána JavaScriptem -->
 	<button onclick="reportImg(event)"></button>
 	<div>
 		<?= require 'Views/reportForm.phtml'; ?> <!-- ZOBRAZENÍ REPORT FORM -->
 	</div>
 </section>
 <section>
-	<form onsubmit="answer(event)">
-		<input type=text autocomplete="off" placeholder="Zadejte odpověď">
+	<form onsubmit="answer(event)" id="answerForm">
+		<input type=text autocomplete="off" placeholder="Zadejte odpověď" id="textfield" />
+		<input type=hidden id="hiddenInput" />
 		<input type=submit value="OK" />
     </form>
-	<div>
-		<!-- ZHODNOCENÍ ODPOVĚDI (BUDE DODÁNO JAVASCRIPTEM)-->
+	<div id="result">
+		<!-- ZHODNOCENÍ ODPOVĚDI -->
+		<span id="resultText"></span>
+		<button onclick="next()" id="nextButton">Další obrázek</button>
 	</div>
 </section>

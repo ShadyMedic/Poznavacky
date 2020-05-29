@@ -14,8 +14,8 @@ class RecoverPasswordController extends Controller
         $this->pageHeader['title'] = 'Obnovit heslo';
         $this->pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
         $this->pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        $this->pageHeader['jsFile'] = 'js/recoverPassword.js';
+        $this->pageHeader['cssFiles'] = array('css/css.css');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
         $this->pageHeader['bodyId'] = 'recoverPassword';
         
         try

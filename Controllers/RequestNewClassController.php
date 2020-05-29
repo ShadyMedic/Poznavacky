@@ -50,8 +50,8 @@ class RequestNewClassController extends Controller
         $this->pageHeader['title'] = 'Zažádat o novou třídu';
         $this->pageHeader['description'] = 'Založte si vlastní novou třídu, do které si budete moci přidávat vlastní poznávačky';
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda, poznávačka, přírodopis, přírodověda, výuka, nová, třída, založení, zakládání, kontakt, žádost';
-        $this->pageHeader['cssFile'] = 'css/css.css';
-        #$this->pageHeader['jsFile'] = '';
+        $this->pageHeader['cssFiles'] = array('css/css.css');
+        $this->pageHeader['jsFiles'] = array();
         $this->pageHeader['bodyId'] = 'requestNewClassController';
         
         $this->view = 'requestNewClass';

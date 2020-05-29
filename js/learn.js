@@ -158,8 +158,3 @@ function updateNatural(offset)
 	selectedNatural = naturals[currentNaturalIndex];
 	updatePicture(0);
 }
-
-function reportImg()
-{
-	//TODO
-}
