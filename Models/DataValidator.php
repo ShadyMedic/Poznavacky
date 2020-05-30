@@ -44,7 +44,10 @@ class DataValidator
      */
     public function checkCharacters(string $subject, string $allowedChars, int $stringType = null)
     {
-
+        
+        //Není nutné (v tomto případě to ani tak být nesmí) používat mb_strlent
+        //strspn totiž nemá multi-byte verzi a pro porovnání délek řetězců se tak musí v obou dvou brát speciální znaky jako více znaků
+        //Ukázka: https://pastebin.com/uucr4xEU
         if(strlen($subject) !== strspn($subject, $allowedChars))
         {
             throw new InvalidArgumentException(null, $stringType);
