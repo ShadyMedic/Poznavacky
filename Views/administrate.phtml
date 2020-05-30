@@ -1,2 +1,203 @@
-<h1>Správa služby</h1>
-<p>Obsah bude teprve přidán</p>
+<div class="overlay"></div>
+<div class="container">
+    <nav>
+        <a id="tab1link" onclick="firstTab()">Správa účtů</a>
+        <a id="tab2link" onclick="secondTab()">Správa hlášení</a>
+        <a id="tab3link" onclick="thirdTab()">Správa změn jmen</a>
+        <a id="tab4link" onclick="fourthTab()">Poslat e-mail</a>
+        <a id="tab5link" onclick="fifthTab()">Ovládání databáze</a>
+        <a href="menu">Návrat</a>
+    </nav>
+    <main>
+        <div id="tab1">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Jméno</th>
+                    <th>E-mail</th>
+                    <th>Poslední přihlášení</th>
+                    <th>Přidané obrázky</th>
+                    <th>Uhodnuté obrázky</th>
+                    <th>Karma</th>
+                    <th>Status</th>
+                    <th>Akce</th>
+                </tr>
+                <?php foreach($users as $user) : ?>
+                <tr>
+                    <td>
+                        <?= $user['id'] ?>
+                    </td>
+                    <td>
+                        <?= $user['name'] ?>
+                    </td>
+                    <td>
+                        <?= $user['email'] ?>
+                    </td>
+                    <td>
+                        <?= $user['lastLogin']->format('Y-m-d H:i:s') ?>
+                    </td>
+                    <td>
+                        <input type=number readonly value="<?= $user['addedPictures'] ?>" class='userField'/>
+                    </td>
+                    <td>
+                        <input type=number readonly value="<?= $user['guessedPictures'] ?>" class='userField'/>
+                    </td>
+                    <td>
+                        <input type=number readonly value="<?= $user['karma'] ?>" class='userField'/>
+                    </td>
+                    <td>
+                        <select disabled class='userField'>
+                            <?php if ($user['status'] === User::STATUS_ADMIN) : ?>
+                            <option selected><?= User::STATUS_ADMIN ?></option>
+                            <?php endif ?>
+                            <?php if ($user['status'] !== User::STATUS_ADMIN) : ?>
+                            <option><?= User::STATUS_ADMIN ?></option>
+                            <?php endif ?>
+                            
+                            <?php if ($user['status'] === User::STATUS_CLASS_OWNER) : ?>
+                            <option selected><?= User::STATUS_CLASS_OWNER ?></option>
+                            <?php endif ?>
+                            <?php if ($user['status'] !== User::STATUS_CLASS_OWNER) : ?>
+                            <option><?= User::STATUS_CLASS_OWNER ?></option>
+                            <?php endif ?>
+                            
+                            <?php if ($user['status'] === User::STATUS_MEMBER) : ?>
+                            <option selected><?= User::STATUS_MEMBER ?></option>
+                            <?php endif ?>
+                            <?php if ($user['status'] !== User::STATUS_MEMBER) : ?>
+                            <option><?= User::STATUS_MEMBER ?></option>
+                            <?php endif ?>
+                            
+                            <?php if ($user['status'] === User::STATUS_GUEST) : ?>
+                            <option selected><?= User::STATUS_GUEST ?></option>
+                            <?php endif ?>
+                            <?php if ($user['status'] !== User::STATUS_GUEST) : ?>
+                            <option><?= User::STATUS_GUEST ?></option>
+                            <?php endif ?>
+                        </select>
+                    </td>
+                    <td>
+                        <button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>
+                            <img src='images/pencil.svg'/>
+                        </button>
+                        <?php if (empty($user['email'])) : ?>
+                        <button class='userAction grayscale' disabled>
+                        <?php endif ?>
+                        <?php if (!empty($user['email'])) : ?>
+                        <button class='userAction activeBtn' onclick='sendMailNameChange("<?= $user['email'] ?>")' title='Poslat e-mail'>
+                        <?php endif ?>
+                            <img src='images/mail.svg'/>
+                        </button>
+                        <button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </td>
+                </tr>
+                <?php endforeach ?>
+            </table>
+        </div>
+        <!--
+        <div id="tab2">
+            <php> 
+                include 'php/included/getReports.php';
+            </php>
+            <div id="singleReport"></div>
+        </div>
+        <div id="tab3">
+            <table>
+                <tr>
+                    <th>Současné jméno</th>
+                    <th>Požadované jméno</th>
+                    <th>Akce</th>
+                </tr>
+                <php>
+                   $query = "SELECT uzivatele_jmeno,nove FROM zadosti_jmena ORDER BY cas ASC LIMIT 25";
+                   $result = mysqli_query($connection, $query);
+                   if (!$result)
+                   {
+                       echo "Nastala chyba SQL: ".mysqli_error($connection);
+                   }
+                   while ($row = mysqli_fetch_array($result))
+                   {
+                        echo "<tr>";
+                           echo "<td>";
+                               echo $row['uzivatele_jmeno'];
+                           echo "</td>";
+                           echo "<td>";
+                               echo $row['nove'];
+                           echo "</td>";
+                           echo "<td>";
+                               echo "<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>";
+                                   echo "<img src='images/tick.svg'/>";
+                               echo "</button>";
+                               echo "<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>";
+                                    echo "<img src='images/cross.svg'/>";
+                               echo "</button>";
+                               //Kontrola, jestli má uživatel zadaný e-mail
+                               $query = "SELECT email FROM uzivatele WHERE jmeno='".$row['uzivatele_jmeno']."' LIMIT 1";
+                               $email = mysqli_query($connection, $query);
+                               if (!$result)
+                               {
+                                   echo "Nastala chyba SQL: ".mysqli_error($connection);
+                               }
+                               $email = mysqli_fetch_array($email)['email'];
+                               if (empty($email))
+                               {
+                                   echo "<button class='nameChangeAction grayscale' disabled>";
+                               }
+                               else
+                               {
+                                   echo "<button class='nameChangeAction activeBtn' onclick='sendMailNameChange(\"$email\")' title='Poslat e-mail'>";
+                               }
+                                    echo "<img src='images/mail.svg'/>";
+                               echo "</button>";
+                           echo "</td>";
+                        echo "</tr>";
+                   }
+                </php>
+            </table>
+        </div>
+        <div id="tab4">
+            <div id="email">
+                <table>
+                    <tr>
+                        <td><span>Adresát:</span></td>
+                        <td><input id="emailAddressee" type=email maxlength=255 /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Předmět:</span></td>
+                        <td><input id="emailSubject" type=text maxlength=70 /></td>
+                    </tr>
+                </table>
+                <textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
+                <div id="emailPreview" style="display:none;">
+                    <span>Zde se zobrazí náhled e-mailu:</span>
+                </div>
+                <table>
+                    <tr>
+                        <td><span>Bezpečnostní kód: </span></td>
+                        <td><input id="emailCode" type=text maxlength=8 value="<php> include 'php/included/CONSTANTS.php'; echo EMAIL_CODE;</php>" /></td>
+                    </tr>
+                </table>
+                <button id="emailPreviewButton" class="borderBtn" onclick="previewEmailMessage()">Zobrazit náhled</button>
+                <button id="emailSendButton" class="borderBtn" onclick="sendMail()">Odeslat</button>
+            </div>
+        </div>
+        <div id="tab5">
+            <div id="sql">
+                <div id="sqlWarning" class="sqlCenter">
+                    Neuvědomělé používání tohoto nástroje může mít destruktivní účinky. Používejte tento nástroj pouze v případě, že jste si naprosto jistí tím, co děláte!
+                </div>
+                <div id="sqlQuery" class="sqlCenter">
+                    <textarea id="sqlQueryInput" rows=5 cols=150 placeholder="Zadejte příkazy. Každý příkaz musí být ukončen středníkem (;)"></textarea>
+                    <br>
+                    <button class="borderBtn" onclick="sendSqlQuery()">Odeslat</button>
+                </div>
+                <div id="sqlResult">
+                    <span class='sqlCenter'>Žádný výstup</span>
+                </div>
+            </div>
+        </div>
+    -->
+    </main>
+</div>
