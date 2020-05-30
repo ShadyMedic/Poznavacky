@@ -18,6 +18,10 @@ class AdministrateController extends Controller
             $this->redirect('error403');
         }
         
+        $administration = new Administration();
+        
+        $this->data['users'] = $administration->getAllUsers(false);
+        
         $this->pageHeader['title'] = 'Správa služby';
         $this->pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
         $this->pageHeader['keywords'] = '';
