@@ -20,22 +20,20 @@ class EnterClassCodeController extends Controller
         $code = $_POST['code'];
         $userId = UserManager::getId();
         
-        $classIds = ClassManager::getClassesByAccessCode($code);
-        if (!$classIds)
+        $classes = ClassManager::getClassesByAccessCode($code);
+        if (!$classes)
         {
             //Se zadaným kódem se nelze dostat do žádné třídy
             $this->redirect('menu');
         }
         
         $accessedClasses = array();
-        foreach($classIds as $classId)
+        foreach($classes as $class)
         {
-            $class = new ClassObject($classId);
             if ($class->addMember($userId))
             {
                 $accessedClasses[] = $class->getName();
             }
-            unset($class);
         }
         
         if (count($accessedClasses) > 0)
