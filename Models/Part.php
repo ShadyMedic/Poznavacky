@@ -13,14 +13,29 @@ class Part
     private $naturals;
     
     /**
-     * Konstruktor části nastavující jeji vlastnosti. Pokud je specifikováno ID i název, má název přednost
+     * Konstruktor části nastavující jeji vlastnosti.
+     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
+     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID části (nepovinné, pokud je specifikováno jméno)
      * @param string $name Název části (nepovinné, pokud je specifikováno ID)
      * @param Group $group Objekt poznávačky, do které tato třída patří (pokud není zadáno, bude zjištěno z databáze)
+     * @param int $naturalsCount Počet přírodnin, které tato část obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze, pro nevyplnění zadejte -1 nebo nic)
+     * @param int $picturesCount Počet obrázků, které tato část obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze, pro nevyplnění zadejte -1 nebo nic)
+     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná část
+     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
      */
-    public function __construct(int $id, string $name = "", Group $group = null)
+    public function __construct(int $id, string $name = "", Group $group = null, int $naturalsCount = -1, int $picturesCount = -1)
     {
-        if (mb_strlen($name) !== 0)
+        if (mb_strlen($name) !== 0 && !empty($id) && !empty($group) && $naturalsCount !== -1 && $picturesCount !== -1)
+        {
+            //Vše je vyplněno --> nastavit
+            $this->id = $id;
+            $this->name = $name;
+            $groupId = $group->getId();
+            $this->naturalsCount = $naturalsCount;
+            $this->picturesCount = $picturesCount;
+        }
+        else if (mb_strlen($name) !== 0)
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT casti_id,prirodniny,obrazky,poznavacky_id FROM casti WHERE nazev = ? LIMIT 1',array($name));
