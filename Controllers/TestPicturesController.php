@@ -19,6 +19,7 @@ class TestPicturesController extends Controller
         if (isset($parameters['part']))
         {
             $partName = $parameters['part'];
+            $part = new Part(0, $partName, $group);
             $allParts = false;
         }
         else
@@ -28,7 +29,6 @@ class TestPicturesController extends Controller
         
         $class = new ClassObject(0, $className);
         $group = new Group(0, $groupName, $class);
-        $part = new Part(0, $partName, $group);
         
         //Získání objektů obrázků
         if ($allParts)
