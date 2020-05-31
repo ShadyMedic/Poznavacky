@@ -149,10 +149,18 @@ class Group
             $this->loadParts();
         }
         
-        $allNaturals = array();
+        $allPartsIds = array();
         foreach ($this->parts as $part)
         {
-            $allNaturals = array_merge($allNaturals, $part->getNaturals());
+            $allPartsIds[] = $part->getId();
+        }
+        
+        $allNaturals = array();
+        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky,casti_id FROM prirodniny WHERE casti_id IN (?)', array(implode(',',$allPartsIds)), true);
+        foreach ($result as $naturalData)
+        {
+            $part = $this->getPartById($naturalData['casti_id']);
+            $allNaturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this, $part, $naturalData['obrazky']);
         }
         return $allNaturals;
     }
@@ -182,6 +190,26 @@ class Group
         foreach ($result as $partData)
         {
             $this->parts[] = new Part($partData['casti_id'], $partData['nazev'], $this, $partData['prirodniny'], $partData['obrazky']);
+        }
+    }
+    
+    /**
+     * Metoda navracející objekt části této poznávačky, která má specifické ID
+     * @param int $id Požadované ID části
+     * @return Part Objekt reprezentující část se zadaným ID
+     */
+    private function getPartById(int $id)
+    {
+        if (!isset($this->parts))
+        {
+            $this->loadParts();
+        }
+        foreach ($this->parts as $part)
+        {
+            if ($part->getId() === $id)
+            {
+                return $part;
+            }
         }
     }
 }
