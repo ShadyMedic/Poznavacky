@@ -14,6 +14,8 @@ class ClassObject
     private $status;
     private $groups;
     
+    private $accessCheckResult;
+    
     /**
      * Konstruktor třídy nastavující její ID a jméno.
      * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
@@ -118,12 +120,19 @@ class ClassObject
     /**
      * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
      * @param int $userId ID ověřovaného uživatele
+     * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
      * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
      */
-    public function checkAccess(int $userId)
+    public function checkAccess(int $userId, bool $forceAgain = false)
     {
+        if (isset($this->accessCheckResult) && $forceAgain === false)
+        {
+            return $this->accessCheckResult;
+        }
+        
         Db::connect();
         $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE tridy_id = ? AND (status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
         return ($result['cnt'] === 1) ? true : false;
     }
     
