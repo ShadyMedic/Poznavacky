@@ -12,15 +12,25 @@ class Group
     private $parts;
     
     /**
-     * Konstruktor poznávačky nastavující její ID, jméno a třídu, do které patří. Pokud je specifikováno ID i název, má název přednost
+     * Konstruktor poznávačky nastavující její ID, jméno, třídu, do které patří a počet jejích částí. Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
      * @param int $id ID poztnávačky (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno poztnávačky (nepovinné, pokud je specifikováno ID)
      * @param ClassObject $class Objekt třídy, do které poznávačka patří (nepovinné, v případě nevyplnění bude zjištěno z databáze)
-     * @throws BadMethodCallException
+     * @param int $partsCount Počet částí, které tato poznávačka obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze)
+     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná poznávačka
+     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
      */
-    public function __construct(int $id, string $name = "", ClassObject $class = null)
+    public function __construct(int $id, string $name = "", ClassObject $class = null, int $partsCount = 0)
     {
-        if (mb_strlen($name) !== 0)
+        if (mb_strlen($name) !== 0 && !empty($id) && !empty($partsCount))
+        {
+            //Je vše je specifikováno --> nastavit
+            $this->id = $id;
+            $this->name = $name;
+            $this->partsCount = $partsCount;
+            $classId = $class->getId();
+        }
+        else if (mb_strlen($name) !== 0)
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT poznavacky_id,casti,tridy_id FROM poznavacky WHERE nazev = ? LIMIT 1',array($name));

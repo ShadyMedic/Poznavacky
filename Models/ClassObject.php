@@ -106,10 +106,10 @@ class ClassObject
         $this->groups = array();
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT poznavacky_id FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT poznavacky_id,nazev,casti FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
         foreach ($result as $groupData)
         {
-            $this->groups[] = new Group($groupData['poznavacky_id'], "", $this);
+            $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
         }
     }
     
