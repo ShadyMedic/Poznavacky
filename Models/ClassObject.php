@@ -15,7 +15,9 @@ class ClassObject
     private $groups;
     
     /**
-     * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i název, má jméno přednost
+     * Konstruktor třídy nastavující její ID a jméno.
+     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
+     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
      * @param string $statis Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)

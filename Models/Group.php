@@ -12,7 +12,9 @@ class Group
     private $parts;
     
     /**
-     * Konstruktor poznávačky nastavující její ID, jméno, třídu, do které patří a počet jejích částí. Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
+     * Konstruktor poznávačky nastavující její ID, jméno, třídu, do které patří a počet jejích částí.
+     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
+     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID poztnávačky (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno poztnávačky (nepovinné, pokud je specifikováno ID)
      * @param ClassObject $class Objekt třídy, do které poznávačka patří (nepovinné, v případě nevyplnění bude zjištěno z databáze)
