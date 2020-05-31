@@ -176,10 +176,10 @@ class Part
         $this->naturals = array();
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT prirodniny_id FROM prirodniny WHERE casti_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky FROM prirodniny WHERE casti_id = ?', array($this->id), true);
         foreach ($result as $naturalData)
         {
-            $this->naturals[] = new Natural($naturalData['prirodniny_id']);
+            $this->naturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this->getGroup(), $this, $naturalData['obrazky']);
         }
     }
 }
