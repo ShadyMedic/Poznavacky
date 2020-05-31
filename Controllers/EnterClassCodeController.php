@@ -20,7 +20,7 @@ class EnterClassCodeController extends Controller
         $code = $_POST['code'];
         $userId = UserManager::getId();
         
-        $classes = ClassManager::getClassesByAccessCode($code);
+        $classes = ClassManager::getNewClassesByAccessCode($code, $userId);
         if (!$classes)
         {
             //Se zadaným kódem se nelze dostat do žádné třídy

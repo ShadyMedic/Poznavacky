@@ -182,11 +182,12 @@ class ClassObject
         Db::connect();
         
         //Zkontroluj, zda již uživatel není členem této třídy
-        if ($this->checkAccess($userId))
-        {
-            //Nelze získat členství ve třídě vícekrát
-            return false;
-        }
+        //Není třeba - metoda getNewClassesByAccessCode ve třídě ClassManager navrací pouze třídy, ve kterých přihlášený uživatel ještě není členem
+      # if ($this->checkAccess($userId))
+      # {
+      #     //Nelze získat členství ve třídě vícekrát
+      #     return false;
+      # }
         
         if (Db::executeQuery('INSERT INTO clenstvi(uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id)))
         {
