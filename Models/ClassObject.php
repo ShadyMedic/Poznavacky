@@ -18,11 +18,18 @@ class ClassObject
      * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i název, má jméno přednost
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
+     * @param string $statis Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)
      * @throws BadMethodCallException
      */
-    public function __construct(int $id, string $name = "")
+    public function __construct(int $id, string $name = "", string $status = "")
     {
-        if (mb_strlen($name) !== 0)
+        if (mb_strlen($name) !== 0 && !empty($id))
+        {
+            //Vše je specifikováno --> nastavit
+            $this->id = $id;
+            $this->name = $name;
+        }
+        else if (mb_strlen($name) !== 0)
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE nazev = ? LIMIT 1', array($name), false);
@@ -51,6 +58,12 @@ class ClassObject
         
         $this->id = $id;
         $this->name = $name;
+        
+        //Nastavení statusu (pokud byl specifikován)
+        if (!empty($status))
+        {
+            $this->status = $status;
+        }
     }
     
     /**
