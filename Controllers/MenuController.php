@@ -53,7 +53,7 @@ class MenuController extends Controller
         }
         
         $argumentCount = count($menuArguments);
-
+        
         #if ($argumentCount === 0)
         #{
         #    Vypsání tříd
@@ -65,6 +65,7 @@ class MenuController extends Controller
             {
                 //AdministrateController
                 $this->controllerToCall = new $controllerName;
+                $this->argumentsToPass = array_slice($menuArguments, 1);
             }
             else
             {
@@ -79,6 +80,7 @@ class MenuController extends Controller
             {
                 //ManageController / LeaveController
                 $this->controllerToCall = new $controllerName;
+                $this->argumentsToPass = array_slice($menuArguments, 2);
             }
             else
             {
