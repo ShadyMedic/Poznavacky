@@ -10,92 +10,9 @@
     </nav>
     <main>
         <div id="tab1">
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Jméno</th>
-                    <th>E-mail</th>
-                    <th>Poslední přihlášení</th>
-                    <th>Přidané obrázky</th>
-                    <th>Uhodnuté obrázky</th>
-                    <th>Karma</th>
-                    <th>Status</th>
-                    <th>Akce</th>
-                </tr>
-                <?php foreach($users as $user) : ?>
-                <tr>
-                    <td>
-                        <?= $user['id'] ?>
-                    </td>
-                    <td>
-                        <?= $user['name'] ?>
-                    </td>
-                    <td>
-                        <?= $user['email'] ?>
-                    </td>
-                    <td>
-                        <?= $user['lastLogin']->format('Y-m-d H:i:s') ?>
-                    </td>
-                    <td>
-                        <input type=number readonly value="<?= $user['addedPictures'] ?>" class='userField'/>
-                    </td>
-                    <td>
-                        <input type=number readonly value="<?= $user['guessedPictures'] ?>" class='userField'/>
-                    </td>
-                    <td>
-                        <input type=number readonly value="<?= $user['karma'] ?>" class='userField'/>
-                    </td>
-                    <td>
-                        <select disabled class='userField'>
-                            <?php if ($user['status'] === User::STATUS_ADMIN) : ?>
-                            <option selected><?= User::STATUS_ADMIN ?></option>
-                            <?php endif ?>
-                            <?php if ($user['status'] !== User::STATUS_ADMIN) : ?>
-                            <option><?= User::STATUS_ADMIN ?></option>
-                            <?php endif ?>
-                            
-                            <?php if ($user['status'] === User::STATUS_CLASS_OWNER) : ?>
-                            <option selected><?= User::STATUS_CLASS_OWNER ?></option>
-                            <?php endif ?>
-                            <?php if ($user['status'] !== User::STATUS_CLASS_OWNER) : ?>
-                            <option><?= User::STATUS_CLASS_OWNER ?></option>
-                            <?php endif ?>
-                            
-                            <?php if ($user['status'] === User::STATUS_MEMBER) : ?>
-                            <option selected><?= User::STATUS_MEMBER ?></option>
-                            <?php endif ?>
-                            <?php if ($user['status'] !== User::STATUS_MEMBER) : ?>
-                            <option><?= User::STATUS_MEMBER ?></option>
-                            <?php endif ?>
-                            
-                            <?php if ($user['status'] === User::STATUS_GUEST) : ?>
-                            <option selected><?= User::STATUS_GUEST ?></option>
-                            <?php endif ?>
-                            <?php if ($user['status'] !== User::STATUS_GUEST) : ?>
-                            <option><?= User::STATUS_GUEST ?></option>
-                            <?php endif ?>
-                        </select>
-                    </td>
-                    <td>
-                        <button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>
-                            <img src='images/pencil.svg'/>
-                        </button>
-                        <?php if (empty($user['email'])) : ?>
-                        <button class='userAction grayscale' disabled>
-                        <?php endif ?>
-                        <?php if (!empty($user['email'])) : ?>
-                        <button class='userAction activeBtn' onclick='sendMailNameChange("<?= $user['email'] ?>")' title='Poslat e-mail'>
-                        <?php endif ?>
-                            <img src='images/mail.svg'/>
-                        </button>
-                        <button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>
-                            <img src='images/cross.svg'/>
-                        </button>
-                    </td>
-                </tr>
-                <?php endforeach ?>
-            </table>
+            <?php require 'Views/usersTable.phtml'; ?>
         </div>
+                            
         <!--
         <div id="tab2">
             <php> 
