@@ -156,6 +156,7 @@ class Group
         }
         
         $allNaturals = array();
+        Db::connect();
         $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky,casti_id FROM prirodniny WHERE casti_id IN (?)', array(implode(',',$allPartsIds)), true);
         foreach ($result as $naturalData)
         {
