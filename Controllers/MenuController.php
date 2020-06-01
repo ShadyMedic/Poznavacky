@@ -134,7 +134,7 @@ class MenuController extends Controller
                 $this->argumentsToPass = array_slice($menuArguments, 3);
                 
                 //Vymazání objektu skladujícího vybranou část ze $_SESSION
-                $this->unsetSelection(this);
+                $this->unsetSelection(true);
             }
             else
             {
