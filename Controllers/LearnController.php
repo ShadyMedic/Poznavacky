@@ -12,11 +12,11 @@ class LearnController extends Controller
      */
     public function process(array $parameters)
     {
-        $class = new ClassObject(0, $parameters['class']);
-        $group = new Group(0, $parameters['group'], $class);
-        if (isset($parameters['part']))
+        $class = $_SESSION['selection']['class'];
+        $group = $_SESSION['selection']['group'];
+        if (isset($_SESSION['selection']['part']))
         {
-            $part = new Part(0, $parameters['part'], $group);
+            $part = $_SESSION['selection']['part'];
             $allParts = false;
         }
         else
