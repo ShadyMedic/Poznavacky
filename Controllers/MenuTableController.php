@@ -34,14 +34,14 @@ class MenuTableController extends Controller
             {
                 $this->data['returnButtonLink'] = 'menu';
                 $this->view = 'menuGroupsButton';
-                $groups = TestGroupsManager::getGroups($className);
+                $groups = TestGroupsManager::getGroups($_SESSION['selection']['class']);
                 $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
             }
             else
             {
                 $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName();
                 $this->view = 'menuPartsButton';
-                $parts = TestGroupsManager::getParts($className, $groupName);
+                $parts = TestGroupsManager::getParts($_SESSION['selection']['group']);
                 $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
             }
         }
