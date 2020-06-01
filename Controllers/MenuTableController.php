@@ -21,24 +21,16 @@ class MenuTableController extends Controller
         $this->pageHeader['jsFiles'] = array('js/generic.js');
         $this->pageHeader['bodyId'] = 'menu';
         
-        //Doplnění argumentů práznými řetězci
-        if (!isset($chosenFolder['class'])){$chosenFolder['class'] = '';}
-        if (!isset($chosenFolder['group'])){$chosenFolder['group'] = '';}
-        if (!isset($chosenFolder['part'])){$chosenFolder['part'] = '';}
-        
-        $className = $chosenFolder['class'];
-        $groupName = $chosenFolder['group'];
-        
         //Získání dat
         try
         {
-            if (mb_strlen($className) === 0)
+            if (!isset($_SESSION['selection']['class']))
             {
                 $this->view = 'menuClassesForms';
                 $classes = TestGroupsManager::getClasses();
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
-            else if (mb_strlen($groupName) === 0)
+            else if (!isset($_SESSION['selection']['group']))
             {
                 $this->data['returnButtonLink'] = 'menu';
                 $this->view = 'menuGroupsButton';
@@ -47,7 +39,7 @@ class MenuTableController extends Controller
             }
             else
             {
-                $this->data['returnButtonLink'] = 'menu/'.$className;
+                $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName();
                 $this->view = 'menuPartsButton';
                 $parts = TestGroupsManager::getParts($className, $groupName);
                 $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
