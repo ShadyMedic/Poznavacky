@@ -5,7 +5,7 @@
  */
 class Report
 {
-    const ADMIN_REQUIRING_REASONS = array(self::REASON_COPYRIGHT, REASON_OTHER_ADMIN);
+    const ADMIN_REQUIRING_REASONS = array(self::REASON_COPYRIGHT, self::REASON_OTHER_ADMIN);
     
     const REASON_NOT_DISPLAYING = 'Obrázek se nezobrazuje správně';
     const REASON_LONG_LOADING = 'Obrázek se načítá příliš dlouho';
