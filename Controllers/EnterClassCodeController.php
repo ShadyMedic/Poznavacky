@@ -29,8 +29,8 @@ class EnterClassCodeController extends Controller
             $this->redirect('menu');
         }
         
-        $classIds = ClassManager::getClassesByAccessCode($code);
-        if (!$classIds)
+        $classes = ClassManager::getNewClassesByAccessCode($code, $userId);
+        if (!$classes)
         {
             //Se zadaným kódem se nelze dostat do žádné třídy
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Zadaný kód není platný');
