@@ -1,11 +1,12 @@
 <select onchange="updateReport()">
-	<option>Obrázek se nezobrazuje správně</option>
-	<option>Obrázek se načítá příliš dlouho</option>
-	<option>Obrázek zobrazuje nesprávnou přírodninu</option>
-	<option>Obrázek obsahuje název přírodniny</option>
-	<option>Obrázek má příliš špatné rozlišení</option>
-	<option>Obrázek porušuje autorská práva</option>
-	<option>Jiný důvod</option>
+	<option><?= Report::REASON_NOT_DISPLAYING ?></option>
+	<option><?= Report::REASON_LONG_LOADING ?></option>
+	<option><?= Report::REASON_INCORRECT_NATURAL ?></option>
+	<option><?= Report::REASON_CONTAINS_NAME ?></option>
+	<option><?= Report::REASON_BAD_RESOLUTION ?></option>
+	<option><?= Report::REASON_COPYRIGHT ?></option>
+	<option><?= Report::REASON_OTHER ?></option>
+	<option><?= Report::REASON_OTHER_ADMIN ?></option>
 </select>
 <div>
 	<!-- Zde se bude zobrazovat další vstupní pole při vybrání některých hlášení -->
