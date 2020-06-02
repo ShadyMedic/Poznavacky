@@ -82,7 +82,7 @@ class NewClassRequester
         
         //Kontrola antispamu
         $captchaChecker = new NumberAsWordCaptcha();
-        if (!$captchaChecker->checkAnswer($antispam, NumberAsWordCaptcha::SESSION_INDEX)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED, null, null,  null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (!$captchaChecker->checkAnswer($antispam, NumberAsWordCaptcha::SESSION_INDEX)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
         
         return true;
     }
