@@ -157,7 +157,9 @@ class Group
         
         $allNaturals = array();
         Db::connect();
-        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky,casti_id FROM prirodniny WHERE casti_id IN (?)', array(implode(',',$allPartsIds)), true);
+        //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
+        $in = str_repeat('?,', count($allPartsIds) - 1).'?';
+        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky,casti_id FROM prirodniny WHERE casti_id IN ('.$in.')', $allPartsIds, true);
         foreach ($result as $naturalData)
         {
             $part = $this->getPartById($naturalData['casti_id']);
