@@ -12,7 +12,7 @@
     <br>
     <span>Kód třídy</span><img src="images/info.svg" title="Třída bude po vytvoření nastavena jako soukromá. Pro přístup do třídy budou muset uživatelé nejprve zadat čtyřciferný vstupní kód. Tím se jim třída trvale odemkne. Kód si můžete později v nastavení třídy změnit. Můžete ho také odebrat a udělat třídu veřejnou nebo ji naopak uzamknout pro nové uživatele úplně."/>
     <br>
-    <input id='newClassFormCode' class="text" name="classCode" type=number min=0 max=9999 maxlength=4 value=<?= @$classCodeValue ?> required />
+    <input id='newClassFormCode' type=number name="classCode" min=0 max=9999 maxlength=4 value=<?= @$classCodeValue ?> required />
     <br>
     <span>Je ještě něco, co bychom měli vědět?</span>
     <br>
