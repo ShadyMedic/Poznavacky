@@ -12,7 +12,7 @@ class TestController extends Controller
      */
     public function process(array $parameters)
     {
-        $class = new ClassObject(0, $parameters['class']);
+        $class = $_SESSION['selection']['class'];
         
         //Kontrola přístupu
         if (!$class->checkAccess(UserManager::getId()))

@@ -38,14 +38,12 @@ class EnterClassCodeController extends Controller
         }
         
         $accessedClasses = array();
-        foreach($classIds as $classId)
+        foreach($classes as $class)
         {
-            $class = new ClassObject($classId);
             if ($class->addMember($userId))
             {
                 $accessedClasses[] = $class->getName();
             }
-            unset($class);
         }
         
         if (count($accessedClasses) > 0)

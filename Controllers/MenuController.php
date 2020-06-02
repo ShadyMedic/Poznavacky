@@ -53,11 +53,14 @@ class MenuController extends Controller
         }
         
         $argumentCount = count($menuArguments);
-        
-        #if ($argumentCount === 0)
-        #{
-        #    Vypsání tříd
-        #}
+      
+        if ($argumentCount === 0)
+        {
+            //Vypisují se třídy
+            
+            //Vymazání objektů skladujících vybranou složku ze $_SESSION
+            $this->unsetSelection(true, true, true);
+        }
         if ($argumentCount > 0)
         {
             $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::ControllerExtension;
@@ -65,12 +68,29 @@ class MenuController extends Controller
             {
                 //AdministrateController
                 $this->controllerToCall = new $controllerName;
+                
+                //Vymazání objektů skladujících vybranou složku ze $_SESSION
+                $this->unsetSelection(true, true, true);
                 $this->argumentsToPass = array_slice($menuArguments, 1);
             }
             else
             {
                 //Název třídy
-                $this->chosenFolder['class'] = urldecode($menuArguments[0]);
+                //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
+                if (!isset($_SESSION['selection']['class']) || urldecode($menuArguments[0]) !== $_SESSION['selection']['class']->getName())
+                {
+                    //Uložení objektu třídy do $_SESSION
+                    $_SESSION['selection']['class'] = new ClassObject(0, urldecode($menuArguments[0]));
+                    
+                    //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
+                    $this->unsetSelection(true, true);
+                }
+                
+                if ($argumentCount === 1)
+                {
+                    //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
+                    $this->unsetSelection(true, true);
+                }
             }
         }
         if ($argumentCount > 1)
@@ -80,12 +100,29 @@ class MenuController extends Controller
             {
                 //ManageController / LeaveController
                 $this->controllerToCall = new $controllerName;
+                
+                //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
+                $this->unsetSelection(true, true);
                 $this->argumentsToPass = array_slice($menuArguments, 2);
             }
             else
             {
                 //Název poznávačky
-                $this->chosenFolder['group'] = urldecode($menuArguments[1]);
+                //Kontrola, zda právě zvolený název souhlasí s názvem poznávačky uložené v $_SESSION
+                if (!isset($_SESSION['selection']['group']) || urldecode($menuArguments[1]) !== @$_SESSION['selection']['group']->getName())
+                {
+                    //Uložení objektu třídy do $_SESSION
+                    $_SESSION['selection']['group'] = new Group(0, urldecode($menuArguments[1]), $_SESSION['selection']['class']);
+                    
+                    //Vymazání objektů skladujících vybranou část ze $_SESSION
+                    $this->unsetSelection(true);
+                }
+                
+                if ($argumentCount === 2)
+                {
+                    //Vymazání objektů skladujících vybranou část ze $_SESSION
+                    $this->unsetSelection(true);
+                }
             }
         }
         if ($argumentCount > 2)
@@ -97,6 +134,9 @@ class MenuController extends Controller
                 //Ano
                 $this->controllerToCall = new $controllerName;
                 $this->argumentsToPass = array_slice($menuArguments, 3);
+                
+                //Vymazání objektu skladujícího vybranou část ze $_SESSION
+                $this->unsetSelection(true);
             }
             else
             {
@@ -108,7 +148,12 @@ class MenuController extends Controller
                 }
                 
                 //Nastavení části (pouze, pokud nejsou vybrány všechny části najednou)
-                $this->chosenFolder['part'] = urldecode($menuArguments[2]);
+                //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
+                if (!isset($_SESSION['selection']['part']) || urldecode($menuArguments[2]) !== @$_SESSION['selection']['part']->getName())
+                {
+                    //Uložení objektu třídy do $_SESSION
+                    $_SESSION['selection']['part'] = new Part(0, urldecode($menuArguments[2]), $_SESSION['selection']['group']);
+                }
             }
         }
         if ($argumentCount > 3)
@@ -152,5 +197,18 @@ class MenuController extends Controller
         $this->data['adminLogged'] = AccessChecker::checkSystemAdmin(UserManager::getId());
         
         $this->view = 'menu';
+    }
+    
+    /**
+     * Metoda odstraňující ze $_SESSION objekty ukládající vybranou třídu, poznávačku, nebo její část
+     * @param bool $unsetPart TRUE, pokud se má odstranit část; defaultně FALSE
+     * @param bool $unsetGroup TRUE, pokud se má odstranit poznávačka; defaultně FALSE
+     * @param bool $unsetClass TRUE, pokud se má odstranit třída; defaultně FALSE
+     */
+    private function unsetSelection(bool $unsetPart = false, bool $unsetGroup = false, bool $unsetClass = false)
+    {
+        if ($unsetPart){ unset($_SESSION['selection']['part']); }
+        if ($unsetGroup){ unset($_SESSION['selection']['group']); }
+        if ($unsetClass){ unset($_SESSION['selection']['class']); }
     }
 }

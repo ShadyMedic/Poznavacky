@@ -14,21 +14,17 @@ class TestPicturesController extends Controller
      */
     public function process(array $parameters)
     {
-        $className = $parameters['class'];
-        $groupName = $parameters['group'];
-        if (isset($parameters['part']))
+        $class = $_SESSION['selection']['class'];
+        $group = $_SESSION['selection']['group'];
+        if (isset($_SESSION['selection']['part']))
         {
-            $partName = $parameters['part'];
-            $part = new Part(0, $partName, $group);
+            $part = $_SESSION['selection']['part'];
             $allParts = false;
         }
         else
         {
             $allParts = true;
         }
-        
-        $class = new ClassObject(0, $className);
-        $group = new Group(0, $groupName, $class);
         
         //Získání objektů obrázků
         if ($allParts)

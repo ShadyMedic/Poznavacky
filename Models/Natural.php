@@ -13,15 +13,29 @@ class Natural
     private $part;
     
     /**
-     * Konstruktor přírodniny nastavující její ID, název a poznávačku do které patří (pokud je specifikována). Pokud je specifikováno ID i název, má název přednost.
+     * Konstruktor přírodniny nastavující její vlastnosti
+     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
+     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * Metoda také načítá počet obrázků dané přírodniny.
      * @param int $id ID přírodniny (nepovinné, pokud je specifikováno jméno A poznávačka)
      * @param string $name Název přírodniny (nepovinné, pokud je specifikováno ID)
-     * @param Group $group Objekt poznávačky, do které přírodnina patří (nepovinné, pokud je specifikováno ID)
+     * @param Group $group Objekt poznávačky, do které přírodnina patří (nepovinné, pokud je specifikováno ID, pokud není zadáno, bude zjištěno z databáze)
+     * @param Part $part Objekt části poznávačky, do které přírodnina patří (pokud není zadáno, bude zjištěno z databáze)
+     * @param int $pictureCount Počet obrázků, které jsou od této přírodniny nahrány v databázi
+     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná přírodnina
+     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
      */
-    public function __construct(int $id, string $name = "", Group $group = null)
+    public function __construct(int $id, string $name = "", Group $group = null, Part $part = null, int $pictureCount = -1)
     {
-        if (mb_strlen($name) !== 0 && (!empty($group)))
+        if (mb_strlen($name) !== 0 && !empty($id) && !empty($group) && !empty($part) && $pictureCount !== -1)
+        {
+            //Vše vyplněno --> nastavit
+            $this->id = $id;
+            $this->name = $name;
+            $partId = $part->getId();
+            $this->pictureCount = $pictureCount;
+        }
+        else if (mb_strlen($name) !== 0 && (!empty($group)))
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT prirodniny_id,obrazky,casti_id FROM prirodniny WHERE nazev = ? AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = ?) LIMIT 1',array($name, $group->getId()));
@@ -31,9 +45,8 @@ class Natural
                 throw new AccessDeniedException(AccessDeniedException::REASON_NATURAL_NOT_FOUND);
             }
             $id = $result['prirodniny_id'];
+            $partId = $result['casti_id'];
             $this->pictureCount = $result['obrazky'];
-            $this->group = $group;
-            $this->part = new Part($result['casti_id']);
         }
         else if (!empty($id))
         {
@@ -45,9 +58,8 @@ class Natural
                 throw new AccessDeniedException(AccessDeniedException::REASON_NATURAL_NOT_FOUND);
             }
             $name = $result['nazev'];
+            $partId = $result['casti_id'];
             $this->pictureCount = $result['obrazky'];
-            $this->part = new Part($result['casti_id']);
-            $this->group = $this->part->getGroup();
         }
         else
         {
@@ -55,6 +67,29 @@ class Natural
         }
         $this->id = $id;
         $this->name = $name;
+        
+        //Nastavit nebo zjistit části
+        if (!empty($part) && $part->getId() === $partId)
+        {
+            //ID souhlasí a objekt je poskytnut --> nastavit
+            $this->part = $part;
+        }
+        else
+        {
+            //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
+            if (!empty($group))
+            {
+                //Využít specifikované poznávačky
+                $this->part = new Part($partId, "", $group);
+            }
+            else
+            {
+                $this->part = new Part($partId);
+            }
+        }
+        
+        //Nastavení poznávačky (její objekt byl zkonstruován buď předán nebo zkonstruován při tvorbě objektu části)
+        $this->group = $this->part->getGroup();
     }
     
     /**

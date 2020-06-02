@@ -13,7 +13,7 @@ class LeaveController extends Controller
     public function process(array $parameters)
     {
         $userId = UserManager::getId();
-        $class = new ClassObject(0, urldecode($parameters['class']));
+        $class = $_SESSION['selection']['class'];
         if ($class->checkAdmin($userId))
         {
             //Správce třídy jí nemůže opustit
