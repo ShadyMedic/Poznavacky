@@ -102,6 +102,15 @@ class Natural
     }
     
     /**
+     * Metoda navracející objekt části, do které je tato přírodnina přiřazena
+     * @return Part Část, do které přírodnina spadá
+     */
+    public function getPart()
+    {
+        return $this->part;
+    }
+    
+    /**
      * Metoda navracející počet obrázků této přírodniny
      * @return int Počet obrázků této přírodniny uložené v databázi
      */
