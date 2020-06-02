@@ -99,7 +99,7 @@ class Group
     
     /**
      * Metoda navracející ID třídy, do které tato poznávačka patří
-     * @return int ID třídy
+     * @return ClassObject ID třídy
      */
     public function getClass()
     {
