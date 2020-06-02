@@ -15,7 +15,7 @@ class ManageController extends Controller
     {
         try
         {
-            if (mb_strlen($parameters['class']) === 0)
+            if (!isset($_SESSION['selection']['class']))
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN, null, null, array('originFile' => 'ManageController.php', 'displayOnView' => 'manage.phtml'));
             }
@@ -25,7 +25,7 @@ class ManageController extends Controller
             $this->redirect('error404');
         }
         
-        $class = new ClassObject(0, $parameters['class']);
+        $class = $_SESSION['selection']['class'];
         if (!$class->checkAdmin(UserManager::getId()))
         {
             $this->redirect('error403');

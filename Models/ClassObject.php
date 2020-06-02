@@ -14,15 +14,26 @@ class ClassObject
     private $status;
     private $groups;
     
+    private $accessCheckResult;
+    
     /**
-     * Konstruktor třídy nastavující její ID a jméno. Pokud je specifikováno ID i název, má jméno přednost
+     * Konstruktor třídy nastavující její ID a jméno.
+     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
+     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
+     * @param string $statis Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)
      * @throws BadMethodCallException
      */
-    public function __construct(int $id, string $name = "")
+    public function __construct(int $id, string $name = "", string $status = "")
     {
-        if (mb_strlen($name) !== 0)
+        if (mb_strlen($name) !== 0 && !empty($id))
+        {
+            //Vše je specifikováno --> nastavit
+            $this->id = $id;
+            $this->name = $name;
+        }
+        else if (mb_strlen($name) !== 0)
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE nazev = ? LIMIT 1', array($name), false);
@@ -51,6 +62,12 @@ class ClassObject
         
         $this->id = $id;
         $this->name = $name;
+        
+        //Nastavení statusu (pokud byl specifikován)
+        if (!empty($status))
+        {
+            $this->status = $status;
+        }
     }
     
     /**
@@ -93,22 +110,29 @@ class ClassObject
         $this->groups = array();
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT poznavacky_id FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT poznavacky_id,nazev,casti FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
         foreach ($result as $groupData)
         {
-            $this->groups[] = new Group($groupData['poznavacky_id'], "", $this);
+            $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
         }
     }
     
     /**
      * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
      * @param int $userId ID ověřovaného uživatele
+     * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
      * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
      */
-    public function checkAccess(int $userId)
+    public function checkAccess(int $userId, bool $forceAgain = false)
     {
+        if (isset($this->accessCheckResult) && $forceAgain === false)
+        {
+            return $this->accessCheckResult;
+        }
+        
         Db::connect();
         $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE tridy_id = ? AND (status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
         return ($result['cnt'] === 1) ? true : false;
     }
     
@@ -149,7 +173,7 @@ class ClassObject
     public function addMember(int $userId)
     {
         //Zkontroluj, zda je třída soukromá
-        if (!$this->status === self::CLASS_STATUS_PRIVATE)
+        if (!$this->getStatus() === self::CLASS_STATUS_PRIVATE)
         {
             //Nelze získat členství ve veřejné nebo uzamčené třídě
             return false;
@@ -158,11 +182,12 @@ class ClassObject
         Db::connect();
         
         //Zkontroluj, zda již uživatel není členem této třídy
-        if ($this->checkAccess($userId))
-        {
-            //Nelze získat členství ve třídě vícekrát
-            return false;
-        }
+        //Není třeba - metoda getNewClassesByAccessCode ve třídě ClassManager navrací pouze třídy, ve kterých přihlášený uživatel ještě není členem
+      # if ($this->checkAccess($userId))
+      # {
+      #     //Nelze získat členství ve třídě vícekrát
+      #     return false;
+      # }
         
         if (Db::executeQuery('INSERT INTO clenstvi(uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id)))
         {
