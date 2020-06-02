@@ -111,5 +111,16 @@ class DataValidator
         }
         return $userId['uzivatele_id'];
     }
+    
+    /**
+     * Metoda kontrolující, zda je zadaný kód třídy platný
+     * @param string $code Kód zadaný uživatelem
+     * @return TRUE, pokud je kód tvořen čtyřmi číslicemi, FALSE, pokud ne
+     */
+    public function validateClassCode(string $code)
+    {
+        if (preg_match('/^\d\d\d\d$/', $code)){ return true; }
+        return false;
+    }
 }
 

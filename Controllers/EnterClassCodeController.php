@@ -14,16 +14,26 @@ class EnterClassCodeController extends Controller
         if (!isset($_POST) || !isset($_POST['code']))
         {
             //Chybně vyplněný formulář
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Musíte vyplnit kód třídy');
             $this->redirect('menu');
         }
         
         $code = $_POST['code'];
         $userId = UserManager::getId();
         
-        $classes = ClassManager::getNewClassesByAccessCode($code, $userId);
-        if (!$classes)
+        //Validace kódu
+        $validator = new DataValidator();
+        if (!$validator->validateClassCode($code))
+        {
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Vstupní kód třídy musí být tvořen čtyřmi číslicemi');
+            $this->redirect('menu');
+        }
+        
+        $classIds = ClassManager::getClassesByAccessCode($code);
+        if (!$classIds)
         {
             //Se zadaným kódem se nelze dostat do žádné třídy
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Zadaný kód není platný');
             $this->redirect('menu');
         }
         

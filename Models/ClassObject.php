@@ -173,7 +173,7 @@ class ClassObject
     public function addMember(int $userId)
     {
         //Zkontroluj, zda je třída soukromá
-        if (!$this->status === self::CLASS_STATUS_PRIVATE)
+        if (!$this->getStatus() === self::CLASS_STATUS_PRIVATE)
         {
             //Nelze získat členství ve veřejné nebo uzamčené třídě
             return false;

@@ -78,11 +78,11 @@ class NewClassRequester
         catch(InvalidArgumentException $e){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
         
         //Kontrola platnosti kódu
-        if (!preg_match('/^\d\d\d\d$/', $code)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_CODE, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (!$validator->validateClassCode($code)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_CODE, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
         
         //Kontrola antispamu
         $captchaChecker = new NumberAsWordCaptcha();
-        if (!$captchaChecker->checkAnswer($antispam, NumberAsWordCaptcha::SESSION_INDEX)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED, null, null,  null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (!$captchaChecker->checkAnswer($antispam, NumberAsWordCaptcha::SESSION_INDEX)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
         
         return true;
     }

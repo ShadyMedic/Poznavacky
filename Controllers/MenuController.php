@@ -53,7 +53,7 @@ class MenuController extends Controller
         }
         
         $argumentCount = count($menuArguments);
-
+      
         if ($argumentCount === 0)
         {
             //Vypisují se třídy
@@ -71,6 +71,7 @@ class MenuController extends Controller
                 
                 //Vymazání objektů skladujících vybranou složku ze $_SESSION
                 $this->unsetSelection(true, true, true);
+                $this->argumentsToPass = array_slice($menuArguments, 1);
             }
             else
             {
@@ -102,6 +103,7 @@ class MenuController extends Controller
                 
                 //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
                 $this->unsetSelection(true, true);
+                $this->argumentsToPass = array_slice($menuArguments, 2);
             }
             else
             {
