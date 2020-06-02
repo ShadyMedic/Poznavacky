@@ -42,7 +42,6 @@ class Administration
     {
         $in = str_repeat('?,', count(Report::ADMIN_REQUIRING_REASONS) - 1).'?'; 
         Db::connect();
-        DebugLogger::debugLog($in);
         //Wow, zírejte na to. SQL dotaz, který vede přes většinu tabulek v databázi. To musí být výkonostní bomba!
         $result = Db::fetchQuery('
             SELECT
