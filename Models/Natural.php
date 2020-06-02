@@ -187,7 +187,7 @@ class Natural
         
         foreach ($this->pictures as $picture)
         {
-            if ($picture['src'] === $url)
+            if ($picture->getSrc() === $url)
             {
                 return true;
             }

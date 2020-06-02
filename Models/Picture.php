@@ -3,7 +3,7 @@
  * Třída reprezentující objekt obrázku
  * @author Jan Štěch
  */
-class Picture implements ArrayAccess
+class Picture
 {
     private $id;
     private $src;
@@ -26,46 +26,38 @@ class Picture implements ArrayAccess
     }
     
     /**
-     * Metoda pro zjišťování existence některé vlastnosti obrázku
-     * {@inheritDoc}
-     * @see ArrayAccess::offsetExists()
+     * Metoda navracející ID tohoto obrázku
+     * @return int ID obrázku
      */
-    public function offsetExists($offset)
+    public function getId()
     {
-        return (isset($this->$offset));
+        return $this->id;
     }
     
     /**
-     * Metoda pro získání hodnoty nějaké z vlastností obrázku
-     * {@inheritDoc}
-     * @see ArrayAccess::offsetGet()
+     * Metoda navracející URL adresu toho obrázku
+     * @return string Zdroj (URL) obrázku
      */
-    public function offsetGet($offset)
+    public function getSrc()
     {
-        return $this->$offset;
+        return $this->src;
     }
     
     /**
-     * Metoda pro nastavení hodnoty nějaké z vlastností obrázku
-     * Nelze ji použít pro nastavení jakékoliv vlastnosti (všechny jsou read-only)
-     * {@inheritDoc}
-     * @see ArrayAccess::offsetSet()
-     * @throws BadMethodCallException Při zavolání metody
+     * Metoda navracející objekt přírodniny, kterou zachycuje tento obrázek
+     * @return Natural Přírodnina na obrázku
      */
-    public function offsetSet($offset, $value)
+    public function getNatural()
     {
-        throw new BadMethodCallException('It isn\'t allowed to edit picture\'s properities.');
+        return $this->natural;
     }
     
     /**
-     * Metoda pro odebrání hodnoty nějaké z vlastností obrázku
-     * Nelze použít pro odebrání jakékoliv vlastnosti
-     * {@inheritDoc}
-     * @see ArrayAccess::offsetUnset()
-     * @throws BadMethodCallException Při zavolání metody
+     * Metoda navracející stav obrázku
+     * @return bool TRUE, je-li obrázek povolený, FALSE, pokud je skrytý
      */
-    public function offsetUnset($offset)
+    public function isEnabled()
     {
-        throw new BadMethodCallException('It isn\'t allowed to remove picture\'s properities.');
+        return $this->enabled;
     }
 }
