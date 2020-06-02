@@ -38,4 +38,37 @@ class Report
         $this->additionalInformation = $additionalInformation;
         $this->reportersCount = $reportersCount;
     }
+    
+    public function getPictureId()
+    {
+        return $this->picture->getId();
+    }
+    
+    public function getUrl()
+    {
+        return $this->picture->getSrc();
+    }
+    
+    public function getPicturePath()
+    {
+        $part = $this->picture->getNatural()->getPart();
+        $group = $part->getGroup();
+        $class = $group->getClass();
+        return $class->getName().' / '.$group->getName().' / '.$part->getName();
+    }
+    
+    public function getReason()
+    {
+        return $this->reason;
+    }
+    
+    public function getAdditionalInformation()
+    {
+        return $this->additionalInformation;
+    }
+    
+    public function getReportersCount()
+    {
+        return $this->reportersCount;
+    }
 }
