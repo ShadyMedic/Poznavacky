@@ -21,6 +21,7 @@ class AdministrateController extends Controller
         $administration = new Administration();
         
         $this->data['users'] = $administration->getAllUsers(false);
+        $this->data['reports'] = $administration->getAdminReports();
         
         $this->pageHeader['title'] = 'Správa služby';
         $this->pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
