@@ -120,15 +120,11 @@ class User implements ArrayAccess
         if (!empty($applications['zadosti_jmena_uzivatele_id']))
         {
             //Přepsání existující žádosti
-            DebugLogger::debugLog($this->id);
-            DebugLogger::debugLog($newName);
             Db::executeQuery('UPDATE zadosti_jmena_uzivatele SET nove = ?, cas = NOW() WHERE zadosti_jmena_uzivatele_id = ? LIMIT 1', array($newName, $applications['zadosti_jmena_uzivatele_id']));
         }
         else
         {
             //Uložení nové žádosti
-            DebugLogger::debugLog($this->id);
-            DebugLogger::debugLog($newName);
             Db::executeQuery('INSERT INTO zadosti_jmena_uzivatele (uzivatele_id,nove,cas) VALUES (?,?,NOW())', array($this->id, $newName));
         }
         return true;
