@@ -1,0 +1,18 @@
+<div id="email">
+    <table>
+        <tr>
+            <td><span>Adresát:</span></td>
+            <td><input id="emailAddressee" type=email maxlength=255 /></td>
+        </tr>
+        <tr>
+            <td><span>Předmět:</span></td>
+            <td><input id="emailSubject" type=text maxlength=70 /></td>
+        </tr>
+    </table>
+    <textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva"></textarea>
+    <div id="emailPreview" style="display:none;">
+        <span>Zde se zobrazí náhled e-mailu:</span>
+    </div>
+    <button id="emailPreviewButton" class="borderBtn" onclick="previewEmailMessage()">Zobrazit náhled</button>
+    <button id="emailSendButton" class="borderBtn" onclick="sendMail()">Odeslat</button>
+</div>
