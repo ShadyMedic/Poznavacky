@@ -76,4 +76,14 @@ class Administration
         
         return $reports;
     }
+    
+    public function getUserNameChangeRequests()
+    {
+        //TODO
+    }
+    
+    public function getClassNameChangeRequests()
+    {
+        //TODO
+    }
 }
