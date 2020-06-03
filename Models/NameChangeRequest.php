@@ -50,7 +50,13 @@ class NameChangeRequest
      */
     public function getOldName()
     {
-        return $this->object->getName();
+        if ($this->type === self::TYPE_CLASS)
+        {
+            //Jméno třídy
+            return $this->object->getName();
+        }
+        //Jméno uživatele
+        return $this->object['name'];
     }
     
     /**
