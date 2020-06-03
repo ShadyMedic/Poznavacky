@@ -77,13 +77,59 @@ class Administration
         return $reports;
     }
     
+    /**
+     * Metoda získávající seznam všech žádostí o změnu uživatelského jména a navrací je jako objekty
+     * @return NameChangeRequest[] Pole objektů se žádostmi
+     */
     public function getUserNameChangeRequests()
     {
-        //TODO
+        Db::connect();
+        $result = Db::fetchQuery('
+        SELECT
+        uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status,
+        zadosti_jmena_uzivatele.zadosti_jmena_uzivatele_id, zadosti_jmena_uzivatele.nove, zadosti_jmena_uzivatele.cas
+        FROM zadosti_jmena_uzivatele
+        JOIN uzivatele ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.uzivatele_id;
+        ', array(), true);
+        
+        //Kontrola, zda byly navráceny nějaké výsledky
+        if ($result === false){ return array(); }
+        
+        $requests = array();
+        foreach ($result as $requestInfo)
+        {
+            $user = new User($requestInfo['uzivatele_id'], $requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['status']);
+            $request = new NameChangeRequest($requestInfo['zadosti_jmena_uzivatele_id'], $user, $requestInfo['nove'], new DateTime($requestInfo['cas']));
+            $requests[] = $request;
+        }
+        return $requests;
     }
     
     public function getClassNameChangeRequests()
     {
-        //TODO
+        Db::connect();
+        $result = Db::fetchQuery('
+        SELECT
+        uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status",
+        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status",
+        zadosti_jmena_tridy.zadosti_jmena_tridy_id, zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
+        FROM zadosti_jmena_tridy
+        JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.tridy_id
+        JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id;
+        ', array(), true);
+        
+        //Kontrola, zda byly navráceny nějaké výsledky
+        if ($result === false){ return array(); }
+        
+        $requests = array();
+        foreach ($result as $requestInfo)
+        {
+            $admin = new User($requestInfo['uzivatele_id'], $requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
+            $class = new ClassObject($requestInfo['tridy_id'], $requestInfo['nazev'], $requestInfo['c_status'], $admin);
+            $request = new NameChangeRequest($requestInfo['zadosti_jmena_tridy_id'], $class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
+            
+            $requests[] = $request;
+        }
+        return $requests;
     }
 }
