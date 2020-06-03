@@ -13,6 +13,7 @@ class ClassObject
     private $name;
     private $status;
     private $groups;
+    private $admin;
     
     private $accessCheckResult;
     
@@ -23,9 +24,10 @@ class ClassObject
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
      * @param string $statis Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)
+     * @param User $admin Objekt uživatele, který je správcem této třídy (nepovinné, v případě potřeby bude načteno z databáze až v případě potřeby)
      * @throws BadMethodCallException
      */
-    public function __construct(int $id, string $name = "", string $status = "")
+    public function __construct(int $id, string $name = "", string $status = "", User $admin = NULL)
     {
         if (mb_strlen($name) !== 0 && !empty($id))
         {
@@ -67,6 +69,12 @@ class ClassObject
         if (!empty($status))
         {
             $this->status = $status;
+        }
+        
+        //Nastavení správce (pokud byl specifikován)
+        if (!empty($admin))
+        {
+            $this->admin = $admin;
         }
     }
     
@@ -138,14 +146,17 @@ class ClassObject
     
     /**
      * Metoda kontrolující, zda je určitý uživatel správcem této třídy
+     * Pokud zatím nebyl načten správce této třídy, bude načten z databáze
      * @param int $userId ID ověřovaného uživatele
      * @return boolean TRUE, pokud je uživatelem správce třídy, FALSE pokud ne
      */
     public function checkAdmin(int $userId)
     {
-        Db::connect();
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE tridy_id = ? AND spravce = ?;', array($this->id, $userId), false);
-        return ($result['cnt'] === 1) ? true : false;
+        if (!isset($this->admin))
+        {
+            $this->loadAdmin();
+        }
+        return ($this->admin['id'] === $userId) ? true : false;
     }
     
     /**
@@ -251,6 +262,31 @@ class ClassObject
             $this->status = $result['status'];
             return $result['status'];
         }
+    }
+    
+    /**
+     * Metoda pro získání objektu uživatele, který je správcem této třídy
+     * @return User Objekt správce třídy
+     */
+    public function getAdmin()
+    {
+        if (isset($this->admin))
+        {
+            return $this->admin;
+        }
+        return $this->loadAdmin();
+    }
+    
+    /**
+     * Metoda načítající data o uživateli, který je správcem této třídy z databáze a nastavující je jako vlastnost "admin"
+     * @return User Objekt správce třídy
+     */
+    private function loadAdmin()
+    {
+        Db::connect();
+        $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status FROM tridy JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id WHERE tridy_id = ?;', array($this->id), false);
+        $this->admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        return $this->admin;
     }
 }
 
