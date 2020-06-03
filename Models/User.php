@@ -116,16 +116,20 @@ class User implements ArrayAccess
         //Kontrola dat OK
         
         //Zkontrolovat, zda již existuje žádost o změnu jména od přihlášeného uživatele
-        $applications = Db::fetchQuery('SELECT zadosti_jmena_id FROM zadosti_jmena WHERE uzivatele_jmeno = ?', array(UserManager::getName()));
-        if (!empty($applications['zadosti_jmena_id']))
+        $applications = Db::fetchQuery('SELECT zadosti_jmena_uzivatele_id FROM zadosti_jmena_uzivatele WHERE uzivatele_id = ?', array(UserManager::getId()));
+        if (!empty($applications['zadosti_jmena_uzivatele_id']))
         {
             //Přepsání existující žádosti
-            Db::executeQuery('UPDATE zadosti_jmena SET nove = ?, cas = ? WHERE zadosti_jmena_id = ? LIMIT 1', array($newName, time(), $applications['zadosti_jmena_id']));
+            DebugLogger::debugLog($this->id);
+            DebugLogger::debugLog($newName);
+            Db::executeQuery('UPDATE zadosti_jmena_uzivatele SET nove = ?, cas = NOW() WHERE zadosti_jmena_uzivatele_id = ? LIMIT 1', array($newName, $applications['zadosti_jmena_uzivatele_id']));
         }
         else
         {
             //Uložení nové žádosti
-            Db::executeQuery('INSERT INTO zadosti_jmena (uzivatele_jmeno,nove,cas) VALUES (?,?,?)', array($this->name, $newName, time()));
+            DebugLogger::debugLog($this->id);
+            DebugLogger::debugLog($newName);
+            Db::executeQuery('INSERT INTO zadosti_jmena_uzivatele (uzivatele_id,nove,cas) VALUES (?,?,NOW())', array($this->id, $newName));
         }
         return true;
     }
