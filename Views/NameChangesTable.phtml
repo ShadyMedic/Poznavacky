@@ -1,0 +1,54 @@
+<table>
+    <tr>
+        <th>Současné jméno</th>
+        <th>Požadované jméno</th>
+        <th>Akce</th>
+    </tr>
+    <tr><td colspan=3>Požadavky na změnu uživatelského jména</td></tr>
+    <?php foreach ($userNameChangeRequests as $request) : ?>
+    <tr>
+    	<td><?= $request->getOldName(); ?></td>
+    	<td><?= $request->getNewName(); ?></td>
+    	<td>
+    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>
+    			<img src='images/tick.svg'/>
+    		</button>
+    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>
+    			<img src='images/cross.svg'/>
+    		</button>
+    		<?php if (empty($request->getRequestersEmail())) : ?>
+			<button class='nameChangeAction grayscale' disabled>
+    		<?php endif ?>
+    		<?php if (!empty($request->getRequestersEmail())) : ?>
+			<button class='nameChangeAction activeBtn' onclick='sendMailNameChange("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
+    		<?php endif ?>
+    			<img src='images/mail.svg'/>
+    		</button>
+    	</td>
+    </tr>
+    <?php endforeach ?>
+    
+    <tr><td colspan=3>Požadavky na změnu jména třídy</td></tr>
+    <?php foreach ($classNameChangeRequests as $request) : ?>
+    <tr>
+    	<td><?= $request->getOldName(); ?></td>
+    	<td><?= $request->getNewName(); ?></td>
+    	<td>
+    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>
+    			<img src='images/tick.svg'/>
+    		</button>
+    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>
+    			<img src='images/cross.svg'/>
+    		</button>
+    		<?php if (empty($request->getRequestersEmail())) : ?>
+			<button class='nameChangeAction grayscale' disabled>
+    		<?php endif ?>
+    		<?php if (!empty($request->getRequestersEmail())) : ?>
+			<button class='nameChangeAction activeBtn' onclick='sendMailNameChange("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
+    		<?php endif ?>
+    			<img src='images/mail.svg'/>
+    		</button>
+    	</td>
+    </tr>
+    <?php endforeach ?>
+</table>
