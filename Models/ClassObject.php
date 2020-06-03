@@ -23,7 +23,7 @@ class ClassObject
      * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
-     * @param string $statis Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)
+     * @param string $status Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)
      * @param User $admin Objekt uživatele, který je správcem této třídy (nepovinné, v případě potřeby bude načteno z databáze až v případě potřeby)
      * @throws BadMethodCallException
      */
