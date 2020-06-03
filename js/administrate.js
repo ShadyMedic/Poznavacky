@@ -5,12 +5,14 @@ function hideAllTabs()
 	$("#tab3").hide();
 	$("#tab4").hide();
 	$("#tab5").hide();
+	$("#tab6").hide();
 	
 	$("#tab1").removeClass("activeTab");
 	$("#tab2").removeClass("activeTab");
 	$("#tab3").removeClass("activeTab");
 	$("#tab4").removeClass("activeTab");
 	$("#tab5").removeClass("activeTab");
+	$("#tab6").removeClass("activeTab");
 }
 function firstTab()
 {
@@ -46,4 +48,11 @@ function fifthTab()
 	
 	$("#tab5").show();
 	$("#tab5").addClass("activeTab");
+}
+function sixthTab()
+{
+	hideAllTabs();
+	
+	$("#tab6").show();
+	$("#tab6").addClass("activeTab");
 }
