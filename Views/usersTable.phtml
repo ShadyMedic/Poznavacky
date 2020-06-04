@@ -72,7 +72,7 @@
                 <button class='userAction grayscale' disabled>
                 <?php endif ?>
                 <?php if (!empty($user['email'])) : ?>
-                <button class='userAction activeBtn' onclick='sendMailNameChange("<?= $user['email'] ?>")' title='Poslat e-mail'>
+                <button class='userAction activeBtn' onclick='sendMail("<?= $user['email'] ?>")' title='Poslat e-mail'>
                 <?php endif ?>
                     <img src='images/mail.svg'/>
                 </button>
