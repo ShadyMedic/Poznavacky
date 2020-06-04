@@ -21,6 +21,7 @@ class AdministrateController extends Controller
         $administration = new Administration();
         
         $this->data['users'] = $administration->getAllUsers(false);
+        $this->data['classes'] = $administration->getAllClasses();
         $this->data['reports'] = $administration->getAdminReports();
         $this->data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
         $this->data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();

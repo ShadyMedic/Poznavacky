@@ -33,6 +33,20 @@ class Administration
         return $users;
     }
     
+    public function getAllClasses()
+    {
+        Db::connect();
+        $dbResult = Db::fetchQuery('SELECT tridy_id, nazev, status, kod FROM tridy', array(), true);
+        
+        $classes = array();
+        foreach($dbResult as $dbRow)
+        {
+            $classes[] = new ClassObject($dbRow['tridy_id'], $dbRow['nazev'], $dbRow['status'], $dbRow['kod']);
+        }
+        
+        return $classes;
+    }
+    
     /**
      * Metoda navracející informace o hlášeních obrázků, které byly nahlášeny z jednoho z důvodů, které musí řešit správce celého systému
      * Důvody, které musí být řešeny touto cestou jsou specifikovány v konstantách třídy Report
