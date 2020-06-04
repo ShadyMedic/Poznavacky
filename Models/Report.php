@@ -51,10 +51,11 @@ class Report
     
     public function getPicturePath()
     {
-        $part = $this->picture->getNatural()->getPart();
+        $natural = $this->picture->getNatural();
+        $part = $natural->getPart();
         $group = $part->getGroup();
         $class = $group->getClass();
-        return $class->getName().' / '.$group->getName().' / '.$part->getName();
+        return $class->getName().' / '.$group->getName().' / '.$part->getName(). ' / '.$natural->getName();
     }
     
     public function getReason()
