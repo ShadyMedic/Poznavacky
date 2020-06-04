@@ -1,2 +1,81 @@
-<?php
-//TODO
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Název</th>
+        <th>Poznávačky</th>
+        <th>Správce</th>
+        <th>Status</th>
+        <th>Vstupní kód</th>
+        <th>Akce</th>
+    </tr>
+    <?php foreach($classes as $class) : ?>
+        <tr>
+            <td>
+                <?= $class->getId() ?>
+            </td>
+            <td>
+                <?= $class->getName() ?>
+            </td>
+            <td>
+                <?= $class->getGroupsCount() ?>
+            </td>
+            <td>
+            	<table>
+            		<tr>
+            			<td>Jméno: </td><td><?= $class->getAdmin()['name'] ?></td>
+            		</tr>
+            		<tr>
+            			<td>ID: </td><td><?= $class->getAdmin()['id'] ?></td>
+            		</tr>
+            		<tr>
+            			<td>E-mail: </td><td><a onclick="sendMail('<?= $class->getAdmin()['email'] ?>')"><?= $class->getAdmin()['email'] ?></td>
+            		</tr>
+            		<tr>
+            			<td>Karma: </td><td><?= $class->getAdmin()['karma'] ?></td>
+            		</tr>
+            		<tr>
+            			<td>Status: </td><td><?= $class->getAdmin()['status'] ?></td>
+            		</tr>
+            	</table>
+            </td>
+            <td>
+                <select disabled class='classField'>
+                    <?php if ($class->getStatus() === ClassObject::CLASS_STATUS_PUBLIC) : ?>
+                    <option selected><?= ClassObject::CLASS_STATUS_PUBLIC ?></option>
+                    <?php endif ?>
+                    <?php if ($class->getStatus() !== ClassObject::CLASS_STATUS_PUBLIC) : ?>
+                    <option><?= ClassObject::CLASS_STATUS_PUBLIC ?></option>
+                    <?php endif ?>
+                    
+                    <?php if ($class->getStatus() === ClassObject::CLASS_STATUS_PRIVATE) : ?>
+                    <option selected><?= ClassObject::CLASS_STATUS_PRIVATE ?></option>
+                    <?php endif ?>
+                    <?php if ($class->getStatus() !== ClassObject::CLASS_STATUS_PRIVATE) : ?>
+                    <option><?= ClassObject::CLASS_STATUS_PRIVATE ?></option>
+                    <?php endif ?>
+                    
+                    <?php if ($class->getStatus() === ClassObject::CLASS_STATUS_LOCKED) : ?>
+                    <option selected><?= ClassObject::CLASS_STATUS_LOCKED ?></option>
+                    <?php endif ?>
+                    <?php if ($class->getStatus() !== ClassObject::CLASS_STATUS_LOCKED) : ?>
+                    <option><?= ClassObject::CLASS_STATUS_LOCKED ?></option>
+                    <?php endif ?>
+                </select>
+            </td>
+            <td>
+                <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='classField'/>
+            </td>
+            <td>
+                <button class='classAction activeBtn editButton' onclick='editUser(event)' title='Upravit status a kód'>
+                    <img src='images/pencil.svg'/>
+                </button>
+                <button class='classAction activeBtn editButton onclick='changeClassAdmin(event)' title='Změnit správce'>
+                	<img src='images/management.svg'/>
+                </button>
+                <button class='classAction activeBtn' onclick='deleteClass(event)' title='Odstranit'>
+                    <img src='images/cross.svg'/>
+                </button>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>
