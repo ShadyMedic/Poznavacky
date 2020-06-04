@@ -276,12 +276,14 @@ class ClassObject
      * Pokud status není uložen, je načten z databáze, uložen a poté navrácen
      * @return string Status třídy (viz konstanty třídy)
      */
-    private function getStatus()
+    public function getStatus()
     {
-        if (isset($this->status))
+        if (!isset($this->status))
         {
-            return $this->status;
+            $this->loadStatusAndCode();
         }
+        return $this->status;
+    }
     
     /**
      * Metoda navracející uložený vstupní kód této třídy
@@ -292,7 +294,7 @@ class ClassObject
         if (!isset($this->code))
         {
             $this->loadStatusAndCode();
-    }
+        }
         return $this->code;
     }
     
@@ -303,9 +305,9 @@ class ClassObject
     {
         Db::connect();
         $result = Db::fetchQuery('SELECT status,kod FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id), false);
-            $this->status = $result['status'];
+        $this->status = $result['status'];
         $this->code = $result['kod'];
-        }
+    }
     
     /**
      * Metoda pro získání objektu uživatele, který je správcem této třídy
@@ -313,23 +315,21 @@ class ClassObject
      */
     public function getAdmin()
     {
-        if (isset($this->admin))
+        if (!isset($this->admin))
         {
-            return $this->admin;
+            $this->loadAdmin();
         }
-        return $this->loadAdmin();
+        return $this->admin;
     }
     
     /**
      * Metoda načítající data o uživateli, který je správcem této třídy z databáze a nastavující je jako vlastnost "admin"
-     * @return User Objekt správce třídy
      */
     private function loadAdmin()
     {
         Db::connect();
         $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status FROM tridy JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id WHERE tridy_id = ?;', array($this->id), false);
         $this->admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
-        return $this->admin;
     }
 }
 
