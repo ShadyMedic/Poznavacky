@@ -12,7 +12,9 @@ class ClassObject
     private $id;
     private $name;
     private $status;
+    private $code;
     private $groups;
+    private $groupsCount;
     private $admin;
     
     private $accessCheckResult;
@@ -23,11 +25,13 @@ class ClassObject
      * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
-     * @param string $status Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)
+     * @param string $status Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno společně s kódem třídy z databáze až v případě potřeby)
+     * @param int|NULL $code Vstupní kód třídy (nepovinné, v případě potřeby bude načteno společně se statusem třídy z databáze až v případě potřeby; pro nespecifikování použijte hodnotu -1)
+     * @param int $groupsCount Počet poznávaček, které třída obsahuje (nepovinné, v případě potřeby bude načteno z databáze; pro nepsecifikování použijte hodnotu -1)
      * @param User $admin Objekt uživatele, který je správcem této třídy (nepovinné, v případě potřeby bude načteno z databáze až v případě potřeby)
      * @throws BadMethodCallException
      */
-    public function __construct(int $id, string $name = "", string $status = "", User $admin = NULL)
+    public function __construct(int $id, string $name = "", string $status = "", $code = -1, int $groupsCount = -1, User $admin = NULL)
     {
         if (mb_strlen($name) !== 0 && !empty($id))
         {
@@ -71,6 +75,12 @@ class ClassObject
             $this->status = $status;
         }
         
+        //Nastavení kódu (pokud byl specifikován)
+        if ($code !== -1)
+        {
+            $this->code = $code;
+        }
+        
         //Nastavení správce (pokud byl specifikován)
         if (!empty($admin))
         {
@@ -97,6 +107,29 @@ class ClassObject
     }
     
     /**
+     * Metoda navracející počet poznávaček v této třídě
+     * @return int Počet poznávaček
+     */
+    public function getGroupsCount()
+    {
+        if (!isset($this->groupsCount))
+        {
+            $this->loadGroupsCount();
+        }
+        return $this->groupsCount;
+    }
+    
+    /**
+     * Metoda načítající počet poznávaček patřících do této třídy a ukládající je jako vlastnost tohoto objektu
+     */
+    private function loadGroupsCount()
+    {
+        Db::connect();
+        $result = Db::fetchQuery('SELECT poznavacky FROM tridy WHERE tridy_id = ?', array($this->id), false);
+        $this->groupsCount = $result['poznavacky'];
+    }
+    
+    /**
      * Metoda navracející pole poznávaček patřících do této třídy jako objekty
      * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
      * @return array Pole poznávaček patřících do této třídy jako objekty
@@ -112,6 +145,7 @@ class ClassObject
     
     /**
      * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
+     * Pokud zatím nebyl načten počet poznávaček v této třídě, je uložen jako počet prvků v $this->groups
      */
     private function loadGroups()
     {
@@ -123,6 +157,8 @@ class ClassObject
         {
             $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
         }
+        
+        if (!isset($this->groupsCount)){ $this->groupsCount = count($this->groups); }
     }
     
     /**
@@ -246,23 +282,30 @@ class ClassObject
         {
             return $this->status;
         }
-        return $this->loadStatus();
+    
+    /**
+     * Metoda navracející uložený vstupní kód této třídy
+     * @return int Čtyřmístný kód této třídy
+     */
+    public function getCode()
+    {
+        if (!isset($this->code))
+        {
+            $this->loadStatusAndCode();
+    }
+        return $this->code;
     }
     
     /**
      * Metoda získávající z databáze status této třídy a nastavující jej jako vlastnost "status"
-     * @return string Status třídy (viz konstanty třídy)
      */
-    private function loadStatus()
+    private function loadStatusAndCode()
     {
         Db::connect();
-        $result = Db::fetchQuery('SELECT status FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id), false);
-        if ($result)
-        {
+        $result = Db::fetchQuery('SELECT status,kod FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id), false);
             $this->status = $result['status'];
-            return $result['status'];
+        $this->code = $result['kod'];
         }
-    }
     
     /**
      * Metoda pro získání objektu uživatele, který je správcem této třídy

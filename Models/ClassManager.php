@@ -38,7 +38,7 @@ class ClassManager
         Db::connect();
         $result = Db::fetchQuery('
         SELECT
-        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status",
+        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.kod
         uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status"
         FROM tridy
         JOIN uzivatele ON spravce = uzivatele_id
@@ -58,7 +58,7 @@ class ClassManager
         foreach($result as $classInfo)
         {
             $classAdmin = new User($classInfo['uzivatele_id'], $classInfo['jmeno'], $classInfo['email'], new DateTime($classInfo['posledni_prihlaseni']), $classInfo['pridane_obrazky'], $classInfo['uhodnute_obrazky'], $classInfo['karma'], $classInfo['u_status']);
-            $classes[] = new ClassObject($classInfo['tridy_id'], $classInfo['nazev'], $classInfo['c_status'], $classAdmin);
+            $classes[] = new ClassObject($classInfo['tridy_id'], $classInfo['nazev'], $classInfo['c_status'], $classInfo['kod'], $classAdmin);
         }
         
         return $classes;
