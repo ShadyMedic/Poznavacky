@@ -1,4 +1,6 @@
-<select onchange="updateReport()">
+<button id="reportButton" onclick="reportImg()"></button>
+<div id="reportMenu" style="display:none;">
+    <select id="reportReason" onchange="updateReport()">
 	<option><?= Report::REASON_NOT_DISPLAYING ?></option>
 	<option><?= Report::REASON_LONG_LOADING ?></option>
 	<option><?= Report::REASON_INCORRECT_NATURAL ?></option>
@@ -13,3 +15,4 @@
 </div>
 <button onclick="submitReport(event)">Odeslat</button>
 <button onclick="cancelReport(event)">Zrušit</button>
+</div>
