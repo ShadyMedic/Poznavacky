@@ -39,16 +39,28 @@ class Report
         $this->reportersCount = $reportersCount;
     }
     
+    /**
+     * Metoda navracející ID nahlášeného obrázku
+     * @return int ID obrázku
+     */
     public function getPictureId()
     {
         return $this->picture->getId();
     }
     
+    /**
+     * Metoda navracející URL nahlášeného obrázku
+     * @return string Zdroj obrázku
+     */
     public function getUrl()
     {
         return $this->picture->getSrc();
     }
     
+    /**
+     * Metoda navracející řetězec se zařazením obrázku ve formátu <Název třídy> / <Název poznávačky> / <Název části> / <Název přírodniny>
+     * @return string Řetězec obsahující cestu k obrázku
+     */
     public function getPicturePath()
     {
         $natural = $this->picture->getNatural();
@@ -58,16 +70,28 @@ class Report
         return $class->getName().' / '.$group->getName().' / '.$part->getName(). ' / '.$natural->getName();
     }
     
+    /**
+     * Metoda navracející důvod hlášení
+     * @return string Důvod hlášení (měl by být jednou z konstant této třídy)
+     */
     public function getReason()
     {
         return $this->reason;
     }
     
+    /**
+     * Metoda navracející další informace o hlášení
+     * @return string Další informace o hlášení (pokud žádné nebyly poskytnuty, tak prázdný řetězec)
+     */
     public function getAdditionalInformation()
     {
         return $this->additionalInformation;
     }
     
+    /**
+     * Metoda navracející počet hlášení stejného typu
+     * @return int Počet hlášení
+     */
     public function getReportersCount()
     {
         return $this->reportersCount;
