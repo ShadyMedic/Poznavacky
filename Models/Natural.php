@@ -21,7 +21,7 @@ class Natural
      * @param string $name Název přírodniny (nepovinné, pokud je specifikováno ID)
      * @param Group $group Objekt poznávačky, do které přírodnina patří (nepovinné, pokud je specifikováno ID, pokud není zadáno, bude zjištěno z databáze)
      * @param Part $part Objekt části poznávačky, do které přírodnina patří (pokud není zadáno, bude zjištěno z databáze)
-     * @param int $pictureCount Počet obrázků, které jsou od této přírodniny nahrány v databázi
+     * @param int $pictureCount Počet obrázků, které jsou od této přírodniny nahrány v databázi (pokud není zadáno, bude zjištěno z databáze)
      * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná přírodnina
      * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
      */
