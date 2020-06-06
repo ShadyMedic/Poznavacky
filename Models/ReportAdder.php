@@ -57,6 +57,12 @@ class ReportAdder
             }
         }
         
+        //Nastavit správnou přírodninu na "Nezadáno" v případě, že důvod nahlášení je nesprávná přírodnina, ale nebylo zadáno, jaká je správná
+        if ($reason === Report::REASON_INCORRECT_NATURAL && mb_strlen($additionalInformation) === 0)
+        {
+            $additionalInformation = Report::INCORRECT_NATURAL_DEFAULT_INFO;
+        }
+        
         //Získání objektu přírodniny
         Db::connect();
         $dbResult = Db::fetchQuery('
