@@ -1,15 +1,25 @@
-<select onchange="updateReport()">
-	<option><?= Report::REASON_NOT_DISPLAYING ?></option>
-	<option><?= Report::REASON_LONG_LOADING ?></option>
-	<option><?= Report::REASON_INCORRECT_NATURAL ?></option>
-	<option><?= Report::REASON_CONTAINS_NAME ?></option>
-	<option><?= Report::REASON_BAD_RESOLUTION ?></option>
-	<option><?= Report::REASON_COPYRIGHT ?></option>
-	<option><?= Report::REASON_OTHER ?></option>
-	<option><?= Report::REASON_OTHER_ADMIN ?></option>
-</select>
-<div>
-	<!-- Zde se bude zobrazovat další vstupní pole při vybrání některých hlášení -->
+<button id="reportButton" onclick="reportImg()"></button>
+<div id="reportMenu" style="display:none;">
+    <select id="reportReason" onchange="updateReport()">
+    	<option><?= Report::REASON_NOT_DISPLAYING ?></option>
+    	<option><?= Report::REASON_LONG_LOADING ?></option>
+    	<option><?= Report::REASON_INCORRECT_NATURAL ?></option>
+    	<option><?= Report::REASON_CONTAINS_NAME ?></option>
+    	<option><?= Report::REASON_BAD_RESOLUTION ?></option>
+    	<option><?= Report::REASON_COPYRIGHT ?></option>
+    	<option><?= Report::REASON_OTHER ?></option>
+    	<option><?= Report::REASON_OTHER_ADMIN ?></option>
+    </select>
+    <div id="additionalReportInfo">
+    	<select id="longLoadingInfo" class='text dropList' style="display:none;">
+		<?php foreach (Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
+    		<option><?= $delay ?></option>
+		<?php endforeach ?>
+		</select>
+		<input id="incorrectNaturalInfo" type='text' class='text' placeholder='Přírodnina na obrázku' maxlength=31 style="display:none;">
+		<textarea id="otherInfo" class='text' placeholder='Specifikujte prosím důvod.&#10;Toto hlášení obdrží pouze správce této třídy.' maxlength=255 style="display:none;"></textarea>
+		<textarea id="otherAdminInfo" class='text' placeholder='Specifikujte prosím důvod.&#10;Toto hlášení obdrží pouze správce celého systému.&#10;Používejte prosím tuto možnost pouze pro případy, při kterých je nutný zásah administrátora.' maxlength=255 style="display:none;"></textarea>
+    </div>
+    <button onclick="submitReport(event)">Odeslat</button>
+    <button onclick="cancelReport(event)">Zrušit</button>
 </div>
-<button onclick="submitReport(event)">Odeslat</button>
-<button onclick="cancelReport(event)">Zrušit</button>

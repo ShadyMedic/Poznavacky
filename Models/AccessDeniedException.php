@@ -75,6 +75,9 @@ class AccessDeniedException extends Exception
     const REASON_ADD_PICTURE_DUPLICATE_PICTURE = 'Tento obrázek je již k této přírodnině přidán';
     const REASON_ADD_PICTURE_INVALID_FORMAT = 'Zadaná URL adresa nevede na obrázek v platném formátu';
     const REASON_TEST_ANSWER_CHECK_INVALID_QUESTION = 'Neplatné číslo otázky';
+    const REASON_REPORT_INVALID_REASON = 'Neplatný důvod';
+    const REASON_REPORT_INVALID_ADDITIONAL_INFORMATION = 'Neplatně vyplněné dodatečné informace';
+    const REASON_REPORT_UNKNOWN_PICTURE = 'Neznámý obrázek';
     
     private $additionalInfo = array();
     
