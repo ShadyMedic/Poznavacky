@@ -85,9 +85,11 @@ function submitReport()
 		picUrl:picUrl,
 		reason:reason,
 		info:reasonInfo
-	}, function()
+	}, function(response)
 	{
-		//TODO
+		$msg = JSON.parse(response)['msg'];
+		//TODO - nějak šikovně zobrazit hlášku ze serveru
+		alert($msg);
 	});
   
 	//Skrýt formulář pro nahlašování
