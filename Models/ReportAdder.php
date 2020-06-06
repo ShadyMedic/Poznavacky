@@ -30,7 +30,32 @@ class ReportAdder
         $reason = $_POST['reason'];
         $additionalInformation = $_POST['info'];
         
-        //TODO zvalidovat data
+        //Kontrola, zda je zadaný důvod platný
+        $rc = new ReflectionClass('Report');
+        $availableReasons = $rc->getConstants();
+        unset($availableReasons['ADMIN_REQUIRING_REASONS']);    //Odebrání konstanty neobsahující důvod
+        unset($availableReasons['LONG_LOADING_AVAILABLE_DELAYS']);   //Odebrání konstanty neobsahující důvod, ale povolené časové intervaly jako dodatečné informace pro jeden z důvodů
+        if (!in_array($reason, $availableReasons, true))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_REASON, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+        }
+        
+        //Kontrola vyplnění dodatečných informací (jsou-li potřeba)
+        if ($reason === Report::REASON_LONG_LOADING)
+        {
+            //Kontrola, zda je specifikován jeden z časových intervalů
+            if (!in_array($additionalInformation, $rc->getConstants()['LONG_LOADING_AVAILABLE_DELAYS']))
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+            }
+        }
+        if ($reason === Report::REASON_OTHER || $reason === Report::REASON_OTHER_ADMIN)
+        {
+            if (!mb_strlen($additionalInformation) > 0)
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+            }
+        }
         
         //Získání objektu přírodniny
         Db::connect();
@@ -44,6 +69,12 @@ class ReportAdder
         JOIN casti ON prirodniny.casti_id = casti.casti_id
         WHERE obrazky.zdroj = ? AND prirodniny.poznavacky_id = ?;
         ', array($url, $this->group->getId()), false);
+        
+        //Obrázek nebyl v databázi podle zdroje nalezen
+        if ($dbResult === false)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_UNKNOWN_PICTURE, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+        }
         
         $part = new Part($dbResult['casti_id'], $dbResult['p_nazev'], $this->group, $dbResult['prirodniny'], $dbResult['p_obrazky']);
         $natural = new Natural($dbResult['prirodniny_id'], $dbResult['n_nazev'], $this->group, $part, $dbResult['n_obrazky']);
