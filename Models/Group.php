@@ -12,15 +12,27 @@ class Group
     private $parts;
     
     /**
-     * Konstruktor poznávačky nastavující její ID, jméno a třídu, do které patří. Pokud je specifikováno ID i název, má název přednost
+     * Konstruktor poznávačky nastavující její ID, jméno, třídu, do které patří a počet jejích částí.
+     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
+     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID poztnávačky (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno poztnávačky (nepovinné, pokud je specifikováno ID)
      * @param ClassObject $class Objekt třídy, do které poznávačka patří (nepovinné, v případě nevyplnění bude zjištěno z databáze)
-     * @throws BadMethodCallException
+     * @param int $partsCount Počet částí, které tato poznávačka obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze)
+     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná poznávačka
+     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
      */
-    public function __construct(int $id, string $name = "", ClassObject $class = null)
+    public function __construct(int $id, string $name = "", ClassObject $class = null, int $partsCount = 0)
     {
-        if (mb_strlen($name) !== 0)
+        if (mb_strlen($name) !== 0 && !empty($id) && !empty($partsCount))
+        {
+            //Je vše je specifikováno --> nastavit
+            $this->id = $id;
+            $this->name = $name;
+            $this->partsCount = $partsCount;
+            $classId = $class->getId();
+        }
+        else if (mb_strlen($name) !== 0)
         {
             Db::connect();
             $result = Db::fetchQuery('SELECT poznavacky_id,casti,tridy_id FROM poznavacky WHERE nazev = ? LIMIT 1',array($name));
@@ -137,10 +149,21 @@ class Group
             $this->loadParts();
         }
         
-        $allNaturals = array();
+        $allPartsIds = array();
         foreach ($this->parts as $part)
         {
-            $allNaturals = array_merge($allNaturals, $part->getNaturals());
+            $allPartsIds[] = $part->getId();
+        }
+        
+        $allNaturals = array();
+        Db::connect();
+        //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
+        $in = str_repeat('?,', count($allPartsIds) - 1).'?';
+        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky,casti_id FROM prirodniny WHERE casti_id IN ('.$in.')', $allPartsIds, true);
+        foreach ($result as $naturalData)
+        {
+            $part = $this->getPartById($naturalData['casti_id']);
+            $allNaturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this, $part, $naturalData['obrazky']);
         }
         return $allNaturals;
     }
@@ -166,10 +189,30 @@ class Group
         $this->parts = array();
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT casti_id FROM casti WHERE poznavacky_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT casti_id,nazev,prirodniny,obrazky FROM casti WHERE poznavacky_id = ?', array($this->id), true);
         foreach ($result as $partData)
         {
-            $this->parts[] = new Part($partData['casti_id'], "", $this);
+            $this->parts[] = new Part($partData['casti_id'], $partData['nazev'], $this, $partData['prirodniny'], $partData['obrazky']);
+        }
+    }
+    
+    /**
+     * Metoda navracející objekt části této poznávačky, která má specifické ID
+     * @param int $id Požadované ID části
+     * @return Part Objekt reprezentující část se zadaným ID
+     */
+    private function getPartById(int $id)
+    {
+        if (!isset($this->parts))
+        {
+            $this->loadParts();
+        }
+        foreach ($this->parts as $part)
+        {
+            if ($part->getId() === $id)
+            {
+                return $part;
+            }
         }
     }
 }

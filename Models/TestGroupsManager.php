@@ -54,20 +54,13 @@ class TestGroupsManager
     
     /**
      * Metoda pro získání seznamu poznávaček v určité třídě a vytvoření tabulky pro předání pohledu
-     * @param string $className Název třídy ze které je potřeba získat seznam poznávaček
+     * @param ClassObject $class Objekt třídy ze které je potřeba získat seznam poznávaček
      * @return array Dvourozměrné pole obsahující seznam poznávaček a další informace potřebné pro pohled
      */
-    public static function getGroups(string $className)
+    public static function getGroups(ClassObject $class)
     {
-        //Zkontroluj, zda třída existuje
-        if (!ClassManager::classExists($className))
-        {
-            throw new NoDataException(NoDataException::UNKNOWN_CLASS);
-        }
-        
-        $class = new ClassObject(0, $className);
         if ($class->checkAccess(UserManager::getId()))
-        {   
+        {
             //Získej data
             $groups = $class->getGroups();
             if (empty($groups))
@@ -97,27 +90,12 @@ class TestGroupsManager
     
     /**
      * Metoda pro získání seznamu částí určité poznávačky v určité třídě a vytvoření tabulky pro předání pohledu
-     * @param string $className Název třídy v níž se nachází poznávačka, ze které je potřeba získat seznam částí
-     * @param string $testName Nátev poznávačky, ze které je potřeba získat seznam částí
+     * @param Group $group Objekt poznávačky, ze které je potřeba získat seznam částí
      * @return array Dvourozměrné pole obsahující seznam částí a další informace potřebné pro pohled
      */
-    public static function getParts(string $className, string $groupName)
+    public static function getParts(Group $group)
     {
-        //Zkontroluj, zda třída existuje
-        if (!ClassManager::classExists($className))
-        {
-            throw new NoDataException(NoDataException::UNKNOWN_CLASS);
-        }
-        
-        //Zkontroluj, zda poznávačka existuje
-        $class = new ClassObject(0, $className);
-        if (!$class->groupExists($groupName))
-        {
-            throw new NoDataException(NoDataException::UNKNOWN_GROUP);
-        }
-        
-        $group = new Group(0, $groupName, $class);
-        if ($class->checkAccess(UserManager::getId(), $class->getId()))
+        if ($group->getClass()->checkAccess(UserManager::getId()))
         {
             //Získej data
             $parts = $group->getParts();

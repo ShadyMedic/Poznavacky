@@ -6,7 +6,7 @@
     <button class='button' onclick='enterClassCode()'>Zadat kód soukromé třídy</button>
 </div>
 <form id='classCodeForm' action="menu/enter-class-code" method="POST"><!-- Po zprovoznění JavaScriptu přidat formuláři vlastnost style="display:none;" -->
-    <input id='classCodeInput' type="text" name="code" maxlength=4 style='width: 2rem;' required/>
+    <input id='classCodeInput' type="number" name="code" min=0 max=9999 maxlength=4 style='width: 2rem;' required/>
     <input class='button' type="submit">OK</button>
     <button class='button' onclick='closeClassCode()'>Zpět</button>
 </form>
