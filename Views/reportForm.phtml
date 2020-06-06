@@ -12,10 +12,9 @@
     </select>
     <div id="additionalReportInfo">
     	<select id="longLoadingInfo" class='text dropList' style="display:none;">
-    		<option>>2 s</option>
-    		<option>>5 s</option>
-    		<option>>10 s</option>
-    		<option>>20 s</option>
+		<?php foreach (Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
+    		<option><?= $delay ?></option>
+		<?php endforeach ?>
 		</select>
 		<input id="incorrectNaturalInfo" type='text' class='text' placeholder='Přírodnina na obrázku' maxlength=31 style="display:none;">
 		<textarea id="otherInfo" class='text' placeholder='Specifikujte prosím důvod.&#10;Toto hlášení obdrží pouze správce této třídy.' maxlength=255 style="display:none;"></textarea>
