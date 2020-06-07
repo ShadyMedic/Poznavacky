@@ -62,7 +62,7 @@ class EmailComposer
     
     /**
      * Metoda navracející poskládanou e-mailovou zprávu
-     * @return mixed
+     * @return string Tělo poskládané e-mailové zprávy
      */
     public function getMail()
     {
