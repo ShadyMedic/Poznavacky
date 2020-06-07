@@ -186,6 +186,31 @@ class Administration
     }
     
     /**
+     * Metoda odesílající e-mail s daty z formuláře na správcovské stránce
+     * @param string $addressee E-mailová adresa adresáta e-mailu
+     * @param string $subject Předmět e-mailu
+     * @param string $rawMessage Obsah hlavního těla e-mailu (může být zformátován pomocí HTML)
+     * @param string $rawFooter Obsah patičky e-mailu (může být zformátován pomocí HTML), může být jako jediný parametr prázdný řetězec
+     * @param string $sender Jméno odesílatele e-mailu, které bude zobrazeno jako odesílatel e-mailové zprávy
+     * @param string $fromAddress E-mailová adresa pro odpověď (bude to tak trochu vypadat, jako kdyby e-mail přišel z této adresy)
+     * @throws AccessDeniedException V případě, že některý z parametrů je nedostatečně nebo chybně vyplněn
+     * @return boolean TRUE, pokud se e-mail podaří odeslat
+     */
+    public function sendEmail(string $addressee, string $subject, string $rawMessage, string $rawFooter, string $sender, string $fromAddress)
+    {
+        //Kontrola platnosti e-mailů
+        if (!filter_var($addressee, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
+        if (!filter_var($fromAddress, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
+        
+        //Kontrola vyplněnosti ostatních polí
+        if (mb_strlen($subject) === 0 || mb_strlen($rawMessage) === 0 || mb_strlen($sender) === 0){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_EMPTY_FIELDS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
+        
+        $emailBody = $this->previewEmail($rawMessage, $rawFooter);
+        $emailSender = new EmailSender();
+        return $emailSender->sendMail($addressee, $subject, $emailBody, $fromAddress, $sender);
+    }
+    
+    /**
      * Metoda vykonávající zadané SQL dotazy a navracející jeho výsledky jako HTML
      * @param string $queries SQL dotaz/y, v případě více dotazů musí být ukončeny středníky
      * @return string Zformátovaný výstup dotazu jako HTML určené k zobrazení uživateli

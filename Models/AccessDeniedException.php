@@ -78,6 +78,9 @@ class AccessDeniedException extends Exception
     const REASON_REPORT_INVALID_REASON = 'Neplatný důvod';
     const REASON_REPORT_INVALID_ADDITIONAL_INFORMATION = 'Neplatně vyplněné dodatečné informace';
     const REASON_REPORT_UNKNOWN_PICTURE = 'Neznámý obrázek';
+    const REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS = 'Neplatná adresa odesílatele';
+    const REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS = 'Neplatná adresa adresáta';
+    const REASON_SEND_EMAIL_EMPTY_FIELDS = 'S výjimkou patičky e-mailu musí být všechna pole vyplněna';
     
     private $additionalInfo = array();
     
