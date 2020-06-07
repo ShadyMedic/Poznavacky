@@ -7,6 +7,25 @@
  */
 class Administration
 {
+    private const DANGEROUS_SQL_KEYWORDS = array(
+        'ALTER ',
+        'INDEX ',
+        'DROP ',
+        'TRIGGER ',
+        'EVENT ',
+        'ROUTINE ',
+        'EXECUTE ',
+        'GRANT ',
+        'SUPER ',
+        'PROCESS ',
+        'RELOAD ',
+        'SHUTDOWN ',
+        'SHOW ',
+        'LOCK ',
+        'REFERENCES ',
+        'REPLICATION ',
+        'USER ');
+    
     /**
      * Metoda navracející většinu informací o všech uživatelích v databázi
      * @param bool $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
@@ -145,5 +164,98 @@ class Administration
             $requests[] = $request;
         }
         return $requests;
+    }
+    
+    /* Metody využívané AJAX kontrolerem AdministrateActionController */
+    
+    /**
+     * Metoda vykonávající zadané SQL dotazy a navracející jeho výsledky jako HTML
+     * @param string $queries SQL dotaz/y, v případě více dotazů musí být ukončeny středníky
+     * @return string Zformátovaný výstup dotazu jako HTML určené k zobrazení uživateli
+     */
+    public function executeSqlQueries(string $queries)
+    {
+        //Kontrola pro nebezpečná klíčová slova
+        $tempQuery = strtoupper($queries);
+        $cnt = count(self::DANGEROUS_SQL_KEYWORDS);
+        for ($i = 0; $i < $cnt; $i++)
+        {
+            if (strpos($tempQuery, self::DANGEROUS_SQL_KEYWORDS[$i]) !== false)
+            {
+                $word = self::DANGEROUS_SQL_KEYWORDS[$i];
+                return "<p>Váš příkaz obsahuje nebezpečné klíčové slovo (<b>$word</b>). Z toho důvodu byl příkaz zablokován.</p>";
+            }
+        }
+        
+        //Kontrola OK
+        
+        ob_start();
+        
+        $queries = rtrim($queries, ';'); //Odebrání posledního střeníku (pokud exisutje), aby následující příkaz vygeneroval čisté pole jednotlivých dotazů
+        $queries = explode(';',$queries); //Pro případ, že je zadáno více příkazů.
+        
+        Db::connect();
+        
+        $cnt = count($queries);
+        if (empty($cnt) && !empty($queries)){$cnt++;}     //Pokud není přítomen žádný středník (a byl odeslán nějaký text), provedeme ten jeden jediný, co nekončí středníkem
+        for ($i = 0; $i < $cnt; $i++)
+        {
+            echo '<p>';
+            $queryResult = Db::unpreparedQuery($queries[$i]);
+            if (gettype($queryResult) === 'boolean')
+            {
+                //Výsledek není tabulka
+                if ($queryResult)
+                {
+                    echo "Dotaz <i>$queries[$i]</i> byl úspěšně proveden.";
+                }
+                else
+                {
+                    echo "Při provádění dozazu <i>$queries[$i]</i> došlo k chybě.";
+                }
+            }
+            else
+            {
+                //Výsledek je tabulka
+                echo "Dotaz <i>$queries[$i]</i> byl úspěšně proveden, byly navráceny následující výsledky:";
+                echo '<table>';
+                
+                //Vypsání hlavičky tabulky
+                $returnedRow = $queryResult[0];
+                echo '<tr>';
+                foreach ($returnedRow as $returnedColumnName => $returnedCell)
+                {
+                    //Přeskočené sloupců oindexovanými čísly
+                    if (gettype($returnedColumnName) === 'integer'){ continue; }
+                    
+                    echo '<th>';
+                    echo $returnedColumnName;
+                    echo '</th>';
+                }
+                echo '</tr>';
+                
+                //Vypsání těla tabulky
+                foreach ($queryResult as $returnedRow)
+                {   
+                    echo '<tr>';
+                    foreach ($returnedRow as $returnedColumnName => $returnedCell)
+                    {
+                        //Přeskočení sloupců oindexovanými čísly (každý sloupec se v poli vyskytuje dvakrát - jednou indexovaný číslem a jednou názvem sloupce)
+                        if (gettype($returnedColumnName) === 'integer'){ continue; }
+                        
+                        echo '<td>';
+                        echo $returnedCell;
+                        echo '</td>';
+                    }
+                    echo '</tr>';
+                }
+                echo '</table>';
+            }
+            echo '</p>';
+        }
+        
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
     }
 }
