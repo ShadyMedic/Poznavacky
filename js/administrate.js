@@ -56,3 +56,21 @@ function sixthTab()
 	$("#tab6").show();
 	$("#tab6").addClass("activeTab");
 }
+
+/*-------------------------------------------------------*/
+/*-------------------------Tab 6-------------------------*/
+function sendSqlQuery()
+{
+	let query = $("#sqlQueryInput").val();
+	$.post('administrate-action',
+		{
+			action:"execute sql query",
+			query:query
+		},
+		function(response)
+		{
+			result = JSON.parse(response)['dbResult'];
+			$("#sqlResult").html(result);
+		}
+	);
+}
