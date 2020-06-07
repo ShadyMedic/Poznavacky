@@ -169,6 +169,23 @@ class Administration
     /* Metody využívané AJAX kontrolerem AdministrateActionController */
     
     /**
+     * Metoda vkládající HTML e-mailovou zprávu z formuláře v záložce "Poslat e-mail" do připravené šablony a navrací výsledné HTML
+     * @param string $rawMessage Obsah hlavního těla e-mailu (může být zformátován pomocí HTML)
+     * @param string $rawFooter Obsah patičky e-mailu (může být zformátován pomocí HTML)
+     * @return string Kompletní HTML těla e-mailu, které by bylo odesláno
+     */
+    public function previewEmail(string $rawMessage, string $rawFooter)
+    {
+        //Převod konců řádků na zobrazitelné <br> tagy
+        $rawMessage = nl2br($rawMessage);
+        $rawFooter = nl2br($rawFooter);
+        
+        $emailComposer = new EmailComposer();
+        $emailComposer->composeMail($emailComposer::EMAIL_TYPE_EMPTY_LAYOUT, array('content' => $rawMessage, 'footer' => $rawFooter));
+        return $emailComposer->getMail();
+    }
+    
+    /**
      * Metoda vykonávající zadané SQL dotazy a navracející jeho výsledky jako HTML
      * @param string $queries SQL dotaz/y, v případě více dotazů musí být ukončeny středníky
      * @return string Zformátovaný výstup dotazu jako HTML určené k zobrazení uživateli
