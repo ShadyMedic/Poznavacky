@@ -35,6 +35,22 @@ class AdministrateActionController extends Controller
         {
             switch ($_POST['action'])
             {
+                case 'preview email':
+                    $msg = $_POST['htmlMessage'];
+                    $footer = $_POST['htmlFooter'];
+                    $result = $administration->previewEmail($msg, $footer);
+                    echo json_encode(array('content' => $result));
+                    break;
+                case 'send email':
+                    $to = $_POST['addressee'];
+                    $subject = $_POST['subject'];
+                    $msg = $_POST['htmlMessage'];
+                    $footer = $_POST['htmlFooter'];
+                    $fromAddress = $_POST['fromAddress'];
+                    $sender = $_POST['sender'];
+                    $administration->sendEmail($to, $subject, $msg, $footer, $sender, $fromAddress);
+                    echo json_encode(array('message' => 'E-mail byl úspěšně odeslán'));
+                    break;
                 case 'execute sql query':
                     $query = $_POST['query'];
                     $result = $administration->executeSqlQueries($query);
