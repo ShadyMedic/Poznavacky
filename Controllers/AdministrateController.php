@@ -20,6 +20,8 @@ class AdministrateController extends Controller
         
         $administration = new Administration();
         
+        $this->data['loggedAdminName'] = UserManager::getName();
+        
         $this->data['users'] = $administration->getAllUsers(false);
         $this->data['classes'] = $administration->getAllClasses();
         $this->data['reports'] = $administration->getAdminReports();
