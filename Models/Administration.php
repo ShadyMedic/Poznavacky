@@ -144,7 +144,7 @@ class Administration
         $result = Db::fetchQuery('
         SELECT
         uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status",
-        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.kod,
+        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.poznavacky, tridy.kod,
         zadosti_jmena_tridy.zadosti_jmena_tridy_id, zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
         FROM zadosti_jmena_tridy
         JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.tridy_id
@@ -158,7 +158,7 @@ class Administration
         foreach ($result as $requestInfo)
         {
             $admin = new User($requestInfo['uzivatele_id'], $requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
-            $class = new ClassObject($requestInfo['tridy_id'], $requestInfo['nazev'], $requestInfo['c_status'], $requestInfo['kod'], $admin);
+            $class = new ClassObject($requestInfo['tridy_id'], $requestInfo['nazev'], $requestInfo['c_status'], $requestInfo['kod'], $requestInfo['poznavacky'], $admin);
             $request = new NameChangeRequest($requestInfo['zadosti_jmena_tridy_id'], $class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             
             $requests[] = $request;
