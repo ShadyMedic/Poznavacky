@@ -58,6 +58,12 @@ function sixthTab()
 }
 
 /*-------------------------------------------------------*/
+/*-----------------------Všeobecné-----------------------*/
+function startMail(addressee)
+{
+	$("#emailAddressee").val(addressee)	//Nastav adresu
+	fifthTab();	//Zobraz formulář
+}
 /*-------------------------Tab 5-------------------------*/
 var emailModified = true;	//Proměnná uchovávající informaci o tom, zda byl formulář pro odeslání e-mailu od posledního odeslání modifikován
 function emailModification()
