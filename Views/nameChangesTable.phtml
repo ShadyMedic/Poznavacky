@@ -15,10 +15,10 @@
     	<td><?= $request->getOldName(); ?></td>
     	<td><?= $request->getNewName(); ?></td>
     	<td>
-    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>
+    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event, "user", <?= $request->getId() ?>)' title='Přijmout'>
     			<img src='images/tick.svg'/>
     		</button>
-    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>
+    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event, "user", <?= $request->getId() ?>)' title='Zamítnout'>
     			<img src='images/cross.svg'/>
     		</button>
     		<?php if (empty($request->getRequestersEmail())) : ?>
@@ -41,10 +41,10 @@
     	<td><?= $request->getOldName(); ?></td>
     	<td><?= $request->getNewName(); ?></td>
     	<td>
-    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event)' title='Přijmout'>
+    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event, "class", <?= $request->getId() ?>)' title='Přijmout'>
     			<img src='images/tick.svg'/>
     		</button>
-    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event)' title='Zamítnout'>
+    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event, "class", <?= $request->getId() ?>)' title='Zamítnout'>
     			<img src='images/cross.svg'/>
     		</button>
     		<?php if (empty($request->getRequestersEmail())) : ?>

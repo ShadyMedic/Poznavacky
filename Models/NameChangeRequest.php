@@ -45,6 +45,15 @@ class NameChangeRequest
     }
     
     /**
+     * Metoda navracející ID této žádosti
+     * @return int ID žádosti v databázi
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Metoda navracející aktuální jméno třídy nebo uživatele
      * @return string Stávající jméno
      */
