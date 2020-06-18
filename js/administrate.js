@@ -64,6 +64,42 @@ function startMail(addressee)
 	$("#emailAddressee").val(addressee)	//Nastav adresu
 	fifthTab();	//Zobraz formulář
 }
+/*-------------------------Tab 1-------------------------*/
+/*-------------------------Tab 2-------------------------*/
+/*-------------------------Tab 3-------------------------*/
+/*-------------------------Tab 4-------------------------*/
+function acceptNameChange(event, objectType, requestId)
+{
+	let action = (objectType === "user") ? "accept user name change" : "accept class name change";
+	$.post('administrate-action',
+		{
+			action:action,
+			reqId:requestId,
+		},
+		function(response)
+		{
+			//TODO - reaguj na odpověď
+		}
+	);
+	//Odebrání žádosti z DOM
+	event.target.parentNode.parentNode.parentNode.remove();
+}
+function declineNameChange(event, objectType, requestId)
+{
+	let action = (objectType === "user") ? "decline user name change" : "decline class name change";
+	$.post('administrate-action',
+		{
+			action:action,
+			reqId:requestId,
+		},
+		function(response)
+		{
+			//TODO - reaguj na odpověď
+		}
+	);
+	//Odebrání žádosti z DOM
+	event.target.parentNode.parentNode.parentNode.remove();
+}
 /*-------------------------Tab 5-------------------------*/
 var emailModified = true;	//Proměnná uchovávající informaci o tom, zda byl formulář pro odeslání e-mailu od posledního odeslání modifikován
 function emailModification()
