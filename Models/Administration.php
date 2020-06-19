@@ -169,6 +169,31 @@ class Administration
     /* Metody využívané AJAX kontrolerem AdministrateActionController */
     
     /**
+     * Metoda řešící vyřízení žádosti o změnu jména uživatele nebo třídy
+     * V případě schválení je jméno uživatele nebo třídy změněno
+     * V obou případech je žádost odstraněna z databáze
+     * Uživatel následně obdrží e-mail s verdiktem (pokud jej zadal)
+     * @param int $requestId ID žádosti z databáze
+     * @param bool $classNameChange TRUE, pokud se žádost týká změny jména třídy, FALSE, pokud změny uživatelského jména
+     * @param bool $approved TRUE, pokud byla žádost schválena, FALSE, pokud zamítnuta
+     * @param string $reason V případě zamítnutí žádosti důvod jejího zamítnutí - je odesláno e-mailem uživateli; při schválení žádosti nepovinné
+     */
+    public function resolveNameChange(int $requestId, bool $classNameChange, bool $approved, string $reason = "")
+    {
+        $type = ($classNameChange) ? NameChangeRequest::TYPE_CLASS : NameChangeRequest::TYPE_USER;
+        $request = new NameChangeRequest($requestId, $type);
+        if ($approved)
+        {
+            $request->approve();
+        }
+        else
+        {
+            $request->decline($reason);
+        }
+        $request->erase();
+    }
+    
+    /**
      * Metoda vkládající HTML e-mailovou zprávu z formuláře v záložce "Poslat e-mail" do připravené šablony a navrací výsledné HTML
      * @param string $rawMessage Obsah hlavního těla e-mailu (může být zformátován pomocí HTML)
      * @param string $rawFooter Obsah patičky e-mailu (může být zformátován pomocí HTML)
