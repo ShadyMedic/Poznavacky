@@ -17,31 +17,80 @@ class NameChangeRequest
     /**
      * Konstruktor žádosti o změnu jména
      * @param int $id ID žádosti v databázi
-     * @param object $object Instance třídy ClassObject, pokud žádost požaduje změnu jména třídy, nebo instance třídy User, pokud žádost požaduje změnu jména uživatele
-     * @param string $newName Požadované nové jméno třídy nebo uživatele
-     * @param DateTime $requestedTime Čas, ve kterém byla žádost podána
+     * @param string $type Typ objektu žádosti (uživatel / třída); musí být hodnota jedné z konstant této třídy
+     * @param object $object Instance třídy ClassObject, pokud žádost požaduje změnu jména třídy, nebo instance třídy User, pokud žádost požaduje změnu jména uživatele; nepovinné, v případě nevyplnění jakéhokoliv nepovinného argumentu budou všechna data načtena z databáze podle ID a typu
+     * @param string $newName Požadované nové jméno třídy nebo uživatele; nepovinné, v případě nevyplnění jakéhokoliv nepovinného argumentu budou všechna data načtena z databáze podle ID a typu
+     * @param DateTime $requestedTime Čas, ve kterém byla žádost podána; nepovinné, v případě nevyplnění jakéhokoliv nepovinného argumentu budou všechna data načtena z databáze podle ID a typu
      * @throws BadMethodCallException V případě, že první argument není instance ClassObject nebo User
      */
-    public function __construct(int $id, object $object, string $newName, DateTime $requestedTime)
+    public function __construct(int $id, string $type, object $object = null, string $newName = "", DateTime $requestedTime = null)
     {
-        if ($object instanceof ClassObject)
+        $this->id = $id;
+        $this->type = $type;
+        
+        if ((!empty($id) && !empty($type)) && (empty($object) || empty($newName) || empty($requestedTime)))
         {
-            $this->object = $object;
-            $this->type = self::TYPE_CLASS;
+            //Je zadáno pouze ID a typ - načti ostatní data z databáze
+            $this->loadData();
+            return;
         }
-        else if ($object instanceof User)
+        
+        if (($type === self::TYPE_CLASS && $object instanceof ClassObject) || ($type === self::TYPE_USER && $object instanceof User))
         {
             $this->object = $object;
-            $this->type = self::TYPE_USER;
+            $this->type = $type;
         }
         else
         {
-            throw new BadMethodCallException('First argument must be instance of User or ClassObject');
+            throw new BadMethodCallException('Second argument must be a value of this class\' constants and third argument must be instance of User or ClassObject');
         }
         
-        $this->id = $id;
         $this->newName = $newName;
         $this->requestedAt = $requestedTime;
+    }
+    
+    /**
+     * Metoda načítající všechna potřebná data z databáze podle již uloženého ID žádosti a typu objektu žádosti a ukládající je jako vlastnosti objektu
+     */
+    private function loadData()
+    {
+        Db::connect();
+        
+        if ($this->type === self::TYPE_USER)
+        {
+            $result = Db::fetchQuery('
+            SELECT
+            uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status,
+            zadosti_jmena_uzivatele.nove, zadosti_jmena_uzivatele.cas
+            FROM zadosti_jmena_uzivatele
+            JOIN uzivatele ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.uzivatele_id
+            WHERE zadosti_jmena_uzivatele.zadosti_jmena_uzivatele_id = ? LIMIT 1;
+            ', array($this->id), false);
+            
+            $user = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+            $this->object = $user;
+            $this->newName = $result['nove'];
+            $this->requestedAt = $result['cas'];
+        }
+        else
+        {
+            $result = Db::fetchQuery('
+            SELECT
+            uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status",
+            tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.poznavacky, tridy.kod,
+            zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
+            FROM zadosti_jmena_tridy
+            JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.tridy_id
+            JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id
+            WHERE zadosti_jmena_tridy.zadosti_jmena_tridy_id = ? LIMIT 1;
+            ', array($this->id), false);
+            $admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['u_status']);
+            $class = new ClassObject($result['tridy_id'], $result['nazev'], $result['c_status'], $result['kod'], $result['poznavacky'], $admin);
+            
+            $this->object = $class;
+            $this->newName = $result['nove'];
+            $this->requestedAt = $result['cas'];
+        }
     }
     
     /**
@@ -77,7 +126,10 @@ class NameChangeRequest
         return $this->newName;
     }
     
-    
+    /**
+     * Metoda navracející e-mail žadatale o změnu jména (uživatele nebo správce třídy)
+     * @return User
+     */
     public function getRequestersEmail()
     {
         if ($this->type === self::TYPE_CLASS)
