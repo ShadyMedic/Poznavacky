@@ -7,9 +7,11 @@ class EmailComposer
 {
     public const EMAIL_TYPE_EMPTY_LAYOUT = 0;
     public const EMAIL_TYPE_PASSWORD_RECOVERY = 1;
-    public const EMAIL_TYPE_NAME_CHANGE_APPROVED = 2;
-    public const EMAIL_TYPE_NAME_CHANGE_DECLINED = 3;
-    public const EMAIL_TYPE_NEW_CLASS_REQUEST = 4;
+    public const EMAIL_TYPE_USER_NAME_CHANGE_APPROVED = 2;
+    public const EMAIL_TYPE_USER_NAME_CHANGE_DECLINED = 3;
+    public const EMAIL_TYPE_CLASS_NAME_CHANGE_APPROVED = 4;
+    public const EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED = 5;
+    public const EMAIL_TYPE_NEW_CLASS_REQUEST = 6;
     
     private $message;
     
@@ -33,14 +35,26 @@ class EmailComposer
                 $template = file_get_contents('Views/EmailTemplates/passwordRecovery.phtml');
                 $template = str_replace('<?= $recoveryLink ?>', $recoveryLink, $template);
                 break;
-            case self::EMAIL_TYPE_NAME_CHANGE_APPROVED:
-                $template = file_get_contents('Views/EmailTemplates/nameChangeApproved.phtml');
+            case self::EMAIL_TYPE_USER_NAME_CHANGE_APPROVED:
+                $template = file_get_contents('Views/EmailTemplates/usernameChangeApproved.phtml');
                 $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
                 $template = str_replace('<?= $oldName ?>', $oldName, $template);
                 $template = str_replace('<?= $newName ?>', $newName, $template);
                 break;
-            case self::EMAIL_TYPE_NAME_CHANGE_DECLINED:
-                $template = file_get_contents('Views/EmailTemplates/nameChangeDeclined.phtml');
+            case self::EMAIL_TYPE_USER_NAME_CHANGE_DECLINED:
+                $template = file_get_contents('Views/EmailTemplates/usernameChangeDeclined.phtml');
+                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
+                $template = str_replace('<?= $oldName ?>', $oldName, $template);
+                $template = str_replace('<?= $declineReason ?>', $declineReason, $template);
+                break;
+            case self::EMAIL_TYPE_CLASS_NAME_CHANGE_APPROVED:
+                $template = file_get_contents('Views/EmailTemplates/classnameChangeApproved.phtml');
+                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
+                $template = str_replace('<?= $oldName ?>', $oldName, $template);
+                $template = str_replace('<?= $newName ?>', $newName, $template);
+                break;
+            case self::EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED:
+                $template = file_get_contents('Views/EmailTemplates/classnameChangeDeclined.phtml');
                 $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
                 $template = str_replace('<?= $oldName ?>', $oldName, $template);
                 $template = str_replace('<?= $declineReason ?>', $declineReason, $template);
