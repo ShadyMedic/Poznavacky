@@ -140,4 +140,33 @@ class NameChangeRequest
         //Změna jména uživatele
         return $this->object['email'];
     }
+    
+    /**
+     * Metoda schvalující tuto žádost
+     * Jméno uživatele nebo třídy je změněno a žadatel obdrží e-mail (pokud jej zadal)
+     */
+    public function approve()
+    {
+        //TODO
+    }
+    
+    /**
+     * Metoda zamítající tuto žádost
+     * Pokud žadatel zadal svůj e-mail, obdrží zprávu s důvodem zamítnutí
+     * @param string $reason Důvod zamítnutí žádosti
+     */
+    public function decline(string $reason)
+    {
+        //TODO
+    }
+    
+    /**
+     * Metoda odstraňující záznam o této žádosti z databáze
+     * Data z vlastností této instance jsou vynulována
+     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
+     */
+    public function erase()
+    {
+        //TODO
+    }
 }
