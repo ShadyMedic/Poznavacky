@@ -147,7 +147,30 @@ class NameChangeRequest
      */
     public function approve()
     {
-        //TODO
+        //Změnit jméno
+        $tableName = ($this->type === self::TYPE_CLASS) ? 'tridy' : 'uzivatele';
+        $columnName = ($this->type === self::TYPE_CLASS) ? 'nazev' : 'jmeno';
+        $requestersId = ($this->type === self::TYPE_CLASS) ? $this->object->getId() : $this->object['id'];
+        Db::connect();
+        Db::executeQuery('UPDATE '.$tableName.' SET '.$columnName.' = ? WHERE '.$tableName.'_id = ?;', array($this->newName, $requestersId));
+        
+        //Odeslat e-mail
+        $addressee = $this->getRequestersEmail();
+        if (empty($addressee)){ return; }   //E-mail není zadán
+        $composer = new EmailComposer();
+        $sender = new EmailSender();
+        switch ($this->type)
+        {
+            case self::TYPE_USER:
+                $composer->composeMail(EmailComposer::EMAIL_TYPE_USER_NAME_CHANGE_APPROVED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'newName' => $this->newName));
+                $subject = 'Vaše žádost o změnu jména na '.$this->newName.' byla přijata';
+                break;
+            case self::TYPE_CLASS:
+                $composer->composeMail(EmailComposer::EMAIL_TYPE_CLASS_NAME_CHANGE_APPROVED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'newName' => $this->newName));
+                $subject = 'Vaše žádost o změnu jména třídy '.$this->getOldName().' na '.$this->newName.' byla schválena';
+                break;
+        }
+        $sender->sendMail($addressee, $subject, $composer->getMail());
     }
     
     /**
@@ -157,7 +180,23 @@ class NameChangeRequest
      */
     public function decline(string $reason)
     {
-        //TODO
+        //Odeslat e-mail
+        $addressee = $this->getRequestersEmail();
+        if (empty($addressee)){ return; }   //E-mail není zadán
+        $composer = new EmailComposer();
+        $sender = new EmailSender();
+        switch ($this->type)
+        {
+            case self::TYPE_USER:
+                $composer->composeMail(EmailComposer::EMAIL_TYPE_USER_NAME_CHANGE_DECLINED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'declineReason' => $reason));
+                $subject = 'Vaše žádost o změnu jména byla zamítnuta';
+                break;
+            case self::TYPE_CLASS:
+                $composer->composeMail(EmailComposer::EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'declineReason' => $reason));
+                $subject = 'Vaše žádost o změnu jména třídy '.$this->getOldName().' byla zamítnuta';
+                break;
+        }
+        $sender->sendMail($addressee, $subject, $composer->getMail());
     }
     
     /**
@@ -167,6 +206,13 @@ class NameChangeRequest
      */
     public function erase()
     {
-        //TODO
+        $tableName = ($this->type === self::TYPE_CLASS) ? 'zadosti_jmena_tridy' : 'zadosti_jmena_uzivatele';
+        Db::connect();
+        Db::executeQuery('DELETE FROM '.$tableName.' WHERE '.$tableName.'_id = ? LIMIT 1;', array($this->id));
+        $this->id = null;
+        $this->type = null;
+        $this->object = null;
+        $this->newName = null;
+        $this->requestedAt = null;
     }
 }

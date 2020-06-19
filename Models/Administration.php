@@ -191,6 +191,7 @@ class Administration
             $request->decline($reason);
         }
         $request->erase();
+        unset($request);
     }
     
     /**
