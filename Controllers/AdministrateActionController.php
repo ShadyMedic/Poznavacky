@@ -35,6 +35,18 @@ class AdministrateActionController extends Controller
         {
             switch ($_POST['action'])
             {
+                case 'accept user name change':
+                case 'accept class name change':
+                case 'decline user name change':
+                case 'decline class name change':
+                    $requestId = $_POST['reqId'];
+                    $classNameChange = (mb_stripos($_POST['action'], 'user') !== false) ? false : true;
+                    $approved = (mb_stripos($_POST['action'], 'decline') !== false) ? false : true;
+                    if (!$approved){ $reason = $_POST['reason']; }
+                    else { $reason = ""; }
+                    $administration->resolveNameChange($requestId, $classNameChange, $approved, $reason);
+                    echo json_encode(array('message' => 'Změna jména úspěšně schválena nebo zamítnuta'));
+                    break;
                 case 'preview email':
                     $msg = $_POST['htmlMessage'];
                     $footer = $_POST['htmlFooter'];
