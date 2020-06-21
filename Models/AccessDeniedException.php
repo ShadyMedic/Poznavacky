@@ -7,6 +7,7 @@
 class AccessDeniedException extends Exception
 {
     const REASON_UNEXPECTED = 'Něco se pokazilo. Opakujte prosím akci později a pokud problém přetrvá, kontaktujte správce';
+    const REASON_INSUFFICIENT_PERMISSION = 'Nemáte oprávnění k této akci';
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
     const REASON_NO_PASSWORD_GENERAL = 'Musíte zadat své heslo';
     const REASON_WRONG_PASSWORD_GENERAL = 'Špatné heslo';
@@ -70,7 +71,7 @@ class AccessDeniedException extends Exception
     const REASON_EMAIL_CHANGE_DUPLICATE_EMAIL = self::REASON_REGISTER_DUPLICATE_EMAIL;
     const REASON_ACCOUNT_DELETION_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
     const REASON_ACCOUNT_DELETION_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
-    const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžete odstranit svůj účet, protože spravujete nějakou třídu. Předejte správu tříd, které spravujete, jiným uživatelům pro uvolnění možnosti odstranit svůj účet';
+    const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžete odstranit svůj účet, protože spravujete nějakou třídu. Předejte správu tříd, které spravujete, jiným uživatelům pro uvolnění možnosti odstranit svůj účet.';
     const REASON_ADD_PICTURE_UNKNOWN_NATURAL = 'Pokoušíte se přidat obrázek k neznámé přírodnině';
     const REASON_ADD_PICTURE_DUPLICATE_PICTURE = 'Tento obrázek je již k této přírodnině přidán';
     const REASON_ADD_PICTURE_INVALID_FORMAT = 'Zadaná URL adresa nevede na obrázek v platném formátu';
@@ -78,6 +79,7 @@ class AccessDeniedException extends Exception
     const REASON_REPORT_INVALID_REASON = 'Neplatný důvod';
     const REASON_REPORT_INVALID_ADDITIONAL_INFORMATION = 'Neplatně vyplněné dodatečné informace';
     const REASON_REPORT_UNKNOWN_PICTURE = 'Neznámý obrázek';
+    const REASON_ADMINISTRATION_ACCOUNT_DELETION = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';
     const REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS = 'Neplatná adresa odesílatele';
     const REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS = 'Neplatná adresa adresáta';
     const REASON_SEND_EMAIL_EMPTY_FIELDS = 'S výjimkou patičky e-mailu musí být všechna pole vyplněna';
