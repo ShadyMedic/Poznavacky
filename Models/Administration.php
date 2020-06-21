@@ -169,6 +169,18 @@ class Administration
     /* Metody využívané AJAX kontrolerem AdministrateActionController */
     
     /**
+     * Metoda upravující uživatelova data v databázi po jejich změně administrátorem
+     * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
+     * @param int $userId ID uživatele, jehož data mají být změněna
+     * @param array $values Pole nových hodnot, podporované indexy jsou "addedPics", "guessedPics", "karma" a "status"
+     */
+    public function editUser(int $userId, array $values)
+    {
+        $user = new User($userId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt uživatele bude prakticky ihned zničen, můžeme využít tento malý hack
+        $user->updateAccount($values['addedPics'], $values['guessedPics'], $values['karma'], $values['status']);
+    }
+    
+    /**
      * Metoda odstraňující uživatelský účet a všechna jeho data z rozhodnutí administrátora
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda může být daný uživatel odstraněn
      * @param int $userId ID uživatele k odstranění

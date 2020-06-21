@@ -43,6 +43,37 @@ class User implements ArrayAccess
     }
     
     /**
+     * Metoda upravující některá data tohoto uživatele z rozhodnutí administrátora
+     * @param int $addedPictures Nový počet přidaných obrázků
+     * @param int $guessedPictures Nový počet uhodnutých obrázků
+     * @param int $karma Nová hodnota karmy
+     * @param string $status Nový status uživatele
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
+     * @return boolean TRUE, pokud jsou uživatelova data úspěšně aktualizována
+     */
+    public function updateAccount(int $addedPictures, int $guessedPictures, int $karma, string $status)
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola platnosti dat
+        if ($addedPictures < 0 || $guessedPictures < 0 || !($status === self::STATUS_ADMIN || $status === self::STATUS_CLASS_OWNER || $status === self::STATUS_MEMBER || $status === self::STATUS_GUEST))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_ACCOUNT_UPDATE_INVALID_DATA);
+        }
+        
+        //Kontrola dat OK
+        
+        Db::connect();
+        Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ?;', array($addedPictures, $guessedPictures, $karma, $status, $this->id), false);
+        
+        return true;
+    }
+    
+    /**
      * Metoda odstraňující tento uživatelský účet na základě rozhodnutí administrátora
      * Data z vlastností této instance jsou vynulována
      * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
