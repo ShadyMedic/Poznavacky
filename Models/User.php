@@ -62,12 +62,13 @@ class User implements ArrayAccess
         $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array($this->id));
         if ($administratedClasses['cnt'] > 0)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_DELETION);
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR);
         }
         
         //Kontrola dat OK
         
         //Odstranit uživatele z databáze
+        Db::connect();
         Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array($this->id));
         
         //Vymazat data z této instance uživatele

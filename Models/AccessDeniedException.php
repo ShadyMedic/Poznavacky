@@ -79,7 +79,7 @@ class AccessDeniedException extends Exception
     const REASON_REPORT_INVALID_REASON = 'Neplatný důvod';
     const REASON_REPORT_INVALID_ADDITIONAL_INFORMATION = 'Neplatně vyplněné dodatečné informace';
     const REASON_REPORT_UNKNOWN_PICTURE = 'Neznámý obrázek';
-    const REASON_ADMINISTRATION_ACCOUNT_DELETION = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';
+    const REASON_REPORT_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
     const REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS = 'Neplatná adresa odesílatele';
     const REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS = 'Neplatná adresa adresáta';
     const REASON_SEND_EMAIL_EMPTY_FIELDS = 'S výjimkou patičky e-mailu musí být všechna pole vyplněna';

@@ -37,9 +37,7 @@ class AdministrateActionController extends Controller
             {
                 case 'delete user':
                     $userId = $_POST['userId'];
-                    $user = new User($userId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt uživatele bude prakticky ihned zničen, můžeme využít tento malý hack
-                    $user->deleteAccountAsAdmin();
-                    unset($user);
+                    $administration->deleteUser($userId);
                     echo json_encode(array('messageType' => 'success', 'message' => 'Uživatel úspěšně odstraněn'));
                     break;
                 case 'accept user name change':

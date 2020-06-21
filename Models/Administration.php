@@ -169,6 +169,18 @@ class Administration
     /* Metody využívané AJAX kontrolerem AdministrateActionController */
     
     /**
+     * Metoda odstraňující uživatelský účet a všechna jeho data z rozhodnutí administrátora
+     * Je ověřeno, zda je přihlášený uživatel administrátorem a zda může být daný uživatel odstraněn
+     * @param int $userId ID uživatele k odstranění
+     */
+    public function deleteUser(int $userId)
+    {
+        $user = new User($userId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt uživatele bude prakticky ihned zničen, můžeme využít tento malý hack
+        $user->deleteAccountAsAdmin();
+        unset($user);
+    }
+    
+    /**
      * Metoda řešící vyřízení žádosti o změnu jména uživatele nebo třídy
      * V případě schválení je jméno uživatele nebo třídy změněno
      * V obou případech je žádost odstraněna z databáze
