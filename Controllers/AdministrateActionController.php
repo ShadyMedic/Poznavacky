@@ -24,7 +24,7 @@ class AdministrateActionController extends Controller
             exit();
         }
         //Kontrola, zda je přihlášený uživatel administrátorem
-        if (!AccessChecker::checkSystemAdmin(UserManager::getId()))
+        if (!AccessChecker::checkSystemAdmin())
         {
             header('HTTP/1.0 403 Forbidden');
             exit();

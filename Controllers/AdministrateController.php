@@ -13,7 +13,7 @@ class AdministrateController extends Controller
      */
     public function process(array $paremeters)
     {
-        if (!AccessChecker::checkSystemAdmin(UserManager::getId()))
+        if (!AccessChecker::checkSystemAdmin())
         {
             $this->redirect('error403');
         }
