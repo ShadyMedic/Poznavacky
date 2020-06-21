@@ -74,11 +74,16 @@ function acceptNameChange(event, objectType, requestId)
 	$.post('administrate-action',
 		{
 			action:action,
-			reqId:requestId,
+			reqId:requestId
 		},
 		function(response)
 		{
-			//TODO - reaguj na odpověď
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
 		}
 	);
 	//Odebrání žádosti z DOM
@@ -97,7 +102,12 @@ function declineNameChange(event, objectType, requestId)
 		},
 		function(response)
 		{
-			//TODO - reaguj na odpověď
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
 		}
 	);
 	//Odebrání žádosti z DOM
@@ -177,8 +187,14 @@ function sendMail()
 			
 			emailModified = false;
 			
-			let result = JSON.parse(response)['message'];
-			//TODO - nějak šikovněji zobrazit chybovou nebo úspěchovou hlášku
+			response = JSON.parse(response)['message']
+			{
+				if (response["messageType"] === "error" || response["messageType"] === "success")
+				{
+					//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+					alert(response["message"]);
+				}
+			}
 			alert(result);
 		}
 	);
