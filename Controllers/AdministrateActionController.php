@@ -35,6 +35,22 @@ class AdministrateActionController extends Controller
         {
             switch ($_POST['action'])
             {
+                case 'update user':
+                    $userId = $_POST['userId'];
+                    $addedPics = $_POST['addedPics'];
+                    $guessedPics = $_POST['guessedPics'];
+                    $karma = $_POST['karma'];
+                    $status = $_POST['status'];
+                    
+                    $values = array(
+                        'addedPics' => $addedPics,
+                        'guessedPics' => $guessedPics,
+                        'karma' => $karma,
+                        'status' => $status
+                    );
+                    $administration->editUser($userId, $values);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Údaje uživatele úspěšně upraveny'));
+                    break;
                 case 'delete user':
                     $userId = $_POST['userId'];
                     $administration->deleteUser($userId);
