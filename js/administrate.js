@@ -65,6 +65,34 @@ function startMail(addressee)
 	fifthTab();	//Zobraz formulář
 }
 /*-------------------------Tab 1-------------------------*/
+function editUser()
+{
+	//TODO
+}
+function deleteUser(userId)
+{
+	if (!confirm("Opravdu chcete odstranit tohoto uživatele?\nTato akce je nevratná!"))
+	{
+		return;
+	}
+	$.post('administrate-action',
+		{
+			action: 'delete user',
+			userId: userId
+		},
+		function(response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error" || response["messageType"] === "success")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+	//Odebrání uživatele z DOM
+	event.target.parentNode.parentNode.parentNode.remove();
+}
 /*-------------------------Tab 2-------------------------*/
 /*-------------------------Tab 3-------------------------*/
 /*-------------------------Tab 4-------------------------*/

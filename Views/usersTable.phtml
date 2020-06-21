@@ -76,7 +76,7 @@
                 <?php endif ?>
                     <img src='images/mail.svg'/>
                 </button>
-                <button class='userAction activeBtn' onclick='deleteUser(event)' title='Odstranit'>
+                <button class='userAction activeBtn' onclick='deleteUser(<?= $user['id'] ?>)' title='Odstranit'>
                     <img src='images/cross.svg'/>
                 </button>
             </td>
