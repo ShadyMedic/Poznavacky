@@ -246,6 +246,8 @@ class LoggedUser extends User
     /**
      * Metoda ověřující heslo přihlášeného uživatele a v případě úspěchu odstraňující jeho uživatelský účet
      * Po odstranění z databáze jsou uživatelova data vymazána i ze $_SESSION
+     * Data z vlastností této instance jsou vynulována
+     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
      * @param string $password Heslo přihlášeného uživatele pro ověření
      * @throws AccessDeniedException Pokud není heslo správné, vyplněné nebo uživatel nemůže smazat svůj účet
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze a odhlášen
@@ -275,6 +277,22 @@ class LoggedUser extends User
         
         //Odhlásit uživatele
         unset($_SESSION['user']);
+        
+        //Vymazat data z této instance uživatele
+        $this->id = null;
+        $this->hash = null;
+        $this->lastChangelog = null;
+        $this->lastLevel = null;
+        $this->lastFolder = null;
+        $this->theme = null;
+        $this->name = null;
+        $this->email = null;
+        $this->lastLogin = null;
+        $this->addedPictures = null;
+        $this->guessedPictures = null;
+        $this->karma = null;
+        $this->status = null;
+        
         return true;
     }
 }
