@@ -68,6 +68,14 @@
                 <button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>
                     <img src='images/pencil.svg'/>
                 </button>
+                <div class="userEditButtons" style="display:none;">
+                    <button class='userEditAction activeBtn' onclick='confirmUserEdit(<?= $user['id'] ?>)' title='Uložit'>
+                    	<img src='images/tick.svg'/>
+                    </button>
+                    <button class='userEditAction activeBtn' onclick='cancelUserEdit()' title='Zrušit'>
+                    	<img src='images/cross.svg'/>
+                    </button>
+                </div>
                 <?php if (empty($user['email'])) : ?>
                 <button class='userAction grayscale' disabled>
                 <?php endif ?>
