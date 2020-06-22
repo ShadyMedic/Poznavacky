@@ -56,6 +56,18 @@ class AdministrateActionController extends Controller
                     $administration->deleteUser($userId);
                     echo json_encode(array('messageType' => 'success', 'message' => 'Uživatel úspěšně odstraněn'));
                     break;
+                case 'update class':
+                    $classId = $_POST['classId'];
+                    $status = $_POST['status'];
+                    $code = $_POST['code'];
+                    
+                    $values = array(
+                        'status' => $status,
+                        'code' => $code
+                    );
+                    $administration->editClass($classId, $values);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Přístupové údaje třídy úspěšně upraveny'));
+                    break;
                 case 'delete class':
                     $classId = $_POST['classId'];
                     $administration->deleteClass($classId);

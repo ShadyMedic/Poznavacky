@@ -341,6 +341,41 @@ class ClassObject
     }
     
     /**
+     * Metoda upravující přístupová data této třídy z rozhodnutí administrátora
+     * @param string $status Nový status třídy (musí být jedna z konstant této třídy)
+     * @param int|NULL $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked")
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
+     * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     */
+    public function updateAccessData(string $status, $code)
+    {
+        //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
+        if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
+        {
+            $code = null;
+        }
+        
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola platnosti dat
+        if (($code !== null && $code < 0 || $code > 9999) || !($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_PRIVATE || $status === self::CLASS_STATUS_LOCKED))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA);
+        }
+        
+        //Kontrola dat OK
+        
+        Db::connect();
+        Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ?;', array($status, $code, $this->id), false);
+        
+        return true;
+    }
+    
+    /**
      * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí administrátora
      * Data z vlastností této instance jsou vynulována
      * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()

@@ -193,6 +193,18 @@ class Administration
     }
     
     /**
+     * Metoda upravující přístupová data třídy v databázi po jejich změně administrátorem
+     * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
+     * @param int $classId ID třídy, jejíž data mají být změněna
+     * @param array $values Pole nových hodnot, podporované indexy jsou "status" a "code"
+     */
+    public function editClass(int $classId, array $values)
+    {
+        $class = new ClassObject($classId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
+        $class->updateAccessData($values['status'], $values['code']);
+    }
+    
+    /**
      * Metoda odstraňující třídu z databáze společně se všemi jejími poznávačkami, skupinami, přírodninami, obrázky a hlášeními
      * @param int $classId ID třídy k odstranění
      */
