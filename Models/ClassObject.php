@@ -153,9 +153,17 @@ class ClassObject
         
         Db::connect();
         $result = Db::fetchQuery('SELECT poznavacky_id,nazev,casti FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
-        foreach ($result as $groupData)
+        if ($result === false || count($result) === 0)
         {
-            $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
+            //Žádné poznávačky nenalezeny
+            $this->groups = array();
+        }
+        else
+        {
+            foreach ($result as $groupData)
+            {
+                $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
+            }
         }
         
         if (!isset($this->groupsCount)){ $this->groupsCount = count($this->groups); }
@@ -330,6 +338,41 @@ class ClassObject
         Db::connect();
         $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status FROM tridy JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id WHERE tridy_id = ?;', array($this->id), false);
         $this->admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+    }
+    
+    /**
+     * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí administrátora
+     * Data z vlastností této instance jsou vynulována
+     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
+     * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
+     */
+    public function disableAsAdmin()
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola dat OK
+        
+        //Odstranit třídu
+        Db::connect();
+        Db::executeQuery('DELETE FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id));
+        
+        //Vymazat data z této instance třídy
+        $this->id = null;
+        $this->name = null;
+        $this->email = null;
+        $this->status = null;
+        $this->code = null;
+        $this->groups = null;
+        $this->groupsCount = null;
+        $this->admin = null;
+        $this->accessCheckResult = null;
+        
+        return true;
     }
 }
 

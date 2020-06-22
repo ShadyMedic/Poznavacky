@@ -177,9 +177,17 @@ class Part
         
         Db::connect();
         $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky FROM prirodniny WHERE casti_id = ?', array($this->id), true);
-        foreach ($result as $naturalData)
+        if ($result === false || count($result) === 0)
         {
-            $this->naturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this->getGroup(), $this, $naturalData['obrazky']);
+            //Žádné části přírodniny
+            $this->naturals = array();
+        }
+        else
+        {
+            foreach ($result as $naturalData)
+            {
+                $this->naturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this->getGroup(), $this, $naturalData['obrazky']);
+            }
         }
     }
 }

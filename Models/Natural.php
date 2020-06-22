@@ -156,10 +156,18 @@ class Natural
         
         Db::connect();
         $result = Db::fetchQuery('SELECT obrazky_id,zdroj,povoleno FROM obrazky WHERE prirodniny_id = ?', array($this->id), true);
-        foreach ($result as $pictureData)
+        if ($result === false || count($result) === 0)
         {
-            $status = ($pictureData['povoleno'] === 1) ? true : false;
-            $this->pictures[] = new Picture($pictureData['obrazky_id'], $pictureData['zdroj'], $this, $status);
+            //Žádné obrázky nenalezeny
+            $this->pictures = array();
+        }
+        else
+        {
+            foreach ($result as $pictureData)
+            {
+                $status = ($pictureData['povoleno'] === 1) ? true : false;
+                $this->pictures[] = new Picture($pictureData['obrazky_id'], $pictureData['zdroj'], $this, $status);
+            }
         }
     }
     
