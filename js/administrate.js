@@ -69,52 +69,52 @@ var currentUserValues = new Array(4);
 function editUser(event)
 {
 	//Dočasné znemožnění ostatních akcí u všech uživatelů
-	$(".userAction:not(.grayscale)").addClass("grayscale_temp");
+	$(".userAction:not(.grayscale)").addClass("grayscale_temp_user");
 	$(".userAction").addClass("grayscale");
 	$(".userAction").attr("disabled", "");
 	
 	//Získat <tr> element upravované řádky
 	let row = $(event.target.parentNode.parentNode.parentNode);
-	row.attr("id", "editableRow");
+	row.attr("id", "editableUserRow");
 	
 	//Uložení současných hodnot
 	for (let i = 0; i <= 3; i++)
 	{
-		currentUserValues[i] = $("#editableRow .userField:eq("+ i +")").val();
+		currentUserValues[i] = $("#editableUserRow .userField:eq("+ i +")").val();
 	}
 	
-	$("#editableRow .userAction").hide();					//Skrytí ostatních tlačítek akcí
-	$("#editableRow .userEditButtons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
-	$("#editableRow .userField").addClass("editableField");	//Obarvení políček (//TODO)
-	$("#editableRow .userField").removeAttr("readonly");	//Umožnění editace (pro <input>)
-	$("#editableRow .userField").removeAttr("disabled");	//Umožnění editace (pro <select>)
+	$("#editableUserRow .userAction").hide();					//Skrytí ostatních tlačítek akcí
+	$("#editableUserRow .userEditButtons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
+	$("#editableUserRow .userField").addClass("editableField");	//Obarvení políček (//TODO)
+	$("#editableUserRow .userField").removeAttr("readonly");	//Umožnění editace (pro <input>)
+	$("#editableUserRow .userField").removeAttr("disabled");	//Umožnění editace (pro <select>)
 }
 function cancelUserEdit()
 {
 	//Opětovné zapnutí ostatních tlačítek akcí
-	$(".grayscale_temp").removeAttr("disabled");
-	$(".grayscale_temp").removeClass("grayscale grayscale_temp");
+	$(".grayscale_temp_user").removeAttr("disabled");
+	$(".grayscale_temp_user").removeClass("grayscale grayscale_temp_user");
 	
 	//Obnova hodnot vstupních polí
 	for (let i = 0; i <= 3; i++)
 	{
-		$("#editableRow .userField:eq("+ i +")").val(currentUserValues[i]);
+		$("#editableUserRow .userField:eq("+ i +")").val(currentUserValues[i]);
 	}
 	
-	$("#editableRow .userAction").show();						//Znovuzobrazení ostatních tlačítek akcí
-	$("#editableRow .userEditButtons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
-	$("#editableRow .userField").removeClass("editableField");	//Odbarvení políček
-	$("#editableRow input.userField").attr("readonly", "");			//Umožnění editace (pro <input>)
-	$("#editableRow select.userField").attr("disabled", "");			//Umožnění editace (pro <select>)
+	$("#editableUserRow .userAction").show();						//Znovuzobrazení ostatních tlačítek akcí
+	$("#editableUserRow .userEditButtons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
+	$("#editableUserRow .userField").removeClass("editableField");	//Odbarvení políček
+	$("#editableUserRow input.userField").attr("readonly", "");		//Znemožnění editace (pro <input>)
+	$("#editableUserRow select.userField").attr("disabled", "");	//Znemožnění editace (pro <select>)
 
-	$("#editableRow").removeAttr("id");
+	$("#editableUserRow").removeAttr("id");
 }
 function confirmUserEdit(userId)
 {
 	//Uložení nových hodnot
 	for (let i = 0; i <= 3; i++)
 	{
-		currentUserValues[i] = $("#editableRow .userField:eq("+ i +")").val();
+		currentUserValues[i] = $("#editableUserRow .userField:eq("+ i +")").val();
 	}
 	
 	//Odeslat data na server

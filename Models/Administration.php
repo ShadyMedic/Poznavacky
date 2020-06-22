@@ -198,8 +198,8 @@ class Administration
      */
     public function deleteClass(int $classId)
     {
-        $class = new ClassObject($classId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt uživatele bude prakticky ihned zničen, můžeme využít tento malý hack
-        $class->disableAsAdmin();
+        $class = new ClassObject($classId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
+        $class->deleteAsAdmin();
         unset($class);
     }
     

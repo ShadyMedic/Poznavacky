@@ -347,7 +347,7 @@ class ClassObject
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
      */
-    public function disableAsAdmin()
+    public function deleteAsAdmin()
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         if (!AccessChecker::checkSystemAdmin())

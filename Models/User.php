@@ -62,7 +62,7 @@ class User implements ArrayAccess
         //Kontrola platnosti dat
         if ($addedPictures < 0 || $guessedPictures < 0 || !($status === self::STATUS_ADMIN || $status === self::STATUS_CLASS_OWNER || $status === self::STATUS_MEMBER || $status === self::STATUS_GUEST))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_ACCOUNT_UPDATE_INVALID_DATA);
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA);
         }
         
         //Kontrola dat OK
