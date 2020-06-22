@@ -170,6 +170,108 @@ function deleteUser(userId)
 	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 2-------------------------*/
+var currentClassValues = new Array(2);
+function editClass(event)
+{
+	//Dočasné znemožnění ostatních akcí u všech tříd
+	$(".classAction:not(.grayscale)").addClass("grayscale_temp_class");
+	$(".classAction").addClass("grayscale");
+	$(".classAction").attr("disabled", "");
+	
+	//Získat <tr> element upravované řádky
+	let row = $(event.target.parentNode.parentNode.parentNode);
+	row.attr("id", "editableClassRow");
+	
+	//Uložení současných hodnot
+	for (let i = 0; i <= 1; i++)
+	{
+		currentClassValues[i] = $("#editableClassRow .classField:eq("+ i +")").val();
+	}
+	
+	$("#editableClassRow .classAction").hide();						//Skrytí ostatních tlačítek akcí
+	$("#editableClassRow .classEditButtons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
+	$("#editableClassRow .classField").addClass("editableField");	//Obarvení políček (//TODO)
+	$("#editableClassRow .classField").removeAttr("disabled");		//Umožnění editace (pro <select>)
+	classStatusEdited();		//Umožnění nastavení kódu třídy, pokud je současný stav nastaven na "private" a kód tak má smysl
+}
+function classStatusEdited()
+{
+	let newStatus = $("#editableClassRow select.classField").val();
+	if (newStatus !== "private")
+	{
+		//Kód nemá smysl --> vymazat jej
+		$("#editableClassRow input.classField").val("");
+		$("#editableClassRow input.classField").attr("readonly", "");
+	}
+	else
+	{
+		//Je potřeba nastavit kód --> umožnit editaci
+		if (currentClassValues[1] === "")
+		{
+			$("#editableClassRow input.classField").val("0000");
+		}
+		else
+		{
+			$("#editableClassRow input.classField").val(currentClassValues[1]);
+		}
+		
+		$("#editableClassRow input.classField").removeAttr("readonly");
+	}
+}
+function cancelClassEdit()
+{
+	//Opětovné zapnutí ostatních tlačítek akcí
+	$(".grayscale_temp_class").removeAttr("disabled");
+	$(".grayscale_temp_class").removeClass("grayscale grayscale_temp_class");
+	
+	//Obnova hodnot vstupních polí
+	for (let i = 0; i <= 1; i++)
+	{
+		$("#editableClassRow .classField:eq("+ i +")").val(currentClassValues[i]);
+	}
+	
+	$("#editableClassRow .classAction").show();							//Znovuzobrazení ostatních tlačítek akcí
+	$("#editableClassRow .classEditButtons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
+	$("#editableClassRow .classField").removeClass("editableField");	//Odbarvení políček
+	$("#editableClassRow input.classField").attr("readonly", "");		//Znemožnit editaci (pro <input>)
+	$("#editableClassRow select.classField").attr("disabled", "");		//Znemožnit editaci (pro <select>)
+
+	$("#editableClassRow").removeAttr("id");
+}
+function confirmClassEdit(classId)
+{
+	//Uložení nových hodnot
+	for (let i = 0; i <= 1; i++)
+	{
+		currentClassValues[i] = $("#editableClassRow .classField:eq("+ i +")").val();
+	}
+	
+	//Odeslat data na server
+	$.post("administrate-action",
+		{
+			action: 'update class',
+			classId: classId,
+			code: currentClassValues[1],
+			status: currentClassValues[0]
+		},
+		function (response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "success")
+			{
+				//Reset DOM
+				cancelClassEdit();
+				//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+				//alert(response["message"]);
+			}
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+}
 function deleteClass(classId)
 {
 	if (!confirm("Opravdu chcete odstranit tuto třídu?\nTato akce je nevratná!"))

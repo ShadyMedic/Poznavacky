@@ -39,7 +39,7 @@
             	</table>
             </td>
             <td>
-                <select disabled class='classField'>
+                <select disabled class='classField' onchange='classStatusEdited()'>
                     <?php if ($class->getStatus() === ClassObject::CLASS_STATUS_PUBLIC) : ?>
                     <option selected><?= ClassObject::CLASS_STATUS_PUBLIC ?></option>
                     <?php endif ?>
@@ -66,10 +66,18 @@
                 <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='classField'/>
             </td>
             <td>
-                <button class='classAction activeBtn editButton' onclick='editUser(event)' title='Upravit status a kód'>
+                <button class='classAction activeBtn editButton' onclick='editClass(event)' title='Upravit status a kód'>
                     <img src='images/pencil.svg'/>
                 </button>
-                <button class='classAction activeBtn editButton onclick='changeClassAdmin(event)' title='Změnit správce'>
+                <div class="classEditButtons" style="display:none;">
+                    <button class='classEditAction activeBtn' onclick='confirmClassEdit(<?= $class->getId() ?>)' title='Uložit'>
+                    	<img src='images/tick.svg'/>
+                    </button>
+                    <button class='classEditAction activeBtn' onclick='cancelClassEdit()' title='Zrušit'>
+                    	<img src='images/cross.svg'/>
+                    </button>
+                </div>
+                <button class='classAction activeBtn editButton' onclick='changeClassAdmin(event)' title='Změnit správce'>
                 	<img src='images/management.svg'/>
                 </button>
                 <button class='classAction activeBtn' onclick='deleteClass(<?= $class->getId() ?>)' title='Odstranit'>
