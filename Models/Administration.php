@@ -193,6 +193,17 @@ class Administration
     }
     
     /**
+     * Metoda odstraňující třídu z databáze společně se všemi jejími poznávačkami, skupinami, přírodninami, obrázky a hlášeními
+     * @param int $classId ID třídy k odstranění
+     */
+    public function deleteClass(int $classId)
+    {
+        $class = new ClassObject($classId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt uživatele bude prakticky ihned zničen, můžeme využít tento malý hack
+        $class->disableAsAdmin();
+        unset($class);
+    }
+    
+    /**
      * Metoda řešící vyřízení žádosti o změnu jména uživatele nebo třídy
      * V případě schválení je jméno uživatele nebo třídy změněno
      * V obou případech je žádost odstraněna z databáze

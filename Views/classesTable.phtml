@@ -72,7 +72,7 @@
                 <button class='classAction activeBtn editButton onclick='changeClassAdmin(event)' title='Změnit správce'>
                 	<img src='images/management.svg'/>
                 </button>
-                <button class='classAction activeBtn' onclick='deleteClass(event)' title='Odstranit'>
+                <button class='classAction activeBtn' onclick='deleteClass(<?= $class->getId() ?>)' title='Odstranit'>
                     <img src='images/cross.svg'/>
                 </button>
             </td>

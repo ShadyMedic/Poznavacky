@@ -161,7 +161,7 @@ function deleteUser(userId)
 			response = JSON.parse(response);
 			if (response["messageType"] === "error" || response["messageType"] === "success")
 			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
 		}
@@ -170,6 +170,30 @@ function deleteUser(userId)
 	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 2-------------------------*/
+function deleteClass(classId)
+{
+	if (!confirm("Opravdu chcete odstranit tuto třídu?\nTato akce je nevratná!"))
+	{
+		return;
+	}
+	$.post('administrate-action',
+		{
+			action: 'delete class',
+			classId: classId
+		},
+		function(response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error" || response["messageType"] === "success")
+			{
+				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+	//Odebrání třídy z DOM
+	event.target.parentNode.parentNode.parentNode.remove();
+}
 /*-------------------------Tab 3-------------------------*/
 /*-------------------------Tab 4-------------------------*/
 function acceptNameChange(event, objectType, requestId)
