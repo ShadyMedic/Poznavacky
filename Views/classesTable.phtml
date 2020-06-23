@@ -20,12 +20,14 @@
                 <?= $class->getGroupsCount() ?>
             </td>
             <td>
-            	<table>
+            	<table class='classAdminTable'>
             		<tr>
-            			<td>Jméno: </td><td><?= $class->getAdmin()['name'] ?></td>
+            			<td>Jméno: </td>
+            			<td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" onchange='adminNameChanged()' class='classAdminField'/></td>
             		</tr>
             		<tr>
-            			<td>ID: </td><td><?= $class->getAdmin()['id'] ?></td>
+            			<td>ID: </td>
+            			<td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" onchange='adminIdChanged()' class='classAdminField'/></td>
             		</tr>
             		<tr>
             			<td>E-mail: </td><td><a onclick="startMail('<?= $class->getAdmin()['email'] ?>')"><?= $class->getAdmin()['email'] ?></td>
@@ -74,6 +76,14 @@
                     	<img src='images/tick.svg'/>
                     </button>
                     <button class='classEditAction activeBtn' onclick='cancelClassEdit()' title='Zrušit'>
+                    	<img src='images/cross.svg'/>
+                    </button>
+                </div>
+                <div class="classEditAdminButtons" style="display:none;">
+                    <button class='classEditAdminAction activeBtn' onclick='confirmClassAdminEdit(<?= $class->getId() ?>)' title='Uložit'>
+                    	<img src='images/tick.svg'/>
+                    </button>
+                    <button class='classEditAdminAction activeBtn' onclick='cancelClassAdminEdit()' title='Zrušit'>
                     	<img src='images/cross.svg'/>
                     </button>
                 </div>

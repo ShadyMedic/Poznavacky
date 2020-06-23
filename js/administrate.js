@@ -272,6 +272,114 @@ function confirmClassEdit(classId)
 		}
 	);
 }
+var currentClassAdminValues = new Array(2);
+var changedIdentifier;
+function changeClassAdmin(event)
+{
+	//Dočasné znemožnění ostatních akcí u všech tříd
+	$(".classAction:not(.grayscale)").addClass("grayscale_temp_class");
+	$(".classAction").addClass("grayscale");
+	$(".classAction").attr("disabled", "");
+	
+	//Získat <tr> element upravované řádky
+	let row = $(event.target.parentNode.parentNode.parentNode);
+	row.attr("id", "editableClassAdminRow");
+	
+	//Uložení současných hodnot
+	for (let i = 0; i <= 1; i++)
+	{
+		currentClassAdminValues[i] = $("#editableClassAdminRow .classAdminTable .classAdminField:eq("+ i +")").val();
+	}
+	
+	$("#editableClassAdminRow .classAction").hide();											//Skrytí ostatních tlačítek akcí
+	$("#editableClassAdminRow .classEditAdminButtons").show();									//Zobrazení tlačítek pro uložení nebo zrušení editace
+	$("#editableClassAdminRow .classAdminTable .classAdminField").addClass("editableField");	//Obarvení políček (//TODO)
+	$("#editableClassAdminRow .classAdminField").removeAttr("readonly");						//Umožnění editace
+}
+function adminNameChanged()
+{
+	changedIdentifier = "name";
+	if ($("#editableClassAdminRow .classAdminField:eq(0)").val() === currentClassAdminValues[0])
+	{
+		//Umožnit změnu ID - jméno je stejné jako na začátku
+		$("#editableClassAdminRow .classAdminField:eq(1)").removeAttr("readonly");
+	}
+	else
+	{
+		//Znemožnit změnu ID - jméno se změnilo
+		$("#editableClassAdminRow .classAdminField:eq(1)").attr("readonly", "");
+	}
+}
+function adminIdChanged()
+{
+	changedIdentifier = "id";
+	if ($("#editableClassAdminRow .classAdminField:eq(1)").val() === currentClassAdminValues[1])
+	{
+		//Umožnit změnu ID - jméno je stejné jako na začátku
+		$("#editableClassAdminRow .classAdminField:eq(0)").removeAttr("readonly");
+	}
+	else
+	{
+		//Znemožnit změnu ID - jméno se změnilo
+		$("#editableClassAdminRow .classAdminField:eq(0)").attr("readonly", "");
+	}
+}
+function cancelClassAdminEdit()
+{
+	//Opětovné zapnutí ostatních tlačítek akcí
+	$(".grayscale_temp_class").removeAttr("disabled");
+	$(".grayscale_temp_class").removeClass("grayscale grayscale_temp_class");
+	
+	//Obnova hodnot vstupních polí
+	for (let i = 0; i <= 1; i++)
+	{
+		$("#editableClassAdminRow .classAdminTable .classAdminField:eq("+ i +")").val(currentClassAdminValues[i]);
+	}
+	
+	$("#editableClassAdminRow .classAction").show();											//Znovuzobrazení ostatních tlačítek akcí
+	$("#editableClassAdminRow .classEditAdminButtons").hide();									//Skrytí tlačítek pro uložení nebo zrušení editace
+	$("#editableClassAdminRow .classAdminTable .classAdminField").removeClass("editableField");	//Odbarvení políček
+	$("#editableClassAdminRow .classAdminField").attr("readonly", "");							//Znemožnit editaci (pro <input>)
+	
+	$("#editableClassAdminRow").removeAttr("id");
+}
+function confirmClassAdminEdit(classId)
+{
+	//Uložení nových hodnot
+	for (let i = 0; i <= 1; i++)
+	{
+		currentClassAdminValues[i] = $("#editableClassAdminRow .classAdminField:eq("+ i +")").val();
+	}
+	
+	//Odeslat data na server
+	$.post("administrate-action",
+		{
+			action: 'change class admin',
+			classId: classId,
+			changedIdentifier: changedIdentifier,
+			adminId: currentClassAdminValues[0],
+			adminName: currentClassAdminValues[1]
+		},
+		function (response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "success")
+			{
+				//Reset DOM
+				cancelClassAdminEdit();
+				//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+				//alert(response["message"]);
+				
+				//TODO - aktualizuj pole jako E-mail, karma a status v DOM
+			}
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+}
 function deleteClass(classId)
 {
 	if (!confirm("Opravdu chcete odstranit tuto třídu?\nTato akce je nevratná!"))
