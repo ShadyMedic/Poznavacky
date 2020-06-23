@@ -345,11 +345,8 @@ function cancelClassAdminEdit()
 }
 function confirmClassAdminEdit(classId)
 {
-	//Uložení nových hodnot
-	for (let i = 0; i <= 1; i++)
-	{
-		currentClassAdminValues[i] = $("#editableClassAdminRow .classAdminField:eq("+ i +")").val();
-	}
+	let newId = $("#editableClassAdminRow .classAdminTable .classAdminField:eq(0)").val();
+	let newName = $("#editableClassAdminRow .classAdminTable .classAdminField:eq(1)").val();
 	
 	//Odeslat data na server
 	$.post("administrate-action",
@@ -357,20 +354,53 @@ function confirmClassAdminEdit(classId)
 			action: 'change class admin',
 			classId: classId,
 			changedIdentifier: changedIdentifier,
-			adminId: currentClassAdminValues[0],
-			adminName: currentClassAdminValues[1]
+			adminId: $("#editableClassAdminRow .classAdminTable .classAdminField:eq(1)").val(),
+			adminName: $("#editableClassAdminRow .classAdminTable .classAdminField:eq(0)").val()
 		},
 		function (response)
 		{
 			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
+				//Aktualizace údajů o správci třídy v DOM
+				let newName = response["newName"];
+				let newId = response["newId"];
+				let newEmail = response["newEmail"];
+				let newKarma = response["newKarma"];
+				let newStatus = response["newStatus"];
+				
+				currentClassAdminValues[0] = newName;
+				currentClassAdminValues[1] = newId;
+				$("#editableClassAdminRow .classAdminTable .classAdminData:eq(0)").text(newEmail);
+				$("#editableClassAdminRow .classAdminTable .classAdminData:eq(1)").text(newKarma);
+				$("#editableClassAdminRow .classAdminTable .classAdminData:eq(2)").text(newStatus);
+				
+				//Vypnutí nebo zapnutí tlačítka pro kontaktování správce třídy a změna adresáta předávaného jako parametr
+				if (newEmail.length === 0)
+				{
+					//Nový správce nemá e-mail --> vypnout tlačítko
+					$("#editableClassAdminRow .classAdminMailButton").attr("disabled", "");
+					$("#editableClassAdminRow .classAdminMailButton").addClass("grayscale");
+					$("#editableClassAdminRow .classAdminMailButton").removeClass("grayscale_temp_class");	//Aby nebyla třída "grayscale" odebrána při zavolání metody cancelClassAdminEdit() níže
+					$("#editableClassAdminRow .classAdminMailButton").removeClass("activeBtn");
+					$("#editableClassAdminRow .classAdminMailButton").removeAttr("onclick");
+					$("#editableClassAdminRow .classAdminMailButton").removeAttr("title");
+				}
+				else
+				{
+					//Zapnutí tlačítka a aktualizace e-mailové adresy adresáta
+					$("#editableClassAdminRow .classAdminMailButton").removeAttr("disabled");
+					$("#editableClassAdminRow .classAdminMailButton").removeClass("grayscale");
+					$("#editableClassAdminRow .classAdminMailButton").addClass("activeBtn");
+					$("#editableClassAdminRow .classAdminMailButton").attr("onclick", "startMail(\""+ newEmail +"\")");
+					$("#editableClassAdminRow .classAdminMailButton").attr("title", "Kontaktovat správce");
+				}
+				
 				//Reset DOM
 				cancelClassAdminEdit();
+				
 				//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
 				//alert(response["message"]);
-				
-				//TODO - aktualizuj pole jako E-mail, karma a status v DOM
 			}
 			if (response["messageType"] === "error")
 			{

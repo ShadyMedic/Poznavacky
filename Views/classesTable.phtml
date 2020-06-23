@@ -23,20 +23,20 @@
             	<table class='classAdminTable'>
             		<tr>
             			<td>Jméno: </td>
-            			<td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" onchange='adminNameChanged()' class='classAdminField'/></td>
+            			<td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" onchange='adminNameChanged()' class='classAdminField classAdminTableData'/></td>
             		</tr>
             		<tr>
             			<td>ID: </td>
-            			<td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" onchange='adminIdChanged()' class='classAdminField'/></td>
+            			<td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" onchange='adminIdChanged()' class='classAdminField classAdminTableData'/></td>
             		</tr>
             		<tr>
-            			<td>E-mail: </td><td><a onclick="startMail('<?= $class->getAdmin()['email'] ?>')"><?= $class->getAdmin()['email'] ?></td>
+            			<td>E-mail: </td><td class='classAdminData'><?= $class->getAdmin()['email'] ?></td>
             		</tr>
             		<tr>
-            			<td>Karma: </td><td><?= $class->getAdmin()['karma'] ?></td>
+            			<td>Karma: </td><td class='classAdminData'><?= $class->getAdmin()['karma'] ?></td>
             		</tr>
             		<tr>
-            			<td>Status: </td><td><?= $class->getAdmin()['status'] ?></td>
+            			<td>Status: </td><td class='classAdminData'><?= $class->getAdmin()['status'] ?></td>
             		</tr>
             	</table>
             </td>
@@ -89,6 +89,14 @@
                 </div>
                 <button class='classAction activeBtn editButton' onclick='changeClassAdmin(event)' title='Změnit správce'>
                 	<img src='images/management.svg'/>
+                </button>
+                <?php if (empty($class->getAdmin()['email'])) : ?>
+                <button class='classAction grayscale classAdminMailButton' disabled>
+                <?php endif ?>
+                <?php if (!empty($class->getAdmin()['email'])) : ?>
+                <button class='classAction activeBtn classAdminMailButton' onclick='startMail("<?= $class->getAdmin()['email'] ?>")' title='Kontaktovat správce'>
+                <?php endif ?>
+                	<img src='images/mail.svg'/>
                 </button>
                 <button class='classAction activeBtn' onclick='deleteClass(<?= $class->getId() ?>)' title='Odstranit'>
                     <img src='images/cross.svg'/>
