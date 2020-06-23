@@ -205,6 +205,44 @@ class Administration
     }
     
     /**
+     * Metoda měnící správce třídy v databázi po jeho změně administrátorem
+     * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
+     * @param int $classId ID třídy, jejíž správce je měněn
+     * @param int|string $newAdminIdentifier ID nebo jméno nového správce třídy
+     * @param string $changedIdentifier Údaj o tom, zda je druhý argument této metody ID nového správce třídy, nebo jeho jméno
+     * @throws AccessDeniedException Pokud není některý z údajů platný (například pokud uživatel s daným ID nebo jménem neexistuje)
+     * @return User Objekt uživatele reprezentující právě nastaveného správce třídy
+     */
+    public function changeClassAdmin(int $classId, $newAdminIdentifier, string $changedIdentifier)
+    {
+        //Konstrukce objektu uživatele
+        Db::connect();
+        switch ($changedIdentifier)
+        {
+            case 'id':
+                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM uzivatele WHERE uzivatele_id = ?', array($newAdminIdentifier), false);
+                break;
+            case 'name':
+                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM uzivatele WHERE jmeno = ?', array($newAdminIdentifier), false);
+                break;
+            default:
+                throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_INVALID_IDENTIFIER);
+                break;
+        }
+        if ($result === false)
+        {
+            //Uživatel nenalezen
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_UNKNOWN_USER);
+        }
+        
+        $admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        
+        $class = new ClassObject($classId, 'null');   //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
+        $class->changeClassAdminAsAdmin($admin);
+        return $admin;
+    }
+    
+    /**
      * Metoda odstraňující třídu z databáze společně se všemi jejími poznávačkami, skupinami, přírodninami, obrázky a hlášeními
      * @param int $classId ID třídy k odstranění
      */

@@ -376,6 +376,28 @@ class ClassObject
     }
     
     /**
+     * Metoda měnící správce této třídy z rozhodnutí administrátora
+     * @param User $newAdmin Instance třídy uživatele reprezentující nového správce
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem 
+     * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     */
+    public function changeClassAdminAsAdmin(User $newAdmin)
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola dat OK (zda uživatel s tímto ID exisutje je již zkontrolováno v Administration::changeClassAdmin())
+        
+        Db::connect();
+        Db::executeQuery('UPDATE tridy SET spravce = ? WHERE tridy_id = ? LIMIT 1;', array($newAdmin['id'], $this->id));
+        
+        return true;
+    }
+    
+    /**
      * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí administrátora
      * Data z vlastností této instance jsou vynulována
      * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()

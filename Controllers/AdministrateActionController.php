@@ -68,6 +68,21 @@ class AdministrateActionController extends Controller
                     $administration->editClass($classId, $values);
                     echo json_encode(array('messageType' => 'success', 'message' => 'Přístupové údaje třídy úspěšně upraveny'));
                     break;
+                case 'change class admin':
+                    $classId = $_POST['classId'];
+                    $changedIdentifier = $_POST['changedIdentifier'];
+                    $identifier = ($changedIdentifier === 'id') ? $_POST['adminId'] : (($changedIdentifier === 'name') ? $_POST['adminName'] : null);
+                    $newClassAdmin = $administration->changeClassAdmin($classId, $identifier, $changedIdentifier);
+                    echo json_encode(array(
+                        'messageType' => 'success',
+                        'message' => 'Správce třídy byl úspěšně změněn',
+                        'newName' => $newClassAdmin['name'],
+                        'newId' => $newClassAdmin['id'],
+                        'newEmail' => $newClassAdmin['email'],
+                        'newKarma' => $newClassAdmin['karma'],
+                        'newStatus' => $newClassAdmin['status']
+                    ));
+                    break;
                 case 'delete class':
                     $classId = $_POST['classId'];
                     $administration->deleteClass($classId);
