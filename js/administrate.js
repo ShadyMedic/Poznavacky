@@ -435,23 +435,24 @@ function deleteClass(classId)
 	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 3-------------------------*/
-function showImage(url)
+function showPicture(url)
+{
+	$("#previewImgElement").attr("src", url);
+	$("#imagePreview").show();
+}
+function editPicture(event, picId)
 {
 	//TODO
 }
-function editImage(event, picId)
+function disablePicture(event, picId)
 {
 	//TODO
 }
-function disableImage(event, picId)
+function deletePicture(event, picId)
 {
 	//TODO
 }
-function deleteImage(event, picId)
-{
-	//TODO
-}
-function deleteReport(event, picId)
+function deletePicture(event, picId)
 {
 	//TODO
 }

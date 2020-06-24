@@ -17,7 +17,7 @@
             <td><?= $report->getAdditionalInformation() ?>
             <td><?= $report->getReportersCount() ?></td>
             <td>
-                <button class='reportAction activeBtn' onclick='showPicture(<?= $report->getUrl() ?>)' title='Zobrazit obrázek'>
+                <button class='reportAction activeBtn' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
                     <img src='images/eye.svg'/>
                 </button>
                 <button class='reportAction activeBtn' onclick='editPicture(event, <?= $report->getPictureId() ?>)' title='Upravit údaje obrázku'>
