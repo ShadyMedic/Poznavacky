@@ -1,7 +1,8 @@
 <table>
     <tr>
+        <th>Třída / Poznávačka / Část</th>
+        <th>Přírodnina</th>
         <th>Zdroj</th>
-        <th>Třída / Poznávačka / Část / Přírodnina</th>
         <th>Důvod</th>
         <th>Další informace</th>
         <th>Počet nahlášení</th>
@@ -9,14 +10,18 @@
     </tr>
     <?php foreach ($reports as $report) : ?>
         <tr>
-            <td><a href='<?= $report->getUrl() ?>' target='_blank'><?= $report->getUrl() ?></a></td>
             <td><?= $report->getPicturePath() ?></td>
+            <td><?= $report->getNaturalName() ?></td>
+            <td><a href='<?= $report->getUrl() ?>' target='_blank'><?= $report->getUrl() ?></a></td>
             <td><?= $report->getReason() ?></td>
             <td><?= $report->getAdditionalInformation() ?>
             <td><?= $report->getReportersCount() ?></td>
             <td>
-                <button class='reportAction activeBtn' onclick='showPicture(event)' title='Zobrazit obrázek'>
+                <button class='reportAction activeBtn' onclick='showPicture(<?= $report->getUrl() ?>)' title='Zobrazit obrázek'>
                     <img src='images/eye.svg'/>
+                </button>
+                <button class='reportAction activeBtn' onclick='editPicture(event, <?= $report->getPictureId() ?>)' title='Upravit údaje obrázku'>
+                    <img src='images/pencil.svg'/>
                 </button>
                 <button class='reportAction activeBtn' onclick='disablePicture(event, <?= $report->getPictureId() ?>)' title='Skrýt obrázek'>
                     <img src='images/dot.svg'/>

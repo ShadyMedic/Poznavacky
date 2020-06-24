@@ -69,7 +69,17 @@ class Report
         $part = $natural->getPart();
         $group = $part->getGroup();
         $class = $group->getClass();
-        return $class->getName().' / '.$group->getName().' / '.$part->getName(). ' / '.$natural->getName();
+        return $class->getName().' / '.$group->getName().' / '.$part->getName();
+    }
+    
+    /**
+     * Metoda navracející název přírodniny, ke které byl nahlášený obrázek nahrán
+     * @return string Název přírodniny na obrázku
+     */
+    public function getNaturalName()
+    {
+        $natural = $this->picture->getNatural();
+        return $natural->getName();
     }
     
     /**
