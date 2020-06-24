@@ -88,6 +88,9 @@
                     </button>
                 </div>
                 <button class='classAction activeBtn editButton' onclick='changeClassAdmin(event)' title='Změnit správce'>
+                	<img src='images/dot.svg'/>
+                </button>
+                <button class='classAction activeBtn' onclick="window.location.href='menu/<?= $class->getName() ?>/manage';" title='Spravovat'>
                 	<img src='images/management.svg'/>
                 </button>
                 <?php if (empty($class->getAdmin()['email'])) : ?>
