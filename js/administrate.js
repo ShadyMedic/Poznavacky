@@ -435,6 +435,26 @@ function deleteClass(classId)
 	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 3-------------------------*/
+function showImage(url)
+{
+	//TODO
+}
+function editImage(event, picId)
+{
+	//TODO
+}
+function disableImage(event, picId)
+{
+	//TODO
+}
+function deleteImage(event, picId)
+{
+	//TODO
+}
+function deleteReport(event, picId)
+{
+	//TODO
+}
 /*-------------------------Tab 4-------------------------*/
 function acceptNameChange(event, objectType, requestId)
 {
