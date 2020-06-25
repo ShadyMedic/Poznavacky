@@ -254,6 +254,17 @@ class Administration
     }
     
     /**
+     * Metoda odstraňující hlášení s daným ID z databáze
+     * @param int $reportId ID hlášení k odstranění
+     */
+    public function deleteReport(int $reportId)
+    {
+        $report = new Report($reportId);
+        $report->delete();
+        unset($report);
+    }
+    
+    /**
      * Metoda řešící vyřízení žádosti o změnu jména uživatele nebo třídy
      * V případě schválení je jméno uživatele nebo třídy změněno
      * V obou případech je žádost odstraněna z databáze

@@ -208,4 +208,36 @@ class Report
             throw new BadMethodCallException('You must call Report::load() before trying to save a report');
         }
     }
+    
+    /**
+     * Metoda odstraňující toto hlášení z databáze
+     * Vlastnosti této instance jsou vynulovány
+     * Insance, na níž je vykonána tato metoda by měla být okamžitě zničena pomocí unset()
+     * Tato metoda může být použita pouze v případě, že právě přihlášený uživatel je systémový administrátor
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
+     * @return boolean TRUE, pokud je hlásení úspěšně odstraněno z databáze
+     */
+    public function delete()
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola dat OK
+        
+        //Odstranit hlášení z databáze
+        Db::connect();
+        Db::executeQuery('DELETE FROM hlaseni WHERE hlaseni_id = ? LIMIT 1;', array($this->id));
+        
+        //Vymazat data z této instance hlášení
+        $this->id = null;
+        $this->picture = null;
+        $this->reason = null;
+        $this->additionalInformation = null;
+        $this->reportersCount = null;
+        
+        return true;
+    }
 }
