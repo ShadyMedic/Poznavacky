@@ -42,6 +42,14 @@ class Report
     }
     
     /**
+     * Metoda navracející ID tohoto hlášení
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Metoda navracející ID nahlášeného obrázku
      * @return int ID obrázku
      */
@@ -115,7 +123,7 @@ class Report
     public function increaseReportersCount()
     {
         $this->reportersCount++;
-}
+    }
     
     /**
      * Metoda načítající z databáze ID tohoto hlášení a číslo, kolikrát bylo hlášení tohoto typu odesláno (podle obrázku, důvodu a dalších informací)
@@ -163,13 +171,13 @@ class Report
             $dbResult = Db::fetchQuery('SELECT hlaseni_id, pocet FROM hlaseni WHERE obrazky_id = ? AND duvod = ? AND dalsi_informace = ? LIMIT 1;', array($this->picture->getId(), $this->reason, $this->additionalInformation), false);
             if (!$dbResult)
             {
-            //Takové hlášení zatím v databázi neexistuje
-            $this->reportersCount = 0;
-        }
-        else
-        {
-            //Hlášení nalezeno
-            $this->id = $dbResult['hlaseni_id'];
+                //Takové hlášení zatím v databázi neexistuje
+                $this->reportersCount = 0;
+            }
+            else
+            {
+                //Hlášení nalezeno
+                $this->id = $dbResult['hlaseni_id'];
                 $this->reportersCount = $dbResult['pocet'];
             }
         }

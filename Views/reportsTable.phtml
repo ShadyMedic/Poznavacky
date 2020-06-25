@@ -29,7 +29,7 @@
                 <button class='reportAction activeBtn' onclick='deletePicture(event, <?= $report->getPictureId() ?>)' title='Odstranit obrázek'>
                     <img src='images/cross.svg'/>
                 </button>
-                <button class='reportAction activeBtn' onclick='deleteReport(event, <?= $report->getPictureId() ?>)' title='Odstranit hlášení'>
+                <button class='reportAction activeBtn' onclick='deleteReport(event, <?= $report->getId() ?>)' title='Odstranit hlášení'>
                     <img src='images/minus.svg'/>
                 </button>
             </td>
