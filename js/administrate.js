@@ -452,9 +452,25 @@ function deletePicture(event, picId)
 {
 	//TODO
 }
-function deletePicture(event, picId)
+function deleteReport(event, reportId)
 {
-	//TODO
+	$.post('administrate-action',
+		{
+			action: 'delete report',
+			reportId: reportId
+		},
+		function(response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+	//Odebrání hlášení z DOM
+	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 4-------------------------*/
 function acceptNameChange(event, objectType, requestId)

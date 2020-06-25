@@ -88,6 +88,11 @@ class AdministrateActionController extends Controller
                     $administration->deleteClass($classId);
                     echo json_encode(array('messageType' => 'success', 'message' => 'Třída úspěšně odstraněna'));
                     break;
+                case 'delete report':
+                    $reportId = $_POST['reportId'];
+                    $administration->deleteReport($reportId);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Hlášení úspěšně odstraněno'));
+                    break;
                 case 'accept user name change':
                 case 'accept class name change':
                 case 'decline user name change':
