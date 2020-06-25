@@ -120,13 +120,49 @@ class Report
     /**
      * Metoda načítající z databáze ID tohoto hlášení a číslo, kolikrát bylo hlášení tohoto typu odesláno (podle obrázku, důvodu a dalších informací)
      * Pokud není takové hlášení v databázi nalezeno, je vlastnost $id ponechána nenastavená a vlastnost $reportersCount nastavena na 1
+     * Pokud je již ID tohoto hlášení nastaveno, jsou naopak podle něj načteny ostatní vlastnosti instance
      */
     public function load()
     {
         Db::connect();
-        $dbResult = Db::fetchQuery('SELECT hlaseni_id, pocet FROM hlaseni WHERE obrazky_id = ? AND duvod = ? AND dalsi_informace = ? LIMIT 1;', array($this->picture->getId(), $this->reason, $this->additionalInformation), false);
-        if (!$dbResult)
+        if (!empty($this->id))
         {
+            //Je zadáno ID - načíst podle něj ostatní informace
+            $reportInfo = Db::fetchQuery('
+            SELECT
+            hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
+            obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
+            prirodniny.prirodniny_id AS "prirodniny_id", prirodniny.nazev AS "prirodniny_nazev", prirodniny.obrazky AS "prirodniny_obrazky",
+            casti.casti_id AS "casti_id", casti.nazev AS "casti_nazev", casti.prirodniny AS "casti_prirodniny", casti.obrazky AS "casti_obrazky",
+            poznavacky.poznavacky_id AS "poznavacky_id", poznavacky.nazev AS "poznavacky_nazev", poznavacky.casti AS "poznavacky_casti",
+            tridy.tridy_id AS "tridy_id", tridy.nazev AS "tridy_nazev"
+            FROM hlaseni
+            JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
+            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
+            JOIN casti ON prirodniny.casti_id = casti.casti_id
+            JOIN poznavacky ON casti.poznavacky_id = poznavacky.poznavacky_id
+            JOIN tridy ON poznavacky.tridy_id = tridy.tridy_id
+            WHERE hlaseni.hlaseni_id = ?
+            LIMIT 1;
+            ', array($this->id), false);
+            
+            $class = new ClassObject($reportInfo['tridy_id'], $reportInfo['tridy_nazev']);
+            $group = new Group($reportInfo['poznavacky_id'], $reportInfo['poznavacky_nazev'], $class, $reportInfo['poznavacky_casti']);
+            $part = new Part($reportInfo['casti_id'], $reportInfo['casti_nazev'], $group, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
+            $natural = new Natural($reportInfo['prirodniny_id'], $reportInfo['prirodniny_nazev'], $group, $part, $reportInfo['prirodniny_obrazky']);
+            $picture = new Picture($reportInfo['obrazky_id'], $reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
+            
+            $this->picture = $picture;
+            $this->reason = $reportInfo['hlaseni_duvod'];
+            $this->additionalInformation = $reportInfo['hlaseni_dalsi_informace'];
+            $this->reportersCount = $reportInfo['hlaseni_pocet'];
+        }
+        else
+        {
+            //Není zadáno ID - načíst ID podle ostatních informací
+            $dbResult = Db::fetchQuery('SELECT hlaseni_id, pocet FROM hlaseni WHERE obrazky_id = ? AND duvod = ? AND dalsi_informace = ? LIMIT 1;', array($this->picture->getId(), $this->reason, $this->additionalInformation), false);
+            if (!$dbResult)
+            {
             //Takové hlášení zatím v databázi neexistuje
             $this->reportersCount = 0;
         }
@@ -134,7 +170,8 @@ class Report
         {
             //Hlášení nalezeno
             $this->id = $dbResult['hlaseni_id'];
-            $this->reportersCount = $dbResult['pocet'];
+                $this->reportersCount = $dbResult['pocet'];
+            }
         }
     }
     
