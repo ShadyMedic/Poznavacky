@@ -55,6 +55,20 @@ footer {
 
 }
 
+.overlay {
+	position: fixed;
+	z-index: 4;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(black, 0.6);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.32s ease-out;
+	&.show {
+		opacity: 1;
+	}
+}
+
 h1,
 h2,
 h3,
@@ -243,9 +257,6 @@ input {
 }
 
 label {
-	&:not([for=login-persist]) {
-		padding: 0.32em 0.6em;
-	}
 	&.required {
 		&:after {
 			content: " *";

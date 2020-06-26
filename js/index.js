@@ -21,10 +21,10 @@ $(window).scroll(function(event) {
 	var scrolled = $(window).scrollTop();
 	console.log(scrolled);
 	if (scrolled > (documentHeight + scrollOffset)) {
-		$("#backToTop").removeClass("hidden");
+		$("#back-to-top").removeClass("hidden");
 	}
 	else if (scrolled <= (documentHeight + scrollOffset)) {
-		$("#backToTop").addClass("hidden");
+		$("#back-to-top").addClass("hidden");
 	}
 })
 
@@ -35,11 +35,12 @@ function hideDown(elementId)
 }
 
 //vysunutí sekce s přihlašováním, registrací a obnovou hesla
-function showLoginSection(specification)
+function showLoginSection(spec)
 {
-	$("#index-login-section").css("transform", "translateX(0)");
+	$("#index-login-section").addClass("show");
+	$(".overlay").addClass("show");
 	$("body").css("overflowY", "hidden");
-	let divId = specification;
+	let divId = spec;
 	showLoginDiv(divId);
 }
 
@@ -54,9 +55,21 @@ function showLoginDiv(divId)
 
 function hideLoginSection() 
 {
-	$("#index-login-section").css("transform", "translateX(-100%)");
+	$("#index-login-section").removeClass("show");
+	$(".overlay").removeClass("show");
 	$("body").css("overflowY", "auto");
 }
+
+$(document).mouseup(function(e) 
+{
+    var container = $("#index-login-section");
+	var cookiesAlert = $("#cookies-alert");
+
+    if (!container.is(e.target) && !cookiesAlert.is(e.target) && container.has(e.target).length === 0 && cookiesAlert.has(e.target).length === 0) 
+    {
+        hideLoginSection();
+    }
+});
 
 /*--------------------------------------------------------------------------*/
 /* Odesílání dat z formulářů na server */
