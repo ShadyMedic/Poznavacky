@@ -4,14 +4,14 @@
 $(function() { //až po načtení stránky
 
 	//přidává třídu na zpracování úvodních animací
-	if (getCookie("recentLogin") == 1) { //Je aktivní cookie, že se uživatel nedávno přihlásil nebo se právě odhlásil? --> přeskoč animace
+	/*if (getCookie("recentLogin") == 1) { //Je aktivní cookie, že se uživatel nedávno přihlásil nebo se právě odhlásil? --> přeskoč animace
 		$("body").addClass("loaded");
 	}
 	else {
 		$("body").addClass("load");
-	}
+	}*/
 	setTimeout(() => {
-		$("#cookies-alert").css("transform", "translateY(0)");
+		$("#cookies-alert").addClass("show");
 	}, 1000);
 });
 
@@ -21,17 +21,17 @@ $(window).scroll(function(event) {
 	var scrolled = $(window).scrollTop();
 	console.log(scrolled);
 	if (scrolled > (documentHeight + scrollOffset)) {
-		$("#back-to-top").removeClass("hidden");
+		$("#back-to-top").addClass("show");
 	}
 	else if (scrolled <= (documentHeight + scrollOffset)) {
-		$("#back-to-top").addClass("hidden");
+		$("#back-to-top").removeClass("show");
 	}
 })
 
 //zasunutí elementu dolů
-function hideDown(elementId)
+function hideCookiesAlert()
 {	
-	$("#" + elementId).css("transform", "translateY(100%)");
+	$("#cookies-alert").removeClass("show");
 }
 
 //vysunutí sekce s přihlašováním, registrací a obnovou hesla

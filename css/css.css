@@ -1208,6 +1208,11 @@ body#index #cookies-alert {
   }
 }
 
+body#index #cookies-alert.show {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
 body#index #cookies-alert span {
   padding-right: 2rem;
 }
@@ -1227,6 +1232,8 @@ body#index #back-to-top {
   padding: 0;
   -webkit-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
   height: 4rem;
   width: 4rem;
   padding: 0.8rem;
@@ -1238,9 +1245,9 @@ body#index #back-to-top {
   z-index: 4;
 }
 
-body#index #back-to-top.hidden {
-  opacity: 0;
-  pointer-events: none;
+body#index #back-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media screen and (min-width: 768px) {

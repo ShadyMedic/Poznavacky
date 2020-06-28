@@ -289,6 +289,9 @@ body#index {
 		display: flex;
 		justify-content: space-between;
 		transition: transform 0.6s ease-in-out;
+		&.show {
+			transform: translateY(0);
+		}
 		span {
 			padding-right: 2rem;
 		}
@@ -302,9 +305,11 @@ body#index {
 		height: fit-content;
 		padding: 0;
 		transition: opacity 0.2s ease-in-out;
-		&.hidden {
-			opacity: 0;
-			pointer-events: none;
+		opacity: 0;
+		pointer-events: none;
+		&.show {
+			opacity: 1;
+			pointer-events: auto;
 		}
 		height: 4rem;
 		width: 4rem;
