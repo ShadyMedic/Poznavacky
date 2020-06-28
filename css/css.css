@@ -1081,7 +1081,7 @@ body#index #index-login-section {
   position: fixed;
   overflow: auto;
   color: black;
-  padding: 2rem;
+  border: 2rem solid white;
   border-radius: 1rem;
   font-size: 1.32rem;
   top: 50vh;
@@ -1110,7 +1110,6 @@ body#index #index-login-section.show {
 
 body#index #index-login-section .cross {
   position: absolute;
-  margin: 2rem;
   right: 0;
   top: 0;
 }
