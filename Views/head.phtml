@@ -30,11 +30,13 @@
     <body id="<?= $bodyId ?>">
 		<div class="overlay"></div>
 		<div class="container">
+			<!--
 			<div id="messages">
 			<?php foreach ($messages as $messageBox) : ?>
 				<div class="<?= $messageBox['messageClass'] ?>"><?= $messageBox['message'] ?></div>
 			<?php endforeach ?>
 			</div>
+			-->
 			<?php $this->controllerToCall->displayView(); ?>
 			<footer>
 				<div class="content">

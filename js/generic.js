@@ -28,3 +28,9 @@ function getCookie(cname)
 	}
 	return "";
 }
+
+function showLoginInfo() {
+	let loginInfoOffset = $("header").outerHeight();
+	$(".login-info").addClass("show");
+	$(".login-info").css("top", loginInfoOffset);
+}

@@ -1,11 +1,17 @@
 <header>
-	<h1>Poznávačky</h1>
+	<button class="btn hamburger-btn"><img src="../images/hamburger.svg"></button>
+	<div class="logo">
+		<img src=""> <!-- LOGO -->
+		<h1>Poznávačky</h1>
+	</div>
+	<button class="btn user-btn" onclick="showLoginInfo()"><img src="../images/user.svg"></button>
 	<div class="login-info">
 		<span>Přihlášen: <?= $loggedUserName ?></span>
-		<a href='logout'><button>Odhlásit se</button></a>
+		<a href="menu/account-settings" class="btn inline black">Nastavení účtu</a>
+		<a href='logout' class="btn inline black">Odhlásit se</a>
 	</div>
 </header>
-<aside class="aside-left">
+<aside>
 	<nav>
 		<?php if ($adminLogged) : ?>
 			<a href="menu/administrate">Správa systému</a>
@@ -17,5 +23,3 @@
 <main>
 	<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
 </main>
-<aside class="aside-right">
-</aside>
