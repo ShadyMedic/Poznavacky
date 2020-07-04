@@ -199,8 +199,9 @@ body#index {
 	}	
 
 	#index-login-section {
+		display: grid;
 		position: fixed;
-		overflow: auto;
+		overflow: hidden;
 		color: black;
 		border: 2rem solid white;
 		border-radius: 1rem;
@@ -209,7 +210,7 @@ body#index {
 		left: 50vw;
 		transform: translate(-50%, calc(-50% + 5px));
 		width: 90vw;
-		max-height: 90vh;
+		height: 90vh;
 		max-width: 600px;
 		z-index: 5;
 		background: white;
@@ -222,13 +223,18 @@ body#index {
 			opacity: 1;
 			pointer-events: auto;
 		}
+		> #register,
+		> #login,
+		> #password-recovery {
+			overflow: auto;
+			height: 100%;
+		}
 		.cross {
-			position: absolute;
-			right: 0;
-			top: 0;
+			justify-self: right;
+			margin-bottom: 0.8rem;
 		}
 		h2 {
-			margin: 1.6rem 0 0.8rem 0;
+			margin: 0.8rem 0 0.8rem 0;
 		}
 		.user-data {
 			display: flex;

@@ -1078,8 +1078,10 @@ body#index #index-info-section p {
 }
 
 body#index #index-login-section {
+  display: -ms-grid;
+  display: grid;
   position: fixed;
-  overflow: auto;
+  overflow: hidden;
   color: black;
   border: 2rem solid white;
   border-radius: 1rem;
@@ -1089,7 +1091,7 @@ body#index #index-login-section {
   -webkit-transform: translate(-50%, calc(-50% + 5px));
           transform: translate(-50%, calc(-50% + 5px));
   width: 90vw;
-  max-height: 90vh;
+  height: 90vh;
   max-width: 600px;
   z-index: 5;
   background: white;
@@ -1108,14 +1110,21 @@ body#index #index-login-section.show {
   pointer-events: auto;
 }
 
+body#index #index-login-section > #register,
+body#index #index-login-section > #login,
+body#index #index-login-section > #password-recovery {
+  overflow: auto;
+  height: 100%;
+}
+
 body#index #index-login-section .cross {
-  position: absolute;
-  right: 0;
-  top: 0;
+  -ms-grid-column-align: right;
+      justify-self: right;
+  margin-bottom: 0.8rem;
 }
 
 body#index #index-login-section h2 {
-  margin: 1.6rem 0 0.8rem 0;
+  margin: 0.8rem 0 0.8rem 0;
 }
 
 body#index #index-login-section .user-data {
