@@ -1115,16 +1115,19 @@ body#index #index-login-section > #login,
 body#index #index-login-section > #password-recovery {
   overflow: auto;
   height: 100%;
+  padding-bottom: 2px;
 }
 
 body#index #index-login-section .cross {
   -ms-grid-column-align: right;
       justify-self: right;
   margin-bottom: 0.8rem;
+  height: 2rem;
+  width: 2rem;
 }
 
 body#index #index-login-section h2 {
-  margin: 0.8rem 0 0.8rem 0;
+  margin: 0 0 0.8rem 0;
 }
 
 body#index #index-login-section .user-data {

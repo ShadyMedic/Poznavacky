@@ -228,13 +228,16 @@ body#index {
 		> #password-recovery {
 			overflow: auto;
 			height: 100%;
+			padding-bottom: 2px;
 		}
 		.cross {
 			justify-self: right;
 			margin-bottom: 0.8rem;
+			height: 2rem;
+			width: 2rem;
 		}
 		h2 {
-			margin: 0.8rem 0 0.8rem 0;
+			margin: 0 0 0.8rem 0;
 		}
 		.user-data {
 			display: flex;

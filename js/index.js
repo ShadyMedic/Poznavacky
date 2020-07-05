@@ -47,6 +47,13 @@ function showLoginSection(spec)
 //zobrazení požadované části v přihlašovací sekci
 function showLoginDiv(divId)
 {
+	$("#index-login-section").css("height", "auto");
+	$("#" + divId).css("height", "auto");
+	let loginDivHeight = $("#" + divId).outerHeight() + $("#hide-login-section-button").outerHeight();
+	if (loginDivHeight > (0.9*$(window).height()-64)) {
+		$("#index-login-section").css("height", "90vh");
+		$("#" + divId).css("height", "100%");
+	}
 	$("#register").hide();
 	$("#login").hide();
 	$("#password-recovery").hide();
