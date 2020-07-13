@@ -145,6 +145,30 @@ class Picture
     }
     
     /**
+     * Metoda skrývající tento obrázek v databázi
+     * Tato metoda může být použita pouze v případě, že právě přihlášený uživatel je systémový administrátor
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
+     * @return boolean TRUE, pokud je obrázek úspěšně skryt v databázi
+     */
+    public function disable()
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola dat OK
+        
+        //Vypnout obrázek v databázi
+        Db::connect();
+        Db::executeQuery('UPDATE obrazky SET povoleno = 0 WHERE obrazky_id = ? LIMIT 1;', array($this->id));
+        
+        //Přenastavit vlastnost této instance
+        $this->enabled = false;
+    }
+    
+    /**
      * Metoda odstraňující tento obrázek z databáze
      * Vlastnosti této instance jsou vynulovány
      * Insance, na níž je vykonána tato metoda by měla být okamžitě zničena pomocí unset()
