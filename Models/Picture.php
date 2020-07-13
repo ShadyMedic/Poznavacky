@@ -9,6 +9,7 @@ class Picture
     private $src;
     private $natural;
     private $enabled;
+    private $reports;
     
     /**
      * Konstruktor obrázku nastavující jeho vlastnosti
@@ -90,6 +91,60 @@ class Picture
     }
     
     /**
+     * Metoda odstraňující z databáze všechna hlášení vztahující se k tomuto obrázku
+     * Vlastnost pole uchovávající hlášení tohoto obrázku, které je uložené jako vlastnost je nahrazeno prázdným polem
+     * @return boolean TRUE, pokud jsou hlášení úspěšně odstraněna
+     */
+    public function deleteReports()
+    {
+        Db::connect();
+        Db::executeQuery('DELETE FROM hlaseni WHERE obrazky_id = ?', array($this->id));
+        $this->reports = array();
+        return true;
+    }
+    
+    /**
+     * Metoda navracející pole hlášení tohoto obrázku
+     * Pokud hlášení zatím nebyla načtena z databáze, budou před navrácením načtena
+     * @return Report[] Pole hlášení tohoto obrázku jako objekty
+     */
+    public function getReports()
+    {
+        $this->checkReportsLoaded();
+        return $this->reports;
+    }
+    
+    private function checkReportsLoaded()
+    {
+        if (!isset($this->reports))
+        {
+            $this->loadReports();
+        }
+    }
+    
+    /**
+     * Metoda načítající hlášení tohoto obrázku z databáze a ukládající je do vlastnosti této instance jako objekty
+     */
+    private function loadReports()
+    {
+        Db::connect();
+        $result = Db::fetchQuery('SELECT hlaseni_id,duvod,dalsi_informace,pocet FROM hlaseni WHERE obrazky_id = ?', array($this->id), true);
+        
+        if (count($result) === 0)
+        {
+            //Žádná hlášení tohoto obrázku
+            $this->reports = array();
+            return;
+        }
+        
+        foreach ($result as $reportInfo)
+        {
+            //Konstrukce nových objektů hlášení a jejich ukládání do pole
+            $this->reports[] = new Report($reportInfo['hlaseni_id'], $this, $reportInfo['duvod'], $reportInfo['dalsi_informace'], $reportInfo['pocet']);
+        }
+    }
+    
+    /**
      * Metoda odstraňující tento obrázek z databáze
      * Vlastnosti této instance jsou vynulovány
      * Insance, na níž je vykonána tato metoda by měla být okamžitě zničena pomocí unset()
@@ -107,7 +162,7 @@ class Picture
         
         //Kontrola dat OK
         
-        //Odstranit hlášení z databáze
+        //Odstranit obrázek z databáze
         Db::connect();
         Db::executeQuery('DELETE FROM obrazky WHERE obrazky_id = ? LIMIT 1;', array($this->id));
         
