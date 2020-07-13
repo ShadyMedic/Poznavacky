@@ -93,6 +93,15 @@ class Natural
     }
     
     /**
+     * Metoda navracející ID této přírodniny
+     * @return int ID této přírodniny
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Metoda navracející jméno této přírodniny
      * @return string Jméno přírodniny
      */

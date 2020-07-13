@@ -91,6 +91,38 @@ class Picture
     }
     
     /**
+     * Metoda upravující přírodninu a adresu tohoto obrázku z rozhodnutí administrátora
+     * @param Natural $newNatural Objekt reprezentující nově zvolenou přírodninu
+     * @param string $newUrl Nová adresa k obrázku
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
+     * @return boolean TRUE, pokud jsou údaje tohoto obrázku úspěšně aktualizovány
+     */
+    public function updatePicture(string $newNaturalName, string $newUrl)
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
+        $checker = new PictureAdder($this->natural->getPart()->getGroup());
+        $newNatural = $checker->checkData($newNaturalName, $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
+        
+        //Kontrola dat OK
+        
+        //Upravit údaje v databázi
+        Db::connect();
+        Db::executeQuery('UPDATE obrazky SET prirodniny_id = ?, zdroj = ? WHERE obrazky_id = ? LIMIT 1', array($newNatural->getId(), $newUrl, $this->id));
+        
+        //Aktualizovat údaje ve vlastnostech této instance
+        $this->natural = $newNatural;
+        $this->src = $newUrl;
+        
+        return true;
+    }
+    
+    /**
      * Metoda odstraňující z databáze všechna hlášení vztahující se k tomuto obrázku
      * Vlastnost pole uchovávající hlášení tohoto obrázku, které je uložené jako vlastnost je nahrazeno prázdným polem
      * @return boolean TRUE, pokud jsou hlášení úspěšně odstraněna
