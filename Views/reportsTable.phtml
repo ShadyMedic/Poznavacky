@@ -1,4 +1,4 @@
-<table>
+<table id="reportsTable">
     <tr>
         <th>Třída / Poznávačka / Část</th>
         <th>Přírodnina</th>
@@ -12,7 +12,7 @@
     <tr><td colspan=6>Žádná hlášení k vyřízení</td></tr>
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
-        <tr>
+        <tr class="pictureId<?= $report->getPictureId() ?>">
             <td><?= $report->getPicturePath() ?></td>
             <td><?= $report->getNaturalName() ?></td>
             <td><a href='<?= $report->getUrl() ?>' target='_blank'><?= $report->getUrl() ?></a></td>
