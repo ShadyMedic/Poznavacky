@@ -446,7 +446,24 @@ function editPicture(event, picId)
 }
 function disablePicture(event, picId)
 {
-	//TODO
+	$.post('administrate-action',
+			{
+				action: 'disable picture',
+				pictureId: picId
+			},
+			function(response)
+			{
+				response = JSON.parse(response);
+				if (response["messageType"] === "error")
+				{
+					//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+					alert(response["message"]);
+				}
+			}
+		);
+		
+		//Odebrání všechna hlášení daného obrázku z DOM
+		$("#reportsTable .pictureId" + picId).remove();
 }
 function deletePicture(event, picId)
 {
