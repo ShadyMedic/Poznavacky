@@ -50,6 +50,15 @@ class Report
     }
     
     /**
+     * Metoda navracející objekt nahlášeného obrázku
+     * @return Picture Nahlášený obrázek
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    /**
      * Metoda navracející ID nahlášeného obrázku
      * @return int ID obrázku
      */
