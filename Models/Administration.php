@@ -93,6 +93,12 @@ class Administration
             WHERE hlaseni.duvod IN ('.$in.');
         ', Report::ADMIN_REQUIRING_REASONS, true);
         
+        if ($result === false)
+        {
+            //Žádná hlášení nenalezena
+            return array();
+        }
+        
         $reports = array();
         foreach ($result as $reportInfo)
         {
