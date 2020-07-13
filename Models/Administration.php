@@ -260,6 +260,17 @@ class Administration
     }
     
     /**
+     * Metoda odstraňující obrázek s daným ID z databáze i se všemi jeho hlášeními
+     * @param int $pictureId ID obrázku k odstranění
+     */
+    public function deletePicture(int $pictureId)
+    {
+        $picture = new Picture($pictureId);
+        $picture->delete();
+        unset($picture);
+    }
+    
+    /**
      * Metoda odstraňující hlášení s daným ID z databáze
      * @param int $reportId ID hlášení k odstranění
      */
