@@ -88,6 +88,13 @@ class AdministrateActionController extends Controller
                     $administration->deleteClass($classId);
                     echo json_encode(array('messageType' => 'success', 'message' => 'Třída úspěšně odstraněna'));
                     break;
+                case 'update picture':
+                    $pictureId = $_POST['pictureId'];
+                    $newNatural = $_POST['natural'];
+                    $newUrl = $_POST['url'];
+                    $administration->editPicture($pictureId, $newNatural, $newUrl);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Údaje obrázku úspěšně upraveny'));
+                    break;
                 case 'disable picture':
                     $pictureId = $_POST['pictureId'];
                     $administration->disablePicture($pictureId);

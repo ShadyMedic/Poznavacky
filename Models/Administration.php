@@ -259,6 +259,12 @@ class Administration
         unset($class);
     }
     
+    public function editPicture(int $pictureId, string $newNaturalName, string $newUrl)
+    {
+        $picture = new Picture($pictureId);
+        $picture->updatePicture($newNaturalName, $newUrl);
+    }
+    
     /**
      * Metoda skrývající obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
