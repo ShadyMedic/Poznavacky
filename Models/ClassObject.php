@@ -15,6 +15,7 @@ class ClassObject
     private $code;
     private $groups;
     private $groupsCount;
+    private $members;
     private $admin;
     
     private $accessCheckResult;
@@ -132,7 +133,7 @@ class ClassObject
     /**
      * Metoda navracející pole poznávaček patřících do této třídy jako objekty
      * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
-     * @return array Pole poznávaček patřících do této třídy jako objekty
+     * @return Group[] Pole poznávaček patřících do této třídy jako objekty
      */
     public function getGroups()
     {
@@ -217,6 +218,43 @@ class ClassObject
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Metoda navracející pole členů této třídy jako objekty
+     * Pokud zatím nebyly členové načteny, budou načteny z databáze
+     * @return User[] Pole členů patřících do této třídy jako instance třídy User
+     */
+    public function getMembers()
+    {
+        if (!isset($this->groups))
+        {
+            $this->loadMembers();
+        }
+        return $this->members;
+    }
+    
+    /**
+     * Metoda načítající členy patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
+     */
+    private function loadMembers()
+    {
+        $this->members = array();
+        
+        Db::connect();
+        $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id,uzivatele.jmeno,uzivatele.email,uzivatele.posledni_prihlaseni,uzivatele.pridane_obrazky,uzivatele.uhodnute_obrazky,uzivatele.karma,uzivatele.status FROM clenstvi JOIN uzivatele ON clenstvi.uzivatele_id = uzivatele.uzivatele_id WHERE clenstvi.tridy_id = ? AND uzivatele.uzivatele_id != ? ORDER BY uzivatele.posledni_prihlaseni DESC;', array($this->id, UserManager::getId()), true);
+        if ($result === false || count($result) === 0)
+        {
+            //Žádné poznávačky nenalezeny
+            $this->members = array();
+        }
+        else
+        {
+            foreach ($result as $memberData)
+            {
+                $this->members[] = new User($memberData['uzivatele_id'], $memberData['jmeno'], $memberData['email'], new DateTime($memberData['posledni_prihlaseni']), $memberData['pridane_obrazky'], $memberData['uhodnute_obrazky'], $memberData['karma'], $memberData['status']);
+            }
+        }
     }
     
     /**
