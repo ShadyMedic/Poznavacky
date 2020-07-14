@@ -14,7 +14,6 @@ class TestPicturesController extends Controller
      */
     public function process(array $parameters)
     {
-        $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
         if (isset($_SESSION['selection']['part']))
         {
