@@ -272,3 +272,25 @@ function createTestSubmit()
 	createTestHide();
 }
 /*-------------------------------------------------------*/
+function deleteTest(id, name)
+{
+    if (confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny, ale zůstanou nepřiřazeny, dokud je nepřidáte do jiné poznávačky. Tato akce je nevratná!"))
+    {
+    	$.post("class-update",
+			{
+	    		action: 'delete test',
+				testId: testId
+			},
+			function (response)
+			{
+				response = JSON.parse(response);
+				if (response["messageType"] === "error")
+				{
+					//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+					alert(response["message"]);
+				}
+			}
+		);
+    }
+}
+/*-------------------------------------------------------*/

@@ -100,7 +100,7 @@
                     <td class='testsTableCell'>
                         <button class='actionButton' onclick='manageTest(<?= $group->getId() ?>)' title='Spravovat hlášení'><img src='images/management.svg'></button>
                         <button class='actionButton' onclick='editTest(<?= $group->getId() ?>)' title='Upravit poznávačku'><img src='images/pencil.svg'></button>
-                        <button class='actionButton' onclick='deleteTest(<?= $group->getId() ?>)' title='Odstranit poznávačku'><img src='images/cross.svg'/></button>
+                        <button class='actionButton' onclick='deleteTest(<?= $group->getId() ?>,"<?= $group->getName(); ?>")' title='Odstranit poznávačku'><img src='images/cross.svg'/></button>
                     </td>
                 </tr>
                 <?php endforeach ?>
