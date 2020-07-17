@@ -42,9 +42,9 @@
         <td class='table_left'>Stav třídy</td>
         <td class='table_right' id="status">
             <select id="statusInput" onchange="statusChange()" class="text dropList">
-				<option value='Veřejná' selected title='Do veřejných tříd mají přístup všichni přihlášení uživatelé.'>Veřejná</option>
-                <option value='Soukromá' title='Do soukromých tříd mohou vstoupit pouze uživatelé, kteří alespoň jednou zadali platný vstupní kód.'>Soukromá</option>
-                <option value='Uzamčená' title='Do uzamčených tříd nemohou vstoupit žádní uživatelé, kteří nedostali pozvánku.'>Uzamčená</option>
+				<option value='Veřejná' <?php if ($classStatus === ClassObject::CLASS_STATUS_PUBLIC) : ?>selected<?php endif ?> title='Do veřejných tříd mají přístup všichni přihlášení uživatelé.'>Veřejná</option>
+                <option value='Soukromá' <?php if ($classStatus === ClassObject::CLASS_STATUS_PRIVATE) : ?>selected<?php endif ?> title='Do soukromých tříd mohou vstoupit pouze uživatelé, kteří alespoň jednou zadali platný vstupní kód.'>Soukromá</option>
+                <option value='Uzamčená' <?php if ($classStatus === ClassObject::CLASS_STATUS_LOCKED) : ?>selected<?php endif ?> title='Do uzamčených tříd nemohou vstoupit žádní uživatelé, kteří nedostali pozvánku.'>Uzamčená</option>
             </select>
         </td>
         <td class='table_action'>
@@ -53,28 +53,34 @@
             	<input id='statusCodeInputField' type=number min=0 max=9999 maxlength=4 value="<?= $classCode ?>" style='width: 3.2rem;' class="text" oninput="statusChange()"/>
             </div>
             <button id="statusSaveButton" class="button" onclick="confirmStatusChange()">Aktualizovat</button>
+            <button id="statusCancelButton" class="button" onclick="cancelStatusChange()">Zrušit</button>
         </td>
     </tr>
     <tr>
         <td class='table_left'>Členové třídy</td>
         <td id='membersCell' class='table_right' colspan=2>
-        	<table id='membersTable'>
-        	<?php foreach ($members as $member) : ?>
-        	<tr class='membersTableRow'>
-                <td class='membersTableCell'><?= $member['name'] ?></td>
-                <td class='membersTableCell'>
-                	<button class='actionButton' onclick='kickUser(<?= $member['id'] ?>)' title='Odstranit ze třídy'><img src='images/cross.svg'/></button>
-                </td>
-            </tr>
-            <?php endforeach ?>
-        	</table>
-        
-            <button class='actionButton' onclick='inviteFormShow()' title='Pozvat nového člena'><img src='images/plus.svg'></button>
-            <div id='inviteForm'>
-                <div id='inviteUserInfo'>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</div>
-                <input id='inviteUserInput' placeholder='Jméno uživatele' type='text' maxlength=15>
-                <button onclick='inviteUser()' class='button'>Pozvat</button>
-                <button onclick='inviteFormHide()' class='button'>Zrušit</button>
+        	<div id='membersUnavailable' <?php if ($classStatus !== ClassObject::CLASS_STATUS_PUBLIC) : ?>style="display:none;"<?php endif ?>>
+        		Správa členů není dostupná pro veřejné třídy, jelikož všichni uživatelé služby mají do takové třídy přístup.
+        	</div>
+        	<div id='membersManagement'>
+            	<table id='membersTable' <?php if ($classStatus === ClassObject::CLASS_STATUS_PUBLIC) : ?>style="display:none;"<?php endif ?>>
+            	<?php foreach ($members as $member) : ?>
+            	<tr class='membersTableRow'>
+                    <td class='membersTableCell'><?= $member['name'] ?></td>
+                    <td class='membersTableCell'>
+                    	<button class='actionButton' onclick='kickUser(<?= $member['id'] ?>)' title='Odstranit ze třídy'><img src='images/cross.svg'/></button>
+                    </td>
+                </tr>
+                <?php endforeach ?>
+            	</table>
+            
+                <button class='actionButton' onclick='inviteFormShow()' title='Pozvat nového člena'><img src='images/plus.svg'></button>
+                <div id='inviteForm'>
+                    <div id='inviteUserInfo'>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</div>
+                    <input id='inviteUserInput' placeholder='Jméno uživatele' type='text' maxlength=15>
+                    <button onclick='inviteUser()' class='button'>Pozvat</button>
+                    <button onclick='inviteFormHide()' class='button'>Zrušit</button>
+                </div>
             </div>
         </td>
     </tr>

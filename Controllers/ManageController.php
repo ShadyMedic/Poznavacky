@@ -33,6 +33,7 @@ class ManageController extends Controller
         
         $this->data['classId'] = $_SESSION['selection']['class']->getId();
         $this->data['className'] = $_SESSION['selection']['class']->getName();
+        $this->data['classStatus'] = $_SESSION['selection']['class']->getStatus();
         $this->data['classCode'] = $_SESSION['selection']['class']->getCode();
         $this->data['members'] = $_SESSION['selection']['class']->getMembers();
         $this->data['groups'] = $_SESSION['selection']['class']->getGroups();
