@@ -105,8 +105,8 @@
                 </tr>
                 <?php endforeach ?>
             </table>
-            <button class='actionButton' onclick='createTest()' title='Vytvořit novou poznávačku'><img src='images/plus.svg'></button>
-            <div id='createForm'>
+            <button id='createButton' class='actionButton' onclick='createTest()' title='Vytvořit novou poznávačku'><img src='images/plus.svg'></button>
+            <div id='createForm' style="display:none;">
                 <div id='createInfo'>Zadejte název nové poznávačky. Do poznávačky budete moci přidat části a přírodniny později.</div>
                 <input id='createInput' placeholder='Název poznávačky' type='text' class='text' maxlength=31>
                 <button onclick='createTestSubmit()' class='button'>Vytvořit</button>

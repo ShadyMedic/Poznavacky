@@ -237,3 +237,38 @@ function inviteUser()
     //Reset HTML
     inviteFormHide();
 }
+/*-------------------------------------------------------*/
+function createTest()
+{
+	$("#createButton").hide();
+	$("#createForm").show();
+}
+function createTestHide()
+{
+	$("#createForm").hide();
+	$("#createButton").show();
+}
+function createTestSubmit()
+{
+	var testName = $("#createInput").val();
+	$.post("class-update",
+		{
+    		action: 'create test',
+			classId: classId,
+			name: testName
+		},
+		function (response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+	
+	//Reset HTML
+	createTestHide();
+}
+/*-------------------------------------------------------*/
