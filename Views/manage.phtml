@@ -68,7 +68,7 @@
             	<tr class='membersTableRow'>
                     <td class='membersTableCell'><?= $member['name'] ?></td>
                     <td class='membersTableCell'>
-                    	<button class='actionButton' onclick='kickUser(<?= $member['id'] ?>)' title='Odstranit ze třídy'><img src='images/cross.svg'/></button>
+                    	<button class='actionButton' onclick='kickUser(<?= $member['id'] ?>,"<?= $member['name'] ?>")' title='Odstranit ze třídy'><img src='images/cross.svg'/></button>
                     </td>
                 </tr>
                 <?php endforeach ?>

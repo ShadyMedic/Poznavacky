@@ -179,3 +179,27 @@ function cancelStatusChange()
     $("#statusCodeInputField").val(initialCode);
     statusChange();
 }
+/*-------------------------------------------------------*/
+function kickUser(memberId, memberName)
+{
+    if (!confirm("Opravdu chcete odebrat uživatele " + memberName + " ze třídy?"))
+    {
+        return;
+    }
+    $.post("class-update",
+		{
+    		action: 'kick member',
+			classId: classId,
+			memberId: memberId
+		},
+		function (response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+}
