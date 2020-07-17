@@ -203,3 +203,37 @@ function kickUser(memberId, memberName)
 		}
 	);
 }
+/*-------------------------------------------------------*/
+function inviteFormShow()
+{
+    $("#inviteButton").hide();
+    $("#inviteForm").show();
+}
+function inviteFormHide()
+{
+    $("#inviteForm").hide();
+    $("#inviteButton").show();
+}
+function inviteUser()
+{
+    var userName = $("#inviteUserInput").val();
+    $.post("class-update",
+		{
+    		action: 'invite user',
+			classId: classId,
+			userName: userName
+		},
+		function (response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+		}
+	);
+    
+    //Reset HTML
+    inviteFormHide();
+}

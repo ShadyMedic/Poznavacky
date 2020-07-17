@@ -74,8 +74,8 @@
                 <?php endforeach ?>
             	</table>
             
-                <button class='actionButton' onclick='inviteFormShow()' title='Pozvat nového člena'><img src='images/plus.svg'></button>
-                <div id='inviteForm'>
+                <button id='inviteButton' class='actionButton' onclick='inviteFormShow()' title='Pozvat nového člena'><img src='images/plus.svg'></button>
+                <div id='inviteForm' style="display:none;">
                     <div id='inviteUserInfo'>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</div>
                     <input id='inviteUserInput' placeholder='Jméno uživatele' type='text' maxlength=15>
                     <button onclick='inviteUser()' class='button'>Pozvat</button>
