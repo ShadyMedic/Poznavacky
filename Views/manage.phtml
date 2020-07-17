@@ -31,9 +31,10 @@
         <td class='table_right' id="name"><?= $className ?></td>
         <td class='table_action'>
             <button id="changeNameButton" class="button" onclick="requestNameChange()">Vyžádat změnu</button>
-            <div id="changeNameInput">
+            <div id="changeNameInput" style="display:none;">
                 <input class="text" id="changeNameInputField" type=text placeholder="Nový název" maxlength=31 />
                 <button class="button" id="changeNameConfirm" onclick="confirmNameChange()">Potvrdit</button>
+                <button class="button" id="changeNameCancel" onclick="cancelNameChange()">Zrušit</button>
             </div>
         </td>
     </tr>
