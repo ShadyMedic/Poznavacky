@@ -294,3 +294,64 @@ function deleteTest(id, name)
     }
 }
 /*-------------------------------------------------------*/
+function deleteClass()
+{
+	$("#deleteClassButton").hide();
+	$("#deleteClassInput1").show();
+}
+function deleteClassVerify()
+{
+	var password = $("#deleteClassInputField").val();
+	$.post("class-update",
+		{
+    		action: 'verify password',
+			password: password
+		},
+		deleteClassConfirm);
+}
+function deleteClassConfirm(response)
+{
+	response = JSON.parse(response);
+	if (response.verified === true)
+	{
+		$("#deleteClassInput1").hide();
+		$("#deleteClassInput2").show();
+	}
+	else
+	{
+		alert("Špatné heslo.");
+		$("#deleteClassInputField").val("");
+	}
+}
+function deleteClassFinal()
+{
+	var password = document.getElementById("deleteClassInputField").value;
+	$.post("class-update",
+		{
+    		action: 'delete class',
+			classId: classId,
+			password: password
+		},
+		function (response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
+			{
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
+			else if (response["messageType"] === "error")
+			{
+				//Přesměrování na seznam tříd
+				window.location = "menu";
+			}
+		}
+	);
+}
+function deleteClassCancel()
+{
+	$("#deleteClassInputField").val("");
+	$("#deleteClassInput2").hide();
+	$("#deleteClassButton").show();
+}
+/*-------------------------------------------------------*/
