@@ -43,7 +43,7 @@ class MenuController extends Controller
             }
         }
         
-        //Načtení argumentů vztahujících se k této stránkce
+        //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu)
         //Maximálně 5 (v případě domena.cz/menu/nazev-tridy/nazev-poznavacky/nazev-casti/akce/ajax-kontroller)
         $menuArguments = array();
@@ -66,8 +66,8 @@ class MenuController extends Controller
             $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::ControllerExtension;
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 1)
             {
-                //AdministrateController
-                $this->controllerToCall = new $controllerName;
+                //AdministrateController nebo AccountSettingsController
+                $this->controllerToCall = new $controllerName();
                 
                 //Vymazání objektů skladujících vybranou složku ze $_SESSION
                 $this->unsetSelection(true, true, true);
@@ -93,13 +93,13 @@ class MenuController extends Controller
                 }
             }
         }
-        if ($argumentCount > 1)
+        if ($argumentCount > 1 && !isset($this->controllerToCall))
         {
             $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::ControllerExtension;
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 2)
             {
                 //ManageController / LeaveController
-                $this->controllerToCall = new $controllerName;
+                $this->controllerToCall = new $controllerName();
                 
                 //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
                 $this->unsetSelection(true, true);
@@ -111,7 +111,7 @@ class MenuController extends Controller
                 //Kontrola, zda právě zvolený název souhlasí s názvem poznávačky uložené v $_SESSION
                 if (!isset($_SESSION['selection']['group']) || urldecode($menuArguments[1]) !== @$_SESSION['selection']['group']->getName())
                 {
-                    //Uložení objektu třídy do $_SESSION
+                    //Uložení objektu poznávačky do $_SESSION
                     $_SESSION['selection']['group'] = new Group(0, urldecode($menuArguments[1]), $_SESSION['selection']['class']);
                     
                     //Vymazání objektů skladujících vybranou část ze $_SESSION
@@ -125,14 +125,14 @@ class MenuController extends Controller
                 }
             }
         }
-        if ($argumentCount > 2)
+        if ($argumentCount > 2 && !isset($this->controllerToCall))
         {
             //Jsou zvoleny všechny části najednou?
             $controllerName = $this->kebabToCamelCase($menuArguments[2]).self::ControllerExtension;
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
             {
                 //Ano
-                $this->controllerToCall = new $controllerName;
+                $this->controllerToCall = new $controllerName();
                 $this->argumentsToPass = array_slice($menuArguments, 3);
                 
                 //Vymazání objektu skladujícího vybranou část ze $_SESSION
@@ -151,18 +151,18 @@ class MenuController extends Controller
                 //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
                 if (!isset($_SESSION['selection']['part']) || urldecode($menuArguments[2]) !== @$_SESSION['selection']['part']->getName())
                 {
-                    //Uložení objektu třídy do $_SESSION
+                    //Uložení objektu části do $_SESSION
                     $_SESSION['selection']['part'] = new Part(0, urldecode($menuArguments[2]), $_SESSION['selection']['group']);
                 }
             }
         }
-        if ($argumentCount > 3)
+        if ($argumentCount > 3 && !isset($this->controllerToCall))
         {
             //Akce pro část
             $controllerName = $this->kebabToCamelCase($menuArguments[3]).self::ControllerExtension;
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
             {
-                $this->controllerToCall = new $controllerName;
+                $this->controllerToCall = new $controllerName();
                 $this->argumentsToPass = array_slice($menuArguments, 4);
             }
             else
@@ -183,7 +183,7 @@ class MenuController extends Controller
             //Kontroler není nastaven --> vypsat tabulku na menu stránkce
             $this->pageHeader['bodyId'] = 'menu';
             $controllerName = 'MenuTable'.self::ControllerExtension;
-            $this->controllerToCall = new $controllerName;
+            $this->controllerToCall = new $controllerName();
             $this->controllerToCall->process($this->chosenFolder);
         }
         
