@@ -96,7 +96,7 @@ class MenuController extends Controller
         if ($argumentCount > 1 && !isset($this->controllerToCall))
         {
             $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::ControllerExtension;
-            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 2)
+            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && ($argumentCount === 2 || $controllerName === 'ManageController'))
             {
                 //ManageController / LeaveController
                 $this->controllerToCall = new $controllerName();
