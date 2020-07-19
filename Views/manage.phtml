@@ -98,8 +98,8 @@
                     <td class='testsTableCell'><?= $group->getName() ?></td>
                     <td class='testsTableCell'><?= $group->getPartsCount() ?></td>
                     <td class='testsTableCell'>
-                        <button class='actionButton' onclick='manageTest(<?= $group->getId() ?>)' title='Spravovat hlášení'><img src='images/management.svg'></button>
-                        <button class='actionButton' onclick='editTest(<?= $group->getId() ?>)' title='Upravit poznávačku'><img src='images/pencil.svg'></button>
+                        <button class='actionButton' onclick='window.location.href=window.location.href+"/<?= $group->getName() ?>/reports";' title='Spravovat hlášení'><img src='images/management.svg'></button>
+                        <button class='actionButton' onclick='window.location.href=window.location.href+"/<?= $group->getName() ?>/edit";' title='Upravit poznávačku'><img src='images/pencil.svg'></button>
                         <button class='actionButton' onclick='deleteTest(<?= $group->getId() ?>,"<?= $group->getName(); ?>")' title='Odstranit poznávačku'><img src='images/cross.svg'/></button>
                     </td>
                 </tr>
