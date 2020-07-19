@@ -13,16 +13,26 @@ class AdministrateController extends Controller
      */
     public function process(array $paremeters)
     {
-        if (!AccessChecker::checkSystemAdmin(UserManager::getId()))
+        if (!AccessChecker::checkSystemAdmin())
         {
             $this->redirect('error403');
         }
+        
+        $administration = new Administration();
+        
+        $this->data['loggedAdminName'] = UserManager::getName();
+        
+        $this->data['users'] = $administration->getAllUsers(false);
+        $this->data['classes'] = $administration->getAllClasses();
+        $this->data['reports'] = $administration->getAdminReports();
+        $this->data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
+        $this->data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
         
         $this->pageHeader['title'] = 'Správa služby';
         $this->pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/private.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/private.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/administrate.js');
         $this->pageHeader['bodyId'] = 'administrate';
         
         $this->view = 'administrate';

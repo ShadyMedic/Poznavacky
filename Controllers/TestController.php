@@ -24,7 +24,7 @@ class TestController extends Controller
         $this->pageHeader['description'] = 'Vyzkoušejte si, jak dobře znáte přírodniny v poznávačce pomocí náhodného testování';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/test.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/test.js','js/report.js');
         $this->pageHeader['bodyId'] = 'test';
         
         $controllerName = "nonexistant-controller";

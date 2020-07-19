@@ -34,23 +34,12 @@ class AccessChecker
     
     /**
      * 
-     * Metoda kontrolující, zda je určitý uživatel systémovým správcem
-     * @param int $userId ID ověřovaného uživatele
-     * @param bool $loadFromDb TRUE, pokud se má status načíst z databáze, což je o něco bezpečnější, ale náročnější. Pro běžné úkony stačí ponechat defaultní FALSE což porovná hodnotu uloženou v $_SESSION['user']['status']
+     * Metoda kontrolující, zda je přihlášený uživatel systémovým správcem
      * @return boolean TRUE, pokud je daný uživatelem systémovým správcem, FALSE, pokud ne
      */
-    public static function checkSystemAdmin(int $userId, bool $loadFromDb = false)
+    public static function checkSystemAdmin()
     {
-        if ($loadFromDb)
-        {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele WHERE uzivatele_id = ? AND status = ?', array($userId, User::STATUS_ADMIN), false);
-            return ($result['cnt'] === 1) ? true : false;
-        }
-        else
-        {
-            return (UserManager::getOtherInformation()['status'] === User::STATUS_ADMIN) ? true : false;
-        }
+        return (UserManager::getOtherInformation()['status'] === User::STATUS_ADMIN) ? true : false;
     }
 }
 

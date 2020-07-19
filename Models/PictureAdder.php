@@ -16,17 +16,14 @@ class PictureAdder
         'image/svg'
     );
     
-    private $class;
     private $group;
     
     /**
-     * Konstruktor třídy nastavující objekt třídy a poznávačky, do které bude tato třída přidávat obrázky
-     * @param ClassObject $class Objekt třídy
+     * Konstruktor třídy nastavující objekt poznávačky, do které bude tato třída přidávat obrázky
      * @param Group $group Objekt poznávačky (musí patřit do třídy)
      */
-    public function __construct(ClassObject $class, Group $group)
+    public function __construct(Group $group)
     {
-        $this->classObject = $class;
         $this->group = $group;
     }
     
@@ -34,14 +31,26 @@ class PictureAdder
      * Metoda zpracovávající data odeslaná z formuláře na stránce pro přidávání obrázků
      * Data jsou ověřena a posléze i uložena do databáze, nebo je vyvolána výjimka s chybovou hláškou
      * @param array $POSTdata Pole dat odeslaných z formuláře
-     * @throws AccessDeniedException V případě že data nesplňují podmínky
-     * @return boolean TRUE, pokud je úspěšně uložen nový obrázek
+     * @return boolean TRUE, pokud vše proběhne tak, jak má
      */
     public function processFormData(array $POSTdata)
     {
         $naturalName = $POSTdata['naturalName'];
         $url = $POSTdata['url'];
         
+        $natural = $this->checkData($naturalName, $url);    //Kontrola dat
+        return $this->addPicture($natural, $url);           //Ovlivnění databáze
+    }
+    
+    /**
+     * Metoda ověřující, zda jsou poskytnutá data v pořádku
+     * @param string $naturalName Jméno přírodniny, ke které chceme přidat obrázek
+     * @param string $url Adresa přidávaného obrázku
+     * @throws AccessDeniedException V případě že data nesplňují podmínky
+     * @return Natural Objekt reprezentující přírodninu, ke které hodláme přidat nový obrázek, pokud jsou data v pořádku
+     */
+    public function checkData(string $naturalName, string $url)
+    {
         $naturals = $this->group->getNaturals();
         for ($i = 0; $i < count($naturals) && $naturals[$i]->getName() !== $naturalName; $i++){}
         
@@ -55,7 +64,7 @@ class PictureAdder
         
         //Ověření, zda adresa vede na obrázek (kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/24936993)
         $typeCheck = false;
-
+        
         $url_headers = @get_headers($url, 1);
         if (isset($url_headers['Content-Type'])){
             $type = @strtolower($url_headers['Content-Type']);
@@ -76,6 +85,18 @@ class PictureAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_DUPLICATE_PICTURE, null, null, array('originFile' => 'PictureAdder.php', 'displayOnView' => 'addPictures.phtml'));
         }
         
+        return $natural;
+    }
+    
+    /**
+     * Metoda vkládající obrázek do databáze a zvyšující počet přidaných obrázků u přihlášeného uživatele
+     * @param Natural $natural Objekt přírodniny, ke které chceme přidat obrázek
+     * @param string $url Adresa přidávaného obrázku
+     * @throws AccessDeniedException V případě, že se obrázek nepodaří přidat
+     * @return boolean TRUE, pokud je úspěšně uložen nový obrázek
+     */
+    private function addPicture(Natural $natural, string $url)
+    {
         //Vložení obrázku do databáze
         if (!$natural->addPicture($url))
         {

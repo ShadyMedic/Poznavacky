@@ -194,7 +194,7 @@ class MenuController extends Controller
         $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
         
         $this->data['loggedUserName'] = UserManager::getName();
-        $this->data['adminLogged'] = AccessChecker::checkSystemAdmin(UserManager::getId());
+        $this->data['adminLogged'] = AccessChecker::checkSystemAdmin();
         
         $this->view = 'menu';
     }

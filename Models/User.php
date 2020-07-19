@@ -43,178 +43,75 @@ class User implements ArrayAccess
     }
     
     /**
-     * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli přidaných obrázků
-     * @return boolean TRUE, pokud vše proběhne hladce
+     * Metoda upravující některá data tohoto uživatele z rozhodnutí administrátora
+     * @param int $addedPictures Nový počet přidaných obrázků
+     * @param int $guessedPictures Nový počet uhodnutých obrázků
+     * @param int $karma Nová hodnota karmy
+     * @param string $status Nový status uživatele
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
+     * @return boolean TRUE, pokud jsou uživatelova data úspěšně aktualizována
      */
-    public function incrementAddedPictures()
+    public function updateAccount(int $addedPictures, int $guessedPictures, int $karma, string $status)
     {
-        $this->addedPictures++;
-        Db::connect();
-        return Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = (pridane_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
-    }
-    
-    /**
-     * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli uhodnutých obrázků
-     * @return boolean TRUE, pokud vše proběhne hladce
-     */
-    public function incrementGuessedPictures()
-    {
-        $this->guessedPictures++;
-        Db::connect();
-        return Db::executeQuery('UPDATE uzivatele SET uhodnute_obrazky = (uhodnute_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
-    }
-    
-    /**
-     * Metoda ukládající do databáze nový požadavek na změnu jména od přihlášeného uživatele, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
-     * Data jsou předem ověřena
-     * @param string $newName Požadované nové jméno
-     * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
-     * @return boolean TRUE, pokud je žádost úspěšně vytvořena/aktualizována
-     */
-    public function requestNameChange(string $newName)
-    {
-        if (mb_strlen($newName) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NO_NAME);}
-        
-        //Kontrola délky jména
-        $validator = new DataValidator();
-        try
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
         {
-            $validator->checkLength($newName, 4, 15, 0);
-        }
-        catch(RangeException $e)
-        {
-            if ($e->getMessage() === 'long')
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NAME_TOO_LONG, null, $e);
-            }
-            else if ($e->getMessage() === 'short')
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NAME_TOO_SHORT, null, $e);
-            }
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
         
-        //Kontrola znaků ve jméně
-        try
+        //Kontrola platnosti dat
+        if ($addedPictures < 0 || $guessedPictures < 0 || !($status === self::STATUS_ADMIN || $status === self::STATUS_CLASS_OWNER || $status === self::STATUS_MEMBER || $status === self::STATUS_GUEST))
         {
-            $validator->checkCharacters($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ', 0);
-        }
-        catch (InvalidArgumentException $e)
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_INVALID_CHARACTERS, null, $e);
-        }
-        
-        //Kontrola dostupnosti jména
-        try
-        {
-            $validator->checkUniqueness($newName, 0);
-        }
-        catch (InvalidArgumentException $e)
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_DUPLICATE_NAME, null, $e);
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA);
         }
         
         //Kontrola dat OK
         
-        //Zkontrolovat, zda již existuje žádost o změnu jména od přihlášeného uživatele
-        $applications = Db::fetchQuery('SELECT zadosti_jmena_id FROM zadosti_jmena WHERE uzivatele_jmeno = ?', array(UserManager::getName()));
-        if (!empty($applications['zadosti_jmena_id']))
-        {
-            //Přepsání existující žádosti
-            Db::executeQuery('UPDATE zadosti_jmena SET nove = ?, cas = ? WHERE zadosti_jmena_id = ? LIMIT 1', array($newName, time(), $applications['zadosti_jmena_id']));
-        }
-        else
-        {
-            //Uložení nové žádosti
-            Db::executeQuery('INSERT INTO zadosti_jmena (uzivatele_jmeno,nove,cas) VALUES (?,?,?)', array($this->name, $newName, time()));
-        }
-        return true;
-    }
-    
-    /**
-     * Metoda ověřující heslo uživatele a v případě úspěchu měnící e-mailovou adresu přihlášeného uživatele v databázi
-     * Data jsou předtím ověřena
-     * @param string $password Heslo přihlášeného uživatele pro ověření
-     * @param string $newEmail Nový e-mail
-     * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
-     * @return boolean TRUE, pokud je e-mail úspěšně změněn
-     */
-    public function changeEmail(string $password, string $newEmail)
-    {
-        if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_NO_PASSWORD);}
-        if (mb_strlen($newEmail) === 0){$newEmail = NULL;}
-        
-        //Kontrola hesla
-        if (!AccessChecker::recheckPassword($password))
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_WRONG_PASSWORD);
-        }
-        
-        //Kontrola délky a unikátnosti e-mailu (pokud ho uživatel nechce odstranit)
-        if ($newEmail !== NULL)
-        {
-            $validator = new DataValidator();
-            try
-            {
-                $validator->checkLength($newEmail, 0, 255, 2);
-                $validator->checkUniqueness($newEmail, 2);
-            }
-            catch (RangeException $e)
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_EMAIL_TOO_LONG, null, $e);
-            }
-            catch (InvalidArgumentException $e)
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_DUPLICATE_EMAIL, null, $e);
-            }
-            
-            //Kontrola platnosti e-mailu
-            if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL) && !empty($newEmail))
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL);
-            }
-        }
-        
-        //Kontrola dat OK
-        
-        //Aktualizovat databázi
         Db::connect();
-        Db::executeQuery('UPDATE uzivatele SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
-        $this->email = $newEmail;
+        Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ?;', array($addedPictures, $guessedPictures, $karma, $status, $this->id), false);
+        
         return true;
     }
     
     /**
-     * Metoda ověřující heslo přihlášeného uživatele a v případě úspěchu odstraňující jeho uživatelský účet
-     * Po odstranění z databáze jsou uživatelova data vymazána i ze $_SESSION
-     * @param string $password Heslo přihlášeného uživatele pro ověření
-     * @throws AccessDeniedException Pokud není heslo správné, vyplněné nebo uživatel nemůže smazat svůj účet
-     * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze a odhlášen
+     * Metoda odstraňující tento uživatelský účet na základě rozhodnutí administrátora
+     * Data z vlastností této instance jsou vynulována
+     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
+     * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
      */
-    public function deleteAccount(string $password)
+    public function deleteAccountAsAdmin()
     {
-        if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_NO_PASSWORD);}
-        
-        //Kontrola hesla
-        if (!AccessChecker::recheckPassword($password))
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_WRONG_PASSWORD);
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
         
         //Kontrola, zda uživatel není správcem žádné třídy
         Db::connect();
-        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array(UserManager::getId()));
+        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array($this->id));
         if ($administratedClasses['cnt'] > 0)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR);
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR);
         }
         
         //Kontrola dat OK
         
         //Odstranit uživatele z databáze
-        Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array(UserManager::getId()));
+        Db::connect();
+        Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array($this->id));
         
-        //Odhlásit uživatele
-        unset($_SESSION['user']);
+        //Vymazat data z této instance uživatele
+        $this->id = null;
+        $this->name = null;
+        $this->email = null;
+        $this->lastLogin = null;
+        $this->addedPictures = null;
+        $this->guessedPictures = null;
+        $this->karma = null;
+        $this->status = null;
+        
         return true;
     }
     

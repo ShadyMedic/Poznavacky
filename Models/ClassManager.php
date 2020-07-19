@@ -36,7 +36,17 @@ class ClassManager
     public static function getNewClassesByAccessCode(int $code, int $userId)
     {
         Db::connect();
-        $result = Db::fetchQuery('SELECT tridy_id, nazev, status FROM tridy WHERE kod = ? AND status = ? AND tridy_id NOT IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?)', array($code, ClassObject::CLASS_STATUS_PRIVATE, $userId), true);
+        $result = Db::fetchQuery('
+        SELECT
+        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.poznavacky, tridy.kod,
+        uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status"
+        FROM tridy
+        JOIN uzivatele ON spravce = uzivatele_id
+        WHERE kod = ? AND tridy.status = ? AND tridy_id NOT IN
+        (
+            SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?
+        )
+        ', array($code, ClassObject::CLASS_STATUS_PRIVATE, $userId), true);
         
         //Kontrola, zda je navrácen alespoň jeden výsledek
         if (!$result)
@@ -47,7 +57,8 @@ class ClassManager
         $classes = array();
         foreach($result as $classInfo)
         {
-            $classes[] = new ClassObject($classInfo['tridy_id'], $classInfo['nazev'], $classInfo['status']);
+            $classAdmin = new User($classInfo['uzivatele_id'], $classInfo['jmeno'], $classInfo['email'], new DateTime($classInfo['posledni_prihlaseni']), $classInfo['pridane_obrazky'], $classInfo['uhodnute_obrazky'], $classInfo['karma'], $classInfo['u_status']);
+            $classes[] = new ClassObject($classInfo['tridy_id'], $classInfo['nazev'], $classInfo['c_status'], $classInfo['kod'], $classInfo['poznavacky'], $classAdmin);
         }
         
         return $classes;

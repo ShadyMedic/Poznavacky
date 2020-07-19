@@ -22,7 +22,7 @@ class LearnPicturesController extends Controller
         $picturesArr = array();
         foreach ($pictures as $picture)
         {
-            $picturesArr[] = $picture['src'];
+            $picturesArr[] = $picture->getSrc();
         }
         echo json_encode($picturesArr);
         

@@ -99,7 +99,7 @@ class Group
     
     /**
      * Metoda navracející ID třídy, do které tato poznávačka patří
-     * @return int ID třídy
+     * @return ClassObject ID třídy
      */
     public function getClass()
     {
@@ -190,9 +190,17 @@ class Group
         
         Db::connect();
         $result = Db::fetchQuery('SELECT casti_id,nazev,prirodniny,obrazky FROM casti WHERE poznavacky_id = ?', array($this->id), true);
-        foreach ($result as $partData)
+        if ($result === false || count($result) === 0)
         {
-            $this->parts[] = new Part($partData['casti_id'], $partData['nazev'], $this, $partData['prirodniny'], $partData['obrazky']);
+            //Žádné části nenalezeny
+            $this->parts = array();
+        }
+        else
+        {
+            foreach ($result as $partData)
+            {
+                $this->parts[] = new Part($partData['casti_id'], $partData['nazev'], $this, $partData['prirodniny'], $partData['obrazky']);
+            }
         }
     }
     
