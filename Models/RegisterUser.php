@@ -51,7 +51,10 @@ class RegisterUser
         {
             $validator->checkLength($name, 4, 15, 0);
             $validator->checkLength($pass, 6, 31, 1);
-            $validator->checkLength($email, 0, 255, 2);
+            if (!empty($email))    //Pouze, pokud je e-mail vyplněn
+            {
+                $validator->checkLength($email, 0, 255, 2);
+            }
         }
         catch(RangeException $e)
         {

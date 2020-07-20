@@ -11,18 +11,12 @@ class DataValidator
      * @param string $subject Řetězec, jehož délku ověřujeme
      * @param int $min Minimální povolená délka řetězce (včetně)
      * @param int $max Maximální povolená délka řetězce (včetně)
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail
+     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail, 3 pro název třídy
      * @throws RangeException Pokud délka řetězce nespadá mezi $min a $max. Zpráva výjimky je 'long' nebo 'short' podle toho, jaká hranice byla přesažena
      * @return boolean TRUE, pokud délka řetězce spadá mezi $min a $max
      */
     public function checkLength($subject, int $min, int $max, int $stringType = null)
     {
-        if ($stringType === 2 && empty($subject))
-        {
-            //Nevyplněný e-mail
-            return true;
-        }
-        
         if (mb_strlen($subject) > $max)
         {
             throw new RangeException('long', $stringType);
@@ -38,7 +32,7 @@ class DataValidator
      * Metoda ověřující, zda se řetězec skládá pouze z povolených znaků
      * @param string $subject Řetězec, jehož znaky ověřujeme
      * @param string $allowedChars Řetězec skládající se z výčtu všech povolených znaků
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo
+     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail (nepoužívané), 3 pro název třídy
      * @throws InvalidArgumentException Pokud se řetězec skládá i z jiných než povolených znaků
      * @returns boolean TRUE, pokud se řetězec skládá pouze z povolených znaků
      */

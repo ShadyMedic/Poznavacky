@@ -188,7 +188,7 @@ class LoggedUser extends User
         }
         
         //Kontrola délky a unikátnosti e-mailu (pokud ho uživatel nechce odstranit)
-        if ($newEmail !== NULL)
+        if (!empty($newEmail))
         {
             $validator = new DataValidator();
             try
