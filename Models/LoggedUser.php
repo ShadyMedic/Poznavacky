@@ -90,7 +90,7 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Zkontrolovat, zda již existuje žádost o změnu jména od přihlášeného uživatele
-        $applications = Db::fetchQuery('SELECT zadosti_jmena_uzivatele_id FROM zadosti_jmena_uzivatele WHERE uzivatele_id = ?', array(UserManager::getId()));
+        $applications = Db::fetchQuery('SELECT zadosti_jmena_uzivatele_id FROM zadosti_jmena_uzivatele WHERE uzivatele_id = ? LIMIT 1', array(UserManager::getId()));
         if (!empty($applications['zadosti_jmena_uzivatele_id']))
         {
             //Přepsání existující žádosti
