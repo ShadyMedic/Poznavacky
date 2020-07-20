@@ -37,7 +37,9 @@ class ClassUpdateController extends Controller
             switch ($_POST['action'])
             {
                 case 'request name change':
-                    //TODO
+                    $newName =$_POST['newName'];
+                    $class->requestNameChange($newName);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Žádost o změnu názvu třídy byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši žádost posoudí správce, dostanete zprávu.'));
                     break;
                 case 'update access':
                     //TODO

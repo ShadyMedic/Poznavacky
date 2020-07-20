@@ -20,7 +20,6 @@ function requestNameChange()
 function confirmNameChange()
 {
     var newName = $("#changeNameInputField").val();
-    newName = encodeURIComponent(newName);
     
     $.post("class-update",
 		{
