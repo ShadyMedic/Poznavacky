@@ -354,4 +354,3 @@ function deleteClassCancel()
 	$("#deleteClassInput2").hide();
 	$("#deleteClassButton").show();
 }
-/*-------------------------------------------------------*/
