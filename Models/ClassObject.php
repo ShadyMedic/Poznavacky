@@ -379,6 +379,72 @@ class ClassObject
     }
     
     /**
+     * Metoda ukládající do databáze nový požadavek na změnu názvu této třídy vyvolaný správcem této třídy, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
+     * Data jsou předem ověřena
+     * @param string $newName Požadovaný nový název
+     * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
+     * @return boolean TRUE, pokud je žádost úspěšně vytvořena/aktualizována
+     */
+    public function requestNameChange(string $newName)
+    {
+        if (mb_strlen($newName) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_NO_NAME);}
+        
+        //Kontrola délky názvu
+        $validator = new DataValidator();
+        try
+        {
+            $validator->checkLength($newName, 5, 31, 3);
+        }
+        catch(RangeException $e)
+        {
+            if ($e->getMessage() === 'long')
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_NAME_TOO_LONG, null, $e);
+            }
+            else if ($e->getMessage() === 'short')
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_NAME_TOO_SHORT, null, $e);
+            }
+        }
+        
+        //Kontrola znaků v názvu
+        try
+        {
+            $validator->checkCharacters($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-', 0);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_INVALID_CHARACTERS, null, $e);
+        }
+        
+        //Kontrola dostupnosti jména
+        try
+        {
+            $validator->checkUniqueness($newName, 3);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME, null, $e);
+        }
+        
+        //Kontrola dat OK
+        
+        //Zkontrolovat, zda již existuje žádost o změnu názvu této třídy
+        $applications = Db::fetchQuery('SELECT zadosti_jmena_tridy_id FROM zadosti_jmena_tridy WHERE tridy_id = ? LIMIT 1', array($this->id));
+        if (!empty($applications['zadosti_jmena_tridy_id']))
+        {
+            //Přepsání existující žádosti
+            Db::executeQuery('UPDATE zadosti_jmena_tridy SET nove = ?, cas = NOW() WHERE zadosti_jmena_tridy_id = ? LIMIT 1', array($newName, $applications['zadosti_jmena_tridy_id']));
+        }
+        else
+        {
+            //Uložení nové žádosti
+            Db::executeQuery('INSERT INTO zadosti_jmena_tridy (tridy_id,nove,cas) VALUES (?,?,NOW())', array($this->id, $newName));
+        }
+        return true;
+    }
+    
+    /**
      * Metoda upravující přístupová data této třídy z rozhodnutí administrátora
      * @param string $status Nový status třídy (musí být jedna z konstant této třídy)
      * @param int|NULL $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked")
