@@ -451,7 +451,7 @@ class ClassObject
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
      */
-    public function updateAccessData(string $status, $code)
+    public function updateAccessDataAsAdmin(string $status, $code)
     {
         //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
         if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
@@ -477,6 +477,18 @@ class ClassObject
         Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ?;', array($status, $code, $this->id), false);
         
         return true;
+    }
+    
+    /**
+     * Metoda upravující přístupová data této třídy po jejich změně správcem třídy
+     * @param string $status Nový status třídy (musí být jedna z konstant této třídy)
+     * @param int|NULL $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked")
+     * @throws AccessDeniedException Pokud jsou zadaná data neplatná
+     * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     */
+    public function updateAccessData(string $status, $code)
+    {
+        //TODO
     }
     
     /**

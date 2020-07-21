@@ -207,7 +207,7 @@ class Administration
     public function editClass(int $classId, array $values)
     {
         $class = new ClassObject($classId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
-        $class->updateAccessData($values['status'], $values['code']);
+        $class->updateAccessDataAsAdmin($values['status'], $values['code']);
     }
     
     /**
