@@ -51,7 +51,7 @@ class AccessDeniedException extends Exception
     const REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG = 'Název třídy nesmí být více než 31 znaků dlouhý';
     const REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS = 'Název třídy může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
     const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto názvem již existuje';
-    const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód pro novou třídu nemá platný formát - musí to být čtyři číslice';
+    const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód třídy nemá platný formát - musí to být čtyři číslice';
     const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';
     const REASON_NAME_CHANGE_NO_NAME = self::REASON_REGISTER_NO_NAME;
     const REASON_NAME_CHANGE_NAME_TOO_LONG = self::REASON_REGISTER_NAME_TOO_LONG;
@@ -86,6 +86,8 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_NAME_CHANGE_NAME_TOO_SHORT = self::REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT;
     const REASON_MANAGEMENT_NAME_CHANGE_INVALID_CHARACTERS = self::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS;
     const REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME = self::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME;
+    const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_CODE = self::REASON_NEW_CLASS_REQUEST_INVALID_CODE;
+    const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_STATUS = 'Zvolený status není platný';
     const REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
     const REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA = self::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA;
     const REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';

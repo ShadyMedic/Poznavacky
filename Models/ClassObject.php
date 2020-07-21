@@ -9,6 +9,12 @@ class ClassObject
     public const CLASS_STATUS_PRIVATE = "private";
     public const CLASS_STATUS_LOCKED = "locked";
     
+    public const CLASS_STATUSES_DICTIONARY = array(
+        'veřejná' => self::CLASS_STATUS_PUBLIC,
+        'soukromá' => self::CLASS_STATUS_PRIVATE,
+        'uzamčená' => self::CLASS_STATUS_LOCKED
+    );
+    
     private $id;
     private $name;
     private $status;
@@ -489,7 +495,29 @@ class ClassObject
      */
     public function updateAccessData(string $status, $code)
     {
-        //TODO
+        //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
+        if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
+        {
+            $code = null;
+        }
+        
+        //Kontrola platnosti dat
+        $validator = new DataValidator();
+        if (!($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_PRIVATE || $status === self::CLASS_STATUS_LOCKED))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_STATUS);
+        }
+        if ($code !== null && !($validator->validateClassCode($code)))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_CODE);
+        }
+        
+        //Kontrola dat OK
+        
+        Db::connect();
+        Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ? LIMIT 1;', array($status, $code, $this->id), false);
+        
+        return true;
     }
     
     /**
