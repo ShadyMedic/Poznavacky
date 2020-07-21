@@ -1,10 +1,8 @@
-var classId;            //Ukládá ID spravované třídy (zda je přihlášený uživatel jejím správcem se kontroluje v PHP)
 var initialStatus;      //Ukládá status třídy uložený v databázi
 var initialCode;        //Ukládá vstupní kód třídy uložený v databázi
 $(function()
 {
-	//Získání ID třídy z dokumentu
-	classId = $("#id").text();
+	//Získání původních přístupových informací třídy z dokumentu
     initialStatus = $("#statusInput").val();
     initialCode = $("#statusCodeInputField").val();
     
@@ -24,7 +22,6 @@ function confirmNameChange()
     $.post("class-update",
 		{
     		action: 'request name change',
-			classId: classId,
 			newName: newName
 		},
 		function (response)
@@ -131,7 +128,6 @@ function confirmStatusChange()
     $.post("class-update",
 		{
     		action: 'update access',
-			classId: classId,
 			newStatus: newStatus,
 			newCode: newCode
 		},
@@ -188,7 +184,6 @@ function kickUser(memberId, memberName)
     $.post("class-update",
 		{
     		action: 'kick member',
-			classId: classId,
 			memberId: memberId
 		},
 		function (response)
@@ -219,7 +214,6 @@ function inviteUser()
     $.post("class-update",
 		{
     		action: 'invite user',
-			classId: classId,
 			userName: userName
 		},
 		function (response)
@@ -253,7 +247,6 @@ function createTestSubmit()
 	$.post("class-update",
 		{
     		action: 'create test',
-			classId: classId,
 			name: testName
 		},
 		function (response)
@@ -328,7 +321,6 @@ function deleteClassFinal()
 	$.post("class-update",
 		{
     		action: 'delete class',
-			classId: classId,
 			password: password
 		},
 		function (response)
