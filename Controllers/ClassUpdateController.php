@@ -42,7 +42,11 @@ class ClassUpdateController extends Controller
                     echo json_encode(array('messageType' => 'success', 'message' => 'Žádost o změnu názvu třídy byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši žádost posoudí správce, dostanete zprávu.'));
                     break;
                 case 'update access':
-                    //TODO
+                    $newStatus = @ClassObject::CLASS_STATUSES_DICTIONARY[mb_strtolower($_POST['newStatus'])];
+                    if (empty($newStatus)){ $newStatus = 'unknown'; }
+                    $newCode = $_POST['newCode'];
+                    $class->updateAccessData($newStatus, $newCode);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Přístupová data třídy byla úspěšně změněna'));
                     break;
                 case 'kick member':
                     //TODO
