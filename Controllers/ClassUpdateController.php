@@ -49,7 +49,9 @@ class ClassUpdateController extends Controller
                     echo json_encode(array('messageType' => 'success', 'message' => 'Přístupová data třídy byla úspěšně změněna'));
                     break;
                 case 'kick member':
-                    //TODO
+                    $kickedUserId = $_POST['memberId'];
+                    $class->removeMember($kickedUserId);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Uživatel byl úspěšně odebrán ze třídy'));
                     break;
                 case 'invite user':
                     //TODO
