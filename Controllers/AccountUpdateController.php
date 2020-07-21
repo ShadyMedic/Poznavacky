@@ -53,6 +53,7 @@ class AccountUpdateController extends Controller
                     $password = urldecode($_POST['password']);
                     $user = UserManager::getUser();
                     $user->deleteAccount($password);
+                    unset($user);
                     //Naposled přesměruj uživatele ven ze systému
                     echo json_encode(array('redirect' => ''));
                     exit();

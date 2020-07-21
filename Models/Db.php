@@ -108,4 +108,34 @@ class Db
             return $statement->fetch();
         }
     }
+    
+    /**
+     * Metoda provádějící nepřipravený SQL dotaz na databázi a navracející jeho výsledek
+     * 
+     * POZOR! Nesmí být využíváno při jakékoliv akci, kterou mohou vyvolat nepověření uživatelé - může dojít k SQL injekci
+     * @param string $query SQL dotaz k vykonání, s vloženými proměnnými
+     * @return boolean|array TRUE, v případě úspěšného vykonání dotazu bez navrácení výsledků; FALSE v případě selhání dotazu; Jednorozměrné nebo dvojrozměrné pole obsahující všechny výsledky dotazu, pokud nějaké navrátil
+     */
+    public static function unpreparedQuery(string $query)
+    {
+        try
+        {
+            $result = self::$connection->query($query);
+            if (!$result){ throw new PDOException('Failed to execute query.'); }
+        }
+        catch(PDOException $e)
+        {
+            return false;
+        }
+        
+        $returnedRows = $result->fetchAll();
+        if (count($returnedRows) === 0)
+        {
+            return true;
+        }
+        else
+        {
+            return $returnedRows;
+        }
+    }
 }

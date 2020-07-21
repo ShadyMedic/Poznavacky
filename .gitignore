@@ -3,6 +3,8 @@
 .settings/
 vendor/
 local/
-log.txt
-debug.txt
 Models/DebugLogger.php
+debug.txt
+log.txt
+database.accdb
+database.laccdb

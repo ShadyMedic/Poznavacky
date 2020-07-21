@@ -17,7 +17,7 @@ class TestGroupsManager
     {
         //Získej data
         Db::connect();
-        $classes = Db::fetchQuery('SELECT nazev,skupiny,status,spravce FROM `tridy` WHERE status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        $classes = Db::fetchQuery('SELECT nazev,poznavacky,status,spravce FROM `tridy` WHERE status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
         if (!$classes)
         {
             throw new NoDataException(NoDataException::NO_CLASSES, null, null, 0);
@@ -30,7 +30,7 @@ class TestGroupsManager
             $tableRow = array();
             $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($dataRow['nazev']);
             $tableRow[0] = $dataRow['nazev'];
-            $tableRow[1] = $dataRow['skupiny'];
+            $tableRow[1] = $dataRow['poznavacky'];
             //Tlačítko pro správu třídy, pokud je přihlášený uživatel správcem třídy
             if (UserManager::getId() === $dataRow['spravce'])
             {

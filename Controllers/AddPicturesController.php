@@ -36,7 +36,7 @@ class AddPicturesController extends Controller
         //Kontrola odeslání formuláře
         if (!empty($_POST))
         {
-            $adder = new PictureAdder($class, $group);
+            $adder = new PictureAdder($group);
             try
             {
                 if ($adder->processFormData($_POST))

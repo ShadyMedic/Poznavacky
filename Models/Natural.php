@@ -21,7 +21,7 @@ class Natural
      * @param string $name Název přírodniny (nepovinné, pokud je specifikováno ID)
      * @param Group $group Objekt poznávačky, do které přírodnina patří (nepovinné, pokud je specifikováno ID, pokud není zadáno, bude zjištěno z databáze)
      * @param Part $part Objekt části poznávačky, do které přírodnina patří (pokud není zadáno, bude zjištěno z databáze)
-     * @param int $pictureCount Počet obrázků, které jsou od této přírodniny nahrány v databázi
+     * @param int $pictureCount Počet obrázků, které jsou od této přírodniny nahrány v databázi (pokud není zadáno, bude zjištěno z databáze)
      * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná přírodnina
      * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
      */
@@ -93,12 +93,30 @@ class Natural
     }
     
     /**
+     * Metoda navracející ID této přírodniny
+     * @return int ID této přírodniny
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Metoda navracející jméno této přírodniny
      * @return string Jméno přírodniny
      */
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Metoda navracející objekt části, do které je tato přírodnina přiřazena
+     * @return Part Část, do které přírodnina spadá
+     */
+    public function getPart()
+    {
+        return $this->part;
     }
     
     /**
@@ -147,10 +165,18 @@ class Natural
         
         Db::connect();
         $result = Db::fetchQuery('SELECT obrazky_id,zdroj,povoleno FROM obrazky WHERE prirodniny_id = ?', array($this->id), true);
-        foreach ($result as $pictureData)
+        if ($result === false || count($result) === 0)
         {
-            $status = ($pictureData['povoleno'] === 1) ? true : false;
-            $this->pictures[] = new Picture($pictureData['obrazky_id'], $pictureData['zdroj'], $this, $status);
+            //Žádné obrázky nenalezeny
+            $this->pictures = array();
+        }
+        else
+        {
+            foreach ($result as $pictureData)
+            {
+                $status = ($pictureData['povoleno'] === 1) ? true : false;
+                $this->pictures[] = new Picture($pictureData['obrazky_id'], $pictureData['zdroj'], $this, $status);
+            }
         }
     }
     
@@ -187,7 +213,7 @@ class Natural
         
         foreach ($this->pictures as $picture)
         {
-            if ($picture['src'] === $url)
+            if ($picture->getSrc() === $url)
             {
                 return true;
             }

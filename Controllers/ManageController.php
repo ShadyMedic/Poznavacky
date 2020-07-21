@@ -8,7 +8,7 @@ class ManageController extends Controller
 {
 
     /**
-     * Metoda ověřující, zda má uživatel do správy třídy přístup a nastavující hlavičku stránky a pohled
+     * Metoda ověřující, zda má uživatel do správy třídy přístup (je její správce nebo administrátor systému) a nastavující hlavičku stránky a pohled
      * @see Controller::process()
      */
     public function process(array $parameters)
@@ -26,7 +26,7 @@ class ManageController extends Controller
         }
         
         $class = $_SESSION['selection']['class'];
-        if (!$class->checkAdmin(UserManager::getId()))
+        if (!($class->checkAdmin(UserManager::getId()) || AccessChecker::checkSystemAdmin()))
         {
             $this->redirect('error403');
         }

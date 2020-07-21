@@ -14,7 +14,6 @@ class TestPicturesController extends Controller
      */
     public function process(array $parameters)
     {
-        $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
         if (isset($_SESSION['selection']['part']))
         {
@@ -43,8 +42,8 @@ class TestPicturesController extends Controller
         $picturesArr = array();
         for ($i = 0; $i < count($pictures); $i++)
         {
-            $picturesArr[] = array('num' => $i, 'url' => $pictures[$i]['src']);
-            $_SESSION['testAnswers'][$i] = $pictures[$i]['natural']->getName();
+            $picturesArr[] = array('num' => $i, 'url' => $pictures[$i]->getSrc());
+            $_SESSION['testAnswers'][$i] = $pictures[$i]->getNatural()->getName();
         }
         
         //Odeslání dvourozměrného pole s čísly otázek a adresami obrázků

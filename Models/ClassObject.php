@@ -12,7 +12,10 @@ class ClassObject
     private $id;
     private $name;
     private $status;
+    private $code;
     private $groups;
+    private $groupsCount;
+    private $admin;
     
     private $accessCheckResult;
     
@@ -22,10 +25,13 @@ class ClassObject
      * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
      * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
      * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
-     * @param string $statis Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno z databáze až v případě potřeby)
+     * @param string $status Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno společně s kódem třídy z databáze až v případě potřeby)
+     * @param int|NULL $code Vstupní kód třídy (nepovinné, v případě potřeby bude načteno společně se statusem třídy z databáze až v případě potřeby; pro nespecifikování použijte hodnotu -1)
+     * @param int $groupsCount Počet poznávaček, které třída obsahuje (nepovinné, v případě potřeby bude načteno z databáze; pro nepsecifikování použijte hodnotu -1)
+     * @param User $admin Objekt uživatele, který je správcem této třídy (nepovinné, v případě potřeby bude načteno z databáze až v případě potřeby)
      * @throws BadMethodCallException
      */
-    public function __construct(int $id, string $name = "", string $status = "")
+    public function __construct(int $id, string $name = "", string $status = "", $code = -1, int $groupsCount = -1, User $admin = NULL)
     {
         if (mb_strlen($name) !== 0 && !empty($id))
         {
@@ -68,6 +74,18 @@ class ClassObject
         {
             $this->status = $status;
         }
+        
+        //Nastavení kódu (pokud byl specifikován)
+        if ($code !== -1)
+        {
+            $this->code = $code;
+        }
+        
+        //Nastavení správce (pokud byl specifikován)
+        if (!empty($admin))
+        {
+            $this->admin = $admin;
+        }
     }
     
     /**
@@ -89,6 +107,29 @@ class ClassObject
     }
     
     /**
+     * Metoda navracející počet poznávaček v této třídě
+     * @return int Počet poznávaček
+     */
+    public function getGroupsCount()
+    {
+        if (!isset($this->groupsCount))
+        {
+            $this->loadGroupsCount();
+        }
+        return $this->groupsCount;
+    }
+    
+    /**
+     * Metoda načítající počet poznávaček patřících do této třídy a ukládající je jako vlastnost tohoto objektu
+     */
+    private function loadGroupsCount()
+    {
+        Db::connect();
+        $result = Db::fetchQuery('SELECT poznavacky FROM tridy WHERE tridy_id = ?', array($this->id), false);
+        $this->groupsCount = $result['poznavacky'];
+    }
+    
+    /**
      * Metoda navracející pole poznávaček patřících do této třídy jako objekty
      * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
      * @return array Pole poznávaček patřících do této třídy jako objekty
@@ -104,6 +145,7 @@ class ClassObject
     
     /**
      * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
+     * Pokud zatím nebyl načten počet poznávaček v této třídě, je uložen jako počet prvků v $this->groups
      */
     private function loadGroups()
     {
@@ -111,10 +153,20 @@ class ClassObject
         
         Db::connect();
         $result = Db::fetchQuery('SELECT poznavacky_id,nazev,casti FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
-        foreach ($result as $groupData)
+        if ($result === false || count($result) === 0)
         {
-            $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
+            //Žádné poznávačky nenalezeny
+            $this->groups = array();
         }
+        else
+        {
+            foreach ($result as $groupData)
+            {
+                $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
+            }
+        }
+        
+        if (!isset($this->groupsCount)){ $this->groupsCount = count($this->groups); }
     }
     
     /**
@@ -138,14 +190,17 @@ class ClassObject
     
     /**
      * Metoda kontrolující, zda je určitý uživatel správcem této třídy
+     * Pokud zatím nebyl načten správce této třídy, bude načten z databáze
      * @param int $userId ID ověřovaného uživatele
      * @return boolean TRUE, pokud je uživatelem správce třídy, FALSE pokud ne
      */
     public function checkAdmin(int $userId)
     {
-        Db::connect();
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE tridy_id = ? AND spravce = ?;', array($this->id, $userId), false);
-        return ($result['cnt'] === 1) ? true : false;
+        if (!isset($this->admin))
+        {
+            $this->loadAdmin();
+        }
+        return ($this->admin['id'] === $userId) ? true : false;
     }
     
     /**
@@ -229,28 +284,152 @@ class ClassObject
      * Pokud status není uložen, je načten z databáze, uložen a poté navrácen
      * @return string Status třídy (viz konstanty třídy)
      */
-    private function getStatus()
+    public function getStatus()
     {
-        if (isset($this->status))
+        if (!isset($this->status))
         {
-            return $this->status;
+            $this->loadStatusAndCode();
         }
-        return $this->loadStatus();
+        return $this->status;
+    }
+    
+    /**
+     * Metoda navracející uložený vstupní kód této třídy
+     * @return int Čtyřmístný kód této třídy
+     */
+    public function getCode()
+    {
+        if (!isset($this->code))
+        {
+            $this->loadStatusAndCode();
+        }
+        return $this->code;
     }
     
     /**
      * Metoda získávající z databáze status této třídy a nastavující jej jako vlastnost "status"
-     * @return string Status třídy (viz konstanty třídy)
      */
-    private function loadStatus()
+    private function loadStatusAndCode()
     {
         Db::connect();
-        $result = Db::fetchQuery('SELECT status FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id), false);
-        if ($result)
+        $result = Db::fetchQuery('SELECT status,kod FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id), false);
+        $this->status = $result['status'];
+        $this->code = $result['kod'];
+    }
+    
+    /**
+     * Metoda pro získání objektu uživatele, který je správcem této třídy
+     * @return User Objekt správce třídy
+     */
+    public function getAdmin()
+    {
+        if (!isset($this->admin))
         {
-            $this->status = $result['status'];
-            return $result['status'];
+            $this->loadAdmin();
         }
+        return $this->admin;
+    }
+    
+    /**
+     * Metoda načítající data o uživateli, který je správcem této třídy z databáze a nastavující je jako vlastnost "admin"
+     */
+    private function loadAdmin()
+    {
+        Db::connect();
+        $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status FROM tridy JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id WHERE tridy_id = ?;', array($this->id), false);
+        $this->admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+    }
+    
+    /**
+     * Metoda upravující přístupová data této třídy z rozhodnutí administrátora
+     * @param string $status Nový status třídy (musí být jedna z konstant této třídy)
+     * @param int|NULL $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked")
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
+     * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     */
+    public function updateAccessData(string $status, $code)
+    {
+        //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
+        if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
+        {
+            $code = null;
+        }
+        
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola platnosti dat
+        if (($code !== null && $code < 0 || $code > 9999) || !($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_PRIVATE || $status === self::CLASS_STATUS_LOCKED))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA);
+        }
+        
+        //Kontrola dat OK
+        
+        Db::connect();
+        Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ?;', array($status, $code, $this->id), false);
+        
+        return true;
+    }
+    
+    /**
+     * Metoda měnící správce této třídy z rozhodnutí administrátora
+     * @param User $newAdmin Instance třídy uživatele reprezentující nového správce
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem 
+     * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     */
+    public function changeClassAdminAsAdmin(User $newAdmin)
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola dat OK (zda uživatel s tímto ID exisutje je již zkontrolováno v Administration::changeClassAdmin())
+        
+        Db::connect();
+        Db::executeQuery('UPDATE tridy SET spravce = ? WHERE tridy_id = ? LIMIT 1;', array($newAdmin['id'], $this->id));
+        
+        return true;
+    }
+    
+    /**
+     * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí administrátora
+     * Data z vlastností této instance jsou vynulována
+     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
+     * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
+     */
+    public function deleteAsAdmin()
+    {
+        //Kontrola, zda je právě přihlášený uživatelem administrátorem
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola dat OK
+        
+        //Odstranit třídu
+        Db::connect();
+        Db::executeQuery('DELETE FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id));
+        
+        //Vymazat data z této instance třídy
+        $this->id = null;
+        $this->name = null;
+        $this->email = null;
+        $this->status = null;
+        $this->code = null;
+        $this->groups = null;
+        $this->groupsCount = null;
+        $this->admin = null;
+        $this->accessCheckResult = null;
+        
+        return true;
     }
 }
 
