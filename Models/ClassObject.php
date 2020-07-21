@@ -465,8 +465,9 @@ class ClassObject
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
         
+        $validator = new DataValidator();
         //Kontrola platnosti dat
-        if (($code !== null && $code < 0 || $code > 9999) || !($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_PRIVATE || $status === self::CLASS_STATUS_LOCKED))
+        if (($code !== null && !($validator->validateClassCode($code))) || !($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_PRIVATE || $status === self::CLASS_STATUS_LOCKED))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA);
         }
@@ -474,7 +475,7 @@ class ClassObject
         //Kontrola dat OK
         
         Db::connect();
-        Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ?;', array($status, $code, $this->id), false);
+        Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ? LIMIT 1;', array($status, $code, $this->id), false);
         
         return true;
     }
