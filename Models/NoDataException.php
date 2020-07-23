@@ -11,6 +11,8 @@ class NoDataException extends Exception
     const UNKNOWN_CLASS = 'Třída nenalezena';
     const UNKNOWN_GROUP = 'Poznávačka nenalezena';
     const UNKNOWN_PART = 'Část nenalezena';
+    const UNKNOWN_USER = 'Uživatel nenalezen';
+    const UNKNOWN_INVITATION = 'Pozvánka nenalezena';
     
     /**
      * Konstruktor podmínky

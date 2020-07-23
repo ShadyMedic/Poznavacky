@@ -264,6 +264,57 @@ class ClassObject
     }
     
     /**
+     * Metoda vytvářející pozvánku do této třídy pro určitého uživatele
+     * Pokud byl již uživatel do této třídy pozván, je prodloužena životnost existující pozvánky
+     * @param int $userName Jméno uživatele, pro kterého je pozvánka určena
+     * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem neexistuje nebo je již členem této třídy
+     * @return boolean TRUE, pokud je pozvánka úspěšně vytvořena
+     */
+    public function inviteUser(string $userName)
+    {
+        //Zkontroluj, zda tato třída není veřejná
+        if ($this->status === self::CLASS_STATUS_PUBLIC)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS);
+        }
+        
+        //Konstrukce objektu uživatele
+        Db::connect();
+        $result = Db::fetchQuery('SELECT uzivatele_id,jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE jmeno = ? LIMIT 1', array($userName));
+        if (empty($result))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER);
+        }
+        $user = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        
+        //Zkontroluj, zda uživatel již není členem třídy
+        for ($i = 0; $i < count($this->members) && $user['id'] !== $this->members[$i]['id']; $i++){}
+        if ($i !== count($this->members))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER);
+        }
+        
+        //Ověř, zda již taková pozvánka v databázi neexistuje
+        $result = Db::fetchQuery('SELECT pozvanky_id FROM pozvanky WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($user['id'], $this->id));
+        if (empty($result))
+        {
+            //Nová pozvánka
+            $invitation = new Invitation();
+        }
+        else
+        {
+            //Prodloužit životnost existující pozvánky
+            $invitation = new Invitation($result['pozvanky_id']);
+        }
+        
+        $expiration = new DateTime('@'.(time() + Invitation::INVITATION_LIFETIME));
+        $invitation->initialize($user, $this, $expiration);
+        $invitation->save();
+        
+        return true;
+    }
+    
+    /**
      * Metoda přidávající uživatele do třídy (přidává spojení uživatele a třídy do tabulky "clenstvi")
      * Pokud je tato třída veřejná nebo uzamčená, nic se nestane
      * @param int $userId ID uživatele získávajícího členství

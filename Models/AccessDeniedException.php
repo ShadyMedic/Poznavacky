@@ -88,6 +88,9 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME = self::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME;
     const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_CODE = self::REASON_NEW_CLASS_REQUEST_INVALID_CODE;
     const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_STATUS = 'Zvolený status není platný';
+    const REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER = 'Uživatel nebyl nalezen';
+    const REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS = 'Pozvánky do veřejné třídy nelze vytvářet';
+    const REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER = 'Tento uživatel je již členem této třídy';
     const REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
     const REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA = self::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA;
     const REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';
