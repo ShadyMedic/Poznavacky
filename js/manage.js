@@ -205,6 +205,7 @@ function inviteFormShow()
 }
 function inviteFormHide()
 {
+	$("#inviteUserInput").val("");
     $("#inviteForm").hide();
     $("#inviteButton").show();
 }
@@ -219,6 +220,14 @@ function inviteUser()
 		function (response)
 		{
 			response = JSON.parse(response);
+			if (response["messageType"] === "success")
+			{
+				//Vynuluj a skryj formulář
+			    inviteFormHide();
+			    
+			    //TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
+			}
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -226,9 +235,6 @@ function inviteUser()
 			}
 		}
 	);
-    
-    //Reset HTML
-    inviteFormHide();
 }
 /*-------------------------------------------------------*/
 function createTest()
