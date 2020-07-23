@@ -54,15 +54,20 @@ class ClassUpdateController extends Controller
                     echo json_encode(array('messageType' => 'success', 'message' => 'Uživatel byl úspěšně odebrán ze třídy'));
                     break;
                 case 'invite user':
-                    //TODO
+                    $invitedUserName = $_POST['userName'];
+                    $class->inviteUser($invitedUserName);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Pozvánka úspěšně odeslána'));
                     break;
                 case 'create test':
+                    $newTestNamme = $_POST['testName'];
                     //TODO
                     break;
                 case 'delete test':
+                    $deletedTestId = $_POST['testId'];
                     //TODO
                     break;
                 case 'delete class':
+                    $adminPassword = $_POST['password'];
                     //TODO
                     break;
                 case 'verify password':
