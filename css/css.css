@@ -547,16 +547,16 @@ label.required:after {
   display: flex;
 }
 
-#menu header .hamburger-btn svg,
-#menu header .user-btn svg,
-#learn header .hamburger-btn svg,
-#learn header .user-btn svg,
-#test header .hamburger-btn svg,
-#test header .user-btn svg,
-#addPictures header .hamburger-btn svg,
-#addPictures header .user-btn svg,
-#accountSettings header .hamburger-btn svg,
-#accountSettings header .user-btn svg {
+#menu header .hamburger-btn img,
+#menu header .user-btn img,
+#learn header .hamburger-btn img,
+#learn header .user-btn img,
+#test header .hamburger-btn img,
+#test header .user-btn img,
+#addPictures header .hamburger-btn img,
+#addPictures header .user-btn img,
+#accountSettings header .hamburger-btn img,
+#accountSettings header .user-btn img {
   width: 100%;
   height: 100%;
   -ms-flex-item-align: center;
