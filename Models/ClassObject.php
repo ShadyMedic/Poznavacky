@@ -318,16 +318,17 @@ class ClassObject
      * Metoda přidávající uživatele do třídy (přidává spojení uživatele a třídy do tabulky "clenstvi")
      * Pokud je tato třída veřejná nebo uzamčená, nic se nestane
      * @param int $userId ID uživatele získávajícího členství
-     * @return boolean TRUE, pokud je členství ve třídě úspěšně přidáno, FALSE, pokud ne (například z důvodu zamknutí třídy)
+     * @return boolean TRUE, pokud je členství ve třídě úspěšně přidáno, FALSE, pokud ne
      */
     public function addMember(int $userId)
     {
         //Zkontroluj, zda je třída soukromá
-        if (!$this->getStatus() === self::CLASS_STATUS_PRIVATE)
-        {
-            //Nelze získat členství ve veřejné nebo uzamčené třídě
-            return false;
-        }
+        //Není třeba - před zavoláním této metody při získávání členství pomocí kódu je zkontrolováno, zda není třída zamknutá
+      # if (!$this->getStatus() === self::CLASS_STATUS_PRIVATE)
+      # {
+      #     //Nelze získat členství ve veřejné nebo uzamčené třídě
+      #     return false;
+      # }
         
         Db::connect();
         
