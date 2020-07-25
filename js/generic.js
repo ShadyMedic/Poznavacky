@@ -34,3 +34,13 @@ function showLoginInfo() {
 	$(".login-info").addClass("show");
 	$(".login-info").css("top", loginInfoOffset);
 }
+
+$(document).mouseup(function(e) 
+{
+    var container = $(".login-info");
+
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        $(".login-info").removeClass("show");
+    }
+});
