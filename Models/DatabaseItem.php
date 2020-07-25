@@ -35,7 +35,7 @@ abstract class DatabaseItem
     public abstract function save();
     
     /**
-     * Metoda odstraňující záznam reprezentovaný tímto objektem z databáze
+     * Metoda odstraňující záznam reprezentovaný tímto objektem z databáze a nulující vlastnost ID objektu
      */
     public abstract function delete();
 }

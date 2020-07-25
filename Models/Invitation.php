@@ -155,6 +155,14 @@ class Invitation extends DatabaseItem
     }
     
     /**
+     * Metoda přijímající pozvánku a vytvářející členství v dané třídě pro daného uživatele
+     */
+    public function accept()
+    {
+        $this->class->addMember($this->user['id']);
+    }
+    
+    /**
      * Metoda odstraňující tuto pozvánku z databáze
      * @return boolean TRUE, pokud je pozvánka úspěšně odstraněna z databáze
      * {@inheritDoc}
@@ -164,6 +172,8 @@ class Invitation extends DatabaseItem
     {
         Db::connect();
         Db::executeQuery('DELETE FROM pozvanky WHERE pozvanky_id = ? LIMIT 1;', array($this->id));
+        unset($this->id);
+        $this->savedInDb = false;
         return true;
     }
 }
