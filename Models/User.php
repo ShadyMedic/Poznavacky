@@ -43,6 +43,32 @@ class User implements ArrayAccess
     }
     
     /**
+     * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
+     * @return Invitation[] Pole aktivních pozvánek jako objekty
+     */
+    public function getActiveInvitations()
+    {
+        Db::connect();
+        $invitationsData = Db::fetchQuery('SELECT pozvanky_id,tridy_id,expirace FROM pozvanky WHERE uzivatele_id = ? AND expirace > NOW()', array($this->id), true);
+        if ($invitationsData === false)
+        {
+            //Žádné pozvánky
+            return array();
+        }
+        
+        $invitations = array();
+        
+        foreach ($invitationsData as $invitationData)
+        {
+            $invitation = new Invitation($invitationData['pozvanky_id']);
+            $invitation->initialize($this, new ClassObject($invitationData['tridy_id']), new DateTime($invitationData['expirace']));
+            $invitations[] = $invitation;
+        }
+        
+        return $invitations;
+    }
+    
+    /**
      * Metoda upravující některá data tohoto uživatele z rozhodnutí administrátora
      * @param int $addedPictures Nový počet přidaných obrázků
      * @param int $guessedPictures Nový počet uhodnutých obrázků

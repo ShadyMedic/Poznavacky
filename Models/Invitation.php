@@ -127,8 +127,32 @@ class Invitation extends DatabaseItem
         return true;
     }
     
-    public function accept(){/*TODO*/}
-    public function reject(){/*TODO*/}
+    /**
+     * Metoda navracející ID této pozvánky
+     * @return int ID této pozvánky (v případě neznámého ID je navrácena hodnota 0)
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Metoda navracející objekt třídy, do které je možné pomocí této pozvánky získat přístup
+     * @return ClassObject Objekt třídy, které se týká tato pozvánka
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+    
+    /**
+     * Metoda navracející datum (bez času), ve kterém tato pozvánka expiruje
+     * @return string Datum expirace této pozvánky ve formátu "den. měsíc. rok" (například 24. 07. 2020)
+     */
+    public function getExpirationDate()
+    {
+        return $this->expiration->format('d. m. Y');
+    }
     
     /**
      * Metoda odstraňující tuto pozvánku z databáze
