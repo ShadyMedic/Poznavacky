@@ -5,7 +5,6 @@
  */
 class MenuController extends Controller
 {
-    private $chosenFolder = array();
     private $argumentsToPass = array();
     
     /**
@@ -144,7 +143,7 @@ class MenuController extends Controller
                 if ($argumentCount === 3)
                 {
                     //Je specifikována část, ale ne akce --> návrat na seznam částí
-                    $this->redirect('menu/'.$this->chosenFolder['class'].'/'.$this->chosenFolder['group']);
+                    $this->redirect('menu/'.$_SESSION['selection']['class']->getName().'/'.$_SESSION['selection']['group']->getName());
                 }
                 
                 //Nastavení části (pouze, pokud nejsou vybrány všechny části najednou)
@@ -175,7 +174,7 @@ class MenuController extends Controller
         if (isset($this->controllerToCall))
         {
             //Kontroler je nastaven --> předat posbírané argumenty dál
-            $this->controllerToCall->process(array_merge($this->argumentsToPass, $this->chosenFolder));
+            $this->controllerToCall->process($this->argumentsToPass);
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
         }
         else
@@ -184,7 +183,7 @@ class MenuController extends Controller
             $this->pageHeader['bodyId'] = 'menu';
             $controllerName = 'MenuTable'.self::ControllerExtension;
             $this->controllerToCall = new $controllerName();
-            $this->controllerToCall->process($this->chosenFolder);
+            $this->controllerToCall->process(array());
         }
         
         $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
