@@ -13,20 +13,15 @@ class Invitation extends DatabaseItem
     
     /**
      * Konstruktor pozvánky nastavující její ID nebo informaci o tom, že je nová
-     * @param int $id ID hlášení (nepovinné, pokud není vyplněno, je pozvánka považována za novou a její ID bude načteno z databáze po vyplnění dalších údajů o ní pomocí metody Invitation::initialize())
+     * @param bool $isNew FALSE, pokud je již pozvánka se zadaným ID nebo později doplněnými informacemi uložena v databázi, TRUE, pokud se jedná o novou pozvánku
+     * @param int $id ID pozvánky (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o ní pomocí metody Invitation::initialize())
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id = 0)
+    public function __construct(bool $isNew, int $id = 0)
     {
-        if (empty($id))
-        {
-            $this->savedInDb = false;
+        parent::__construct($isNew, $id);
         }
-        else
-        {
-            $this->id = $id;
-            $this->savedInDb = true;
-        }
-    }
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů

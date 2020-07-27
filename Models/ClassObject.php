@@ -299,12 +299,12 @@ class ClassObject
         if (empty($result))
         {
             //Nová pozvánka
-            $invitation = new Invitation();
+            $invitation = new Invitation(true);
         }
         else
         {
             //Prodloužit životnost existující pozvánky
-            $invitation = new Invitation($result['pozvanky_id']);
+            $invitation = new Invitation(false, $result['pozvanky_id']);
         }
         
         $expiration = new DateTime('@'.(time() + Invitation::INVITATION_LIFETIME));

@@ -39,7 +39,7 @@ class AnswerInvitationController extends Controller
             $this->redirect('menu');
         }
         
-        $invitation = new Invitation($invitationId);
+        $invitation = new Invitation(false, $invitationId);
         $invitation->initialize(UserManager::getUser(), new ClassObject($invitationData['tridy_id']), new DateTime($invitationData['expirace']));
         
         if ($answer === 'accept')
