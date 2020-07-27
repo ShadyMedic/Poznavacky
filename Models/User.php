@@ -3,8 +3,10 @@
  * Třída uchovávající data o uživateli (ne nutně přihlášeném)
  * @author Jan Štěch
  */
-class User implements ArrayAccess
+class User extends DatabaseItem implements ArrayAccess
 {
+    public const TABLE_NAME = 'uzivatele';
+    
     const STATUS_GUEST = 'Guest';
     const STATUS_MEMBER = 'Member';
     const STATUS_CLASS_OWNER = 'Class Owner';
@@ -20,8 +22,19 @@ class User implements ArrayAccess
     protected $status;
     
     /**
-     * Konstruktor pro nového uživatele
+     * Konstruktor uživatele nastavující jeho ID nebo informaci o tom, že je nový
+     * @param bool $isNew FALSE, pokud je již uživatele se zadaným ID nebo později doplněnými informacemi uložen v databázi, TRUE, pokud se jedná o nového uživatele
      * @param int $id ID uživatele v databázi
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
+     */
+    public function __construct(bool $isNew, int $id = 0)
+    {
+        parent::__construct($isNew, $id);
+    }
+    
+    /**
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * @param string $name Přezdívka uživatele
      * @param string $email E-mailová adresa uživatele
      * @param DateTime $lastLogin Datum a čas posledního přihlášení uživatele
@@ -29,10 +42,15 @@ class User implements ArrayAccess
      * @param int $guessedPictures Počet obrázků uhodnutých uživatelem
      * @param int $karma Uživatelova karma
      * @param string $status Uživatelův status
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id, string $name, string $email = null, DateTime $lastLogin = null, int $addedPictures = 0, int $guessedPictures = 0, int $karma = 0, string $status = self::STATUS_MEMBER)
+    public function initialize(string $name = '', string $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '')
     {
-        $this->id = $id;
+        if ($addedPictures === -1){ $addedPictures = null; }
+        if ($guessedPictures === -1){ $guessedPictures = null; }
+        if ($karma === -1){ $karma = null; }
+        
         $this->name = $name;
         $this->email = $email;
         $this->lastLogin = $lastLogin;
@@ -43,13 +61,108 @@ class User implements ArrayAccess
     }
     
     /**
+     * Metoda načítající z databáze data uživatele (s výjimkou hashe jeho hesla) podle jeho ID (pokud bylo zadáno v konstruktoru)
+     * V případě, že není známé ID, ale je známé jméno uživatele, je načteno ID uživatelovo ID a ostatní informace o něm (opět s výjimkou hesla) podle jeho jména
+     * @throws BadMethodCallException Pokud se jedná o uživatele, který dosud není uložen v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
+     * @throws NoDataException Pokud není uživatel, který má zadané vlastnosti nalezen
+     * @return boolean TRUE, pokud jsou vlastnosti tohoto uživatele úspěšně načteny z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::load()
+     */
+    public function load()
+    {
+        if ($this->savedInDb === false)
+        {
+            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
+        }
+        
+        Db::connect();
+        
+        if (isset($this->id))
+        {
+            $userData = Db::fetchQuery('SELECT jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ? LIMIT 1', array($this->id));
+            if (empty($userData))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_USER);
+            }
+            
+            $name = $userData['jmeno'];
+            $email = $userData['email'];
+            $lastLogin = $userData['posledni_prihlaseni'];
+            $addedPictures = $userData['pridane_obrazky'];
+            $guessedPictures = $userData['uhodnute_obrazky'];
+            $karma = $userData['karma'];
+            $status = $userData['status'];
+            
+            $this->initialize($name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status);
+        }
+        else if (isset($this->name))
+        {
+            $userData = Db::fetchQuery('SELECT uzivatele_id,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.self::TABLE_NAME.' WHERE jmeno = ? LIMIT 1', array($this->name));
+            if (empty($userData))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_USER);
+            }
+            
+            $id = $userData['uzivatele_id'];
+            $email = $userData['email'];
+            $lastLogin = $userData['posledni_prihlaseni'];
+            $addedPictures = $userData['pridane_obrazky'];
+            $guessedPictures = $userData['uhodnute_obrazky'];
+            $karma = $userData['karma'];
+            $status = $userData['status'];
+            
+            $this->id = $id;
+            $this->initialize($this->name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
+        }
+      # else if (isset($this->email))
+      # {
+      #     //TODO - implementovat v případě potřeby zkonstruovat objekt uživatele pouze podle jeho e-mailové adresy
+      # }
+        else
+        {
+            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
+        }
+        return true;
+    }
+    
+    /**
+     * Metoda ukládající data tohoto uživatele do databáze
+     * Data uživatele se stejným ID jsou v databázy přepsána
+     * @throws BadMethodCallException Pokud není známé ID uživatele (znalost ID uživatele je nutná pro modifikaci databázové tabulky) nebo pokud uživatel zatím není uložen v databázi
+     * @return boolean TRUE, pokud jsou data uživatele v databázi úspěšně aktualizována
+     * {@inheritDoc}
+     * @see DatabaseItem::save()
+     */
+    public function save()
+    {
+        if ($this->savedInDb === true && empty($this->id))
+        {
+            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
+        }
+        
+        Db::connect();
+        if ($this->savedInDb)
+        {
+            //Aktualizace existujícího uživatele
+            $this->id = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET jmeno = ?, email = ?, posledni_prihlaseni = ?, pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ? LIMIT 1', array($this->name, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
+        }
+        else
+        {
+            //Nelze vytvořit nového uživatele skrz třídu User - lze pouze ve třídě LoggedUser, jelikož musí být známo heslo uživatele
+            throw new BadMethodCallException('New user cannot be created from this class, because this class doesn\'t store the user\'s password. Try doing this from the LoggedUser class');
+        }
+        return true;
+    }
+    
+    /**
      * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
      * @return Invitation[] Pole aktivních pozvánek jako objekty
      */
     public function getActiveInvitations()
     {
         Db::connect();
-        $invitationsData = Db::fetchQuery('SELECT pozvanky_id,tridy_id,expirace FROM pozvanky WHERE uzivatele_id = ? AND expirace > NOW()', array($this->id), true);
+        $invitationsData = Db::fetchQuery('SELECT pozvanky_id,tridy_id,expirace FROM '.Invitation::TABLE_NAME.' WHERE uzivatele_id = ? AND expirace > NOW()', array($this->id), true);
         if ($invitationsData === false)
         {
             //Žádné pozvánky
@@ -60,7 +173,7 @@ class User implements ArrayAccess
         
         foreach ($invitationsData as $invitationData)
         {
-            $invitation = new Invitation($invitationData['pozvanky_id']);
+            $invitation = new Invitation(false, $invitationData['pozvanky_id']);
             $invitation->initialize($this, new ClassObject($invitationData['tridy_id']), new DateTime($invitationData['expirace']));
             $invitations[] = $invitation;
         }
@@ -93,16 +206,19 @@ class User implements ArrayAccess
         
         //Kontrola dat OK
         
-        Db::connect();
-        Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ?;', array($addedPictures, $guessedPictures, $karma, $status, $this->id), false);
+        $this->addedPictures = $addedPictures;
+        $this->guessedPictures = $guessedPictures;
+        $this->karma = $karma;
+        $this->status = $status;
+        
+        $this->save();
         
         return true;
     }
     
     /**
      * Metoda odstraňující tento uživatelský účet na základě rozhodnutí administrátora
-     * Data z vlastností této instance jsou vynulována
-     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
+     * Před samotným odstraněním je provedena kontrola, zda je možné uživatele odstranit
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
      */
@@ -124,20 +240,23 @@ class User implements ArrayAccess
         
         //Kontrola dat OK
         
-        //Odstranit uživatele z databáze
+        $this->delete();
+        
+        return true;
+    }
+    
+    /**
+     * Metoda odstraňující tohoto uživatele
+     * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::delete()
+     */
+    public function delete()
+    {
         Db::connect();
-        Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array($this->id));
-        
-        //Vymazat data z této instance uživatele
-        $this->id = null;
-        $this->name = null;
-        $this->email = null;
-        $this->lastLogin = null;
-        $this->addedPictures = null;
-        $this->guessedPictures = null;
-        $this->karma = null;
-        $this->status = null;
-        
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ? LIMIT 1;', array($this->id));
+        unset($this->id);
+        $this->savedInDb = false;
         return true;
     }
     
@@ -158,6 +277,11 @@ class User implements ArrayAccess
      */
     public function offsetGet($offset)
     {
+        if (!isset($this->$offset))
+        {
+            //Načtení chybějících vlastností
+            $this->load();
+        }
         return $this->$offset;
     }
     
