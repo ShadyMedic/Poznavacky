@@ -12,7 +12,6 @@ class AnswerInvitationController extends Controller
     public function process(array $parameters)
     {
         //Validace odeslaných dat
-        DebugLogger::debugLog(gettype($_POST['invitationId']));
         if (!isset($_POST) || !isset($_POST['invitationId']) || !isset($_POST['invitationAnswer']) || filter_var($_POST['invitationId'], FILTER_VALIDATE_INT) === false)
         {
             //Jsou odeslána neplatná data v důsledku manipulace s HTML dokumentem
