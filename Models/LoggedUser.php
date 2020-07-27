@@ -5,7 +5,6 @@
  */
 class LoggedUser extends User
 {
-    static $isLogged = false;
     protected $hash;
     protected $lastChangelog;
     protected $lastLevel;
