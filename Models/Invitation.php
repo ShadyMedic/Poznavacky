@@ -5,6 +5,8 @@
  */
 class Invitation extends DatabaseItem
 {
+    public const TABLE_NAME = 'pozvanky';
+    
     public const INVITATION_LIFETIME = 604800;  //7 dní
     
     private $user;
@@ -58,7 +60,7 @@ class Invitation extends DatabaseItem
         
         if (isset($this->id))
         {
-            $result = Db::fetchQuery('SELECT uzivatele_id, tridy_id, expirace FROM pozvanky WHERE pozvanky_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT uzivatele_id, tridy_id, expirace FROM '.self::TABLE_NAME.' WHERE pozvanky_id = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
@@ -77,7 +79,7 @@ class Invitation extends DatabaseItem
         }
         else if (isset($this->user) && isset($this->class))
         {
-            $result = Db::fetchQuery('SELECT pozvanky_id, expirace FROM pozvanky WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
+            $result = Db::fetchQuery('SELECT pozvanky_id, expirace FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
@@ -112,12 +114,13 @@ class Invitation extends DatabaseItem
         if ($this->savedInDb)
         {
             //Aktualizace existující pozvánky
-            $this->id = Db::executeQuery('UPDATE pozvanky SET uzivatele_id = ?, tridy_id = ?, expirace = ? WHERE pozvanky_id = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
+            $this->id = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET uzivatele_id = ?, tridy_id = ?, expirace = ? WHERE pozvanky_id = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
         }
         else
         {
             //Tvorba nové pozvánky
-            $this->id = Db::executeQuery('INSERT INTO pozvanky (uzivatele_id,tridy_id,expirace) VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (uzivatele_id,tridy_id,expirace) VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
+            $this->savedInDb = true;
         }
         return true;
     }
@@ -166,7 +169,7 @@ class Invitation extends DatabaseItem
     public function delete()
     {
         Db::connect();
-        Db::executeQuery('DELETE FROM pozvanky WHERE pozvanky_id = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE pozvanky_id = ? LIMIT 1;', array($this->id));
         unset($this->id);
         $this->savedInDb = false;
         return true;

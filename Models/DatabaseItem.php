@@ -12,6 +12,13 @@ abstract class DatabaseItem
      */
     protected $savedInDb;
     
+    /**
+     * Název databázové tabulky, která skladuje záznamy typu této třídy
+     * Všechny třídy dědící z této abstraktní třídy musí definovat tuto konstantu
+     * @var string
+     */
+    protected const TABLE_NAME = null;
+    
     protected $id;
     
     /**
