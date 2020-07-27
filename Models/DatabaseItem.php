@@ -1,6 +1,6 @@
 <?php
 /**
- * Rozhraní pro třídy reprezentující záznamy v různých databázových tabulkách
+ * Abstraktní mateřská třída pro třídy reprezentující záznamy v různých databázových tabulkách
  * @author Jan Štěch
  */
 abstract class DatabaseItem
@@ -16,8 +16,29 @@ abstract class DatabaseItem
     
     /**
      * Konstruktor položky nastavující její ID nebo informaci o tom, že je nová
+     * Tento konstruktor je volán z konstruktorů všech tříd, které z této abstraktní tříd dědí
+     * @param bool $isNew FALSE, pokud je již položka se zadaným ID nebo později doplněnými informacemi uložena v databázi, TRUE, pokud se jedná o novou položku
+     * @param int $id ID položky (pouze pokud je první argument FALSE)
      */
-    public abstract function __construct(int $id = 0);
+    public function __construct(bool $isNew, int $id = 0)
+    {
+        if ($isNew)
+        {
+            //Nová položka bez známých informací
+            $this->savedInDb = false;
+        }
+        else if (!empty($id))
+        {
+            //Položka uložená v databázi se známým ID
+            $this->id = $id;
+            $this->savedInDb = true;
+        }
+        else
+        {
+            //Položka uložená v databázi s neznámým ID, ale známými jinými informacemi, které jsou později doplněny skrze metodu initialize()
+            $this->savedInDb = true;
+        }
+    }
     
     /**
      * Metoda nastavující všechny vlastnosti objektu podle proměnných poskytnutých v argumentech
