@@ -66,7 +66,7 @@ class MenuController extends Controller
             $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::ControllerExtension;
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 1)
             {
-                //AdministrateController
+                //AccountSettingsController
                 $this->controllerToCall = new $controllerName;
                 
                 //Vymazání objektů skladujících vybranou složku ze $_SESSION
