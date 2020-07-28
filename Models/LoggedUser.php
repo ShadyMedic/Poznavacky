@@ -5,6 +5,17 @@
  */
 class LoggedUser extends User
 {
+    private const DEFAULT_VALUES = array(
+        'email' => null,
+        'lastChangelog' => 0,
+        'lastLevel' => 0,
+        'lastFolder' => null,
+        'theme' => 0,
+        'addedPictures' => 0,
+        'guessedPictures' => 0,
+        'karma' => 0,
+    );
+    
     protected $hash;
     protected $lastChangelog;
     protected $lastLevel;
@@ -12,29 +23,166 @@ class LoggedUser extends User
     protected $theme;
     
     /**
-     *
+     * Konstruktor uživatele nastavující jeho ID nebo informaci o tom, že je nový
+     * @param bool $isNew FALSE, pokud je již uživatele se zadaným ID nebo později doplněnými informacemi uložen v databázi, TRUE, pokud se jedná o nového uživatele
      * @param int $id ID uživatele v databázi
+     * {@inheritDoc}
+     * @see User::initialize()
+     */
+    public function __construct(bool $isNew, int $id = 0)
+    {
+        parent::__construct($isNew, $id);
+    }
+    
+    /**
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * @param string $name Přezdívka uživatele
-     * @param string $hash Heš uživatelova hesla z databáze
      * @param string $email E-mailová adresa uživatele
      * @param DateTime $lastLogin Datum a čas posledního přihlášení uživatele
-     * @param float $lastChangelog Poslední zobrazený changelog
-     * @param int $lastLevel Poslední navštívěná úroveň složek na menu stránce
-     * @param int $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
-     * @param int $theme Zvolený vzhled stránek
      * @param int $addedPictures Počet obrázků přidaných uživatelem
      * @param int $guessedPictures Počet obrázků uhodnutých uživatelem
      * @param int $karma Uživatelova karma
      * @param string $status Uživatelův status
+     * @param string $hash Heš uživatelova hesla z databáze
+     * @param float $lastChangelog Poslední zobrazený changelog
+     * @param int $lastLevel Poslední navštívěná úroveň složek na menu stránce
+     * @param int $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
+     * @param int $theme Zvolený vzhled stránek
+     * {@inheritDoc}
+     * @see User::initialize()
      */
-    public function __construct(int $id, string $name, string $hash, string $email = null, DateTime $lastLogin = null, float $lastChangelog = 0, int $lastLevel = 0, int $lastFolder = null, int $theme = 0, int $addedPictures = 0, int $guessedPictures = 0, int $karma = 0, string $status = self::STATUS_MEMBER)
+    public function initialize(string $name = '', string $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '', string $hash = '', float $lastChangelog = -1, int $lastLevel = -1, int $lastFolder = -1, int $theme = -1)
     {
-        parent::__construct($id, $name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
+        //Načtení defaultních hodnot do nenastavených vlastností
+        $this->loadDefaultValues();
+        
+        //Nastav vlastnosti zděděné z mateřské třídy
+        parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
+        
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($hash === ''){ $hash = $this->hash; }
+        if ($lastChangelog === -1){ $lastChangelog = $this->lastChangelog; }
+        if ($lastLevel === -1){ $lastLevel = $this->lastLevel; }
+        if ($lastFolder === -1){ $lastFolder = $this->lastFolder; }
+        if ($theme === -1){ $theme = $this->theme; }
+        
         $this->hash = $hash;
         $this->lastChangelog = $lastChangelog;
         $this->lastLevel = $lastLevel;
         $this->lastFolder = $lastFolder;
         $this->theme = $theme;
+    }
+    
+    /**
+     * Metoda načítající z databáze data přihlášeného uživatele podle jeho ID (pokud bylo zadáno v konstruktoru)
+     * V případě, že není známé ID, ale je známé jméno přihlášeného uživatele, jsou uživatelovo ID a ostatní informace o něm načteny podle jeho jména
+     * @throws BadMethodCallException Pokud se jedná o uživatele, který dosud není uložen v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
+     * @throws NoDataException Pokud není uživatel, který má zadané vlastnosti nalezen
+     * @return boolean TRUE, pokud jsou vlastnosti tohoto uživatele úspěšně načteny z databáze
+     * {@inheritDoc}
+     * @see User::load()
+     */
+    public function load()
+    {
+        $this->loadDefaultValues();
+        
+        if ($this->savedInDb === false)
+        {
+            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
+        }
+        
+        Db::connect();
+        
+        if (isset($this->id))
+        {
+            $userData = Db::fetchQuery('SELECT jmeno,heslo,email,posledni_prihlaseni,posledni_changelog,posledni_uroven,posledni_slozka,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ? LIMIT 1', array($this->id));
+            if (empty($userData))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_USER);
+            }
+            
+            $name = $userData['jmeno'];
+            $hash = $userData['heslo'];
+            $email = $userData['email'];
+            $lastLogin = $userData['posledni_prihlaseni'];
+            $lastChangelog = $userData['posledni_changelog'];
+            $lastLevel = $userData['posledni_uroven'];
+            $lastFolder = $userData['posledni_slozka'];
+            $theme = $userData['vzhled'];
+            $addedPictures = $userData['pridane_obrazky'];
+            $guessedPictures = $userData['uhodnute_obrazky'];
+            $karma = $userData['karma'];
+            $status = $userData['status'];
+            
+            $this->initialize($name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status, $hash, $lastChangelog, $lastLevel, $lastFolder, $theme);
+        }
+        else if (isset($this->name))
+        {
+            $userData = Db::fetchQuery('SELECT uzivatele_id,heslo,email,posledni_prihlaseni,posledni_changelog,posledni_uroven,posledni_slozka,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.self::TABLE_NAME.' WHERE jmeno = ? LIMIT 1', array($this->name));
+            if (empty($userData))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_USER);
+            }
+            
+            $id = $userData['uzivatele_id'];
+            $hash = $userData['heslo'];
+            $email = $userData['email'];
+            $lastLogin = $userData['posledni_prihlaseni'];
+            $lastChangelog = $userData['posledni_changelog'];
+            $lastLevel = $userData['posledni_uroven'];
+            $lastFolder = $userData['posledni_slozka'];
+            $theme = $userData['vzhled'];
+            $addedPictures = $userData['pridane_obrazky'];
+            $guessedPictures = $userData['uhodnute_obrazky'];
+            $karma = $userData['karma'];
+            $status = $userData['status'];
+            
+            $this->id = $id;
+            $this->initialize($this->name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status, $hash, $lastChangelog, $lastLevel, $lastFolder, $theme);
+        }
+      # else if (isset($this->email))
+      # {
+      #     //Implementovat v případě potřeby zkonstruovat objekt přihlášeného uživatele pouze podle jeho e-mailové adresy
+      # }
+        else
+        {
+            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
+        }
+        return true;
+    }
+    
+    /**
+     * Metoda ukládající data tohoto uživatele do databáze
+     * Data uživatele se stejným ID jsou v databázy přepsána
+     * @throws BadMethodCallException Pokud není známé ID uživatele (znalost ID uživatele je nutná pro modifikaci databázové tabulky)
+     * @return boolean TRUE, pokud jsou data uživatele v databázi úspěšně aktualizována nebo pokud je vytvořen nový uživatelský účet
+     * {@inheritDoc}
+     * @see User::save()
+     */
+    public function save()
+    {
+        if ($this->savedInDb === true && empty($this->id))
+        {
+            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
+        }
+        
+        Db::connect();
+        if ($this->savedInDb)
+        {
+            //Aktualizace existujícího uživatele
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET jmeno = ?, heslo = ?, email = ?, posledni_prihlaseni = ?, posledni_changelog = ?, posledni_uroven = ?, posledni_složka = ?, vzhled = ?, pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ? LIMIT 1', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
+        }
+        else
+        {
+            //Tvorba nového uživatele
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (jmeno,heslo,email,posledni_prihlaseni,posledni_changelog,posledni_uroven,posledni_slozka,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', array($this->name, $this->hash, $this->email, $this->lastLogin, $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status), true);
+            if (!empty($this->id))
+            {
+                $this->savedInDb = true;
+                $result = true;
+            }
+        }
+        return $result;
     }
     
     /**
