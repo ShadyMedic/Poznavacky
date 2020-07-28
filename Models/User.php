@@ -7,6 +7,13 @@ class User extends DatabaseItem implements ArrayAccess
 {
     public const TABLE_NAME = 'uzivatele';
     
+    private const DEFAULT_VALUES = array(
+        'email' => null,
+        'addedPictures' => 0,
+        'guessedPictures' => 0,
+        'karma' => 0,
+    );
+    
     const STATUS_GUEST = 'Guest';
     const STATUS_MEMBER = 'Member';
     const STATUS_CLASS_OWNER = 'Class Owner';
@@ -47,9 +54,17 @@ class User extends DatabaseItem implements ArrayAccess
      */
     public function initialize(string $name = '', string $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '')
     {
-        if ($addedPictures === -1){ $addedPictures = null; }
-        if ($guessedPictures === -1){ $guessedPictures = null; }
-        if ($karma === -1){ $karma = null; }
+        //Načtení defaultních hodnot do nenastavených vlastností
+        $this->loadDefaultValues();
+        
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($name === ''){ $name = $this->name; }
+        if ($email === ''){ $email = $this->email; }
+        if ($lastLogin === null){ $lastLogin = $this->lastLogin; }
+        if ($addedPictures === -1){ $addedPictures = $this->addedPictures; }
+        if ($guessedPictures === -1){ $guessedPictures = $this->guessedPictures; }
+        if ($karma === -1){ $karma = $this->karma; }
+        if ($status === ''){ $status = $this->status; }
         
         $this->name = $name;
         $this->email = $email;
@@ -62,7 +77,7 @@ class User extends DatabaseItem implements ArrayAccess
     
     /**
      * Metoda načítající z databáze data uživatele (s výjimkou hashe jeho hesla) podle jeho ID (pokud bylo zadáno v konstruktoru)
-     * V případě, že není známé ID, ale je známé jméno uživatele, je načteno ID uživatelovo ID a ostatní informace o něm (opět s výjimkou hesla) podle jeho jména
+     * V případě, že není známé ID, ale je známé jméno uživatele, jsou uživatelovo ID a ostatní informace o něm (opět s výjimkou hesla) načteny podle jeho jména
      * @throws BadMethodCallException Pokud se jedná o uživatele, který dosud není uložen v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
      * @throws NoDataException Pokud není uživatel, který má zadané vlastnosti nalezen
      * @return boolean TRUE, pokud jsou vlastnosti tohoto uživatele úspěšně načteny z databáze
@@ -117,7 +132,7 @@ class User extends DatabaseItem implements ArrayAccess
         }
       # else if (isset($this->email))
       # {
-      #     //TODO - implementovat v případě potřeby zkonstruovat objekt uživatele pouze podle jeho e-mailové adresy
+      #     //Implementovat v případě potřeby zkonstruovat objekt uživatele pouze podle jeho e-mailové adresy
       # }
         else
         {
@@ -136,6 +151,8 @@ class User extends DatabaseItem implements ArrayAccess
      */
     public function save()
     {
+        $this->loadDefaultValues();
+        
         if ($this->savedInDb === true && empty($this->id))
         {
             throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
@@ -145,14 +162,14 @@ class User extends DatabaseItem implements ArrayAccess
         if ($this->savedInDb)
         {
             //Aktualizace existujícího uživatele
-            $this->id = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET jmeno = ?, email = ?, posledni_prihlaseni = ?, pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ? LIMIT 1', array($this->name, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET jmeno = ?, email = ?, posledni_prihlaseni = ?, pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ? LIMIT 1', array($this->name, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
         }
         else
         {
             //Nelze vytvořit nového uživatele skrz třídu User - lze pouze ve třídě LoggedUser, jelikož musí být známo heslo uživatele
             throw new BadMethodCallException('New user cannot be created from this class, because this class doesn\'t store the user\'s password. Try doing this from the LoggedUser class');
         }
-        return true;
+        return $result;
     }
     
     /**
