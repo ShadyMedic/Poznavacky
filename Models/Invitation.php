@@ -7,6 +7,10 @@ class Invitation extends DatabaseItem
 {
     public const TABLE_NAME = 'pozvanky';
     
+    private const DEFAULT_VALUES = array(
+        /*Všechny vlastnosti musí být vyplněné před uložením do databáze*/
+    );
+    
     public const INVITATION_LIFETIME = 604800;  //7 dní
     
     private $user;
@@ -23,7 +27,7 @@ class Invitation extends DatabaseItem
     public function __construct(bool $isNew, int $id = 0)
     {
         parent::__construct($isNew, $id);
-        }
+    }
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -35,6 +39,14 @@ class Invitation extends DatabaseItem
      */
     public function initialize(User $user = null, ClassObject $class = null, DateTime $expiration = null)
     {
+        //Načtení defaultních hodnot do nenastavených vlastností
+        $this->loadDefaultValues();
+        
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($user === null){ $user = $this->user; }
+        if ($class === null){ $class = $this->class; }
+        if ($expiration === null){ $expiration = $this->expiration; }
+        
         $this->user = $user;
         $this->class = $class;
         $this->expiration = $expiration;
@@ -105,6 +117,8 @@ class Invitation extends DatabaseItem
      */
     public function save()
     {
+        $this->loadDefaultValues();
+        
         if ($this->savedInDb === true && empty($this->id))
         {
             throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
@@ -114,15 +128,19 @@ class Invitation extends DatabaseItem
         if ($this->savedInDb)
         {
             //Aktualizace existující pozvánky
-            $this->id = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET uzivatele_id = ?, tridy_id = ?, expirace = ? WHERE pozvanky_id = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET uzivatele_id = ?, tridy_id = ?, expirace = ? WHERE pozvanky_id = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
         }
         else
         {
             //Tvorba nové pozvánky
             $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (uzivatele_id,tridy_id,expirace) VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
-            $this->savedInDb = true;
+            if (!empty($this->id))
+            {
+                $this->savedInDb = true;
+                $result = true;
+            }
         }
-        return true;
+        return $result;
     }
     
     /**
