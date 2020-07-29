@@ -40,7 +40,7 @@ class Administration
         }
         else
         {
-            $dbResult = Db::fetchQuery('SELECT uzivatele_id,jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE uzivatele_id != ?', array(UserManager::getId()), true);
+            $dbResult = Db::fetchQuery('SELECT uzivatele_id,jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.User::TABLE_NAME.' WHERE uzivatele_id != ?', array(UserManager::getId()), true);
         }
         $users = array();
         foreach($dbResult as $dbRow)
@@ -130,7 +130,7 @@ class Administration
         uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status,
         zadosti_jmena_uzivatele.zadosti_jmena_uzivatele_id, zadosti_jmena_uzivatele.nove, zadosti_jmena_uzivatele.cas
         FROM zadosti_jmena_uzivatele
-        JOIN uzivatele ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.uzivatele_id;
+        JOIN '.User::TABLE_NAME.' ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.uzivatele_id;
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky
@@ -157,7 +157,7 @@ class Administration
         zadosti_jmena_tridy.zadosti_jmena_tridy_id, zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
         FROM zadosti_jmena_tridy
         JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.tridy_id
-        JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id;
+        JOIN '.User::TABLE_NAME.' ON tridy.spravce = uzivatele.uzivatele_id;
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky
@@ -229,10 +229,10 @@ class Administration
         switch ($changedIdentifier)
         {
             case 'id':
-                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM uzivatele WHERE uzivatele_id = ?', array($newAdminIdentifier), false);
+                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM '.User::TABLE_NAME.' WHERE uzivatele_id = ?', array($newAdminIdentifier), false);
                 break;
             case 'name':
-                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM uzivatele WHERE jmeno = ?', array($newAdminIdentifier), false);
+                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM '.User::TABLE_NAME.' WHERE jmeno = ?', array($newAdminIdentifier), false);
                 break;
             default:
                 throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_INVALID_IDENTIFIER);

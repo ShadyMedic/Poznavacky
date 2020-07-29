@@ -41,7 +41,7 @@ class ClassManager
         tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.poznavacky, tridy.kod,
         uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status"
         FROM tridy
-        JOIN uzivatele ON spravce = uzivatele_id
+        JOIN '.User::TABLE_NAME.' ON spravce = uzivatele_id
         WHERE kod = ? AND tridy.status = ? AND tridy_id NOT IN
         (
             SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?

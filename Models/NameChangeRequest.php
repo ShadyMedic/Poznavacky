@@ -63,7 +63,7 @@ class NameChangeRequest
             uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status,
             zadosti_jmena_uzivatele.nove, zadosti_jmena_uzivatele.cas
             FROM zadosti_jmena_uzivatele
-            JOIN uzivatele ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.uzivatele_id
+            JOIN '.User::TABLE_NAME.' ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.uzivatele_id
             WHERE zadosti_jmena_uzivatele.zadosti_jmena_uzivatele_id = ? LIMIT 1;
             ', array($this->id), false);
             
@@ -82,7 +82,7 @@ class NameChangeRequest
             zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
             FROM zadosti_jmena_tridy
             JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.tridy_id
-            JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id
+            JOIN '.User::TABLE_NAME.' ON tridy.spravce = uzivatele.uzivatele_id
             WHERE zadosti_jmena_tridy.zadosti_jmena_tridy_id = ? LIMIT 1;
             ', array($this->id), false);
             $admin = new User(false, $result['uzivatele_id']);

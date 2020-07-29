@@ -61,7 +61,7 @@ class LoginUser
     private static function authenticate(string $username, string $password)
     {
         Db::connect();
-        $userData = Db::fetchQuery('SELECT * FROM uzivatele WHERE jmeno = ? LIMIT 1', array($username), false);
+        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE jmeno = ? LIMIT 1', array($username), false);
         if ($userData === FALSE){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NONEXISTANT_USER, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         if (!password_verify($password, $userData['heslo'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_WRONG_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         else {return $userData;}
@@ -77,7 +77,7 @@ class LoginUser
     private static function verifyCode(string $code)
     {
         Db::connect();
-        $userData = Db::fetchQuery('SELECT * FROM uzivatele WHERE uzivatele_id = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
+        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE uzivatele_id = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
         if ($userData === FALSE) {throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login'));}
         else {return $userData;}
         return false;
@@ -93,7 +93,7 @@ class LoginUser
         $user->initialize($userData['jmeno'], $userData['email'], new Datetime(), $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status'], $userData['heslo'], $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled']);
         $_SESSION['user'] = $user;
         
-        Db::executeQuery('UPDATE uzivatele SET posledni_prihlaseni = NOW() WHERE uzivatele_id = ?', array($userData['uzivatele_id']));
+        Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET posledni_prihlaseni = NOW() WHERE uzivatele_id = ?', array($userData['uzivatele_id']));
         
         //Nastavení cookie pro zabránění přehrávání animace
         self::setRecentLoginCookie();

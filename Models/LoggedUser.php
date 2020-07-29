@@ -313,7 +313,7 @@ class LoggedUser extends User
         //Aktualizovat heslo v databázi
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         Db::connect();
-        Db::executeQuery('UPDATE uzivatele SET heslo = ? WHERE uzivatele_id = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET heslo = ? WHERE uzivatele_id = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
         $this->hash = $hashedPassword;
         return true;
     }
@@ -366,7 +366,7 @@ class LoggedUser extends User
         
         //Aktualizovat databázi
         Db::connect();
-        Db::executeQuery('UPDATE uzivatele SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;
         return true;
     }
@@ -379,7 +379,7 @@ class LoggedUser extends User
     {
         $this->addedPictures++;
         Db::connect();
-        return Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = (pridane_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET pridane_obrazky = (pridane_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
     }
     
     /**
@@ -390,7 +390,7 @@ class LoggedUser extends User
     {
         $this->guessedPictures++;
         Db::connect();
-        return Db::executeQuery('UPDATE uzivatele SET uhodnute_obrazky = (uhodnute_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET uhodnute_obrazky = (uhodnute_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
     }
     
     /**
@@ -423,7 +423,7 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Odstranit uživatele z databáze
-        Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array(UserManager::getId()));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ?', array(UserManager::getId()));
         
         //Odhlásit uživatele
         unset($_SESSION['user']);

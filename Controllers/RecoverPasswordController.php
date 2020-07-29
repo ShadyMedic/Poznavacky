@@ -37,7 +37,7 @@ class RecoverPasswordController extends Controller
             
             //Získat jméno uživatele pro zobrazení na stránce
             Db::connect();
-            $username = Db::fetchQuery('SELECT jmeno FROM uzivatele WHERE uzivatele_id = ?', array($userId), false)['jmeno'];
+            $username = Db::fetchQuery('SELECT jmeno FROM '.User::TABLE_NAME.' WHERE uzivatele_id = ?', array($userId), false)['jmeno'];
             
             $this->data['username'] = $username;
         }
