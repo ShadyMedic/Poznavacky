@@ -69,7 +69,7 @@ abstract class DatabaseItem
      */
     public function loadDefaultValues(bool $overwriteAll = false)
     {
-        foreach (self::DEFAULT_VALUES as $fieldName => $fieldValue)
+        foreach ($this::DEFAULT_VALUES as $fieldName => $fieldValue)
         {
             if (!$overwriteAll)
             {
