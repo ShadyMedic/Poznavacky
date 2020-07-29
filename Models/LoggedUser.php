@@ -178,7 +178,7 @@ class LoggedUser extends User
         else
         {
             //Tvorba nového uživatele
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (jmeno,heslo,email,posledni_prihlaseni,posledni_changelog,posledni_uroven,posledni_slozka,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', array($this->name, $this->hash, $this->email, $this->lastLogin, $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (jmeno,heslo,email,posledni_prihlaseni,posledni_changelog,posledni_uroven,posledni_slozka,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
