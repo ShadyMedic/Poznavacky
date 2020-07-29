@@ -162,6 +162,8 @@ class LoggedUser extends User
      */
     public function save()
     {
+        $this->loadDefaultValues();
+        
         if ($this->savedInDb === true && empty($this->id))
         {
             throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
