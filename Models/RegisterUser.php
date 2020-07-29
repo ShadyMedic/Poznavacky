@@ -142,9 +142,9 @@ class RegisterUser
     
     /**
      * Metoda registrující uživatele do systému po ověření platnosti zadaných dat
-     * @param string $name
-     * @param string $password
-     * @param string $email
+     * @param string $name Přezdívka vybraná uživatelem
+     * @param string $password Heslo zvolené uživatelem
+     * @param string $email E-mail zadaný uživatelem (null, pokud žádný nezadal)
      * @return boolean TRUE, pokud je uživatel úspěšně zaregistrován
      */
     private static function register(string $name, string $password, $email)
