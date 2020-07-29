@@ -37,7 +37,7 @@ class LoggedUser extends User
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * @param string $name Přezdívka uživatele
-     * @param string $email E-mailová adresa uživatele
+     * @param string|null $email E-mailová adresa uživatele
      * @param DateTime $lastLogin Datum a čas posledního přihlášení uživatele
      * @param int $addedPictures Počet obrázků přidaných uživatelem
      * @param int $guessedPictures Počet obrázků uhodnutých uživatelem
@@ -46,12 +46,12 @@ class LoggedUser extends User
      * @param string $hash Heš uživatelova hesla z databáze
      * @param float $lastChangelog Poslední zobrazený changelog
      * @param int $lastLevel Poslední navštívěná úroveň složek na menu stránce
-     * @param int $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
+     * @param int|null $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
      * @param int $theme Zvolený vzhled stránek
      * {@inheritDoc}
      * @see User::initialize()
      */
-    public function initialize(string $name = '', string $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '', string $hash = '', float $lastChangelog = -1, int $lastLevel = -1, int $lastFolder = -1, int $theme = -1)
+    public function initialize(string $name = '', $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '', string $hash = '', float $lastChangelog = -1.0, int $lastLevel = -1, $lastFolder = -1, int $theme = -1)
     {
         //Načtení defaultních hodnot do nenastavených vlastností
         $this->loadDefaultValues();
@@ -61,7 +61,7 @@ class LoggedUser extends User
         
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($hash === ''){ $hash = $this->hash; }
-        if ($lastChangelog === -1){ $lastChangelog = $this->lastChangelog; }
+        if ($lastChangelog === -1.0){ $lastChangelog = $this->lastChangelog; }
         if ($lastLevel === -1){ $lastLevel = $this->lastLevel; }
         if ($lastFolder === -1){ $lastFolder = $this->lastFolder; }
         if ($theme === -1){ $theme = $this->theme; }

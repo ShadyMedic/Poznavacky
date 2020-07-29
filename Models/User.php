@@ -43,7 +43,7 @@ class User extends DatabaseItem implements ArrayAccess
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * @param string $name Přezdívka uživatele
-     * @param string $email E-mailová adresa uživatele
+     * @param string|null $email E-mailová adresa uživatele
      * @param DateTime $lastLogin Datum a čas posledního přihlášení uživatele
      * @param int $addedPictures Počet obrázků přidaných uživatelem
      * @param int $guessedPictures Počet obrázků uhodnutých uživatelem
@@ -52,7 +52,7 @@ class User extends DatabaseItem implements ArrayAccess
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize(string $name = '', string $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '')
+    public function initialize(string $name = '', $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '')
     {
         //Načtení defaultních hodnot do nenastavených vlastností
         $this->loadDefaultValues();
