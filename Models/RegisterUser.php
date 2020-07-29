@@ -152,11 +152,14 @@ class RegisterUser
         Db::connect();
         
         //Uložení dat do databáze
+        if ($email === null){ $email = ''; }
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $id = Db::executeQuery('INSERT INTO uzivatele (jmeno, heslo, email, posledni_prihlaseni, vzhled, karma, status) VALUES (?,?,?,NOW(),?,?,?)', array($name, $password, $email, self::DEFAULT_THEME, self::DEFAULT_KARMA, self::DEFAULT_STATUS), true);
+        
+        $user = new LoggedUser(true);
+        $user->initialize($name, $email, new DateTime(), -1, -1, -1, '', $password, -1, -1, -1, -1);
+        $user->save();
         
         //Přihlášení
-        $user = new LoggedUser($id, $name, $password, $email, new DateTime(null, new DateTimeZone('EUROPE/PRAGUE')), 0, 0, null, self::DEFAULT_THEME, 0, 0, self::DEFAULT_KARMA, self::DEFAULT_STATUS);
         $_SESSION['user'] = $user;
         
         //Nastavení cookie pro zabránění přehrávání animace

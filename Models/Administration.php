@@ -46,7 +46,9 @@ class Administration
         foreach($dbResult as $dbRow)
         {
             $lastLogin = new DateTime($dbRow['posledni_prihlaseni']);
-            $users[] = new User($dbRow['uzivatele_id'], $dbRow['jmeno'], $dbRow['email'], $lastLogin, $dbRow['pridane_obrazky'], $dbRow['uhodnute_obrazky'], $dbRow['karma'], $dbRow['status']);
+            $user = new User(false, $dbRow['uzivatele_id']);
+            $user->initialize($dbRow['jmeno'], $dbRow['email'], new DateTime($lastLogin), $dbRow['pridane_obrazky'], $dbRow['uhodnute_obrazky'], $dbRow['karma'], $dbRow['status']);
+            $users[] = $user;
         }
         
         return $users;
@@ -137,7 +139,8 @@ class Administration
         $requests = array();
         foreach ($result as $requestInfo)
         {
-            $user = new User($requestInfo['uzivatele_id'], $requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['status']);
+            $user = new User(false, $requestInfo['uzivatele_id']);
+            $user->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['status']);
             $request = new NameChangeRequest($requestInfo['zadosti_jmena_uzivatele_id'], NameChangeRequest::TYPE_USER, $user, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             $requests[] = $request;
         }
@@ -163,7 +166,8 @@ class Administration
         $requests = array();
         foreach ($result as $requestInfo)
         {
-            $admin = new User($requestInfo['uzivatele_id'], $requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
+            $admin = new User(false, $requestInfo['uzivatele_id']);
+            $admin->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
             $class = new ClassObject($requestInfo['tridy_id'], $requestInfo['nazev'], $requestInfo['c_status'], $requestInfo['kod'], $requestInfo['poznavacky'], $admin);
             $request = new NameChangeRequest($requestInfo['zadosti_jmena_tridy_id'], NameChangeRequest::TYPE_CLASS, $class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             
@@ -182,7 +186,7 @@ class Administration
      */
     public function editUser(int $userId, array $values)
     {
-        $user = new User($userId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt uživatele bude prakticky ihned zničen, můžeme využít tento malý hack
+        $user = new User(false, $userId);
         $user->updateAccount($values['addedPics'], $values['guessedPics'], $values['karma'], $values['status']);
     }
     
@@ -193,9 +197,8 @@ class Administration
      */
     public function deleteUser(int $userId)
     {
-        $user = new User($userId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt uživatele bude prakticky ihned zničen, můžeme využít tento malý hack
+        $user = new User(false, $userId);
         $user->deleteAccountAsAdmin();
-        unset($user);
     }
     
     /**
@@ -241,7 +244,8 @@ class Administration
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_UNKNOWN_USER);
         }
         
-        $admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        $admin = new User(false, $result['uzivatele_id']);
+        $admin->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
         
         $class = new ClassObject($classId, 'null');   //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
         $class->changeClassAdminAsAdmin($admin);

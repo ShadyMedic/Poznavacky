@@ -89,7 +89,8 @@ class LoginUser
      */
     private static function login(array $userData)
     {
-        $user = new LoggedUser($userData['uzivatele_id'], $userData['jmeno'], $userData['heslo'], $userData['email'], new Datetime(), $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
+        $user = new LoggedUser(false, $userData['uzivatele_id']);
+        $user->initialize($userData['jmeno'], $userData['email'], new Datetime(), $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status'], $userData['heslo'], $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled']);
         $_SESSION['user'] = $user;
         
         Db::executeQuery('UPDATE uzivatele SET posledni_prihlaseni = NOW() WHERE uzivatele_id = ?', array($userData['uzivatele_id']));

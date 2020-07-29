@@ -258,7 +258,9 @@ class ClassObject
         {
             foreach ($result as $memberData)
             {
-                $this->members[] = new User($memberData['uzivatele_id'], $memberData['jmeno'], $memberData['email'], new DateTime($memberData['posledni_prihlaseni']), $memberData['pridane_obrazky'], $memberData['uhodnute_obrazky'], $memberData['karma'], $memberData['status']);
+                $user = new User(false, $memberData['uzivatele_id']);
+                $user->initialize($memberData['jmeno'], $memberData['email'], new DateTime($memberData['posledni_prihlaseni']), $memberData['pridane_obrazky'], $memberData['uhodnute_obrazky'], $memberData['karma'], $memberData['status']);
+                $this->members[] = $user;
             }
         }
     }
@@ -285,7 +287,8 @@ class ClassObject
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER);
         }
-        $user = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        $user = new User(false, $result['uzivatele_id']);
+        $user->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
         
         //Zkontroluj, zda uživatel již není členem třídy
         for ($i = 0; $i < count($this->members) && $user['id'] !== $this->members[$i]['id']; $i++){}
@@ -433,7 +436,9 @@ class ClassObject
     {
         Db::connect();
         $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status FROM tridy JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id WHERE tridy_id = ?;', array($this->id), false);
-        $this->admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        $admin = new User(false, $result['uzivatele_id']);
+        $admin->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        $this->admin = $admin;
     }
     
     /**

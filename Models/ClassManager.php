@@ -57,7 +57,8 @@ class ClassManager
         $classes = array();
         foreach($result as $classInfo)
         {
-            $classAdmin = new User($classInfo['uzivatele_id'], $classInfo['jmeno'], $classInfo['email'], new DateTime($classInfo['posledni_prihlaseni']), $classInfo['pridane_obrazky'], $classInfo['uhodnute_obrazky'], $classInfo['karma'], $classInfo['u_status']);
+            $classAdmin = new User(false, $classInfo['uzivatele_id']);
+            $classAdmin->initialize($classInfo['jmeno'], $classInfo['email'], new DateTime($classInfo['posledni_prihlaseni']), $classInfo['pridane_obrazky'], $classInfo['uhodnute_obrazky'], $classInfo['karma'], $classInfo['u_status']);
             $classes[] = new ClassObject($classInfo['tridy_id'], $classInfo['nazev'], $classInfo['c_status'], $classInfo['kod'], $classInfo['poznavacky'], $classAdmin);
         }
         

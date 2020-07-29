@@ -78,12 +78,7 @@ class Invitation extends DatabaseItem
                 throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
             }
             
-            $userData = Db::fetchQuery('SELECT jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele WHERE uzivatele_id = ? LIMIT 1', array($result['uzivatele_id']));
-            if (empty($userData))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_USER);
-            }
-            $user = new User($result['uzivatele_id'], $userData['jmeno'], $userData['email'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
+            $user = new User(false, $result['uzivatele_id']);
             $class = new ClassObject($result['tridy_id']);
             $expiration = new DateTime($result['expirace']);
             

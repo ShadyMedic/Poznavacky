@@ -67,7 +67,8 @@ class NameChangeRequest
             WHERE zadosti_jmena_uzivatele.zadosti_jmena_uzivatele_id = ? LIMIT 1;
             ', array($this->id), false);
             
-            $user = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+            $user = new User(false, $result['uzivatele_id']);
+            $user->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
             $this->object = $user;
             $this->newName = $result['nove'];
             $this->requestedAt = $result['cas'];
@@ -84,7 +85,8 @@ class NameChangeRequest
             JOIN uzivatele ON tridy.spravce = uzivatele.uzivatele_id
             WHERE zadosti_jmena_tridy.zadosti_jmena_tridy_id = ? LIMIT 1;
             ', array($this->id), false);
-            $admin = new User($result['uzivatele_id'], $result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['u_status']);
+            $admin = new User(false, $result['uzivatele_id']);
+            $admin->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['u_status']);
             $class = new ClassObject($result['tridy_id'], $result['nazev'], $result['c_status'], $result['kod'], $result['poznavacky'], $admin);
             
             $this->object = $class;
