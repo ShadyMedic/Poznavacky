@@ -14,6 +14,7 @@ class LoggedUser extends User
         'addedPictures' => 0,
         'guessedPictures' => 0,
         'karma' => 0,
+        'status' => self::STATUS_MEMBER,
     );
     
     protected $hash;
