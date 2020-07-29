@@ -5,7 +5,7 @@
  */
 class LoggedUser extends User
 {
-    private const DEFAULT_VALUES = array(
+    protected const DEFAULT_VALUES = array(
         'email' => null,
         'lastChangelog' => 0,
         'lastLevel' => 0,

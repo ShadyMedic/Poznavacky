@@ -7,7 +7,7 @@ class Invitation extends DatabaseItem
 {
     public const TABLE_NAME = 'pozvanky';
     
-    private const DEFAULT_VALUES = array(
+    protected const DEFAULT_VALUES = array(
         /*Všechny vlastnosti musí být vyplněné před uložením do databáze*/
     );
     

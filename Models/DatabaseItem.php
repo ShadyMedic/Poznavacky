@@ -18,7 +18,7 @@ abstract class DatabaseItem
      * Všechny třídy dědící z této abstraktní třídy musí definovat tuto konstantu
      * @var array()
      */
-    private const DEFAULT_VALUES = null;
+    protected const DEFAULT_VALUES = null;
     
     /**
      * TRUE, pokud se jedná o záznam, který dosud není v databázi uložen

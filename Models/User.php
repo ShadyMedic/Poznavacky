@@ -7,7 +7,7 @@ class User extends DatabaseItem implements ArrayAccess
 {
     public const TABLE_NAME = 'uzivatele';
     
-    private const DEFAULT_VALUES = array(
+    protected const DEFAULT_VALUES = array(
         'email' => null,
         'addedPictures' => 0,
         'guessedPictures' => 0,
