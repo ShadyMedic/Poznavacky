@@ -47,7 +47,7 @@ class Administration
         {
             $lastLogin = new DateTime($dbRow['posledni_prihlaseni']);
             $user = new User(false, $dbRow['uzivatele_id']);
-            $user->initialize($dbRow['jmeno'], $dbRow['email'], new DateTime($lastLogin), $dbRow['pridane_obrazky'], $dbRow['uhodnute_obrazky'], $dbRow['karma'], $dbRow['status']);
+            $user->initialize($dbRow['jmeno'], $dbRow['email'], $lastLogin, $dbRow['pridane_obrazky'], $dbRow['uhodnute_obrazky'], $dbRow['karma'], $dbRow['status']);
             $users[] = $user;
         }
         
@@ -147,6 +147,10 @@ class Administration
         return $requests;
     }
     
+    /**
+     * Metoda získávající seznam všech žádostí o změnu názvu třídy a navrací je jako objekty
+     * @return ClassNameChangeRequest[] Pole objektů se žádostmi
+     */
     public function getClassNameChangeRequests()
     {
         Db::connect();
