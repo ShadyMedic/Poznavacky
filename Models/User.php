@@ -173,6 +173,26 @@ class User extends DatabaseItem implements ArrayAccess
     }
     
     /**
+     * Metoda navracející ID tohoto uživatele (pokud není známo, bude načteno z databáze)
+     * @return int ID tohoto uživatele nebo FALSE v případě, že tento uživatel ještě není uložen v databázi
+     */
+    public function getId()
+    {
+        if (!isset($this->id))
+        {
+            if ($this->savedInDb === true)
+            {
+                $this->load();
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return $this->id;
+    }
+    
+    /**
      * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
      * @return Invitation[] Pole aktivních pozvánek jako objekty
      */
