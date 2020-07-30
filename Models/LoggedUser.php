@@ -423,26 +423,11 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Odstranit uživatele z databáze
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ?', array(UserManager::getId()));
+        $result = $this->delete();
         
         //Odhlásit uživatele
         unset($_SESSION['user']);
         
-        //Vymazat data z této instance uživatele
-        $this->id = null;
-        $this->hash = null;
-        $this->lastChangelog = null;
-        $this->lastLevel = null;
-        $this->lastFolder = null;
-        $this->theme = null;
-        $this->name = null;
-        $this->email = null;
-        $this->lastLogin = null;
-        $this->addedPictures = null;
-        $this->guessedPictures = null;
-        $this->karma = null;
-        $this->status = null;
-        
-        return true;
+        return $result;
     }
 }
