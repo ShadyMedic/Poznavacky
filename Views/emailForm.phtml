@@ -1,29 +1,21 @@
 <div id="email">
-    <table>
-        <tr>
-            <td><span>Odesílatel:</span></td>
-            <td><input id="emailSender" type=text maxlength=255 value="<?= $loggedAdminName ?>" onchange="emailModification()" /></td>
-        </tr>
-        <tr>
-            <td><span>Adresa pro odpověď:</span></td>
-            <td><input id="emailSenderAddress" type=email maxlength=255 value="poznavacky@email.com" onchange="emailModification()" /></td>
-        </tr>
-        <tr>
-            <td><span>Adresát:</span></td>
-            <td><input id="emailAddressee" type=email maxlength=255 onchange="emailModification()" /></td>
-        </tr>
-        <tr>
-            <td><span>Předmět:</span></td>
-            <td><input id="emailSubject" type=text maxlength=70 onchange="emailModification()" /></td>
-        </tr>
-    </table>
-    <div id="emailEditor">
-        <textarea id="emailMessage" rows="20" cols="70" placeholder="Zpráva" onchange="emailModification()"></textarea>
-        <textarea id="emailFooter" rows="20" cols="70" placeholder="Patička" onchange="emailModification()">Tato zpráva nebyla vygenerována automaticky</textarea>
+	<div id="email-info">
+		<label for="email-sender">Odesílatel:</label></td>
+		<input id="email-sender" type=text maxlength=255 value="<?= $loggedAdminName ?>" onchange="emailModification()" />
+		<label for="email-sender-address">Adresa pro odpověď:</label></td>
+		<input id="email-sender-address" type=email maxlength=255 value="poznavacky@email.com" onchange="emailModification()" />
+		<label for="email-address">Adresát:</label></td>
+		<input id="email-address" type=email maxlength=255 onchange="emailModification()" />
+		<label for="email-subject">Předmět:</label></td>
+		<input id="email-subject" type=text maxlength=70 onchange="emailModification()" />
+	</div>
+    <div id="email-editor">
+        <textarea id="email-message" rows="20" cols="70" placeholder="Zpráva" onchange="emailModification()"></textarea>
+        <textarea id="email-footer" rows="20" cols="70" placeholder="Patička" onchange="emailModification()">Tato zpráva nebyla vygenerována automaticky</textarea>
     </div>
-    <div id="emailPreview" style="display:none;"> <!-- Zde se zobrazí náhled e-mailu --> </div>
-    <button id="emailPreviewButton" class="border-btn" onclick="previewEmailMessage()">Zobrazit náhled</button>
-    <button id="emailEditButton" class="border-btn" onclick="editEmailMessage()" style="display:none;">Upravit zprávu</button>
-    <button id="emailSendButton" class="border-btn" onclick="sendMail()">Odeslat</button>
-    <span id="statusInfo" style="display:none;">E-mail se odesílá...</span>
+    <div id="email-preview" style="display:none;"> <!-- Zde se zobrazí náhled e-mailu --> </div>
+    <button id="email-preview-btn" class="border-btn" onclick="previewEmailMessage()">Zobrazit náhled</button>
+    <button id="email-edit-btn" class="border-btn" onclick="editEmailMessage()" style="display:none;">Upravit zprávu</button>
+    <button id="email-send-btn" class="border-btn" onclick="sendMail()">Odeslat</button>
+    <span id="status-info" style="display:none;">E-mail se odesílá...</span>
 </div>

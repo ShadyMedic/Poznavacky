@@ -64,6 +64,9 @@ nav {
 		}
 	}
 }
+footer {
+	display: none;
+}
 table {
 	border-collapse: collapse;
 }
@@ -259,14 +262,31 @@ button {
 	.border-btn {
 		margin: 0 0.2rem 0 0;
 	}
-	textarea {
-		border: 1px solid gray;
-		padding: 0.2rem;
-		resize: vertical;
-		min-height: 3.8rem;
-		max-height: 40vh;
-		margin-bottom: -0.24rem;
-		width: 100%;
+	#email-info {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		justify-content: start;
+		margin: 0.4rem 0;
+		* {
+			margin: 0.2rem 0;
+			padding: 0.2rem 0.4rem;
+		}
+		label {
+			margin-right: 0.2rem;
+		}
+	}
+	#email-editor {
+		margin: 0.4rem 0;
+		textarea {
+			border: 1px solid gray;
+			padding: 0.2rem 0.4rem;
+			resize: vertical;
+			height: 16vh;
+			min-height: 3.8rem;
+			max-height: 36vh;
+			width: 100%;
+			margin: 0.2rem 0;
+		}
 	}
 	#email-preview {
 		width: 100%;

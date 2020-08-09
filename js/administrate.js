@@ -654,8 +654,8 @@ function emailModification()
 }
 function previewEmailMessage()
 {
-	let rawHTMLbody = $("#emailMessage").val();
-	let rawHTMLfooter = $("#emailFooter").val();
+	let rawHTMLbody = $("#email-message").val();
+	let rawHTMLfooter = $("#email-footer").val();
 	$.post('administrate-action',
 		{
 			action:"preview email",
@@ -665,22 +665,22 @@ function previewEmailMessage()
 		function(response)
 		{
 			let result = JSON.parse(response)['content'];
-			$("#emailEditor").hide();
-			$("#emailPreviewButton").hide();
+			$("#email-editor").hide();
+			$("#email-preview-btn").hide();
 			
-			$("#emailPreview").html(result);
-			$("#emailPreview").show();
-			$("#emailEditButton").show();
+			$("#email-preview").html(result);
+			$("#email-preview").show();
+			$("#email-edit-btn").show();
 		}
 	);
 }
 function editEmailMessage()
 {
-	$("#emailEditButton").hide();
-	$("#emailPreview").hide();
+	$("#email-edit-btn").hide();
+	$("#email-preview").hide();
 	
-	$("#emailEditor").show();
-	$("#emailPreviewButton").show();
+	$("#email-editor").show();
+	$("#email-preview-btn").show();
 }
 function sendMail()
 {
@@ -693,15 +693,15 @@ function sendMail()
 		}
 	}
 	
-	let sender = $("#emailSender").val();
-	let fromAddress = $("#emailSenderAddress").val();
-	let addressee = $("#emailAddressee").val();
-	let subject = $("#emailSubject").val();
-	let rawHTMLbody = $("#emailMessage").val();
-	let rawHTMLfooter = $("#emailFooter").val();
+	let sender = $("#email-sender").val();
+	let fromAddress = $("#email-sender-address").val();
+	let addressee = $("#email-address").val();
+	let subject = $("#email-subject").val();
+	let rawHTMLbody = $("#email-message").val();
+	let rawHTMLfooter = $("#email-footer").val();
 	
-	$("#statusInfo").show();
-	$("#emailSendButton").attr("disabled", true);
+	$("#status-info").show();
+	$("#email-send-btn").attr("disabled", true);
 	
 	$.post('administrate-action',
 		{
@@ -715,8 +715,8 @@ function sendMail()
 		},
 		function(response)
 		{
-			$("#statusInfo").hide();
-			$("#emailSendButton").removeAttr("disabled");
+			$("#status-info").hide();
+			$("#email-send-btn").removeAttr("disabled");
 			
 			emailModified = false;
 			

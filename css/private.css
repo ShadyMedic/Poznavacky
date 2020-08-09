@@ -82,6 +82,10 @@ nav :not(.active-tab):hover {
   background: #eee;
 }
 
+footer {
+  display: none;
+}
+
 table {
   border-collapse: collapse;
 }
@@ -360,14 +364,39 @@ button:hover {
   margin: 0 0.2rem 0 0;
 }
 
-#tab5 textarea {
+#tab5 #email-info {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 1fr;
+      grid-template-columns: auto 1fr;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  margin: 0.4rem 0;
+}
+
+#tab5 #email-info * {
+  margin: 0.2rem 0;
+  padding: 0.2rem 0.4rem;
+}
+
+#tab5 #email-info label {
+  margin-right: 0.2rem;
+}
+
+#tab5 #email-editor {
+  margin: 0.4rem 0;
+}
+
+#tab5 #email-editor textarea {
   border: 1px solid gray;
-  padding: 0.2rem;
+  padding: 0.2rem 0.4rem;
   resize: vertical;
+  height: 16vh;
   min-height: 3.8rem;
-  max-height: 40vh;
-  margin-bottom: -0.24rem;
+  max-height: 36vh;
   width: 100%;
+  margin: 0.2rem 0;
 }
 
 #tab5 #email-preview {
