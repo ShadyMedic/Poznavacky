@@ -450,8 +450,9 @@ function deleteClass(classId)
 /*-------------------------Tab 3-------------------------*/
 function showPicture(url)
 {
-	$("#preview-img-element").attr("src", url);
+	$("#image-preview img").attr("src", url);
 	$("#image-preview").show();
+	$(".overlay").show();
 }
 var currentReportValues = new Array(2);
 function editPicture(event)

@@ -28,7 +28,7 @@ body {
 	z-index: 9;
 	width: 100vw;
 	height: 100vh;
-	background: rgba(black, 0.6);
+	background: rgba(black, 0.4);
 	display: none;
 }
 main {
@@ -47,6 +47,7 @@ nav {
 	display: flex;
 	flex-wrap: wrap;
 	a {
+		text-decoration: none;
 		padding: 0.6rem;
 		height: 2.4rem;
 		&:last-child {
@@ -208,7 +209,7 @@ button {
 		background: transparent;
 	}
 }
-#single-report {
+#image-preview {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -226,6 +227,7 @@ button {
 	}
 	img {
 		width: 100%;
+		border: 1px solid black;
 	}
 	.border-btn {
 		display: block;

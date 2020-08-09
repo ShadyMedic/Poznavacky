@@ -33,7 +33,7 @@ body {
   z-index: 9;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   display: none;
 }
 
@@ -64,6 +64,7 @@ nav {
 }
 
 nav a {
+  text-decoration: none;
   padding: 0.6rem;
   height: 2.4rem;
 }
@@ -279,7 +280,7 @@ button:hover {
   background: transparent;
 }
 
-#single-report {
+#image-preview {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -290,28 +291,29 @@ button:hover {
 }
 
 @media screen and (min-width: 576px) {
-  #single-report {
+  #image-preview {
     width: 80%;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #single-report {
+  #image-preview {
     width: 65%;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #single-report {
+  #image-preview {
     width: 45%;
   }
 }
 
-#single-report img {
+#image-preview img {
   width: 100%;
+  border: 1px solid black;
 }
 
-#single-report .border-btn {
+#image-preview .border-btn {
   display: block;
   margin: auto;
   background: white;
