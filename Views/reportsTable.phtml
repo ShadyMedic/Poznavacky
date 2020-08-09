@@ -12,42 +12,42 @@
     <tr><td colspan=6>Žádná hlášení k vyřízení</td></tr>
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
-        <tr class="pictureId<?= $report->getPictureId() ?>">
+        <tr class="picture-id<?= $report->getPictureId() ?>">
             <td><?= $report->getPicturePath() ?></td>
             <td>
-            	<select disabled class='reportField'>
+            	<select disabled class='report-field'>
             	<option selected hidden disabled value="<?= $report->getNaturalName() ?>"><?= $report->getNaturalName() ?></option>
             	<?php foreach($report->getPicture()->getNatural()->getPart()->getGroup()->getNaturals() as $natural) : ?>
             		<option><?= $natural->getName() ?></option>
             	<?php endforeach ?>
         		</select>
         	</td>
-            <td><input type=url readonly value="<?= $report->getUrl() ?>" class='reportField'/></td>
+            <td><input type=url readonly value="<?= $report->getUrl() ?>" class='report-field'/></td>
             <td><?= $report->getReason() ?></td>
             <td><?= $report->getAdditionalInformation() ?>
             <td><?= $report->getReportersCount() ?></td>
             <td>
-                <button class='reportAction activeBtn' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
+                <button class='report-action active-btn' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
                     <img src='images/eye.svg'/>
                 </button>
-                <button class='reportAction activeBtn' onclick='editPicture(event)' title='Upravit údaje obrázku'>
+                <button class='report-action active-btn' onclick='editPicture(event)' title='Upravit údaje obrázku'>
                     <img src='images/pencil.svg'/>
                 </button>
-                <div class="reportEditButtons" style="display:none;">
-                    <button class='reportEditAction activeBtn' onclick='confirmPictureEdit(<?= $report->getPictureId() ?>)' title='Uložit'>
+                <div class="report-edit-buttons" style="display:none;">
+                    <button class='report-edit-action active-btn' onclick='confirmPictureEdit(<?= $report->getPictureId() ?>)' title='Uložit'>
                     	<img src='images/tick.svg'/>
                     </button>
-                    <button class='reportEditAction activeBtn' onclick='cancelPictureEdit()' title='Zrušit'>
+                    <button class='report-edit-action active-btn' onclick='cancelPictureEdit()' title='Zrušit'>
                     	<img src='images/cross.svg'/>
                     </button>
                 </div>
-                <button class='reportAction activeBtn' onclick='disablePicture(event, <?= $report->getPictureId() ?>)' title='Skrýt obrázek'>
+                <button class='report-action active-btn' onclick='disablePicture(event, <?= $report->getPictureId() ?>)' title='Skrýt obrázek'>
                     <img src='images/dot.svg'/>
                 </button>
-                <button class='reportAction activeBtn' onclick='deletePicture(event, <?= $report->getPictureId() ?>)' title='Odstranit obrázek'>
+                <button class='report-action active-btn' onclick='deletePicture(event, <?= $report->getPictureId() ?>)' title='Odstranit obrázek'>
                     <img src='images/cross.svg'/>
                 </button>
-                <button class='reportAction activeBtn' onclick='deleteReport(event, <?= $report->getId() ?>)' title='Odstranit hlášení'>
+                <button class='report-action active-btn' onclick='deleteReport(event, <?= $report->getId() ?>)' title='Odstranit hlášení'>
                     <img src='images/minus.svg'/>
                 </button>
             </td>

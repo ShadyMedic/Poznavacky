@@ -15,17 +15,17 @@
     	<td><?= $request->getOldName(); ?></td>
     	<td><?= $request->getNewName(); ?></td>
     	<td>
-    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event, "user", <?= $request->getId() ?>)' title='Přijmout'>
+    		<button class='name-change-action active-btn' onclick='acceptNameChange(event, "user", <?= $request->getId() ?>)' title='Přijmout'>
     			<img src='images/tick.svg'/>
     		</button>
-    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event, "user", <?= $request->getId() ?>)' title='Zamítnout'>
+    		<button class='name-change-action active-btn' onclick='declineNameChange(event, "user", <?= $request->getId() ?>)' title='Zamítnout'>
     			<img src='images/cross.svg'/>
     		</button>
     		<?php if (empty($request->getRequestersEmail())) : ?>
-			<button class='nameChangeAction grayscale' disabled>
+			<button class='name-change-action grayscale' disabled>
     		<?php endif ?>
     		<?php if (!empty($request->getRequestersEmail())) : ?>
-			<button class='nameChangeAction activeBtn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
+			<button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
     		<?php endif ?>
     			<img src='images/mail.svg'/>
     		</button>
@@ -41,17 +41,17 @@
     	<td><?= $request->getOldName(); ?></td>
     	<td><?= $request->getNewName(); ?></td>
     	<td>
-    		<button class='nameChangeAction activeBtn' onclick='acceptNameChange(event, "class", <?= $request->getId() ?>)' title='Přijmout'>
+    		<button class='name-change-action active-btn' onclick='acceptNameChange(event, "class", <?= $request->getId() ?>)' title='Přijmout'>
     			<img src='images/tick.svg'/>
     		</button>
-    		<button class='nameChangeAction activeBtn' onclick='declineNameChange(event, "class", <?= $request->getId() ?>)' title='Zamítnout'>
+    		<button class='name-change-action active-btn' onclick='declineNameChange(event, "class", <?= $request->getId() ?>)' title='Zamítnout'>
     			<img src='images/cross.svg'/>
     		</button>
     		<?php if (empty($request->getRequestersEmail())) : ?>
-			<button class='nameChangeAction grayscale' disabled>
+			<button class='name-change-action grayscale' disabled>
     		<?php endif ?>
     		<?php if (!empty($request->getRequestersEmail())) : ?>
-			<button class='nameChangeAction activeBtn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
+			<button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
     		<?php endif ?>
     			<img src='images/mail.svg'/>
     		</button>
