@@ -476,7 +476,7 @@ function editPicture(event)
 	V takovém případě nahradíme tuto hodnotu textem zobrazeném v <select> elementu
 	Tento text je innerText prvního <option> elementu
 	*/
-	if (currentReportValues[0] === null){ currentReportValues[0] = $("#editableReportRow .reportField:eq(0)>option:eq(0)").text(); }
+	if (currentReportValues[0] === null){ currentReportValues[0] = $("#editable-report-row .report-field:eq(0)>option:eq(0)").text(); }
 	
 	$("#editable-report-row .report-action").hide();					//Skrytí ostatních tlačítek akcí
 	$("#editable-report-row .report-edit-buttons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
