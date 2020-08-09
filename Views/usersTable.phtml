@@ -25,16 +25,16 @@
                 <?= $user['lastLogin']->format('Y-m-d H:i:s') ?>
             </td>
             <td>
-                <input type=number readonly value="<?= $user['addedPictures'] ?>" class='userField'/>
+                <input type=number readonly value="<?= $user['addedPictures'] ?>" class='user-field'/>
             </td>
             <td>
-                <input type=number readonly value="<?= $user['guessedPictures'] ?>" class='userField'/>
+                <input type=number readonly value="<?= $user['guessedPictures'] ?>" class='user-field'/>
             </td>
             <td>
-                <input type=number readonly value="<?= $user['karma'] ?>" class='userField'/>
+                <input type=number readonly value="<?= $user['karma'] ?>" class='user-field'/>
             </td>
             <td>
-                <select disabled class='userField'>
+                <select disabled class='user-field'>
                     <?php if ($user['status'] === User::STATUS_ADMIN) : ?>
                     <option selected><?= User::STATUS_ADMIN ?></option>
                     <?php endif ?>
@@ -65,26 +65,26 @@
                 </select>
             </td>
             <td>
-                <button class='userAction activeBtn editButton' onclick='editUser(event)' title='Upravit'>
+                <button class='user-action active-btn edit-btn' onclick='editUser(event)' title='Upravit'>
                     <img src='images/pencil.svg'/>
                 </button>
-                <div class="userEditButtons" style="display:none;">
-                    <button class='userEditAction activeBtn' onclick='confirmUserEdit(<?= $user['id'] ?>)' title='Uložit'>
+                <div class="user-edit-buttons" style="display:none;">
+                    <button class='user-edit-action active-btn' onclick='confirmUserEdit(<?= $user['id'] ?>)' title='Uložit'>
                     	<img src='images/tick.svg'/>
                     </button>
-                    <button class='userEditAction activeBtn' onclick='cancelUserEdit()' title='Zrušit'>
+                    <button class='user-edit-action active-btn' onclick='cancelUserEdit()' title='Zrušit'>
                     	<img src='images/cross.svg'/>
                     </button>
                 </div>
                 <?php if (empty($user['email'])) : ?>
-                <button class='userAction grayscale' disabled>
+                <button class='user-action grayscale' disabled>
                 <?php endif ?>
                 <?php if (!empty($user['email'])) : ?>
-                <button class='userAction activeBtn' onclick='startMail("<?= $user['email'] ?>")' title='Poslat e-mail'>
+                <button class='user-action active-btn' onclick='startMail("<?= $user['email'] ?>")' title='Poslat e-mail'>
                 <?php endif ?>
                     <img src='images/mail.svg'/>
                 </button>
-                <button class='userAction activeBtn' onclick='deleteUser(<?= $user['id'] ?>)' title='Odstranit'>
+                <button class='user-action active-btn' onclick='deleteUser(<?= $user['id'] ?>)' title='Odstranit'>
                     <img src='images/cross.svg'/>
                 </button>
             </td>

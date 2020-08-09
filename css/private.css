@@ -12,6 +12,7 @@ body {
   line-height: 1.2rem;
   overflow: hidden;
   position: relative;
+  font-family: serif;
 }
 
 .container {
@@ -71,12 +72,12 @@ nav a:last-child {
   color: gray;
 }
 
-nav .activeTab {
+nav .active-tab {
   background: lightgray;
   cursor: default;
 }
 
-nav :not(.activeTab):hover {
+nav :not(.active-tab):hover {
   cursor: pointer;
   background: #eee;
 }
@@ -90,6 +91,8 @@ input {
   padding-right: 0.2rem;
   background: none;
   border: 1px solid gray;
+  font-family: serif;
+  font-size: 100%;
 }
 
 td,
@@ -119,17 +122,17 @@ button:hover {
   cursor: pointer;
 }
 
-.borderBtn {
+.border-btn {
   border: 1px solid gray;
   padding: 0.26rem 0.4rem 0.2rem 0.4rem;
   margin: 0.3rem auto;
 }
 
-.borderBtn:hover {
+.border-btn:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.activeBtn,
+.active-btn,
 .grayscale {
   height: 1.2rem;
   width: 1.2rem;
@@ -138,7 +141,7 @@ button:hover {
   vertical-align: middle;
 }
 
-.activeBtn img,
+.active-btn img,
 .grayscale img {
   height: 1.2rem;
   width: 1.2rem;
@@ -181,27 +184,26 @@ button:hover {
 }
 
 /*----------- Tab1 ------------*/
-#tab1 table {
-  margin: auto;
-  text-align: center;
-}
-
-#tab1 #constants {
-  margin: auto;
-  text-align: center;
-}
-
-#tab1 h3 {
-  text-align: center;
-  margin: 0.4rem;
-  font-size: 1.2rem;
-}
-
-#tab1 .constantField {
-  border: 0;
-}
-
+/*#tab1 {
+	table {
+		margin: auto;
+		text-align: center;
+	}
+	#constants {
+		margin: auto;
+		text-align: center;
+	}
+	h3 {
+		text-align: center;
+		margin: 0.4rem;
+		font-size: 1.2rem;
+	}
+	.constantField {
+		border: 0;
+	}
+}*/
 /*----------- Tab2, Tab3, Tab4 ------------*/
+#tab1 table,
 #tab2 table,
 #tab3 table,
 #tab4 table {
@@ -210,6 +212,7 @@ button:hover {
   text-align: center;
 }
 
+#tab1 th,
 #tab2 th,
 #tab3 th,
 #tab4 th {
@@ -220,24 +223,35 @@ button:hover {
   padding: 0.1rem 0.4rem;
 }
 
+#tab1 tr:nth-child(odd),
 #tab2 tr:nth-child(odd),
 #tab3 tr:nth-child(odd),
 #tab4 tr:nth-child(odd) {
   background: #eee;
 }
 
+#tab1 .class-admin-table tr:nth-child(odd),
+#tab2 .class-admin-table tr:nth-child(odd),
+#tab3 .class-admin-table tr:nth-child(odd),
+#tab4 .class-admin-table tr:nth-child(odd) {
+  background: transparent;
+}
+
+#tab1 td,
 #tab2 td,
 #tab3 td,
 #tab4 td {
   padding: 0.1rem 0.4rem;
 }
 
+#tab1 td:not(:last-child),
 #tab2 td:not(:last-child),
 #tab3 td:not(:last-child),
 #tab4 td:not(:last-child) {
   border-right: 1px solid lightgray;
 }
 
+#tab1 input,
 #tab2 input,
 #tab3 input,
 #tab4 input {
@@ -245,6 +259,7 @@ button:hover {
   text-align: center;
 }
 
+#tab1 input[type='number'],
 #tab2 input[type='number'],
 #tab3 input[type='number'],
 #tab4 input[type='number'] {
@@ -252,6 +267,7 @@ button:hover {
   padding-left: 1.2rem;
 }
 
+#tab1 select,
 #tab2 select,
 #tab3 select,
 #tab4 select {
@@ -259,7 +275,7 @@ button:hover {
   background: transparent;
 }
 
-#singleReport {
+#single-report {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -270,28 +286,28 @@ button:hover {
 }
 
 @media screen and (min-width: 576px) {
-  #singleReport {
+  #single-report {
     width: 80%;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #singleReport {
+  #single-report {
     width: 65%;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #singleReport {
+  #single-report {
     width: 45%;
   }
 }
 
-#singleReport img {
+#single-report img {
   width: 100%;
 }
 
-#singleReport .borderBtn {
+#single-report .border-btn {
   display: block;
   margin: auto;
   background: white;
@@ -340,7 +356,7 @@ button:hover {
   padding: 0.1rem 0.2rem 0.1rem 0;
 }
 
-#tab5 .borderBtn {
+#tab5 .border-btn {
   margin: 0 0.2rem 0 0;
 }
 
@@ -354,12 +370,12 @@ button:hover {
   width: 100%;
 }
 
-#tab5 #emailPreview {
+#tab5 #email-preview {
   width: 100%;
   margin: 1rem auto;
 }
 
-#tab5 #emailPreview span {
+#tab5 #email-preview span {
   margin-bottom: 1rem;
 }
 
