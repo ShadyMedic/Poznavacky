@@ -735,7 +735,7 @@ function sendMail()
 /*-------------------------Tab 6-------------------------*/
 function sendSqlQuery()
 {
-	let query = $("#sqlQueryInput").val();
+	let query = $("#sql-query-input").val();
 	$.post('administrate-action',
 		{
 			action:"execute sql query",
@@ -744,7 +744,7 @@ function sendSqlQuery()
 		function(response)
 		{
 			let result = JSON.parse(response)['dbResult'];
-			$("#sqlResult").html(result);
+			$("#sql-result").html(result);
 		}
 	);
 }

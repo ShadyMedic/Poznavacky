@@ -104,7 +104,7 @@ button {
 .border-btn {
 	border: 1px solid gray;
 	padding: 0.26rem 0.4rem 0.2rem 0.4rem;
-	margin: 0.3rem auto;
+	margin: 0.4rem auto;
 	&:hover {
 		background-color: rgba(black, 0.1);
 	}
@@ -302,7 +302,7 @@ button {
 	#sql {
 		width: 100%;
 	}
-	.sqlCenter {
+	.sql-center {
 		display: block;
 		margin: auto;
 		text-align: justify;
@@ -317,28 +317,54 @@ button {
 			width: 56%;
 		}
 	}
-	#sqlWarning {
-		margin: 0.2rem auto 0.3rem auto;
-	}	
-	textarea {
-		border: 1px solid gray;
-		padding: 0.2rem;
-		resize: vertical;
-		min-height: 3.8rem;
-		max-height: 40vh;
-		margin-bottom: -0.24rem;
-		width: 100%;
+	#sql-warning {
+		margin: 0.4rem auto;
 	}
-	table {
-		border-collapse: collapse;
-		margin: 0.2rem auto;
-		tr:nth-child(even) {
-			background: #eee;
+	#sql-query {
+		margin: 0.4rem auto;
+		textarea {
+			border: 1px solid gray;
+			padding: 0.2rem 0.4rem;
+			resize: vertical;
+			min-height: 3.8rem;
+			max-height: 24vh;
+			width: 100%;
+			margin: 0.2rem 0;
 		}
-		td {
-			padding: 0.1rem 0.4rem;
-			&:not(:last-child) {
-				border-right: 1px solid lightgray;
+	}	
+	#sql-result {
+		p {
+			display: block;
+			margin: 0 auto 0.4rem auto;
+			width: 96%;
+			@media screen and (min-width: $mobile) {
+				width: 88%;
+			}
+			@media screen and (min-width: $tablet) {
+				width: 72%;
+			}
+			@media screen and (min-width: $smallDesktop) {
+				width: 56%;
+			}
+		}
+		table {
+			position: relative;
+			margin: auto;
+			text-align: center;
+			th {
+				position: sticky;
+				top: 0;
+				background: lightgray;
+				padding: 0.1rem 0.4rem;
+			}
+			tr:nth-child(odd) {
+				background: #eee;
+			}
+			td {
+				padding: 0.1rem 0.4rem;
+				&:not(:last-child) {
+					border-right: 1px solid lightgray;
+				}
 			}
 		}
 	}
