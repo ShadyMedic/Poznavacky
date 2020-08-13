@@ -2,11 +2,11 @@
 
 <a href="menu/request-new-class"><button class='button'>Zažádat o vytvoření nové třídy</button></a>
 
-<div id='classCodeBtn' style='display:block;'>
-    <button class='button' onclick='enterClassCode()'>Zadat kód soukromé třídy</button>
+<div id='class-code-btn' style='display:block;'>
+    <button class='btn' onclick='enterClassCode()'>Zadat kód soukromé třídy</button>
 </div>
-<form id='classCodeForm' action="menu/enter-class-code" method="POST"><!-- Po zprovoznění JavaScriptu přidat formuláři vlastnost style="display:none;" -->
-    <input id='classCodeInput' type="number" name="code" min=0 max=9999 maxlength=4 style='width: 2rem;' required/>
-    <input class='button' type="submit">OK</button>
-    <button class='button' onclick='closeClassCode()'>Zpět</button>
+<form id='class-code-form' action="menu/enter-class-code" method="POST"><!-- Po zprovoznění JavaScriptu přidat formuláři vlastnost style="display:none;" -->
+    <input id='class-code-input' type="number" name="code" min=0 max=9999 maxlength=4 required/>
+    <input class='btn' type="submit">OK</button>
+    <button class='btn' onclick='closeClassCode()'>Zpět</button>
 </form>
