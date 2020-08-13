@@ -1,24 +1,34 @@
 <header>
-	<button class="btn hamburger-btn"><img src="../images/hamburger.svg"></button>
+	<button class="btn hamburger-btn" onclick="showPanel()"><img src="../images/hamburger.svg"></button>
 	<div class="logo">
 		<img src=""> <!-- LOGO -->
 		<h1>Poznávačky</h1>
 	</div>
-	<button class="btn user-btn" onclick="showLoginInfo()"><img src="../images/user.svg"></button>
-	<div class="login-info">
-		<span>Přihlášen: <?= $loggedUserName ?></span>
-		<a href="menu/account-settings" class="btn inline black">Nastavení účtu</a>
-		<a href='logout' class="btn inline black">Odhlásit se</a>
-	</div>
 </header>
 <aside>
-	<nav>
-		<?php if ($adminLogged) : ?>
-			<a href="administrate">Správa systému</a>
-		<?php endif ?>
-		<a href="menu/account-settings">Nastavení účtu</a>
-		<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
+	<nav id="aside-main-panel">
+		<button class="btn" onclick="showAdditionalPanel('aside-login-info')"><img src="../images/user.svg" alt=""></button> <!--zobrazí info o uživateli-->
+		<button class="btn" onclick="showAdditionalPanel('aside-nav')"><img src="../images/arrowWhite.svg" alt=""></button> <!--zobrazí navigaci-->
+		<button class="btn" onclick="showAdditionalPanel('aside-settings')"><img src="../images/management.svg" alt=""></button> <!--zobrazí nastavení-->
 	</nav>
+	<div id="aside-additional-panel">
+		<div id="aside-login-info">
+			<span>Přihlášen: <?= $loggedUserName ?></span>
+			<a href="menu/account-settings" class="btn inline black">Nastavení účtu</a>
+			<a href='logout' class="btn inline black">Odhlásit se</a>
+		</div>
+		<nav id="aside-nav">
+			<?php if ($adminLogged) : ?>
+				<a href="administrate">Správa systému</a>
+			<?php endif ?>
+			<a href="menu/account-settings">Nastavení účtu</a>
+			<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
+		</nav>
+		<div id="aside-settings">
+
+		</div>
+		<button class="btn cross" onclick="closePanel()"><img src="../images/cross.svg" alt=""></button>
+	</div>
 </aside>
 <main>
 	<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->

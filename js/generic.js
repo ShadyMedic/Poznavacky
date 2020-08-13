@@ -29,10 +29,31 @@ function getCookie(cname)
 	return "";
 }
 
-function showLoginInfo() {
-	let loginInfoOffset = $("header").outerHeight();
-	$(".login-info").addClass("show");
-	$(".login-info").css("top", loginInfoOffset);
+function showPanel() {
+	$("aside").addClass("show");
+	$("#aside-nav").hide();
+	$("#aside-settings").hide();
+} 
+
+function showAdditionalPanel(spec) {
+	$("#aside-additional-panel").addClass("show");
+	$("#aside-login-info").hide();
+	$("#aside-nav").hide();
+	$("#aside-settings").hide();
+	$("#" + spec).show();
+	$("main").css("margin-left", "304px");
+}
+
+function closePanel() {
+	if ($("#aside-additional-panel").hasClass("show"))
+	{
+		$("#aside-additional-panel").removeClass("show");
+		$("main").css("margin-left", "64px");
+	}
+	else if ($("aside").hasClass("show"))
+	{
+		$("aside").removeClass("show");
+	}
 }
 
 $(document).mouseup(function(e) 

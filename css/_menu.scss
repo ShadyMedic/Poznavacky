@@ -10,25 +10,26 @@
 	width: 100vw;
 	height: 100vh;
 	position: relative;
+	background: #eee;
 	.container {
 		min-height: 100%;
 		display: grid;
 		grid-template-rows: auto auto 1fr auto;
-		@media screen and (min-width: $desktop) {
-			grid-template-columns: 20vw 80vw;
+		@media screen and (min-width: $tablet) {
+			grid-template-columns: auto 1fr;
 		}
 	}
 	header {
 		position: relative;
 		grid-row: 1/2;
-		@media screen and (min-width: $desktop) {
+		@media screen and (min-width: $tablet) {
 			grid-column: 1/3;
 		}
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
 		justify-content: space-evenly;
-		@media screen and (min-width: $desktop) {
+		@media screen and (min-width: $tablet) {
 			justify-content: space-between;
 		}
 		background: $greenMid;
@@ -43,11 +44,11 @@
 		}
 		.logo {
 			display: flex;
-			@media screen and (min-width: $desktop) {
+			@media screen and (min-width: $tablet) {
 				margin: 0;
 				padding: 0.2rem 0.8rem;
-				width: 20vw;
-				background: $greenDark;
+				width: 216px;
+				//background: $greenDark;
 				height: 100%;
 			}
 			img {
@@ -73,53 +74,97 @@
 			}
 		}
 		.hamburger-btn {
-			@media screen and (min-width: $desktop) {
+			@media screen and (min-width: $tablet) {
 				display: none;
-			}
-		}
-		.login-info {
-			position: absolute;
-			top: 0; //calculated by js
-			right: 0;
-			display: flex;
-			flex-direction: column;
-			background: white;
-			width: fit-content;
-			height: fit-content;
-			opacity: 0;
-			pointer-events: none;
-			transition: opacity 0.32s ease-out;
-			&.show {
-				opacity: 1;
-				pointer-events: auto;
 			}
 		}
 	}
 	aside {
-		@media screen and (max-width: $desktop) {
+		@media screen and (max-width: $tablet) {
 			position: fixed;
 			transform: translateX(-100%);
 			width: 100%;
-			@media screen and (min-width: $tablet) {
-				width: 50%;
-			}
+			height: 100%;
+			z-index: 2;
 		}
-		@media screen and (min-width: $desktop) {
+		@media screen and (min-width: $tablet) {
 			grid-row: 2/4;
 			grid-column: 1/2;
+			position: relative;
+			width: fit-content;
 		}
-		background: $gray3;
+		display: flex;
 		color: white;
+		transition: transform 0.2s ease-out;
+		&.show {
+			transform: translateX(0);
+			#aside-additional-panel {
+				transform: translateX(0);
+			}
+		}
+		#aside-main-panel {
+			z-index: 3;
+			width: 64px;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			overflow-y: auto;
+			background: $gray3;
+			.btn {
+				margin: 1rem auto;
+				height: 2rem;
+				width: 2rem;
+				> img {
+					height: 100%;
+					width: 100%;
+				}
+				&:active {
+					transform: scale(0.88);
+				}
+			}
+		}
+		#aside-additional-panel {
+			flex-grow: 1;
+			transition: transform 0.2s ease-out;
+			transform: translateX(-100%);
+			border-left: 1px solid #555;
+			padding: 1rem;
+			position: relative;
+			@media screen and (min-width: $tablet) {
+				width: 240px;
+			}
+			&.show {
+				transform: translateX(0);
+			}
+			overflow: hidden;
+			background: $gray3;
+			> * {
+				display: flex;
+				flex-direction: column;
+			}
+			.cross {
+				position: absolute;
+				right: 1rem;
+				bottom: 1rem;
+			}
+		}
 	}
 	main {
+		padding: 1rem;
 		grid-row: 2/4;
-		@media screen and (min-width: $desktop) {
-			grid-column: 2/3;
+		@media screen and (min-width: $tablet) {
+			grid-column: 1/3;
+			margin-left: 64px;
+			transition: margin 0.2s ease-out;
+		}
+
+		* {
+			margin: auto;
 		}
 	}
 	footer {
 		grid-row: 4/5;
-		@media screen and (min-width: $desktop) {
+		@media screen and (min-width: $tablet) {
 			grid-column: 1/3;
 		}
 	}
