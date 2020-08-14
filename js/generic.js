@@ -1,3 +1,7 @@
+var smallTablet = 672;
+var tablet = 768;
+
+
 //přidává třídu podle toho, jestli uživatel používá myš nebo tabulátor -> úprava pseudotřídy :focus
 $(window).on("keydown", function(event) { 
 	if (event.keyCode === 9)
@@ -6,6 +10,27 @@ $(window).on("keydown", function(event) {
 $(window).on("mousedown", function() {
 	$("body").removeClass("tab");	
 })
+
+$(window).resize(function() {
+	resizeAsidePanel();
+});
+
+function resizeAsidePanel() {
+	if ($(window).width() < smallTablet) {
+		$("main").css("margin-left", "0");
+		$("#aside-additional-panel").removeClass("show");
+	}
+	if (($(window).width() >= smallTablet) && ($("aside").hasClass("show"))) {
+		$("#aside-additional-panel").addClass("show");
+	}
+	if ($("#aside-additional-panel").hasClass("show"))
+	{
+		$("main").css("margin-left", "304px");
+	}
+	else if ((!$("#aside-additional-panel").hasClass("show")) && ($(window).width() >= smallTablet)) {
+		$("main").css("margin-left", "64px");
+	}
+}
 
 //Funkce pro získání hodnoty cookie
 //Zkopírována z https://www.w3schools.com/js/js_cookies.asp
@@ -40,20 +65,20 @@ function showAdditionalPanel(spec) {
 	$("#aside-login-info").hide();
 	$("#aside-nav").hide();
 	$("#aside-settings").hide();
+	$("aside").addClass("show");
 	$("#" + spec).show();
 	$("main").css("margin-left", "304px");
 }
 
 function closePanel() {
-	if ($("#aside-additional-panel").hasClass("show"))
-	{
-		$("#aside-additional-panel").removeClass("show");
+	if ($("#aside-additional-panel").hasClass("show")) {
 		$("main").css("margin-left", "64px");
 	}
-	else if ($("aside").hasClass("show"))
-	{
-		$("aside").removeClass("show");
+	else {
+		$("main").css("margin-left", "0");
 	}
+	$("#aside-additional-panel").removeClass("show");
+	$("aside").removeClass("show");
 }
 
 $(document).mouseup(function(e) 
