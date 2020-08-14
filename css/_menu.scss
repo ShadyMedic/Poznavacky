@@ -28,16 +28,16 @@
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
-		justify-content: space-evenly;
-		@media screen and (min-width: $smallTablet) {
+		justify-content: start;
+		/*@media screen and (min-width: $smallTablet) {
 			justify-content: space-between;
-		}
+		}*/
 		background: $greenMid;
 		> * {
-			margin: 0.2rem 0.4rem;
-			@media screen and (min-width: $smallTablet) {
+			margin: 0.2rem 16px;
+			/*@media screen and (min-width: $smallTablet) {
 				margin: 0.2rem 0.6rem;
-			}
+			}*/
 			@media screen and (min-width: $desktop) {
 				margin: 0.2rem 0.8rem;
 			}
@@ -61,11 +61,10 @@
 				margin: 0;
 			}
 		}
-		.hamburger-btn,
-		.user-btn {
+		.hamburger-btn {
 			position: relative;
-			height: 2rem;
-			width: 2rem;
+			height: 32px;
+			width: 32px;
 			display: flex;
 			img {
 				width: 100%;
@@ -111,8 +110,8 @@
 			background: $gray3;
 			.btn {
 				margin: 1rem auto;
-				height: 2rem;
-				width: 2rem;
+				height: 32px;
+				width: 32px;
 				> img {
 					height: 100%;
 					width: 100%;

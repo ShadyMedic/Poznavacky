@@ -438,9 +438,12 @@ label.required:after {
           align-items: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  /*@media screen and (min-width: $smallTablet) {
+			justify-content: space-between;
+		}*/
   background: #479911;
 }
 
@@ -456,34 +459,15 @@ label.required:after {
   }
 }
 
-@media screen and (min-width: 672px) {
-  #menu header,
-  #learn header,
-  #test header,
-  #addPictures header,
-  #accountSettings header {
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-  }
-}
-
 #menu header > *,
 #learn header > *,
 #test header > *,
 #addPictures header > *,
 #accountSettings header > * {
-  margin: 0.2rem 0.4rem;
-}
-
-@media screen and (min-width: 672px) {
-  #menu header > *,
-  #learn header > *,
-  #test header > *,
-  #addPictures header > *,
-  #accountSettings header > * {
-    margin: 0.2rem 0.6rem;
-  }
+  margin: 0.2rem 16px;
+  /*@media screen and (min-width: $smallTablet) {
+				margin: 0.2rem 0.6rem;
+			}*/
 }
 
 @media screen and (min-width: 1200px) {
@@ -531,33 +515,23 @@ label.required:after {
 }
 
 #menu header .hamburger-btn,
-#menu header .user-btn,
 #learn header .hamburger-btn,
-#learn header .user-btn,
 #test header .hamburger-btn,
-#test header .user-btn,
 #addPictures header .hamburger-btn,
-#addPictures header .user-btn,
-#accountSettings header .hamburger-btn,
-#accountSettings header .user-btn {
+#accountSettings header .hamburger-btn {
   position: relative;
-  height: 2rem;
-  width: 2rem;
+  height: 32px;
+  width: 32px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
 #menu header .hamburger-btn img,
-#menu header .user-btn img,
 #learn header .hamburger-btn img,
-#learn header .user-btn img,
 #test header .hamburger-btn img,
-#test header .user-btn img,
 #addPictures header .hamburger-btn img,
-#addPictures header .user-btn img,
-#accountSettings header .hamburger-btn img,
-#accountSettings header .user-btn img {
+#accountSettings header .hamburger-btn img {
   width: 100%;
   height: 100%;
   -ms-flex-item-align: center;
@@ -664,8 +638,8 @@ label.required:after {
 #addPictures aside #aside-main-panel .btn,
 #accountSettings aside #aside-main-panel .btn {
   margin: 1rem auto;
-  height: 2rem;
-  width: 2rem;
+  height: 32px;
+  width: 32px;
 }
 
 #menu aside #aside-main-panel .btn > img,
