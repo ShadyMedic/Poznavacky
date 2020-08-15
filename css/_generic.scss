@@ -102,6 +102,7 @@ h5 {
 		cursor: pointer;
 	}
 	&.border-btn {
+		text-align: center;
 		position: relative;
 		padding: 0.8rem 1.6rem;
 		&.non-transparent {
@@ -191,33 +192,41 @@ h5 {
 	&.inline {
 		font-size: 1em;
 		position: relative;
-			text-decoration: none;
-			color: white;
-			&:after {
-				content: "";
-				display: block;
-				width: 0%;
-				left: 50%;
-				height: 2px;
-				position: absolute;
-				bottom: -0.1rem;
-				transition: all 0.1s ease-in;
-			}
-			&:hover:after {
-				width: 100%;
-				left: 0;
-			}
+		text-decoration: none;
+		color: white;
+		&:hover {
+			text-decoration: underline;
+		}
+		/*
+		&:after {
+			content: "";
+			display: block;
+			width: 0%;
+			left: 50%;
+			height: 2px;
+			position: absolute;
+			bottom: -0.1rem;
+			transition: all 0.1s ease-in;
+		}
+		&:hover:after {
+			width: 100%;
+			left: 0;
+		}
+		*/
 		&.white {
 			color: white;
+			/*
 			&:after {
 				background: white;
-			}
+			}*/
 		}
 		&.black {
 			color: black;
+			/*
 			&:after {
 				background: black;
 			}
+			*/
 		}
 	}
 	&.cross {

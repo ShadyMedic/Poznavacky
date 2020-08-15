@@ -181,6 +181,7 @@ h5 {
 }
 
 .btn.border-btn {
+  text-align: center;
   position: relative;
   padding: 0.8rem 1.6rem;
 }
@@ -303,39 +304,43 @@ h5 {
   position: relative;
   text-decoration: none;
   color: white;
+  /*
+		&:after {
+			content: "";
+			display: block;
+			width: 0%;
+			left: 50%;
+			height: 2px;
+			position: absolute;
+			bottom: -0.1rem;
+			transition: all 0.1s ease-in;
+		}
+		&:hover:after {
+			width: 100%;
+			left: 0;
+		}
+		*/
 }
 
-.btn.inline:after {
-  content: "";
-  display: block;
-  width: 0%;
-  left: 50%;
-  height: 2px;
-  position: absolute;
-  bottom: -0.1rem;
-  -webkit-transition: all 0.1s ease-in;
-  transition: all 0.1s ease-in;
-}
-
-.btn.inline:hover:after {
-  width: 100%;
-  left: 0;
+.btn.inline:hover {
+  text-decoration: underline;
 }
 
 .btn.inline.white {
   color: white;
-}
-
-.btn.inline.white:after {
-  background: white;
+  /*
+			&:after {
+				background: white;
+			}*/
 }
 
 .btn.inline.black {
   color: black;
-}
-
-.btn.inline.black:after {
-  background: black;
+  /*
+			&:after {
+				background: black;
+			}
+			*/
 }
 
 .btn.cross {
@@ -591,7 +596,6 @@ label.required:after {
     -ms-grid-column: 1;
     -ms-grid-column-span: 1;
     grid-column: 1/2;
-    position: relative;
   }
 }
 
