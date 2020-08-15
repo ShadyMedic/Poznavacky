@@ -25,10 +25,10 @@ function resizeAsidePanel() {
 	}
 	if ($("#aside-additional-panel").hasClass("show"))
 	{
-		$("main").css("margin-left", "304px");
+		$("main.menu").css("margin-left", "304px");
 	}
 	else if ((!$("#aside-additional-panel").hasClass("show")) && ($(window).width() >= smallTablet)) {
-		$("main").css("margin-left", "64px");
+		$("main.menu").css("margin-left", "64px");
 	}
 }
 
