@@ -1,32 +1,35 @@
-<table>
-	<tr>
-		<th>Název třídy</th>
-		<th>Poznávačky</th>
-		<th>Akce</th>
-	</tr>
-	<?php foreach ($table as $tableRow) : ?>
-		<tr>
-    		<td>
-    			<a href="<?= $tableRow['rowLink'] ?>">
-    			<?= $tableRow[0] ?>
-				</a>
-    		</td>
-    		<td>
-    			<a href="<?= $tableRow['rowLink'] ?>">
-    			<?= $tableRow[1] ?>
-				</a>
-    		</td>
-    		<td>
-    			<?php if ($tableRow[2] === 'admin') : ?>
-    			<a href="<?= $tableRow['rowLink'].'/'.'manage' ?>"><button>Správa třídy</button></a>
-    			<?php endif ?>
-    			<?php if ($tableRow[2] === 'leave') : ?>
-    			<a href="<?= $tableRow['rowLink'].'/'.'leave' ?>"><button>Opustit třídu</button></a>
-    			<?php endif ?>
-    			<?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
-    			<?= $tableRow[2] ?>
-    			<?php endif ?>
-    		</td>
-    	</tr>
-	<?php endforeach; ?>
-</table>
+<div id="menu-classes-table" class="folders">
+	<div class="table-title rows">
+		<span class="col1">Název třídy</span>
+		<span class="col1">Poznávačky</span>
+		<span class="col1">Akce</span>
+	</div>
+	<ul class="tiles">
+		<?php foreach ($table as $tableRow) : ?>
+			<button class="btn" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>
+				<h4 class="col1">
+					<!--<a href="<?= $tableRow['rowLink'] ?>">
+					<?= $tableRow[0] ?>
+					</a>-->
+					<?= $tableRow[0] ?>
+				</h4>
+				<span class="col2">
+					<span class="tiles">poznávaček: </span>
+					<!--<a href="<?= $tableRow['rowLink'] ?>">
+					<?= $tableRow[1] ?>
+					</a>-->
+					<span><?= $tableRow[1] ?></span>
+				</span>
+				<?php if ($tableRow[2] === 'admin') : ?>
+				<a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" class="btn border-btn rounded transparent black col3">Správa třídy</a>
+				<?php endif ?>
+				<?php if ($tableRow[2] === 'leave') : ?>
+				<a href="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn border-btn rounded transparent black col3">Opustit třídu</a>
+				<?php endif ?>
+				<?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
+				<?= $tableRow[2] ?>
+				<?php endif ?>
+			</li></button>
+		<?php endforeach; ?>
+	</ul>
+</div>

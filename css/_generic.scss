@@ -15,7 +15,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 	line-height: 1.25em;
 	font-size: 100%;
-	min-width: 100vw;
+	min-width: 100%;
 	min-height: 100vh;
 	.btn:focus {
 		outline: none;
@@ -96,6 +96,7 @@ h5 {
 	font-family: 'Roboto', sans-serif;
 	background: none;
 	border: none;
+	text-decoration: none;
 	font-size: 1em;
 	transition: transform 0.1s ease-in;
 	&:hover {

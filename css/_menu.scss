@@ -7,10 +7,11 @@
 #test,
 #addPictures,
 #accountSettings {
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 	position: relative;
 	background: #eee;
+	overflow-x: hidden;
 	.container {
 		min-height: 100%;
 		display: grid;
@@ -166,6 +167,49 @@
 		grid-row: 4/5;
 		@media screen and (min-width: $smallTablet) {
 			grid-column: 1/3;
+		}
+	}
+	.folders {
+		width: 95%;
+		a {
+			display: block;
+		}
+		li {
+			display: block;
+			background: white;
+			border-radius: 4px;
+			box-shadow: 0 3px 2px -1px rgba(black, 0.2);
+		}
+		ul {
+			display: grid;
+			&.rows {
+				//flex-direction: column;
+			}
+			&.tiles {
+				grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+				grid-gap: 1rem;
+				@media screen and (min-width: $mobile) {
+					grid-template-columns: repeat(auto-fit, minmax(11.2rem, 1fr));
+					grid-gap: 2rem;
+				}
+				grid-auto-rows: auto;
+				> button {
+					width: 100%;
+					height: 16rem;
+				}
+				li {
+					height: 100%;
+					width: 100%;
+					padding: 1rem;
+					display: flex;
+					flex-direction: column;
+					align-content: center;
+					h4 {
+						font-weight: bold;
+						font-size: 1.6rem;
+					}
+				}
+			}
 		}
 	}
 }
