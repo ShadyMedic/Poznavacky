@@ -83,6 +83,21 @@ function closePanel() {
 	$("aside").removeClass("show");
 }
 
+function changeMenuView() {
+	if ($(".folders ul").hasClass("tiles")) {
+		$(".folders ul").removeClass("tiles");
+		$(".folders ul").addClass("rows");
+		$(".rows").show();
+		$(".tiles").hide();
+	}
+	else if ($(".folders ul").hasClass("rows")) {
+		$(".folders ul").removeClass("rows");
+		$(".folders ul").addClass("tiles");
+		$(".tiles").show();
+		$(".rows").hide();
+	}
+}
+
 $(document).mouseup(function(e) 
 {
     var container = $(".login-info");
