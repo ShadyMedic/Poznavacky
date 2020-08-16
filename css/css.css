@@ -834,8 +834,8 @@ label.required:after {
   #test .folders ul.tiles,
   #addPictures .folders ul.tiles,
   #accountSettings .folders ul.tiles {
-    -ms-grid-columns: (minmax(11.2rem, 1fr))[auto-fit];
-        grid-template-columns: repeat(auto-fit, minmax(11.2rem, 1fr));
+    -ms-grid-columns: (minmax(12rem, 1fr))[auto-fit];
+        grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     grid-gap: 2rem;
   }
 }
@@ -846,7 +846,12 @@ label.required:after {
 #addPictures .folders ul.tiles > button,
 #accountSettings .folders ul.tiles > button {
   width: 100%;
-  height: 16rem;
+  min-height: 16rem;
+  height: 100%;
+  -ms-flex-item-align: stretch;
+      -ms-grid-row-align: stretch;
+      align-self: stretch;
+  max-width: 16rem;
 }
 
 #menu .folders ul.tiles li,
@@ -876,6 +881,14 @@ label.required:after {
   font-weight: bold;
   font-size: 1.6rem;
   word-break: break-word;
+}
+
+#menu .folders ul.tiles li a.btn,
+#learn .folders ul.tiles li a.btn,
+#test .folders ul.tiles li a.btn,
+#addPictures .folders ul.tiles li a.btn,
+#accountSettings .folders ul.tiles li a.btn {
+  margin: 0.4rem auto;
 }
 
 body#index {

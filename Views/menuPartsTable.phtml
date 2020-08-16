@@ -1,23 +1,27 @@
-<table>
-	<tr>
-		<th>Název části</th>
-		<th>Přírodniny</th>
-		<th>Obrázky</th>
-	</tr>
+<div id="menu-parts-table" class="folders">
+	<div class="table-title rows">
+		<span class="col1">Název části</span>
+		<span class="col2">Přírodniny</span>
+		<span class="col3">Obrázky</span>
+	</div>
+	<ul class="tiles">
 	<?php foreach ($table as $tableRow) : ?>
-		<tr>
-			<?php for ($i = 0; $i < 3; $i++) : ?>
-    		<td style="display:inline">
-    			<a onclick="displayButtons()">
-    			<?= $tableRow[$i] ?>
-				</a>
-    		</td>
-    		<?php endfor ?>
-    		<td>
-    			<a href="<?= $tableRow['rowLink'].'/add-pictures' ?>"><button>Přidat obrázky</button></a>
-    			<a href="<?= $tableRow['rowLink'].'/learn' ?>"><button>Učit se</button></a>
-    			<a href="<?= $tableRow['rowLink'].'/test' ?>"><button>Vyzkoušet se</button></a>
-			</td>
-		</tr>
+		<button class="btn" onclick="displayButtons()"><li>
+    		<h4 class="col1"><?= $tableRow[0] ?></h4>
+			<span class="col2">
+				<span>přírodnin: </span>
+				<span><?= $tableRow[1] ?></span>
+			</span>
+			<span class="col3">
+				<span>obrázků: </span>
+				<span><?= $tableRow[2] ?></span>
+			</span>
+    		<div>
+    			<a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn rounded transparent black border-btn">Přidat obrázky</a>
+    			<a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn rounded transparent black border-btn">Učit se</a>
+    			<a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn rounded transparent black border-btn">Vyzkoušet se</a>
+			</div>
+		</li></button>
 	<?php endforeach; ?>
-</table>
+	</ul>
+</div>
