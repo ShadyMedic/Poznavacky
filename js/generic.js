@@ -61,13 +61,15 @@ function showPanel() {
 } 
 
 function showAdditionalPanel(spec) {
-	$("#aside-additional-panel").addClass("show");
+	if (!$("aside").hasClass("show")) {
+		$("aside").addClass("show");
+		$("#aside-additional-panel").addClass("show");
+		$("main").css("margin-left", "304px");
+	}
 	$("#aside-login-info").hide();
 	$("#aside-nav").hide();
 	$("#aside-settings").hide();
-	$("aside").addClass("show");
 	$("#" + spec).show();
-	$("main").css("margin-left", "304px");
 }
 
 function closePanel() {
