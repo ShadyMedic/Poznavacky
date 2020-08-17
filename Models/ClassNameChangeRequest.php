@@ -14,6 +14,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     /**
      * Metoda navracející aktuální jméno třídy
      * @return string Stávající jméno třídy
+     * {@inheritDoc}
      * @see NameChangeRequest::getOldName()
      */
     public function getOldName()
@@ -24,6 +25,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     /**
      * Metoda navracející e-mail správce třídy, které se tato žádost týká
      * @return string E-mailová adresa správce třídy
+     * {@inheritDoc}
      * @see NameChangeRequest::getRequestersEmail()
      */
     public function getRequestersEmail()
@@ -33,6 +35,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     
     /**
      * Metoda odesílající správci třídy, které se tato žádost týká, e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
+     * {@inheritDoc}
      * @see NameChangeRequest::sendApprovedEmail()
      */
     public function sendApprovedEmail()
@@ -51,6 +54,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     /**
      * Metoda odesílající správci třídy, které se tato žádost týká, e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména zadaný správcem
+     * {@inheritDoc}
      * @see NameChangeRequest::sendDeclinedEmail()
      */
     public function sendDeclinedEmail(string $reason)

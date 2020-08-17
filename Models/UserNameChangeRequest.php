@@ -14,6 +14,7 @@ class UserNameChangeRequest extends NameChangeRequest
     /**
      * Metoda navracející aktuální jméno uživatele
      * @return string Stávající jméno uživatele
+     * {@inheritDoc}
      * @see NameChangeRequest::getOldName()
      */
     public function getOldName()
@@ -25,6 +26,7 @@ class UserNameChangeRequest extends NameChangeRequest
     /**
      * Metoda navracející e-mail uživatele žádající o změnu svého jména
      * @return string E-mailová adresa autora této žádosti
+     * {@inheritDoc}
      * @see NameChangeRequest::getRequestersEmail()
      */
     public function getRequestersEmail()
@@ -35,6 +37,7 @@ class UserNameChangeRequest extends NameChangeRequest
     
     /**
      * Metoda odesílající autorovi této žádosti e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
+     * {@inheritDoc}
      * @see NameChangeRequest::sendApprovedEmail()
      */
     public function sendApprovedEmail()
@@ -53,6 +56,7 @@ class UserNameChangeRequest extends NameChangeRequest
     /**
      * Metoda odesílající autorovi této žádosti e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména zadaný správcem
+     * {@inheritDoc}
      * @see NameChangeRequest::sendDeclinedEmail()
      */
     public function sendDeclinedEmail(string $reason)
