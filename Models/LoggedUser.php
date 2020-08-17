@@ -37,22 +37,24 @@ class LoggedUser extends User
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
-     * @param string $name Přezdívka uživatele
-     * @param string|null $email E-mailová adresa uživatele
-     * @param DateTime $lastLogin Datum a čas posledního přihlášení uživatele
-     * @param int $addedPictures Počet obrázků přidaných uživatelem
-     * @param int $guessedPictures Počet obrázků uhodnutých uživatelem
-     * @param int $karma Uživatelova karma
-     * @param string $status Uživatelův status
-     * @param string $hash Heš uživatelova hesla z databáze
-     * @param float $lastChangelog Poslední zobrazený changelog
-     * @param int $lastLevel Poslední navštívěná úroveň složek na menu stránce
-     * @param int|null $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
-     * @param int $theme Zvolený vzhled stránek
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param string|undefined|null $name Přezdívka uživatele
+     * @param string|undefined|null $email E-mailová adresa uživatele
+     * @param DateTime|undefined|null $lastLogin Datum a čas posledního přihlášení uživatele
+     * @param int|undefined|null $addedPictures Počet obrázků přidaných uživatelem
+     * @param int|undefined|null $guessedPictures Počet obrázků uhodnutých uživatelem
+     * @param int|undefined|null $karma Uživatelova karma
+     * @param string|undefined|null $status Uživatelův status
+     * @param string|undefined|null $hash Heš uživatelova hesla z databáze
+     * @param float|undefined|null $lastChangelog Poslední zobrazený changelog
+     * @param int|undefined|null $lastLevel Poslední navštívěná úroveň složek na menu stránce
+     * @param int|undefined|null $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
+     * @param int|undefined|null $theme Zvolený vzhled stránek
      * {@inheritDoc}
      * @see User::initialize()
      */
-    public function initialize(string $name = '', $email = '', DateTime $lastLogin = null, int $addedPictures = -1, int $guessedPictures = -1, int $karma = -1, string $status = '', string $hash = '', float $lastChangelog = -1.0, int $lastLevel = -1, $lastFolder = -1, int $theme = -1)
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null, $theme = null)
     {
         //Načtení defaultních hodnot do nenastavených vlastností
         $this->loadDefaultValues();
@@ -61,11 +63,11 @@ class LoggedUser extends User
         parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
         
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
-        if ($hash === ''){ $hash = $this->hash; }
-        if ($lastChangelog === -1.0){ $lastChangelog = $this->lastChangelog; }
-        if ($lastLevel === -1){ $lastLevel = $this->lastLevel; }
-        if ($lastFolder === -1){ $lastFolder = $this->lastFolder; }
-        if ($theme === -1){ $theme = $this->theme; }
+        if ($hash === null){ $hash = $this->hash; }
+        if ($lastChangelog === null){ $lastChangelog = $this->lastChangelog; }
+        if ($lastLevel === null){ $lastLevel = $this->lastLevel; }
+        if ($lastFolder === null){ $lastFolder = $this->lastFolder; }
+        if ($theme === null){ $theme = $this->theme; }
         
         $this->hash = $hash;
         $this->lastChangelog = $lastChangelog;
@@ -85,8 +87,6 @@ class LoggedUser extends User
      */
     public function load()
     {
-        $this->loadDefaultValues();
-        
         if ($this->savedInDb === false)
         {
             throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
@@ -94,7 +94,7 @@ class LoggedUser extends User
         
         Db::connect();
         
-        if (isset($this->id))
+        if ($this->isDefined($this->id))
         {
             $userData = Db::fetchQuery('SELECT jmeno,heslo,email,posledni_prihlaseni,posledni_changelog,posledni_uroven,posledni_slozka,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ? LIMIT 1', array($this->id));
             if (empty($userData))
@@ -117,7 +117,7 @@ class LoggedUser extends User
             
             $this->initialize($name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status, $hash, $lastChangelog, $lastLevel, $lastFolder, $theme);
         }
-        else if (isset($this->name))
+        else if ($this->isDefined($this->name))
         {
             $userData = Db::fetchQuery('SELECT uzivatele_id,heslo,email,posledni_prihlaseni,posledni_changelog,posledni_uroven,posledni_slozka,vzhled,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.self::TABLE_NAME.' WHERE jmeno = ? LIMIT 1', array($this->name));
             if (empty($userData))
@@ -141,7 +141,7 @@ class LoggedUser extends User
             $this->id = $id;
             $this->initialize($this->name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status, $hash, $lastChangelog, $lastLevel, $lastFolder, $theme);
         }
-      # else if (isset($this->email))
+      # else if ($this->isDefined($this->email))
       # {
       #     //Implementovat v případě potřeby zkonstruovat objekt přihlášeného uživatele pouze podle jeho e-mailové adresy
       # }
@@ -162,9 +162,7 @@ class LoggedUser extends User
      */
     public function save()
     {
-        $this->loadDefaultValues();
-        
-        if ($this->savedInDb === true && empty($this->id))
+        if ($this->savedInDb === true && !$this->isDefined($this->id))
         {
             throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
         }
@@ -172,6 +170,8 @@ class LoggedUser extends User
         Db::connect();
         if ($this->savedInDb)
         {
+            $this->loadIfNotLoaded($this->id);
+            
             //Aktualizace existujícího uživatele
             $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET jmeno = ?, heslo = ?, email = ?, posledni_prihlaseni = ?, posledni_changelog = ?, posledni_uroven = ?, posledni_složka = ?, vzhled = ?, pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ? LIMIT 1', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
         }
@@ -244,6 +244,8 @@ class LoggedUser extends User
         if (!empty($applications['zadosti_jmena_uzivatele_id']))
         {
             //Přepsání existující žádosti
+            $this->loadIfNotLoaded($this->id);
+            
             Db::executeQuery('UPDATE zadosti_jmena_uzivatele SET nove = ?, cas = NOW() WHERE zadosti_jmena_uzivatele_id = ? LIMIT 1', array($newName, $applications['zadosti_jmena_uzivatele_id']));
         }
         else
@@ -311,6 +313,8 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Aktualizovat heslo v databázi
+        $this->loadIfNotLoaded($this->id);
+        
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET heslo = ? WHERE uzivatele_id = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
@@ -365,6 +369,8 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Aktualizovat databázi
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;
@@ -388,6 +394,8 @@ class LoggedUser extends User
      */
     public function incrementGuessedPictures()
     {
+        $this->loadIfNotLoaded($this->id);
+        
         $this->guessedPictures++;
         Db::connect();
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET uhodnute_obrazky = (uhodnute_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));

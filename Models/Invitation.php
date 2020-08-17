@@ -31,13 +31,15 @@ class Invitation extends DatabaseItem
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
-     * @param User $user Odkaz na objekt uživatele, pro kterého je tato pozvánka určena
-     * @param ClassObject $class Odkaz na objekt třídy, do které je možné pomocí této pozvánky získat přístup
-     * @param DateTime $expiration Datum a čas, kdy tato pozvánka expiruje
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param User|undefined|null $user Odkaz na objekt uživatele, pro kterého je tato pozvánka určena
+     * @param ClassObject|undefined|null  $class Odkaz na objekt třídy, do které je možné pomocí této pozvánky získat přístup
+     * @param DateTime|undefined|null  $expiration Datum a čas, kdy tato pozvánka expiruje
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize(User $user = null, ClassObject $class = null, DateTime $expiration = null)
+    public function initialize($user = null, $class = null, $expiration = null)
     {
         //Načtení defaultních hodnot do nenastavených vlastností
         $this->loadDefaultValues();
@@ -70,7 +72,7 @@ class Invitation extends DatabaseItem
         
         Db::connect();
         
-        if (isset($this->id))
+        if ($this->isDefined($this->id))
         {
             $result = Db::fetchQuery('SELECT uzivatele_id, tridy_id, expirace FROM '.self::TABLE_NAME.' WHERE pozvanky_id = ? LIMIT 1', array($this->id));
             if (empty($result))
@@ -84,7 +86,7 @@ class Invitation extends DatabaseItem
             
             $this->initialize($user, $class, $expiration);
         }
-        else if (isset($this->user) && isset($this->class))
+        else if ($this->isDefined($this->user) && $this->isDefined($this->class))
         {
             $result = Db::fetchQuery('SELECT pozvanky_id, expirace FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
             if (empty($result))
@@ -112,9 +114,7 @@ class Invitation extends DatabaseItem
      */
     public function save()
     {
-        $this->loadDefaultValues();
-        
-        if ($this->savedInDb === true && empty($this->id))
+        if ($this->savedInDb === true && !$this->isDefined($this->id))
         {
             throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
         }
@@ -123,6 +123,8 @@ class Invitation extends DatabaseItem
         if ($this->savedInDb)
         {
             //Aktualizace existující pozvánky
+            $this->loadIfNotAllLoaded();
+            
             $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET uzivatele_id = ?, tridy_id = ?, expirace = ? WHERE pozvanky_id = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
         }
         else
@@ -144,6 +146,7 @@ class Invitation extends DatabaseItem
      */
     public function getId()
     {
+        $this->loadIfNotLoaded($this->id);
         return $this->id;
     }
     
@@ -153,6 +156,7 @@ class Invitation extends DatabaseItem
      */
     public function getClass()
     {
+        $this->loadIfNotLoaded($this->class);
         return $this->class;
     }
     
@@ -162,6 +166,7 @@ class Invitation extends DatabaseItem
      */
     public function getExpirationDate()
     {
+        $this->loadIfNotLoaded($this->expiration);
         return $this->expiration->format('d. m. Y');
     }
     
@@ -170,6 +175,7 @@ class Invitation extends DatabaseItem
      */
     public function accept()
     {
+        $this->loadIfNotLoaded($this->class);
         $this->class->addMember($this->user['id']);
     }
     
@@ -181,9 +187,11 @@ class Invitation extends DatabaseItem
      */
     public function delete()
     {
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
         Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE pozvanky_id = ? LIMIT 1;', array($this->id));
-        unset($this->id);
+        $this->id = new undefined();
         $this->savedInDb = false;
         return true;
     }
