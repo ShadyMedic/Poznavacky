@@ -80,7 +80,7 @@ class EmailSender
         $result = $mail->Send();
         if(!$result)
         {
-            throw new Exception('E-mail nemohl být odeslán. Zkuste to prosím znovu později');
+            throw new Exception('E-mail nemohl být odeslán. Zkuste to prosím znovu později: '.$mail->ErrorInfo);
         }
 
         return true;
