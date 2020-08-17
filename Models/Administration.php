@@ -320,8 +320,7 @@ class Administration
      */
     public function resolveNameChange(int $requestId, bool $classNameChange, bool $approved, string $reason = "")
     {
-        $type = ($classNameChange) ? NameChangeRequest::TYPE_CLASS : NameChangeRequest::TYPE_USER;
-        $request = new NameChangeRequest($requestId, $type);
+        $request = ($classNameChange) ? new ClassNameChangeRequest(false, $requestId) : new UserNameChangeRequest(false, $requestId);
         if ($approved)
         {
             $request->approve();
@@ -330,8 +329,7 @@ class Administration
         {
             $request->decline($reason);
         }
-        $request->erase();
-        unset($request);
+        $request->delete();
     }
     
     /**
