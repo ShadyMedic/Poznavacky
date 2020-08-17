@@ -120,7 +120,7 @@ class Administration
     
     /**
      * Metoda získávající seznam všech žádostí o změnu uživatelského jména a navrací je jako objekty
-     * @return NameChangeRequest[] Pole objektů se žádostmi
+     * @return UserNameChangeRequest[] Pole objektů se žádostmi
      */
     public function getUserNameChangeRequests()
     {
@@ -141,7 +141,8 @@ class Administration
         {
             $user = new User(false, $requestInfo['uzivatele_id']);
             $user->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['status']);
-            $request = new NameChangeRequest($requestInfo['zadosti_jmena_uzivatele_id'], NameChangeRequest::TYPE_USER, $user, $requestInfo['nove'], new DateTime($requestInfo['cas']));
+            $request = new UserNameChangeRequest(false, $requestInfo['zadosti_jmena_uzivatele_id']);
+            $request->initialize($user, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             $requests[] = $request;
         }
         return $requests;
@@ -173,7 +174,8 @@ class Administration
             $admin = new User(false, $requestInfo['uzivatele_id']);
             $admin->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
             $class = new ClassObject($requestInfo['tridy_id'], $requestInfo['nazev'], $requestInfo['c_status'], $requestInfo['kod'], $requestInfo['poznavacky'], $admin);
-            $request = new NameChangeRequest($requestInfo['zadosti_jmena_tridy_id'], NameChangeRequest::TYPE_CLASS, $class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
+            $request = new ClassNameChangeRequest(false, $requestInfo['zadosti_jmena_tridy_id']);
+            $request->initialize($class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             
             $requests[] = $request;
         }
