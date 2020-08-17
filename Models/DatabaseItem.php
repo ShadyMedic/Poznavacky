@@ -23,7 +23,7 @@ abstract class DatabaseItem
     /**
      * TRUE, pokud se jedná o záznam, který dosud není v databázi uložen
      * V takovém případě nemusí mít objekt při volání funkce save() nastavené ID a nelze na něm zavolat funkci load()
-     * @var boolean
+     * @var bool
      */
     protected $savedInDb;
     
@@ -38,6 +38,13 @@ abstract class DatabaseItem
      */
     public function __construct(bool $isNew, int $id = 0)
     {
+        //Nastav všechny vlastnosti na undefined
+        $properties = get_object_vars($this);
+        foreach ($properties as $property)
+        {
+            $this->$property = new Undefined();
+        }
+        
         if ($isNew)
         {
             //Nová položka bez známých informací
@@ -62,6 +69,44 @@ abstract class DatabaseItem
      * V případě nespecifikování všech argumentů jsou neznámé vlastnosti naplněny základními hodnotami
      */
     public abstract function initialize();
+    
+    /**
+     * Metoda zjišťující, zda je daná proměnná definována (zda je do ní přiřazeno cokoliv jiného než objekt typu undefined
+     * @param mixed $property
+     * @return boolean TRUE, pokud proměnná obsahuje cokoliv jiného než objekt typu undefined (včetně null)
+     */
+    public function isDefined($property)
+    {
+        return (!$property instanceof undefined);
+    }
+    
+    /**
+     * Metoda načítající všechny vlastnosti objektu z databáze, pokud jakákoliv z vlastností objektů není definována
+     */
+    protected function loadIfNotAllLoaded()
+    {
+        //Kontrola, zda není nějaká vlastnost nedefinována
+        $properties = get_object_vars($this);
+        foreach ($properties as $property)
+        {
+            if (!$this->isDefined($property))
+            {
+                $this->load();
+                return;
+            }
+        }
+    }
+    
+    /**
+     * Metoda načítající všechny vlastnosti objektu z databáze, pokud vlastnost specifikovaná jako argument není definována
+     */
+    protected function loadIfNotLoaded($property)
+    {
+        if (!$this->isDefined($property))
+        {
+            $this->load();
+        }
+    }
     
     /**
      * Metoda nastavující do vlastností objektu základní hodnoty, které by byly uloženy do databáze i v případě jejich nespecifikování v SQL INSERT dotazu
