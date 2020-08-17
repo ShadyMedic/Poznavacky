@@ -39,10 +39,10 @@ abstract class DatabaseItem
     public function __construct(bool $isNew, int $id = 0)
     {
         //Nastav všechny vlastnosti na undefined
-        $properties = get_object_vars($this);
+        $properties = array_keys(get_object_vars($this));
         foreach ($properties as $property)
         {
-            $this->$property = new Undefined();
+            $this->$property = new undefined();
         }
         
         if ($isNew)
