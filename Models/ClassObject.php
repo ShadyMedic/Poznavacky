@@ -370,6 +370,14 @@ class ClassObject
         Db::connect();
         if (Db::executeQuery('DELETE FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1', array($this->id, $userId)))
         {
+            for ($i = 0; $i < count($this->members); $i++)
+            {
+                if ($this->members[$i]->getId() === $userId)
+                {
+                    //Odebrat uživatele z objektu třídy
+                    array_splice($this->members, $i, 1);
+                }
+            }
             return true;
         }
         else
