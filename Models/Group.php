@@ -49,8 +49,12 @@ class Group extends DatabaseItem
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
         if ($class === null){ $class = $this->class; }
-        if ($parts === null){ $parts = $this->parts; }
-        if ($partsCount === null){ $partsCount = $this->partsCount; }
+        if ($parts === null)
+        {
+            $parts = $this->parts;
+            if ($partsCount === null){ $partsCount = $this->partsCount; }
+        }
+        else { $partsCount = count($parts); }
         
         $this->name = $name;
         $this->class = $class;
@@ -60,7 +64,7 @@ class Group extends DatabaseItem
     
     /**
      * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu částí, do kterých je tato poznávačka rozdělena podle ID (pokud je vyplněno)
-     * Pokud není známé ID této poznávačky, ale je známa třída, do které tato poznávačka patří a název poznávačky, jsou ostatní informace (včetně ID a s výjimkou seznamu částí, do kterých je tato poznávačka rozdělena)
+     * Pokud není známé ID této poznávačky, ale je známa třída, do které tato poznávačka patří a název poznávačky, jsou ostatní informace (včetně ID a s výjimkou seznamu částí, do kterých je tato poznávačka rozdělena) načteny podle těchto informací
      * Seznam částí, do kterých je tato poznávačka rozdělena může být načten do vlastnosti Group::$parts pomocí metody Group::loadParts()
      * @throws BadMethodCallException Pokud se jedná o poznávačku, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
      * @throws NoDataException Pokud není poznávačka s odpovídajícími daty nalezena v databázi
@@ -88,19 +92,19 @@ class Group extends DatabaseItem
             $name = $result['nazev'];
             $class = new ClassObject(false, $result['tridy_id']);
             $partsCount = $result['casti'];
-            $this->initialize($name, $class, $partsCount);
+            $this->initialize($name, $class, null, $partsCount);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->class))
         {
             $result = Db::fetchQuery('SELECT poznavacky_id, casti FROM '.self::TABLE_NAME.' WHERE nazev = ? AND tridy_id = ? LIMIT 1', array($this->name, $this->class->getId()));
             if (empty($result))
             {
-                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
+                throw new NoDataException(NoDataException::UNKNOWN_GROUP);
             }
             
             $this->id = $result['poznavacky_id'];
             $partsCount = $result['casti'];
-            $this->initialize(null, null, $partsCount);
+            $this->initialize(null, null, null, $partsCount);
         }
         else
         {
