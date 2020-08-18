@@ -3,8 +3,18 @@
  * Třída reprezentující objekt třídy (jakože té z reálného světa / obsahující poznávačky)
  * @author Jan Štěch
  */
-class ClassObject
+class ClassObject extends DatabaseItem
 {
+    public const TABLE_NAME = 'tridy';
+    
+    protected const DEFAULT_VALUES = array(
+        'status' => self::CLASS_STATUS_PRIVATE,
+        'code' => 0,
+        'groups' => array(),
+        'groupsCount' => 0,
+        'members' => array()
+    );
+    
     public const CLASS_STATUS_PUBLIC = "public";
     public const CLASS_STATUS_PRIVATE = "private";
     public const CLASS_STATUS_LOCKED = "locked";
@@ -15,84 +25,154 @@ class ClassObject
         'uzamčená' => self::CLASS_STATUS_LOCKED
     );
     
-    private $id;
     private $name;
-    private $status;
-    private $code;
-    private $groups;
-    private $groupsCount;
-    private $members;
-    private $admin;
+    protected $status;
+    protected $code;
+    protected $groupsCount;
+    protected $admin;
+    
+    protected $members;
+    protected $groups;
     
     private $accessCheckResult;
     
     /**
-     * Konstruktor třídy nastavující její ID a jméno.
-     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
-     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
-     * @param int $id ID třídy (nepovinné, pokud je specifikováno jméno)
-     * @param string $name Jméno třídy (nepovinné, pokud je specifikováno ID)
-     * @param string $status Status třídy (musí mít hodnotu jako některá z konstant této třídy; nepovinné, v případě nevyplnění bude načteno společně s kódem třídy z databáze až v případě potřeby)
-     * @param int|NULL $code Vstupní kód třídy (nepovinné, v případě potřeby bude načteno společně se statusem třídy z databáze až v případě potřeby; pro nespecifikování použijte hodnotu -1)
-     * @param int $groupsCount Počet poznávaček, které třída obsahuje (nepovinné, v případě potřeby bude načteno z databáze; pro nepsecifikování použijte hodnotu -1)
-     * @param User $admin Objekt uživatele, který je správcem této třídy (nepovinné, v případě potřeby bude načteno z databáze až v případě potřeby)
-     * @throws BadMethodCallException
+     * Konstruktor třídy nastavující její ID nebo informaci o tom, že je nová
+     * @param bool $isNew FALSE, pokud je již třída se zadaným ID nebo později doplněnými informacemi uložena v databázi, TRUE, pokud se jedná o novou třídu
+     * @param int $id ID třídy (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o ní pomocí metody ClassObject::initialize())
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id, string $name = "", string $status = "", $code = -1, int $groupsCount = -1, User $admin = NULL)
+    public function __construct(bool $isNew, int $id = 0)
     {
-        if (mb_strlen($name) !== 0 && !empty($id))
+        parent::__construct($isNew, $id);
+    }
+    
+    /**
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param string|undefined|null $name Název třídy
+     * @param string|undefined|null $status Status přístupnosti třídy (musí být jedna z konstant této třídy začínající na CLASS_STATUS_)
+     * @param int|undefined|null $code Přístupový kód třídy
+     * @param Group[]|undefined|null $groups Pole poznávaček patřících do této třídy jako objekty
+     * @param int|undefined|null $groupsCount Počet poznávaček patřících do této třídy (při vyplnění parametru $group je ignorováno a je použita délka poskytnutého pole)
+     * @param User[]|undefined|null $members Pole uživatelů, kteří mají členství v této třídě
+     * @param User|undefined|null $admin Odkaz na objekt uživatele, který je správcem této třídy
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
+     */
+    public function initialize($name = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null)
+    {
+        //Načtení defaultních hodnot do nenastavených vlastností
+        $this->loadDefaultValues();
+        
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($name === null){ $name = $this->name; }
+        if ($status === null){ $status = $this->status; }
+        if ($code === null){ $code = $this->code; }
+        if ($groups === null)
         {
-            //Vše je specifikováno --> nastavit
-            $this->id = $id;
-            $this->name = $name;
+            $groups = $this->groups;
+            if ($groupsCount === null){ $groupsCount = $this->groupsCount; }
         }
-        else if (mb_strlen($name) !== 0)
+        else { $groupsCount = count($groups); }
+        if ($members === null){ $members = $this->members; }
+        if ($admin === null){ $admin = $this->admin; }
+        
+        $this->name = $name;
+        $this->status = $status;
+        $this->code = $code;
+        $this->groups = $groups;
+        $this->groupsCount = $groupsCount;
+        $this->members = $members;
+        $this->admin = $admin;
+    }
+    
+    /**
+     * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu členů třídy a poznávaček do ní patřících podle ID (pokud je vyplněno) nebo podle názvu třídy (pokud není vyplněno ID, ale je vyplněn název)
+     * Seznam členů třídy může být načten do vlastnosti ClassObject::$members pomocí metody ClassObject::loadMembers()
+     * Seznam poznávaček v této třídě může být načten do vlastnosti ClassObject::$groups pomocí metody ClassObject::loadGroups()
+     * @throws BadMethodCallException Pokud se jedná o třídu, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
+     * @throws NoDataException Pokud není třída, s daným ID nebo názven nalezena v databázi
+     * @return boolean TRUE, pokud jsou vlastnosti této třídy úspěšně načteny z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::load()
+     */
+    public function load()
+    {
+        if ($this->savedInDb === false)
         {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT tridy_id FROM tridy WHERE nazev = ? LIMIT 1', array($name), false);
-            if (!$result)
-            {
-                //Třída nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_FOUND);
-            }
-            $id = $result['tridy_id'];
+            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
         }
-        else if (!empty($id))
+        
+        Db::connect();
+        
+        if ($this->isDefined($this->id))
         {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT nazev FROM tridy WHERE tridy_id = ? LIMIT 1', array($id), false);
-            if (!$result)
+            $result = Db::fetchQuery('SELECT nazev,poznavacky,status,kod,spravce FROM '.self::TABLE_NAME.' WHERE tridy_id = ? LIMIT 1', array($this->id));
+            if (empty($result))
             {
-                //Třída nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_FOUND);
+                throw new NoDataException(NoDataException::UNKNOWN_CLASS);
             }
+            
             $name = $result['nazev'];
+        }
+        else if ($this->isDefined($this->name))
+        {
+            $result = Db::fetchQuery('SELECT tridy_id,poznavacky,status,kod,spravce FROM '.self::TABLE_NAME.' WHERE nazev = ? LIMIT 1', array($this->name));
+            if (empty($result))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_CLASS);
+            }
+            
+            $this->id = $result['tridy_id'];
+            $name = $this->name;
         }
         else
         {
-            throw new BadMethodCallException('At least one of the arguments must be specified.', null, null);
+            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
         }
         
-        $this->id = $id;
-        $this->name = $name;
+        $groupsCount = $result['poznavacky'];
+        $status = $result['status'];
+        $code = $result['kod'];
+        $admin = new User(false, $result['spravce']);
         
-        //Nastavení statusu (pokud byl specifikován)
-        if (!empty($status))
+        $this->initialize($name, $status, $code, null, $groupsCount, null, $admin);
+        
+        return true;
+    }
+    
+    /**
+     * Metoda ukládající data této třídy do databáze
+     * Touto metodou nelze vytvořit novou třídu (je-li vlastnost $savedInDb nastavena na FALSE, je vyhozena výjimka) - to lze pouze přímo v ovládání databáze
+     * Data třídy se stejným ID jsou v databázi přepsána
+     * @throws BadMethodCallException Pokud se nejedná o novou třídu a zároveň není známo její ID (znalost ID třídy je nutná pro modifikaci databázové tabulky), nebo pokud tato třída zatím v databázi neexistuje
+     * @return boolean TRUE, pokud je třída úspěšně uložena do databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::save()
+     */
+    public function save()
+    {
+        if ($this->savedInDb === true && !$this->isDefined($this->id))
         {
-            $this->status = $status;
+            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
         }
         
-        //Nastavení kódu (pokud byl specifikován)
-        if ($code !== -1)
+        Db::connect();
+        if ($this->savedInDb)
         {
-            $this->code = $code;
+            //Aktualizace existující třídy
+            $this->loadIfNotAllLoaded();
+            
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET tridy_id = ?, nazev = ?, poznavacky = ?, status = ?, kod = ?, spravce = ? WHERE tridy_id = ? LIMIT 1', array($this->id, $this->name, $this->groupsCount, $this->status, $this->code, $this->admin->getId(), $this->id));
         }
-        
-        //Nastavení správce (pokud byl specifikován)
-        if (!empty($admin))
+        else
         {
-            $this->admin = $admin;
+            throw new BadMethodCallException('Method ClassObject::save() cannot be used to create a new class in the databse');
         }
+        return $result;
     }
     
     /**
@@ -101,6 +181,7 @@ class ClassObject
      */
     public function getId()
     {
+        $this->loadIfNotLoaded($this->id);
         return $this->id;
     }
     
@@ -110,6 +191,7 @@ class ClassObject
      */
     public function getName()
     {
+        $this->loadIfNotLoaded($this->name);
         return $this->name;
     }
     
@@ -119,21 +201,38 @@ class ClassObject
      */
     public function getGroupsCount()
     {
-        if (!isset($this->groupsCount))
-        {
-            $this->loadGroupsCount();
-        }
+        $this->loadIfNotLoaded($this->groupsCount);
         return $this->groupsCount;
     }
     
     /**
-     * Metoda načítající počet poznávaček patřících do této třídy a ukládající je jako vlastnost tohoto objektu
+     * Metoda navracející uložený status této třídy.
+     * @return string Status třídy (viz konstanty třídy)
      */
-    private function loadGroupsCount()
+    public function getStatus()
     {
-        Db::connect();
-        $result = Db::fetchQuery('SELECT poznavacky FROM tridy WHERE tridy_id = ?', array($this->id), false);
-        $this->groupsCount = $result['poznavacky'];
+        $this->loadIfNotLoaded($this->status);
+        return $this->status;
+    }
+    
+    /**
+     * Metoda navracející uložený vstupní kód této třídy
+     * @return int Čtyřmístný kód této třídy
+     */
+    public function getCode()
+    {
+        $this->loadIfNotLoaded($this->code);
+        return $this->code;
+    }
+    
+    /**
+     * Metoda pro získání objektu uživatele, který je správcem této třídy
+     * @return User Objekt správce třídy
+     */
+    public function getAdmin()
+    {
+        $this->loadIfNotLoaded($this->admin);
+        return $this->admin;
     }
     
     /**
@@ -143,7 +242,7 @@ class ClassObject
      */
     public function getGroups()
     {
-        if (!isset($this->groups))
+        if (!$this->isDefined($this->groups))
         {
             $this->loadGroups();
         }
@@ -152,11 +251,11 @@ class ClassObject
     
     /**
      * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
-     * Pokud zatím nebyl načten počet poznávaček v této třídě, je uložen jako počet prvků v $this->groups
+     * Počet poznávaček v této třídě je také aktualizován (vlastnost ClassObject::$groupsCount)
      */
-    private function loadGroups()
+    public function loadGroups()
     {
-        $this->groups = array();
+        $this->loadIfNotLoaded($this->id);
         
         Db::connect();
         $result = Db::fetchQuery('SELECT poznavacky_id,nazev,casti FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
@@ -167,63 +266,14 @@ class ClassObject
         }
         else
         {
+            $this->groups = array();
             foreach ($result as $groupData)
             {
                 $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
             }
         }
         
-        if (!isset($this->groupsCount)){ $this->groupsCount = count($this->groups); }
-    }
-    
-    /**
-     * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
-     * @param int $userId ID ověřovaného uživatele
-     * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
-     * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
-     */
-    public function checkAccess(int $userId, bool $forceAgain = false)
-    {
-        if (isset($this->accessCheckResult) && $forceAgain === false)
-        {
-            return $this->accessCheckResult;
-        }
-        
-        Db::connect();
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE tridy_id = ? AND (status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
-        $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
-        return ($result['cnt'] === 1) ? true : false;
-    }
-    
-    /**
-     * Metoda kontrolující, zda je určitý uživatel správcem této třídy
-     * Pokud zatím nebyl načten správce této třídy, bude načten z databáze
-     * @param int $userId ID ověřovaného uživatele
-     * @return boolean TRUE, pokud je uživatelem správce třídy, FALSE pokud ne
-     */
-    public function checkAdmin(int $userId)
-    {
-        if (!isset($this->admin))
-        {
-            $this->loadAdmin();
-        }
-        return ($this->admin['id'] === $userId) ? true : false;
-    }
-    
-    /**
-     * Metoda kontrolující, zda v této třídě existuje specifikovaná poznávačka
-     * @param string $groupName Jméno poznávačky
-     * @return boolean TRUE, pokud byla poznávačka nalezene, FALSE, pokud ne
-     */
-    public function groupExists(string $groupName)
-    {
-        Db::connect();
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM poznavacky WHERE nazev = ? AND tridy_id = ?', array($groupName, $this->id), false);
-        if ($cnt['cnt'] > 0)
-        {
-            return true;
-        }
-        return false;
+        $this->groupsCount = count($this->groups);
     }
     
     /**
@@ -233,7 +283,7 @@ class ClassObject
      */
     public function getMembers()
     {
-        if (!isset($this->groups))
+        if (!$this->isDefined($this->members))
         {
             $this->loadMembers();
         }
@@ -242,20 +292,22 @@ class ClassObject
     
     /**
      * Metoda načítající členy patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
+     * Přihlášený uživatel není zahrnut do tohoto pole, i když je třeba členem třídy
      */
-    private function loadMembers()
+    public function loadMembers()
     {
-        $this->members = array();
+        $this->loadIfNotLoaded($this->id);
         
         Db::connect();
         $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id,uzivatele.jmeno,uzivatele.email,uzivatele.posledni_prihlaseni,uzivatele.pridane_obrazky,uzivatele.uhodnute_obrazky,uzivatele.karma,uzivatele.status FROM clenstvi JOIN '.User::TABLE_NAME.' ON clenstvi.uzivatele_id = uzivatele.uzivatele_id WHERE clenstvi.tridy_id = ? AND uzivatele.uzivatele_id != ? ORDER BY uzivatele.posledni_prihlaseni DESC;', array($this->id, UserManager::getId()), true);
         if ($result === false || count($result) === 0)
         {
-            //Žádné poznávačky nenalezeny
+            //Žádní členové nenalezeni
             $this->members = array();
         }
         else
         {
+            $this->members = array();
             foreach ($result as $memberData)
             {
                 $user = new User(false, $memberData['uzivatele_id']);
@@ -274,6 +326,8 @@ class ClassObject
      */
     public function inviteUser(string $userName)
     {
+        $this->loadIfNotLoaded($this->id);
+        
         //Zkontroluj, zda tato třída není veřejná
         if ($this->status === self::CLASS_STATUS_PUBLIC)
         {
@@ -291,14 +345,14 @@ class ClassObject
         $user->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
         
         //Zkontroluj, zda uživatel již není členem třídy
-        for ($i = 0; $i < count($this->members) && $user['id'] !== $this->members[$i]['id']; $i++){}
+        for ($i = 0; $i < count($this->members) && $user->getId() !== $this->members[$i]->getId(); $i++){}
         if ($i !== count($this->members))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER);
         }
         
         //Ověř, zda již taková pozvánka v databázi neexistuje
-        $result = Db::fetchQuery('SELECT pozvanky_id FROM pozvanky WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($user['id'], $this->id));
+        $result = Db::fetchQuery('SELECT pozvanky_id FROM pozvanky WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($user->getId(), $this->id));
         if (empty($result))
         {
             //Nová pozvánka
@@ -325,6 +379,8 @@ class ClassObject
      */
     public function addMember(int $userId)
     {
+        $this->loadIfNotLoaded($this->id);
+        
         //Zkontroluj, zda je třída soukromá
         //Není třeba - před zavoláním této metody při získávání členství pomocí kódu je zkontrolováno, zda není třída zamknutá
       # if (!$this->getStatus() === self::CLASS_STATUS_PRIVATE)
@@ -361,11 +417,16 @@ class ClassObject
      */
     public function removeMember(int $userId)
     {
+        $this->loadIfNotLoaded($this->status);
+        
         if ($this->status == self::CLASS_STATUS_PUBLIC)
         {
             //Nelze odstranit člena z veřejné třídy
             return false;
         }
+        
+        $this->loadIfNotLoaded($this->id);
+        if (!$this->isDefined($this->members)){ $this->loadMembers(); }
         
         Db::connect();
         if (Db::executeQuery('DELETE FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1', array($this->id, $userId)))
@@ -387,66 +448,54 @@ class ClassObject
     }
     
     /**
-     * Metoda navracející uložený status této třídy.
-     * Pokud status není uložen, je načten z databáze, uložen a poté navrácen
-     * @return string Status třídy (viz konstanty třídy)
+     * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
+     * @param int $userId ID ověřovaného uživatele
+     * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
+     * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
      */
-    public function getStatus()
+    public function checkAccess(int $userId, bool $forceAgain = false)
     {
-        if (!isset($this->status))
+        if (isset($this->accessCheckResult) && $forceAgain === false)
         {
-            $this->loadStatusAndCode();
+            return $this->accessCheckResult;
         }
-        return $this->status;
-    }
-    
-    /**
-     * Metoda navracející uložený vstupní kód této třídy
-     * @return int Čtyřmístný kód této třídy
-     */
-    public function getCode()
-    {
-        if (!isset($this->code))
-        {
-            $this->loadStatusAndCode();
-        }
-        return $this->code;
-    }
-    
-    /**
-     * Metoda získávající z databáze status této třídy a nastavující jej jako vlastnost "status"
-     */
-    private function loadStatusAndCode()
-    {
+        
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
-        $result = Db::fetchQuery('SELECT status,kod FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id), false);
-        $this->status = $result['status'];
-        $this->code = $result['kod'];
+        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE tridy_id = ? AND (status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
+        return ($result['cnt'] === 1) ? true : false;
     }
     
     /**
-     * Metoda pro získání objektu uživatele, který je správcem této třídy
-     * @return User Objekt správce třídy
+     * Metoda kontrolující, zda je určitý uživatel správcem této třídy
+     * Pokud zatím nebyl načten správce této třídy, bude načten z databáze
+     * @param int $userId ID ověřovaného uživatele
+     * @return boolean TRUE, pokud je uživatelem správce třídy, FALSE pokud ne
      */
-    public function getAdmin()
+    public function checkAdmin(int $userId)
     {
-        if (!isset($this->admin))
-        {
-            $this->loadAdmin();
-        }
-        return $this->admin;
+        $this->loadIfNotLoaded($this->admin);
+        return ($this->admin->getId() === $userId) ? true : false;
     }
     
     /**
-     * Metoda načítající data o uživateli, který je správcem této třídy z databáze a nastavující je jako vlastnost "admin"
+     * Metoda kontrolující, zda v této třídě existuje specifikovaná poznávačka
+     * @param string $groupName Jméno poznávačky
+     * @return boolean TRUE, pokud byla poznávačka nalezene, FALSE, pokud ne
      */
-    private function loadAdmin()
+    public function groupExists(string $groupName)
     {
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
-        $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status FROM tridy JOIN '.User::TABLE_NAME.' ON tridy.spravce = uzivatele.uzivatele_id WHERE tridy_id = ?;', array($this->id), false);
-        $admin = new User(false, $result['uzivatele_id']);
-        $admin->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
-        $this->admin = $admin;
+        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM poznavacky WHERE nazev = ? AND tridy_id = ?', array($groupName, $this->id), false);
+        if ($cnt['cnt'] > 0)
+        {
+            return true;
+        }
+        return false;
     }
     
     /**
@@ -500,6 +549,8 @@ class ClassObject
         
         //Kontrola dat OK
         
+        $this->loadIfNotLoaded($this->id);
+        
         //Zkontrolovat, zda již existuje žádost o změnu názvu této třídy
         $applications = Db::fetchQuery('SELECT zadosti_jmena_tridy_id FROM zadosti_jmena_tridy WHERE tridy_id = ? LIMIT 1', array($this->id));
         if (!empty($applications['zadosti_jmena_tridy_id']))
@@ -545,6 +596,11 @@ class ClassObject
         
         //Kontrola dat OK
         
+        $this->status = $status;
+        $this->code = $code;
+        
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
         Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ? LIMIT 1;', array($status, $code, $this->id), false);
         
@@ -579,6 +635,11 @@ class ClassObject
         
         //Kontrola dat OK
         
+        $this->status = $status;
+        $this->code = $code;
+        
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
         Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ? LIMIT 1;', array($status, $code, $this->id), false);
         
@@ -601,8 +662,12 @@ class ClassObject
         
         //Kontrola dat OK (zda uživatel s tímto ID exisutje je již zkontrolováno v Administration::changeClassAdmin())
         
+        $this->admin = $newAdmin;
+        
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
-        Db::executeQuery('UPDATE tridy SET spravce = ? WHERE tridy_id = ? LIMIT 1;', array($newAdmin['id'], $this->id));
+        Db::executeQuery('UPDATE tridy SET spravce = ? WHERE tridy_id = ? LIMIT 1;', array($newAdmin->getId(), $this->id));
         
         return true;
     }
@@ -624,21 +689,25 @@ class ClassObject
         
         //Kontrola dat OK
         
-        //Odstranit třídu
+        $this->delete();
+        
+        return true;
+    }
+    
+    /**
+     * Metoda odstraňující tuto třídu z databáze
+     * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::delete()
+     */
+    public function delete()
+    {
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
-        Db::executeQuery('DELETE FROM tridy WHERE tridy_id = ? LIMIT 1', array($this->id));
-        
-        //Vymazat data z této instance třídy
-        $this->id = null;
-        $this->name = null;
-        $this->email = null;
-        $this->status = null;
-        $this->code = null;
-        $this->groups = null;
-        $this->groupsCount = null;
-        $this->admin = null;
-        $this->accessCheckResult = null;
-        
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE tridy_id = ? LIMIT 1;', array($this->id));
+        $this->id = new undefined();
+        $this->savedInDb = false;
         return true;
     }
 }
