@@ -56,7 +56,7 @@ class ClassObject extends DatabaseItem
      * @param string|undefined|null $status Status přístupnosti třídy (musí být jedna z konstant této třídy začínající na CLASS_STATUS_)
      * @param int|undefined|null $code Přístupový kód třídy
      * @param Group[]|undefined|null $groups Pole poznávaček patřících do této třídy jako objekty
-     * @param int|undefined|null $groupsCount Počet poznávaček patřících do této třídy (při vyplnění parametru $group je ignorováno a je použita délka poskytnutého pole)
+     * @param int|undefined|null $groupsCount Počet poznávaček patřících do této třídy (při vyplnění parametru $groups je ignorováno a je použita délka poskytnutého pole)
      * @param User[]|undefined|null $members Pole uživatelů, kteří mají členství v této třídě
      * @param User|undefined|null $admin Odkaz na objekt uživatele, který je správcem této třídy
      * {@inheritDoc}
