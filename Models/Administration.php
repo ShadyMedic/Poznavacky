@@ -57,12 +57,14 @@ class Administration
     public function getAllClasses()
     {
         Db::connect();
-        $dbResult = Db::fetchQuery('SELECT tridy_id, nazev, status, kod FROM tridy', array(), true);
+        $dbResult = Db::fetchQuery('SELECT tridy_id, nazev, poznavacky, status, kod, spravce FROM tridy', array(), true);
         
         $classes = array();
         foreach($dbResult as $dbRow)
         {
-            $classes[] = new ClassObject($dbRow['tridy_id'], $dbRow['nazev'], $dbRow['status'], $dbRow['kod']);
+            $class = new ClassObject(false, $dbRow['tridy_id']);
+            $class->initialize($dbRow['nazev'], $dbRow['status'], $dbRow['kod'], null, $dbRow['poznavacky'], null, new User(false, $dbRow['spravce']));
+            $classes[] = $class;
         }
         
         return $classes;
@@ -106,7 +108,8 @@ class Administration
         {
             //Následující kód indukuje, že jsem objektovou PHP aplikaci navrhl dobře, nebo úplně blbě...
             //V případě, že tohle bude po mně někdo muset předělávat... tak se ti ty nešťastníku omlouvám
-            $class = new ClassObject($reportInfo['tridy_id'], $reportInfo['tridy_nazev']);
+            $class = new ClassObject(false, $reportInfo['tridy_id']);
+            $class->initialize($reportInfo['tridy_nazev']);
             $group = new Group($reportInfo['poznavacky_id'], $reportInfo['poznavacky_nazev'], $class, $reportInfo['poznavacky_casti']);
             $part = new Part($reportInfo['casti_id'], $reportInfo['casti_nazev'], $group, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural($reportInfo['prirodniny_id'], $reportInfo['prirodniny_nazev'], $group, $part, $reportInfo['prirodniny_obrazky']);
@@ -173,7 +176,8 @@ class Administration
         {
             $admin = new User(false, $requestInfo['uzivatele_id']);
             $admin->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
-            $class = new ClassObject($requestInfo['tridy_id'], $requestInfo['nazev'], $requestInfo['c_status'], $requestInfo['kod'], $requestInfo['poznavacky'], $admin);
+            $class = new ClassObject(false, $requestInfo['tridy_id']);
+            $class->initialize($requestInfo['nazev'], $requestInfo['c_status'], $requestInfo['kod'], null, $requestInfo['poznavacky'], null, $admin);
             $request = new ClassNameChangeRequest(false, $requestInfo['zadosti_jmena_tridy_id']);
             $request->initialize($class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             
@@ -215,7 +219,7 @@ class Administration
      */
     public function editClass(int $classId, array $values)
     {
-        $class = new ClassObject($classId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
+        $class = new ClassObject(false, $classId);
         $class->updateAccessDataAsAdmin($values['status'], $values['code']);
     }
     
@@ -253,7 +257,7 @@ class Administration
         $admin = new User(false, $result['uzivatele_id']);
         $admin->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
         
-        $class = new ClassObject($classId, 'null');   //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
+        $class = new ClassObject(false, $classId);
         $class->changeClassAdminAsAdmin($admin);
         return $admin;
     }
@@ -264,7 +268,7 @@ class Administration
      */
     public function deleteClass(int $classId)
     {
-        $class = new ClassObject($classId, 'null');  //Jméno (druhý argument) je sice povinné, ale vzhledem k tomu, že nebude potřeba a že tento objekt třídy bude prakticky ihned zničen, můžeme využít tento malý hack
+        $class = new ClassObject(false, $classId);
         $class->deleteAsAdmin();
         unset($class);
     }

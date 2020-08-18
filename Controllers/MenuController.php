@@ -79,7 +79,9 @@ class MenuController extends Controller
                 if (!isset($_SESSION['selection']['class']) || urldecode($menuArguments[0]) !== $_SESSION['selection']['class']->getName())
                 {
                     //Uložení objektu třídy do $_SESSION
-                    $_SESSION['selection']['class'] = new ClassObject(0, urldecode($menuArguments[0]));
+                    $_SESSION['selection']['class'] = new ClassObject(false, 0);
+                    $_SESSION['selection']['class']->initialize(urldecode($menuArguments[0]));
+                    $_SESSION['selection']['class']->load();
                     
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
                     $this->unsetSelection(true, true);

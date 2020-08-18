@@ -75,7 +75,7 @@ class Group
         else
         {
             //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
-            $this->class = new ClassObject($classId);
+            $this->class = new ClassObject(false, $classId);
         }
     }
     

@@ -205,7 +205,7 @@ class User extends DatabaseItem implements ArrayAccess
         foreach ($invitationsData as $invitationData)
         {
             $invitation = new Invitation(false, $invitationData['pozvanky_id']);
-            $invitation->initialize($this, new ClassObject($invitationData['tridy_id']), new DateTime($invitationData['expirace']));
+            $invitation->initialize($this, new ClassObject(false, $invitationData['tridy_id']), new DateTime($invitationData['expirace']));
             $invitations[] = $invitation;
         }
         

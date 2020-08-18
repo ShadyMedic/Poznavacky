@@ -81,7 +81,7 @@ class Invitation extends DatabaseItem
             }
             
             $user = new User(false, $result['uzivatele_id']);
-            $class = new ClassObject($result['tridy_id']);
+            $class = new ClassObject(false, $result['tridy_id']);
             $expiration = new DateTime($result['expirace']);
             
             $this->initialize($user, $class, $expiration);

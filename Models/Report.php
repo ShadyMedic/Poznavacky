@@ -163,7 +163,8 @@ class Report
             LIMIT 1;
             ', array($this->id), false);
             
-            $class = new ClassObject($reportInfo['tridy_id'], $reportInfo['tridy_nazev']);
+            $class = new ClassObject(false, $reportInfo['tridy_id']);
+            $class->initialize($reportInfo['tridy_nazev']);
             $group = new Group($reportInfo['poznavacky_id'], $reportInfo['poznavacky_nazev'], $class, $reportInfo['poznavacky_casti']);
             $part = new Part($reportInfo['casti_id'], $reportInfo['casti_nazev'], $group, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural($reportInfo['prirodniny_id'], $reportInfo['prirodniny_nazev'], $group, $part, $reportInfo['prirodniny_obrazky']);
