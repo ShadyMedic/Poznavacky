@@ -80,7 +80,7 @@ class Part
         else
         {
             //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
-            $this->group = new Group($groupId);
+            $this->group = new Group(false, $groupId);
         }
     }
     

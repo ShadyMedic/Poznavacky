@@ -113,7 +113,8 @@ class MenuController extends Controller
                 if (!isset($_SESSION['selection']['group']) || urldecode($menuArguments[1]) !== @$_SESSION['selection']['group']->getName())
                 {
                     //Uložení objektu poznávačky do $_SESSION
-                    $_SESSION['selection']['group'] = new Group(0, urldecode($menuArguments[1]), $_SESSION['selection']['class']);
+                    $_SESSION['selection']['group'] = new Group(false);
+                    $_SESSION['selection']['group']->initialize(urldecode($menuArguments[1]), $_SESSION['selection']['class'], null, null);
                     
                     //Vymazání objektů skladujících vybranou část ze $_SESSION
                     $this->unsetSelection(true);

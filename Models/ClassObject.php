@@ -269,7 +269,9 @@ class ClassObject extends DatabaseItem
             $this->groups = array();
             foreach ($result as $groupData)
             {
-                $this->groups[] = new Group($groupData['poznavacky_id'], $groupData['nazev'], $this, $groupData['casti']);
+                $group = new Group(false, $groupData['poznavacky_id']);
+                $group->initialize($groupData['nazev'], $this, null, $groupData['casti']);
+                $this->groups[] = $group;
             }
         }
         

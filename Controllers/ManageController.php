@@ -52,7 +52,8 @@ class ManageController extends Controller
             //Název poznávačky
 
             //Uložení objektu třídy do $_SESSION
-            $_SESSION['selection']['group'] = new Group(0, urldecode($manageArguments[0]), $_SESSION['selection']['class']);
+            $_SESSION['selection']['group'] = new Group(false);
+            $_SESSION['selection']['group']->initialize(urldecode($manageArguments[0]), $_SESSION['selection']['class'], null, null);
         
             //Musí být specifikována i akce
             if ($argumentCount === 1)
