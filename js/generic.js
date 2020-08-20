@@ -70,6 +70,7 @@ function showAdditionalPanel(spec) {
 		$("aside").addClass("show");
 		$("#aside-additional-panel").addClass("show");
 		$("main").css("margin-left", "304px");
+		$(".btn.cross").show();
 	}
 	$("#aside-login-info").hide();
 	$("#aside-nav").hide();
@@ -86,6 +87,7 @@ function closePanel() {
 	}
 	$("#aside-additional-panel").removeClass("show");
 	$("aside").removeClass("show");
+	$(".btn.cross").hide();
 }
 
 function changeMenuView() {

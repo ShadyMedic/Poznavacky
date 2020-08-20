@@ -667,6 +667,15 @@ label.required:after {
           transform: scale(0.88);
 }
 
+#menu aside #aside-main-panel .btn.cross,
+#learn aside #aside-main-panel .btn.cross,
+#test aside #aside-main-panel .btn.cross,
+#addPictures aside #aside-main-panel .btn.cross,
+#accountSettings aside #aside-main-panel .btn.cross {
+  margin-top: auto;
+  display: none;
+}
+
 #menu aside #aside-additional-panel,
 #learn aside #aside-additional-panel,
 #test aside #aside-additional-panel,
@@ -682,7 +691,9 @@ label.required:after {
   -webkit-transform: translateX(-100%);
           transform: translateX(-100%);
   border-left: 1px solid #555;
-  padding: 1rem;
+  padding: 0 1rem;
+  border-bottom: 1rem solid transparent;
+  border-top: 1rem solid transparent;
   position: relative;
   overflow: auto;
   /*&.show {
@@ -713,16 +724,6 @@ label.required:after {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-}
-
-#menu aside #aside-additional-panel .cross,
-#learn aside #aside-additional-panel .cross,
-#test aside #aside-additional-panel .cross,
-#addPictures aside #aside-additional-panel .cross,
-#accountSettings aside #aside-additional-panel .cross {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
 }
 
 #menu main,
