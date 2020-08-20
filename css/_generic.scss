@@ -98,6 +98,7 @@ h5 {
 	border: none;
 	text-decoration: none;
 	font-size: 1em;
+	//display: inline-block;
 	transition: transform 0.1s ease-in;
 	&:hover {
 		cursor: pointer;
@@ -256,9 +257,10 @@ h5 {
 input {
 	border: none;
 	&.text-field {
-		padding: 0.48em 0.6em;
+		font-size: 100%;
+		padding: 0.4em 0.72em;
 		&:focus {
-			box-shadow: 0 2px 0 0 darkblue;
+			box-shadow: 0 2px 0 0 $greenMid;
 			outline: none;
 		}
 		&:invalid {

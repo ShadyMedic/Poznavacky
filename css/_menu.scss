@@ -151,7 +151,13 @@
 		}
 	}
 	main {
-		padding: 1rem;
+		padding: 0.6rem 1rem;
+		@media screen and (min-width: $mobile) {
+			padding: 1.2rem 2rem;
+		}
+		@media screen and (min-width: $smallDesktop) {
+			padding:  1.8rem 3rem;
+		}
 		grid-row: 2/4;
 		transition: margin 0.2s ease-out;
 		overflow-y: auto;
@@ -171,7 +177,6 @@
 		}
 	}
 	.folders {
-		width: 95%;
 		a {
 			display: block;
 		}
@@ -217,6 +222,17 @@
 						margin: 0.4rem auto;
 					}
 				}
+			}
+		}
+	}
+	#menu-classes-forms {
+		margin: 2rem auto;
+		display: flex;
+		flex-direction: column;
+		> * {
+			margin: 0.4rem auto 0.4rem 0;
+			&.btn {
+				width: 30ch;
 			}
 		}
 	}
