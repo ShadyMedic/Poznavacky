@@ -21,19 +21,6 @@ class Part extends DatabaseItem
     protected $naturals;
     
     /**
-     * Konstruktor části nastavující jeji vlastnosti.
-     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
-     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
-     * @param int $id ID části (nepovinné, pokud je specifikováno jméno)
-     * @param string $name Název části (nepovinné, pokud je specifikováno ID)
-     * @param Group $group Objekt poznávačky, do které tato třída patří (pokud není zadáno, bude zjištěno z databáze)
-     * @param int $naturalsCount Počet přírodnin, které tato část obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze, pro nevyplnění zadejte -1 nebo nic)
-     * @param int $picturesCount Počet obrázků, které tato část obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze, pro nevyplnění zadejte -1 nebo nic)
-     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná část
-     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
-     */
-    
-    /**
      * Konstruktor části nastavující její ID nebo informaci o tom, že je nová
      * @param bool $isNew FALSE, pokud je již část se zadaným ID nebo později doplněnými informacemi uložena v databázi, TRUE, pokud se jedná o novou část
      * @param int $id ID části (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o ní pomocí metody Part::initialize())
