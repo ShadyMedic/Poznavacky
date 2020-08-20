@@ -82,7 +82,8 @@ class ReportAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_UNKNOWN_PICTURE, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
         }
         
-        $part = new Part($dbResult['casti_id'], $dbResult['p_nazev'], $this->group, $dbResult['prirodniny'], $dbResult['p_obrazky']);
+        $part = new Part(false, $dbResult['casti_id']);
+        $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult['prirodniny'], $dbResult['p_obrazky']);
         $natural = new Natural($dbResult['prirodniny_id'], $dbResult['n_nazev'], $this->group, $part, $dbResult['n_obrazky']);
         $picture = new Picture($dbResult['obrazky_id'], $url, $natural, $dbResult['povoleno']);
         $report = new Report(0, $picture, $reason, $additionalInformation);

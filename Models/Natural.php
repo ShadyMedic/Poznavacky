@@ -80,11 +80,12 @@ class Natural
             if (!empty($group))
             {
                 //Využít specifikované poznávačky
-                $this->part = new Part($partId, "", $group);
+                $this->part = new Part(false, $partId);
+                $this->part->initialize(null, $group, null, null, null);
             }
             else
             {
-                $this->part = new Part($partId);
+                $this->part = new Part(false, $partId);
             }
         }
         

@@ -167,7 +167,8 @@ class Report
             $class->initialize($reportInfo['tridy_nazev']);
             $group = new Group(false, $reportInfo['poznavacky_id']);
             $group->intialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo['poznavacky_casti']);
-            $part = new Part($reportInfo['casti_id'], $reportInfo['casti_nazev'], $group, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
+            $part = new Part(false, $reportInfo['casti_id']);
+            $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural($reportInfo['prirodniny_id'], $reportInfo['prirodniny_nazev'], $group, $part, $reportInfo['prirodniny_obrazky']);
             $picture = new Picture($reportInfo['obrazky_id'], $reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
             

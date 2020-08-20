@@ -274,7 +274,9 @@ class Group extends DatabaseItem
             $this->parts = array();
             foreach ($result as $partData)
             {
-                $this->parts[] = new Part($partData['casti_id'], $partData['nazev'], $this, $partData['prirodniny'], $partData['obrazky']);
+                $part = new Part(false, $partData['casti_id']);
+                $part->initialize($partData['nazev'], $this, null, $partData['prirodniny'], $partData['obrazky']);
+                $this->parts[] = $part;
             }
         }
     }
