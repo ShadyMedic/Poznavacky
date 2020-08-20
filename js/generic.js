@@ -2,6 +2,11 @@ var smallTablet = 672;
 var tablet = 768;
 
 
+$(function() { //až po načtení stránky
+
+	$(".rows").hide();
+});
+
 //přidává třídu podle toho, jestli uživatel používá myš nebo tabulátor -> úprava pseudotřídy :focus
 $(window).on("keydown", function(event) { 
 	if (event.keyCode === 9)

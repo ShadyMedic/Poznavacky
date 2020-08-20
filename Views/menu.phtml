@@ -26,11 +26,18 @@
 			<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
 		</nav>
 		<div id="aside-settings">
-			<button class="btn rounded transparent white border-btn" onclick="changeMenuView()">Přepnout zobrazení menu</button>
+			<button class="btn transparent white border-btn" onclick="changeMenuView()">Přepnout zobrazení menu</button>
 		</div>
 		<button class="btn cross" onclick="closePanel()"><img src="../images/crossButtonWhite.svg" alt=""></button>
 	</div>
 </aside>
 <main class="menu">
+	<h2><!--  --><button class="btn"></button></h2>
+		<!-- 
+		BUĎ Menu, 
+		NEBO Správa účtu,
+		NEBO *třída* -> Správa třídy, 
+		NEBO *třída* -> *poznávačka* -> *část* -> *akce* (Učit se/Vyzkoušet se/Přidat obrázky)
+		-->
 	<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
 </main>
