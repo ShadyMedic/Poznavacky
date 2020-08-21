@@ -34,8 +34,8 @@ class Invitation extends DatabaseItem
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
      * @param User|undefined|null $user Odkaz na objekt uživatele, pro kterého je tato pozvánka určena
-     * @param ClassObject|undefined|null  $class Odkaz na objekt třídy, do které je možné pomocí této pozvánky získat přístup
-     * @param DateTime|undefined|null  $expiration Datum a čas, kdy tato pozvánka expiruje
+     * @param ClassObject|undefined|null $class Odkaz na objekt třídy, do které je možné pomocí této pozvánky získat přístup
+     * @param DateTime|undefined|null $expiration Datum a čas, kdy tato pozvánka expiruje
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
@@ -56,7 +56,7 @@ class Invitation extends DatabaseItem
     
     /**
      * Metoda načítající z databáze uživatele, kterého se tato pozvánka týká, třídu, do které lze pomocí této pozvánky získat přístup a čas, kdy pozvánka expiruje (pokud je známé ID pozvánky)
-     * V případě, že není známé ID, ale je známý uživatel, kterého se tato pozvánka týký a třída, do které lze pomocí této pozvánky získat přístup, je načteno ID pozvánky a čas její expirace
+     * V případě, že není známé ID, ale je známý uživatel, kterého se tato pozvánka týká a třída, do které lze pomocí této pozvánky získat přístup, je načteno ID pozvánky a čas její expirace podle těchto informací
      * @throws BadMethodCallException Pokud se jedná o pozvánku, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
      * @throws NoDataException Pokud není pozvánka nebo uživatel, kterého se týká nalezena v databázi
      * @return boolean TRUE, pokud jsou vlastnosti této pozvánky úspěšně načteny z databáze
