@@ -89,7 +89,7 @@ class Natural extends DatabaseItem
             $result = Db::fetchQuery('SELECT nazev, obrazky, poznavacky_id, casti_id FROM '.self::TABLE_NAME.' WHERE prirodniny_id = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
-                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
+                throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
             }
             
             $name = $result['nazev'];
@@ -104,7 +104,7 @@ class Natural extends DatabaseItem
             $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, casti_id FROM '.self::TABLE_NAME.' WHERE poznavacky_id = ? LIMIT 1', array($this->group->getId()));
             if (empty($result))
             {
-                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
+                throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
             }
             
             $this->id = $result['prirodniny_id'];
@@ -118,7 +118,7 @@ class Natural extends DatabaseItem
             $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, poznavacky_id FROM '.self::TABLE_NAME.' WHERE casti_id = ? LIMIT 1', array($this->part->getId()));
             if (empty($result))
             {
-                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
+                throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
             }
             
             $this->id = $result['prirodniny_id'];
@@ -314,5 +314,6 @@ class Natural extends DatabaseItem
         Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE prirodniny_id = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
+        return true;
     }
 }
