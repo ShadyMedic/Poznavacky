@@ -16,7 +16,8 @@ class LearnPicturesController extends Controller
         $group = $_SESSION['selection']['group'];
         $naturalName = $_POST['name'];
         
-        $natural = new Natural(0, $naturalName, $group);
+        $natural = new Natural(false);
+        $natural->initialize($naturalName, null, null, $group, null);
         $pictures = $natural->getPictures();
         
         $picturesArr = array();

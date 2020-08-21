@@ -40,7 +40,7 @@ class Picture
                 throw new AccessDeniedException(AccessDeniedException::REASON_PICTURE_NOT_FOUND);
             }
             $url = $result['zdroj'];
-            $natural = new Natural($result['prirodniny_id']);
+            $natural = new Natural(false, $result['prirodniny_id']);
             $enabled = ($result['povoleno'] == 1) ? true : false;
         }
         else

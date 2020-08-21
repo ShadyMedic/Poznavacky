@@ -264,7 +264,9 @@ class Part extends DatabaseItem
             $this->naturals = array();
             foreach ($result as $naturalData)
             {
-                $this->naturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this->getGroup(), $this, $naturalData['obrazky']);
+                $natural = new Natural(false, $naturalData['prirodniny_id']);
+                $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], $this->getGroup(), $this);
+                $this->naturals[] = $natural;
             }
         }
     }

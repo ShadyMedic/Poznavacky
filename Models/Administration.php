@@ -114,7 +114,8 @@ class Administration
             $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo['poznavacky_casti']);
             $part = new Part(false, $reportInfo['casti_id']);
             $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
-            $natural = new Natural($reportInfo['prirodniny_id'], $reportInfo['prirodniny_nazev'], $group, $part, $reportInfo['prirodniny_obrazky']);
+            $natural = new Natural(false, $reportInfo['prirodniny_id']);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $group, $part);
             $picture = new Picture($reportInfo['obrazky_id'], $reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
             $report = new Report($reportInfo['hlaseni_id'], $picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;

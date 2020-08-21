@@ -237,7 +237,9 @@ class Group extends DatabaseItem
         foreach ($result as $naturalData)
         {
             $part = $this->getPartById($naturalData['casti_id']);
-            $allNaturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this, $part, $naturalData['obrazky']);
+            $natural = new Natural(false, $naturalData['prirodniny_id']);
+            $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], $this, $part);
+            $allNaturals[] = $natural;
         }
         return $allNaturals;
     }
