@@ -51,7 +51,7 @@ class Part extends DatabaseItem
         
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
-        if ($group === null){ $group = $this->class; }
+        if ($group === null){ $group = $this->group; }
         if ($naturals === null)
         {
             $naturals = $this->naturals;
