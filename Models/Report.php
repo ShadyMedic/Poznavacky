@@ -171,7 +171,8 @@ class Report
             $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $group, $part);
-            $picture = new Picture($reportInfo['obrazky_id'], $reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
+            $picture = new Picture(false, $reportInfo['obrazky_id']);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);
             
             $this->picture = $picture;
             $this->reason = $reportInfo['hlaseni_duvod'];

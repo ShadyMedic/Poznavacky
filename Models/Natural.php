@@ -254,7 +254,9 @@ class Natural extends DatabaseItem
             foreach ($result as $pictureData)
             {
                 $status = ($pictureData['povoleno'] === 1) ? true : false;
-                $this->pictures[] = new Picture($pictureData['obrazky_id'], $pictureData['zdroj'], $this, $status);
+                $picture = new Picture(false, $pictureData['obrazky_id']);
+                $picture->initialize($pictureData['zdroj'], $this, $this->part, $status, null);
+                $this->pictures[] = $picture;
             }
         }
     }
@@ -266,15 +268,14 @@ class Natural extends DatabaseItem
      */
     public function addPicture(string $url)
     {
-        $this->loadIfNotLoaded($this->id);
         $this->loadIfNotLoaded($this->part);
         
-        Db::connect();
-        $result = Db::executeQuery('INSERT INTO obrazky (prirodniny_id,zdroj,casti_id) VALUES (?,?,?)', array($this->id, $url, $this->part->getId()), true);
+        $picture = new Picture(true);
+        $picture->initialize($url, $this, $this->part, null, null);
+        $result = $picture->save();
         if ($result)
         {
-            $this->picturesCount++;
-            $this->pictures[] = new Picture($result, $url, $this, true);
+            $this->pictures[] = $picture;
             return true;
         }
         return false;

@@ -86,7 +86,8 @@ class ReportAdder
         $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult['prirodniny'], $dbResult['p_obrazky']);
         $natural = new Natural(false, $dbResult['prirodniny_id']);
         $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], $this->group, $part);
-        $picture = new Picture($dbResult['obrazky_id'], $url, $natural, $dbResult['povoleno']);
+        $picture = new Picture(false, $dbResult['obrazky_id']);
+        $picture->initialize($url, $natural, $part, $dbResult['povoleno'], null);
         $report = new Report(0, $picture, $reason, $additionalInformation);
         $report->load();    //Zjištění, zda již takovéto hlášení v databázi existuje, popřípadě načtení jejich počtu
         $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1

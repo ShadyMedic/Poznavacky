@@ -116,7 +116,8 @@ class Administration
             $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $group, $part);
-            $picture = new Picture($reportInfo['obrazky_id'], $reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
+            $picture = new Picture(false, $reportInfo['obrazky_id']);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);
             $report = new Report($reportInfo['hlaseni_id'], $picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;
         }
@@ -278,7 +279,7 @@ class Administration
     
     public function editPicture(int $pictureId, string $newNaturalName, string $newUrl)
     {
-        $picture = new Picture($pictureId);
+        $picture = new Picture(false, $pictureId);
         $picture->updatePicture($newNaturalName, $newUrl);
     }
     
@@ -288,7 +289,7 @@ class Administration
      */
     public function disablePicture(int $pictureId)
     {
-        $picture = new Picture($pictureId);
+        $picture = new Picture(false, $pictureId);
         $picture->disable();
         $picture->deleteReports();
     }
@@ -299,9 +300,8 @@ class Administration
      */
     public function deletePicture(int $pictureId)
     {
-        $picture = new Picture($pictureId);
+        $picture = new Picture(false, $pictureId);
         $picture->delete();
-        unset($picture);
     }
     
     /**
