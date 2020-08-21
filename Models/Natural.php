@@ -3,94 +3,172 @@
  * Třída reprezentující objekt přírodniny
  * @author Jan Štěch
  */
-class Natural
+class Natural extends DatabaseItem
 {
-    private $id;
+    public const TABLE_NAME = 'prirodniny';
+    
+    protected const DEFAULT_VALUES = array(
+        'picturesCount' => 0
+    );
+    
     private $name;
-    private $pictureCount;
-    private $pictures;
+    protected $picturesCount;
     private $group;
     private $part;
+
+    private $pictures;
     
     /**
-     * Konstruktor přírodniny nastavující její vlastnosti
-     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
-     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
-     * Metoda také načítá počet obrázků dané přírodniny.
-     * @param int $id ID přírodniny (nepovinné, pokud je specifikováno jméno A poznávačka)
-     * @param string $name Název přírodniny (nepovinné, pokud je specifikováno ID)
-     * @param Group $group Objekt poznávačky, do které přírodnina patří (nepovinné, pokud je specifikováno ID, pokud není zadáno, bude zjištěno z databáze)
-     * @param Part $part Objekt části poznávačky, do které přírodnina patří (pokud není zadáno, bude zjištěno z databáze)
-     * @param int $pictureCount Počet obrázků, které jsou od této přírodniny nahrány v databázi (pokud není zadáno, bude zjištěno z databáze)
-     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná přírodnina
-     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
+     * Konstruktor přírodniny nastavující její ID nebo informaci o tom, že je nová
+     * @param bool $isNew FALSE, pokud je již přírodnina se zadaným ID nebo později doplněnými informacemi uložena v databázi, TRUE, pokud se jedná o novou přírodninu
+     * @param int $id ID přírodniny (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o ní pomocí metody Natural::initialize())
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id, string $name = "", Group $group = null, Part $part = null, int $pictureCount = -1)
+    public function __construct(bool $isNew, int $id = 0)
     {
-        if (mb_strlen($name) !== 0 && !empty($id) && !empty($group) && !empty($part) && $pictureCount !== -1)
+        parent::__construct($isNew, $id);
+    }
+    
+    /**
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param string|undefined|null $name Název této přírodniny
+     * @param Picture[]|undefined|null $pictures Pole obrázků nahraných k této přírodnině, jako objekty
+     * @param int|undefined|null $picturesCount Počet obrázků nahraných k této přírodnině (při vyplnění parametru $pictures je ignorováno a je použita délka poskytnutého pole)
+     * @param Group|undefined|null $group Poznávačka, do které tato přírodnina patří
+     * @param Part|undefined|null $part Část poznávačky, do které je tato přírodnina v současné době přiřazena
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
+     */
+    public function initialize($name = null, $pictures = null, $picturesCount = null, $group = null, $part = null)
+    {
+        //Načtení defaultních hodnot do nenastavených vlastností
+        $this->loadDefaultValues();
+        
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($name === null){ $name = $this->name; }
+        if ($pictures === null)
         {
-            //Vše vyplněno --> nastavit
-            $this->id = $id;
-            $this->name = $name;
-            $partId = $part->getId();
-            $this->pictureCount = $pictureCount;
+            $pictures = $this->pictures;
+            if ($picturesCount === null){ $picturesCount = $this->picturesCount; }
         }
-        else if (mb_strlen($name) !== 0 && (!empty($group)))
-        {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT prirodniny_id,obrazky,casti_id FROM prirodniny WHERE nazev = ? AND casti_id IN (SELECT casti_id FROM casti WHERE poznavacky_id = ?) LIMIT 1',array($name, $group->getId()));
-            if (!$result)
-            {
-                //Přírodnina nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_NATURAL_NOT_FOUND);
-            }
-            $id = $result['prirodniny_id'];
-            $partId = $result['casti_id'];
-            $this->pictureCount = $result['obrazky'];
-        }
-        else if (!empty($id))
-        {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT nazev,obrazky,casti_id FROM prirodniny WHERE prirodniny_id = ? LIMIT 1',array($id));
-            if (!$result)
-            {
-                //Přírodnina nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_NATURAL_NOT_FOUND);
-            }
-            $name = $result['nazev'];
-            $partId = $result['casti_id'];
-            $this->pictureCount = $result['obrazky'];
-        }
-        else
-        {
-            throw new BadMethodCallException('Either ID or name and group must be specified.', null, null);
-        }
-        $this->id = $id;
+        else { $picturesCount = count($pictures); }
+        if ($group === null){ $group = $this->group; }
+        if ($part === null){ $part = $this->part; }
+        
         $this->name = $name;
-        
-        //Nastavit nebo zjistit části
-        if (!empty($part) && $part->getId() === $partId)
+        $this->pictures = $pictures;
+        $this->picturesCount = $picturesCount;
+        $this->group = $group;
+        $this->part = $part;
+    }
+    
+    /**
+     * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu obrázků, které jsou k této přírodnině nahrány, podle ID (pokud je vyplněno)
+     * V případě, že není známé ID, ale je známý název přírodniny a část nebo poznávačka, do které patří, jsou načteny ty samé informace + ID podle těchto známých informací
+     * Obrázky, které byly nahrány k této přírodnině mohou být načteny zvlášť pomocí metody Natural::loadPictures()
+     * @throws BadMethodCallException Pokud se jedná o přírodninu, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
+     * @throws NoDataException Pokud není přírodnina se zadanými vlastnostmi nalezena v databázi
+     * @return boolean TRUE, pokud jsou vlastnosti této přírodniny úspěšně načteny z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::load()
+     */
+    public function load()
+    {
+        if ($this->savedInDb === false)
         {
-            //ID souhlasí a objekt je poskytnut --> nastavit
-            $this->part = $part;
+            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
+        }
+        
+        Db::connect();
+        
+        if ($this->isDefined($this->id))
+        {
+            $result = Db::fetchQuery('SELECT nazev, obrazky, poznavacky_id, casti_id FROM '.self::TABLE_NAME.' WHERE prirodniny_id = ? LIMIT 1', array($this->id));
+            if (empty($result))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
+            }
+            
+            $name = $result['nazev'];
+            $picturesCount = $result['obrazky'];
+            $group = new Group(false, $result['poznavacky_id']);
+            $part = new Part(false, $result['casti_id']);
+            
+            $this->initialize($name, null, $picturesCount, $group, $part);
+        }
+        else if ($this->isDefined($this->name) && $this->isDefined($this->group))
+        {
+            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, casti_id FROM '.self::TABLE_NAME.' WHERE poznavacky_id = ? LIMIT 1', array($this->group->getId()));
+            if (empty($result))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
+            }
+            
+            $this->id = $result['prirodniny_id'];
+            $picturesCount = $result['obrazky'];
+            $part = new Part(false, $result['casti_id']);
+            
+            $this->initialize(null, null, $picturesCount, null, $part);
+        }
+        else if ($this->isDefined($this->name) && $this->isDefined($this->part))
+        {
+            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, poznavacky_id FROM '.self::TABLE_NAME.' WHERE casti_id = ? LIMIT 1', array($this->part->getId()));
+            if (empty($result))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
+            }
+            
+            $this->id = $result['prirodniny_id'];
+            $picturesCount = $result['obrazky'];
+            $group = new Group(false, $result['poznavacky_id']);
+            
+            $this->initialize(null, null, $picturesCount, $group, null);
         }
         else
         {
-            //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
-            if (!empty($group))
-            {
-                //Využít specifikované poznávačky
-                $this->part = new Part(false, $partId);
-                $this->part->initialize(null, $group, null, null, null);
-            }
-            else
-            {
-                $this->part = new Part(false, $partId);
-            }
+            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
+        }
+        return true;
+    }
+    
+    /**
+     * Metoda ukládající data této přírodniny do databáze
+     * Pokud se jedná o novou přírodninu (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
+     * V opačném případě jsou přepsána data přírodniny se stejným ID
+     * @throws BadMethodCallException Pokud se nejedná o novou přírodninu a zároveň není známo jeho ID (znalost ID pozvánky je nutná pro modifikaci databázové tabulky)
+     * @return boolean TRUE, pokud je přírodnina úspěšně uložena do databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::save()
+     */
+    public function save()
+    {
+        if ($this->savedInDb === true && !$this->isDefined($this->id))
+        {
+            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
         }
         
-        //Nastavení poznávačky (její objekt byl zkonstruován buď předán nebo zkonstruován při tvorbě objektu části)
-        $this->group = $this->part->getGroup();
+        Db::connect();
+        if ($this->savedInDb)
+        {
+            //Aktualizace existující přírodniny
+            $this->loadIfNotAllLoaded();
+            
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET nazev = ?, obrazky = ?, poznavacky_id = ?, casti_id = ? WHERE prirodniny_id = ? LIMIT 1', array($this->name, $this->picturesCount, $this->group->getId(), $this->part->getId(), $this->id));
+        }
+        else
+        {
+            //Tvorba nové přírodniny
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (nazev,obrazky,poznavacky_id,casti_id) VALUES (?,?,?,?)', array($this->name, $this->picturesCount, $this->group->getId(), $this->part->getId()), true);
+            if (!empty($this->id))
+            {
+                $this->savedInDb = true;
+                $result = true;
+            }
+        }
+        return $result;
     }
     
     /**
@@ -99,6 +177,7 @@ class Natural
      */
     public function getId()
     {
+        $this->loadIfNotLoaded($this->id);
         return $this->id;
     }
     
@@ -108,6 +187,7 @@ class Natural
      */
     public function getName()
     {
+        $this->loadIfNotLoaded($this->name);
         return $this->name;
     }
     
@@ -117,6 +197,7 @@ class Natural
      */
     public function getPart()
     {
+        $this->loadIfNotLoaded($this->part);
         return $this->part;
     }
     
@@ -126,7 +207,8 @@ class Natural
      */
     public function getPicturesCount()
     {
-        return $this->pictureCount;
+        $this->loadIfNotLoaded($this->picturesCount);
+        return $this->picturesCount;
     }
     
     /**
@@ -136,10 +218,7 @@ class Natural
      */
     public function getPictures()
     {
-        if (!isset($this->pictures))
-        {
-            $this->loadPictures();
-        }
+        if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
         return $this->pictures;
     }
     
@@ -150,19 +229,16 @@ class Natural
      */
     public function getRandomPicture()
     {
-        if (!isset($this->pictures))
-        {
-            $this->loadPictures();
-        }
-        return $this->pictures[rand(0, $this->pictureCount - 1)];
+        if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
+        return $this->pictures[rand(0, $this->picturesCount - 1)];
     }
     
     /**
-     * Metoda načítající z databáze obrázky přírodnin a ukládající je jako vlastnost objektu
+     * Metoda načítající z databáze obrázky přírodniny a ukládající je jako vlastnost objektu
      */
-    private function loadPictures()
+    public function loadPictures()
     {
-        $this->pictures = array();
+        $this->loadIfNotLoaded($this->id);
         
         Db::connect();
         $result = Db::fetchQuery('SELECT obrazky_id,zdroj,povoleno FROM obrazky WHERE prirodniny_id = ?', array($this->id), true);
@@ -173,6 +249,8 @@ class Natural
         }
         else
         {
+            $this->pictures = array();
+            
             foreach ($result as $pictureData)
             {
                 $status = ($pictureData['povoleno'] === 1) ? true : false;
@@ -188,11 +266,14 @@ class Natural
      */
     public function addPicture(string $url)
     {
+        $this->loadIfNotLoaded($this->id);
+        $this->loadIfNotLoaded($this->part);
+        
         Db::connect();
         $result = Db::executeQuery('INSERT INTO obrazky (prirodniny_id,zdroj,casti_id) VALUES (?,?,?)', array($this->id, $url, $this->part->getId()), true);
         if ($result)
         {
-            $this->pictureCount++;
+            $this->picturesCount++;
             $this->pictures[] = new Picture($result, $url, $this, true);
             return true;
         }
@@ -207,10 +288,7 @@ class Natural
      */
     public function pictureExists(string $url)
     {
-        if (!isset($this->pictures))
-        {
-            $this->loadPictures();
-        }
+        if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
         
         foreach ($this->pictures as $picture)
         {
@@ -221,5 +299,20 @@ class Natural
         }
         return false;
     }
+    
+    /**
+     * Metoda odstraňující tuto přírodninu z databáze
+     * @return boolean TRUE, pokud je přírodnina úspěšně odstraněna z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::delete()
+     */
+    public function delete()
+    {
+        $this->loadIfNotLoaded($this->id);
+        
+        Db::connect();
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE prirodniny_id = ? LIMIT 1;', array($this->id));
+        $this->id = new undefined();
+        $this->savedInDb = false;
+    }
 }
-
