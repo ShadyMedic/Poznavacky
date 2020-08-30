@@ -88,9 +88,19 @@ class ReportAdder
         $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], $this->group, $part);
         $picture = new Picture(false, $dbResult['obrazky_id']);
         $picture->initialize($url, $natural, $part, $dbResult['povoleno'], null);
-        $report = new Report(0, $picture, $reason, $additionalInformation);
-        $report->load();    //Zjištění, zda již takovéto hlášení v databázi existuje, popřípadě načtení jejich počtu
-        $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1
+        
+        $report = new Report(false, 0);    //Pokus s hlášením, které již v datbázi existuje, ale u kterého neznáme ID
+        $report->initialize($picture, $reason, $additionalInformation, null);
+        try
+        {
+            $report->load();    //Pokud hlášení zatím v databázi neexistuje, je vyvolána výjimka typu NoDataException
+            $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1
+        }
+        catch (NoDataException $e)
+        {
+            $report = new Report(true); //Tvorba nového hlášení
+            $report->initialize($picture, $reason, $additionalInformation, 1);
+        }
         $report->save();    //Uložení hlášení do databáze
     }
 }

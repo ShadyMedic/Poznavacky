@@ -283,7 +283,9 @@ class Picture extends DatabaseItem
         foreach ($result as $reportInfo)
         {
             //Konstrukce nových objektů hlášení a jejich ukládání do pole
-            $this->reports[] = new Report($reportInfo['hlaseni_id'], $this, $reportInfo['duvod'], $reportInfo['dalsi_informace'], $reportInfo['pocet']);
+            $report = new Report(false, $reportInfo['hlaseni_id']);
+            $report->initialize($this, $reportInfo['duvod'], $reportInfo['dalsi_informace'], $reportInfo['pocet']);
+            $this->reports[] = $report;
         }
     }
     

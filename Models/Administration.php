@@ -118,7 +118,8 @@ class Administration
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $group, $part);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
             $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);
-            $report = new Report($reportInfo['hlaseni_id'], $picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
+            $report = new Report(false, $reportInfo['hlaseni_id']);
+            $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;
         }
         
@@ -310,9 +311,8 @@ class Administration
      */
     public function deleteReport(int $reportId)
     {
-        $report = new Report($reportId);
+        $report = new Report(false, $reportId);
         $report->delete();
-        unset($report);
     }
     
     /**
