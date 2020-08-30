@@ -21,18 +21,6 @@ class Part extends DatabaseItem
     protected $naturals;
     
     /**
-     * Konstruktor části nastavující její ID nebo informaci o tom, že je nová
-     * @param bool $isNew FALSE, pokud je již část se zadaným ID nebo později doplněnými informacemi uložena v databázi, TRUE, pokud se jedná o novou část
-     * @param int $id ID části (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o ní pomocí metody Part::initialize())
-     * {@inheritDoc}
-     * @see DatabaseItem::initialize()
-     */
-    public function __construct(bool $isNew, int $id = 0)
-    {
-        parent::__construct($isNew, $id);
-    }
-    
-    /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna

@@ -37,18 +37,6 @@ class ClassObject extends DatabaseItem
     private $accessCheckResult;
     
     /**
-     * Konstruktor třídy nastavující její ID nebo informaci o tom, že je nová
-     * @param bool $isNew FALSE, pokud je již třída se zadaným ID nebo později doplněnými informacemi uložena v databázi, TRUE, pokud se jedná o novou třídu
-     * @param int $id ID třídy (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o ní pomocí metody ClassObject::initialize())
-     * {@inheritDoc}
-     * @see DatabaseItem::initialize()
-     */
-    public function __construct(bool $isNew, int $id = 0)
-    {
-        parent::__construct($isNew, $id);
-    }
-    
-    /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna

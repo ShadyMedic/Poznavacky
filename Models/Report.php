@@ -31,18 +31,6 @@ class Report extends DatabaseItem
     protected $reportersCount;
     
     /**
-     * Konstruktor hlášení nastavující jejho ID nebo informaci o tom, že je nové
-     * @param bool $isNew FALSE, pokud je již hlášení se zadaným ID nebo později doplněnými informacemi uloženo v databázi, TRUE, pokud se jedná o nové hlášení
-     * @param int $id ID hlášení (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o něm pomocí metody Report::initialize())
-     * {@inheritDoc}
-     * @see DatabaseItem::initialize()
-     */
-    public function __construct(bool $isNew, int $id = 0)
-    {
-        parent::__construct($isNew, $id);
-    }
-    
-    /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna

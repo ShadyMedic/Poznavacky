@@ -29,18 +29,6 @@ class User extends DatabaseItem implements ArrayAccess
     protected $status;
     
     /**
-     * Konstruktor uživatele nastavující jeho ID nebo informaci o tom, že je nový
-     * @param bool $isNew FALSE, pokud je již uživatele se zadaným ID nebo později doplněnými informacemi uložen v databázi, TRUE, pokud se jedná o nového uživatele
-     * @param int $id ID uživatele v databázi
-     * {@inheritDoc}
-     * @see DatabaseItem::initialize()
-     */
-    public function __construct(bool $isNew, int $id = 0)
-    {
-        parent::__construct($isNew, $id);
-    }
-    
-    /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
