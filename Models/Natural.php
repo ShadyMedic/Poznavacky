@@ -101,7 +101,7 @@ class Natural extends DatabaseItem
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->group))
         {
-            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, casti_id FROM '.self::TABLE_NAME.' WHERE poznavacky_id = ? LIMIT 1', array($this->group->getId()));
+            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, casti_id FROM '.self::TABLE_NAME.' WHERE nazev = ? AND poznavacky_id = ? LIMIT 1', array($this->name, $this->group->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
@@ -115,7 +115,7 @@ class Natural extends DatabaseItem
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->part))
         {
-            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, poznavacky_id FROM '.self::TABLE_NAME.' WHERE casti_id = ? LIMIT 1', array($this->part->getId()));
+            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, poznavacky_id FROM '.self::TABLE_NAME.' WHERE nazev = ? AND casti_id = ? LIMIT 1', array($this->part->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
