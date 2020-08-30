@@ -3,8 +3,15 @@
  * Třída reprezentující hlášení obrázku
  * @author Jan Štěch
  */
-class Report
+class Report extends DatabaseItem
 {
+    public const TABLE_NAME = 'hlaseni';
+    
+    protected const DEFAULT_VALUES = array(
+        'additionalInformation' => null,
+        'reportersCount' => 1
+    );
+    
     const ADMIN_REQUIRING_REASONS = array(self::REASON_COPYRIGHT, self::REASON_OTHER_ADMIN);
     const LONG_LOADING_AVAILABLE_DELAYS = array('>2 s', '>5 s', '>10 s', '>20 s');
     const INCORRECT_NATURAL_DEFAULT_INFO = 'Nezadáno';
@@ -18,23 +25,45 @@ class Report
     const REASON_OTHER = 'Jiný důvod (řeší správce třídy)';
     const REASON_OTHER_ADMIN = 'Jiný důvod (řeší správce služby)';
     
-    private $id;
     private $picture;
     private $reason;
-    private $additionalInformation;
-    private $reportersCount;
+    protected $additionalInformation;
+    protected $reportersCount;
     
     /**
-     * Konstruktor hlášení nastavující všechny jeho vlastnosti
-     * @param int $id ID hlášení (nepovinné, v případě zadání 0 nebude svázáno se záznamem v databázi dokud není zavolána metoda load nebo save)
-     * @param Picture $picture Odkaz na objekt obrázku, kterého se toto hlášení týká (nepovinné; pokud je vyplněno ID, může být načteno z databáze pomocí metody load)
-     * @param string $reason Důvod hlášení (musí být hodnota jedne z konstant této třídy začánající na REASON_; nepovinné; pokud je vyplněno ID, může být načteno z databáze pomocí metody load)
-     * @param string $additionalInformation Další informace, které může uživatel u určitých hlášení specifikovat (nepovinné; pokud je vyplněno ID, může být načteno z databáze pomocí metody load)
-     * @param int $reportersCount Počet uživatelů, kteří tento obrázek z tohoto důvodu nahlásili (nepovinné; pokud je vyplněno ID, může být načteno z databáze pomocí metody load; pro nespecifikaci vyplňte -1 nebo nic)
+     * Konstruktor hlášení nastavující jejho ID nebo informaci o tom, že je nové
+     * @param bool $isNew FALSE, pokud je již hlášení se zadaným ID nebo později doplněnými informacemi uloženo v databázi, TRUE, pokud se jedná o nové hlášení
+     * @param int $id ID hlášení (možné pouze pokud je první argument FALSE; pokud není vyplněno, bude načteno z databáze po vyplnění dalších údajů o něm pomocí metody Report::initialize())
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id = 0, Picture $picture = null, string $reason = "", string $additionalInformation = "", int $reportersCount = -1)
+    public function __construct(bool $isNew, int $id = 0)
     {
-        $this->id = $id;
+        parent::__construct($isNew, $id);
+    }
+    
+    /**
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param Picture|undefined|null $picture Odkaz na objekt obrázku, ke kterému se toto hlášení vztahuje
+     * @param string|undefined|null $reason Důvod hlášení (musí být jedna z konstant této třídy začínající "REASON_")
+     * @param string|undefined|null $additionalInformation Další informace o hlášení odeslané uživatelem
+     * @param int|undefined|null $reportersCount Počet uživatelů, kteří odeslali hlášení tohoto typu
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
+     */
+    public function initialize($picture = null, $reason = null, $additionalInformation = null, $reportersCount = null)
+    {
+        //Načtení defaultních hodnot do nenastavených vlastností
+        $this->loadDefaultValues();
+        
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($picture === null){ $picture = $this->picture; }
+        if ($reason === null){ $reason = $this->reason; }
+        if ($additionalInformation === null){ $additionalInformation = $this->additionalInformation; }
+        if ($reportersCount === null){ $reportersCount = $this->reportersCount; }
+        
         $this->picture = $picture;
         $this->reason = $reason;
         $this->additionalInformation = $additionalInformation;
@@ -42,10 +71,103 @@ class Report
     }
     
     /**
+     * Metoda načítající z databáze všechny vlastnosti objektu podle ID (pokud je vyplněno)
+     * Pokud není ID vyplněno, jsou vlastnosti (včetně ID) načteny podle obrázku, ke kterému se toto hlášení vztahuje, důvodu a dalších informací odeslaných uživatelem
+     * @throws BadMethodCallException Pokud se jedná o hlášení, které dosud není uloženo v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
+     * @throws NoDataException Pokud není hlášení, s daným ID nebo názvem nalezeno v databázi
+     * @return boolean TRUE, pokud jsou vlastnosti tohoto hlášení úspěšně načteny z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::load()
+     */
+    public function load()
+    {
+        if ($this->savedInDb === false)
+        {
+            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
+        }
+        
+        Db::connect();
+        
+        if ($this->isDefined($this->id))
+        {
+            $result = Db::fetchQuery('SELECT obrazky_id,duvod,dalsi_informace,pocet FROM '.self::TABLE_NAME.' WHERE hlaseni_id = ? LIMIT 1', array($this->id));
+            if (empty($result))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_REPORT);
+            }
+            
+            $picture = new Picture(false, $result['obrazky_id']);
+            $reason = $result['duvod'];
+            $additionalInformation = $result['dalsi_informace'];
+        }
+        else if ($this->isDefined($this->picture) && $this->isDefined($this->reason) && $this->isDefined($this->additionalInformation))
+        {
+            $result = Db::fetchQuery('SELECT hlaseni_id,pocet FROM '.self::TABLE_NAME.' WHERE obrazky_id = ? AND duvod = ? AND dalsi_informace = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation));
+            if (empty($result))
+            {
+                throw new NoDataException(NoDataException::UNKNOWN_REPORT);
+            }
+            
+            $this->id = $result['hlaseni_id'];
+            $picture = null;
+            $reason = null;
+            $additionalInformation = null;
+        }
+        else
+        {
+            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
+        }
+        
+        $reportersCount = $result['pocet'];
+        
+        $this->initialize($picture, $reason, $additionalInformation, $reportersCount);
+        
+        return true;
+    }
+    
+    /**
+     * Metoda ukládající data tohoto hlášení do databáze
+     * Pokud se jedná o nové hlášení (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
+     * V opačném případě jsou přepsána data hlášení se stejným ID
+     * @throws BadMethodCallException Pokud se nejedná o nové hlášení a zároveň není známo jeho ID (znalost ID hlášení je nutné pro modifikaci databázové tabulky)
+     * @return boolean TRUE, pokud je hlášení úspěšně uloženo do databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::save()
+     */
+    public function save()
+    {
+        if ($this->savedInDb === true && !$this->isDefined($this->id))
+        {
+            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
+        }
+        
+        Db::connect();
+        if ($this->savedInDb)
+        {
+            //Aktualizace existujícího hlášení
+            $this->loadIfNotAllLoaded();
+            
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET obrazky_id = ?, duvod = ?, dalsi_informace = ?, pocet = ? WHERE hlaseni_id = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount, $this->id));
+        }
+        else
+        {
+            //Tvorba nového hlášení
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (obrazky_id,duvod,dalsi_informace,pocet) VALUES (?,?,?,?)', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount), true);
+            if (!empty($this->id))
+            {
+                $this->savedInDb = true;
+                $result = true;
+            }
+        }
+        return $result;
+    }
+    
+    /**
      * Metoda navracející ID tohoto hlášení
      */
     public function getId()
     {
+        $this->loadIfNotLoaded($this->id);
         return $this->id;
     }
     
@@ -55,6 +177,7 @@ class Report
      */
     public function getPicture()
     {
+        $this->loadIfNotLoaded($this->picture);
         return $this->picture;
     }
     
@@ -64,6 +187,7 @@ class Report
      */
     public function getPictureId()
     {
+        $this->loadIfNotLoaded($this->picture);
         return $this->picture->getId();
     }
     
@@ -73,6 +197,7 @@ class Report
      */
     public function getUrl()
     {
+        $this->loadIfNotLoaded($this->picture);
         return $this->picture->getSrc();
     }
     
@@ -82,6 +207,7 @@ class Report
      */
     public function getPicturePath()
     {
+        $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
         $part = $natural->getPart();
         $group = $part->getGroup();
@@ -95,6 +221,7 @@ class Report
      */
     public function getNaturalName()
     {
+        $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
         return $natural->getName();
     }
@@ -105,6 +232,7 @@ class Report
      */
     public function getReason()
     {
+        $this->loadIfNotLoaded($this->reason);
         return $this->reason;
     }
     
@@ -114,6 +242,7 @@ class Report
      */
     public function getAdditionalInformation()
     {
+        $this->loadIfNotLoaded($this->additionalInformation);
         return $this->additionalInformation;
     }
     
@@ -123,6 +252,7 @@ class Report
      */
     public function getReportersCount()
     {
+        $this->loadIfNotLoaded($this->reportersCount);
         return $this->reportersCount;
     }
     
@@ -131,127 +261,24 @@ class Report
      */
     public function increaseReportersCount()
     {
+        $this->loadIfNotLoaded($this->reportersCount);
         $this->reportersCount++;
     }
     
     /**
-     * Metoda načítající z databáze ID tohoto hlášení a číslo, kolikrát bylo hlášení tohoto typu odesláno (podle obrázku, důvodu a dalších informací)
-     * Pokud není takové hlášení v databázi nalezeno, je vlastnost $id ponechána nenastavená a vlastnost $reportersCount nastavena na 1
-     * Pokud je již ID tohoto hlášení nastaveno, jsou naopak podle něj načteny ostatní vlastnosti instance
-     */
-    public function load()
-    {
-        Db::connect();
-        if (!empty($this->id))
-        {
-            //Je zadáno ID - načíst podle něj ostatní informace
-            $reportInfo = Db::fetchQuery('
-            SELECT
-            hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
-            obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
-            prirodniny.prirodniny_id AS "prirodniny_id", prirodniny.nazev AS "prirodniny_nazev", prirodniny.obrazky AS "prirodniny_obrazky",
-            casti.casti_id AS "casti_id", casti.nazev AS "casti_nazev", casti.prirodniny AS "casti_prirodniny", casti.obrazky AS "casti_obrazky",
-            poznavacky.poznavacky_id AS "poznavacky_id", poznavacky.nazev AS "poznavacky_nazev", poznavacky.casti AS "poznavacky_casti",
-            tridy.tridy_id AS "tridy_id", tridy.nazev AS "tridy_nazev"
-            FROM hlaseni
-            JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
-            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
-            JOIN casti ON prirodniny.casti_id = casti.casti_id
-            JOIN poznavacky ON casti.poznavacky_id = poznavacky.poznavacky_id
-            JOIN tridy ON poznavacky.tridy_id = tridy.tridy_id
-            WHERE hlaseni.hlaseni_id = ?
-            LIMIT 1;
-            ', array($this->id), false);
-            
-            $class = new ClassObject(false, $reportInfo['tridy_id']);
-            $class->initialize($reportInfo['tridy_nazev']);
-            $group = new Group(false, $reportInfo['poznavacky_id']);
-            $group->intialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo['poznavacky_casti']);
-            $part = new Part(false, $reportInfo['casti_id']);
-            $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
-            $natural = new Natural(false, $reportInfo['prirodniny_id']);
-            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $group, $part);
-            $picture = new Picture(false, $reportInfo['obrazky_id']);
-            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);
-            
-            $this->picture = $picture;
-            $this->reason = $reportInfo['hlaseni_duvod'];
-            $this->additionalInformation = $reportInfo['hlaseni_dalsi_informace'];
-            $this->reportersCount = $reportInfo['hlaseni_pocet'];
-        }
-        else
-        {
-            //Není zadáno ID - načíst ID podle ostatních informací
-            $dbResult = Db::fetchQuery('SELECT hlaseni_id, pocet FROM hlaseni WHERE obrazky_id = ? AND duvod = ? AND dalsi_informace = ? LIMIT 1;', array($this->picture->getId(), $this->reason, $this->additionalInformation), false);
-            if (!$dbResult)
-            {
-                //Takové hlášení zatím v databázi neexistuje
-                $this->reportersCount = 0;
-            }
-            else
-            {
-                //Hlášení nalezeno
-                $this->id = $dbResult['hlaseni_id'];
-                $this->reportersCount = $dbResult['pocet'];
-            }
-        }
-    }
-    
-    /**
-     * Metoda ukládající data tohoto hlášení do databáze
-     * Pokud je nastavena vlastnost $id, je v databázi hlášení se stejným ID nahrazeno současnými informacemi
-     * V opačném případě je do databáze vloženo nové hlášení a vlastnost $id je vyplněna podle ID posledního vloženého řádku do databáze
-     * Před zavoláním této metody musí být proveden pokus, zda takovéto hlášení již v databázi neexistuje pomocí metody Report::load()
-     * @throws BadMethodCallException Pokud nebyl před zavoláním této metody proveden test, zda takové hlášení již v databázi existuje pomocí metody Report::load()
-     */
-    public function save()
-    {
-        if (!empty($this->id))
-        {
-            //Aktualizace existujícího hlášení
-            Db::executeQuery('UPDATE hlaseni SET obrazky_id = ?,duvod = ?,dalsi_informace = ?,pocet = ? WHERE hlaseni_id = ?;', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount, $this->id));
-        }
-        else if (empty($this->id) && $this->reportersCount !== -1)
-        {
-            //Tvorba nového hlášení
-            $this->id = Db::executeQuery('INSERT INTO hlaseni (obrazky_id,duvod,dalsi_informace,pocet) VALUES (?,?,?,?);', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount), true);
-        }
-        else
-        {
-            //Chyba: nejdříve musí být zjištěno, zda již hlášení tohoto typu v databázi neexistuje
-            throw new BadMethodCallException('You must call Report::load() before trying to save a report');
-        }
-    }
-    
-    /**
      * Metoda odstraňující toto hlášení z databáze
-     * Vlastnosti této instance jsou vynulovány
-     * Insance, na níž je vykonána tato metoda by měla být okamžitě zničena pomocí unset()
-     * Tato metoda může být použita pouze v případě, že právě přihlášený uživatel je systémový administrátor
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
-     * @return boolean TRUE, pokud je hlásení úspěšně odstraněno z databáze
+     * @return boolean TRUE, pokud je hlášení úspěšně odstraněno z databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::delete()
      */
     public function delete()
     {
-        //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
-        }
-        
-        //Kontrola dat OK
-        
-        //Odstranit hlášení z databáze
-        Db::connect();
-        Db::executeQuery('DELETE FROM hlaseni WHERE hlaseni_id = ? LIMIT 1;', array($this->id));
-        
-        //Vymazat data z této instance hlášení
-        $this->id = null;
-        $this->picture = null;
-        $this->reason = null;
-        $this->additionalInformation = null;
-        $this->reportersCount = null;
-        
-        return true;
+    	$this->loadIfNotLoaded($this->id);
+    	
+    	Db::connect();
+    	Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE hlaseni_id = ? LIMIT 1;', array($this->id));
+    	$this->id = new undefined();
+    	$this->savedInDb = false;
+    	return true;
     }
 }
