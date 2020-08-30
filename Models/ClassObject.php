@@ -25,7 +25,7 @@ class ClassObject extends DatabaseItem
         'uzamčená' => self::CLASS_STATUS_LOCKED
     );
     
-    private $name;
+    protected $name;
     protected $status;
     protected $code;
     protected $groupsCount;
@@ -94,7 +94,7 @@ class ClassObject extends DatabaseItem
      * Seznam členů třídy může být načten do vlastnosti ClassObject::$members pomocí metody ClassObject::loadMembers()
      * Seznam poznávaček v této třídě může být načten do vlastnosti ClassObject::$groups pomocí metody ClassObject::loadGroups()
      * @throws BadMethodCallException Pokud se jedná o třídu, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není třída, s daným ID nebo názven nalezena v databázi
+     * @throws NoDataException Pokud není třída s daným ID nebo názvem nalezena v databázi
      * @return boolean TRUE, pokud jsou vlastnosti této třídy úspěšně načteny z databáze
      * {@inheritDoc}
      * @see DatabaseItem::load()

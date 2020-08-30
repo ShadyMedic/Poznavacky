@@ -13,9 +13,9 @@ class Invitation extends DatabaseItem
     
     public const INVITATION_LIFETIME = 604800;  //7 dní
     
-    private $user;
-    private $class;
-    private $expiration;
+    protected $user;
+    protected $class;
+    protected $expiration;
     
     /**
      * Konstruktor pozvánky nastavující její ID nebo informaci o tom, že je nová

@@ -11,12 +11,12 @@ class Picture extends DatabaseItem
         'enabled' => true
     );
     
-    private $src;
-    private $natural;
-    private $part;
+    protected $src;
+    protected $natural;
+    protected $part;
     protected $enabled;
     
-    private $reports;
+    protected $reports;
     
     /**
      * Konstruktor obrázku nastavující jeho ID nebo informaci o tom, že je nový

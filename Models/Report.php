@@ -25,8 +25,8 @@ class Report extends DatabaseItem
     const REASON_OTHER = 'Jiný důvod (řeší správce třídy)';
     const REASON_OTHER_ADMIN = 'Jiný důvod (řeší správce služby)';
     
-    private $picture;
-    private $reason;
+    protected $picture;
+    protected $reason;
     protected $additionalInformation;
     protected $reportersCount;
     

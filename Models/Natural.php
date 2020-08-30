@@ -11,12 +11,12 @@ class Natural extends DatabaseItem
         'picturesCount' => 0
     );
     
-    private $name;
+    protected $name;
     protected $picturesCount;
-    private $group;
-    private $part;
+    protected $group;
+    protected $part;
 
-    private $pictures;
+    protected $pictures;
     
     /**
      * Konstruktor přírodniny nastavující její ID nebo informaci o tom, že je nová

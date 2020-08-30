@@ -13,8 +13,8 @@ class Part extends DatabaseItem
         'naturals' => array()
     );
     
-    private $name;
-    private $group;
+    protected $name;
+    protected $group;
     protected $naturalsCount;
     protected $picturesCount;
     

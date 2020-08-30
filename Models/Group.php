@@ -12,8 +12,8 @@ class Group extends DatabaseItem
         'parts' => array()
     );
     
-    private $name;
-    private $class;
+    protected $name;
+    protected $class;
     protected $partsCount;
     
     protected $parts;
