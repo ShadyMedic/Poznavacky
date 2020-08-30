@@ -14,7 +14,7 @@ class Picture extends DatabaseItem
     private $src;
     private $natural;
     private $part;
-    private $enabled;
+    protected $enabled;
     
     private $reports;
     
@@ -171,7 +171,7 @@ class Picture extends DatabaseItem
      */
     public function getId()
     {
-        $this->loadIfNotDefined($this->id);
+        $this->loadIfNotLoaded($this->id);
         return $this->id;
     }
     
@@ -181,7 +181,7 @@ class Picture extends DatabaseItem
      */
     public function getSrc()
     {
-        $this->loadIfNotDefined($this->src);
+        $this->loadIfNotLoaded($this->src);
         return $this->src;
     }
     
@@ -191,7 +191,7 @@ class Picture extends DatabaseItem
      */
     public function getNatural()
     {
-        $this->loadIfNotDefined($this->natural);
+        $this->loadIfNotLoaded($this->natural);
         return $this->natural;
     }
     
@@ -201,7 +201,7 @@ class Picture extends DatabaseItem
      */
     public function isEnabled()
     {
-        $this->loadIfNotDefined($this->enabled);
+        $this->loadIfNotLoaded($this->enabled);
         return $this->enabled;
     }
     
@@ -221,8 +221,8 @@ class Picture extends DatabaseItem
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
         
-        $this->loadIfNotDefined($this->natural);
-        $this->loadIfNotDefined($this->id);
+        $this->loadIfNotLoaded($this->natural);
+        $this->loadIfNotLoaded($this->id);
         
         //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
         $checker = new PictureAdder($this->natural->getPart()->getGroup());
@@ -303,7 +303,7 @@ class Picture extends DatabaseItem
         
         //Kontrola dat OK
         
-        $this->loadIfNotDefined($this->id);
+        $this->loadIfNotLoaded($this->id);
         
         //Vypnout obrázek v databázi
         Db::connect();
