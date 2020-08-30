@@ -107,7 +107,7 @@ class Invitation extends DatabaseItem
      * Metoda ukládající data této pozvánky do databáze
      * Pokud se jedná o novou pozvánku (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
      * V opačném případě jsou přepsána data pozvánky se stejným ID
-     * @throws BadMethodCallException Pokud se nejedná o novou pozvánku a zároveň není známo jeho ID (znalost ID pozvánky je nutná pro modifikaci databázové tabulky)
+     * @throws BadMethodCallException Pokud se nejedná o novou pozvánku a zároveň není známo její ID (znalost ID pozvánky je nutná pro modifikaci databázové tabulky)
      * @return boolean TRUE, pokud je pozvánka úspěšně uložena do databáze
      * {@inheritDoc}
      * @see DatabaseItem::save()
