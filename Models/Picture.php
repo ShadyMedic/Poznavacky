@@ -261,7 +261,7 @@ class Picture extends DatabaseItem
      */
     public function getReports()
     {
-        if (!$this->isDefined($this->reports)){ $this->loadReports(); }
+        if (!isset($this->reports)){ $this->loadReports(); }
         return $this->reports;
     }
     

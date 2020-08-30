@@ -218,7 +218,7 @@ class Natural extends DatabaseItem
      */
     public function getPictures()
     {
-        if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
+        if (!isset($this->pictures)){ $this->loadPictures(); }
         return $this->pictures;
     }
     
@@ -229,7 +229,7 @@ class Natural extends DatabaseItem
      */
     public function getRandomPicture()
     {
-        if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
+        if (!isset($this->pictures)){ $this->loadPictures(); }
         return $this->pictures[rand(0, $this->picturesCount - 1)];
     }
     
@@ -289,7 +289,7 @@ class Natural extends DatabaseItem
      */
     public function pictureExists(string $url)
     {
-        if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
+        if (!isset($this->pictures)){ $this->loadPictures(); }
         
         foreach ($this->pictures as $picture)
         {
