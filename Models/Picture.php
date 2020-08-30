@@ -193,7 +193,6 @@ class Picture extends DatabaseItem
         return $this->enabled;
     }
     
-    //TODO - upravit metodu tak, aby jako první parametr brala proměnnou typu Natural
     /**
      * Metoda upravující přírodninu a adresu tohoto obrázku z rozhodnutí administrátora
      * @param Natural $newNatural Objekt reprezentující nově zvolenou přírodninu
@@ -201,7 +200,7 @@ class Picture extends DatabaseItem
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou údaje tohoto obrázku úspěšně aktualizovány
      */
-    public function updatePicture(string $newNaturalName, string $newUrl)
+    public function updatePicture(Natural $newNatural, string $newUrl)
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         if (!AccessChecker::checkSystemAdmin())
@@ -214,7 +213,7 @@ class Picture extends DatabaseItem
         
         //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
         $checker = new PictureAdder($this->natural->getPart()->getGroup());
-        $newNatural = $checker->checkData($newNaturalName, $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
+        $checker->checkData($newNatural->getName(), $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
         
         //Kontrola dat OK
         

@@ -278,10 +278,18 @@ class Administration
         unset($class);
     }
     
+    /**
+     * Metoda upravující přírodninu a/nebo adresu obrázku uloženého v databázi
+     * @param int $pictureId ID obrázku, jehož data chceme změnit
+     * @param string $newNaturalName Název nové přírodniny, kterou obrázek zobrazuje
+     * @param string $newUrl Nová adresa obrázku
+     */
     public function editPicture(int $pictureId, string $newNaturalName, string $newUrl)
     {
         $picture = new Picture(false, $pictureId);
-        $picture->updatePicture($newNaturalName, $newUrl);
+        $natural = new Natural(false, 0);
+        $natural->initialize($newNaturalName, null, null, null, null);
+        $picture->updatePicture($natural, $newUrl);
     }
     
     /**
