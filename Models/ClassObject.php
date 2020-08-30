@@ -242,7 +242,10 @@ class ClassObject extends DatabaseItem
      */
     public function getGroups()
     {
-        if (!isset($this->groups)){ $this->loadGroups(); }
+        if (!$this->isDefined($this->groups))
+        {
+            $this->loadGroups();
+        }
         return $this->groups;
     }
     
@@ -282,7 +285,10 @@ class ClassObject extends DatabaseItem
      */
     public function getMembers()
     {
-        if (!isset($this->members)){ $this->loadMembers(); }
+        if (!$this->isDefined($this->members))
+        {
+            $this->loadMembers();
+        }
         return $this->members;
     }
     
@@ -422,7 +428,7 @@ class ClassObject extends DatabaseItem
         }
         
         $this->loadIfNotLoaded($this->id);
-        if (!isset($this->members)){ $this->loadMembers(); }
+        if (!$this->isDefined($this->members)){ $this->loadMembers(); }
         
         Db::connect();
         if (Db::executeQuery('DELETE FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1', array($this->id, $userId)))

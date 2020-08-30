@@ -221,7 +221,7 @@ class Group extends DatabaseItem
      */
     public function getNaturals()
     {
-        if (!isset($this->parts)){ $this->loadParts(); }
+        if (!$this->isDefined($this->parts)){ $this->loadParts(); }
         
         $allPartsIds = array();
         foreach ($this->parts as $part)
@@ -250,7 +250,10 @@ class Group extends DatabaseItem
      */
     public function getParts()
     {
-        if (!isset($this->parts)){ $this->loadParts(); }
+        if (!$this->isDefined($this->parts))
+        {
+            $this->loadParts();
+        }
         return $this->parts;
     }
     
@@ -287,7 +290,7 @@ class Group extends DatabaseItem
      */
     private function getPartById(int $id)
     {
-        if (!isset($this->parts)){ $this->loadParts(); }
+        if (!$this->isDefined($this->parts)){ $this->loadParts(); }
         foreach ($this->parts as $part)
         {
             if ($part->getId() === $id)

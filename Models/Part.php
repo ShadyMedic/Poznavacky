@@ -205,7 +205,10 @@ class Part extends DatabaseItem
      */
     public function getRandomPictures(int $count)
     {
-        if (!isset($this->naturals)){ $this->loadNaturals(); }
+        if (!$this->isDefined($this->naturals))
+        {
+            $this->loadNaturals();
+        }
         
         $result = array();
         
@@ -235,7 +238,10 @@ class Part extends DatabaseItem
      */
     public function getNaturals()
     {
-        if (!isset($this->naturals)){ $this->loadNaturals(); }
+        if (!$this->isDefined($this->naturals))
+        {
+            $this->loadNaturals();
+        }
         return $this->naturals;
     }
     
