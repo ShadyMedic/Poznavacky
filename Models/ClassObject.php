@@ -721,8 +721,6 @@ class ClassObject extends DatabaseItem
     
     /**
      * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí administrátora
-     * Data z vlastností této instance jsou vynulována
-     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
      */
