@@ -740,6 +740,41 @@ class ClassObject extends DatabaseItem
     }
     
     /**
+     * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí jejího správce
+     * @param string $password Heslo správce třídy pro ověření
+     * @throws AccessDeniedException Pokud přihlášený uživatel není správcem této třídy nebo zadal špatné / žádné heslo
+     * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
+     */
+    public function deleteAsClassAdmin(string $password)
+    {
+        //Kontrola, zda je přihlášený uživatel správcem této třídy
+        if (!$this->checkAdmin(UserManager::getId()))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+        
+        //Kontrola hesla
+        if (mb_strlen($password) === 0)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
+        }
+        if (!AccessChecker::recheckPassword($password))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
+        }
+        
+        //Kontrola dat OK
+        
+        //Odstranit třídu z databáze
+        $result = $this->delete();
+        
+        //Zrušit výběr této třídy (a jejích podčástí) v $_SESSION['selection']
+        unset($_SESSION['selection']);
+        
+        return $result;
+    }
+    
+    /**
      * Metoda odstraňující tuto třídu z databáze
      * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
      * {@inheritDoc}

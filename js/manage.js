@@ -350,7 +350,7 @@ function deleteClassFinal()
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
-			else if (response["messageType"] === "error")
+			else if (response["messageType"] === "success")
 			{
 				//Přesměrování na seznam tříd
 				window.location = "menu";

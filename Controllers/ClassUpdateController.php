@@ -70,7 +70,9 @@ class ClassUpdateController extends Controller
                     break;
                 case 'delete class':
                     $adminPassword = $_POST['password'];
-                    //TODO
+                    $class->deleteAsClassAdmin($adminPassword);
+                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Třída byla odstraněna'));
                     break;
                 case 'verify password':
                     $password = urldecode($_POST['password']);
