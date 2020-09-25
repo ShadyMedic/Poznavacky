@@ -65,7 +65,8 @@ class ClassUpdateController extends Controller
                     break;
                 case 'delete test':
                     $deletedTestId = $_POST['testId'];
-                    //TODO
+                    $test = new Group(false, $deletedTestId);
+                    try { $class->removeGroup($test); } catch (BadMethodCallException $e) { throw new NoDataException(NoDataException::UNKNOWN_GROUP); }
                     break;
                 case 'delete class':
                     $adminPassword = $_POST['password'];
@@ -88,7 +89,7 @@ class ClassUpdateController extends Controller
                     exit();
             }
         }
-        catch (AccessDeniedException $e)
+        catch (AccessDeniedException | NoDataException $e)
         {
             echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $_POST['action']));
         }

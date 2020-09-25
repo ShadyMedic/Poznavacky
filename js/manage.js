@@ -197,7 +197,7 @@ function kickUser(memberId, memberName)
 			else if (response["messageType"] === "success")
 			{
 				//TODO - nějak odstraň řádek s uživatelem z DOM
-		}
+			}
 		}
 	);
 }
@@ -271,15 +271,15 @@ function createTestSubmit()
 			else if (response["messageType"] === "success")
 			{
 				//TODO přidej do tabulky poznávaček novou řádku
-	
-	//Reset HTML
-	createTestHide();
-}
+				
+				//Reset HTML
+				createTestHide();
+			}
 		}
 	);
 }
 /*-------------------------------------------------------*/
-function deleteTest(id, name)
+function deleteTest(testId, name)
 {
     if (confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny, ale zůstanou nepřiřazeny, dokud je nepřidáte do jiné poznávačky. Tato akce je nevratná!"))
     {
@@ -299,7 +299,7 @@ function deleteTest(id, name)
 				else if (response["messageType"] === "success")
 				{
 					//TODO - odstraň řádek s poznávačkou z tabulky
-			}
+				}
 			}
 		);
     }
