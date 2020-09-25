@@ -194,6 +194,10 @@ function kickUser(memberId, memberName)
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
+			else if (response["messageType"] === "success")
+			{
+				//TODO - nějak odstraň řádek s uživatelem z DOM
+		}
 		}
 	);
 }
@@ -244,6 +248,7 @@ function createTest()
 }
 function createTestHide()
 {
+	$("#createInput").val("");
 	$("#createForm").hide();
 	$("#createButton").show();
 }
@@ -253,7 +258,7 @@ function createTestSubmit()
 	$.post("class-update",
 		{
     		action: 'create test',
-			name: testName
+			testName: testName
 		},
 		function (response)
 		{
@@ -263,11 +268,15 @@ function createTestSubmit()
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
-		}
-	);
+			else if (response["messageType"] === "success")
+			{
+				//TODO přidej do tabulky poznávaček novou řádku
 	
 	//Reset HTML
 	createTestHide();
+}
+		}
+	);
 }
 /*-------------------------------------------------------*/
 function deleteTest(id, name)
@@ -287,6 +296,10 @@ function deleteTest(id, name)
 					//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 					alert(response["message"]);
 				}
+				else if (response["messageType"] === "success")
+				{
+					//TODO - odstraň řádek s poznávačkou z tabulky
+			}
 			}
 		);
     }

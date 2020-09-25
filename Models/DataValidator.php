@@ -32,7 +32,7 @@ class DataValidator
      * Metoda ověřující, zda se řetězec skládá pouze z povolených znaků
      * @param string $subject Řetězec, jehož znaky ověřujeme
      * @param string $allowedChars Řetězec skládající se z výčtu všech povolených znaků
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail (nepoužívané), 3 pro název třídy
+     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail (nepoužívané), 3 pro název třídy, 4 pro název poznávačky
      * @throws InvalidArgumentException Pokud se řetězec skládá i z jiných než povolených znaků
      * @returns boolean TRUE, pokud se řetězec skládá pouze z povolených znaků
      */

@@ -489,6 +489,34 @@ class ClassObject extends DatabaseItem
     }
     
     /**
+     * Metoda přidávající do databáze i do instance třídy novou poznávačku
+     * @param string $groupName Ošetřený název nové poznávačky
+     * @return boolean TRUE, pokud je poznávačka vytvořena a přidána úspěšně, FALSE, pokud ne
+     */
+    public function addGroup(string $groupName)
+    {
+        if (!$this->isDefined($this->groups))
+        {
+            $this->loadGroups();
+        }
+        
+        $group = new Group(true);
+        $group->initialize($groupName, $this, null, 0);
+        try
+        {
+            $result = $group->save();
+            if ($result)
+            {
+                $this->groups[] = $group;
+                return true;
+            }
+        }
+        catch (BadMethodCallException $e) { }
+        
+        return false;
+    }
+    
+    /**
      * Metoda ukládající do databáze nový požadavek na změnu názvu této třídy vyvolaný správcem této třídy, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
      * Data jsou předem ověřena
      * @param string $newName Požadovaný nový název

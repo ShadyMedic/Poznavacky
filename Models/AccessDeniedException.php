@@ -91,6 +91,10 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER = 'Uživatel nebyl nalezen';
     const REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS = 'Pozvánky do veřejné třídy nelze vytvářet';
     const REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER = 'Tento uživatel je již členem této třídy';
+    const REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME = 'Poznávačka s tímto názvem již v této třídě existuje';
+    const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG = 'Název poznávačky nesmí být více než 31 znaků dlouhý';
+    const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT = 'Název poznávačky musí být alespoň 3 znaky dlouhý';
+    const REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS = 'Název poznávačky může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
     const REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
     const REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA = self::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA;
     const REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';

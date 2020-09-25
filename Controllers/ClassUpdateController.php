@@ -59,8 +59,9 @@ class ClassUpdateController extends Controller
                     echo json_encode(array('messageType' => 'success', 'message' => 'Pozvánka úspěšně odeslána'));
                     break;
                 case 'create test':
-                    $newTestNamme = $_POST['testName'];
-                    //TODO
+                    $adder = new GroupAdder($class);
+                    $adder->processFormData($_POST);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena'));
                     break;
                 case 'delete test':
                     $deletedTestId = $_POST['testId'];
