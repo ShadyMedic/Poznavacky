@@ -91,6 +91,8 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER = 'Uživatel nebyl nalezen';
     const REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS = 'Pozvánky do veřejné třídy nelze vytvářet';
     const REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER = 'Tento uživatel je již členem této třídy';
+    const REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS = 'Z této třídy nelze odebrat žádného člena';
+    const REASON_MANAGEMENT_KICK_USER_NOT_A_MEMBER = 'Tento uživatel není členem této třídy';
     const REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME = 'Poznávačka s tímto názvem již v této třídě existuje';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG = 'Název poznávačky nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT = 'Název poznávačky musí být alespoň 3 znaky dlouhý';

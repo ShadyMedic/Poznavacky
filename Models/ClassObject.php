@@ -460,7 +460,8 @@ class ClassObject extends DatabaseItem
      * Metoda odstraňující uživatele ze třídy (odstraňuje spojení uživatele a třídy z tabulky "clenstvi")
      * Pokud je třída veřejná, nic se nestane
      * @param int $userId
-     * @return boolean TRUE, v případě, že se odstranění uživatele povede, FALSE, pokud ne
+     * @throws AccessDeniedException Pokud se jedná o veřejnou třídu, pokud uživatel s daným ID není členem této třídy nebo pokud se vyskytne chyba při odstraňování iživatelova členství z databáze
+     * @return boolean TRUE, v případě, že se odstranění uživatele povede
      */
     public function removeMember(int $userId)
     {
@@ -469,28 +470,35 @@ class ClassObject extends DatabaseItem
         if ($this->status == self::CLASS_STATUS_PUBLIC)
         {
             //Nelze odstranit člena z veřejné třídy
-            return false;
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS);
         }
         
         $this->loadIfNotLoaded($this->id);
         if (!$this->isDefined($this->members)){ $this->loadMembers(); }
         
+        //Odebrat uživatele z pole uživatelů v objektu třídy
+        for ($i = 0; $i < count($this->members); $i++)
+        {
+            if ($this->members[$i]->getId() === $userId)
+            {
+                array_splice($this->members, $i, 1);
+                $i = count($this->members) + 1;
+            }
+        }
+        if ($i === count($this->members))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_NOT_A_MEMBER);
+        }
+        
+        //Odstranit členství z databáze
         Db::connect();
         if (Db::executeQuery('DELETE FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1', array($this->id, $userId)))
         {
-            for ($i = 0; $i < count($this->members); $i++)
-            {
-                if ($this->members[$i]->getId() === $userId)
-                {
-                    //Odebrat uživatele z objektu třídy
-                    array_splice($this->members, $i, 1);
-                }
-            }
             return true;
         }
         else
         {
-            return false;
+            throw new AccessDeniedException(AccessDeniedException::REASON_UNEXPECTED);
         }
     }
     
