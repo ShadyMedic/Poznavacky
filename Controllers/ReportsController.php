@@ -22,7 +22,7 @@ class ReportsController extends Controller
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/resolveReports.js');
         $this->pageHeader['bodyId'] = 'resolveReports';
         
-        $this->view = 'reportsTable';
+        $this->view = 'reports';
     }
 }
 
