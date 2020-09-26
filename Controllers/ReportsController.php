@@ -12,7 +12,8 @@ class ReportsController extends Controller
      */
     public function process(array $parameters)
     {
-        $this->data['reports'] = array();   //TODO - získat skutečný seznam hlášení
+        $group = $_SESSION['selection']['group'];
+        $this->data['reports'] = $group->getReports();
         
         $this->pageHeader['title'] = 'Řešit hlášení';
         $this->pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
