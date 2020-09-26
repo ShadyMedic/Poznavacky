@@ -32,7 +32,7 @@ class AdministrateController extends Controller
         $this->pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/private.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/administrate.js', 'js/reports.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/administrate.js', 'js/resolveReports.js');
         $this->pageHeader['bodyId'] = 'administrate';
         
         $this->view = 'administrate';
