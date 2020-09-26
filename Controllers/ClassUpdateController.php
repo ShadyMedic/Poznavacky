@@ -61,18 +61,20 @@ class ClassUpdateController extends Controller
                 case 'create test':
                     $adder = new GroupAdder($class);
                     $adder->processFormData($_POST);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena'));
+                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena');
+                    echo json_encode(array('messageType' => 'success'));
                     break;
                 case 'delete test':
                     $deletedTestId = $_POST['testId'];
                     $test = new Group(false, $deletedTestId);
                     try { $class->removeGroup($test); } catch (BadMethodCallException $e) { throw new NoDataException(NoDataException::UNKNOWN_GROUP); }
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Poznávačka byla odstraněna'));
                     break;
                 case 'delete class':
                     $adminPassword = $_POST['password'];
                     $class->deleteAsClassAdmin($adminPassword);
                     $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Třída byla odstraněna'));
+                    echo json_encode(array('messageType' => 'success'));
                     break;
                 case 'verify password':
                     $password = urldecode($_POST['password']);

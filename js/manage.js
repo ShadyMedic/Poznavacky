@@ -1,5 +1,6 @@
 var initialStatus;      //Ukládá status třídy uložený v databázi
 var initialCode;        //Ukládá vstupní kód třídy uložený v databázi
+var deletedTableRow;    //Ukládá řádek tabulky členů nebo potnávaček, který je odstraňován
 $(function()
 {
 	//Získání původních přístupových informací třídy z dokumentu
@@ -181,6 +182,7 @@ function kickUser(memberId, memberName)
     {
         return;
     }
+    deletedTableRow = event.target.parentNode.parentNode.parentNode;
     $.post("class-update",
 		{
     		action: 'kick member',
@@ -197,7 +199,10 @@ function kickUser(memberId, memberName)
 			else if (response["messageType"] === "success")
 			{
 				//TODO - nějak odstraň řádek s uživatelem z DOM
+				//Odebrání uživatele z DOM
+				deletedTableRow.remove();
 			}
+			deletedTableRow = undefined;
 		}
 	);
 }
@@ -270,10 +275,8 @@ function createTestSubmit()
 			}
 			else if (response["messageType"] === "success")
 			{
-				//TODO přidej do tabulky poznávaček novou řádku
-				
-				//Reset HTML
-				createTestHide();
+				//Znovu načti stránku, ať se zobrazí nová poznávačka v DOM
+				location.reload();
 			}
 		}
 	);
@@ -281,28 +284,31 @@ function createTestSubmit()
 /*-------------------------------------------------------*/
 function deleteTest(testId, name)
 {
-    if (confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny, ale zůstanou nepřiřazeny, dokud je nepřidáte do jiné poznávačky. Tato akce je nevratná!"))
+    if (!confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny, ale zůstanou nepřiřazeny, dokud je nepřidáte do jiné poznávačky. Tato akce je nevratná!"))
     {
-    	$.post("class-update",
+    	return;
+	}
+	deletedTableRow = event.target.parentNode.parentNode.parentNode;
+	$.post("class-update",
+		{
+    		action: 'delete test',
+			testId: testId
+		},
+		function (response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
 			{
-	    		action: 'delete test',
-				testId: testId
-			},
-			function (response)
-			{
-				response = JSON.parse(response);
-				if (response["messageType"] === "error")
-				{
-					//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-					alert(response["message"]);
-				}
-				else if (response["messageType"] === "success")
-				{
-					//TODO - odstraň řádek s poznávačkou z tabulky
-				}
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
 			}
-		);
-    }
+			else if (response["messageType"] === "success")
+			{
+				deletedTableRow.remove();
+			}
+			deletedTableRow = undefined;
+		}
+	);
 }
 /*-------------------------------------------------------*/
 function deleteClass()
