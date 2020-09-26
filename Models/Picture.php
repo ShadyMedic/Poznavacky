@@ -5,7 +5,7 @@
  */
 class Picture extends DatabaseItem
 {
-    public const TABLE_NAME = 'prirodniny';
+    public const TABLE_NAME = 'obrazky';
     
     protected const DEFAULT_VALUES = array(
         'enabled' => true
