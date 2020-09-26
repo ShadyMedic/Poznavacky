@@ -205,6 +205,17 @@ class Report extends DatabaseItem
     }
     
     /**
+     * Metoda navracející objekt části, do které patří nahlášený obrázek
+     * @return Part Objekt části, do které nahlášený obrázek patří
+     */
+    public function getPartWithPicture()
+    {
+        $this->loadIfNotLoaded($this->picture);
+        $natural = $this->picture->getNatural();
+        return $natural->getPart();
+    }
+    
+    /**
      * Metoda navracející název přírodniny, ke které byl nahlášený obrázek nahrán
      * @return string Název přírodniny na obrázku
      */
