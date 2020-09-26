@@ -31,10 +31,8 @@ class ReportAdder
         $additionalInformation = $_POST['info'];
         
         //Kontrola, zda je zadaný důvod platný
-        $rc = new ReflectionClass('Report');
-        $availableReasons = $rc->getConstants();
-        unset($availableReasons['ADMIN_REQUIRING_REASONS']);    //Odebrání konstanty neobsahující důvod
-        unset($availableReasons['LONG_LOADING_AVAILABLE_DELAYS']);   //Odebrání konstanty neobsahující důvod, ale povolené časové intervaly jako dodatečné informace pro jeden z důvodů
+        $availableReasons = REPORT::ALL_REASONS;
+        
         if (!in_array($reason, $availableReasons, true))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_REASON, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
@@ -44,7 +42,7 @@ class ReportAdder
         if ($reason === Report::REASON_LONG_LOADING)
         {
             //Kontrola, zda je specifikován jeden z časových intervalů
-            if (!in_array($additionalInformation, $rc->getConstants()['LONG_LOADING_AVAILABLE_DELAYS']))
+            if (!in_array($additionalInformation, Report::LONG_LOADING_AVAILABLE_DELAYS))
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
             }

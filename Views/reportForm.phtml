@@ -1,14 +1,9 @@
 <button id="reportButton" onclick="reportImg()"></button>
 <div id="reportMenu" style="display:none;">
     <select id="reportReason" onchange="updateReport()">
-    	<option><?= Report::REASON_NOT_DISPLAYING ?></option>
-    	<option><?= Report::REASON_LONG_LOADING ?></option>
-    	<option><?= Report::REASON_INCORRECT_NATURAL ?></option>
-    	<option><?= Report::REASON_CONTAINS_NAME ?></option>
-    	<option><?= Report::REASON_BAD_RESOLUTION ?></option>
-    	<option><?= Report::REASON_COPYRIGHT ?></option>
-    	<option><?= Report::REASON_OTHER ?></option>
-    	<option><?= Report::REASON_OTHER_ADMIN ?></option>
+    	<?php foreach (Report::ALL_REASONS as $report) : ?>
+    	<option><?= $report ?></option>
+    	<?php endforeach ?>
     </select>
     <div id="additionalReportInfo">
     	<select id="longLoadingInfo" class='text dropList' style="display:none;">
