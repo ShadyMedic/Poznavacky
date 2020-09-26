@@ -8,11 +8,14 @@ class Natural extends DatabaseItem
     public const TABLE_NAME = 'prirodniny';
     
     protected const DEFAULT_VALUES = array(
-        'picturesCount' => 0
+        'picturesCount' => 0,
+        'group' => null,
+        'part' => null
     );
     
     protected $name;
     protected $picturesCount;
+    protected $class;
     protected $group;
     protected $part;
 
@@ -25,12 +28,13 @@ class Natural extends DatabaseItem
      * @param string|undefined|null $name Název této přírodniny
      * @param Picture[]|undefined|null $pictures Pole obrázků nahraných k této přírodnině, jako objekty
      * @param int|undefined|null $picturesCount Počet obrázků nahraných k této přírodnině (při vyplnění parametru $pictures je ignorováno a je použita délka poskytnutého pole)
+     * @param ClassObject|undefined|null $class Třída, se kterou je tato přírodnina svázána
      * @param Group|undefined|null $group Poznávačka, do které tato přírodnina patří
      * @param Part|undefined|null $part Část poznávačky, do které je tato přírodnina v současné době přiřazena
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $pictures = null, $picturesCount = null, $group = null, $part = null)
+    public function initialize($name = null, $pictures = null, $picturesCount = null, $class = null, $group = null, $part = null)
     {
         //Načtení defaultních hodnot do nenastavených vlastností
         $this->loadDefaultValues();
@@ -43,12 +47,14 @@ class Natural extends DatabaseItem
             if ($picturesCount === null){ $picturesCount = $this->picturesCount; }
         }
         else { $picturesCount = count($pictures); }
+        if ($class === null){ $class = $this->class; }
         if ($group === null){ $group = $this->group; }
         if ($part === null){ $part = $this->part; }
         
         $this->name = $name;
         $this->pictures = $pictures;
         $this->picturesCount = $picturesCount;
+        $this->class = $class;
         $this->group = $group;
         $this->part = $part;
     }
@@ -74,7 +80,7 @@ class Natural extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT nazev, obrazky, poznavacky_id, casti_id FROM '.self::TABLE_NAME.' WHERE prirodniny_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT nazev, obrazky, tridy_id, poznavacky_id, casti_id FROM '.self::TABLE_NAME.' WHERE prirodniny_id = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
@@ -82,14 +88,15 @@ class Natural extends DatabaseItem
             
             $name = $result['nazev'];
             $picturesCount = $result['obrazky'];
+            $class = new ClassObject(false, $result['tridy_id']);
             $group = new Group(false, $result['poznavacky_id']);
             $part = new Part(false, $result['casti_id']);
             
-            $this->initialize($name, null, $picturesCount, $group, $part);
+            $this->initialize($name, null, $picturesCount, $class, $group, $part);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->group))
         {
-            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, casti_id FROM '.self::TABLE_NAME.' WHERE nazev = ? AND poznavacky_id = ? LIMIT 1', array($this->name, $this->group->getId()));
+            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, tridy_id, casti_id FROM '.self::TABLE_NAME.' WHERE nazev = ? AND poznavacky_id = ? LIMIT 1', array($this->name, $this->group->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
@@ -97,13 +104,14 @@ class Natural extends DatabaseItem
             
             $this->id = $result['prirodniny_id'];
             $picturesCount = $result['obrazky'];
+            $class = new ClassObject(false, $result['tridy_id']);
             $part = new Part(false, $result['casti_id']);
             
             $this->initialize(null, null, $picturesCount, null, $part);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->part))
         {
-            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, poznavacky_id FROM '.self::TABLE_NAME.' WHERE nazev = ? AND casti_id = ? LIMIT 1', array($this->part->getId()));
+            $result = Db::fetchQuery('SELECT prirodniny_id, obrazky, tridy_id, poznavacky_id FROM '.self::TABLE_NAME.' WHERE nazev = ? AND casti_id = ? LIMIT 1', array($this->part->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
@@ -111,6 +119,7 @@ class Natural extends DatabaseItem
             
             $this->id = $result['prirodniny_id'];
             $picturesCount = $result['obrazky'];
+            $class = new ClassObject(false, $result['tridy_id']);
             $group = new Group(false, $result['poznavacky_id']);
             
             $this->initialize(null, null, $picturesCount, $group, null);
@@ -144,12 +153,12 @@ class Natural extends DatabaseItem
             //Aktualizace existující přírodniny
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET nazev = ?, obrazky = ?, poznavacky_id = ?, casti_id = ? WHERE prirodniny_id = ? LIMIT 1', array($this->name, $this->picturesCount, $this->group->getId(), $this->part->getId(), $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET nazev = ?, obrazky = ?, tridy_id, poznavacky_id = ?, casti_id = ? WHERE prirodniny_id = ? LIMIT 1', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId(), $this->id));
         }
         else
         {
             //Tvorba nové přírodniny
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (nazev,obrazky,poznavacky_id,casti_id) VALUES (?,?,?,?)', array($this->name, $this->picturesCount, $this->group->getId(), $this->part->getId()), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (nazev,obrazky,tridy_id,poznavacky_id,casti_id) VALUES (?,?,?,?)', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId()), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -177,6 +186,16 @@ class Natural extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
+    }
+    
+    /**
+     * Metoda navracející objekt poznávačky, do které tato přírodnina patří
+     * @return Group Poznávačka, do které přírodnina spadá
+     */
+    public function getGroup()
+    {
+        $this->loadIfNotLoaded($this->group);
+        return $this->group;
     }
     
     /**

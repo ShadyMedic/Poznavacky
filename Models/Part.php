@@ -253,7 +253,7 @@ class Part extends DatabaseItem
             foreach ($result as $naturalData)
             {
                 $natural = new Natural(false, $naturalData['prirodniny_id']);
-                $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], $this->getGroup(), $this);
+                $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], null, $this->getGroup(), $this);
                 $this->naturals[] = $natural;
             }
         }

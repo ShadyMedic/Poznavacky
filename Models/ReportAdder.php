@@ -85,7 +85,7 @@ class ReportAdder
         $part = new Part(false, $dbResult['casti_id']);
         $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult['prirodniny'], $dbResult['p_obrazky']);
         $natural = new Natural(false, $dbResult['prirodniny_id']);
-        $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], $this->group, $part);
+        $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], null, $this->group, $part);
         $picture = new Picture(false, $dbResult['obrazky_id']);
         $picture->initialize($url, $natural, $part, $dbResult['povoleno'], null);
         

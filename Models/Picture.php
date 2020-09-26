@@ -13,7 +13,6 @@ class Picture extends DatabaseItem
     
     protected $src;
     protected $natural;
-    protected $part;
     protected $enabled;
     
     protected $reports;
@@ -24,13 +23,12 @@ class Picture extends DatabaseItem
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
      * @param string|undefined|null $src Adresa, pod kterou lze obrázek najít
      * @param Natural|undefined|null $natural Odkaz na objekt přírodniny, kterou tento obrázek zobrazuje
-     * @param Part|undefined|null $part Odkaz na objekt části, ve které se obrázek v současnosti nachází
      * @param bool|undefined|null $enabled TRUE, pokud je obrázek povolen, FALSE, pokud je skryt
      * @param Report[]|undefined|null $reports Pole hlášení tohoto obrázku, jako objekty
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($src = null, $natural = null, $part = null, $enabled = null, $reports = null)
+    public function initialize($src = null, $natural = null, $enabled = null, $reports = null)
     {
         //Načtení defaultních hodnot do nenastavených vlastností
         $this->loadDefaultValues();
@@ -38,20 +36,18 @@ class Picture extends DatabaseItem
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($src === null){ $src = $this->src; }
         if ($natural === null){ $natural = $this->natural; }
-        if ($part === null){ $part = $this->part; }
         if ($enabled === null){ $enabled = $this->enabled; }
         if ($reports === null){ $reports = $this->reports; }
         
         $this->src = $src;
         $this->natural = $natural;
-        $this->part = $part;
         $this->enabled = $enabled;
         $this->reports = $reports;
     }
     
     /**
      * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu hlášení tohoto obrázku, podle ID (pokud je vyplněno)
-     * V případě, že není známé ID, ale je známá adresa obrázku a přírodnina nebo část, do které patří, jsou načteny ty samé informace + ID podle těchto známých informací
+     * V případě, že není známé ID, ale je známá adresa obrázku a přírodnina, ke které patří, jsou načteny ty samé informace + ID podle těchto známých informací
      * Hlášení tohoto obrázku lze načíst samostatně pomocí metody Picture::loadReports()
      * @throws BadMethodCallException Pokud se jedná o obrázek, který dosud není uložen v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
      * @throws NoDataException Pokud není obrázek nalezen v databázi
@@ -70,7 +66,7 @@ class Picture extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT zdroj, prirodniny_id, casti_id, povoleno FROM '.self::TABLE_NAME.' WHERE obrazky_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT zdroj, prirodniny_id, povoleno FROM '.self::TABLE_NAME.' WHERE obrazky_id = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PICTURE);
@@ -78,11 +74,10 @@ class Picture extends DatabaseItem
             
             $src = $result['zdroj'];
             $natural = new Natural(false, $result['prirodniny_id']);
-            $part = new Part(false, $result['casti_id']);
         }
         else if ($this->isDefined($this->src) && $this->isDefined($this->natural))
         {
-            $result = Db::fetchQuery('SELECT obrazky_id, casti_id, povoleno FROM '.self::TABLE_NAME.' WHERE zdroj = ? AND prirodniny_id = ? LIMIT 1', array($this->src, $this->natural->getId()));
+            $result = Db::fetchQuery('SELECT obrazky_id, povoleno FROM '.self::TABLE_NAME.' WHERE zdroj = ? AND prirodniny_id = ? LIMIT 1', array($this->src, $this->natural->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PICTURE);
@@ -90,19 +85,6 @@ class Picture extends DatabaseItem
             $this->id = $result['obrazky_id'];
             $src = null;
             $natural = null;
-            $part = new Part(false, $result['casti_id']);
-        }
-        else if ($this->isDefined($this->src) && $this->isDefined($this->part))
-        {
-            $result = Db::fetchQuery('SELECT obrazky_id, prirodniny_id, povoleno FROM '.self::TABLE_NAME.' WHERE zdroj = ? AND casti_id = ? LIMIT 1', array($this->src, $this->part->getId()));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_PICTURE);
-            }
-            $this->id = $result['obrazky_id'];
-            $src = null;
-            $natural = new Natural(false, $result['prirodniny_id']);
-            $part = null;
         }
         else
         {
@@ -111,7 +93,7 @@ class Picture extends DatabaseItem
         
         $enabled = ($result['povoleno'] === 1) ? true : false;
         
-        $this->initialize($src, $natural, $part, $enabled, null);
+        $this->initialize($src, $natural, $enabled, null);
         
         return true;
     }
@@ -138,12 +120,12 @@ class Picture extends DatabaseItem
             //Aktualizace existujícího obrázku
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET zdroj = ?, prirodniny_id = ?, casti_id = null, povoleno = ? WHERE obrazky_id = ? LIMIT 1', array($this->src, $this->natural->getId(), $this->part->getId(), $this->enabled, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET zdroj = ?, prirodniny_id = ?, povoleno = ? WHERE obrazky_id = ? LIMIT 1', array($this->src, $this->natural->getId(), $this->enabled, $this->id));
         }
         else
         {
             //Tvorba nové pozvánky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (zdroj,prirodniny_id,casti_id,povoleno) VALUES (?,?,?,?)', array($this->src, $this->natural->getId(), $this->part->getId(), $this->enabled), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (zdroj,prirodniny_id,povoleno) VALUES (?,?,?,?)', array($this->src, $this->natural->getId(), $this->enabled), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -212,7 +194,7 @@ class Picture extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
-        $checker = new PictureAdder($this->natural->getPart()->getGroup());
+        $checker = new PictureAdder($this->natural->getGroup());
         $checker->checkData($newNatural->getName(), $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
         
         //Kontrola dat OK

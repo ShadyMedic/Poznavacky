@@ -115,7 +115,7 @@ class Administration
             $part = new Part(false, $reportInfo['casti_id']);
             $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
-            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $group, $part);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $class, $group, $part);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
             $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);
             $report = new Report(false, $reportInfo['hlaseni_id']);
@@ -288,7 +288,7 @@ class Administration
     {
         $picture = new Picture(false, $pictureId);
         $natural = new Natural(false, 0);
-        $natural->initialize($newNaturalName, null, null, null, null);
+        $natural->initialize($newNaturalName, null, null, null, null, null);
         $picture->updatePicture($natural, $newUrl);
     }
     

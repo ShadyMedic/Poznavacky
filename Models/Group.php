@@ -226,7 +226,7 @@ class Group extends DatabaseItem
         {
             $part = $this->getPartById($naturalData['casti_id']);
             $natural = new Natural(false, $naturalData['prirodniny_id']);
-            $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], $this, $part);
+            $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], null, $this, $part);
             $allNaturals[] = $natural;
         }
         return $allNaturals;
@@ -286,6 +286,51 @@ class Group extends DatabaseItem
                 return $part;
             }
         }
+    }
+    
+    public function getReports()
+    {
+        $this->loadIfNotLoaded($this->id);
+        
+        //Získání důvodů hlášení vyřizovaných správcem třídy
+        $availableReasons = array_diff(Report::ALL_REASONS, Report::ADMIN_REQUIRING_REASONS);
+        
+        $in = str_repeat('?,', count($availableReasons) - 1).'?';
+        $sqlArguments = array_values($availableReasons);
+        $sqlArguments[] = $this->id;
+        Db::connect();
+        //Wow, zírejte na to. SQL dotaz, který vede přes většinu tabulek v databázi. To musí být výkonostní bomba!
+        $result = Db::fetchQuery('
+            SELECT
+            hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
+            obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
+            prirodniny.prirodniny_id AS "prirodniny_id", prirodniny.nazev AS "prirodniny_nazev", prirodniny.obrazky AS "prirodniny_obrazky", prirodniny.casti_id AS "prirodniny_cast"
+            FROM hlaseni
+            JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
+            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
+            WHERE hlaseni.duvod IN ('.$in.')
+            AND prirodniny.poznavacky_id = ?;
+        ', $sqlArguments, true);
+        
+        if ($result === false)
+        {
+            //Žádná hlášení nenalezena
+            return array();
+        }
+        
+        $reports = array();
+        foreach ($result as $reportInfo)
+        {
+            $natural = new Natural(false, $reportInfo['prirodniny_id']);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null, $this, new Part(false, $reportInfo['prirodniny_cast']));
+            $picture = new Picture(false, $reportInfo['obrazky_id']);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, null, $reportInfo['obrazky_povoleno'], $natural->getPart());
+            $report = new Report(false, $reportInfo['hlaseni_id']);
+            $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
+            $reports[] = $report;
+        }
+        
+        return $reports;
     }
     
     /**
