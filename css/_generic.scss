@@ -86,10 +86,10 @@ h3 {
 	font-size: 1.6rem;
 }
 h4 {
-	font-size: 1.4rem;
+	font-size: 1.6rem;
 }
 h5 {
-	font-size: 1.32rem;
+	font-size: 1.4rem;
 }
 
 .btn {
@@ -120,6 +120,14 @@ h5 {
 				background: $black1;
 				color: white;
 				border: 2px solid $black1;
+				&:after {
+					background: rgba(white, 0.06);
+				}
+			}
+			&.dark-green {
+				background: $greenDark;
+				color: white;
+				border: 2px solid $greenDark;
 				&:after {
 					background: rgba(white, 0.06);
 				}
