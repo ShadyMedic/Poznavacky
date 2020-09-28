@@ -98,7 +98,7 @@ class AdministrateActionController extends Controller
                 case 'disable picture':
                     $pictureId = $_POST['pictureId'];
                     $administration->disablePicture($pictureId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Obrázek úspěšně odstraněn'));
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Obrázek úspěšně skryt'));
                     break;
                 case 'delete picture':
                     $pictureId = $_POST['pictureId'];
