@@ -54,7 +54,7 @@ function cancelPictureEdit()
 
 	$("#editableReportRow").removeAttr("id");
 }
-function confirmPictureEdit(picId)
+function confirmPictureEdit(picId, asAdmin)
 {
 	//Uložení nových hodnot
 	for (let i = 0; i <= 1; i++)
@@ -62,8 +62,10 @@ function confirmPictureEdit(picId)
 		currentReportValues[i] = $("#editableReportRow .reportField:eq("+ i +")").val();
 	}
 	
+	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
+	
 	//Odeslat data na server
-	$.post("administrate-action",
+	$.post(ajaxUrl,
 		{
 			action: 'update picture',
 			pictureId: picId,
@@ -88,9 +90,11 @@ function confirmPictureEdit(picId)
 		}
 	);
 }
-function disablePicture(event, picId)
+function disablePicture(event, picId, asAdmin)
 {
-	$.post('administrate-action',
+	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
+	
+	$.post(ajaxUrl,
 			{
 				action: 'disable picture',
 				pictureId: picId
@@ -109,9 +113,11 @@ function disablePicture(event, picId)
 		//Odebrání všechna hlášení daného obrázku z DOM
 		$("#reportsTable .pictureId" + picId).remove();
 }
-function deletePicture(event, picId)
+function deletePicture(event, picId, asAdmin)
 {
-	$.post('administrate-action',
+	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
+	
+	$.post(ajaxUrl,
 			{
 				action: 'delete picture',
 				pictureId: picId
@@ -130,9 +136,11 @@ function deletePicture(event, picId)
 		//Odebrání všechna hlášení daného obrázku z DOM
 		$("#reportsTable .pictureId" + picId).remove();
 }
-function deleteReport(event, reportId)
+function deleteReport(event, reportId, asAdmin)
 {
-	$.post('administrate-action',
+	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
+	
+	$.post(ajaxUrl,
 		{
 			action: 'delete report',
 			reportId: reportId
