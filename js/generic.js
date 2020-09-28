@@ -105,14 +105,6 @@ function changeMenuView() {
 	}
 }
 
-function enterClassCode() {
-	$("#enter-class-code-btn").hide();
-	$("#class-code-form").show();
-}
-function closeClassCode() {
-	$("#enter-class-code-btn").show();
-	$("#class-code-form").hide();
-}
 
 $(document).mouseup(function(e) 
 {

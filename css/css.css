@@ -158,11 +158,11 @@ h3 {
 }
 
 h4 {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 h5 {
-  font-size: 1.32rem;
+  font-size: 1.4rem;
 }
 
 .btn {
@@ -204,6 +204,16 @@ h5 {
 }
 
 .btn.border-btn.non-transparent.black:after {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn.border-btn.non-transparent.dark-green {
+  background: #366e11;
+  color: white;
+  border: 2px solid #366e11;
+}
+
+.btn.border-btn.non-transparent.dark-green:after {
   background: rgba(255, 255, 255, 0.06);
 }
 
@@ -726,38 +736,45 @@ label.required:after {
           flex-direction: column;
 }
 
+#menu .wrapper,
+#learn .wrapper,
+#test .wrapper,
+#addPictures .wrapper,
+#accountSettings .wrapper {
+  padding: 1rem 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  #menu .wrapper,
+  #learn .wrapper,
+  #test .wrapper,
+  #addPictures .wrapper,
+  #accountSettings .wrapper {
+    padding: 2rem 2rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #menu .wrapper,
+  #learn .wrapper,
+  #test .wrapper,
+  #addPictures .wrapper,
+  #accountSettings .wrapper {
+    padding: 2.4rem 3rem;
+  }
+}
+
 #menu main,
 #learn main,
 #test main,
 #addPictures main,
 #accountSettings main {
-  padding: 0.6rem 1rem;
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
   -webkit-transition: margin 0.2s ease-out;
   transition: margin 0.2s ease-out;
   overflow-y: auto;
-}
-
-@media screen and (min-width: 576px) {
-  #menu main,
-  #learn main,
-  #test main,
-  #addPictures main,
-  #accountSettings main {
-    padding: 1.2rem 2rem;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  #menu main,
-  #learn main,
-  #test main,
-  #addPictures main,
-  #accountSettings main {
-    padding: 1.8rem 3rem;
-  }
 }
 
 @media screen and (min-width: 672px) {
@@ -855,11 +872,15 @@ label.required:after {
   }
 }
 
-#menu .folders ul.tiles > button,
+#menu .folders ul.tiles > button, #menu .folders ul.tiles > li,
 #learn .folders ul.tiles > button,
+#learn .folders ul.tiles > li,
 #test .folders ul.tiles > button,
+#test .folders ul.tiles > li,
 #addPictures .folders ul.tiles > button,
-#accountSettings .folders ul.tiles > button {
+#addPictures .folders ul.tiles > li,
+#accountSettings .folders ul.tiles > button,
+#accountSettings .folders ul.tiles > li {
   width: 100%;
   min-height: 16rem;
   height: 100%;
@@ -867,6 +888,22 @@ label.required:after {
       -ms-grid-row-align: stretch;
       align-self: stretch;
   max-width: 16rem;
+}
+
+#menu .folders ul.tiles span, #menu .folders ul.tiles h4, #menu .folders ul.tiles h5,
+#learn .folders ul.tiles span,
+#learn .folders ul.tiles h4,
+#learn .folders ul.tiles h5,
+#test .folders ul.tiles span,
+#test .folders ul.tiles h4,
+#test .folders ul.tiles h5,
+#addPictures .folders ul.tiles span,
+#addPictures .folders ul.tiles h4,
+#addPictures .folders ul.tiles h5,
+#accountSettings .folders ul.tiles span,
+#accountSettings .folders ul.tiles h4,
+#accountSettings .folders ul.tiles h5 {
+  text-align: center;
 }
 
 #menu .folders ul.tiles li,
@@ -893,8 +930,6 @@ label.required:after {
 #test .folders ul.tiles li h4,
 #addPictures .folders ul.tiles li h4,
 #accountSettings .folders ul.tiles li h4 {
-  font-weight: bold;
-  font-size: 1.6rem;
   word-break: break-word;
 }
 
@@ -906,35 +941,29 @@ label.required:after {
   margin: 0.4rem auto;
 }
 
-#menu #menu-classes-forms,
-#learn #menu-classes-forms,
-#test #menu-classes-forms,
-#addPictures #menu-classes-forms,
-#accountSettings #menu-classes-forms {
-  margin: 2rem auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+#menu .folders ul.tiles #class-code-form,
+#learn .folders ul.tiles #class-code-form,
+#test .folders ul.tiles #class-code-form,
+#addPictures .folders ul.tiles #class-code-form,
+#accountSettings .folders ul.tiles #class-code-form {
+  width: 100%;
 }
 
-#menu #menu-classes-forms > *,
-#learn #menu-classes-forms > *,
-#test #menu-classes-forms > *,
-#addPictures #menu-classes-forms > *,
-#accountSettings #menu-classes-forms > * {
-  margin: 0.4rem auto 0.4rem 0;
+#menu .folders ul.tiles #class-code-form > *,
+#learn .folders ul.tiles #class-code-form > *,
+#test .folders ul.tiles #class-code-form > *,
+#addPictures .folders ul.tiles #class-code-form > *,
+#accountSettings .folders ul.tiles #class-code-form > * {
+  width: 100%;
+  margin: 4px 0;
 }
 
-#menu #menu-classes-forms > *.btn,
-#learn #menu-classes-forms > *.btn,
-#test #menu-classes-forms > *.btn,
-#addPictures #menu-classes-forms > *.btn,
-#accountSettings #menu-classes-forms > *.btn {
-  width: 30ch;
+#menu .folders ul.tiles #class-code-form .text-field,
+#learn .folders ul.tiles #class-code-form .text-field,
+#test .folders ul.tiles #class-code-form .text-field,
+#addPictures .folders ul.tiles #class-code-form .text-field,
+#accountSettings .folders ul.tiles #class-code-form .text-field {
+  background: #eee;
 }
 
 body#index {

@@ -152,14 +152,17 @@
 			
 		}
 	}
-	main {
-		padding: 0.6rem 1rem;
+	.wrapper {
+		padding: 1rem 1rem;
 		@media screen and (min-width: $mobile) {
-			padding: 1.2rem 2rem;
+			padding: 2rem 2rem;
 		}
 		@media screen and (min-width: $smallDesktop) {
-			padding:  1.8rem 3rem;
+			padding:  2.4rem 3rem;
 		}
+	}
+	main {
+
 		grid-row: 2/4;
 		transition: margin 0.2s ease-out;
 		overflow-y: auto;
@@ -201,12 +204,15 @@
 					grid-gap: 2rem;
 				}
 				grid-auto-rows: auto;
-				> button {
+				> button, > li {
 					width: 100%;
 					min-height: 16rem;
 					height: 100%;
 					align-self: stretch;
 					max-width: 16rem;
+				}
+				span, h4, h5 {
+					text-align: center;
 				}
 				li {
 					height: 100%;
@@ -216,25 +222,22 @@
 					flex-direction: column;
 					align-content: center;
 					h4 {
-						font-weight: bold;
-						font-size: 1.6rem;
 						word-break: break-word;
 					}
 					a.btn {
 						margin: 0.4rem auto;
 					}
 				}
-			}
-		}
-	}
-	#menu-classes-forms {
-		margin: 2rem auto;
-		display: flex;
-		flex-direction: column;
-		> * {
-			margin: 0.4rem auto 0.4rem 0;
-			&.btn {
-				width: 30ch;
+				#class-code-form {
+					width: 100%;
+					> * {
+						width: 100%;
+						margin: 4px 0;
+					}
+					.text-field {
+						background: #eee;
+					}
+				}
 			}
 		}
 	}

@@ -30,6 +30,20 @@
 				<?= $tableRow[2] ?>
 				<?php endif ?>
 			</li></button>
+			
 		<?php endforeach; ?>
+		<li id="enter-code-wrapper">
+			<h5>Připojte se pomocí kódu</h5>
+			<span>Zadejte kód soukromé třídy, do které chcete vstoupit:</span>
+			<form id='class-code-form' action="menu/enter-class-code" method="POST">
+				<input id='class-code-input' class="text-field" type="number" name="code" min=0 max=9999 maxlength=4 required/>
+				<input class='btn border-btn non-transparent black' type="submit" value="OK">
+			</form>
+		</li>
+		<li id="request-class-wrapper">
+			<h5>Vytvořte novou třídu</h5>
+			<span>Vyplňte krátký formulář pro tvorbu třídy:</span>
+			<a id="request-new-class-button" href="menu/request-new-class" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</a> <!-- TEMPORARY -->
+		</li>
 	</ul>
 </div>
