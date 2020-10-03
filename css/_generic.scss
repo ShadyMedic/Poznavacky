@@ -107,6 +107,7 @@ h5 {
 		text-align: center;
 		position: relative;
 		padding: 0.4em 1em;
+		border-radius: 0.2em;
 		&.non-transparent {
 			&.white {
 				background: white;
@@ -165,6 +166,7 @@ h5 {
 			top: -2px;
 			left: -2px;
 			transition: transform 0.1s ease-out;
+			border-radius: 0.2em;
 			}
 		&:hover {
 			&:after {
@@ -267,6 +269,7 @@ input {
 	&.text-field {
 		font-size: 100%;
 		padding: 0.4em 0.72em;
+		border-radius: 0.2em;
 		/*&:focus {
 			box-shadow: 0 2px 0 0 $greenMid;
 			outline: none;
