@@ -203,15 +203,18 @@ body#index {
 		position: fixed;
 		overflow: hidden;
 		color: black;
-		border: 2rem solid white;
+		border: 1.2rem solid white;
+		@media screen and (min-width: $mobile) {
+			border-width: 2rem;
+		}
 		border-radius: 1rem;
-		font-size: 1.32rem;
+		//font-size: 1.2rem;
 		top: 50vh;
 		left: 50vw;
 		transform: translate(-50%, calc(-50% + 5px));
 		width: 90vw;
 		height: 90vh;
-		max-width: 600px;
+		max-width: 520px;
 		z-index: 5;
 		background: white;
 		//transform: translateY(5px);
@@ -244,17 +247,18 @@ body#index {
 			flex-direction: column;
 			label, 
 			input.text-field {
-				margin: 0.4rem 0;
+				margin: 0.2rem 0;
 			}
 			label:not(:nth-of-type(1)), //kromě prvního labelu
 			.checkbox { 
-				margin-top: 0.8rem;
+				margin-top: 1rem;
 			}
 			input.text-field {
 				color: $gray1;
 				font-family: 'Roboto', sans-serif;
-				font-size: 1.4rem;
-				background: lightgray;
+				//font-size: 1.2rem;
+				background: #eee;
+				padding: 0.6em 0.72em;
 			}
 		}
 		.btn.inline,
@@ -267,6 +271,7 @@ body#index {
 		}
 		.border-btn {
 			margin: 0.8rem auto;
+			font-size: 1.2rem;
 		}
 	}
 

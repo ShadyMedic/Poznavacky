@@ -386,17 +386,13 @@ input {
 input.text-field {
   font-size: 100%;
   padding: 0.4em 0.72em;
-}
-
-input.text-field:focus {
-  -webkit-box-shadow: 0 2px 0 0 #479911;
-          box-shadow: 0 2px 0 0 #479911;
-  outline: none;
-}
-
-input.text-field:invalid {
-  -webkit-box-shadow: 0 2px 0 0 #a00;
-          box-shadow: 0 2px 0 0 #a00;
+  /*&:focus {
+			box-shadow: 0 2px 0 0 $greenMid;
+			outline: none;
+		}
+		&:invalid {
+			box-shadow: 0 2px 0 0 $red1;
+		}*/
 }
 
 label.required:after {
@@ -1347,16 +1343,15 @@ body#index #index-login-section {
   position: fixed;
   overflow: hidden;
   color: black;
-  border: 2rem solid white;
+  border: 1.2rem solid white;
   border-radius: 1rem;
-  font-size: 1.32rem;
   top: 50vh;
   left: 50vw;
   -webkit-transform: translate(-50%, calc(-50% + 5px));
           transform: translate(-50%, calc(-50% + 5px));
   width: 90vw;
   height: 90vh;
-  max-width: 600px;
+  max-width: 520px;
   z-index: 5;
   background: white;
   opacity: 0;
@@ -1365,6 +1360,12 @@ body#index #index-login-section {
   transition: opacity 0.32s ease-out, -webkit-transform 0.32s ease-out;
   transition: transform 0.32s ease-out, opacity 0.32s ease-out;
   transition: transform 0.32s ease-out, opacity 0.32s ease-out, -webkit-transform 0.32s ease-out;
+}
+
+@media screen and (min-width: 576px) {
+  body#index #index-login-section {
+    border-width: 2rem;
+  }
 }
 
 body#index #index-login-section.show {
@@ -1406,19 +1407,19 @@ body#index #index-login-section .user-data {
 
 body#index #index-login-section .user-data label,
 body#index #index-login-section .user-data input.text-field {
-  margin: 0.4rem 0;
+  margin: 0.2rem 0;
 }
 
 body#index #index-login-section .user-data label:not(:nth-of-type(1)),
 body#index #index-login-section .user-data .checkbox {
-  margin-top: 0.8rem;
+  margin-top: 1rem;
 }
 
 body#index #index-login-section .user-data input.text-field {
   color: #222;
   font-family: 'Roboto', sans-serif;
-  font-size: 1.4rem;
-  background: lightgray;
+  background: #eee;
+  padding: 0.6em 0.72em;
 }
 
 body#index #index-login-section .btn.inline,
@@ -1433,6 +1434,7 @@ body#index #index-login-section p {
 
 body#index #index-login-section .border-btn {
   margin: 0.8rem auto;
+  font-size: 1.2rem;
 }
 
 body#index footer {

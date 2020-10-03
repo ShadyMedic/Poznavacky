@@ -64,6 +64,14 @@ function hideLoginSection() {
 	$("#index-login-section").removeClass("show");
 	$(".overlay").removeClass("show");
 	$("body").css("overflowY", "auto");
+	emptyForms(".user-data input.text-field");
+}
+
+//vymaže obsah textových polí ve formuláři
+function emptyForms(fields) {
+	var formTextFields = [];
+	formTextFields = $(fields);
+	formTextFields.val('');
 }
 
 //zobrazení požadované části v login sekci
