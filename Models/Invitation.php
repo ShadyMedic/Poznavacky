@@ -7,6 +7,13 @@ class Invitation extends DatabaseItem
 {
     public const TABLE_NAME = 'pozvanky';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'pozvanky_id',
+        'user' => 'uzivatele_id',
+        'class' => 'tridy_id',
+        'expiration' => 'expirace'
+    );
+    
     protected const DEFAULT_VALUES = array(
         /*Všechny vlastnosti musí být vyplněné před uložením do databáze*/
     );

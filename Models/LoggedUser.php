@@ -5,6 +5,22 @@
  */
 class LoggedUser extends User
 {
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'uzivatele_id',
+        'name' => 'jmeno',
+        'hash' => 'heslo',
+        'email' => 'email',
+        'lastLogin' => 'posledni_prihlaseni',
+        'lastChangelog' => 'posledni_changelog',
+        'lastLevel' => 'posledni_uroven',
+        'lastFolder' => 'posledni_slozka',
+        'theme' => 'vzhled',
+        'addedPictures' => 'pridane_obrazky',
+        'guessedPictures' => 'uhodnute_obrazky',
+        'karma' => 'karma',
+        'status' => 'status'
+    );
+    
     protected const DEFAULT_VALUES = array(
         'email' => null,
         'lastChangelog' => 0,

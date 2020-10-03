@@ -7,6 +7,14 @@ class Report extends DatabaseItem
 {
     public const TABLE_NAME = 'hlaseni';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'hlaseni_id',
+        'picture' => 'obrazky_id',
+        'reason' => 'duvod',
+        'additionalInformation' => 'dalsi_informace',
+        'reportersCount' => 'pocet'
+    );
+    
     protected const DEFAULT_VALUES = array(
         'additionalInformation' => null,
         'reportersCount' => 1

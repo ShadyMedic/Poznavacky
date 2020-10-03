@@ -13,6 +13,13 @@ abstract class DatabaseItem
     private const TABLE_NAME = null;
     
     /**
+     * Asociativní pole skladující dvojice název vlastnosti objektu a název databázového sloupce, který ji ukládá
+     * Všechny třídy dědící z této abstraktní třídy musí definovat tuto konstantu
+     * @var array()
+     */
+    private const COLUMN_DICTIONARY = null;
+    
+    /**
      * Pole defaultních hodnot, které by byly do databázové tabulky nastaveny v případě jejich nespecifikování v SQL INSERT dotazu
      * Klíče jsou názvy vlastností tohoto objektu, hodnoty jejich defaultní hodnoty
      * Všechny třídy dědící z této abstraktní třídy musí definovat tuto konstantu

@@ -7,6 +7,14 @@ class Part extends DatabaseItem
 {
     public const TABLE_NAME = 'casti';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'casti_id',
+        'name' => 'nazev',
+        'group' => 'poznavacky_id',
+        'naturalsCount' => 'prirodniny',
+        'picturesCount' => 'obrazky'
+    );
+    
     protected const DEFAULT_VALUES = array(
         'picturesCount' => 0,
         'naturalsCount' => 0,

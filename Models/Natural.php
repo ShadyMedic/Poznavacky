@@ -7,6 +7,15 @@ class Natural extends DatabaseItem
 {
     public const TABLE_NAME = 'prirodniny';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'prirodniny_id',
+        'name' => 'nazev',
+        'picturesCount' => 'obrazky',
+        'class' => 'tridy_id',
+        'group' => 'poznavacky_id',
+        'part' => 'casti_id'
+    );
+    
     protected const DEFAULT_VALUES = array(
         'picturesCount' => 0,
         'group' => null,

@@ -7,6 +7,13 @@ class ClassNameChangeRequest extends NameChangeRequest
 {
     protected const TABLE_NAME = 'zadosti_jmena_tridy';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'zadosti_jmena_tridy_id',
+        'subject' => 'tridy_id',
+        'newName' => 'nove',
+        'requestedAt' => 'cas'
+    );
+    
     protected const SUBJECT_CLASS_NAME = 'ClassObject';
     protected const SUBJECT_TABLE_NAME = 'tridy';
     protected const SUBJECT_NAME_DB_NAME = 'nazev';

@@ -7,6 +7,13 @@ class Picture extends DatabaseItem
 {
     public const TABLE_NAME = 'obrazky';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'obrazky_id',
+        'src' => 'zdroj',
+        'natural' => 'prirodniny_id',
+        'enabled' => 'povoleno'
+    );
+    
     protected const DEFAULT_VALUES = array(
         'enabled' => true
     );

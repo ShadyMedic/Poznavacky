@@ -7,6 +7,17 @@ class User extends DatabaseItem implements ArrayAccess
 {
     public const TABLE_NAME = 'uzivatele';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'uzivatele_id',
+        'name' => 'jmeno',
+        'email' => 'email',
+        'lastLogin' => 'posledni_prihlaseni',
+        'addedPictures' => 'pridane_obrazky',
+        'guessedPictures' => 'uhodnute_obrazky',
+        'karma' => 'karma',
+        'status' => 'status'
+    );
+    
     protected const DEFAULT_VALUES = array(
         'email' => null,
         'addedPictures' => 0,

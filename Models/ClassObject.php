@@ -7,6 +7,15 @@ class ClassObject extends DatabaseItem
 {
     public const TABLE_NAME = 'tridy';
     
+    private const COLUMN_DICTIONARY = array(
+        'id' => 'tridy_id',
+        'name' => 'nazev',
+        'status' => 'status',
+        'code' => 'kod',
+        'groupsCount' => 'poznavacky',
+        'admin' => 'spravce'
+    );
+    
     protected const DEFAULT_VALUES = array(
         'status' => self::CLASS_STATUS_PRIVATE,
         'code' => 0,
