@@ -241,6 +241,12 @@ body#index {
 		}
 		h2 {
 			margin: 0 0 0.8rem 0;
+			> img {
+				height: 1em;
+				width: 1em;
+				margin-right: 0.4rem;
+				transform: translateY(10%);
+			}
 		}
 		.user-data {
 			display: flex;
