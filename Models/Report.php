@@ -7,7 +7,7 @@ class Report extends DatabaseItem
 {
     public const TABLE_NAME = 'hlaseni';
     
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'hlaseni_id',
         'picture' => 'obrazky_id',
         'reason' => 'duvod',

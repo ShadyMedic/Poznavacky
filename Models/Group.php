@@ -7,7 +7,7 @@ class Group extends DatabaseItem
 {
     public const TABLE_NAME = 'poznavacky';
     
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'poznavacky_id',
         'name' => 'nazev',
         'class' => 'tridy_id',

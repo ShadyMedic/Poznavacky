@@ -7,7 +7,7 @@ class Invitation extends DatabaseItem
 {
     public const TABLE_NAME = 'pozvanky';
     
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'pozvanky_id',
         'user' => 'uzivatele_id',
         'class' => 'tridy_id',

@@ -7,7 +7,7 @@ class Picture extends DatabaseItem
 {
     public const TABLE_NAME = 'obrazky';
     
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'obrazky_id',
         'src' => 'zdroj',
         'natural' => 'prirodniny_id',

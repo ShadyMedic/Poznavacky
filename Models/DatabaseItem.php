@@ -132,9 +132,10 @@ abstract class DatabaseItem
     }
     
     /**
-     * Metoda načítající podle údajů poskytnutých v konstruktoru všechny ostatní vlastnosti objektu
+     * Metoda načítající podle údajů poskytnutých v konstruktoru a metodě initialize všechny ostatní vlastnosti objektu
+     * @param bool $rewriteKnown TRUE, pokud mají být načtenými hodnotami přepsány vlastnosti obsahující i něco jiného než instanci třídy undefined
      */
-    public abstract function load();
+    public abstract function load(bool $rewriteKnown = false);
     
     /**
      * Metoda ukládající všechny vlastnosti objektu do databáze, přepisujíce záznam se stejným ID nebo vytvářející nový v případě, že záznam s takovým ID v databázové tabulce neexistuje

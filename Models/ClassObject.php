@@ -7,7 +7,7 @@ class ClassObject extends DatabaseItem
 {
     public const TABLE_NAME = 'tridy';
     
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'tridy_id',
         'name' => 'nazev',
         'status' => 'status',

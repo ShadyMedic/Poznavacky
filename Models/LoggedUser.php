@@ -5,7 +5,7 @@
  */
 class LoggedUser extends User
 {
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'uzivatele_id',
         'name' => 'jmeno',
         'hash' => 'heslo',

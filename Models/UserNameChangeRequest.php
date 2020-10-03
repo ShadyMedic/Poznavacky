@@ -5,9 +5,9 @@
  */
 class UserNameChangeRequest extends NameChangeRequest
 {
-    protected const TABLE_NAME = 'zadosti_jmena_uzivatele';
+    public const TABLE_NAME = 'zadosti_jmena_uzivatele';
     
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'zadosti_jmena_uzivatele_id',
         'subject' => 'uzivatele_id',
         'newName' => 'nove',

@@ -7,7 +7,7 @@ class Part extends DatabaseItem
 {
     public const TABLE_NAME = 'casti';
     
-    private const COLUMN_DICTIONARY = array(
+    public const COLUMN_DICTIONARY = array(
         'id' => 'casti_id',
         'name' => 'nazev',
         'group' => 'poznavacky_id',
