@@ -2,11 +2,6 @@ var smallTablet = 672;
 var tablet = 768;
 
 
-$(function() { //až po načtení stránky
-
-	$(".tiles").hide();
-});
-
 //přidává třídu podle toho, jestli uživatel používá myš nebo tabulátor -> úprava pseudotřídy :focus
 $(window).on("keydown", function(event) { 
 	if (event.keyCode === 9)
@@ -89,22 +84,6 @@ function closePanel() {
 	$("aside").removeClass("show");
 	$(".btn.cross").hide();
 }
-
-function changeMenuView() {
-	if ($(".folders ul").hasClass("tiles")) {
-		$(".folders ul").removeClass("tiles");
-		$(".folders ul").addClass("rows");
-		$(".rows").show();
-		$(".tiles").hide();
-	}
-	else if ($(".folders ul").hasClass("rows")) {
-		$(".folders ul").removeClass("rows");
-		$(".folders ul").addClass("tiles");
-		$(".tiles").show();
-		$(".rows").hide();
-	}
-}
-
 
 $(document).mouseup(function(e) 
 {

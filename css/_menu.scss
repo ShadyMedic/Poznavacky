@@ -274,6 +274,9 @@
 					grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 					grid-gap: 2rem;
 				}
+				/*&.not-enough-tiles {
+					grid-template-columns: repeat(auto-fit, 16rem);
+				}*/
 				grid-auto-rows: auto;
 				> button, > li {
 					width: 100%;

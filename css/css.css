@@ -1061,6 +1061,9 @@ label.required:after {
   -ms-grid-columns: (minmax(10rem, 1fr))[auto-fit];
       grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-gap: 1rem;
+  /*&.not-enough-tiles {
+					grid-template-columns: repeat(auto-fit, 16rem);
+				}*/
   grid-auto-rows: auto;
 }
 
