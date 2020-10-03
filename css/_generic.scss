@@ -267,13 +267,13 @@ input {
 	&.text-field {
 		font-size: 100%;
 		padding: 0.4em 0.72em;
-		&:focus {
+		/*&:focus {
 			box-shadow: 0 2px 0 0 $greenMid;
 			outline: none;
 		}
 		&:invalid {
 			box-shadow: 0 2px 0 0 $red1;
-		}
+		}*/
 	}
 }
 
