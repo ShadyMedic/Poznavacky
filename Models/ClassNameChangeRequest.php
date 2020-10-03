@@ -16,7 +16,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     
     protected const SUBJECT_CLASS_NAME = 'ClassObject';
     protected const SUBJECT_TABLE_NAME = 'tridy';
-    protected const SUBJECT_NAME_DB_NAME = 'nazev';
+    protected const SUBJECT_NAME_DB_NAME = ClassObject::COLUMN_DICTIONARY['name'];
     
     /**
      * Metoda navracející aktuální jméno třídy

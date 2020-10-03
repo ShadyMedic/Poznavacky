@@ -57,13 +57,13 @@ class Administration
     public function getAllClasses()
     {
         Db::connect();
-        $dbResult = Db::fetchQuery('SELECT tridy_id, nazev, poznavacky, status, kod, spravce FROM tridy', array(), true);
+        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::COLUMN_DICTIONARY['status'].', '.ClassObject::COLUMN_DICTIONARY['code'].', '.ClassObject::COLUMN_DICTIONARY['admin'].' FROM tridy', array(), true);
         
         $classes = array();
         foreach($dbResult as $dbRow)
         {
-            $class = new ClassObject(false, $dbRow['tridy_id']);
-            $class->initialize($dbRow['nazev'], $dbRow['status'], $dbRow['kod'], null, $dbRow['poznavacky'], null, new User(false, $dbRow['spravce']));
+            $class = new ClassObject(false, $dbRow[ClassObject::COLUMN_DICTIONARY['id']]);
+            $class->initialize($dbRow[ClassObject::COLUMN_DICTIONARY['name']], $dbRow[ClassObject::COLUMN_DICTIONARY['status']], $dbRow[ClassObject::COLUMN_DICTIONARY['code']], null, $dbRow[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, new User(false, $dbRow[ClassObject::COLUMN_DICTIONARY['admin']]));
             $classes[] = $class;
         }
         
@@ -87,13 +87,13 @@ class Administration
             prirodniny.prirodniny_id AS "prirodniny_id", prirodniny.nazev AS "prirodniny_nazev", prirodniny.obrazky AS "prirodniny_obrazky",
             casti.casti_id AS "casti_id", casti.nazev AS "casti_nazev", casti.prirodniny AS "casti_prirodniny", casti.obrazky AS "casti_obrazky",
             poznavacky.poznavacky_id AS "poznavacky_id", poznavacky.nazev AS "poznavacky_nazev", poznavacky.casti AS "poznavacky_casti",
-            tridy.tridy_id AS "tridy_id", tridy.nazev AS "tridy_nazev"
+            tridy.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", tridy.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM hlaseni
             JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
             JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
             JOIN casti ON prirodniny.casti_id = casti.casti_id
             JOIN poznavacky ON casti.poznavacky_id = poznavacky.poznavacky_id
-            JOIN tridy ON poznavacky.tridy_id = tridy.tridy_id
+            JOIN tridy ON poznavacky.tridy_id = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.duvod IN ('.$in.');
         ', Report::ADMIN_REQUIRING_REASONS, true);
         
@@ -108,8 +108,8 @@ class Administration
         {
             //Následující kód indukuje, že jsem objektovou PHP aplikaci navrhl dobře, nebo úplně blbě...
             //V případě, že tohle bude po mně někdo muset předělávat... tak se ti ty nešťastníku omlouvám
-            $class = new ClassObject(false, $reportInfo['tridy_id']);
-            $class->initialize($reportInfo['tridy_nazev']);
+            $class = new ClassObject(false, $reportInfo[ClassObject::COLUMN_DICTIONARY['id']]);
+            $class->initialize($reportInfo[ClassObject::COLUMN_DICTIONARY['name']]);
             $group = new Group(false, $reportInfo['poznavacky_id']);
             $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo['poznavacky_casti']);
             $part = new Part(false, $reportInfo['casti_id']);
@@ -166,11 +166,11 @@ class Administration
         $result = Db::fetchQuery('
         SELECT
         uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status",
-        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.poznavacky, tridy.kod,
+        tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
         zadosti_jmena_tridy.zadosti_jmena_tridy_id, zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
         FROM zadosti_jmena_tridy
         JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.tridy_id
-        JOIN '.User::TABLE_NAME.' ON tridy.spravce = uzivatele.uzivatele_id;
+        JOIN '.User::TABLE_NAME.' ON tridy.'.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele.uzivatele_id;
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky
@@ -181,8 +181,8 @@ class Administration
         {
             $admin = new User(false, $requestInfo['uzivatele_id']);
             $admin->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
-            $class = new ClassObject(false, $requestInfo['tridy_id']);
-            $class->initialize($requestInfo['nazev'], $requestInfo['c_status'], $requestInfo['kod'], null, $requestInfo['poznavacky'], null, $admin);
+            $class = new ClassObject(false, $requestInfo[ClassObject::COLUMN_DICTIONARY['id']]);
+            $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']], $requestInfo['c_status'], $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
             $request = new ClassNameChangeRequest(false, $requestInfo['zadosti_jmena_tridy_id']);
             $request->initialize($class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             

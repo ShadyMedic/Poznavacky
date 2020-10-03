@@ -15,7 +15,7 @@ class ClassManager
     public static function classExists(string $className)
     {
         Db::connect();
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE nazev = ?', array($className), false);
+        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ?', array($className), false);
         if ($cnt['cnt'] > 0)
         {
             return true;
@@ -38,11 +38,11 @@ class ClassManager
         Db::connect();
         $result = Db::fetchQuery('
         SELECT
-        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.poznavacky, tridy.kod,
+        tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
         uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status"
         FROM tridy
-        JOIN '.User::TABLE_NAME.' ON spravce = uzivatele_id
-        WHERE kod = ? AND tridy.status = ? AND tridy_id NOT IN
+        JOIN '.User::TABLE_NAME.' ON '.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele_id
+        WHERE '.ClassObject::COLUMN_DICTIONARY['code'].' = ? AND tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' = ? AND '.ClassObject::COLUMN_DICTIONARY['id'].' NOT IN
         (
             SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?
         )
@@ -59,8 +59,8 @@ class ClassManager
         {
             $classAdmin = new User(false, $classInfo['uzivatele_id']);
             $classAdmin->initialize($classInfo['jmeno'], $classInfo['email'], new DateTime($classInfo['posledni_prihlaseni']), $classInfo['pridane_obrazky'], $classInfo['uhodnute_obrazky'], $classInfo['karma'], $classInfo['u_status']);
-            $class = new ClassObject(false, $classInfo['tridy_id']);
-            $class->initialize($classInfo['nazev'], $classInfo['c_status'], $classInfo['kod'], null, $classInfo['poznavacky'], null, $classAdmin);
+            $class = new ClassObject(false, $classInfo[ClassObject::COLUMN_DICTIONARY['id']]);
+            $class->initialize($classInfo[ClassObject::COLUMN_DICTIONARY['name']], $classInfo['c_status'], $classInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $classInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $classAdmin);
             $classes[] = $class;
         }
         

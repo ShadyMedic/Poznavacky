@@ -107,23 +107,23 @@ class ClassObject extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT nazev,poznavacky,status,kod,spravce FROM '.self::TABLE_NAME.' WHERE tridy_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_CLASS);
             }
             
-            $name = $result['nazev'];
+            $name = $result[ClassObject::COLUMN_DICTIONARY['name']];
         }
         else if ($this->isDefined($this->name))
         {
-            $result = Db::fetchQuery('SELECT tridy_id,poznavacky,status,kod,spravce FROM '.self::TABLE_NAME.' WHERE nazev = ? LIMIT 1', array($this->name));
+            $result = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.self::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($this->name));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_CLASS);
             }
             
-            $this->id = $result['tridy_id'];
+            $this->id = $result[ClassObject::COLUMN_DICTIONARY['id']];
             $name = $this->name;
         }
         else
@@ -131,10 +131,10 @@ class ClassObject extends DatabaseItem
             throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
         }
         
-        $groupsCount = $result['poznavacky'];
-        $status = $result['status'];
-        $code = $result['kod'];
-        $admin = new User(false, $result['spravce']);
+        $groupsCount = $result[ClassObject::COLUMN_DICTIONARY['groupsCount']];
+        $status = $result[ClassObject::COLUMN_DICTIONARY['status']];
+        $code = $result[ClassObject::COLUMN_DICTIONARY['code']];
+        $admin = new User(false, $result[ClassObject::COLUMN_DICTIONARY['admin']]);
         
         $this->initialize($name, $status, $code, null, $groupsCount, null, $admin);
         
@@ -163,7 +163,7 @@ class ClassObject extends DatabaseItem
             //Aktualizace existující třídy
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET tridy_id = ?, nazev = ?, poznavacky = ?, status = ?, kod = ?, spravce = ? WHERE tridy_id = ? LIMIT 1', array($this->id, $this->name, $this->groupsCount, $this->status, $this->code, $this->admin->getId(), $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.ClassObject::COLUMN_DICTIONARY['id'].' = ?, '.ClassObject::COLUMN_DICTIONARY['name'].' = ?, '.ClassObject::COLUMN_DICTIONARY['groupsCount'].' = ?, '.ClassObject::COLUMN_DICTIONARY['status'].' = ?, '.ClassObject::COLUMN_DICTIONARY['code'].' = ?, '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? WHERE tridy_id = ? LIMIT 1', array($this->id, $this->name, $this->groupsCount, $this->status, $this->code, $this->admin->getId(), $this->id));
         }
         else
         {
@@ -527,7 +527,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE tridy_id = ? AND (status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM `tridy` WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
         $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
         return ($result['cnt'] === 1) ? true : false;
     }
@@ -666,7 +666,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ? LIMIT 1;', array($status, $code, $this->id), false);
+        Db::executeQuery('UPDATE tridy SET '.ClassObject::COLUMN_DICTIONARY['status'].' = ?, '.ClassObject::COLUMN_DICTIONARY['code'].' = ? WHERE '.ClassObject::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($status, $code, $this->id), false);
         
         return true;
     }
@@ -705,7 +705,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('UPDATE tridy SET status = ?, kod = ? WHERE tridy_id = ? LIMIT 1;', array($status, $code, $this->id), false);
+        Db::executeQuery('UPDATE tridy SET '.ClassObject::COLUMN_DICTIONARY['status'].' = ?, '.ClassObject::COLUMN_DICTIONARY['code'].' = ? WHERE '.ClassObject::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($status, $code, $this->id), false);
         
         return true;
     }
@@ -731,7 +731,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('UPDATE tridy SET spravce = ? WHERE tridy_id = ? LIMIT 1;', array($newAdmin->getId(), $this->id));
+        Db::executeQuery('UPDATE tridy SET '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? WHERE '.ClassObject::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($newAdmin->getId(), $this->id));
         
         return true;
     }
@@ -802,7 +802,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE tridy_id = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

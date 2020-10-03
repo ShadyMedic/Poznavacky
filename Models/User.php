@@ -264,7 +264,7 @@ class User extends DatabaseItem implements ArrayAccess
         
         //Kontrola, zda uživatel není správcem žádné třídy
         Db::connect();
-        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array($this->id));
+        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array($this->id));
         if ($administratedClasses['cnt'] > 0)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR);

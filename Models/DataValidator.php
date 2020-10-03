@@ -81,7 +81,7 @@ class DataValidator
                 }
                 break;
             case 3:
-                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT(nazev) AS "items" FROM tridy WHERE nazev= ? UNION ALL SELECT COUNT(nove) FROM zadosti_jmena_tridy WHERE nove= ?) AS tmp', array($subject, $subject), false);
+                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.ClassObject::COLUMN_DICTIONARY['name'].') AS "items" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT(nove) FROM zadosti_jmena_tridy WHERE nove= ?) AS tmp', array($subject, $subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
