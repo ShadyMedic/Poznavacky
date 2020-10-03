@@ -4,7 +4,7 @@ var tablet = 768;
 
 $(function() { //až po načtení stránky
 
-	$(".rows").hide();
+	$(".tiles").hide();
 });
 
 //přidává třídu podle toho, jestli uživatel používá myš nebo tabulátor -> úprava pseudotřídy :focus
