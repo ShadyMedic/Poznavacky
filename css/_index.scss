@@ -8,6 +8,7 @@ body#index {
 	font-size: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
+	@include scrollbar(12px, $gray3, $gray2);
 	.container {
 		min-height: 100%;
 		display: grid;
@@ -230,6 +231,7 @@ body#index {
 		> #login,
 		> #password-recovery {
 			overflow: auto;
+			@include scrollbar(12px, $gray3, $gray2);
 			height: 100%;
 			padding-bottom: 2px;
 		}

@@ -705,9 +705,36 @@ label.required:after {
   border-top: 1rem solid transparent;
   position: relative;
   overflow: auto;
+  scrollbar-color: #222 #444;
+  scrollbar-width: auto;
   /*&.show {
 				transform: translateX(0);
 			}*/
+  background: #444;
+}
+
+#menu aside #aside-additional-panel::-webkit-scrollbar,
+#learn aside #aside-additional-panel::-webkit-scrollbar,
+#test aside #aside-additional-panel::-webkit-scrollbar,
+#addPictures aside #aside-additional-panel::-webkit-scrollbar,
+#accountSettings aside #aside-additional-panel::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#menu aside #aside-additional-panel::-webkit-scrollbar-thumb,
+#learn aside #aside-additional-panel::-webkit-scrollbar-thumb,
+#test aside #aside-additional-panel::-webkit-scrollbar-thumb,
+#addPictures aside #aside-additional-panel::-webkit-scrollbar-thumb,
+#accountSettings aside #aside-additional-panel::-webkit-scrollbar-thumb {
+  background: #222;
+}
+
+#menu aside #aside-additional-panel::-webkit-scrollbar-track,
+#learn aside #aside-additional-panel::-webkit-scrollbar-track,
+#test aside #aside-additional-panel::-webkit-scrollbar-track,
+#addPictures aside #aside-additional-panel::-webkit-scrollbar-track,
+#accountSettings aside #aside-additional-panel::-webkit-scrollbar-track {
   background: #444;
 }
 
@@ -775,6 +802,33 @@ label.required:after {
   -webkit-transition: margin 0.2s ease-out;
   transition: margin 0.2s ease-out;
   overflow-y: auto;
+  scrollbar-color: #444 #eee;
+  scrollbar-width: auto;
+}
+
+#menu main::-webkit-scrollbar,
+#learn main::-webkit-scrollbar,
+#test main::-webkit-scrollbar,
+#addPictures main::-webkit-scrollbar,
+#accountSettings main::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#menu main::-webkit-scrollbar-thumb,
+#learn main::-webkit-scrollbar-thumb,
+#test main::-webkit-scrollbar-thumb,
+#addPictures main::-webkit-scrollbar-thumb,
+#accountSettings main::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+#menu main::-webkit-scrollbar-track,
+#learn main::-webkit-scrollbar-track,
+#test main::-webkit-scrollbar-track,
+#addPictures main::-webkit-scrollbar-track,
+#accountSettings main::-webkit-scrollbar-track {
+  background: #eee;
 }
 
 @media screen and (min-width: 672px) {
@@ -1181,6 +1235,8 @@ body#index {
   font-size: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  scrollbar-color: #444 #eee;
+  scrollbar-width: auto;
   /*
 	&.loaded {
 		#index-text-section .content {
@@ -1226,6 +1282,19 @@ body#index {
 		}
 	}
 	*/
+}
+
+body#index::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+body#index::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+body#index::-webkit-scrollbar-track {
+  background: #eee;
 }
 
 body#index .container {
@@ -1590,8 +1659,29 @@ body#index #index-login-section > #register,
 body#index #index-login-section > #login,
 body#index #index-login-section > #password-recovery {
   overflow: auto;
+  scrollbar-color: #444 #eee;
+  scrollbar-width: auto;
   height: 100%;
   padding-bottom: 2px;
+}
+
+body#index #index-login-section > #register::-webkit-scrollbar,
+body#index #index-login-section > #login::-webkit-scrollbar,
+body#index #index-login-section > #password-recovery::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+body#index #index-login-section > #register::-webkit-scrollbar-thumb,
+body#index #index-login-section > #login::-webkit-scrollbar-thumb,
+body#index #index-login-section > #password-recovery::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+body#index #index-login-section > #register::-webkit-scrollbar-track,
+body#index #index-login-section > #login::-webkit-scrollbar-track,
+body#index #index-login-section > #password-recovery::-webkit-scrollbar-track {
+  background: #eee;
 }
 
 body#index #index-login-section .cross {
