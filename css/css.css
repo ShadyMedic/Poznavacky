@@ -1662,7 +1662,6 @@ body#index #index-login-section > #password-recovery {
   scrollbar-color: #444 #eee;
   scrollbar-width: auto;
   height: 100%;
-  padding-bottom: 2px;
 }
 
 body#index #index-login-section > #register::-webkit-scrollbar,

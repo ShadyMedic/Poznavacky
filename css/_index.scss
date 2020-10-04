@@ -233,7 +233,6 @@ body#index {
 			overflow: auto;
 			@include scrollbar(12px, $gray3, $gray2);
 			height: 100%;
-			padding-bottom: 2px;
 		}
 		.cross {
 			justify-self: right;
