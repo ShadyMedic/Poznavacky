@@ -69,27 +69,27 @@ class Invitation extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT uzivatele_id, tridy_id, expirace FROM '.self::TABLE_NAME.' WHERE pozvanky_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['user'].', '.Invitation::COLUMN_DICTIONARY['class'].', '.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
             }
             
-            $user = new User(false, $result['uzivatele_id']);
-            $class = new ClassObject(false, $result['tridy_id']);
-            $expiration = new DateTime($result['expirace']);
+            $user = new User(false, $result[Invitation::COLUMN_DICTIONARY['user']]);
+            $class = new ClassObject(false, $result[Invitation::COLUMN_DICTIONARY['class']]);
+            $expiration = new DateTime($result[Invitation::COLUMN_DICTIONARY['expiration']]);
             
             $this->initialize($user, $class, $expiration);
         }
         else if ($this->isDefined($this->user) && $this->isDefined($this->class))
         {
-            $result = Db::fetchQuery('SELECT pozvanky_id, expirace FROM '.self::TABLE_NAME.' WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
+            $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].', '.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
             }
-            $this->id = $result['pozvanky_id'];
-            $this->expiration = new DateTime($result['expirace']);
+            $this->id = $result[Invitation::COLUMN_DICTIONARY['id']];
+            $this->expiration = new DateTime($result[Invitation::COLUMN_DICTIONARY['expiration']]);
         }
         else
         {
@@ -120,12 +120,12 @@ class Invitation extends DatabaseItem
             //Aktualizace existující pozvánky
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET uzivatele_id = ?, tridy_id = ?, expirace = ? WHERE pozvanky_id = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Invitation::COLUMN_DICTIONARY['user'].' = ?, '.Invitation::COLUMN_DICTIONARY['class'].' = ?, '.Invitation::COLUMN_DICTIONARY['expiration'].' = ? WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
         }
         else
         {
             //Tvorba nové pozvánky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (uzivatele_id,tridy_id,expirace) VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Invitation::COLUMN_DICTIONARY['user'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].') VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -185,7 +185,7 @@ class Invitation extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE pozvanky_id = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

@@ -408,7 +408,7 @@ class ClassObject extends DatabaseItem
         }
         
         //Ověř, zda již taková pozvánka v databázi neexistuje
-        $result = Db::fetchQuery('SELECT pozvanky_id FROM pozvanky WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1', array($user->getId(), $this->id));
+        $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].' FROM pozvanky WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($user->getId(), $this->id));
         if (empty($result))
         {
             //Nová pozvánka
@@ -417,7 +417,7 @@ class ClassObject extends DatabaseItem
         else
         {
             //Prodloužit životnost existující pozvánky
-            $invitation = new Invitation(false, $result['pozvanky_id']);
+            $invitation = new Invitation(false, $result[Invitation::COLUMN_DICTIONARY['id']]);
         }
         
         $expiration = new DateTime('@'.(time() + Invitation::INVITATION_LIFETIME));

@@ -192,7 +192,7 @@ class User extends DatabaseItem implements ArrayAccess
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $invitationsData = Db::fetchQuery('SELECT pozvanky_id,tridy_id,expirace FROM '.Invitation::TABLE_NAME.' WHERE uzivatele_id = ? AND expirace > NOW()', array($this->id), true);
+        $invitationsData = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND expirace > NOW()', array($this->id), true);
         if ($invitationsData === false)
         {
             //Žádné pozvánky
@@ -203,8 +203,8 @@ class User extends DatabaseItem implements ArrayAccess
         
         foreach ($invitationsData as $invitationData)
         {
-            $invitation = new Invitation(false, $invitationData['pozvanky_id']);
-            $invitation->initialize($this, new ClassObject(false, $invitationData['tridy_id']), new DateTime($invitationData['expirace']));
+            $invitation = new Invitation(false, $invitationData[Invitation::COLUMN_DICTIONARY['id']]);
+            $invitation->initialize($this, new ClassObject(false, $invitationData[Invitation::COLUMN_DICTIONARY['class']]), new DateTime($invitationData[Invitation::COLUMN_DICTIONARY['expiration']]));
             $invitations[] = $invitation;
         }
         

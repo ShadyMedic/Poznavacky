@@ -31,7 +31,7 @@ class AnswerInvitationController extends Controller
         
         //Kontrola, zda pozvánka existuje
         Db::connect();
-        $invitationData = Db::fetchQuery('SELECT uzivatele_id,tridy_id,expirace FROM pozvanky WHERE pozvanky_id = ? AND uzivatele_id = ? AND expirace > NOW() LIMIT 1', array($invitationId, UserManager::getId()));
+        $invitationData = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['user'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].' FROM pozvanky WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? AND '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['expiration'].' > NOW() LIMIT 1', array($invitationId, UserManager::getId()));
         if (empty($invitationData))
         {
             //Pozvánka buďto neexistuje nebo vyexpirovala nebo není určena pro přihlášeného uživatele
@@ -40,7 +40,7 @@ class AnswerInvitationController extends Controller
         }
         
         $invitation = new Invitation(false, $invitationId);
-        $invitation->initialize(UserManager::getUser(), new ClassObject(false, $invitationData['tridy_id']), new DateTime($invitationData['expirace']));
+        $invitation->initialize(UserManager::getUser(), new ClassObject(false, $invitationData[Invitation::COLUMN_DICTIONARY['class']]), new DateTime($invitationData[Invitation::COLUMN_DICTIONARY['expiration']]));
         
         if ($answer === 'accept')
         {
