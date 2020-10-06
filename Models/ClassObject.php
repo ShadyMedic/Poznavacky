@@ -163,7 +163,7 @@ class ClassObject extends DatabaseItem
             //Aktualizace existující třídy
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.ClassObject::COLUMN_DICTIONARY['id'].' = ?, '.ClassObject::COLUMN_DICTIONARY['name'].' = ?, '.ClassObject::COLUMN_DICTIONARY['groupsCount'].' = ?, '.ClassObject::COLUMN_DICTIONARY['status'].' = ?, '.ClassObject::COLUMN_DICTIONARY['code'].' = ?, '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? WHERE tridy_id = ? LIMIT 1', array($this->id, $this->name, $this->groupsCount, $this->status, $this->code, $this->admin->getId(), $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.ClassObject::COLUMN_DICTIONARY['id'].' = ?, '.ClassObject::COLUMN_DICTIONARY['name'].' = ?, '.ClassObject::COLUMN_DICTIONARY['groupsCount'].' = ?, '.ClassObject::COLUMN_DICTIONARY['status'].' = ?, '.ClassObject::COLUMN_DICTIONARY['code'].' = ?, '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? WHERE '.ClassObject::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id, $this->name, $this->groupsCount, $this->status, $this->code, $this->admin->getId(), $this->id));
         }
         else
         {
@@ -255,7 +255,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT poznavacky_id,nazev,casti FROM poznavacky WHERE tridy_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].','.Group::COLUMN_DICTIONARY['name'].','.Group::COLUMN_DICTIONARY['partsCount'].' FROM poznavacky WHERE '.Group::COLUMN_DICTIONARY['class'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné poznávačky nenalezeny
@@ -266,8 +266,8 @@ class ClassObject extends DatabaseItem
             $this->groups = array();
             foreach ($result as $groupData)
             {
-                $group = new Group(false, $groupData['poznavacky_id']);
-                $group->initialize($groupData['nazev'], $this, null, $groupData['casti']);
+                $group = new Group(false, $groupData[Group::COLUMN_DICTIONARY['id']]);
+                $group->initialize($groupData[Group::COLUMN_DICTIONARY['name']], $this, null, $groupData[Group::COLUMN_DICTIONARY['partsCount']]);
                 $this->groups[] = $group;
             }
         }
@@ -554,7 +554,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM poznavacky WHERE nazev = ? AND tridy_id = ?', array($groupName, $this->id), false);
+        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM poznavacky WHERE '.Group::COLUMN_DICTIONARY['name'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ?', array($groupName, $this->id), false);
         if ($cnt['cnt'] > 0)
         {
             return true;

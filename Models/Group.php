@@ -78,27 +78,27 @@ class Group extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT nazev, tridy_id, casti FROM '.self::TABLE_NAME.' WHERE poznavacky_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['name'].', '.Group::COLUMN_DICTIONARY['class'].', '.Group::COLUMN_DICTIONARY['partsCount'].' FROM '.self::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_GROUP);
             }
             
-            $name = $result['nazev'];
-            $class = new ClassObject(false, $result['tridy_id']);
-            $partsCount = $result['casti'];
+            $name = $result[Group::COLUMN_DICTIONARY['name']];
+            $class = new ClassObject(false, $result[Group::COLUMN_DICTIONARY['class']]);
+            $partsCount = $result[Group::COLUMN_DICTIONARY['partsCount']];
             $this->initialize($name, $class, null, $partsCount);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->class))
         {
-            $result = Db::fetchQuery('SELECT poznavacky_id, casti FROM '.self::TABLE_NAME.' WHERE nazev = ? AND tridy_id = ? LIMIT 1', array($this->name, $this->class->getId()));
+            $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].', '.Group::COLUMN_DICTIONARY['partsCount'].' FROM '.self::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['name'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($this->name, $this->class->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_GROUP);
             }
             
-            $this->id = $result['poznavacky_id'];
-            $partsCount = $result['casti'];
+            $this->id = $result[Group::COLUMN_DICTIONARY['id']];
+            $partsCount = $result[Group::COLUMN_DICTIONARY['partsCount']];
             $this->initialize(null, null, null, $partsCount);
         }
         else
@@ -131,12 +131,12 @@ class Group extends DatabaseItem
             //Aktualizace existující poznávačky
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET nazev = ?, tridy_id = ?, casti = ? WHERE poznavacky_id = ? LIMIT 1', array($this->name, $this->class->getId(), $this->partsCount, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Group::COLUMN_DICTIONARY['name'].' = ?, '.Group::COLUMN_DICTIONARY['class'].' = ?, '.Group::COLUMN_DICTIONARY['partsCount'].' = ? WHERE '.Group::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->class->getId(), $this->partsCount, $this->id));
         }
         else
         {
             //Tvorba nové poznávačky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (nazev,tridy_id,casti) VALUES (?,?,?)', array($this->name, $this->class->getId(), $this->partsCount), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Group::COLUMN_DICTIONARY['name'].','.Group::COLUMN_DICTIONARY['class'].','.Group::COLUMN_DICTIONARY['partsCount'].') VALUES (?,?,?)', array($this->name, $this->class->getId(), $this->partsCount), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -351,7 +351,7 @@ class Group extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE poznavacky_id = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

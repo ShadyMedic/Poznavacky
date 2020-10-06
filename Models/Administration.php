@@ -86,14 +86,14 @@ class Administration
             obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
             prirodniny.prirodniny_id AS "prirodniny_id", prirodniny.nazev AS "prirodniny_nazev", prirodniny.obrazky AS "prirodniny_obrazky",
             casti.casti_id AS "casti_id", casti.nazev AS "casti_nazev", casti.prirodniny AS "casti_prirodniny", casti.obrazky AS "casti_obrazky",
-            poznavacky.poznavacky_id AS "poznavacky_id", poznavacky.nazev AS "poznavacky_nazev", poznavacky.casti AS "poznavacky_casti",
+            poznavacky.'.Group::COLUMN_DICTIONARY['id'].' AS "poznavacky_id", poznavacky.'.Group::COLUMN_DICTIONARY['name'].' AS "poznavacky_nazev", poznavacky.'.Group::COLUMN_DICTIONARY['partsCount'].' AS "poznavacky_casti",
             tridy.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", tridy.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM hlaseni
             JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
             JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
             JOIN casti ON prirodniny.casti_id = casti.casti_id
-            JOIN poznavacky ON casti.poznavacky_id = poznavacky.poznavacky_id
-            JOIN tridy ON poznavacky.tridy_id = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
+            JOIN poznavacky ON casti.poznavacky_id = poznavacky.'.Group::COLUMN_DICTIONARY['id'].'
+            JOIN tridy ON poznavacky.'.Group::COLUMN_DICTIONARY['class'].' = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.duvod IN ('.$in.');
         ', Report::ADMIN_REQUIRING_REASONS, true);
         
@@ -110,8 +110,8 @@ class Administration
             //V případě, že tohle bude po mně někdo muset předělávat... tak se ti ty nešťastníku omlouvám
             $class = new ClassObject(false, $reportInfo[ClassObject::COLUMN_DICTIONARY['id']]);
             $class->initialize($reportInfo[ClassObject::COLUMN_DICTIONARY['name']]);
-            $group = new Group(false, $reportInfo['poznavacky_id']);
-            $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo['poznavacky_casti']);
+            $group = new Group(false, $reportInfo[Group::COLUMN_DICTIONARY['id']]);
+            $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo[Group::COLUMN_DICTIONARY['partsCount']]);
             $part = new Part(false, $reportInfo['casti_id']);
             $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
@@ -169,7 +169,7 @@ class Administration
         tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
         zadosti_jmena_tridy.zadosti_jmena_tridy_id, zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
         FROM zadosti_jmena_tridy
-        JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.tridy_id
+        JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
         JOIN '.User::TABLE_NAME.' ON tridy.'.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele.uzivatele_id;
         ', array(), true);
         
