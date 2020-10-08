@@ -62,7 +62,7 @@ class DataValidator
         switch ($stringType)
         {
             case 0:
-                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT(jmeno) AS "items" FROM '.User::TABLE_NAME.' WHERE jmeno= ? UNION ALL SELECT COUNT(nove) FROM zadosti_jmena_uzivatele WHERE nove= ?) AS tmp', array($subject, $subject), false);
+                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.User::COLUMN_DICTIONARY['name'].') AS "items" FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT(nove) FROM zadosti_jmena_uzivatele WHERE nove= ?) AS tmp', array($subject, $subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
@@ -74,7 +74,7 @@ class DataValidator
                     //Nevyplněný e-mail
                     return true;
                 }
-                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.User::TABLE_NAME.' WHERE email = ? LIMIT 1', array($subject), false);
+                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
@@ -98,12 +98,12 @@ class DataValidator
     public function getUserIdByEmail(string $email)
     {
         Db::connect();
-        $userId = Db::fetchQuery('SELECT uzivatele_id FROM '.User::TABLE_NAME.' WHERE email = ? LIMIT 1', array($email), false);
+        $userId = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($email), false);
         if (!$userId)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_ACCOUNT, null, null, array('originFile' => 'RecoverPassword.php', 'displayOnView' => 'index.phtml', 'form' => 'passRecovery'));
         }
-        return $userId['uzivatele_id'];
+        return $userId[User::COLUMN_DICTIONARY['id']];
     }
     
     /**

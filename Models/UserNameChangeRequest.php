@@ -16,7 +16,7 @@ class UserNameChangeRequest extends NameChangeRequest
     
     protected const SUBJECT_CLASS_NAME = 'User';
     protected const SUBJECT_TABLE_NAME = 'uzivatele';
-    protected const SUBJECT_NAME_DB_NAME = 'jmeno';
+    protected const SUBJECT_NAME_DB_NAME = User::COLUMN_DICTIONARY['name'];
     
     /**
      * Metoda navracející aktuální jméno uživatele
@@ -39,7 +39,7 @@ class UserNameChangeRequest extends NameChangeRequest
     public function getRequestersEmail()
     {
         $this->loadIfNotLoaded($this->subject);
-        return $this->subject['email'];
+        return $this->subject[User::COLUMN_DICTIONARY['email']];
     }
     
     /**

@@ -39,9 +39,9 @@ class ClassManager
         $result = Db::fetchQuery('
         SELECT
         tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
-        uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status"
+        uzivatele.'.User::COLUMN_DICTIONARY['id'].', uzivatele.'.User::COLUMN_DICTIONARY['name'].', uzivatele.'.User::COLUMN_DICTIONARY['email'].', uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].', uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['karma'].', uzivatele.'.User::COLUMN_DICTIONARY['status'].' AS "u_status"
         FROM tridy
-        JOIN '.User::TABLE_NAME.' ON '.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele_id
+        JOIN '.User::TABLE_NAME.' ON '.ClassObject::COLUMN_DICTIONARY['admin'].' = '.User::COLUMN_DICTIONARY['id'].'
         WHERE '.ClassObject::COLUMN_DICTIONARY['code'].' = ? AND tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' = ? AND '.ClassObject::COLUMN_DICTIONARY['id'].' NOT IN
         (
             SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?
@@ -57,8 +57,8 @@ class ClassManager
         $classes = array();
         foreach($result as $classInfo)
         {
-            $classAdmin = new User(false, $classInfo['uzivatele_id']);
-            $classAdmin->initialize($classInfo['jmeno'], $classInfo['email'], new DateTime($classInfo['posledni_prihlaseni']), $classInfo['pridane_obrazky'], $classInfo['uhodnute_obrazky'], $classInfo['karma'], $classInfo['u_status']);
+            $classAdmin = new User(false, $classInfo[User::COLUMN_DICTIONARY['id']]);
+            $classAdmin->initialize($classInfo[User::COLUMN_DICTIONARY['name']], $classInfo[User::COLUMN_DICTIONARY['email']], new DateTime($classInfo[User::COLUMN_DICTIONARY['lastLogin']]), $classInfo[User::COLUMN_DICTIONARY['addedPictures']], $classInfo[User::COLUMN_DICTIONARY['guessedPictures']], $classInfo[User::COLUMN_DICTIONARY['karma']], $classInfo['u_status']);
             $class = new ClassObject(false, $classInfo[ClassObject::COLUMN_DICTIONARY['id']]);
             $class->initialize($classInfo[ClassObject::COLUMN_DICTIONARY['name']], $classInfo['c_status'], $classInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $classInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $classAdmin);
             $classes[] = $class;

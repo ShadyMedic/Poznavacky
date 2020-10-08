@@ -355,7 +355,7 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT uzivatele.uzivatele_id,uzivatele.jmeno,uzivatele.email,uzivatele.posledni_prihlaseni,uzivatele.pridane_obrazky,uzivatele.uhodnute_obrazky,uzivatele.karma,uzivatele.status FROM clenstvi JOIN '.User::TABLE_NAME.' ON clenstvi.uzivatele_id = uzivatele.uzivatele_id WHERE clenstvi.tridy_id = ? AND uzivatele.uzivatele_id != ? ORDER BY uzivatele.posledni_prihlaseni DESC;', array($this->id, UserManager::getId()), true);
+        $result = Db::fetchQuery('SELECT uzivatele.'.User::COLUMN_DICTIONARY['id'].',uzivatele.'.User::COLUMN_DICTIONARY['name'].',uzivatele.'.User::COLUMN_DICTIONARY['email'].',uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].',uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].',uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].',uzivatele.'.User::COLUMN_DICTIONARY['karma'].',uzivatele.'.User::COLUMN_DICTIONARY['status'].' FROM clenstvi JOIN '.User::TABLE_NAME.' ON clenstvi.uzivatele_id = uzivatele.'.User::COLUMN_DICTIONARY['id'].' WHERE clenstvi.tridy_id = ? AND uzivatele.'.User::COLUMN_DICTIONARY['id'].' != ? ORDER BY uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].' DESC;', array($this->id, UserManager::getId()), true);
         if ($result === false || count($result) === 0)
         {
             //Žádní členové nenalezeni
@@ -366,8 +366,8 @@ class ClassObject extends DatabaseItem
             $this->members = array();
             foreach ($result as $memberData)
             {
-                $user = new User(false, $memberData['uzivatele_id']);
-                $user->initialize($memberData['jmeno'], $memberData['email'], new DateTime($memberData['posledni_prihlaseni']), $memberData['pridane_obrazky'], $memberData['uhodnute_obrazky'], $memberData['karma'], $memberData['status']);
+                $user = new User(false, $memberData[User::COLUMN_DICTIONARY['id']]);
+                $user->initialize($memberData[User::COLUMN_DICTIONARY['name']], $memberData[User::COLUMN_DICTIONARY['email']], new DateTime($memberData[User::COLUMN_DICTIONARY['lastLogin']]), $memberData[User::COLUMN_DICTIONARY['addedPictures']], $memberData[User::COLUMN_DICTIONARY['guessedPictures']], $memberData[User::COLUMN_DICTIONARY['karma']], $memberData[User::COLUMN_DICTIONARY['status']]);
                 $this->members[] = $user;
             }
         }
@@ -392,13 +392,13 @@ class ClassObject extends DatabaseItem
         
         //Konstrukce objektu uživatele
         Db::connect();
-        $result = Db::fetchQuery('SELECT uzivatele_id,jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.User::TABLE_NAME.' WHERE jmeno = ? LIMIT 1', array($userName));
+        $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['karma'].','.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($userName));
         if (empty($result))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER);
         }
-        $user = new User(false, $result['uzivatele_id']);
-        $user->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        $user = new User(false, $result[User::COLUMN_DICTIONARY['id']]);
+        $user->initialize($result[User::COLUMN_DICTIONARY['name']], $result[User::COLUMN_DICTIONARY['email']], new DateTime($result[User::COLUMN_DICTIONARY['lastLogin']]), $result[User::COLUMN_DICTIONARY['addedPictures']], $result[User::COLUMN_DICTIONARY['guessedPictures']], $result[User::COLUMN_DICTIONARY['karma']], $result[User::COLUMN_DICTIONARY['status']]);
         
         //Zkontroluj, zda uživatel již není členem třídy
         for ($i = 0; $i < count($this->members) && $user->getId() !== $this->members[$i]->getId(); $i++){}

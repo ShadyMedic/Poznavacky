@@ -37,7 +37,7 @@ class ClassNameChangeRequest extends NameChangeRequest
      */
     public function getRequestersEmail()
     {
-        return $this->subject->getAdmin()['email'];
+        return $this->subject->getAdmin()[User::COLUMN_DICTIONARY['email']];
     }
     
     /**

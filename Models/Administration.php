@@ -36,18 +36,18 @@ class Administration
         Db::connect();
         if ($includeLogged)
         {
-            $dbResult = Db::fetchQuery('SELECT uzivatele_id,jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM uzivatele', array(), true);
+            $dbResult = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME, array(), true);
         }
         else
         {
-            $dbResult = Db::fetchQuery('SELECT uzivatele_id,jmeno,email,posledni_prihlaseni,pridane_obrazky,uhodnute_obrazky,karma,status FROM '.User::TABLE_NAME.' WHERE uzivatele_id != ?', array(UserManager::getId()), true);
+            $dbResult = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE uzivatele_id != ?', array(UserManager::getId()), true);
         }
         $users = array();
         foreach($dbResult as $dbRow)
         {
-            $lastLogin = new DateTime($dbRow['posledni_prihlaseni']);
-            $user = new User(false, $dbRow['uzivatele_id']);
-            $user->initialize($dbRow['jmeno'], $dbRow['email'], $lastLogin, $dbRow['pridane_obrazky'], $dbRow['uhodnute_obrazky'], $dbRow['karma'], $dbRow['status']);
+            $lastLogin = new DateTime($dbRow[User::COLUMN_DICTIONARY['lastLogin']]);
+            $user = new User(false, $dbRow[User::COLUMN_DICTIONARY['id']]);
+            $user->initialize($dbRow[User::COLUMN_DICTIONARY['name']], $dbRow[User::COLUMN_DICTIONARY['email']], $lastLogin, $dbRow[User::COLUMN_DICTIONARY['addedPictures']], $dbRow[User::COLUMN_DICTIONARY['guessedPictures']], $dbRow[User::COLUMN_DICTIONARY['karma']], $dbRow[User::COLUMN_DICTIONARY['status']]);
             $users[] = $user;
         }
         
@@ -57,7 +57,7 @@ class Administration
     public function getAllClasses()
     {
         Db::connect();
-        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::COLUMN_DICTIONARY['status'].', '.ClassObject::COLUMN_DICTIONARY['code'].', '.ClassObject::COLUMN_DICTIONARY['admin'].' FROM tridy', array(), true);
+        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM tridy', array(), true);
         
         $classes = array();
         foreach($dbResult as $dbRow)
@@ -135,10 +135,10 @@ class Administration
         Db::connect();
         $result = Db::fetchQuery('
         SELECT
-        uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status,
+        uzivatele.'.User::COLUMN_DICTIONARY['id'].', uzivatele.'.User::COLUMN_DICTIONARY['name'].', uzivatele.'.User::COLUMN_DICTIONARY['email'].', uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].', uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['karma'].', uzivatele.'.User::COLUMN_DICTIONARY['status'].',
         zadosti_jmena_uzivatele.zadosti_jmena_uzivatele_id, zadosti_jmena_uzivatele.nove, zadosti_jmena_uzivatele.cas
         FROM zadosti_jmena_uzivatele
-        JOIN '.User::TABLE_NAME.' ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.uzivatele_id;
+        JOIN '.User::TABLE_NAME.' ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.'.User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky
@@ -147,8 +147,8 @@ class Administration
         $requests = array();
         foreach ($result as $requestInfo)
         {
-            $user = new User(false, $requestInfo['uzivatele_id']);
-            $user->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['status']);
+            $user = new User(false, $requestInfo[User::COLUMN_DICTIONARY['id']]);
+            $user->initialize($requestInfo[User::COLUMN_DICTIONARY['name']], $requestInfo[User::COLUMN_DICTIONARY['email']], new DateTime($requestInfo[User::COLUMN_DICTIONARY['lastLogin']]), $requestInfo[User::COLUMN_DICTIONARY['addedPictures']], $requestInfo[User::COLUMN_DICTIONARY['guessedPictures']], $requestInfo[User::COLUMN_DICTIONARY['karma']], $requestInfo[User::COLUMN_DICTIONARY['status']]);
             $request = new UserNameChangeRequest(false, $requestInfo['zadosti_jmena_uzivatele_id']);
             $request->initialize($user, $requestInfo['nove'], new DateTime($requestInfo['cas']));
             $requests[] = $request;
@@ -165,12 +165,12 @@ class Administration
         Db::connect();
         $result = Db::fetchQuery('
         SELECT
-        uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status",
+        uzivatele.'.User::COLUMN_DICTIONARY['id'].', uzivatele.'.User::COLUMN_DICTIONARY['name'].', uzivatele.'.User::COLUMN_DICTIONARY['email'].', uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].', uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['karma'].', uzivatele.'.User::COLUMN_DICTIONARY['status'].' AS "u_status",
         tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
         zadosti_jmena_tridy.zadosti_jmena_tridy_id, zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
         FROM zadosti_jmena_tridy
         JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
-        JOIN '.User::TABLE_NAME.' ON tridy.'.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele.uzivatele_id;
+        JOIN '.User::TABLE_NAME.' ON tridy.'.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele.'.User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky
@@ -179,8 +179,8 @@ class Administration
         $requests = array();
         foreach ($result as $requestInfo)
         {
-            $admin = new User(false, $requestInfo['uzivatele_id']);
-            $admin->initialize($requestInfo['jmeno'], $requestInfo['email'], new DateTime($requestInfo['posledni_prihlaseni']), $requestInfo['pridane_obrazky'], $requestInfo['uhodnute_obrazky'], $requestInfo['karma'], $requestInfo['u_status']);
+            $admin = new User(false, $requestInfo[User::COLUMN_DICTIONARY['id']]);
+            $admin->initialize($requestInfo[User::COLUMN_DICTIONARY['name']], $requestInfo[User::COLUMN_DICTIONARY['email']], new DateTime($requestInfo[User::COLUMN_DICTIONARY['lastLogin']]), $requestInfo[User::COLUMN_DICTIONARY['addedPictures']], $requestInfo[User::COLUMN_DICTIONARY['guessedPictures']], $requestInfo[User::COLUMN_DICTIONARY['karma']], $requestInfo['u_status']);
             $class = new ClassObject(false, $requestInfo[ClassObject::COLUMN_DICTIONARY['id']]);
             $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']], $requestInfo['c_status'], $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
             $request = new ClassNameChangeRequest(false, $requestInfo['zadosti_jmena_tridy_id']);
@@ -202,7 +202,7 @@ class Administration
     public function editUser(int $userId, array $values)
     {
         $user = new User(false, $userId);
-        $user->updateAccount($values['addedPics'], $values['guessedPics'], $values['karma'], $values['status']);
+        $user->updateAccount($values['addedPics'], $values['guessedPics'], $values[User::COLUMN_DICTIONARY['karma']], $values['status']);
     }
     
     /**
@@ -244,10 +244,10 @@ class Administration
         switch ($changedIdentifier)
         {
             case 'id':
-                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM '.User::TABLE_NAME.' WHERE uzivatele_id = ?', array($newAdminIdentifier), false);
+                $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].', '.User::COLUMN_DICTIONARY['name'].', '.User::COLUMN_DICTIONARY['email'].', '.User::COLUMN_DICTIONARY['lastLogin'].', '.User::COLUMN_DICTIONARY['addedPictures'].', '.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::COLUMN_DICTIONARY['karma'].', '.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE uzivatele_id = ?', array($newAdminIdentifier), false);
                 break;
             case 'name':
-                $result = Db::fetchQuery('SELECT uzivatele_id, jmeno, email, posledni_prihlaseni, pridane_obrazky, uhodnute_obrazky, karma, status FROM '.User::TABLE_NAME.' WHERE jmeno = ?', array($newAdminIdentifier), false);
+                $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].', '.User::COLUMN_DICTIONARY['name'].', '.User::COLUMN_DICTIONARY['email'].', '.User::COLUMN_DICTIONARY['lastLogin'].', '.User::COLUMN_DICTIONARY['addedPictures'].', '.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::COLUMN_DICTIONARY['karma'].', '.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].' = ?', array($newAdminIdentifier), false);
                 break;
             default:
                 throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_INVALID_IDENTIFIER);
@@ -259,8 +259,8 @@ class Administration
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_UNKNOWN_USER);
         }
         
-        $admin = new User(false, $result['uzivatele_id']);
-        $admin->initialize($result['jmeno'], $result['email'], new DateTime($result['posledni_prihlaseni']), $result['pridane_obrazky'], $result['uhodnute_obrazky'], $result['karma'], $result['status']);
+        $admin = new User(false, $result[User::COLUMN_DICTIONARY['id']]);
+        $admin->initialize($result[User::COLUMN_DICTIONARY['name']], $result[User::COLUMN_DICTIONARY['email']], new DateTime($result[User::COLUMN_DICTIONARY['lastLogin']]), $result[User::COLUMN_DICTIONARY['addedPictures']], $result[User::COLUMN_DICTIONARY['guessedPictures']], $result[User::COLUMN_DICTIONARY['karma']], $result[User::COLUMN_DICTIONARY['status']]);
         
         $class = new ClassObject(false, $classId);
         $class->changeClassAdminAsAdmin($admin);
