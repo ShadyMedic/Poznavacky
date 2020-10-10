@@ -185,7 +185,7 @@ h5 {
   text-align: center;
   position: relative;
   padding: 0.4em 1em;
-  border-radius: 0.2em;
+  border-radius: 3.2px;
 }
 
 .btn.border-btn.non-transparent.white {
@@ -381,11 +381,11 @@ h5 {
   height: 1em;
 }
 
-input {
+input, select {
   border: none;
 }
 
-input.text-field {
+input.text-field, select.text-field {
   font-size: 100%;
   padding: 0.4em 0.72em;
   border-radius: 0.2em;
@@ -874,19 +874,11 @@ label.required:after {
   }
 }
 
-#menu .folders a,
-#learn .folders a,
-#test .folders a,
-#addPictures .folders a,
-#accountSettings .folders a {
+#menu .folders a {
   display: block;
 }
 
-#menu .folders li,
-#learn .folders li,
-#test .folders li,
-#addPictures .folders li,
-#accountSettings .folders li {
+#menu .folders li {
   display: block;
   background: white;
   border-radius: 4px;
@@ -894,73 +886,45 @@ label.required:after {
           box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
 }
 
-#menu .folders#menu-groups-table .table-title.rows,
-#learn .folders#menu-groups-table .table-title.rows,
-#test .folders#menu-groups-table .table-title.rows,
-#addPictures .folders#menu-groups-table .table-title.rows,
-#accountSettings .folders#menu-groups-table .table-title.rows {
+#menu .folders#menu-groups-table .table-title.rows {
   -ms-grid-columns: 1fr 5rem;
       grid-template-columns: 1fr 5rem;
 }
 
 @media screen and (min-width: 360px) {
-  #menu .folders#menu-groups-table .table-title.rows,
-  #learn .folders#menu-groups-table .table-title.rows,
-  #test .folders#menu-groups-table .table-title.rows,
-  #addPictures .folders#menu-groups-table .table-title.rows,
-  #accountSettings .folders#menu-groups-table .table-title.rows {
+  #menu .folders#menu-groups-table .table-title.rows {
     -ms-grid-columns: 1fr 6rem;
         grid-template-columns: 1fr 6rem;
   }
 }
 
 @media screen and (min-width: 576px) {
-  #menu .folders#menu-groups-table .table-title.rows,
-  #learn .folders#menu-groups-table .table-title.rows,
-  #test .folders#menu-groups-table .table-title.rows,
-  #addPictures .folders#menu-groups-table .table-title.rows,
-  #accountSettings .folders#menu-groups-table .table-title.rows {
+  #menu .folders#menu-groups-table .table-title.rows {
     -ms-grid-columns: 1fr 8rem;
         grid-template-columns: 1fr 8rem;
   }
 }
 
-#menu .folders#menu-groups-table ul.rows li,
-#learn .folders#menu-groups-table ul.rows li,
-#test .folders#menu-groups-table ul.rows li,
-#addPictures .folders#menu-groups-table ul.rows li,
-#accountSettings .folders#menu-groups-table ul.rows li {
+#menu .folders#menu-groups-table ul.rows li {
   -ms-grid-columns: 1fr 5rem;
       grid-template-columns: 1fr 5rem;
 }
 
 @media screen and (min-width: 360px) {
-  #menu .folders#menu-groups-table ul.rows li,
-  #learn .folders#menu-groups-table ul.rows li,
-  #test .folders#menu-groups-table ul.rows li,
-  #addPictures .folders#menu-groups-table ul.rows li,
-  #accountSettings .folders#menu-groups-table ul.rows li {
+  #menu .folders#menu-groups-table ul.rows li {
     -ms-grid-columns: 1fr 6rem;
         grid-template-columns: 1fr 6rem;
   }
 }
 
 @media screen and (min-width: 576px) {
-  #menu .folders#menu-groups-table ul.rows li,
-  #learn .folders#menu-groups-table ul.rows li,
-  #test .folders#menu-groups-table ul.rows li,
-  #addPictures .folders#menu-groups-table ul.rows li,
-  #accountSettings .folders#menu-groups-table ul.rows li {
+  #menu .folders#menu-groups-table ul.rows li {
     -ms-grid-columns: 1fr 8rem;
         grid-template-columns: 1fr 8rem;
   }
 }
 
-#menu .folders .table-title.rows,
-#learn .folders .table-title.rows,
-#test .folders .table-title.rows,
-#addPictures .folders .table-title.rows,
-#accountSettings .folders .table-title.rows {
+#menu .folders .table-title.rows {
   width: 100%;
   max-width: 780px;
   padding: 0.4rem;
@@ -971,41 +935,25 @@ label.required:after {
 }
 
 @media screen and (min-width: 360px) {
-  #menu .folders .table-title.rows,
-  #learn .folders .table-title.rows,
-  #test .folders .table-title.rows,
-  #addPictures .folders .table-title.rows,
-  #accountSettings .folders .table-title.rows {
+  #menu .folders .table-title.rows {
     -ms-grid-columns: 1fr 8rem 6rem;
         grid-template-columns: 1fr 8rem 6rem;
   }
 }
 
 @media screen and (min-width: 576px) {
-  #menu .folders .table-title.rows,
-  #learn .folders .table-title.rows,
-  #test .folders .table-title.rows,
-  #addPictures .folders .table-title.rows,
-  #accountSettings .folders .table-title.rows {
+  #menu .folders .table-title.rows {
     -ms-grid-columns: 1fr 8rem 8rem;
         grid-template-columns: 1fr 8rem 8rem;
   }
 }
 
-#menu .folders ul,
-#learn .folders ul,
-#test .folders ul,
-#addPictures .folders ul,
-#accountSettings .folders ul {
+#menu .folders ul {
   display: -ms-grid;
   display: grid;
 }
 
-#menu .folders ul.rows,
-#learn .folders ul.rows,
-#test .folders ul.rows,
-#addPictures .folders ul.rows,
-#accountSettings .folders ul.rows {
+#menu .folders ul.rows {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1018,20 +966,12 @@ label.required:after {
   position: relative;
 }
 
-#menu .folders ul.rows button,
-#learn .folders ul.rows button,
-#test .folders ul.rows button,
-#addPictures .folders ul.rows button,
-#accountSettings .folders ul.rows button {
+#menu .folders ul.rows button {
   width: 100%;
   margin: 0.4rem 0;
 }
 
-#menu .folders ul.rows button li,
-#learn .folders ul.rows button li,
-#test .folders ul.rows button li,
-#addPictures .folders ul.rows button li,
-#accountSettings .folders ul.rows button li {
+#menu .folders ul.rows button li {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 6rem 5rem;
@@ -1039,79 +979,43 @@ label.required:after {
 }
 
 @media screen and (min-width: 360px) {
-  #menu .folders ul.rows button li,
-  #learn .folders ul.rows button li,
-  #test .folders ul.rows button li,
-  #addPictures .folders ul.rows button li,
-  #accountSettings .folders ul.rows button li {
+  #menu .folders ul.rows button li {
     -ms-grid-columns: 1fr 8rem 6rem;
         grid-template-columns: 1fr 8rem 6rem;
   }
 }
 
 @media screen and (min-width: 576px) {
-  #menu .folders ul.rows button li,
-  #learn .folders ul.rows button li,
-  #test .folders ul.rows button li,
-  #addPictures .folders ul.rows button li,
-  #accountSettings .folders ul.rows button li {
+  #menu .folders ul.rows button li {
     -ms-grid-columns: 1fr 8rem 8rem;
         grid-template-columns: 1fr 8rem 8rem;
   }
 }
 
-#menu .folders ul.rows li,
-#learn .folders ul.rows li,
-#test .folders ul.rows li,
-#addPictures .folders ul.rows li,
-#accountSettings .folders ul.rows li {
+#menu .folders ul.rows li {
   width: 100%;
   padding: 0.4rem;
 }
 
 #menu .folders ul.rows #enter-code-wrapper,
-#menu .folders ul.rows #request-class-wrapper,
-#learn .folders ul.rows #enter-code-wrapper,
-#learn .folders ul.rows #request-class-wrapper,
-#test .folders ul.rows #enter-code-wrapper,
-#test .folders ul.rows #request-class-wrapper,
-#addPictures .folders ul.rows #enter-code-wrapper,
-#addPictures .folders ul.rows #request-class-wrapper,
-#accountSettings .folders ul.rows #enter-code-wrapper,
-#accountSettings .folders ul.rows #request-class-wrapper {
+#menu .folders ul.rows #request-class-wrapper {
   margin: 0.6rem 0;
   text-align: center;
 }
 
 #menu .folders ul.rows #enter-code-wrapper > *,
-#menu .folders ul.rows #request-class-wrapper > *,
-#learn .folders ul.rows #enter-code-wrapper > *,
-#learn .folders ul.rows #request-class-wrapper > *,
-#test .folders ul.rows #enter-code-wrapper > *,
-#test .folders ul.rows #request-class-wrapper > *,
-#addPictures .folders ul.rows #enter-code-wrapper > *,
-#addPictures .folders ul.rows #request-class-wrapper > *,
-#accountSettings .folders ul.rows #enter-code-wrapper > *,
-#accountSettings .folders ul.rows #request-class-wrapper > * {
+#menu .folders ul.rows #request-class-wrapper > * {
   margin: 0.2rem 0;
 }
 
-#menu .folders ul.rows #request-class-wrapper .btn,
-#learn .folders ul.rows #request-class-wrapper .btn,
-#test .folders ul.rows #request-class-wrapper .btn,
-#addPictures .folders ul.rows #request-class-wrapper .btn,
-#accountSettings .folders ul.rows #request-class-wrapper .btn {
+#menu .folders ul.rows #request-class-wrapper .btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   margin: 0.2rem auto;
 }
 
-#menu .folders ul.tiles,
-#learn .folders ul.tiles,
-#test .folders ul.tiles,
-#addPictures .folders ul.tiles,
-#accountSettings .folders ul.tiles {
+#menu .folders ul.tiles {
   -ms-grid-columns: (minmax(10rem, 1fr))[auto-fit];
       grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-gap: 1rem;
@@ -1122,26 +1026,14 @@ label.required:after {
 }
 
 @media screen and (min-width: 576px) {
-  #menu .folders ul.tiles,
-  #learn .folders ul.tiles,
-  #test .folders ul.tiles,
-  #addPictures .folders ul.tiles,
-  #accountSettings .folders ul.tiles {
+  #menu .folders ul.tiles {
     -ms-grid-columns: (minmax(12rem, 1fr))[auto-fit];
         grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     grid-gap: 2rem;
   }
 }
 
-#menu .folders ul.tiles > button, #menu .folders ul.tiles > li,
-#learn .folders ul.tiles > button,
-#learn .folders ul.tiles > li,
-#test .folders ul.tiles > button,
-#test .folders ul.tiles > li,
-#addPictures .folders ul.tiles > button,
-#addPictures .folders ul.tiles > li,
-#accountSettings .folders ul.tiles > button,
-#accountSettings .folders ul.tiles > li {
+#menu .folders ul.tiles > button, #menu .folders ul.tiles > li {
   width: 100%;
   min-height: 16rem;
   height: 100%;
@@ -1151,27 +1043,11 @@ label.required:after {
   max-width: 16rem;
 }
 
-#menu .folders ul.tiles span, #menu .folders ul.tiles h4, #menu .folders ul.tiles h5,
-#learn .folders ul.tiles span,
-#learn .folders ul.tiles h4,
-#learn .folders ul.tiles h5,
-#test .folders ul.tiles span,
-#test .folders ul.tiles h4,
-#test .folders ul.tiles h5,
-#addPictures .folders ul.tiles span,
-#addPictures .folders ul.tiles h4,
-#addPictures .folders ul.tiles h5,
-#accountSettings .folders ul.tiles span,
-#accountSettings .folders ul.tiles h4,
-#accountSettings .folders ul.tiles h5 {
+#menu .folders ul.tiles span, #menu .folders ul.tiles h4, #menu .folders ul.tiles h5 {
   text-align: center;
 }
 
-#menu .folders ul.tiles li,
-#learn .folders ul.tiles li,
-#test .folders ul.tiles li,
-#addPictures .folders ul.tiles li,
-#accountSettings .folders ul.tiles li {
+#menu .folders ul.tiles li {
   height: 100%;
   width: 100%;
   padding: 1rem;
@@ -1186,45 +1062,54 @@ label.required:after {
       align-content: center;
 }
 
-#menu .folders ul.tiles li h4,
-#learn .folders ul.tiles li h4,
-#test .folders ul.tiles li h4,
-#addPictures .folders ul.tiles li h4,
-#accountSettings .folders ul.tiles li h4 {
+#menu .folders ul.tiles li h4 {
   word-break: break-word;
 }
 
-#menu .folders ul.tiles li a.btn,
-#learn .folders ul.tiles li a.btn,
-#test .folders ul.tiles li a.btn,
-#addPictures .folders ul.tiles li a.btn,
-#accountSettings .folders ul.tiles li a.btn {
+#menu .folders ul.tiles li a.btn {
   margin: 0.4rem auto;
 }
 
-#menu .folders ul.tiles #class-code-form,
-#learn .folders ul.tiles #class-code-form,
-#test .folders ul.tiles #class-code-form,
-#addPictures .folders ul.tiles #class-code-form,
-#accountSettings .folders ul.tiles #class-code-form {
+#menu .folders ul.tiles #class-code-form {
   width: 100%;
 }
 
-#menu .folders ul.tiles #class-code-form > *,
-#learn .folders ul.tiles #class-code-form > *,
-#test .folders ul.tiles #class-code-form > *,
-#addPictures .folders ul.tiles #class-code-form > *,
-#accountSettings .folders ul.tiles #class-code-form > * {
+#menu .folders ul.tiles #class-code-form > * {
   width: 100%;
   margin: 4px 0;
 }
 
-#menu .folders ul .text-field,
-#learn .folders ul .text-field,
-#test .folders ul .text-field,
-#addPictures .folders ul .text-field,
-#accountSettings .folders ul .text-field {
+#menu .folders ul .text-field {
   background: #eee;
+}
+
+#learn #learn-wrapper .controllers .text-field {
+  width: 100%;
+  margin: 6px auto;
+}
+
+#learn #learn-wrapper .controllers .btn {
+  width: 100%;
+  margin: 4px auto;
+}
+
+#learn #learn-wrapper .picture {
+  width: 100%;
+  margin: 8px 0;
+}
+
+#learn #learn-wrapper .picture #main-img {
+  height: 100%;
+  width: 100%;
+  background: #f8f8f8;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 3.2px;
+}
+
+#learn #learn-wrapper .picture .btn {
+  background: none;
+  width: 25%;
 }
 
 body#index {

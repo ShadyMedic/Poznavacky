@@ -107,7 +107,7 @@ h5 {
 		text-align: center;
 		position: relative;
 		padding: 0.4em 1em;
-		border-radius: 0.2em;
+		border-radius: 3.2px;
 		&.non-transparent {
 			&.white {
 				background: white;
@@ -264,7 +264,7 @@ h5 {
 	height: 1em;
 }
 
-input {
+input, select {
 	border: none;
 	&.text-field {
 		font-size: 100%;

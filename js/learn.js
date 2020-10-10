@@ -3,7 +3,14 @@ $(function() {
 	$("#natural-forward-button").click(function(){updateNatural(1)});
 	$("#picture-back-button").click(function(){updatePicture(-1)});
 	$("#picture-forward-button").click(function(){updatePicture(1)});
-	$("#key-navigation-wrapper").keypress(function(event){keyPressed(event)});
+	$("#learn-wrapper").keypress(function(event){keyPressed(event)});
+
+	console.log($("#learn-wrapper .picture").outerWidth());
+	$("#learn-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
+})
+
+$(window).resize(function() {
+	$("#learn-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
 })
 
 
