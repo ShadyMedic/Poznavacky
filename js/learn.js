@@ -33,7 +33,7 @@ function natural(name)
 			this.lastPicture += this.pictures.length;
 		}
 		
-		$("#mainImg").attr("src", this.pictures[this.lastPicture]);
+		$("#main-img").attr("src", this.pictures[this.lastPicture]);
 	}
 	
 	/**
@@ -71,7 +71,7 @@ $(function()
 	naturals = new Array();
 	
 	//Kód napsaný podle odpovědi na StackOverflow: https://stackoverflow.com/a/590219
-	$("#selectBox option").each(function()
+	$("#select-box option").each(function()
 	{
 		naturals.push(new natural($(this).val()));
 	});
@@ -128,7 +128,7 @@ function updatePicture(offset)
 function sel()
 {
 	let i;
-	for (i = 0; i < naturals.length && naturals[i].name !== $("#selectBox").val(); i++){}
+	for (i = 0; i < naturals.length && naturals[i].name !== $("#select-box").val(); i++){}
 	selectedNatural = naturals[i];
 	
 	updatePicture(0);
@@ -152,7 +152,7 @@ function updateNatural(offset)
 		currentNaturalIndex += naturals.length;
 	}
 	
-	$("#selectBox").prop("selectedIndex", currentNaturalIndex);
+	$("#select-box").prop("selected-index", currentNaturalIndex);
 	
 	//Úprava currentNatural a obrázeku
 	selectedNatural = naturals[currentNaturalIndex];
