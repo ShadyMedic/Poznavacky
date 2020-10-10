@@ -1,3 +1,12 @@
+$(function() {
+	$("#natural-back-button").click(function(){updateNatural(-1)});
+	$("#natural-forward-button").click(function(){updateNatural(1)});
+	$("#picture-back-button").click(function(){updatePicture(-1)});
+	$("#picture-forward-button").click(function(){updatePicture(1)});
+	$("#key-navigation-wrapper").keypress(function(event){keyPressed(event)});
+})
+
+
 //Objekt pro uchování přírodniny a jejích obrázků
 function natural(name)
 {
@@ -79,12 +88,12 @@ $(function()
 	//Nastav první přírodninu
 	sel();
 	
-	//Nastav focus na hlavní <div>, aby fungovali klávesové zkratky
+	//Nastav focus na hlavní <div>, aby fungovaly klávesové zkratky
 	$("main>div:eq(0)").focus();
 })
 
 /**
- * Funkce, která se spouští vždy, když je stisknuta nějaká klávesa zatímco má focus jediný <div> v <main> obsahující vše důležité ze stránky
+ * Funkce, která se spouští vždy, když je stisknuta nějaká klávesa, zatímco má focus jediný <div> v <main> obsahující vše důležité ze stránky
  * @param event
  */
 function keyPressed(event)
@@ -152,7 +161,7 @@ function updateNatural(offset)
 		currentNaturalIndex += naturals.length;
 	}
 	
-	$("#select-box").prop("selected-index", currentNaturalIndex);
+	$("#select-box").prop("selectedIndex", currentNaturalIndex);
 	
 	//Úprava currentNatural a obrázeku
 	selectedNatural = naturals[currentNaturalIndex];
