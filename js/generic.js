@@ -32,6 +32,21 @@ function resizeAsidePanel() {
 	}
 }
 
+$(function() {
+	$(".custom-select-wrapper").click(function() {
+		$(this).find(".custom-select").toggleClass("open");
+		for (const option of $(".custom-option")) {
+			$(option).click(function() {
+				if (!$(this).hasClass('selected')) {
+					$(this).siblings().removeClass('selected');
+					$(this).addClass('selected');
+					$(this).closest('.custom-select').find(".custom-select-main span").text($(this).text());
+				}
+			})
+		}
+	})
+})
+
 //Funkce pro získání hodnoty cookie
 //Zkopírována z https://www.w3schools.com/js/js_cookies.asp
 function getCookie(cname)

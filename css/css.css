@@ -403,6 +403,97 @@ label.required:after {
   color: #a00;
 }
 
+.custom-select-wrapper {
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 100%;
+}
+
+.custom-select-wrapper .custom-select {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.custom-select-wrapper .custom-select.open .custom-options {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.custom-select-wrapper .custom-select.open .custom-select-main {
+  border-radius: 3.2px 3.2px 0 0;
+}
+
+.custom-select-wrapper .custom-select-main {
+  position: relative;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 1em;
+  color: #3b3b3b;
+  padding: 0.4em 0.72em;
+  background: #ffffff;
+  cursor: pointer;
+  border-radius: 3.2px;
+}
+
+.custom-select-wrapper .custom-options {
+  position: absolute;
+  display: block;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 2;
+  max-height: 50vh;
+  border-radius: 0 0 3.2px 3.2px;
+  -webkit-box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+}
+
+.custom-select-wrapper .custom-options .custom-option {
+  position: relative;
+  display: block;
+  padding: 0.4em 0.72em;
+  color: #3b3b3b;
+  cursor: pointer;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  border-top: 1px solid #eee;
+}
+
+.custom-select-wrapper .custom-options .custom-option:hover {
+  cursor: pointer;
+  background-color: #b2b2b2;
+}
+
+.custom-select-wrapper .custom-options .custom-option.selected {
+  color: #ffffff;
+  background-color: #305c91;
+}
+
 #menu,
 #learn,
 #test,
@@ -1083,7 +1174,7 @@ label.required:after {
   background: #eee;
 }
 
-#learn #learn-wrapper .controllers .text-field {
+#learn #learn-wrapper .controllers .custom-select {
   width: 100%;
   margin: 6px auto;
 }
