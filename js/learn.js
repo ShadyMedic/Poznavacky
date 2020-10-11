@@ -4,8 +4,8 @@ $(function() {
 	$("#picture-back-button").click(function(){updatePicture(-1)});
 	$("#picture-forward-button").click(function(){updatePicture(1)});
 	$("#learn-wrapper").keypress(function(event){keyPressed(event)});
+	$("#natural-select span").on('DOMSubtreeModified',function(){sel()});
 
-	console.log($("#learn-wrapper .picture").outerWidth());
 	$("#learn-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
 })
 
@@ -87,9 +87,9 @@ $(function()
 	naturals = new Array();
 	
 	//Kód napsaný podle odpovědi na StackOverflow: https://stackoverflow.com/a/590219
-	$("#select-box option").each(function()
+	$(".custom-options .custom-option").each(function()
 	{
-		naturals.push(new natural($(this).val()));
+		naturals.push(new natural($(this).text()));
 	});
 	
 	//Nastav první přírodninu
@@ -143,10 +143,14 @@ function updatePicture(offset)
  */
 function sel()
 {
+	//Tato funkce je zavolána dvakrát po každém výběru přírodniny:
+	//  1. Když je název staré přírodniny vymazán
+	//	2. Když je zobraze název nové přírodniny
+	//V prvním případě by se změny nepovedly a zobrazovali by se do konzole chyby, proto je případ jedna ukončen následujícím řádkem
+	if ($(".custom-select-main span").text() === ""){ return; }
 	let i;
-	for (i = 0; i < naturals.length && naturals[i].name !== $("#select-box").val(); i++){}
+	for (i = 0; i < naturals.length && naturals[i].name !== $(".custom-select-main span").text(); i++){}
 	selectedNatural = naturals[i];
-	
 	updatePicture(0);
 }
 
@@ -168,9 +172,24 @@ function updateNatural(offset)
 		currentNaturalIndex += naturals.length;
 	}
 	
-	$("#select-box").prop("selectedIndex", currentNaturalIndex);
-	
+		
 	//Úprava currentNatural a obrázeku
 	selectedNatural = naturals[currentNaturalIndex];
 	updatePicture(0);
+	
+	
+	//Aktualizace select boxu
+	$("#natural-select span").text(selectedNatural.name);
+	$(".custom-options .custom-option").each(function()
+	{
+		if ($(this).text() === selectedNatural.name)
+		{
+			if (!$(this).hasClass('selected')) {
+				$(this).siblings().removeClass('selected');
+				$(this).addClass('selected');
+				$(this).closest('.custom-select').find(".custom-select-main span").text($(this).text());
+				return;
+			}
+		}
+	});
 }
