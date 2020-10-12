@@ -228,12 +228,12 @@ class Group extends DatabaseItem
         Db::connect();
         //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
         $in = str_repeat('?,', count($allPartsIds) - 1).'?';
-        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky,casti_id FROM prirodniny WHERE casti_id IN ('.$in.')', $allPartsIds, true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM prirodniny WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);
         foreach ($result as $naturalData)
         {
-            $part = $this->getPartById($naturalData['casti_id']);
-            $natural = new Natural(false, $naturalData['prirodniny_id']);
-            $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], null, $this, $part);
+            $part = $this->getPartById($naturalData[Natural::COLUMN_DICTIONARY['part']]);
+            $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
+            $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, $this, $part);
             $allNaturals[] = $natural;
         }
         return $allNaturals;
@@ -311,12 +311,12 @@ class Group extends DatabaseItem
             SELECT
             hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
             obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
-            prirodniny.prirodniny_id AS "prirodniny_id", prirodniny.nazev AS "prirodniny_nazev", prirodniny.obrazky AS "prirodniny_obrazky", prirodniny.casti_id AS "prirodniny_cast"
+            prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky", prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' AS "prirodniny_cast"
             FROM hlaseni
             JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
-            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
+            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.duvod IN ('.$in.')
-            AND prirodniny.poznavacky_id = ?;
+            AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', $sqlArguments, true);
         
         if ($result === false)
@@ -328,7 +328,7 @@ class Group extends DatabaseItem
         $reports = array();
         foreach ($result as $reportInfo)
         {
-            $natural = new Natural(false, $reportInfo['prirodniny_id']);
+            $natural = new Natural(false, $reportInfo[Natural::COLUMN_DICTIONARY['id']]);
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null, $this, new Part(false, $reportInfo['prirodniny_cast']));
             $picture = new Picture(false, $reportInfo['obrazky_id']);
             $picture->initialize($reportInfo['obrazky_zdroj'], $natural, null, $reportInfo['obrazky_povoleno'], $natural->getPart());

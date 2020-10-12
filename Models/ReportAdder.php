@@ -66,12 +66,12 @@ class ReportAdder
         $dbResult = Db::fetchQuery('
         SELECT
         casti.casti_id, casti.nazev AS "p_nazev", casti.prirodniny, casti.obrazky AS "p_obrazky",
-        prirodniny.prirodniny_id, prirodniny.nazev AS "n_nazev", prirodniny.obrazky AS "n_obrazky",
+        prirodniny.'.Natural::COLUMN_DICTIONARY['id'].', prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
         obrazky.obrazky_id, obrazky.prirodniny_id, obrazky.zdroj, obrazky.povoleno
         FROM obrazky
-        JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
-        JOIN casti ON prirodniny.casti_id = casti.casti_id
-        WHERE obrazky.zdroj = ? AND prirodniny.poznavacky_id = ?;
+        JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
+        JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.casti_id
+        WHERE obrazky.zdroj = ? AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', array($url, $this->group->getId()), false);
         
         //Obrázek nebyl v databázi podle zdroje nalezen
@@ -82,7 +82,7 @@ class ReportAdder
         
         $part = new Part(false, $dbResult['casti_id']);
         $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult['prirodniny'], $dbResult['p_obrazky']);
-        $natural = new Natural(false, $dbResult['prirodniny_id']);
+        $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);
         $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], null, $this->group, $part);
         $picture = new Picture(false, $dbResult['obrazky_id']);
         $picture->initialize($url, $natural, $part, $dbResult['povoleno'], null);

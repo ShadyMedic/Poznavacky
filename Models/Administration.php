@@ -84,14 +84,14 @@ class Administration
             SELECT
             hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
             obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
-            prirodniny.prirodniny_id AS "prirodniny_id", prirodniny.nazev AS "prirodniny_nazev", prirodniny.obrazky AS "prirodniny_obrazky",
+            prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky",
             casti.casti_id AS "casti_id", casti.nazev AS "casti_nazev", casti.prirodniny AS "casti_prirodniny", casti.obrazky AS "casti_obrazky",
             poznavacky.'.Group::COLUMN_DICTIONARY['id'].' AS "poznavacky_id", poznavacky.'.Group::COLUMN_DICTIONARY['name'].' AS "poznavacky_nazev", poznavacky.'.Group::COLUMN_DICTIONARY['partsCount'].' AS "poznavacky_casti",
             tridy.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", tridy.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM hlaseni
             JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
-            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
-            JOIN casti ON prirodniny.casti_id = casti.casti_id
+            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
+            JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.casti_id
             JOIN poznavacky ON casti.poznavacky_id = poznavacky.'.Group::COLUMN_DICTIONARY['id'].'
             JOIN tridy ON poznavacky.'.Group::COLUMN_DICTIONARY['class'].' = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.duvod IN ('.$in.');
@@ -114,7 +114,7 @@ class Administration
             $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo[Group::COLUMN_DICTIONARY['partsCount']]);
             $part = new Part(false, $reportInfo['casti_id']);
             $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
-            $natural = new Natural(false, $reportInfo['prirodniny_id']);
+            $natural = new Natural(false, $reportInfo[Natural::COLUMN_DICTIONARY['id']]);
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $class, $group, $part);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
             $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);

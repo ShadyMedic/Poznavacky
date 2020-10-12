@@ -249,7 +249,7 @@ class Part extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky FROM prirodniny WHERE casti_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' FROM prirodniny WHERE '.Natural::COLUMN_DICTIONARY['part'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné části přírodniny
@@ -260,8 +260,8 @@ class Part extends DatabaseItem
             $this->naturals = array();
             foreach ($result as $naturalData)
             {
-                $natural = new Natural(false, $naturalData['prirodniny_id']);
-                $natural->initialize($naturalData['nazev'], null, $naturalData['obrazky'], null, $this->getGroup(), $this);
+                $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
+                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, $this->getGroup(), $this);
                 $this->naturals[] = $natural;
             }
         }
