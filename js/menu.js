@@ -1,7 +1,23 @@
+var smallTablet = 672;
+var tablet = 768;
+
 $(function() { //až po načtení stránky
 
 	$(".rows").hide();
+	checkHeader();
 });
+
+$(window).resize(function(){
+	checkHeader();
+})
+
+//funkce nastavující padding mainu podle velikosti okna (různá zobrazení pro mobily a desktopy)
+function checkHeader() {
+	if ($(window).width() <= smallTablet)
+		$("main").css("padding-top", $("header").outerHeight());
+	else 
+		$("main").css("padding-top", 0);
+}
 
 $(function(){
 	/*
