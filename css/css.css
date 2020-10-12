@@ -410,6 +410,7 @@ label.required:after {
       -ms-user-select: none;
           user-select: none;
   width: 100%;
+  margin: 0;
 }
 
 .custom-select-wrapper .custom-select {
@@ -1007,12 +1008,14 @@ label.required:after {
   }
 }
 
-#menu main *,
-#learn main *,
-#test main *,
-#addPictures main *,
-#accountSettings main * {
-  margin: auto;
+@media screen and (max-width: 672px) {
+  #menu main *,
+  #learn main *,
+  #test main *,
+  #addPictures main *,
+  #accountSettings main * {
+    margin: auto;
+  }
 }
 
 #menu footer,
@@ -1246,6 +1249,69 @@ label.required:after {
   background: #eee;
 }
 
+#learn main > .wrapper {
+  padding: 1rem 2rem;
+}
+
+#learn #learn-wrapper:focus {
+  outline: none;
+}
+
+@media screen and (min-width: 672px) {
+  #learn #learn-wrapper {
+    display: -ms-grid;
+    display: grid;
+    -webkit-column-gap: 20px;
+            column-gap: 20px;
+    -ms-grid-columns: auto 1fr;
+        grid-template-columns: auto 1fr;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: start;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #learn #learn-wrapper {
+    -webkit-column-gap: 40px;
+            column-gap: 40px;
+    max-width: 900px;
+  }
+}
+
+#learn #learn-wrapper .controllers {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 672px) {
+  #learn #learn-wrapper .controllers {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #learn #learn-wrapper .controllers {
+    max-width: 280px;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #learn #learn-wrapper .controllers {
+    max-width: 320px;
+  }
+}
+
 #learn #learn-wrapper .controllers .custom-select {
   width: 100%;
   margin: 6px auto;
@@ -1259,6 +1325,36 @@ label.required:after {
 #learn #learn-wrapper .picture {
   width: 100%;
   margin: 8px 0;
+}
+
+@media screen and (min-width: 672px) {
+  #learn #learn-wrapper .picture {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1/2;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1/2;
+    width: 320px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #learn #learn-wrapper .picture {
+    width: 400px;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #learn #learn-wrapper .picture {
+    width: 500px;
+  }
+}
+
+@media screen and (min-width: 672px) {
+  #learn #learn-wrapper .picture {
+    margin: 6px 0;
+  }
 }
 
 #learn #learn-wrapper .picture #main-img {
