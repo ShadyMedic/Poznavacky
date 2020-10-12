@@ -303,10 +303,14 @@ label {
 				opacity: 1;
 				visibility: visible;
 				pointer-events: all;
+				transform: rotateX(0deg);
 			}
 			.custom-select-main {
 				border-radius: 3.2px 3.2px 0 0;
-			}
+				.arrow {
+					transform: rotate(270deg);
+				}
+			}			
 		}
 	}
 	.custom-select-main {
@@ -314,13 +318,21 @@ label {
 		width: 100%;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
 		font-size: 1em;
-		color: #3b3b3b;
-		padding: 0.4em 0.72em;
-		background: #ffffff;
+		color: $gray1;
+		padding: 0.4em 1em;
+		background: #fff;
 		cursor: pointer;
 		border-radius: 3.2px;
+		span {
+			flex-grow: 1;
+		}
+		.arrow {
+			height: 1em;
+			width: 1em;
+			transform: rotate(90deg);
+			transition: transform 0.4s ease-in-out;
+		}
 	}
 	.custom-options {
 		position: absolute;
@@ -329,8 +341,10 @@ label {
 		left: 0;
 		right: 0;
 		background: #fff;
-		transition: all 0.5s;
+		transition: all 0.4s ease-out;
 		opacity: 0;
+		transform: rotateX(90deg);
+		transform-origin: top;
 		visibility: hidden;
 		pointer-events: none;
 		z-index: 2;
@@ -342,17 +356,16 @@ label {
 			position: relative;
 			display: block;
 			padding: 0.4em 0.72em;
-			color: #3b3b3b;
+			color: $black1;
 			cursor: pointer;
-			transition: all 0.5s;
-			border-top: 1px solid #eee;
+			border-top: 1px solid $gray2;
 			&:hover {
 				cursor: pointer;
-				background-color: #b2b2b2;
+				background-color: $gray2;
 			}
 			&.selected {
-				color: #ffffff;
-				background-color: #305c91;
+				color: #fff;
+				background-color: $greenMid;
 			}
 		}
 	}

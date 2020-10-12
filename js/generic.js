@@ -33,6 +33,8 @@ function resizeAsidePanel() {
 }
 
 $(function() {
+	$(".custom-select-wrapper").find(".custom-option").first().addClass("selected");
+
 	$(".custom-select-wrapper").click(function() {
 		$(this).find(".custom-select").toggleClass("open");
 		for (const option of $(".custom-option")) {

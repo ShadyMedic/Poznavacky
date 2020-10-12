@@ -9,11 +9,11 @@
 		<div class="custom-select-wrapper" id="natural-select">
 			<div class="custom-select">
 				<div class="custom-select-main">
-					<span></span>
-					<!--<div class="arrow"></div>-->
+					<span><?= $naturals[0]->getName() ?></span>
+					<img class="arrow" src="../images/arrowBlack.svg">
 				</div>
 				<ul class="custom-options">
-					<?php foreach ($naturals as $natural) : ?>
+					<?php foreach ($naturals as $natural) :?>
 						<li class="custom-option"><?= $natural->getName() ?></li>
 					<?php endforeach; ?>
 				</ul>

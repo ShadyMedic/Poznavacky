@@ -427,10 +427,17 @@ label.required:after {
   opacity: 1;
   visibility: visible;
   pointer-events: all;
+  -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
 }
 
 .custom-select-wrapper .custom-select.open .custom-select-main {
   border-radius: 3.2px 3.2px 0 0;
+}
+
+.custom-select-wrapper .custom-select.open .custom-select-main .arrow {
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
 }
 
 .custom-select-wrapper .custom-select-main {
@@ -442,15 +449,29 @@ label.required:after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   font-size: 1em;
-  color: #3b3b3b;
-  padding: 0.4em 0.72em;
-  background: #ffffff;
+  color: #222;
+  padding: 0.4em 1em;
+  background: #fff;
   cursor: pointer;
   border-radius: 3.2px;
+}
+
+.custom-select-wrapper .custom-select-main span {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.custom-select-wrapper .custom-select-main .arrow {
+  height: 1em;
+  width: 1em;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  -webkit-transition: -webkit-transform 0.4s ease-in-out;
+  transition: -webkit-transform 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out, -webkit-transform 0.4s ease-in-out;
 }
 
 .custom-select-wrapper .custom-options {
@@ -460,9 +481,13 @@ label.required:after {
   left: 0;
   right: 0;
   background: #fff;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
+  -webkit-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
   opacity: 0;
+  -webkit-transform: rotateX(90deg);
+          transform: rotateX(90deg);
+  -webkit-transform-origin: top;
+          transform-origin: top;
   visibility: hidden;
   pointer-events: none;
   z-index: 2;
@@ -477,21 +502,19 @@ label.required:after {
   position: relative;
   display: block;
   padding: 0.4em 0.72em;
-  color: #3b3b3b;
+  color: #101010;
   cursor: pointer;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
   border-top: 1px solid #eee;
 }
 
 .custom-select-wrapper .custom-options .custom-option:hover {
   cursor: pointer;
-  background-color: #b2b2b2;
+  background-color: #eee;
 }
 
 .custom-select-wrapper .custom-options .custom-option.selected {
-  color: #ffffff;
-  background-color: #305c91;
+  color: #fff;
+  background-color: #479911;
 }
 
 #menu,
