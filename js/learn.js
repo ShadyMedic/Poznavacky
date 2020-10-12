@@ -1,3 +1,6 @@
+var smallTablet = 672;
+var tablet = 768;
+
 $(function() {
 	$("#natural-back-button").click(function(){updateNatural(-1)});
 	$("#natural-forward-button").click(function(){updateNatural(1)});
@@ -14,6 +17,21 @@ $(window).resize(function() {
 })
 
 
+$(function(){
+	checkHeader();
+})
+
+$(window).resize(function(){
+	checkHeader();
+})
+
+//funkce nastavující padding mainu podle velikosti okna (různá zobrazení pro mobily a desktopy)
+function checkHeader() {
+	if ($(window).width() <= smallTablet)
+		$("main").css("padding-top", $("header").outerHeight());
+	else 
+		$("main").css("padding-top", 0);
+}
 //Objekt pro uchování přírodniny a jejích obrázků
 function natural(name)
 {
