@@ -89,47 +89,47 @@ class Natural extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['name'].', '.Natural::COLUMN_DICTIONARY['picturesCount'].', '.Natural::COLUMN_DICTIONARY['class'].', '.Natural::COLUMN_DICTIONARY['group'].', '.Natural::COLUMN_DICTIONARY['part'].' FROM '.self::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].', '.self::COLUMN_DICTIONARY['picturesCount'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['group'].', '.self::COLUMN_DICTIONARY['part'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
             }
             
-            $name = $result[Natural::COLUMN_DICTIONARY['name']];
-            $picturesCount = $result[Natural::COLUMN_DICTIONARY['picturesCount']];
-            $class = new ClassObject(false, $result[Natural::COLUMN_DICTIONARY['class']]);
-            $group = new Group(false, $result[Natural::COLUMN_DICTIONARY['group']]);
-            $part = new Part(false, $result[Natural::COLUMN_DICTIONARY['part']]);
+            $name = $result[self::COLUMN_DICTIONARY['name']];
+            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
+            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
+            $group = new Group(false, $result[self::COLUMN_DICTIONARY['group']]);
+            $part = new Part(false, $result[self::COLUMN_DICTIONARY['part']]);
             
             $this->initialize($name, null, $picturesCount, $class, $group, $part);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->group))
         {
-            $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].', '.Natural::COLUMN_DICTIONARY['picturesCount'].', '.Natural::COLUMN_DICTIONARY['class'].', '.Natural::COLUMN_DICTIONARY['part'].' FROM '.self::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['name'].' = ? AND '.Natural::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($this->name, $this->group->getId()));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['picturesCount'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['part'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? AND '.self::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($this->name, $this->group->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
             }
             
-            $this->id = $result[Natural::COLUMN_DICTIONARY['id']];
-            $picturesCount = $result[Natural::COLUMN_DICTIONARY['picturesCount']];
-            $class = new ClassObject(false, $result[Natural::COLUMN_DICTIONARY['class']]);
-            $part = new Part(false, $result[Natural::COLUMN_DICTIONARY['part']]);
+            $this->id = $result[self::COLUMN_DICTIONARY['id']];
+            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
+            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
+            $part = new Part(false, $result[self::COLUMN_DICTIONARY['part']]);
             
             $this->initialize(null, null, $picturesCount, null, $part);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->part))
         {
-            $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].', '.Natural::COLUMN_DICTIONARY['picturesCount'].', '.Natural::COLUMN_DICTIONARY['class'].', '.Natural::COLUMN_DICTIONARY['group'].' FROM '.self::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['name'].' = ? AND '.Natural::COLUMN_DICTIONARY['part'].' = ? LIMIT 1', array($this->part->getId()));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['picturesCount'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['group'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? AND '.self::COLUMN_DICTIONARY['part'].' = ? LIMIT 1', array($this->part->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
             }
             
-            $this->id = $result[Natural::COLUMN_DICTIONARY['id']];
-            $picturesCount = $result[Natural::COLUMN_DICTIONARY['picturesCount']];
-            $class = new ClassObject(false, $result[Natural::COLUMN_DICTIONARY['class']]);
-            $group = new Group(false, $result[Natural::COLUMN_DICTIONARY['group']]);
+            $this->id = $result[self::COLUMN_DICTIONARY['id']];
+            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
+            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
+            $group = new Group(false, $result[self::COLUMN_DICTIONARY['group']]);
             
             $this->initialize(null, null, $picturesCount, $group, null);
         }
@@ -162,12 +162,12 @@ class Natural extends DatabaseItem
             //Aktualizace existující přírodniny
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Natural::COLUMN_DICTIONARY['name'].' = ?, '.Natural::COLUMN_DICTIONARY['picturesCount'].' = ?, '.Natural::COLUMN_DICTIONARY['class'].', '.Natural::COLUMN_DICTIONARY['group'].' = ?, '.Natural::COLUMN_DICTIONARY['part'].' = ? WHERE '.Natural::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId(), $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['picturesCount'].' = ?, '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['group'].' = ?, '.self::COLUMN_DICTIONARY['part'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId(), $this->id));
         }
         else
         {
             //Tvorba nové přírodniny
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['class'].','.Natural::COLUMN_DICTIONARY['group'].','.Natural::COLUMN_DICTIONARY['part'].') VALUES (?,?,?,?)', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId()), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['picturesCount'].','.self::COLUMN_DICTIONARY['class'].','.self::COLUMN_DICTIONARY['group'].','.self::COLUMN_DICTIONARY['part'].') VALUES (?,?,?,?)', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId()), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -328,7 +328,7 @@ class Natural extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

@@ -96,37 +96,37 @@ class User extends DatabaseItem implements ArrayAccess
         
         if ($this->isDefined($this->id))
         {
-            $userData = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['karma'].','.User::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
+            $userData = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['email'].','.self::COLUMN_DICTIONARY['lastLogin'].','.self::COLUMN_DICTIONARY['addedPictures'].','.self::COLUMN_DICTIONARY['guessedPictures'].','.self::COLUMN_DICTIONARY['karma'].','.self::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($userData))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_USER);
             }
             
-            $name = $userData[User::COLUMN_DICTIONARY['name']];
-            $email = $userData[User::COLUMN_DICTIONARY['email']];
-            $lastLogin = $userData[User::COLUMN_DICTIONARY['lastLogin']];
-            $addedPictures = $userData[User::COLUMN_DICTIONARY['addedPictures']];
-            $guessedPictures = $userData[User::COLUMN_DICTIONARY['guessedPictures']];
-            $karma = $userData[User::COLUMN_DICTIONARY['karma']];
-            $status = $userData[User::COLUMN_DICTIONARY['status']];
+            $name = $userData[self::COLUMN_DICTIONARY['name']];
+            $email = $userData[self::COLUMN_DICTIONARY['email']];
+            $lastLogin = $userData[self::COLUMN_DICTIONARY['lastLogin']];
+            $addedPictures = $userData[self::COLUMN_DICTIONARY['addedPictures']];
+            $guessedPictures = $userData[self::COLUMN_DICTIONARY['guessedPictures']];
+            $karma = $userData[self::COLUMN_DICTIONARY['karma']];
+            $status = $userData[self::COLUMN_DICTIONARY['status']];
             
             $this->initialize($name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status);
         }
         else if ($this->isDefined($this->name))
         {
-            $userData = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['karma'].','.User::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($this->name));
+            $userData = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].','.self::COLUMN_DICTIONARY['email'].','.self::COLUMN_DICTIONARY['lastLogin'].','.self::COLUMN_DICTIONARY['addedPictures'].','.self::COLUMN_DICTIONARY['guessedPictures'].','.self::COLUMN_DICTIONARY['karma'].','.self::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($this->name));
             if (empty($userData))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_USER);
             }
             
-            $id = $userData[User::COLUMN_DICTIONARY['id']];
-            $email = $userData[User::COLUMN_DICTIONARY['email']];
-            $lastLogin = $userData[User::COLUMN_DICTIONARY['lastLogin']];
-            $addedPictures = $userData[User::COLUMN_DICTIONARY['addedPictures']];
-            $guessedPictures = $userData[User::COLUMN_DICTIONARY['guessedPictures']];
-            $karma = $userData[User::COLUMN_DICTIONARY['karma']];
-            $status = $userData[User::COLUMN_DICTIONARY['status']];
+            $id = $userData[self::COLUMN_DICTIONARY['id']];
+            $email = $userData[self::COLUMN_DICTIONARY['email']];
+            $lastLogin = $userData[self::COLUMN_DICTIONARY['lastLogin']];
+            $addedPictures = $userData[self::COLUMN_DICTIONARY['addedPictures']];
+            $guessedPictures = $userData[self::COLUMN_DICTIONARY['guessedPictures']];
+            $karma = $userData[self::COLUMN_DICTIONARY['karma']];
+            $status = $userData[self::COLUMN_DICTIONARY['status']];
             
             $this->id = $id;
             $this->initialize($this->name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
@@ -163,7 +163,7 @@ class User extends DatabaseItem implements ArrayAccess
             //Aktualizace existujícího uživatele
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.User::COLUMN_DICTIONARY['name'].' = ?, '.User::COLUMN_DICTIONARY['email'].' = ?, '.User::COLUMN_DICTIONARY['lastLogin'].' = ?, '.User::COLUMN_DICTIONARY['addedPictures'].' = ?, '.User::COLUMN_DICTIONARY['guessedPictures'].' = ?, '.User::COLUMN_DICTIONARY['karma'].' = ?, '.User::COLUMN_DICTIONARY['status'].' = ? WHERE '.User::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['email'].' = ?, '.self::COLUMN_DICTIONARY['lastLogin'].' = ?, '.self::COLUMN_DICTIONARY['addedPictures'].' = ?, '.self::COLUMN_DICTIONARY['guessedPictures'].' = ?, '.self::COLUMN_DICTIONARY['karma'].' = ?, '.self::COLUMN_DICTIONARY['status'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
         }
         else
         {
@@ -288,7 +288,7 @@ class User extends DatabaseItem implements ArrayAccess
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

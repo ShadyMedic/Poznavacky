@@ -82,29 +82,29 @@ class Part extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['name'].', '.Part::COLUMN_DICTIONARY['group'].', '.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].', '.self::COLUMN_DICTIONARY['group'].', '.self::COLUMN_DICTIONARY['naturalsCount'].', '.self::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PART);
             }
             
-            $name = $result[Part::COLUMN_DICTIONARY['name']];
-            $group = new Group(false, $result[Part::COLUMN_DICTIONARY['group']]);
-            $naturalsCount = $result[Part::COLUMN_DICTIONARY['naturalsCount']];
-            $picturesCount = $result[Part::COLUMN_DICTIONARY['picturesCount']];
+            $name = $result[self::COLUMN_DICTIONARY['name']];
+            $group = new Group(false, $result[self::COLUMN_DICTIONARY['group']]);
+            $naturalsCount = $result[self::COLUMN_DICTIONARY['naturalsCount']];
+            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
             $this->initialize($name, $group, null, $naturalsCount, $picturesCount);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->group))
         {
-            $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].', '.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['name'].' = ? AND '.Part::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($this->name, $this->group->getId()));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['naturalsCount'].', '.self::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? AND '.self::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($this->name, $this->group->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PART);
             }
             
-            $this->id = $result[Part::COLUMN_DICTIONARY['id']];
-            $naturalsCount = $result[Part::COLUMN_DICTIONARY['naturalsCount']];
-            $picturesCount = $result[Part::COLUMN_DICTIONARY['picturesCount']];
+            $this->id = $result[self::COLUMN_DICTIONARY['id']];
+            $naturalsCount = $result[self::COLUMN_DICTIONARY['naturalsCount']];
+            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
             $this->initialize(null, null, null, $naturalsCount, $picturesCount);
         }
         else
@@ -137,12 +137,12 @@ class Part extends DatabaseItem
             //Aktualizace existující části
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Part::COLUMN_DICTIONARY['name'].' = ?, '.Part::COLUMN_DICTIONARY['group'].' = ?, '.Part::COLUMN_DICTIONARY['naturalsCount'].' = ?, '.Part::COLUMN_DICTIONARY['picturesCount'].' = ? WHERE '.Part::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['group'].' = ?, '.self::COLUMN_DICTIONARY['naturalsCount'].' = ?, '.self::COLUMN_DICTIONARY['picturesCount'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount, $this->id));
         }
         else
         {
             //Tvorba nové části
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['group'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].') VALUES (?,?,?,?)', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['group'].','.self::COLUMN_DICTIONARY['naturalsCount'].','.self::COLUMN_DICTIONARY['picturesCount'].') VALUES (?,?,?,?)', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -278,7 +278,7 @@ class Part extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

@@ -69,27 +69,27 @@ class Invitation extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['user'].', '.Invitation::COLUMN_DICTIONARY['class'].', '.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['user'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
             }
             
-            $user = new User(false, $result[Invitation::COLUMN_DICTIONARY['user']]);
-            $class = new ClassObject(false, $result[Invitation::COLUMN_DICTIONARY['class']]);
-            $expiration = new DateTime($result[Invitation::COLUMN_DICTIONARY['expiration']]);
+            $user = new User(false, $result[self::COLUMN_DICTIONARY['user']]);
+            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
+            $expiration = new DateTime($result[self::COLUMN_DICTIONARY['expiration']]);
             
             $this->initialize($user, $class, $expiration);
         }
         else if ($this->isDefined($this->user) && $this->isDefined($this->class))
         {
-            $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].', '.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['user'].' = ? AND '.self::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
             }
-            $this->id = $result[Invitation::COLUMN_DICTIONARY['id']];
-            $this->expiration = new DateTime($result[Invitation::COLUMN_DICTIONARY['expiration']]);
+            $this->id = $result[self::COLUMN_DICTIONARY['id']];
+            $this->expiration = new DateTime($result[self::COLUMN_DICTIONARY['expiration']]);
         }
         else
         {
@@ -120,12 +120,12 @@ class Invitation extends DatabaseItem
             //Aktualizace existující pozvánky
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Invitation::COLUMN_DICTIONARY['user'].' = ?, '.Invitation::COLUMN_DICTIONARY['class'].' = ?, '.Invitation::COLUMN_DICTIONARY['expiration'].' = ? WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['user'].' = ?, '.self::COLUMN_DICTIONARY['class'].' = ?, '.self::COLUMN_DICTIONARY['expiration'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
         }
         else
         {
             //Tvorba nové pozvánky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Invitation::COLUMN_DICTIONARY['user'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].') VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['user'].','.self::COLUMN_DICTIONARY['class'].','.self::COLUMN_DICTIONARY['expiration'].') VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -185,7 +185,7 @@ class Invitation extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

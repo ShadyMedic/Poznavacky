@@ -100,47 +100,47 @@ class LoggedUser extends User
         
         if ($this->isDefined($this->id))
         {
-            $userData = Db::fetchQuery('SELECT '.LoggedUser::COLUMN_DICTIONARY['name'].','.LoggedUser::COLUMN_DICTIONARY['hash'].','.LoggedUser::COLUMN_DICTIONARY['email'].','.LoggedUser::COLUMN_DICTIONARY['lastLogin'].','.LoggedUser::COLUMN_DICTIONARY['lastChangelog'].','.LoggedUser::COLUMN_DICTIONARY['lastLevel'].','.LoggedUser::COLUMN_DICTIONARY['lastFolder'].','.LoggedUser::COLUMN_DICTIONARY['theme'].','.LoggedUser::COLUMN_DICTIONARY['addedPictures'].','.LoggedUser::COLUMN_DICTIONARY['guessedPictures'].','.LoggedUser::COLUMN_DICTIONARY['karma'].','.LoggedUser::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
+            $userData = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['hash'].','.self::COLUMN_DICTIONARY['email'].','.self::COLUMN_DICTIONARY['lastLogin'].','.self::COLUMN_DICTIONARY['lastChangelog'].','.self::COLUMN_DICTIONARY['lastLevel'].','.self::COLUMN_DICTIONARY['lastFolder'].','.self::COLUMN_DICTIONARY['theme'].','.self::COLUMN_DICTIONARY['addedPictures'].','.self::COLUMN_DICTIONARY['guessedPictures'].','.self::COLUMN_DICTIONARY['karma'].','.self::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($userData))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_USER);
             }
             
-            $name = $userData[LoggedUser::COLUMN_DICTIONARY['name']];
-            $hash = $userData[LoggedUser::COLUMN_DICTIONARY['hash']];
-            $email = $userData[LoggedUser::COLUMN_DICTIONARY['email']];
-            $lastLogin = $userData[LoggedUser::COLUMN_DICTIONARY['lastLogin']];
-            $lastChangelog = $userData[LoggedUser::COLUMN_DICTIONARY['lastChangelog']];
-            $lastLevel = $userData[LoggedUser::COLUMN_DICTIONARY['lastLevel']];
-            $lastFolder = $userData[LoggedUser::COLUMN_DICTIONARY['lastFolder']];
-            $theme = $userData[LoggedUser::COLUMN_DICTIONARY['theme']];
-            $addedPictures = $userData[LoggedUser::COLUMN_DICTIONARY['addedPictures']];
-            $guessedPictures = $userData[LoggedUser::COLUMN_DICTIONARY['guessedPictures']];
-            $karma = $userData[LoggedUser::COLUMN_DICTIONARY['karma']];
-            $status = $userData[LoggedUser::COLUMN_DICTIONARY['status']];
+            $name = $userData[self::COLUMN_DICTIONARY['name']];
+            $hash = $userData[self::COLUMN_DICTIONARY['hash']];
+            $email = $userData[self::COLUMN_DICTIONARY['email']];
+            $lastLogin = $userData[self::COLUMN_DICTIONARY['lastLogin']];
+            $lastChangelog = $userData[self::COLUMN_DICTIONARY['lastChangelog']];
+            $lastLevel = $userData[self::COLUMN_DICTIONARY['lastLevel']];
+            $lastFolder = $userData[self::COLUMN_DICTIONARY['lastFolder']];
+            $theme = $userData[self::COLUMN_DICTIONARY['theme']];
+            $addedPictures = $userData[self::COLUMN_DICTIONARY['addedPictures']];
+            $guessedPictures = $userData[self::COLUMN_DICTIONARY['guessedPictures']];
+            $karma = $userData[self::COLUMN_DICTIONARY['karma']];
+            $status = $userData[self::COLUMN_DICTIONARY['status']];
             
             $this->initialize($name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status, $hash, $lastChangelog, $lastLevel, $lastFolder, $theme);
         }
         else if ($this->isDefined($this->name))
         {
-            $userData = Db::fetchQuery('SELECT '.LoggedUser::COLUMN_DICTIONARY['id'].','.LoggedUser::COLUMN_DICTIONARY['hash'].','.LoggedUser::COLUMN_DICTIONARY['email'].','.LoggedUser::COLUMN_DICTIONARY['lastLogin'].','.LoggedUser::COLUMN_DICTIONARY['lastChangelog'].','.LoggedUser::COLUMN_DICTIONARY['lastLevel'].','.LoggedUser::COLUMN_DICTIONARY['lastFolder'].','.LoggedUser::COLUMN_DICTIONARY['theme'].','.LoggedUser::COLUMN_DICTIONARY['addedPictures'].','.LoggedUser::COLUMN_DICTIONARY['guessedPictures'].','.LoggedUser::COLUMN_DICTIONARY['karma'].','.LoggedUser::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($this->name));
+            $userData = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].','.self::COLUMN_DICTIONARY['hash'].','.self::COLUMN_DICTIONARY['email'].','.self::COLUMN_DICTIONARY['lastLogin'].','.self::COLUMN_DICTIONARY['lastChangelog'].','.self::COLUMN_DICTIONARY['lastLevel'].','.self::COLUMN_DICTIONARY['lastFolder'].','.self::COLUMN_DICTIONARY['theme'].','.self::COLUMN_DICTIONARY['addedPictures'].','.self::COLUMN_DICTIONARY['guessedPictures'].','.self::COLUMN_DICTIONARY['karma'].','.self::COLUMN_DICTIONARY['status'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($this->name));
             if (empty($userData))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_USER);
             }
             
-            $id = $userData[LoggedUser::COLUMN_DICTIONARY['id']];
-            $hash = $userData[LoggedUser::COLUMN_DICTIONARY['hash']];
-            $email = $userData[LoggedUser::COLUMN_DICTIONARY['email']];
-            $lastLogin = $userData[LoggedUser::COLUMN_DICTIONARY['lastLogin']];
-            $lastChangelog = $userData[LoggedUser::COLUMN_DICTIONARY['lastChangelog']];
-            $lastLevel = $userData[LoggedUser::COLUMN_DICTIONARY['lastLevel']];
-            $lastFolder = $userData[LoggedUser::COLUMN_DICTIONARY['lastFolder']];
-            $theme = $userData[LoggedUser::COLUMN_DICTIONARY['theme']];
-            $addedPictures = $userData[LoggedUser::COLUMN_DICTIONARY['addedPictures']];
-            $guessedPictures = $userData[LoggedUser::COLUMN_DICTIONARY['guessedPictures']];
-            $karma = $userData[LoggedUser::COLUMN_DICTIONARY['karma']];
-            $status = $userData[LoggedUser::COLUMN_DICTIONARY['status']];
+            $id = $userData[self::COLUMN_DICTIONARY['id']];
+            $hash = $userData[self::COLUMN_DICTIONARY['hash']];
+            $email = $userData[self::COLUMN_DICTIONARY['email']];
+            $lastLogin = $userData[self::COLUMN_DICTIONARY['lastLogin']];
+            $lastChangelog = $userData[self::COLUMN_DICTIONARY['lastChangelog']];
+            $lastLevel = $userData[self::COLUMN_DICTIONARY['lastLevel']];
+            $lastFolder = $userData[self::COLUMN_DICTIONARY['lastFolder']];
+            $theme = $userData[self::COLUMN_DICTIONARY['theme']];
+            $addedPictures = $userData[self::COLUMN_DICTIONARY['addedPictures']];
+            $guessedPictures = $userData[self::COLUMN_DICTIONARY['guessedPictures']];
+            $karma = $userData[self::COLUMN_DICTIONARY['karma']];
+            $status = $userData[self::COLUMN_DICTIONARY['status']];
             
             $this->id = $id;
             $this->initialize($this->name, $email, new DateTime($lastLogin), $addedPictures, $guessedPictures, $karma, $status, $hash, $lastChangelog, $lastLevel, $lastFolder, $theme);
@@ -177,12 +177,12 @@ class LoggedUser extends User
             $this->loadIfNotLoaded($this->id);
             
             //Aktualizace existujícího uživatele
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['name'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['hash'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['email'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['lastChangelog'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['lastLevel'].' = ?, posledni_složka = ?, vzhled = ?, '.LoggedUser::COLUMN_DICTIONARY['addedPictures'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['guessedPictures'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['karma'].' = ?, '.LoggedUser::COLUMN_DICTIONARY['status'].' = ? WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['hash'].' = ?, '.self::COLUMN_DICTIONARY['email'].' = ?, '.self::COLUMN_DICTIONARY['lastLogin'].' = ?, '.self::COLUMN_DICTIONARY['lastChangelog'].' = ?, '.self::COLUMN_DICTIONARY['lastLevel'].' = ?, posledni_složka = ?, vzhled = ?, '.self::COLUMN_DICTIONARY['addedPictures'].' = ?, '.self::COLUMN_DICTIONARY['guessedPictures'].' = ?, '.self::COLUMN_DICTIONARY['karma'].' = ?, '.self::COLUMN_DICTIONARY['status'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
         }
         else
         {
             //Tvorba nového uživatele
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.LoggedUser::COLUMN_DICTIONARY['name'].','.LoggedUser::COLUMN_DICTIONARY['hash'].','.LoggedUser::COLUMN_DICTIONARY['email'].','.LoggedUser::COLUMN_DICTIONARY['lastLogin'].','.LoggedUser::COLUMN_DICTIONARY['lastChangelog'].','.LoggedUser::COLUMN_DICTIONARY['lastLevel'].','.LoggedUser::COLUMN_DICTIONARY['lastFolder'].','.LoggedUser::COLUMN_DICTIONARY['theme'].','.LoggedUser::COLUMN_DICTIONARY['addedPictures'].','.LoggedUser::COLUMN_DICTIONARY['guessedPictures'].','.LoggedUser::COLUMN_DICTIONARY['karma'].','.LoggedUser::COLUMN_DICTIONARY['status'].') VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['hash'].','.self::COLUMN_DICTIONARY['email'].','.self::COLUMN_DICTIONARY['lastLogin'].','.self::COLUMN_DICTIONARY['lastChangelog'].','.self::COLUMN_DICTIONARY['lastLevel'].','.self::COLUMN_DICTIONARY['lastFolder'].','.self::COLUMN_DICTIONARY['theme'].','.self::COLUMN_DICTIONARY['addedPictures'].','.self::COLUMN_DICTIONARY['guessedPictures'].','.self::COLUMN_DICTIONARY['karma'].','.self::COLUMN_DICTIONARY['status'].') VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -321,7 +321,7 @@ class LoggedUser extends User
         
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         Db::connect();
-        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['hash'].' = ? WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['hash'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
         $this->hash = $hashedPassword;
         return true;
     }
@@ -376,7 +376,7 @@ class LoggedUser extends User
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['email'].' = ? WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newEmail, UserManager::getId()));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['email'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;
         return true;
     }
@@ -389,7 +389,7 @@ class LoggedUser extends User
     {
         $this->addedPictures++;
         Db::connect();
-        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
     
     /**
@@ -402,7 +402,7 @@ class LoggedUser extends User
         
         $this->guessedPictures++;
         Db::connect();
-        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['guessedPictures'].' = (uhodnute_obrazky + 1) WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['guessedPictures'].' = (uhodnute_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
     
     /**

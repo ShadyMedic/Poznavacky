@@ -73,23 +73,23 @@ class Picture extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['src'].', '.Picture::COLUMN_DICTIONARY['natural'].', '.Picture::COLUMN_DICTIONARY['enabled'].' FROM '.self::TABLE_NAME.' WHERE '.Picture::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['src'].', '.self::COLUMN_DICTIONARY['natural'].', '.self::COLUMN_DICTIONARY['enabled'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PICTURE);
             }
             
-            $src = $result[Picture::COLUMN_DICTIONARY['src']];
-            $natural = new Natural(false, $result[Picture::COLUMN_DICTIONARY['natural']]);
+            $src = $result[self::COLUMN_DICTIONARY['src']];
+            $natural = new Natural(false, $result[self::COLUMN_DICTIONARY['natural']]);
         }
         else if ($this->isDefined($this->src) && $this->isDefined($this->natural))
         {
-            $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['id'].', '.Picture::COLUMN_DICTIONARY['enabled'].' FROM '.self::TABLE_NAME.' WHERE '.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Picture::COLUMN_DICTIONARY['natural'].' = ? LIMIT 1', array($this->src, $this->natural->getId()));
+            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['enabled'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['src'].' = ? AND '.self::COLUMN_DICTIONARY['natural'].' = ? LIMIT 1', array($this->src, $this->natural->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PICTURE);
             }
-            $this->id = $result[Picture::COLUMN_DICTIONARY['id']];
+            $this->id = $result[self::COLUMN_DICTIONARY['id']];
             $src = null;
             $natural = null;
         }
@@ -98,7 +98,7 @@ class Picture extends DatabaseItem
             throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
         }
         
-        $enabled = ($result[Picture::COLUMN_DICTIONARY['enabled']] === 1) ? true : false;
+        $enabled = ($result[self::COLUMN_DICTIONARY['enabled']] === 1) ? true : false;
         
         $this->initialize($src, $natural, $enabled, null);
         
@@ -127,12 +127,12 @@ class Picture extends DatabaseItem
             //Aktualizace existujícího obrázku
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Picture::COLUMN_DICTIONARY['src'].' = ?, '.Picture::COLUMN_DICTIONARY['natural'].' = ?, '.Picture::COLUMN_DICTIONARY['enabled'].' = ? WHERE '.Picture::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->src, $this->natural->getId(), $this->enabled, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['src'].' = ?, '.self::COLUMN_DICTIONARY['natural'].' = ?, '.self::COLUMN_DICTIONARY['enabled'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->src, $this->natural->getId(), $this->enabled, $this->id));
         }
         else
         {
             //Tvorba nové pozvánky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Picture::COLUMN_DICTIONARY['src'].','.Picture::COLUMN_DICTIONARY['natural'].','.Picture::COLUMN_DICTIONARY['enabled'].') VALUES (?,?,?,?)', array($this->src, $this->natural->getId(), $this->enabled), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['src'].','.self::COLUMN_DICTIONARY['natural'].','.self::COLUMN_DICTIONARY['enabled'].') VALUES (?,?,?,?)', array($this->src, $this->natural->getId(), $this->enabled), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -208,7 +208,7 @@ class Picture extends DatabaseItem
         
         //Upravit údaje v databázi
         Db::connect();
-        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Picture::COLUMN_DICTIONARY['natural'].' = ?, '.Picture::COLUMN_DICTIONARY['src'].' = ? WHERE '.Picture::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newNatural->getId(), $newUrl, $this->id));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['natural'].' = ?, '.self::COLUMN_DICTIONARY['src'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newNatural->getId(), $newUrl, $this->id));
         
         //Aktualizovat údaje ve vlastnostech této instance
         $this->natural = $newNatural;
@@ -285,7 +285,7 @@ class Picture extends DatabaseItem
         
         //Vypnout obrázek v databázi
         Db::connect();
-        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Picture::COLUMN_DICTIONARY['enabled'].' = 0 WHERE '.Picture::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['enabled'].' = 0 WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         
         //Přenastavit vlastnost této instance
         $this->enabled = false;
@@ -302,7 +302,7 @@ class Picture extends DatabaseItem
     	$this->loadIfNotLoaded($this->id);
     	
     	Db::connect();
-    	Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Picture::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
+    	Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
     	$this->id = new undefined();
     	$this->savedInDb = false;
     	return true;
