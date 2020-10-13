@@ -66,12 +66,12 @@ class ReportAdder
         $dbResult = Db::fetchQuery('
         SELECT
         casti.'.Part::COLUMN_DICTIONARY['id'].', casti.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", casti.'.Part::COLUMN_DICTIONARY['naturalsCount'].', casti.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
-        prirodniny.'.Natural::COLUMN_DICTIONARY['id'].', prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
+        '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
         obrazky.'.Picture::COLUMN_DICTIONARY['id'].', obrazky.'.Picture::COLUMN_DICTIONARY['natural'].', obrazky.'.Picture::COLUMN_DICTIONARY['src'].', obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].'
         FROM obrazky
-        JOIN prirodniny ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
-        JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
-        WHERE obrazky.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
+        JOIN '.Natural::TABLE_NAME.' ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
+        JOIN casti ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
+        WHERE obrazky.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', array($url, $this->group->getId()), false);
         
         //Obrázek nebyl v databázi podle zdroje nalezen

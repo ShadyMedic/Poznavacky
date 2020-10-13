@@ -228,7 +228,7 @@ class Group extends DatabaseItem
         Db::connect();
         //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
         $in = str_repeat('?,', count($allPartsIds) - 1).'?';
-        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM prirodniny WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);
         foreach ($result as $naturalData)
         {
             $part = $this->getPartById($naturalData[Natural::COLUMN_DICTIONARY['part']]);
@@ -310,12 +310,12 @@ class Group extends DatabaseItem
             SELECT
             hlaseni.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", hlaseni.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", hlaseni.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
             obrazky.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", obrazky.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
-            prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky", prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' AS "prirodniny_cast"
+            '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' AS "prirodniny_cast"
             FROM hlaseni
             JOIN obrazky ON hlaseni.'.Report::COLUMN_DICTIONARY['picture'].' = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
-            JOIN prirodniny ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
+            JOIN '.Natural::TABLE_NAME.' ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.')
-            AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
+            AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', $sqlArguments, true);
         
         if ($result === false)
