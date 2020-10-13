@@ -408,7 +408,7 @@ class ClassObject extends DatabaseItem
         }
         
         //Ověř, zda již taková pozvánka v databázi neexistuje
-        $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].' FROM pozvanky WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($user->getId(), $this->id));
+        $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($user->getId(), $this->id));
         if (empty($result))
         {
             //Nová pozvánka
