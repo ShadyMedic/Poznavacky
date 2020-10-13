@@ -198,6 +198,9 @@
 }
 #menu {
 	.folders {
+		* {
+			margin: auto;
+		}
 		a {
 			display: block;
 		}

@@ -1040,6 +1040,10 @@ label.required:after {
   }
 }
 
+#menu .folders * {
+  margin: auto;
+}
+
 #menu .folders a {
   display: block;
 }
