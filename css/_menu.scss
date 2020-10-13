@@ -108,7 +108,6 @@
 			transform: translateX(0);
 			#aside-additional-panel {
 				transform: translateX(0);
-				//left: 0;
 			}
 		}
 		#aside-main-panel {
@@ -132,7 +131,10 @@
 				}
 				&.cross {
 					margin-top: auto;
-					//display: none;
+					display: none;
+					&.show {
+						display: block;
+					}
 				}
 			}
 		}
@@ -152,9 +154,6 @@
 			@media screen and (min-width: $smallTablet) {
 				width: 240px;
 			}
-			/*&.show {
-				transform: translateX(0);
-			}*/
 			background: $gray3;
 			> * {
 				display: flex;

@@ -14,9 +14,9 @@ $(window).resize(function(){
 //funkce nastavující padding mainu podle velikosti okna (různá zobrazení pro mobily a desktopy)
 function checkHeader() {
 	if ($(window).width() <= smallTablet)
-		$("main").css("padding-top", $("header").outerHeight());
+		$("main, aside").css("padding-top", $("header").outerHeight());
 	else 
-		$("main").css("padding-top", 0);
+		$("main, aside").css("padding-top", 0);
 }
 
 $(function(){

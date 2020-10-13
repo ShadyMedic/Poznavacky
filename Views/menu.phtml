@@ -1,5 +1,5 @@
 <header>
-	<button class="btn hamburger-btn" onclick="showPanel()"><img src="../images/hamburger.svg"></button>
+	<button class="btn hamburger-btn" id="show-full-panel-button"><img src="../images/hamburger.svg"></button>
 	<div class="logo">
 		<img src=""> <!-- LOGO -->
 		<h1>Poznávačky</h1>
@@ -7,10 +7,10 @@
 </header>
 <aside>
 	<nav id="aside-main-panel">
-		<button class="btn" onclick="showAdditionalPanel('aside-login-info')"><img src="../images/user.svg" alt=""></button> <!--zobrazí info o uživateli-->
-		<button class="btn" onclick="showAdditionalPanel('aside-nav')"><img src="../images/navigation.svg" alt=""></button> <!--zobrazí navigaci-->
-		<button class="btn" onclick="showAdditionalPanel('aside-settings')"><img src="../images/settings.svg" alt=""></button> <!--zobrazí nastavení-->
-		<button class="btn cross" onclick="closePanel()"><img src="../images/crossButtonWhite.svg" alt=""></button>
+		<button class="btn" id="show-aside-login-info-button"><img src="../images/user.svg" alt=""></button> <!--zobrazí info o uživateli-->
+		<button class="btn" id="show-aside-nav-button"><img src="../images/navigation.svg" alt=""></button> <!--zobrazí navigaci-->
+		<button class="btn" id="show-aside-settings-button"><img src="../images/settings.svg" alt=""></button> <!--zobrazí nastavení-->
+		<button class="btn cross" id="close-panel-button"><img src="../images/cross2.svg" alt=""></button>
 	</nav>
 	<div id="aside-additional-panel">
 		<div id="aside-login-info">

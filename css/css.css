@@ -850,6 +850,15 @@ label.required:after {
 #addPictures aside #aside-main-panel .btn.cross,
 #accountSettings aside #aside-main-panel .btn.cross {
   margin-top: auto;
+  display: none;
+}
+
+#menu aside #aside-main-panel .btn.cross.show,
+#learn aside #aside-main-panel .btn.cross.show,
+#test aside #aside-main-panel .btn.cross.show,
+#addPictures aside #aside-main-panel .btn.cross.show,
+#accountSettings aside #aside-main-panel .btn.cross.show {
+  display: block;
 }
 
 #menu aside #aside-additional-panel,
@@ -874,9 +883,6 @@ label.required:after {
   overflow: auto;
   scrollbar-color: #222 #444;
   scrollbar-width: auto;
-  /*&.show {
-				transform: translateX(0);
-			}*/
   background: #444;
 }
 

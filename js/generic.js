@@ -15,23 +15,6 @@ $(window).resize(function() {
 	resizeAsidePanel();
 });
 
-function resizeAsidePanel() {
-	if ($(window).width() < smallTablet) {
-		$("main").css("margin-left", "0");
-		$("#aside-additional-panel").removeClass("show");
-	}
-	if (($(window).width() >= smallTablet) && ($("aside").hasClass("show"))) {
-		$("#aside-additional-panel").addClass("show");
-	}
-	if ($("#aside-additional-panel").hasClass("show"))
-	{
-		$("main.menu").css("margin-left", "304px");
-	}
-	else if ((!$("#aside-additional-panel").hasClass("show")) && ($(window).width() >= smallTablet)) {
-		$("main.menu").css("margin-left", "64px");
-	}
-}
-
 $(function() {
 	$(".custom-select-wrapper").find(".custom-option").first().addClass("selected");
 
@@ -47,6 +30,12 @@ $(function() {
 			})
 		}
 	})
+
+	$("#show-full-panel-button").click(function(){showFullPanel()});
+	$("#show-aside-login-info-button").click(function(){showAdditionalPanel('aside-login-info')})
+	$("#show-aside-nav-button").click(function(){showAdditionalPanel('aside-nav')})
+	$("#show-aside-settings-button").click(function(){showAdditionalPanel('aside-settings')})
+	$("#close-panel-button").click(function(){closePanel()});
 })
 
 //Funkce pro získání hodnoty cookie
@@ -71,10 +60,30 @@ function getCookie(cname)
 	return "";
 }
 
-function showPanel() {
+
+function resizeAsidePanel() {
+	if ($(window).width() < smallTablet) {
+		$("main").css("margin-left", "0");
+		$("#aside-additional-panel").removeClass("show");
+	}
+	if (($(window).width() >= smallTablet) && ($("aside").hasClass("show"))) {
+		$("#aside-additional-panel").addClass("show");
+	}
+	if ($("#aside-additional-panel").hasClass("show"))
+	{
+		$("main.menu").css("margin-left", "304px");
+	}
+	else if ((!$("#aside-additional-panel").hasClass("show")) && ($(window).width() >= smallTablet)) {
+		$("main.menu").css("margin-left", "64px");
+	}
+}
+
+function showFullPanel() {
 	$("aside").addClass("show");
 	$("#aside-nav").hide();
 	$("#aside-settings").hide();
+	$("body").css("overflow-y","hidden");
+	$(".btn.cross").addClass("show");
 } 
 
 function showAdditionalPanel(spec) {
@@ -82,7 +91,7 @@ function showAdditionalPanel(spec) {
 		$("aside").addClass("show");
 		$("#aside-additional-panel").addClass("show");
 		$("main").css("margin-left", "304px");
-		$(".btn.cross").show();
+		$(".btn.cross").addClass("show");
 	}
 	$("#aside-login-info").hide();
 	$("#aside-nav").hide();
@@ -96,10 +105,11 @@ function closePanel() {
 	}
 	else {
 		$("main").css("margin-left", "0");
+		$("body").css("overflow-y","auto");
 	}
 	$("#aside-additional-panel").removeClass("show");
 	$("aside").removeClass("show");
-	$(".btn.cross").hide();
+	$(".btn.cross").removeClass("show");
 }
 
 $(document).mouseup(function(e) 
