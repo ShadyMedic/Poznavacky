@@ -67,11 +67,11 @@ class ReportAdder
         SELECT
         casti.'.Part::COLUMN_DICTIONARY['id'].', casti.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", casti.'.Part::COLUMN_DICTIONARY['naturalsCount'].', casti.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
         prirodniny.'.Natural::COLUMN_DICTIONARY['id'].', prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
-        obrazky.obrazky_id, obrazky.prirodniny_id, obrazky.zdroj, obrazky.povoleno
+        obrazky.'.Picture::COLUMN_DICTIONARY['id'].', obrazky.'.Picture::COLUMN_DICTIONARY['natural'].', obrazky.'.Picture::COLUMN_DICTIONARY['src'].', obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].'
         FROM obrazky
-        JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
+        JOIN prirodniny ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
         JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
-        WHERE obrazky.zdroj = ? AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
+        WHERE obrazky.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', array($url, $this->group->getId()), false);
         
         //Obrázek nebyl v databázi podle zdroje nalezen
@@ -84,8 +84,8 @@ class ReportAdder
         $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult[Part::COLUMN_DICTIONARY['naturalsCount']], $dbResult['p_obrazky']);
         $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);
         $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], null, $this->group, $part);
-        $picture = new Picture(false, $dbResult['obrazky_id']);
-        $picture->initialize($url, $natural, $part, $dbResult['povoleno'], null);
+        $picture = new Picture(false, $dbResult[Picture::COLUMN_DICTIONARY['id']]);
+        $picture->initialize($url, $natural, $part, $dbResult[Picture::COLUMN_DICTIONARY['enabled']], null);
         
         $report = new Report(false, 0);    //Pokus s hlášením, které již v datbázi existuje, ale u kterého neznáme ID
         $report->initialize($picture, $reason, $additionalInformation, null);

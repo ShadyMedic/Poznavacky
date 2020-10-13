@@ -257,7 +257,7 @@ class Natural extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT obrazky_id,zdroj,povoleno FROM obrazky WHERE prirodniny_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['id'].','.Picture::COLUMN_DICTIONARY['src'].','.Picture::COLUMN_DICTIONARY['enabled'].' FROM obrazky WHERE '.Picture::COLUMN_DICTIONARY['natural'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné obrázky nenalezeny
@@ -269,9 +269,9 @@ class Natural extends DatabaseItem
             
             foreach ($result as $pictureData)
             {
-                $status = ($pictureData['povoleno'] === 1) ? true : false;
-                $picture = new Picture(false, $pictureData['obrazky_id']);
-                $picture->initialize($pictureData['zdroj'], $this, $this->part, $status, null);
+                $status = ($pictureData[Picture::COLUMN_DICTIONARY['enabled']] === 1) ? true : false;
+                $picture = new Picture(false, $pictureData[Picture::COLUMN_DICTIONARY['id']]);
+                $picture->initialize($pictureData[Picture::COLUMN_DICTIONARY['src']], $this, $this->part, $status, null);
                 $this->pictures[] = $picture;
             }
         }

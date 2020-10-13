@@ -306,15 +306,14 @@ class Group extends DatabaseItem
         $sqlArguments = array_values($availableReasons);
         $sqlArguments[] = $this->id;
         Db::connect();
-        //Wow, zírejte na to. SQL dotaz, který vede přes většinu tabulek v databázi. To musí být výkonostní bomba!
         $result = Db::fetchQuery('
             SELECT
             hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
-            obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
+            obrazky.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", obrazky.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
             prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky", prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' AS "prirodniny_cast"
             FROM hlaseni
-            JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
-            JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
+            JOIN obrazky ON hlaseni.obrazky_id = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
+            JOIN prirodniny ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.duvod IN ('.$in.')
             AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', $sqlArguments, true);
