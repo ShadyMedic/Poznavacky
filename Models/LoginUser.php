@@ -93,7 +93,7 @@ class LoginUser
         $user->initialize($userData[LoggedUser::COLUMN_DICTIONARY['name']], $userData[LoggedUser::COLUMN_DICTIONARY['email']], new Datetime(), $userData[LoggedUser::COLUMN_DICTIONARY['addedPictures']], $userData[LoggedUser::COLUMN_DICTIONARY['guessedPictures']], $userData[LoggedUser::COLUMN_DICTIONARY['karma']], $userData[LoggedUser::COLUMN_DICTIONARY['status']], $userData[LoggedUser::COLUMN_DICTIONARY['hash']], $userData[LoggedUser::COLUMN_DICTIONARY['lastChangelog']], $userData[LoggedUser::COLUMN_DICTIONARY['lastLevel']], $userData[LoggedUser::COLUMN_DICTIONARY['lastFolder']], $userData[LoggedUser::COLUMN_DICTIONARY['theme']]);
         $_SESSION['user'] = $user;
         
-        Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].' = NOW() WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array($userData['uzivatele_id']));
+        Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].' = NOW() WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array($userData[LoggedUser::COLUMN_DICTIONARY['id']]));
         
         //Nastavení cookie pro zabránění přehrávání animace
         self::setRecentLoginCookie();

@@ -40,7 +40,7 @@ class Administration
         }
         else
         {
-            $dbResult = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE uzivatele_id != ?', array(UserManager::getId()), true);
+            $dbResult = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['id'].' != ?', array(UserManager::getId()), true);
         }
         $users = array();
         foreach($dbResult as $dbRow)
@@ -244,7 +244,7 @@ class Administration
         switch ($changedIdentifier)
         {
             case 'id':
-                $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].', '.User::COLUMN_DICTIONARY['name'].', '.User::COLUMN_DICTIONARY['email'].', '.User::COLUMN_DICTIONARY['lastLogin'].', '.User::COLUMN_DICTIONARY['addedPictures'].', '.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::COLUMN_DICTIONARY['karma'].', '.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE uzivatele_id = ?', array($newAdminIdentifier), false);
+                $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].', '.User::COLUMN_DICTIONARY['name'].', '.User::COLUMN_DICTIONARY['email'].', '.User::COLUMN_DICTIONARY['lastLogin'].', '.User::COLUMN_DICTIONARY['addedPictures'].', '.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::COLUMN_DICTIONARY['karma'].', '.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['id'].' = ?', array($newAdminIdentifier), false);
                 break;
             case 'name':
                 $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].', '.User::COLUMN_DICTIONARY['name'].', '.User::COLUMN_DICTIONARY['email'].', '.User::COLUMN_DICTIONARY['lastLogin'].', '.User::COLUMN_DICTIONARY['addedPictures'].', '.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::COLUMN_DICTIONARY['karma'].', '.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].' = ?', array($newAdminIdentifier), false);
