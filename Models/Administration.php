@@ -85,14 +85,14 @@ class Administration
             hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
             obrazky.obrazky_id AS "obrazky_id", obrazky.zdroj AS "obrazky_zdroj", obrazky.povoleno AS "obrazky_povoleno",
             prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky",
-            casti.casti_id AS "casti_id", casti.nazev AS "casti_nazev", casti.prirodniny AS "casti_prirodniny", casti.obrazky AS "casti_obrazky",
+            casti.'.Part::COLUMN_DICTIONARY['id'].' AS "casti_id", casti.'.Part::COLUMN_DICTIONARY['name'].' AS "casti_nazev", casti.'.Part::COLUMN_DICTIONARY['naturalsCount'].' AS "casti_prirodniny", casti.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "casti_obrazky",
             poznavacky.'.Group::COLUMN_DICTIONARY['id'].' AS "poznavacky_id", poznavacky.'.Group::COLUMN_DICTIONARY['name'].' AS "poznavacky_nazev", poznavacky.'.Group::COLUMN_DICTIONARY['partsCount'].' AS "poznavacky_casti",
             tridy.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", tridy.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM hlaseni
             JOIN obrazky ON hlaseni.obrazky_id = obrazky.obrazky_id
             JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
-            JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.casti_id
-            JOIN poznavacky ON casti.poznavacky_id = poznavacky.'.Group::COLUMN_DICTIONARY['id'].'
+            JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
+            JOIN poznavacky ON casti.'.Part::COLUMN_DICTIONARY['group'].' = poznavacky.'.Group::COLUMN_DICTIONARY['id'].'
             JOIN tridy ON poznavacky.'.Group::COLUMN_DICTIONARY['class'].' = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.duvod IN ('.$in.');
         ', Report::ADMIN_REQUIRING_REASONS, true);
@@ -108,13 +108,13 @@ class Administration
         {
             //Následující kód indukuje, že jsem objektovou PHP aplikaci navrhl dobře, nebo úplně blbě...
             //V případě, že tohle bude po mně někdo muset předělávat... tak se ti ty nešťastníku omlouvám
-            $class = new ClassObject(false, $reportInfo[ClassObject::COLUMN_DICTIONARY['id']]);
-            $class->initialize($reportInfo[ClassObject::COLUMN_DICTIONARY['name']]);
-            $group = new Group(false, $reportInfo[Group::COLUMN_DICTIONARY['id']]);
-            $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo[Group::COLUMN_DICTIONARY['partsCount']]);
+            $class = new ClassObject(false, $reportInfo['tridy_id']);
+            $class->initialize($reportInfo['tridy_nazev']);
+            $group = new Group(false, $reportInfo['poznavacky_id']);
+            $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo['poznavacky_casti']);
             $part = new Part(false, $reportInfo['casti_id']);
             $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
-            $natural = new Natural(false, $reportInfo[Natural::COLUMN_DICTIONARY['id']]);
+            $natural = new Natural(false, $reportInfo['prirodniny_id']);
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $class, $group, $part);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
             $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);

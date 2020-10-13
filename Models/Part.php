@@ -82,29 +82,29 @@ class Part extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT nazev, poznavacky_id, prirodniny, obrazky FROM '.self::TABLE_NAME.' WHERE casti_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['name'].', '.Part::COLUMN_DICTIONARY['group'].', '.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PART);
             }
             
-            $name = $result['nazev'];
-            $group = new Group(false, $result['poznavacky_id']);
-            $naturalsCount = $result['prirodniny'];
-            $picturesCount = $result['obrazky'];
+            $name = $result[Part::COLUMN_DICTIONARY['name']];
+            $group = new Group(false, $result[Part::COLUMN_DICTIONARY['group']]);
+            $naturalsCount = $result[Part::COLUMN_DICTIONARY['naturalsCount']];
+            $picturesCount = $result[Part::COLUMN_DICTIONARY['picturesCount']];
             $this->initialize($name, $group, null, $naturalsCount, $picturesCount);
         }
         else if ($this->isDefined($this->name) && $this->isDefined($this->group))
         {
-            $result = Db::fetchQuery('SELECT casti_id, prirodniny, obrazky FROM '.self::TABLE_NAME.' WHERE nazev = ? AND poznavacky_id = ? LIMIT 1', array($this->name, $this->group->getId()));
+            $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].', '.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['name'].' = ? AND '.Part::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($this->name, $this->group->getId()));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_PART);
             }
             
-            $this->id = $result['casti_id'];
-            $naturalsCount = $result['prirodniny'];
-            $picturesCount = $result['obrazky'];
+            $this->id = $result[Part::COLUMN_DICTIONARY['id']];
+            $naturalsCount = $result[Part::COLUMN_DICTIONARY['naturalsCount']];
+            $picturesCount = $result[Part::COLUMN_DICTIONARY['picturesCount']];
             $this->initialize(null, null, null, $naturalsCount, $picturesCount);
         }
         else
@@ -137,12 +137,12 @@ class Part extends DatabaseItem
             //Aktualizace existující části
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET nazev = ?, poznavacky_id = ?, prirodniny = ?, obrazky = ? WHERE casti_id = ? LIMIT 1', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Part::COLUMN_DICTIONARY['name'].' = ?, '.Part::COLUMN_DICTIONARY['group'].' = ?, '.Part::COLUMN_DICTIONARY['naturalsCount'].' = ?, '.Part::COLUMN_DICTIONARY['picturesCount'].' = ? WHERE '.Part::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount, $this->id));
         }
         else
         {
             //Tvorba nové části
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (nazev,poznavacky_id,prirodniny,obrazky) VALUES (?,?,?,?)', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['group'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].') VALUES (?,?,?,?)', array($this->name, $this->group->getId(), $this->naturalsCount, $this->picturesCount), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -278,7 +278,7 @@ class Part extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE casti_id = ? LIMIT 1;', array($this->id));
+        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         $this->id = new undefined();
         $this->savedInDb = false;
         return true;

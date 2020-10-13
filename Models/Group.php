@@ -260,7 +260,7 @@ class Group extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT casti_id,nazev,prirodniny,obrazky FROM casti WHERE poznavacky_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].','.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné části nenalezeny
@@ -271,8 +271,8 @@ class Group extends DatabaseItem
             $this->parts = array();
             foreach ($result as $partData)
             {
-                $part = new Part(false, $partData['casti_id']);
-                $part->initialize($partData['nazev'], $this, null, $partData['prirodniny'], $partData['obrazky']);
+                $part = new Part(false, $partData[Part::COLUMN_DICTIONARY['id']]);
+                $part->initialize($partData[Part::COLUMN_DICTIONARY['name']], $this, null, $partData[Part::COLUMN_DICTIONARY['naturalsCount']], $partData[Part::COLUMN_DICTIONARY['picturesCount']]);
                 $this->parts[] = $part;
             }
         }
@@ -328,7 +328,7 @@ class Group extends DatabaseItem
         $reports = array();
         foreach ($result as $reportInfo)
         {
-            $natural = new Natural(false, $reportInfo[Natural::COLUMN_DICTIONARY['id']]);
+            $natural = new Natural(false, $reportInfo['prirodniny_id']);
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null, $this, new Part(false, $reportInfo['prirodniny_cast']));
             $picture = new Picture(false, $reportInfo['obrazky_id']);
             $picture->initialize($reportInfo['obrazky_zdroj'], $natural, null, $reportInfo['obrazky_povoleno'], $natural->getPart());

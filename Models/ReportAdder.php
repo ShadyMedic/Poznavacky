@@ -65,12 +65,12 @@ class ReportAdder
         Db::connect();
         $dbResult = Db::fetchQuery('
         SELECT
-        casti.casti_id, casti.nazev AS "p_nazev", casti.prirodniny, casti.obrazky AS "p_obrazky",
+        casti.'.Part::COLUMN_DICTIONARY['id'].', casti.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", casti.'.Part::COLUMN_DICTIONARY['naturalsCount'].', casti.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
         prirodniny.'.Natural::COLUMN_DICTIONARY['id'].', prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
         obrazky.obrazky_id, obrazky.prirodniny_id, obrazky.zdroj, obrazky.povoleno
         FROM obrazky
         JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
-        JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.casti_id
+        JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
         WHERE obrazky.zdroj = ? AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', array($url, $this->group->getId()), false);
         
@@ -80,8 +80,8 @@ class ReportAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_UNKNOWN_PICTURE, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
         }
         
-        $part = new Part(false, $dbResult['casti_id']);
-        $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult['prirodniny'], $dbResult['p_obrazky']);
+        $part = new Part(false, $dbResult[Part::COLUMN_DICTIONARY['id']]);
+        $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult[Part::COLUMN_DICTIONARY['naturalsCount']], $dbResult['p_obrazky']);
         $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);
         $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], null, $this->group, $part);
         $picture = new Picture(false, $dbResult['obrazky_id']);
