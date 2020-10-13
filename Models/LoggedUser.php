@@ -244,18 +244,18 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Zkontrolovat, zda již existuje žádost o změnu jména od přihlášeného uživatele
-        $applications = Db::fetchQuery('SELECT '.UserNameChangeRequest::COLUMN_DICTIONARY['id'].' FROM zadosti_jmena_uzivatele WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' = ? LIMIT 1', array(UserManager::getId()));
+        $applications = Db::fetchQuery('SELECT '.UserNameChangeRequest::COLUMN_DICTIONARY['id'].' FROM '.UserNameChangeRequest::TABLE_NAME.' WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' = ? LIMIT 1', array(UserManager::getId()));
         if (!empty($applications[UserNameChangeRequest::COLUMN_DICTIONARY['id']]))
         {
             //Přepsání existující žádosti
             $this->loadIfNotLoaded($this->id);
             
-            Db::executeQuery('UPDATE zadosti_jmena_uzivatele SET '.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].' = ?, '.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].' = NOW() WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newName, $applications[UserNameChangeRequest::COLUMN_DICTIONARY['id']]));
+            Db::executeQuery('UPDATE '.UserNameChangeRequest::TABLE_NAME.' SET '.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].' = ?, '.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].' = NOW() WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newName, $applications[UserNameChangeRequest::COLUMN_DICTIONARY['id']]));
         }
         else
         {
             //Uložení nové žádosti
-            Db::executeQuery('INSERT INTO zadosti_jmena_uzivatele ('.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].','.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].','.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,NOW())', array($this->id, $newName));
+            Db::executeQuery('INSERT INTO '.UserNameChangeRequest::TABLE_NAME.' ('.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].','.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].','.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,NOW())', array($this->id, $newName));
         }
         return true;
     }

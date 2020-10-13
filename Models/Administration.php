@@ -136,9 +136,9 @@ class Administration
         $result = Db::fetchQuery('
         SELECT
         '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].',
-        zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['id'].', zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].', zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
-        FROM zadosti_jmena_uzivatele
-        JOIN '.User::TABLE_NAME.' ON zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' = '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].';
+        '.UserNameChangeRequest::TABLE_NAME.'.'.UserNameChangeRequest::COLUMN_DICTIONARY['id'].', '.UserNameChangeRequest::TABLE_NAME.'.'.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].', '.UserNameChangeRequest::TABLE_NAME.'.'.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
+        FROM '.UserNameChangeRequest::TABLE_NAME.'
+        JOIN '.User::TABLE_NAME.' ON '.UserNameChangeRequest::TABLE_NAME.'.'.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' = '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky
