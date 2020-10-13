@@ -87,25 +87,25 @@ class Report extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT obrazky_id,duvod,dalsi_informace,pocet FROM '.self::TABLE_NAME.' WHERE hlaseni_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.Report::COLUMN_DICTIONARY['picture'].','.Report::COLUMN_DICTIONARY['reason'].','.Report::COLUMN_DICTIONARY['additionalInformation'].','.Report::COLUMN_DICTIONARY['reportersCount'].' FROM '.self::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_REPORT);
             }
             
-            $picture = new Picture(false, $result['obrazky_id']);
-            $reason = $result['duvod'];
-            $additionalInformation = $result['dalsi_informace'];
+            $picture = new Picture(false, $result[Report::COLUMN_DICTIONARY['picture']]);
+            $reason = $result[Report::COLUMN_DICTIONARY['reason']];
+            $additionalInformation = $result[Report::COLUMN_DICTIONARY['additionalInformation']];
         }
         else if ($this->isDefined($this->picture) && $this->isDefined($this->reason) && $this->isDefined($this->additionalInformation))
         {
-            $result = Db::fetchQuery('SELECT hlaseni_id,pocet FROM '.self::TABLE_NAME.' WHERE obrazky_id = ? AND duvod = ? AND dalsi_informace = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation));
+            $result = Db::fetchQuery('SELECT '.Report::COLUMN_DICTIONARY['id'].','.Report::COLUMN_DICTIONARY['reportersCount'].' FROM '.self::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ? AND '.Report::COLUMN_DICTIONARY['reason'].' = ? AND '.Report::COLUMN_DICTIONARY['additionalInformation'].' = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_REPORT);
             }
             
-            $this->id = $result['hlaseni_id'];
+            $this->id = $result[Report::COLUMN_DICTIONARY['id']];
             $picture = null;
             $reason = null;
             $additionalInformation = null;
@@ -115,7 +115,7 @@ class Report extends DatabaseItem
             throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
         }
         
-        $reportersCount = $result['pocet'];
+        $reportersCount = $result[Report::COLUMN_DICTIONARY['reportersCount']];
         
         $this->initialize($picture, $reason, $additionalInformation, $reportersCount);
         
@@ -144,12 +144,12 @@ class Report extends DatabaseItem
             //Aktualizace existujícího hlášení
             $this->loadIfNotAllLoaded();
             
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET obrazky_id = ?, duvod = ?, dalsi_informace = ?, pocet = ? WHERE hlaseni_id = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount, $this->id));
+            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.Report::COLUMN_DICTIONARY['picture'].' = ?, '.Report::COLUMN_DICTIONARY['reason'].' = ?, '.Report::COLUMN_DICTIONARY['additionalInformation'].' = ?, '.Report::COLUMN_DICTIONARY['reportersCount'].' = ? WHERE '.Report::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount, $this->id));
         }
         else
         {
             //Tvorba nového hlášení
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' (obrazky_id,duvod,dalsi_informace,pocet) VALUES (?,?,?,?)', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount), true);
+            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.Report::COLUMN_DICTIONARY['picture'].','.Report::COLUMN_DICTIONARY['reason'].','.Report::COLUMN_DICTIONARY['additionalInformation'].','.Report::COLUMN_DICTIONARY['reportersCount'].') VALUES (?,?,?,?)', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;
@@ -284,7 +284,7 @@ class Report extends DatabaseItem
     	$this->loadIfNotLoaded($this->id);
     	
     	Db::connect();
-    	Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE hlaseni_id = ? LIMIT 1;', array($this->id));
+    	Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
     	$this->id = new undefined();
     	$this->savedInDb = false;
     	return true;

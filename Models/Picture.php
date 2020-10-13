@@ -225,7 +225,7 @@ class Picture extends DatabaseItem
     public function deleteReports()
     {
         Db::connect();
-        Db::executeQuery('DELETE FROM hlaseni WHERE obrazky_id = ?', array($this->id));
+        Db::executeQuery('DELETE FROM hlaseni WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id));
         $this->reports = array();
         return true;
     }
@@ -247,7 +247,7 @@ class Picture extends DatabaseItem
     public function loadReports()
     {
         Db::connect();
-        $result = Db::fetchQuery('SELECT hlaseni_id,duvod,dalsi_informace,pocet FROM hlaseni WHERE obrazky_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Report::COLUMN_DICTIONARY['id'].','.Report::COLUMN_DICTIONARY['reason'].','.Report::COLUMN_DICTIONARY['additionalInformation'].','.Report::COLUMN_DICTIONARY['reportersCount'].' FROM hlaseni WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id), true);
         
         if (count($result) === 0)
         {
@@ -259,8 +259,8 @@ class Picture extends DatabaseItem
         foreach ($result as $reportInfo)
         {
             //Konstrukce nových objektů hlášení a jejich ukládání do pole
-            $report = new Report(false, $reportInfo['hlaseni_id']);
-            $report->initialize($this, $reportInfo['duvod'], $reportInfo['dalsi_informace'], $reportInfo['pocet']);
+            $report = new Report(false, $reportInfo[Report::COLUMN_DICTIONARY['id']]);
+            $report->initialize($this, $reportInfo[Report::COLUMN_DICTIONARY['reason']], $reportInfo[Report::COLUMN_DICTIONARY['additionalInformation']], $reportInfo[Report::COLUMN_DICTIONARY['reportersCount']]);
             $this->reports[] = $report;
         }
     }

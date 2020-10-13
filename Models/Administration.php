@@ -82,19 +82,19 @@ class Administration
         //Wow, zírejte na to. SQL dotaz, který vede přes většinu tabulek v databázi. To musí být výkonostní bomba!
         $result = Db::fetchQuery('
             SELECT
-            hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
+            hlaseni.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", hlaseni.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", hlaseni.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
             obrazky.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", obrazky.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
             prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky",
             casti.'.Part::COLUMN_DICTIONARY['id'].' AS "casti_id", casti.'.Part::COLUMN_DICTIONARY['name'].' AS "casti_nazev", casti.'.Part::COLUMN_DICTIONARY['naturalsCount'].' AS "casti_prirodniny", casti.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "casti_obrazky",
             poznavacky.'.Group::COLUMN_DICTIONARY['id'].' AS "poznavacky_id", poznavacky.'.Group::COLUMN_DICTIONARY['name'].' AS "poznavacky_nazev", poznavacky.'.Group::COLUMN_DICTIONARY['partsCount'].' AS "poznavacky_casti",
             tridy.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", tridy.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM hlaseni
-            JOIN obrazky ON hlaseni.obrazky_id = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
+            JOIN obrazky ON hlaseni.'.Report::COLUMN_DICTIONARY['picture'].' = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
             JOIN prirodniny ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
             JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
             JOIN poznavacky ON casti.'.Part::COLUMN_DICTIONARY['group'].' = poznavacky.'.Group::COLUMN_DICTIONARY['id'].'
             JOIN tridy ON poznavacky.'.Group::COLUMN_DICTIONARY['class'].' = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
-            WHERE hlaseni.duvod IN ('.$in.');
+            WHERE hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.');
         ', Report::ADMIN_REQUIRING_REASONS, true);
         
         if ($result === false)

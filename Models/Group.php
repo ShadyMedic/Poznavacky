@@ -308,13 +308,13 @@ class Group extends DatabaseItem
         Db::connect();
         $result = Db::fetchQuery('
             SELECT
-            hlaseni.hlaseni_id AS "hlaseni_id", hlaseni.duvod AS "hlaseni_duvod", hlaseni.dalsi_informace AS "hlaseni_dalsi_informace", hlaseni.pocet AS "hlaseni_pocet",
+            hlaseni.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", hlaseni.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", hlaseni.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
             obrazky.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", obrazky.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
             prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky", prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' AS "prirodniny_cast"
             FROM hlaseni
-            JOIN obrazky ON hlaseni.obrazky_id = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
+            JOIN obrazky ON hlaseni.'.Report::COLUMN_DICTIONARY['picture'].' = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
             JOIN prirodniny ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
-            WHERE hlaseni.duvod IN ('.$in.')
+            WHERE hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.')
             AND prirodniny.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', $sqlArguments, true);
         
