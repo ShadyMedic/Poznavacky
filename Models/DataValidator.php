@@ -62,7 +62,7 @@ class DataValidator
         switch ($stringType)
         {
             case 0:
-                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.User::COLUMN_DICTIONARY['name'].') AS "items" FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT(nove) FROM zadosti_jmena_uzivatele WHERE nove= ?) AS tmp', array($subject, $subject), false);
+                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.User::COLUMN_DICTIONARY['name'].') AS "items" FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT('.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM zadosti_jmena_uzivatele WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].'= ?) AS tmp', array($subject, $subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);

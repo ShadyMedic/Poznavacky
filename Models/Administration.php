@@ -136,9 +136,9 @@ class Administration
         $result = Db::fetchQuery('
         SELECT
         uzivatele.'.User::COLUMN_DICTIONARY['id'].', uzivatele.'.User::COLUMN_DICTIONARY['name'].', uzivatele.'.User::COLUMN_DICTIONARY['email'].', uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].', uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['karma'].', uzivatele.'.User::COLUMN_DICTIONARY['status'].',
-        zadosti_jmena_uzivatele.zadosti_jmena_uzivatele_id, zadosti_jmena_uzivatele.nove, zadosti_jmena_uzivatele.cas
+        zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['id'].', zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].', zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
         FROM zadosti_jmena_uzivatele
-        JOIN '.User::TABLE_NAME.' ON zadosti_jmena_uzivatele.uzivatele_id = uzivatele.'.User::COLUMN_DICTIONARY['id'].';
+        JOIN '.User::TABLE_NAME.' ON zadosti_jmena_uzivatele.'.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' = uzivatele.'.User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky
@@ -149,8 +149,8 @@ class Administration
         {
             $user = new User(false, $requestInfo[User::COLUMN_DICTIONARY['id']]);
             $user->initialize($requestInfo[User::COLUMN_DICTIONARY['name']], $requestInfo[User::COLUMN_DICTIONARY['email']], new DateTime($requestInfo[User::COLUMN_DICTIONARY['lastLogin']]), $requestInfo[User::COLUMN_DICTIONARY['addedPictures']], $requestInfo[User::COLUMN_DICTIONARY['guessedPictures']], $requestInfo[User::COLUMN_DICTIONARY['karma']], $requestInfo[User::COLUMN_DICTIONARY['status']]);
-            $request = new UserNameChangeRequest(false, $requestInfo['zadosti_jmena_uzivatele_id']);
-            $request->initialize($user, $requestInfo['nove'], new DateTime($requestInfo['cas']));
+            $request = new UserNameChangeRequest(false, $requestInfo[UserNameChangeRequest::COLUMN_DICTIONARY['id']]);
+            $request->initialize($user, $requestInfo[UserNameChangeRequest::COLUMN_DICTIONARY['newName']], new DateTime($requestInfo[UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt']]));
             $requests[] = $request;
         }
         return $requests;
