@@ -65,12 +65,12 @@ class ReportAdder
         Db::connect();
         $dbResult = Db::fetchQuery('
         SELECT
-        casti.'.Part::COLUMN_DICTIONARY['id'].', casti.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", casti.'.Part::COLUMN_DICTIONARY['naturalsCount'].', casti.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
+        '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
         '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
         obrazky.'.Picture::COLUMN_DICTIONARY['id'].', obrazky.'.Picture::COLUMN_DICTIONARY['natural'].', obrazky.'.Picture::COLUMN_DICTIONARY['src'].', obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].'
         FROM obrazky
         JOIN '.Natural::TABLE_NAME.' ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
-        JOIN casti ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
+        JOIN '.Part::TABLE_NAME.' ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].'
         WHERE obrazky.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', array($url, $this->group->getId()), false);
         
