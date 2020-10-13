@@ -3,6 +3,10 @@ var tablet = 768;
 
 //vše, co se děje po načtení stránky
 $(function() {
+	//skrytí částí postranního panelu, aby se při prvním otevření zobrazila jen jedna
+	$("#aside-nav").hide();
+	$("#aside-settings").hide();
+	
 	//event listenery tlačítek na manipulaci s postranním panelem
 	$("#show-full-panel-button").click(function(){showFullPanel()});
 	$("#show-aside-login-info-button").click(function(){showAdditionalPanel('aside-login-info')})
@@ -52,8 +56,6 @@ function resizeAsidePanel() {
 //funkce otevírající celý postranní panel (pro mobily)
 function showFullPanel() {
 	$("aside").addClass("show");
-	$("#aside-nav").hide();
-	$("#aside-settings").hide();
 	$("body").css("overflow-y","hidden");
 	$(".btn.cross").addClass("show");
 } 
