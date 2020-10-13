@@ -1,37 +1,36 @@
 var smallTablet = 672;
 var tablet = 768;
 
+//vše, co se děje po načtení stránky
 $(function() {
+	//event listenery tlačítek na posun přírodnin a obrázků
 	$("#natural-back-button").click(function(){updateNatural(-1)});
 	$("#natural-forward-button").click(function(){updateNatural(1)});
 	$("#picture-back-button").click(function(){updatePicture(-1)});
 	$("#picture-forward-button").click(function(){updatePicture(1)});
+
+	//event listener stisknutí klávesy
 	$("#learn-wrapper").keypress(function(event){keyPressed(event)});
+
+	//event listener změny select boxu přírodnin
 	$("#natural-select span").on('DOMSubtreeModified',function(){sel()});
 
-	$("#learn-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
+	resizeMainImg();
 })
 
+//vše, co se děje při změně velikosti okna
 $(window).resize(function() {
+	resizeMainImg();
+})
+
+//funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
+function resizeMainImg(){
 	$("#learn-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
-})
-
-
-$(function(){
-	checkHeader();
-})
-
-$(window).resize(function(){
-	checkHeader();
-})
-
-//funkce nastavující padding mainu podle velikosti okna (různá zobrazení pro mobily a desktopy)
-function checkHeader() {
-	if ($(window).width() <= smallTablet)
-		$("main").css("padding-top", $("header").outerHeight());
-	else 
-		$("main").css("padding-top", 0);
 }
+
+// -------------------------------------------------------------------------------------------- */
+
+
 //Objekt pro uchování přírodniny a jejích obrázků
 function natural(name)
 {

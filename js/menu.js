@@ -1,14 +1,26 @@
 var smallTablet = 672;
 var tablet = 768;
 
-$(function() { //až po načtení stránky
+//vše, co se děje po načtení stránky
+$(function() {
+	//event listenery tlačítek na manipulaci s postranním panelem
+	$("#show-full-panel-button").click(function(){showFullPanel()});
+	$("#show-aside-login-info-button").click(function(){showAdditionalPanel('aside-login-info')})
+	$("#show-aside-nav-button").click(function(){showAdditionalPanel('aside-nav')})
+	$("#show-aside-settings-button").click(function(){showAdditionalPanel('aside-settings')})
+	$("#close-panel-button").click(function(){closePanel()});
 
-	$(".rows").hide();
+	//skryje tlačítko na změnu zobrazení složek, pokud se uživatel nenachází na stránce se složkami
+	if($("body").attr("id")!="menu")
+		$("#change-folders-layout-button").hide();
+
 	checkHeader();
 });
 
+//vše, co se děje při změně velikosti okna
 $(window).resize(function(){
 	checkHeader();
+	resizeAsidePanel();
 })
 
 //funkce nastavující padding mainu podle velikosti okna (různá zobrazení pro mobily a desktopy)
@@ -19,49 +31,58 @@ function checkHeader() {
 		$("main, aside").css("padding-top", 0);
 }
 
-$(function(){
-	/*
-	checkTilesLayout();
-	$(window).resize(function() {
-		checkTilesLayout();
-	});*/
-
-	//changeMenuLayout();
-	$("#change-menu-layout-button").click(function(){
-		changeMenuLayout();
-	})
-});
-
-//změna uspořádání dlaždic, pokud jich je příliš málo (neimplentována)
-function checkTilesLayout() {
-	let gapSize = ($(window).width() >= 576)? remToPixels(2) : remToPixels(1);
-	let numberOfTiles = [];
-	numberOfTiles = $(".folders > ul > button").length;
-	let allTilesWidth = numberOfTiles*remToPixels(16) + (numberOfTiles-1)*gapSize;
-	let containerWidth = $(".menu > .wrapper").width();
-	if (allTilesWidth < containerWidth)
-		$(".folders > ul").addClass("not-enough-tiles");
-	else
-		$(".folders > ul").removeClass("not-enough-tiles");
-}
-
-//přepnutí zobrazení menu
-function changeMenuLayout() {
-	if ($(".folders ul").hasClass("tiles")) {
-		$(".folders ul").removeClass("tiles");
-		$(".folders ul").addClass("rows");
-		$(".rows").show();
-		$(".tiles").hide();
+//funkce měnící velikosti postranního panelu v závislosti na velikosti okna
+function resizeAsidePanel() {
+	if ($(window).width() < smallTablet) {
+		$("main").css("margin-left", "0");
+		$("#aside-additional-panel").removeClass("show");
 	}
-	else if ($(".folders ul").hasClass("rows")) {
-		$(".folders ul").removeClass("rows");
-		$(".folders ul").addClass("tiles");
-		$(".tiles").show();
-		$(".rows").hide();
+	if (($(window).width() >= smallTablet) && ($("aside").hasClass("show"))) {
+		$("#aside-additional-panel").addClass("show");
+	}
+	if ($("#aside-additional-panel").hasClass("show"))
+	{
+		$("main.menu").css("margin-left", "304px");
+	}
+	else if ((!$("#aside-additional-panel").hasClass("show")) && ($(window).width() >= smallTablet)) {
+		$("main.menu").css("margin-left", "64px");
 	}
 }
 
-//převod rem na pixely
-function remToPixels(rem) {    
-    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+//funkce otevírající celý postranní panel (pro mobily)
+function showFullPanel() {
+	$("aside").addClass("show");
+	$("#aside-nav").hide();
+	$("#aside-settings").hide();
+	$("body").css("overflow-y","hidden");
+	$(".btn.cross").addClass("show");
+} 
+
+//funkce otevírající dodatečný postranní panel (pro desktop)
+function showAdditionalPanel(spec) {
+	if (!$("aside").hasClass("show")) {
+		$("aside").addClass("show");
+		$("#aside-additional-panel").addClass("show");
+		$("main").css("margin-left", "304px");
+		$(".btn.cross").addClass("show");
+	}
+	$("#aside-login-info").hide();
+	$("#aside-nav").hide();
+	$("#aside-settings").hide();
+	$("#" + spec).show();
 }
+
+//funkce zavírající postranní panel
+function closePanel() {
+	if ($("#aside-additional-panel").hasClass("show")) {
+		$("main").css("margin-left", "64px");
+	}
+	else {
+		$("main").css("margin-left", "0");
+		$("body").css("overflow-y","auto");
+	}
+	$("#aside-additional-panel").removeClass("show");
+	$("aside").removeClass("show");
+	$(".btn.cross").removeClass("show");
+}
+
