@@ -15,7 +15,7 @@ class UserNameChangeRequest extends NameChangeRequest
     );
     
     protected const SUBJECT_CLASS_NAME = 'User';
-    protected const SUBJECT_TABLE_NAME = 'uzivatele';
+    protected const SUBJECT_TABLE_NAME = User::TABLE_NAME;
     protected const SUBJECT_NAME_DB_NAME = User::COLUMN_DICTIONARY['name'];
     
     /**
