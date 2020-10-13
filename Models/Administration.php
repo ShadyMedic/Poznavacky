@@ -57,7 +57,7 @@ class Administration
     public function getAllClasses()
     {
         Db::connect();
-        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM tridy', array(), true);
+        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME, array(), true);
         
         $classes = array();
         foreach($dbResult as $dbRow)
@@ -87,13 +87,13 @@ class Administration
             prirodniny.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", prirodniny.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", prirodniny.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky",
             casti.'.Part::COLUMN_DICTIONARY['id'].' AS "casti_id", casti.'.Part::COLUMN_DICTIONARY['name'].' AS "casti_nazev", casti.'.Part::COLUMN_DICTIONARY['naturalsCount'].' AS "casti_prirodniny", casti.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "casti_obrazky",
             poznavacky.'.Group::COLUMN_DICTIONARY['id'].' AS "poznavacky_id", poznavacky.'.Group::COLUMN_DICTIONARY['name'].' AS "poznavacky_nazev", poznavacky.'.Group::COLUMN_DICTIONARY['partsCount'].' AS "poznavacky_casti",
-            tridy.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", tridy.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
+            '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM hlaseni
             JOIN obrazky ON hlaseni.'.Report::COLUMN_DICTIONARY['picture'].' = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
             JOIN prirodniny ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = prirodniny.'.Natural::COLUMN_DICTIONARY['id'].'
             JOIN casti ON prirodniny.'.Natural::COLUMN_DICTIONARY['part'].' = casti.'.Part::COLUMN_DICTIONARY['id'].'
             JOIN poznavacky ON casti.'.Part::COLUMN_DICTIONARY['group'].' = poznavacky.'.Group::COLUMN_DICTIONARY['id'].'
-            JOIN tridy ON poznavacky.'.Group::COLUMN_DICTIONARY['class'].' = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
+            JOIN '.ClassObject::TABLE_NAME.' ON poznavacky.'.Group::COLUMN_DICTIONARY['class'].' = '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].'
             WHERE hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.');
         ', Report::ADMIN_REQUIRING_REASONS, true);
         
@@ -166,11 +166,11 @@ class Administration
         $result = Db::fetchQuery('
         SELECT
         uzivatele.'.User::COLUMN_DICTIONARY['id'].', uzivatele.'.User::COLUMN_DICTIONARY['name'].', uzivatele.'.User::COLUMN_DICTIONARY['email'].', uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].', uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['karma'].', uzivatele.'.User::COLUMN_DICTIONARY['status'].' AS "u_status",
-        tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
+        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
         zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].', zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].', zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
         FROM zadosti_jmena_tridy
-        JOIN tridy ON zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].' = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
-        JOIN '.User::TABLE_NAME.' ON tridy.'.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele.'.User::COLUMN_DICTIONARY['id'].';
+        JOIN '.ClassObject::TABLE_NAME.' ON zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].' = '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].'
+        JOIN '.User::TABLE_NAME.' ON '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele.'.User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
         
         //Kontrola, zda byly navráceny nějaké výsledky

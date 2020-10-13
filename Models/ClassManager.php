@@ -15,7 +15,7 @@ class ClassManager
     public static function classExists(string $className)
     {
         Db::connect();
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ?', array($className), false);
+        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ?', array($className), false);
         if ($cnt['cnt'] > 0)
         {
             return true;
@@ -38,11 +38,11 @@ class ClassManager
         Db::connect();
         $result = Db::fetchQuery('
         SELECT
-        tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
+        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
         uzivatele.'.User::COLUMN_DICTIONARY['id'].', uzivatele.'.User::COLUMN_DICTIONARY['name'].', uzivatele.'.User::COLUMN_DICTIONARY['email'].', uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].', uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['karma'].', uzivatele.'.User::COLUMN_DICTIONARY['status'].' AS "u_status"
-        FROM tridy
+        FROM '.ClassObject::TABLE_NAME.'
         JOIN '.User::TABLE_NAME.' ON '.ClassObject::COLUMN_DICTIONARY['admin'].' = '.User::COLUMN_DICTIONARY['id'].'
-        WHERE '.ClassObject::COLUMN_DICTIONARY['code'].' = ? AND tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' = ? AND '.ClassObject::COLUMN_DICTIONARY['id'].' NOT IN
+        WHERE '.ClassObject::COLUMN_DICTIONARY['code'].' = ? AND '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' = ? AND '.ClassObject::COLUMN_DICTIONARY['id'].' NOT IN
         (
             SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?
         )

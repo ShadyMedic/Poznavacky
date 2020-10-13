@@ -426,7 +426,7 @@ class LoggedUser extends User
         
         //Kontrola, zda uživatel není správcem žádné třídy
         Db::connect();
-        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array(UserManager::getId()));
+        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array(UserManager::getId()));
         if ($administratedClasses['cnt'] > 0)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR);
