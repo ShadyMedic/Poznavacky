@@ -257,7 +257,7 @@ class Natural extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['id'].','.Picture::COLUMN_DICTIONARY['src'].','.Picture::COLUMN_DICTIONARY['enabled'].' FROM obrazky WHERE '.Picture::COLUMN_DICTIONARY['natural'].' = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['id'].','.Picture::COLUMN_DICTIONARY['src'].','.Picture::COLUMN_DICTIONARY['enabled'].' FROM '.Picture::TABLE_NAME.' WHERE '.Picture::COLUMN_DICTIONARY['natural'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné obrázky nenalezeny

@@ -83,14 +83,14 @@ class Administration
         $result = Db::fetchQuery('
             SELECT
             hlaseni.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", hlaseni.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", hlaseni.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", hlaseni.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
-            obrazky.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", obrazky.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
+            '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
             '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky",
             '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].' AS "casti_id", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['name'].' AS "casti_nazev", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['naturalsCount'].' AS "casti_prirodniny", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "casti_obrazky",
             '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['id'].' AS "poznavacky_id", '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['name'].' AS "poznavacky_nazev", '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['partsCount'].' AS "poznavacky_casti",
             '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM hlaseni
-            JOIN obrazky ON hlaseni.'.Report::COLUMN_DICTIONARY['picture'].' = obrazky.'.Picture::COLUMN_DICTIONARY['id'].'
-            JOIN '.Natural::TABLE_NAME.' ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
+            JOIN '.Picture::TABLE_NAME.' ON hlaseni.'.Report::COLUMN_DICTIONARY['picture'].' = '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].'
+            JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
             JOIN '.Part::TABLE_NAME.' ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].'
             JOIN '.Group::TABLE_NAME.' ON '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['group'].' = '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['id'].'
             JOIN '.ClassObject::TABLE_NAME.' ON '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['class'].' = '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].'

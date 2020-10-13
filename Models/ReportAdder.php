@@ -67,11 +67,11 @@ class ReportAdder
         SELECT
         '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
         '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
-        obrazky.'.Picture::COLUMN_DICTIONARY['id'].', obrazky.'.Picture::COLUMN_DICTIONARY['natural'].', obrazky.'.Picture::COLUMN_DICTIONARY['src'].', obrazky.'.Picture::COLUMN_DICTIONARY['enabled'].'
-        FROM obrazky
-        JOIN '.Natural::TABLE_NAME.' ON obrazky.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
+        '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].'
+        FROM '.Picture::TABLE_NAME.'
+        JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
         JOIN '.Part::TABLE_NAME.' ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].'
-        WHERE obrazky.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
+        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', array($url, $this->group->getId()), false);
         
         //Obrázek nebyl v databázi podle zdroje nalezen
