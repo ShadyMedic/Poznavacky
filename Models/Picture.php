@@ -225,7 +225,7 @@ class Picture extends DatabaseItem
     public function deleteReports()
     {
         Db::connect();
-        Db::executeQuery('DELETE FROM hlaseni WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id));
+        Db::executeQuery('DELETE FROM '.Report::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id));
         $this->reports = array();
         return true;
     }
@@ -247,7 +247,7 @@ class Picture extends DatabaseItem
     public function loadReports()
     {
         Db::connect();
-        $result = Db::fetchQuery('SELECT '.Report::COLUMN_DICTIONARY['id'].','.Report::COLUMN_DICTIONARY['reason'].','.Report::COLUMN_DICTIONARY['additionalInformation'].','.Report::COLUMN_DICTIONARY['reportersCount'].' FROM hlaseni WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Report::COLUMN_DICTIONARY['id'].','.Report::COLUMN_DICTIONARY['reason'].','.Report::COLUMN_DICTIONARY['additionalInformation'].','.Report::COLUMN_DICTIONARY['reportersCount'].' FROM '.Report::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id), true);
         
         if (count($result) === 0)
         {
