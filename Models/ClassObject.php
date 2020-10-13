@@ -616,16 +616,16 @@ class ClassObject extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         //Zkontrolovat, zda již existuje žádost o změnu názvu této třídy
-        $applications = Db::fetchQuery('SELECT zadosti_jmena_tridy_id FROM zadosti_jmena_tridy WHERE tridy_id = ? LIMIT 1', array($this->id));
-        if (!empty($applications['zadosti_jmena_tridy_id']))
+        $applications = Db::fetchQuery('SELECT '.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].' FROM zadosti_jmena_tridy WHERE '.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].' = ? LIMIT 1', array($this->id));
+        if (!empty($applications[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]))
         {
             //Přepsání existující žádosti
-            Db::executeQuery('UPDATE zadosti_jmena_tridy SET nove = ?, cas = NOW() WHERE zadosti_jmena_tridy_id = ? LIMIT 1', array($newName, $applications['zadosti_jmena_tridy_id']));
+            Db::executeQuery('UPDATE zadosti_jmena_tridy SET '.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].' = ?, '.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].' = NOW() WHERE '.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newName, $applications['zadosti_jmena_tridy_id']));
         }
         else
         {
             //Uložení nové žádosti
-            Db::executeQuery('INSERT INTO zadosti_jmena_tridy (tridy_id,nove,cas) VALUES (?,?,NOW())', array($this->id, $newName));
+            Db::executeQuery('INSERT INTO zadosti_jmena_tridy ('.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,NOW())', array($this->id, $newName));
         }
         return true;
     }

@@ -69,7 +69,7 @@ abstract class NameChangeRequest extends DatabaseItem
         
         if ($this->isDefined($this->id))
         {
-            $result = Db::fetchQuery('SELECT '.$this::SUBJECT_TABLE_NAME.'_id, nove, cas FROM '.$this::TABLE_NAME.' WHERE '.$this::TABLE_NAME.'_id = ? LIMIT 1', array($this->id));
+            $result = Db::fetchQuery('SELECT '.$this::SUBJECT_TABLE_NAME.'_id, '.$this::COLUMN_DICTIONARY['newName'].', '.$this::COLUMN_DICTIONARY['requestedAt'].' FROM '.$this::TABLE_NAME.' WHERE '.$this::TABLE_NAME.'_id = ? LIMIT 1', array($this->id));
             if (empty($result))
             {
                 throw new NoDataException(NoDataException::UNKNOWN_NAME_CHANGE_REQUEST);
@@ -77,8 +77,8 @@ abstract class NameChangeRequest extends DatabaseItem
             
             $subjectClassName = get_class($this)::SUBJECT_CLASS_NAME;
             $subject = new $subjectClassName($result[$this::SUBJECT_TABLE_NAME.'_id']);
-            $newName = $result['nove'];
-            $requestedAt = new DateTime($result['cas']);
+            $newName = $result[$this::COLUMN_DICTIONARY['newName']];
+            $requestedAt = new DateTime($result[$this::COLUMN_DICTIONARY['requestedAt']]);
             
             $this->initialize($subject, $newName, $requestedAt);
         }
@@ -115,12 +115,12 @@ abstract class NameChangeRequest extends DatabaseItem
             //Aktualizace existující žádosti
             $this->loadIfNotLoaded($this->id);
             
-            $result = Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$this::SUBJECT_TABLE_NAME.'_id = ?, nove = ?, cas = ? WHERE '.$this::TABLE_NAME.'_id = ? LIMIT 1', array($this->subject->getId(), $this->newName, $this->requestedAt->format('Y-m-d H:i:s'), $this->id));
+            $result = Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$this::SUBJECT_TABLE_NAME.'_id = ?, '.$this::COLUMN_DICTIONARY['newName'].' = ?, '.$this::COLUMN_DICTIONARY['requestedAt'].' = ? WHERE '.$this::TABLE_NAME.'_id = ? LIMIT 1', array($this->subject->getId(), $this->newName, $this->requestedAt->format('Y-m-d H:i:s'), $this->id));
         }
         else
         {
             //Tvorba nové žádosti
-            $this->id = Db::executeQuery('INSERT INTO '.$this::TABLE_NAME.' ('.$this::SUBJECT_TABLE_NAME.'_id,nove,cas) VALUES (?,?,?)', array($this->subject->getId(), $this->newName, $this->requestedAt->format('Y-m-d H:i:s')), true);
+            $this->id = Db::executeQuery('INSERT INTO '.$this::TABLE_NAME.' ('.$this::SUBJECT_TABLE_NAME.'_id,'.$this::COLUMN_DICTIONARY['newName'].','.$this::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,?)', array($this->subject->getId(), $this->newName, $this->requestedAt->format('Y-m-d H:i:s')), true);
             if (!empty($this->id))
             {
                 $this->savedInDb = true;

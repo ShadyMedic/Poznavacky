@@ -167,9 +167,9 @@ class Administration
         SELECT
         uzivatele.'.User::COLUMN_DICTIONARY['id'].', uzivatele.'.User::COLUMN_DICTIONARY['name'].', uzivatele.'.User::COLUMN_DICTIONARY['email'].', uzivatele.'.User::COLUMN_DICTIONARY['lastLogin'].', uzivatele.'.User::COLUMN_DICTIONARY['addedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['guessedPictures'].', uzivatele.'.User::COLUMN_DICTIONARY['karma'].', uzivatele.'.User::COLUMN_DICTIONARY['status'].' AS "u_status",
         tridy.'.ClassObject::COLUMN_DICTIONARY['id'].', tridy.'.ClassObject::COLUMN_DICTIONARY['name'].', tridy.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", tridy.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', tridy.'.ClassObject::COLUMN_DICTIONARY['code'].',
-        zadosti_jmena_tridy.zadosti_jmena_tridy_id, zadosti_jmena_tridy.nove, zadosti_jmena_tridy.cas
+        zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].', zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].', zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
         FROM zadosti_jmena_tridy
-        JOIN tridy ON zadosti_jmena_tridy.tridy_id = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
+        JOIN tridy ON zadosti_jmena_tridy.'.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].' = tridy.'.ClassObject::COLUMN_DICTIONARY['id'].'
         JOIN '.User::TABLE_NAME.' ON tridy.'.ClassObject::COLUMN_DICTIONARY['admin'].' = uzivatele.'.User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
         
@@ -183,8 +183,8 @@ class Administration
             $admin->initialize($requestInfo[User::COLUMN_DICTIONARY['name']], $requestInfo[User::COLUMN_DICTIONARY['email']], new DateTime($requestInfo[User::COLUMN_DICTIONARY['lastLogin']]), $requestInfo[User::COLUMN_DICTIONARY['addedPictures']], $requestInfo[User::COLUMN_DICTIONARY['guessedPictures']], $requestInfo[User::COLUMN_DICTIONARY['karma']], $requestInfo['u_status']);
             $class = new ClassObject(false, $requestInfo[ClassObject::COLUMN_DICTIONARY['id']]);
             $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']], $requestInfo['c_status'], $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
-            $request = new ClassNameChangeRequest(false, $requestInfo['zadosti_jmena_tridy_id']);
-            $request->initialize($class, $requestInfo['nove'], new DateTime($requestInfo['cas']));
+            $request = new ClassNameChangeRequest(false, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
+            $request->initialize($class, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['newName']], new DateTime($requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt']]));
             
             $requests[] = $request;
         }
