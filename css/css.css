@@ -371,6 +371,20 @@ h5 {
           transform: scale(0.88);
 }
 
+.btn.icon img {
+  -webkit-filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.32));
+          filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.32));
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+.btn.icon:active img {
+  -webkit-transform: scale(0.96);
+          transform: scale(0.96);
+}
+
 .center {
   display: block;
   margin: auto;
@@ -1335,6 +1349,7 @@ label.required:after {
 #learn #learn-wrapper .picture {
   width: 100%;
   margin: 8px 0;
+  position: relative;
 }
 
 @media screen and (min-width: 672px) {
@@ -1378,7 +1393,22 @@ label.required:after {
 
 #learn #learn-wrapper .picture .btn {
   background: none;
-  width: 25%;
+  width: 12%;
+  opacity: 0.8;
+  position: absolute;
+  padding: 10px;
+}
+
+#learn #learn-wrapper .picture .btn#picture-back-button {
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#learn #learn-wrapper .picture .btn#picture-forward-button {
+  top: 0;
+  bottom: 0;
+  right: 0;
 }
 
 body#index {
