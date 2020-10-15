@@ -11,7 +11,7 @@ informace o správci mohou být nalezeny na online úložišti projektu na
 1.2 Podmínky představují právně závaznou smlouvu mezi vámi a Správcem.
 
 1.3 Tyto podmínky se vztahují na **všechny** uživatele Služby, včetně všech
-vývojářů, přispěvatelů a kohokoliv, kdo se zaregistroval, pokusil zaregistrovat nebo pokusil přihlásit na úvodní stránce *poznavacky.chytrak.cz*.
+vývojářů, přispěvatelů a kohokoliv, kdo se zaregistroval, pokusil zaregistrovat nebo pokusil přihlásit na úvodní stránce *poznavacky.com*.
 
 ## 2\. Souhlas s podmínkami použití
 
@@ -20,10 +20,10 @@ Podmínkami. Pokud s Podmínkami nesouhlasíte, nesmíte tuto službu
 využívat.
 
 2.2 Svůj souhlas s Podmínkami vyjadřujete **registrací svého uživatelského účtu, nebo přihlášením se na jakýkoliv uživatelský účet** na stránkách
-*poznavacky.chytrak.cz*. Tím berete na vědomí obsah Podmínek a
+*poznavacky.com*. Tím berete na vědomí obsah Podmínek a
 zavazujete se je dodržovat.
 
-2.3 Svůj souhlas s částečnými Podmínkami vyjadřujete **pokusem o registraci, přihlášení nebo odeslání formuláře pro obnovu hesla, který nemusí být úspěšný** na úvodní stránce *poznavacky.chytrak.cz*. V takovém případě se na Vás vztahují pouze body 6.4 - data uchovávána v logovacím souboru, podbody 1 až 7 a dále podbody 18 a 19
+2.3 Svůj souhlas s částečnými Podmínkami vyjadřujete **pokusem o registraci, přihlášení nebo odeslání formuláře pro obnovu hesla, který nemusí být úspěšný** na úvodní stránce *poznavacky.com*. V takovém případě se na Vás vztahují pouze body 6.4 - data uchovávána v logovacím souboru, podbody 1 až 7 a dále podbody 18 a 19
 
 2.4 Souhlas s Podmínkami (a to ani částečný) nemůžete uzavřít a Službu tak nemůžete používat,
 pokud (a) jste mladší 15 let a nemáte svolení svého zákonného zástupce,
