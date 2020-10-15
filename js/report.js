@@ -1,48 +1,55 @@
+//vše, co se děje po načtení stránky
+$(function() {
+	//event listener tlačítka na zobrazení report menu
+	$(".report-button").click(function(){reportImg()});
+});
+
 function reportImg()
 {
-	$("#reportButton").hide();
-	$("#reportMenu").show();
+	console.log("click");
+	$(".report-button").hide();
+	$(".report-box").addClass("show");
 }
 function cancelReport()
 {
-	$("#reportButton").show();
-	$("#reportMenu").hide();
-	$("#reportMenu select")[0].selectedIndex = 0;
-	$("#additionalReportInfo > *").hide();
-	$("#additionalReportInfo input").val("");
-	$("#additionalReportInfo textarea").val("");
-	$("#additionalReportInfo select").selectedIndex = 0;
+	$("#report-button").show();
+	$("#report-menu").hide();
+	$("#report-menu select")[0].selectedIndex = 0;
+	$("#additional-report-info > *").hide();
+	$("#additional-report-info input").val("");
+	$("#additional-report-info textarea").val("");
+	$("#additional-report-info select").selectedIndex = 0;
 }
 
 function updateReport()
 {
 	//Vše skrýt
-	$("#additionalReportInfo > *").hide();
-	if ($("#reportReason")[0].selectedIndex === 1)  //Obrázek se načítá příliš dlouho
+	$("#additional-report-info > *").hide();
+	if ($("#report-reason")[0].selectedIndex === 1)  //Obrázek se načítá příliš dlouho
 	{
-	    $("#longLoadingInfo").show();
+	    $("#long-loading-info").show();
 	}
-	else if ($("#reportReason")[0].selectedIndex === 2) //Obrázek zobrazuje nesprávnou přírodninu
+	else if ($("#report-reason")[0].selectedIndex === 2) //Obrázek zobrazuje nesprávnou přírodninu
 	{
-		$("#incorrectNaturalInfo").show();
+		$("#incorrect-natural-info").show();
 	}
-	else if ($("#reportReason")[0].selectedIndex === 6) //Jiný důvod (pro správce třídy)
+	else if ($("#report-reason")[0].selectedIndex === 6) //Jiný důvod (pro správce třídy)
 	{
-		$("#otherInfo").show();
+		$("#other-info").show();
 	}
-	else if ($("#reportReason")[0].selectedIndex === 7) //Jiný důvod (pro správce systému)
+	else if ($("#report-reason")[0].selectedIndex === 7) //Jiný důvod (pro správce systému)
 	{
-		$("#otherAdminInfo").show();
+		$("#other-admin-info").show();
 	}
 }
 
 function submitReport()
 {
-	let reason = $("#reportReason").find(":selected").text();	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/10659117
-	let picUrl = $("#mainImg").attr("src");
+	let reason = $("#report-reason").find(":selected").text();	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/10659117
+	let picUrl = $("#main-img").attr("src");
 	let reasonInfo = "";
 	
-	let additionalInfoElement = $("#additionalReportInfo").find("*:visible:first");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/18162730
+	let additionalInfoElement = $("#additional-reportInfo").find("*:visible:first");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/18162730
 	if (additionalInfoElement.length > 0)
 	{
 		if (additionalInfoElement.prop("tagName") === "SELECT")		//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/5347371

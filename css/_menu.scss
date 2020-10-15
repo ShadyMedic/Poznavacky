@@ -392,6 +392,8 @@
 				margin: 6px 0;
 			}
 			position: relative;
+			overflow: hidden;
+			border-radius: 3.2px;
 			#main-img {
 				height: 100%;
 				width: 100%;
@@ -399,7 +401,7 @@
 				object-fit: contain;
 				border-radius: 3.2px;
 			}
-			.btn {
+			.picture-control {
 				background: none;
 				width: 12%;
 				opacity: 0.8;
@@ -415,6 +417,26 @@
 					bottom: 0;
 					right: 0;
 					
+				}
+			}
+			.report-button {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				height: 16px;
+				width: 16px;
+			}
+			.report-box {
+				position: absolute;
+				bottom: 0;
+				height: 50%;
+				width: 100%;
+				background: white;
+				transform: translateY(100%);
+				transition: transform 0.4s ease-out;
+				border-radius: 0 0 3.2px 3.2px;
+				&.show {
+					transform: translateY(0);
 				}
 			}
 		}

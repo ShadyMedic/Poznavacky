@@ -88,3 +88,5 @@ function closePanel() {
 	$(".btn.cross").removeClass("show");
 }
 
+
+

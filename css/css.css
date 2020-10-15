@@ -1365,6 +1365,8 @@ label.required:after {
   width: 100%;
   margin: 8px 0;
   position: relative;
+  overflow: hidden;
+  border-radius: 3.2px;
 }
 
 @media screen and (min-width: 672px) {
@@ -1406,7 +1408,7 @@ label.required:after {
   border-radius: 3.2px;
 }
 
-#learn #learn-wrapper .picture .btn {
+#learn #learn-wrapper .picture .picture-control {
   background: none;
   width: 12%;
   opacity: 0.8;
@@ -1414,16 +1416,44 @@ label.required:after {
   padding: 10px;
 }
 
-#learn #learn-wrapper .picture .btn#picture-back-button {
+#learn #learn-wrapper .picture .picture-control#picture-back-button {
   top: 0;
   bottom: 0;
   left: 0;
 }
 
-#learn #learn-wrapper .picture .btn#picture-forward-button {
+#learn #learn-wrapper .picture .picture-control#picture-forward-button {
   top: 0;
   bottom: 0;
   right: 0;
+}
+
+#learn #learn-wrapper .picture .report-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 16px;
+  width: 16px;
+}
+
+#learn #learn-wrapper .picture .report-box {
+  position: absolute;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+  background: white;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  -webkit-transition: -webkit-transform 0.4s ease-out;
+  transition: -webkit-transform 0.4s ease-out;
+  transition: transform 0.4s ease-out;
+  transition: transform 0.4s ease-out, -webkit-transform 0.4s ease-out;
+  border-radius: 0 0 3.2px 3.2px;
+}
+
+#learn #learn-wrapper .picture .report-box.show {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
 }
 
 body#index {
