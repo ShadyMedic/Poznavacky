@@ -490,6 +490,8 @@ label.required:after {
 }
 
 .custom-select-wrapper .custom-options {
+  scrollbar-color: #444 white;
+  scrollbar-width: auto;
   position: absolute;
   display: block;
   top: 100%;
@@ -511,6 +513,19 @@ label.required:after {
   -webkit-box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
           box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
   overflow: auto;
+}
+
+.custom-select-wrapper .custom-options::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.custom-select-wrapper .custom-options::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+.custom-select-wrapper .custom-options::-webkit-scrollbar-track {
+  background: white;
 }
 
 .custom-select-wrapper .custom-options .custom-option {

@@ -347,6 +347,7 @@ label {
 		}
 	}
 	.custom-options {
+		@include scrollbar(12px, $gray3, white);
 		position: absolute;
 		display: block;
 		top: 100%;
