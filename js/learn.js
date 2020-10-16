@@ -104,7 +104,7 @@ $(function()
 	naturals = new Array();
 	
 	//Kód napsaný podle odpovědi na StackOverflow: https://stackoverflow.com/a/590219
-	$(".custom-options .custom-option").each(function()
+	$("#natural-select .custom-options .custom-option").each(function()
 	{
 		naturals.push(new natural($(this).text()));
 	});
@@ -164,9 +164,9 @@ function sel()
 	//  1. Když je název staré přírodniny vymazán
 	//	2. Když je zobraze název nové přírodniny
 	//V prvním případě by se změny nepovedly a zobrazovali by se do konzole chyby, proto je případ jedna ukončen následujícím řádkem
-	if ($(".custom-select-main span").text() === ""){ return; }
+	if ($("#natural-select .custom-select-main span").text() === ""){ return; }
 	let i;
-	for (i = 0; i < naturals.length && naturals[i].name !== $(".custom-select-main span").text(); i++){}
+	for (i = 0; i < naturals.length && naturals[i].name !== $("#natural-select .custom-select-main span").text(); i++){}
 	selectedNatural = naturals[i];
 	updatePicture(0);
 }
@@ -197,7 +197,7 @@ function updateNatural(offset)
 	
 	//Aktualizace select boxu
 	$("#natural-select span").text(selectedNatural.name);
-	$(".custom-options .custom-option").each(function()
+	$("#natural-select .custom-options .custom-option").each(function()
 	{
 		if ($(this).text() === selectedNatural.name)
 		{

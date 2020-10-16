@@ -4,10 +4,25 @@ var tablet = 768;
 //vše, co se děje po načtení stránky
 $(function() {
 	//první možnosti v každém select-boxu je přiřazena třída "selected"
-	$(".custom-select-wrapper").find(".custom-option").first().addClass("selected");
+	//$(".custom-select-wrapper").find(".custom-option").first().addClass("selected");
 
 	//event listener select boxů
-	$(".custom-select-wrapper").click(function() {manageSelectBox($(this))})
+	for (const dropdown of $(".custom-select-wrapper")) {
+		$(dropdown).find(".custom-option").first().addClass("selected");
+		$(dropdown).click(function() {
+			//$(this).find(".custom-option").first().addClass("selected");
+			manageSelectBox($(this));
+		})
+	}
+
+	//event listener kliknutí mimo select box
+	$(window).click(function(e) {
+		for (const select of $('.custom-select')) {
+			if (!select.contains(e.target)) {
+				$(select).removeClass('open');
+			}
+		}
+	});
 
 	//event listener přidávající třídu podle toho, jestli uživatel používá myš nebo tabulátor
 	$(window).on("keydown", function(event) { 
