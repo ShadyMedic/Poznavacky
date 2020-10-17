@@ -5,8 +5,10 @@
  */
 class Report
 {
+	// PŘI ÚPRAVĚ KONSTANT NUTNÉ UPRAVIT I PROMĚNNÉ V REPORT.JS
+	
     const ADMIN_REQUIRING_REASONS = array(self::REASON_COPYRIGHT, self::REASON_OTHER_ADMIN);
-    const LONG_LOADING_AVAILABLE_DELAYS = array('>2 s', '>5 s', '>10 s', '>20 s');
+    const LONG_LOADING_AVAILABLE_DELAYS = array('> 2 s', '> 5 s', '> 10 s', '> 20 s');
     const INCORRECT_NATURAL_DEFAULT_INFO = 'Nezadáno';
     
     const REASON_NOT_DISPLAYING = 'Obrázek se nezobrazuje správně';

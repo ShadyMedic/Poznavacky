@@ -1,20 +1,40 @@
+var reasonNotDisplaying;
+var reasonLongLoading;
+var reasonIncorrectNatural;
+var reasonContainsName;
+var reasonBadResolution;
+var reasonCopyright;
+var reasonOther;
+var reasonOtherAdmin;
+
 //vše, co se děje po načtení stránky
 $(function() {
+	//načtení proměnných skladujících důvody nahlášení
+	reasonNotDisplaying = $("#report-reason .custom-option:contains('Obrázek se nezobrazuje správně')");
+	reasonLongLoading = $("#report-reason .custom-option:contains('Obrázek se načítá příliš dlouho')");
+	reasonIncorrectNatural = $("#report-reason .custom-option:contains('Obrázek zobrazuje nesprávnou přírodninu')");
+	reasonContainsName = $("#report-reason .custom-option:contains('Obrázek obsahuje název přírodniny')");
+	reasonBadResolution = $("#report-reason .custom-option:contains('Obrázek má příliš špatné rozlišení')");
+	reasonCopyright = $("#report-reason .custom-option:contains('Obrázek porušuje autorská práva')");
+	reasonOther = $("#report-reason .custom-option:contains('Jiný důvod (řeší správce třídy)')");
+	reasonOtherAdmin = $("#report-reason .custom-option:contains('Jiný důvod (řeší správce služby)')");
+
 	//event listener tlačítka na zobrazení report menu
 	$(".report-button").click(function(){reportImg()});
+	$("#report-reason .custom-options").click(function(){updateReport()});
 });
 
 function reportImg()
 {
-	console.log("click");
 	$(".report-button").hide();
 	$(".report-box").addClass("show");
 }
+
 function cancelReport()
 {
 	$("#report-button").show();
 	$("#report-menu").hide();
-	$("#report-menu select")[0].selectedIndex = 0;
+	$(".report-box #report-reason")[0].selectedIndex = 0;
 	$("#additional-report-info > *").hide();
 	$("#additional-report-info input").val("");
 	$("#additional-report-info textarea").val("");
@@ -23,21 +43,21 @@ function cancelReport()
 
 function updateReport()
 {
-	//Vše skrýt
-	$("#additional-report-info > *").hide();
-	if ($("#report-reason")[0].selectedIndex === 1)  //Obrázek se načítá příliš dlouho
+	console.log("update");
+	$(".additional-report-info > *").hide();
+	if (reasonLongLoading.hasClass("selected"))  //Obrázek se načítá příliš dlouho
 	{
 	    $("#long-loading-info").show();
 	}
-	else if ($("#report-reason")[0].selectedIndex === 2) //Obrázek zobrazuje nesprávnou přírodninu
+	else if (reasonIncorrectNatural.hasClass("selected")) //Obrázek zobrazuje nesprávnou přírodninu
 	{
 		$("#incorrect-natural-info").show();
 	}
-	else if ($("#report-reason")[0].selectedIndex === 6) //Jiný důvod (pro správce třídy)
+	else if (reasonOther.hasClass("selected")) //Jiný důvod (pro správce třídy)
 	{
 		$("#other-info").show();
 	}
-	else if ($("#report-reason")[0].selectedIndex === 7) //Jiný důvod (pro správce systému)
+	else if (reasonOtherAdmin.hasClass("selected")) //Jiný důvod (pro správce systému)
 	{
 		$("#other-admin-info").show();
 	}
