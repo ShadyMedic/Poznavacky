@@ -9,6 +9,7 @@ var reasonOtherAdmin;
 
 //vše, co se děje po načtení stránky
 $(function() {
+
 	//načtení proměnných skladujících důvody nahlášení
 	reasonNotDisplaying = $("#report-reason .custom-option:contains('Obrázek se nezobrazuje správně')");
 	reasonLongLoading = $("#report-reason .custom-option:contains('Obrázek se načítá příliš dlouho')");
@@ -19,9 +20,11 @@ $(function() {
 	reasonOther = $("#report-reason .custom-option:contains('Jiný důvod (řeší správce třídy)')");
 	reasonOtherAdmin = $("#report-reason .custom-option:contains('Jiný důvod (řeší správce služby)')");
 
-	//event listener tlačítka na zobrazení report menu
+	//event listener tlačítek
 	$(".report-button").click(function(){reportImg()});
 	$("#report-reason .custom-options").click(function(){updateReport()});
+	$("#submit-report-button").click(function(e){submitReport(e)})
+	$("#cancel-report-button").click(function(e){cancelReport(e)})
 });
 
 function reportImg()
@@ -43,7 +46,6 @@ function cancelReport()
 
 function updateReport()
 {
-	console.log("update");
 	$(".additional-report-info > *").hide();
 	if (reasonLongLoading.hasClass("selected"))  //Obrázek se načítá příliš dlouho
 	{
@@ -51,30 +53,34 @@ function updateReport()
 	}
 	else if (reasonIncorrectNatural.hasClass("selected")) //Obrázek zobrazuje nesprávnou přírodninu
 	{
-		$("#incorrect-natural-info").show();
+		$(".incorrect-natural-info-wrapper").show();
 	}
 	else if (reasonOther.hasClass("selected")) //Jiný důvod (pro správce třídy)
 	{
-		$("#other-info").show();
+		$(".other-info-wrapper").show();
 	}
 	else if (reasonOtherAdmin.hasClass("selected")) //Jiný důvod (pro správce systému)
 	{
-		$("#other-admin-info").show();
+		$(".other-admin-info-wrapper").show();
 	}
 }
 
 function submitReport()
 {
-	let reason = $("#report-reason").find(":selected").text();	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/10659117
+	let reason = $("#report-reason").find(".selected");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/10659117
 	let picUrl = $("#main-img").attr("src");
 	let reasonInfo = "";
 	
-	let additionalInfoElement = $("#additional-reportInfo").find("*:visible:first");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/18162730
+	let additionalInfoElement = $(".additional-report-info").find("*:visible:first");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/18162730
 	if (additionalInfoElement.length > 0)
 	{
-		if (additionalInfoElement.prop("tagName") === "SELECT")		//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/5347371
+		/*if (additionalInfoElement.prop("tagName") === "SELECT")		//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/5347371
 		{
 			reasonInfo = additionalInfoElement.find(":selected").text();
+		}*/
+		if (additionalInfoElement.hasClass("custom-select-wrapper")) {
+			reasonInfo = additionalInfoElement.find(".custom-options .selected").text();
+			console.log(reasonInfo);
 		}
 		else
 		{
@@ -83,7 +89,7 @@ function submitReport()
 	}
 	
 	//Kontrola vyplnění informací pro obecná hlášení
-	if ((reason === "Jiný důvod (řeší správce třídy)" || reason === "Jiný důvod (řeší správce služby)") && reasonInfo.length === 0)
+	if ((reason === reasonOther || reason === reasonOtherAdmin) && reasonInfo.length === 0)
 	{
 		//TODO - nějak šikovně zobrazit chybovou hlášku
 		alert("Musíte vyplnit důvod hlášení");
@@ -99,7 +105,7 @@ function submitReport()
 		alert("Tento obrázek nemůžete nahlásit");
 		return;
 	case "images/loading.gif":
-		if (reason !== "Obrázek se načítá příliš dlouho")
+		if (reason !== reasonLongLoading)
 		{
 			//TODO - nějak šikovně zobrazit chybovou hlášku
 			alert("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
@@ -110,7 +116,7 @@ function submitReport()
 	$.post('new-report',
 	{
 		picUrl:picUrl,
-		reason:reason,
+		reason:reason.text(),
 		info:reasonInfo
 	}, function(response)
 	{
