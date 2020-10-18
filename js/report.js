@@ -1,3 +1,4 @@
+// proměnné obsahující elementy select boxu s důvody nahlášení
 var reasonNotDisplaying;
 var reasonLongLoading;
 var reasonIncorrectNatural;
@@ -27,23 +28,33 @@ $(function() {
 	$("#cancel-report-button").click(function(e){cancelReport(e)})
 });
 
+// funkce na nahlášení obrázku
 function reportImg()
 {
 	$(".report-button").hide();
 	$(".report-box").addClass("show");
 }
 
+// funkce na zrušení hlášení
 function cancelReport()
 {
-	$("#report-button").show();
-	$("#report-menu").hide();
-	$(".report-box #report-reason")[0].selectedIndex = 0;
-	$("#additional-report-info > *").hide();
-	$("#additional-report-info input").val("");
-	$("#additional-report-info textarea").val("");
-	$("#additional-report-info select").selectedIndex = 0;
+	// skrytí report boxu a zobrazení tlačítka na jeho zobrazení
+	$(".report-box").removeClass("show");
+	$(".report-button").show();
+	// obnovení hlavního select boxu
+	$("#report-reason .selected").removeClass("selected");
+	$("#report-reason .custom-option:first").addClass("selected");
+	$("#report-reason .custom-select-main span").text($("#report-reason .selected").text());
+	// obnovení dodatečných polí a select boxů
+	$(".additional-report-info > *").hide();
+	$("#long-loading-info .selected").removeClass("selected");
+	$("#long-loading-info .custom-option:first").addClass("selected");
+	$("#long-loading-info .custom-select-main span").text($("#long-loading-info .selected").text());
+	$(".additional-report-info input").val("");
+	$(".additional-report-info textarea").val("");
 }
 
+// funkce aktualizující obsah report boxu
 function updateReport()
 {
 	$(".additional-report-info > *").hide();
@@ -65,6 +76,7 @@ function updateReport()
 	}
 }
 
+// funkce odesílající hlášení
 function submitReport()
 {
 	let reason = $("#report-reason").find(".selected");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/10659117
@@ -74,10 +86,11 @@ function submitReport()
 	let additionalInfoElement = $(".additional-report-info").find("*:visible:first");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/18162730
 	if (additionalInfoElement.length > 0)
 	{
-		/*if (additionalInfoElement.prop("tagName") === "SELECT")		//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/5347371
-		{
-			reasonInfo = additionalInfoElement.find(":selected").text();
-		}*/
+		//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/5347371
+
+		// momentálně ení nutné, jelikož nejsou využívány defaultní select boxy
+		/*if (additionalInfoElement.prop("tagName") === "SELECT"){reasonInfo = additionalInfoElement.find(":selected").text();}*/
+
 		if (additionalInfoElement.hasClass("custom-select-wrapper")) {
 			reasonInfo = additionalInfoElement.find(".custom-options .selected").text();
 			console.log(reasonInfo);
