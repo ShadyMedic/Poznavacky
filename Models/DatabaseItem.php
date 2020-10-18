@@ -144,7 +144,7 @@ abstract class DatabaseItem
     /**
      * Metoda prověřující všechny vlastnosti objektu na jejich definovanost a navracející pole se jmény nedefinovaných vlastností
      * Jako nedefinovaná vlastnost se rozumí vlastnost, která ukládá instanci třídy undefined, vlastnost ukládající hodnotu NULL je definovaná
-     * @return string[] Pole obsahující názvy vlastností, které nejsou definované
+     * @return string[] Pole obsahující názvy vlastností, které nejsou definované jako klíče a instance třídy undefined jako hodnoty
      */
     protected function getUndefinedProperties()
     {
@@ -155,7 +155,7 @@ abstract class DatabaseItem
     /**
      * Metoda prověřující všechny vlastnosti objektu na jejich definovanost a navracející pole se jmény definovaných vlastností
      * Jako definovaná vlastnost se rozumí vlastnost, která ukládá cokoliv jiného než instanci třídy undefined, vlastnost ukládající hodnotu NULL je definovaná
-     * @return string[] Pole obsahující názvy vlastností, které jsou definované
+     * @return string[] Pole obsahující názvy vlastností, které jsou definované jako klíče a jejich hodnoty jako hodnoty
      */
     protected function getDefinedProperties()
     {
@@ -166,7 +166,7 @@ abstract class DatabaseItem
     /**
      * Metoda získávající buďto pole názvů definovaných vlastností objektu, nebo pole názvů nedefinovaných vlastností objektu
      * @param bool $getDefined TRUE, pokud má být navrácen seznam názvů definovaných vlastností, FALSE, pokud nedefinovaných
-     * @return string[] Pole obsahující názvy definovaných nebo nedefinovaných vlastností objektu
+     * @return array Pole obsahující názvy definovaných nebo nedefinovaných vlastností objektu jako klíče a jejich hodnoty jako hodnoty
      */
     private function getPropertyList(bool $getDefined)
     {
@@ -176,7 +176,7 @@ abstract class DatabaseItem
         {
             if ($getDefined == $this->isDefined($propertyValue))
             {
-                $result[] = $propertyName;
+                $result[$propertyName] = $propertyValue;
             }
         }
         return $result;
