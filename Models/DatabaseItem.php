@@ -95,7 +95,7 @@ abstract class DatabaseItem
      */
     public function getId()
     {
-        $this->loadIfNotLoaded($this->loaded);
+        $this->loadIfNotLoaded($this->id);
         return $this->id;
     }
     
@@ -198,7 +198,7 @@ abstract class DatabaseItem
      * Metoda načítající podle údajů poskytnutých v konstruktoru a metodě initialize všechny ostatní vlastnosti objektu
      * @param bool $rewriteKnown TRUE, pokud mají být načtenými hodnotami přepsány vlastnosti obsahující i něco jiného než instanci třídy undefined
      */
-    public abstract function load(bool $rewriteKnown = false);
+    public abstract function load(/*bool $rewriteKnown = false*/);
     
     /**
      * Metoda ukládající známá data této položky do databáze
