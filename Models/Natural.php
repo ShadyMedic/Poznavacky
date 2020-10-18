@@ -22,6 +22,9 @@ class Natural extends DatabaseItem
         'part' => null
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     protected $name;
     protected $picturesCount;
     protected $class;

@@ -20,6 +20,9 @@ class Report extends DatabaseItem
         'reportersCount' => 1
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     const ALL_REASONS = array(self::REASON_NOT_DISPLAYING, self::REASON_LONG_LOADING, self::REASON_INCORRECT_NATURAL, self::REASON_CONTAINS_NAME, self::REASON_BAD_RESOLUTION, self::REASON_COPYRIGHT, self::REASON_OTHER, self::REASON_OTHER_ADMIN);
     const ADMIN_REQUIRING_REASONS = array(self::REASON_COPYRIGHT, self::REASON_OTHER_ADMIN);
     const LONG_LOADING_AVAILABLE_DELAYS = array('>2 s', '>5 s', '>10 s', '>20 s');

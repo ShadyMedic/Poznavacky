@@ -33,6 +33,9 @@ class LoggedUser extends User
         'status' => self::STATUS_MEMBER,
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     protected $hash;
     protected $lastChangelog;
     protected $lastLevel;

@@ -14,6 +14,9 @@ class ClassNameChangeRequest extends NameChangeRequest
         'requestedAt' => 'cas'
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     protected const SUBJECT_CLASS_NAME = 'ClassObject';
     protected const SUBJECT_TABLE_NAME = ClassObject::TABLE_NAME;
     protected const SUBJECT_NAME_DB_NAME = ClassObject::COLUMN_DICTIONARY['name'];

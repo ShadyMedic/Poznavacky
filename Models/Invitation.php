@@ -18,6 +18,9 @@ class Invitation extends DatabaseItem
         /*Všechny vlastnosti musí být vyplněné před uložením do databáze*/
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     public const INVITATION_LIFETIME = 604800;  //7 dní
     
     protected $user;

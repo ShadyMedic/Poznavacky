@@ -19,6 +19,9 @@ class Group extends DatabaseItem
         'parts' => array()
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     protected $name;
     protected $class;
     protected $partsCount;

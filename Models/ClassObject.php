@@ -24,6 +24,9 @@ class ClassObject extends DatabaseItem
         'members' => array()
     );
     
+    protected const CAN_BE_CREATED = false;
+    protected const CAN_BE_UPDATED = true;
+    
     public const CLASS_STATUS_PUBLIC = "public";
     public const CLASS_STATUS_PRIVATE = "private";
     public const CLASS_STATUS_LOCKED = "locked";

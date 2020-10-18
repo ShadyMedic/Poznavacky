@@ -25,6 +25,9 @@ class User extends DatabaseItem implements ArrayAccess
         'karma' => 0,
     );
     
+    protected const CAN_BE_CREATED = false;
+    protected const CAN_BE_UPDATED = true;
+    
     const STATUS_GUEST = 'Guest';
     const STATUS_MEMBER = 'Member';
     const STATUS_CLASS_OWNER = 'Class Owner';

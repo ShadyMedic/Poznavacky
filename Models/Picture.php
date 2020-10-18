@@ -18,6 +18,9 @@ class Picture extends DatabaseItem
         'enabled' => true
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     protected $src;
     protected $natural;
     protected $enabled;

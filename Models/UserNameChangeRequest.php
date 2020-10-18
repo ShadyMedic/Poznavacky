@@ -14,6 +14,9 @@ class UserNameChangeRequest extends NameChangeRequest
         'requestedAt' => 'cas'
     );
     
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     protected const SUBJECT_CLASS_NAME = 'User';
     protected const SUBJECT_TABLE_NAME = User::TABLE_NAME;
     protected const SUBJECT_NAME_DB_NAME = User::COLUMN_DICTIONARY['name'];

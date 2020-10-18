@@ -28,6 +28,18 @@ abstract class DatabaseItem
     protected const DEFAULT_VALUES = null;
     
     /**
+     * TRUE, pokud mohou být do databáze ukládány nové záznamy této položky, FALSE, pokud ne
+     * @var bool
+     */
+    protected const CAN_BE_CREATED = true;
+    
+    /**
+     * TRUE, pokud mohou být existující záznamy této položky v databázy upravovány, FALSE, pokud ne
+     * @var bool
+     */
+    protected const CAN_BE_UPDATED = true;
+    
+    /**
      * TRUE, pokud se jedná o záznam, který dosud není v databázi uložen
      * V takovém případě nemusí mít objekt při volání funkce save() nastavené ID a nelze na něm zavolat funkci load()
      * @var bool
@@ -202,6 +214,12 @@ abstract class DatabaseItem
      */
     protected function create()
     {
+        //Zkontroluj, zda je možné položku tohoto typu do databáze vložit
+        if (!$this::CAN_BE_CREATED)
+        {
+            throw new BadMethodCallException('This item cannot be inserted into database, change value of CAN_BE_CREATED to change this');
+        }
+        
         //Zkontroluj, zda jsou všechny potřebné vlastnosti vyplněny a sestav pole hodnot pro vložení a názvů databázových sloupců
         $databaseColumnNames = array();
         $databaseColumnValues = array();
@@ -243,6 +261,12 @@ abstract class DatabaseItem
      */
     protected function update()
     {
+        //Zkontrolovat, za je možné tuto položku v databázi upravovat
+        if (!$this::CAN_BE_UPDATED)
+        {
+            throw new BadMethodCallException('Database data of this item cannot be modified, change value of CAN_BE_UPDATED to true to change this');
+        }
+        
         //Zkontrolovat, zda je známé ID
         if (!$this->isDefined($this->id))
         {
