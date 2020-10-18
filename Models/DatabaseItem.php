@@ -195,6 +195,46 @@ abstract class DatabaseItem
     public abstract function save();
     
     /**
+     * Metoda vytvářející v databázové tabulce nový záznam s daty dané položky
+     * I pokud je vyplněno ID nebo je vlastnost $savedInDb nastavena na TRUE, bude položka uložena jako nový záznam a vlastnost ID objektu bude přepsána
+     * @throws BadMethodCallException Pokud některá z vlastností ukládaných do databáze není známa
+     * @return boolean TRUE, pokud je úspěšně vytvořen v databázi nový záznam a ID položky nastaveno / aktualizováno, FALSE, pokud ne
+     */
+    protected function create()
+    {
+        //Zkontroluj, zda jsou všechny potřebné vlastnosti vyplněny a sestav pole hodnot pro vložení a názvů databázových sloupců
+        $databaseColumnNames = array();
+        $databaseColumnValues = array();
+        
+        $databaseProperties = $this::COLUMN_DICTIONARY;
+        unset($databaseProperties['id']);   //Odebrat ze seznamu vlastnost ID (nemůže být nastaveno pro nový záznam)
+        foreach ($databaseProperties as $propertyName => $columnName)
+        {
+            $propertyValue = $this->$propertyName;
+            if (!$this->isDefined($propertyValue))
+            {
+                throw new BadMethodCallException('Values of all database columns must be know before creating a new record in the table');
+            }
+            $databaseColumnNames[] = $columnName;
+            if ($propertyValue instanceof DatabaseItem) { $databaseColumnValues[] = $propertyValue->getId(); }  //Pro případ, že vlastnost ukládá odkaz na objekt
+            else { $databaseColumnValues[] = $propertyValue; }
+        }
+        
+        //Sestav řetězce pro vložení do SQL dotazu
+        $columnString = implode(',', $databaseColumnNames);
+        $valuesString = str_repeat('?,', count($databaseColumnNames) - 1).'?';
+        
+        //Proveď SQL dotaz
+        $this->id = Db::executeQuery('INSERT INTO '.$this::TABLE_NAME.' ('.$columnString.') VALUES ('.$valuesString.')', $databaseColumnValues, true);
+        if (!empty($this->id))
+        {
+            $this->savedInDb = true;
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * Metoda ukládající data této databázové položky do databáze
      * Tato metoda NEVYTVÁŘÍ nový záznam v databázy, pouze aktualizuje již existující
      * ID položky musí být známo a data záznamu se stejným ID jsou v databázi přepsána
