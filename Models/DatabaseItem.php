@@ -195,6 +195,48 @@ abstract class DatabaseItem
     public abstract function save();
     
     /**
+     * Metoda ukládající data této databázové položky do databáze
+     * Tato metoda NEVYTVÁŘÍ nový záznam v databázy, pouze aktualizuje již existující
+     * ID položky musí být známo a data záznamu se stejným ID jsou v databázi přepsána
+     * @throws BadMethodCallException Pokud není známo ID záznamu
+     * @return boolean TRUE, pokud je položka úspěšně v databázi aktualizována, FALSE, pokud nejsou známy žádné vlastnosti nebo pokud selže SQL dotaz
+     */
+    protected function update()
+    {
+        //Zkontrolovat, zda je známé ID
+        if (!$this->isDefined($this->id))
+        {
+            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
+        }
+        
+        //Získat seznam definovaných vlastností (včetně jejich hodnot)
+        $definedProperties = $this->getDefinedProperties();
+        
+        //Odebrat ze seznamu ID záznamu (nemůže být změněno)
+        unset($definedProperties['id']);
+        
+        //Sestavit řetězec databázových sloupců a jejich hodnot pro SQL dotaz
+        $databaseColumnNames = array();
+        $databaseColumnValues = array();
+        foreach ($definedProperties as $propertyName => $propertyValue)
+        {
+            if (isset($this::COLUMN_DICTIONARY[$propertyName]))    //Aby se ukládali pouze vlastnosti propojené s databázovým sloupcem
+            {
+                $databaseColumnNames[] = $this::COLUMN_DICTIONARY[$propertyName];
+                if ($propertyValue instanceof DatabaseItem) { $databaseColumnValues[] = $propertyValue->getId(); }  //Pro případ, že vlastnost ukládá odkaz na objekt
+                else { $databaseColumnValues[] = $propertyValue; }
+            }
+        }
+        
+        if (count($databaseColumnNames) === 0) { return false; }
+        $columnString = implode(' = ?,', $databaseColumnNames);
+        $columnString .= ' = ?'; //Přidání rovnítka s otazníkem za název posledního sloupce
+        
+        Db::connect();
+        return Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$columnString.' WHERE '.$this::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array_merge(array_values($definedProperties), array_pad($databaseColumnValues, count($databaseColumnValues) + 1, $this->id)));
+    }
+    
+    /**
      * Metoda odstraňující záznam reprezentovaný tímto objektem z databáze a nulující vlastnost ID objektu
      */
     public abstract function delete();
