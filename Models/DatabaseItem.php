@@ -149,16 +149,37 @@ abstract class DatabaseItem
     protected function getUndefinedProperties()
     {
         //Ukládání nedefinovaných vlastností objektu
-        $undefinedProps = array();
+        return $this->getPropertyList(false);
+    }
+    
+    /**
+     * Metoda prověřující všechny vlastnosti objektu na jejich definovanost a navracející pole se jmény definovaných vlastností
+     * Jako definovaná vlastnost se rozumí vlastnost, která ukládá cokoliv jiného než instanci třídy undefined, vlastnost ukládající hodnotu NULL je definovaná
+     * @return string[] Pole obsahující názvy vlastností, které jsou definované
+     */
+    protected function getDefinedProperties()
+    {
+        //Ukládání definovaných vlastností objektu
+        return $this->getPropertyList(true);
+    }
+    
+    /**
+     * Metoda získávající buďto pole názvů definovaných vlastností objektu, nebo pole názvů nedefinovaných vlastností objektu
+     * @param bool $getDefined TRUE, pokud má být navrácen seznam názvů definovaných vlastností, FALSE, pokud nedefinovaných
+     * @return string[] Pole obsahující názvy definovaných nebo nedefinovaných vlastností objektu
+     */
+    private function getPropertyList(bool $getDefined)
+    {
+        $result = array();
         $properties = get_object_vars($this);
         foreach ($properties as $propertyName => $propertyValue)
         {
-            if (!$this->isDefined($propertyValue))
+            if ($getDefined == $this->isDefined($propertyValue))
             {
-                $undefinedProps[] = $propertyName;
+                $result[] = $propertyName;
             }
         }
-        return $undefinedProps;
+        return $result;
     }
     
     /**
