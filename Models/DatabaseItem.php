@@ -129,7 +129,7 @@ abstract class DatabaseItem
      * Metoda nastavující do vlastností objektu základní hodnoty, které by byly uloženy do databáze i v případě jejich nespecifikování v SQL INSERT dotazu
      * @param bool $overwriteAll TRUE, pokud mají být základními hodnotami přepsány všechny vlastnosti objektu, FALSE pouze pro přepsání vlastností, jejichž hodnota není nastavena nebo je nastavena na NULL
      */
-    public function loadDefaultValues(bool $overwriteAll = false)
+    protected function loadDefaultValues(bool $overwriteAll = false)
     {
         foreach ($this::DEFAULT_VALUES as $fieldName => $fieldValue)
         {
@@ -142,14 +142,34 @@ abstract class DatabaseItem
     }
     
     /**
+     * Metoda prověřující všechny vlastnosti objektu na jejich definovanost a navracející pole se jmény nedefinovaných vlastností
+     * Jako nedefinovaná vlastnost se rozumí vlastnost, která ukládá instanci třídy undefined, vlastnost ukládající hodnotu NULL je definovaná
+     * @return string[] Pole obsahující názvy vlastností, které nejsou definované
+     */
+    protected function getUndefinedProperties()
+    {
+        //Ukládání nedefinovaných vlastností objektu
+        $undefinedProps = array();
+        $properties = get_object_vars($this);
+        foreach ($properties as $propertyName => $propertyValue)
+        {
+            if (!$this->isDefined($propertyValue))
+            {
+                $undefinedProps[] = $propertyName;
+            }
+        }
+        return $undefinedProps;
+    }
+    
+    /**
      * Metoda načítající podle údajů poskytnutých v konstruktoru a metodě initialize všechny ostatní vlastnosti objektu
      * @param bool $rewriteKnown TRUE, pokud mají být načtenými hodnotami přepsány vlastnosti obsahující i něco jiného než instanci třídy undefined
      */
     public abstract function load(bool $rewriteKnown = false);
     
     /**
-     * Metoda ukládající všechny vlastnosti objektu do databáze, přepisujíce záznam se stejným ID nebo vytvářející nový v případě, že záznam s takovým ID v databázové tabulce neexistuje
-     * Před uložením jsou do nevyplněných vlastností načteny základní hodnoty
+     * Metoda ukládající všechny definované vlastnosti objektu do databáze, přepisujíce záznam se stejným ID nebo vytvářející nový v případě, že záznam s takovým ID v databázové tabulce neexistuje
+     * Neznámé vlastnosti (obsahující instanci undefined) nejsou ukládány
      */
     public abstract function save();
     
