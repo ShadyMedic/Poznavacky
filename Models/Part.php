@@ -153,16 +153,6 @@ class Part extends DatabaseItem
     }
     
     /**
-     * Metoda navracející ID této části
-     * @return int ID části
-     */
-    public function getId()
-    {
-        $this->loadIfNotLoaded($this->id);
-        return $this->id;
-    }
-    
-    /**
      * Metoda navracející jméno této části
      * @return string Jméno části
      */

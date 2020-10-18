@@ -173,16 +173,6 @@ class ClassObject extends DatabaseItem
     }
     
     /**
-     * Metoda navrecející ID této třídy
-     * @return int ID třídy
-     */
-    public function getId()
-    {
-        $this->loadIfNotLoaded($this->id);
-        return $this->id;
-    }
-    
-    /**
      * Metoda navracející jméno této třídy
      * @return string Jméno třídy
      */

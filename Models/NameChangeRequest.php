@@ -131,16 +131,6 @@ abstract class NameChangeRequest extends DatabaseItem
     }
     
     /**
-     * Metoda navracející ID této žádosti
-     * @return int ID žádosti v databázi
-     */
-    public function getId()
-    {
-        $this->loadIfNotLoaded($this->id);
-        return $this->id;
-    }
-    
-    /**
      * Metoda navracejícící požadované jméno
      * @return string Požadované nové jméno
      */

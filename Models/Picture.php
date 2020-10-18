@@ -143,16 +143,6 @@ class Picture extends DatabaseItem
     }
     
     /**
-     * Metoda navracející ID tohoto obrázku
-     * @return int ID obrázku
-     */
-    public function getId()
-    {
-        $this->loadIfNotLoaded($this->id);
-        return $this->id;
-    }
-    
-    /**
      * Metoda navracející URL adresu toho obrázku
      * @return string Zdroj (URL) obrázku
      */

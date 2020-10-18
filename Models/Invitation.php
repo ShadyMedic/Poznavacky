@@ -136,16 +136,6 @@ class Invitation extends DatabaseItem
     }
     
     /**
-     * Metoda navracející ID této pozvánky
-     * @return int ID této pozvánky (v případě neznámého ID je navrácena hodnota 0)
-     */
-    public function getId()
-    {
-        $this->loadIfNotLoaded($this->id);
-        return $this->id;
-    }
-    
-    /**
      * Metoda navracející objekt třídy, do které je možné pomocí této pozvánky získat přístup
      * @return ClassObject Objekt třídy, které se týká tato pozvánka
      */

@@ -147,16 +147,6 @@ class Group extends DatabaseItem
     }
     
     /**
-     * Metoda navracející ID této poznávačky
-     * @return int ID poznávačky
-     */
-    public function getId()
-    {
-        $this->loadIfNotLoaded($this->id);
-        return $this->id;
-    }
-    
-    /**
      * Metoda navracející jméno této poztnávačky
      * @return string Jméno poznávačky
      */

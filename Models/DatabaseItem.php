@@ -78,6 +78,16 @@ abstract class DatabaseItem
     public abstract function initialize();
     
     /**
+     * Metoda navracející ID tohoto databázového záznamu
+     * @return int ID záznamu
+     */
+    public function getId()
+    {
+        $this->loadIfNotLoaded($this->loaded);
+        return $this->id;
+    }
+    
+    /**
      * Metoda zjišťující, zda je daná proměnná definována (zda je do ní přiřazeno cokoliv jiného než objekt typu undefined
      * @param mixed $property
      * @return boolean TRUE, pokud proměnná obsahuje cokoliv jiného než objekt typu undefined (včetně null)

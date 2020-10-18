@@ -160,15 +160,6 @@ class Report extends DatabaseItem
     }
     
     /**
-     * Metoda navracející ID tohoto hlášení
-     */
-    public function getId()
-    {
-        $this->loadIfNotLoaded($this->id);
-        return $this->id;
-    }
-    
-    /**
      * Metoda navracející objekt nahlášeného obrázku
      * @return Picture Nahlášený obrázek
      */
