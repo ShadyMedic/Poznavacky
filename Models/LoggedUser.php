@@ -160,42 +160,6 @@ class LoggedUser extends User
     }
     
     /**
-     * Metoda ukládající data tohoto uživatele do databáze
-     * Data uživatele se stejným ID jsou v databázy přepsána
-     * @throws BadMethodCallException Pokud není známé ID uživatele (znalost ID uživatele je nutná pro modifikaci databázové tabulky)
-     * @return boolean TRUE, pokud jsou data uživatele v databázi úspěšně aktualizována nebo pokud je vytvořen nový uživatelský účet
-     * {@inheritDoc}
-     * @see User::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            $this->loadIfNotLoaded($this->id);
-            
-            //Aktualizace existujícího uživatele
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['hash'].' = ?, '.self::COLUMN_DICTIONARY['email'].' = ?, '.self::COLUMN_DICTIONARY['lastLogin'].' = ?, '.self::COLUMN_DICTIONARY['lastChangelog'].' = ?, '.self::COLUMN_DICTIONARY['lastLevel'].' = ?, posledni_složka = ?, vzhled = ?, '.self::COLUMN_DICTIONARY['addedPictures'].' = ?, '.self::COLUMN_DICTIONARY['guessedPictures'].' = ?, '.self::COLUMN_DICTIONARY['karma'].' = ?, '.self::COLUMN_DICTIONARY['status'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
-        }
-        else
-        {
-            //Tvorba nového uživatele
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['hash'].','.self::COLUMN_DICTIONARY['email'].','.self::COLUMN_DICTIONARY['lastLogin'].','.self::COLUMN_DICTIONARY['lastChangelog'].','.self::COLUMN_DICTIONARY['lastLevel'].','.self::COLUMN_DICTIONARY['lastFolder'].','.self::COLUMN_DICTIONARY['theme'].','.self::COLUMN_DICTIONARY['addedPictures'].','.self::COLUMN_DICTIONARY['guessedPictures'].','.self::COLUMN_DICTIONARY['karma'].','.self::COLUMN_DICTIONARY['status'].') VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', array($this->name, $this->hash, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->lastChangelog, $this->lastLevel, $this->lastFolder, $this->theme, $this->addedPictures, $this->guessedPictures, $this->karma, $this->status), true);
-            if (!empty($this->id))
-            {
-                $this->savedInDb = true;
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda ukládající do databáze nový požadavek na změnu jména od přihlášeného uživatele, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
      * Data jsou předem ověřena
      * @param string $newName Požadované nové jméno

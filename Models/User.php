@@ -146,37 +146,6 @@ class User extends DatabaseItem implements ArrayAccess
     }
     
     /**
-     * Metoda ukládající data tohoto uživatele do databáze
-     * Data uživatele se stejným ID jsou v databázy přepsána
-     * @throws BadMethodCallException Pokud není známé ID uživatele (znalost ID uživatele je nutná pro modifikaci databázové tabulky) nebo pokud uživatel zatím není uložen v databázi
-     * @return boolean TRUE, pokud jsou data uživatele v databázi úspěšně aktualizována
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existujícího uživatele
-            $this->loadIfNotAllLoaded();
-            
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['email'].' = ?, '.self::COLUMN_DICTIONARY['lastLogin'].' = ?, '.self::COLUMN_DICTIONARY['addedPictures'].' = ?, '.self::COLUMN_DICTIONARY['guessedPictures'].' = ?, '.self::COLUMN_DICTIONARY['karma'].' = ?, '.self::COLUMN_DICTIONARY['status'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->email, $this->lastLogin->format('Y-m-d H:i:s'), $this->addedPictures, $this->guessedPictures, $this->karma, $this->status, $this->id));
-        }
-        else
-        {
-            //Nelze vytvořit nového uživatele skrz třídu User - lze pouze ve třídě LoggedUser, jelikož musí být známo heslo uživatele
-            throw new BadMethodCallException('New user cannot be created from this class, because this class doesn\'t store the user\'s password. Try doing this from the LoggedUser class');
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
      * @return Invitation[] Pole aktivních pozvánek jako objekty
      */

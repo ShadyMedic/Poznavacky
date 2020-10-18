@@ -145,37 +145,6 @@ class ClassObject extends DatabaseItem
     }
     
     /**
-     * Metoda ukládající data této třídy do databáze
-     * Touto metodou nelze vytvořit novou třídu (je-li vlastnost $savedInDb nastavena na FALSE, je vyhozena výjimka) - to lze pouze přímo v ovládání databáze
-     * Data třídy se stejným ID jsou v databázi přepsána
-     * @throws BadMethodCallException Pokud se nejedná o novou třídu a zároveň není známo její ID (znalost ID třídy je nutná pro modifikaci databázové tabulky), nebo pokud tato třída zatím v databázi neexistuje
-     * @return boolean TRUE, pokud je třída úspěšně uložena do databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existující třídy
-            $this->loadIfNotAllLoaded();
-            
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['id'].' = ?, '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['groupsCount'].' = ?, '.self::COLUMN_DICTIONARY['status'].' = ?, '.self::COLUMN_DICTIONARY['code'].' = ?, '.self::COLUMN_DICTIONARY['admin'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id, $this->name, $this->groupsCount, $this->status, $this->code, $this->admin->getId(), $this->id));
-        }
-        else
-        {
-            throw new BadMethodCallException('Method ClassObject::save() cannot be used to create a new class in the databse');
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda navracející jméno této třídy
      * @return string Jméno třídy
      */
@@ -297,7 +266,7 @@ class ClassObject extends DatabaseItem
     }
     
     /**
-     * 
+     *
      * Metoda odstraňující danou poznávačku z této třídy i z databáze
      * @param Group $group Objekt poznávačky, který má být odstraněn
      * @throws BadMethodCallException Pokud daná poznávačka není součástí této třídy
@@ -432,21 +401,21 @@ class ClassObject extends DatabaseItem
         
         //Zkontroluj, zda je třída soukromá
         //Není třeba - před zavoláním této metody při získávání členství pomocí kódu je zkontrolováno, zda není třída zamknutá
-      # if (!$this->getStatus() === self::CLASS_STATUS_PRIVATE)
-      # {
-      #     //Nelze získat členství ve veřejné nebo uzamčené třídě
-      #     return false;
-      # }
+        # if (!$this->getStatus() === self::CLASS_STATUS_PRIVATE)
+        # {
+        #     //Nelze získat členství ve veřejné nebo uzamčené třídě
+        #     return false;
+        # }
         
         Db::connect();
         
         //Zkontroluj, zda již uživatel není členem této třídy
         //Není třeba - metoda getNewClassesByAccessCode ve třídě ClassManager navrací pouze třídy, ve kterých přihlášený uživatel ještě není členem
-      # if ($this->checkAccess($userId))
-      # {
-      #     //Nelze získat členství ve třídě vícekrát
-      #     return false;
-      # }
+        # if ($this->checkAccess($userId))
+        # {
+        #     //Nelze získat členství ve třídě vícekrát
+        #     return false;
+        # }
         
         if (Db::executeQuery('INSERT INTO clenstvi (uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id)))
         {
@@ -706,7 +675,7 @@ class ClassObject extends DatabaseItem
     /**
      * Metoda měnící správce této třídy z rozhodnutí administrátora
      * @param User $newAdmin Instance třídy uživatele reprezentující nového správce
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem 
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
      */
     public function changeClassAdminAsAdmin(User $newAdmin)

@@ -94,43 +94,6 @@ abstract class NameChangeRequest extends DatabaseItem
     }
     
     /**
-     * Metoda ukládající data této žádosti do databáze
-     * Pokud se jedná o novou žádost (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
-     * V opačném případě jsou přepsána data žádosti se stejným ID
-     * @throws BadMethodCallException Pokud se nejedná o novou žádost a zároveň není známo jeho ID (znalost ID žádosti je nutná pro modifikaci databázové tabulky)
-     * @return boolean TRUE, pokud je žádost úspěšně uložena do databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existující žádosti
-            $this->loadIfNotLoaded($this->id);
-            
-            $result = Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$this::SUBJECT_TABLE_NAME.'_id = ?, '.$this::COLUMN_DICTIONARY['newName'].' = ?, '.$this::COLUMN_DICTIONARY['requestedAt'].' = ? WHERE '.$this::TABLE_NAME.'_id = ? LIMIT 1', array($this->subject->getId(), $this->newName, $this->requestedAt->format('Y-m-d H:i:s'), $this->id));
-        }
-        else
-        {
-            //Tvorba nové žádosti
-            $this->id = Db::executeQuery('INSERT INTO '.$this::TABLE_NAME.' ('.$this::SUBJECT_TABLE_NAME.'_id,'.$this::COLUMN_DICTIONARY['newName'].','.$this::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,?)', array($this->subject->getId(), $this->newName, $this->requestedAt->format('Y-m-d H:i:s')), true);
-            if (!empty($this->id))
-            {
-                $this->savedInDb = true;
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda navracejícící požadované jméno
      * @return string Požadované nové jméno
      */

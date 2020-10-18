@@ -109,43 +109,6 @@ class Picture extends DatabaseItem
     }
     
     /**
-     * Metoda ukládající data tohoto obrázku do databáze
-     * Pokud se jedná o nový obrázek (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
-     * V opačném případě jsou přepsána data obrázku se stejným ID
-     * @throws BadMethodCallException Pokud se nejedná o nový obrázek a zároveň není známo jeho ID (znalost ID obrázku je nutná pro modifikaci databázové tabulky)
-     * @return boolean TRUE, pokud je obrázek úspěšně uložen do databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existujícího obrázku
-            $this->loadIfNotAllLoaded();
-            
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['src'].' = ?, '.self::COLUMN_DICTIONARY['natural'].' = ?, '.self::COLUMN_DICTIONARY['enabled'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->src, $this->natural->getId(), $this->enabled, $this->id));
-        }
-        else
-        {
-            //Tvorba nové pozvánky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['src'].','.self::COLUMN_DICTIONARY['natural'].','.self::COLUMN_DICTIONARY['enabled'].') VALUES (?,?,?,?)', array($this->src, $this->natural->getId(), $this->enabled), true);
-            if (!empty($this->id))
-            {
-                $this->savedInDb = true;
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda navracející URL adresu toho obrázku
      * @return string Zdroj (URL) obrázku
      */

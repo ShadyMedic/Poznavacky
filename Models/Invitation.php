@@ -102,43 +102,6 @@ class Invitation extends DatabaseItem
     }
     
     /**
-     * Metoda ukládající data této pozvánky do databáze
-     * Pokud se jedná o novou pozvánku (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
-     * V opačném případě jsou přepsána data pozvánky se stejným ID
-     * @throws BadMethodCallException Pokud se nejedná o novou pozvánku a zároveň není známo její ID (znalost ID pozvánky je nutná pro modifikaci databázové tabulky)
-     * @return boolean TRUE, pokud je pozvánka úspěšně uložena do databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existující pozvánky
-            $this->loadIfNotAllLoaded();
-            
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['user'].' = ?, '.self::COLUMN_DICTIONARY['class'].' = ?, '.self::COLUMN_DICTIONARY['expiration'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s'), $this->id));
-        }
-        else
-        {
-            //Tvorba nové pozvánky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['user'].','.self::COLUMN_DICTIONARY['class'].','.self::COLUMN_DICTIONARY['expiration'].') VALUES (?,?,?)', array($this->user['id'], $this->class->getId(), $this->expiration->format('Y-m-d H:i:s')), true);
-            if (!empty($this->id))
-            {
-                $this->savedInDb = true;
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda navracející objekt třídy, do které je možné pomocí této pozvánky získat přístup
      * @return ClassObject Objekt třídy, které se týká tato pozvánka
      */

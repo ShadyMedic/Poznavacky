@@ -126,43 +126,6 @@ class Report extends DatabaseItem
     }
     
     /**
-     * Metoda ukládající data tohoto hlášení do databáze
-     * Pokud se jedná o nové hlášení (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
-     * V opačném případě jsou přepsána data hlášení se stejným ID
-     * @throws BadMethodCallException Pokud se nejedná o nové hlášení a zároveň není známo jeho ID (znalost ID hlášení je nutné pro modifikaci databázové tabulky)
-     * @return boolean TRUE, pokud je hlášení úspěšně uloženo do databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existujícího hlášení
-            $this->loadIfNotAllLoaded();
-            
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['picture'].' = ?, '.self::COLUMN_DICTIONARY['reason'].' = ?, '.self::COLUMN_DICTIONARY['additionalInformation'].' = ?, '.self::COLUMN_DICTIONARY['reportersCount'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount, $this->id));
-        }
-        else
-        {
-            //Tvorba nového hlášení
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['picture'].','.self::COLUMN_DICTIONARY['reason'].','.self::COLUMN_DICTIONARY['additionalInformation'].','.self::COLUMN_DICTIONARY['reportersCount'].') VALUES (?,?,?,?)', array($this->picture->getId(), $this->reason, $this->additionalInformation, $this->reportersCount), true);
-            if (!empty($this->id))
-            {
-                $this->savedInDb = true;
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda navracející objekt nahlášeného obrázku
      * @return Picture Nahlášený obrázek
      */

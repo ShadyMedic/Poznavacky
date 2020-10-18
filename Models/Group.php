@@ -113,43 +113,6 @@ class Group extends DatabaseItem
     }
     
     /**
-     * Metoda ukládající data této poznávačky do databáze
-     * Pokud se jedná o novou poznávačku (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
-     * V opačném případě jsou přepsána data poznávačky se stejným ID
-     * @throws BadMethodCallException Pokud se nejedná o novou poznávačku a zároveň není známo jeho ID (znalost ID poznávačky je nutná pro modifikaci databázové tabulky)
-     * @return boolean TRUE, pokud je poznávačka úspěšně uložena do databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existující poznávačky
-            $this->loadIfNotAllLoaded();
-            
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['class'].' = ?, '.self::COLUMN_DICTIONARY['partsCount'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->class->getId(), $this->partsCount, $this->id));
-        }
-        else
-        {
-            //Tvorba nové poznávačky
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['class'].','.self::COLUMN_DICTIONARY['partsCount'].') VALUES (?,?,?)', array($this->name, $this->class->getId(), $this->partsCount), true);
-            if (!empty($this->id))
-            {
-                $this->savedInDb = true;
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda navracející jméno této poztnávačky
      * @return string Jméno poznávačky
      */

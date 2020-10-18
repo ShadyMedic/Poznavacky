@@ -201,10 +201,29 @@ abstract class DatabaseItem
     public abstract function load(bool $rewriteKnown = false);
     
     /**
-     * Metoda ukládající všechny definované vlastnosti objektu do databáze, přepisujíce záznam se stejným ID nebo vytvářející nový v případě, že záznam s takovým ID v databázové tabulce neexistuje
+     * Metoda ukládající známá data této položky do databáze
+     * Pokud se jedná o novou položku (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
+     * V opačném případě jsou přepsána data položky se stejným ID
      * Neznámé vlastnosti (obsahující instanci undefined) nejsou ukládány
+     * Tato metoda využívá metody DatabaseItem::create() a DatabaseItem::update(), přečtěte si i jejich phpDoc
+     * @return boolean TRUE, pokud je poznávačka úspěšně uložena do databáze
+     * {@inheritDoc}
+     * @see DatabaseItem::save()
      */
-    public abstract function save();
+    public function save()
+    {
+        if ($this->savedInDb)
+        {
+            //Aktualizace existujícího záznamu
+            $result = $this->update();
+        }
+        else
+        {
+            //Vložení nového záznamu
+            $result = $this->create();
+        }
+        return $result;
+    }
     
     /**
      * Metoda vytvářející v databázové tabulce nový záznam s daty dané položky

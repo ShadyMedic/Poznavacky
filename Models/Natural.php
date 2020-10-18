@@ -144,43 +144,6 @@ class Natural extends DatabaseItem
     }
     
     /**
-     * Metoda ukládající data této přírodniny do databáze
-     * Pokud se jedná o novou přírodninu (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
-     * V opačném případě jsou přepsána data přírodniny se stejným ID
-     * @throws BadMethodCallException Pokud se nejedná o novou přírodninu a zároveň není známo jeho ID (znalost ID pozvánky je nutná pro modifikaci databázové tabulky)
-     * @return boolean TRUE, pokud je přírodnina úspěšně uložena do databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::save()
-     */
-    public function save()
-    {
-        if ($this->savedInDb === true && !$this->isDefined($this->id))
-        {
-            throw new BadMethodCallException('ID of the item must be loaded before saving into the database, since this item isn\'t new');
-        }
-        
-        Db::connect();
-        if ($this->savedInDb)
-        {
-            //Aktualizace existující přírodniny
-            $this->loadIfNotAllLoaded();
-            
-            $result = Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['name'].' = ?, '.self::COLUMN_DICTIONARY['picturesCount'].' = ?, '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['group'].' = ?, '.self::COLUMN_DICTIONARY['part'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId(), $this->id));
-        }
-        else
-        {
-            //Tvorba nové přírodniny
-            $this->id = Db::executeQuery('INSERT INTO '.self::TABLE_NAME.' ('.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['picturesCount'].','.self::COLUMN_DICTIONARY['class'].','.self::COLUMN_DICTIONARY['group'].','.self::COLUMN_DICTIONARY['part'].') VALUES (?,?,?,?)', array($this->name, $this->picturesCount, $this->class->getId(), $this->group->getId(), $this->part->getId()), true);
-            if (!empty($this->id))
-            {
-                $this->savedInDb = true;
-                $result = true;
-            }
-        }
-        return $result;
-    }
-    
-    /**
      * Metoda navracející jméno této přírodniny
      * @return string Jméno přírodniny
      */
