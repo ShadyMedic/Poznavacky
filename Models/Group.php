@@ -65,58 +65,6 @@ class Group extends DatabaseItem
     }
     
     /**
-     * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu částí, do kterých je tato poznávačka rozdělena podle ID (pokud je vyplněno)
-     * Pokud není známé ID této poznávačky, ale je známa třída, do které tato poznávačka patří a název poznávačky, jsou ostatní informace (včetně ID a s výjimkou seznamu částí, do kterých je tato poznávačka rozdělena) načteny podle těchto informací
-     * Seznam částí, do kterých je tato poznávačka rozdělena může být načten do vlastnosti Group::$parts pomocí metody Group::loadParts()
-     * @throws BadMethodCallException Pokud se jedná o poznávačku, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není poznávačka s odpovídajícími daty nalezena v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti této poznávačky úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
-        
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['partsCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_GROUP);
-            }
-            
-            $name = $result[self::COLUMN_DICTIONARY['name']];
-            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
-            $partsCount = $result[self::COLUMN_DICTIONARY['partsCount']];
-            $this->initialize($name, $class, null, $partsCount);
-        }
-        else if ($this->isDefined($this->name) && $this->isDefined($this->class))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['partsCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? AND '.self::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($this->name, $this->class->getId()));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_GROUP);
-            }
-            
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $partsCount = $result[self::COLUMN_DICTIONARY['partsCount']];
-            $this->initialize(null, null, null, $partsCount);
-        }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        
-        return true;
-    }
-    
-    /**
      * Metoda navracející jméno této poztnávačky
      * @return string Jméno poznávačky
      */

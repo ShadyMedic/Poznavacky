@@ -73,62 +73,7 @@ class Report extends DatabaseItem
         $this->additionalInformation = $additionalInformation;
         $this->reportersCount = $reportersCount;
     }
-    
-    /**
-     * Metoda načítající z databáze všechny vlastnosti objektu podle ID (pokud je vyplněno)
-     * Pokud není ID vyplněno, jsou vlastnosti (včetně ID) načteny podle obrázku, ke kterému se toto hlášení vztahuje, důvodu a dalších informací odeslaných uživatelem
-     * @throws BadMethodCallException Pokud se jedná o hlášení, které dosud není uloženo v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není hlášení, s daným ID nebo názvem nalezeno v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti tohoto hlášení úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
         
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['picture'].','.self::COLUMN_DICTIONARY['reason'].','.self::COLUMN_DICTIONARY['additionalInformation'].','.self::COLUMN_DICTIONARY['reportersCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_REPORT);
-            }
-            
-            $picture = new Picture(false, $result[self::COLUMN_DICTIONARY['picture']]);
-            $reason = $result[self::COLUMN_DICTIONARY['reason']];
-            $additionalInformation = $result[self::COLUMN_DICTIONARY['additionalInformation']];
-        }
-        else if ($this->isDefined($this->picture) && $this->isDefined($this->reason) && $this->isDefined($this->additionalInformation))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].','.self::COLUMN_DICTIONARY['reportersCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['picture'].' = ? AND '.self::COLUMN_DICTIONARY['reason'].' = ? AND '.self::COLUMN_DICTIONARY['additionalInformation'].' = ? LIMIT 1', array($this->picture->getId(), $this->reason, $this->additionalInformation));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_REPORT);
-            }
-            
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $picture = null;
-            $reason = null;
-            $additionalInformation = null;
-        }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        
-        $reportersCount = $result[self::COLUMN_DICTIONARY['reportersCount']];
-        
-        $this->initialize($picture, $reason, $additionalInformation, $reportersCount);
-        
-        return true;
-    }
-    
     /**
      * Metoda navracející objekt nahlášeného obrázku
      * @return Picture Nahlášený obrázek

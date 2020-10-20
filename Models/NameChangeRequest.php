@@ -51,49 +51,6 @@ abstract class NameChangeRequest extends DatabaseItem
     }
     
     /**
-     * Metoda načítající z databáze objekt uživatele nebo třídy, kterého se tato žádost týká, žádané jméno a čas, kdy byla žádost podána podle ID žádosti
-     * @throws BadMethodCallException Pokud se jedná o žádost, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není žádost nalezena v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti této žádosti úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
-        
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.$this::SUBJECT_TABLE_NAME.'_id, '.$this::COLUMN_DICTIONARY['newName'].', '.$this::COLUMN_DICTIONARY['requestedAt'].' FROM '.$this::TABLE_NAME.' WHERE '.$this::TABLE_NAME.'_id = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_NAME_CHANGE_REQUEST);
-            }
-            
-            $subjectClassName = get_class($this)::SUBJECT_CLASS_NAME;
-            $subject = new $subjectClassName($result[$this::SUBJECT_TABLE_NAME.'_id']);
-            $newName = $result[$this::COLUMN_DICTIONARY['newName']];
-            $requestedAt = new DateTime($result[$this::COLUMN_DICTIONARY['requestedAt']]);
-            
-            $this->initialize($subject, $newName, $requestedAt);
-        }
-      # else if (isset($this->newName))
-      # {
-      #     //Implementovat v případě potřeby zkonstruovat objekt žádosti pouze podle žádaného jména
-      # }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        return true;
-    }
-    
-    /**
      * Metoda navracejícící požadované jméno
      * @return string Požadované nové jméno
      */

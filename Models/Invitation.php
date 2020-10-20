@@ -58,55 +58,6 @@ class Invitation extends DatabaseItem
     }
     
     /**
-     * Metoda načítající z databáze uživatele, kterého se tato pozvánka týká, třídu, do které lze pomocí této pozvánky získat přístup a čas, kdy pozvánka expiruje (pokud je známé ID pozvánky)
-     * V případě, že není známé ID, ale je známý uživatel, kterého se tato pozvánka týká a třída, do které lze pomocí této pozvánky získat přístup, je načteno ID pozvánky a čas její expirace podle těchto informací
-     * @throws BadMethodCallException Pokud se jedná o pozvánku, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není pozvánka nebo uživatel, kterého se týká nalezena v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti této pozvánky úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
-        
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['user'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
-            }
-            
-            $user = new User(false, $result[self::COLUMN_DICTIONARY['user']]);
-            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
-            $expiration = new DateTime($result[self::COLUMN_DICTIONARY['expiration']]);
-            
-            $this->initialize($user, $class, $expiration);
-        }
-        else if ($this->isDefined($this->user) && $this->isDefined($this->class))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['expiration'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['user'].' = ? AND '.self::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($this->user['id'], $this->class->getId()));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_INVITATION);
-            }
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $this->expiration = new DateTime($result[self::COLUMN_DICTIONARY['expiration']]);
-        }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        return true;
-    }
-    
-    /**
      * Metoda navracející objekt třídy, do které je možné pomocí této pozvánky získat přístup
      * @return ClassObject Objekt třídy, které se týká tato pozvánka
      */

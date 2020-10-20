@@ -76,79 +76,7 @@ class Natural extends DatabaseItem
         $this->group = $group;
         $this->part = $part;
     }
-    
-    /**
-     * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu obrázků, které jsou k této přírodnině nahrány, podle ID (pokud je vyplněno)
-     * V případě, že není známé ID, ale je známý název přírodniny a část nebo poznávačka, do které patří, jsou načteny ty samé informace + ID podle těchto známých informací
-     * Obrázky, které byly nahrány k této přírodnině mohou být načteny zvlášť pomocí metody Natural::loadPictures()
-     * @throws BadMethodCallException Pokud se jedná o přírodninu, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není přírodnina se zadanými vlastnostmi nalezena v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti této přírodniny úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
         
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].', '.self::COLUMN_DICTIONARY['picturesCount'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['group'].', '.self::COLUMN_DICTIONARY['part'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
-            }
-            
-            $name = $result[self::COLUMN_DICTIONARY['name']];
-            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
-            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
-            $group = new Group(false, $result[self::COLUMN_DICTIONARY['group']]);
-            $part = new Part(false, $result[self::COLUMN_DICTIONARY['part']]);
-            
-            $this->initialize($name, null, $picturesCount, $class, $group, $part);
-        }
-        else if ($this->isDefined($this->name) && $this->isDefined($this->group))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['picturesCount'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['part'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? AND '.self::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($this->name, $this->group->getId()));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
-            }
-            
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
-            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
-            $part = new Part(false, $result[self::COLUMN_DICTIONARY['part']]);
-            
-            $this->initialize(null, null, $picturesCount, null, $part);
-        }
-        else if ($this->isDefined($this->name) && $this->isDefined($this->part))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['picturesCount'].', '.self::COLUMN_DICTIONARY['class'].', '.self::COLUMN_DICTIONARY['group'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? AND '.self::COLUMN_DICTIONARY['part'].' = ? LIMIT 1', array($this->part->getId()));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_NATURAL);
-            }
-            
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
-            $class = new ClassObject(false, $result[self::COLUMN_DICTIONARY['class']]);
-            $group = new Group(false, $result[self::COLUMN_DICTIONARY['group']]);
-            
-            $this->initialize(null, null, $picturesCount, $group, null);
-        }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        return true;
-    }
-    
     /**
      * Metoda navracející jméno této přírodniny
      * @return string Jméno přírodniny

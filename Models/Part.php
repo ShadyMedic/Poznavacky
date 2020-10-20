@@ -68,60 +68,7 @@ class Part extends DatabaseItem
         $this->naturalsCount = $naturalsCount;
         $this->picturesCount = $picturesCount;
     }
-    
-    /**
-     * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu přírodnin, které tato část poznávačky obsahuje, podle ID (pokud je vyplněno)
-     * Pokud není známé ID této části, ale je známa poznávačka, do které patří a název části, jsou ostatní informace (včetně ID a s výjimkou seznamu přírodnin, které tato část poznávačky obsahuje) načteny podle těchto informací
-     * @throws BadMethodCallException Pokud se jedná o část, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není část s odpovídajícími daty nalezena v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti této části úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
         
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].', '.self::COLUMN_DICTIONARY['group'].', '.self::COLUMN_DICTIONARY['naturalsCount'].', '.self::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_PART);
-            }
-            
-            $name = $result[self::COLUMN_DICTIONARY['name']];
-            $group = new Group(false, $result[self::COLUMN_DICTIONARY['group']]);
-            $naturalsCount = $result[self::COLUMN_DICTIONARY['naturalsCount']];
-            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
-            $this->initialize($name, $group, null, $naturalsCount, $picturesCount);
-        }
-        else if ($this->isDefined($this->name) && $this->isDefined($this->group))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['naturalsCount'].', '.self::COLUMN_DICTIONARY['picturesCount'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? AND '.self::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($this->name, $this->group->getId()));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_PART);
-            }
-            
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $naturalsCount = $result[self::COLUMN_DICTIONARY['naturalsCount']];
-            $picturesCount = $result[self::COLUMN_DICTIONARY['picturesCount']];
-            $this->initialize(null, null, null, $naturalsCount, $picturesCount);
-        }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        
-        return true;
-    }
-    
     /**
      * Metoda navracející jméno této části
      * @return string Jméno části

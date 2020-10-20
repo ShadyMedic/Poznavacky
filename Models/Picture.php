@@ -60,59 +60,6 @@ class Picture extends DatabaseItem
     }
     
     /**
-     * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu hlášení tohoto obrázku, podle ID (pokud je vyplněno)
-     * V případě, že není známé ID, ale je známá adresa obrázku a přírodnina, ke které patří, jsou načteny ty samé informace + ID podle těchto známých informací
-     * Hlášení tohoto obrázku lze načíst samostatně pomocí metody Picture::loadReports()
-     * @throws BadMethodCallException Pokud se jedná o obrázek, který dosud není uložen v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není obrázek nalezen v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti tohoto obrázku úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
-        
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['src'].', '.self::COLUMN_DICTIONARY['natural'].', '.self::COLUMN_DICTIONARY['enabled'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_PICTURE);
-            }
-            
-            $src = $result[self::COLUMN_DICTIONARY['src']];
-            $natural = new Natural(false, $result[self::COLUMN_DICTIONARY['natural']]);
-        }
-        else if ($this->isDefined($this->src) && $this->isDefined($this->natural))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].', '.self::COLUMN_DICTIONARY['enabled'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['src'].' = ? AND '.self::COLUMN_DICTIONARY['natural'].' = ? LIMIT 1', array($this->src, $this->natural->getId()));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_PICTURE);
-            }
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $src = null;
-            $natural = null;
-        }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        
-        $enabled = ($result[self::COLUMN_DICTIONARY['enabled']] === 1) ? true : false;
-        
-        $this->initialize($src, $natural, $enabled, null);
-        
-        return true;
-    }
-    
-    /**
      * Metoda navracející URL adresu toho obrázku
      * @return string Zdroj (URL) obrázku
      */

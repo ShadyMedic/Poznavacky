@@ -94,61 +94,6 @@ class ClassObject extends DatabaseItem
     }
     
     /**
-     * Metoda načítající z databáze všechny vlastnosti objektu s výjimkou seznamu členů třídy a poznávaček do ní patřících podle ID (pokud je vyplněno) nebo podle názvu třídy (pokud není vyplněno ID, ale je vyplněn název)
-     * Seznam členů třídy může být načten do vlastnosti ClassObject::$members pomocí metody ClassObject::loadMembers()
-     * Seznam poznávaček v této třídě může být načten do vlastnosti ClassObject::$groups pomocí metody ClassObject::loadGroups()
-     * @throws BadMethodCallException Pokud se jedná o třídu, která dosud není uložena v databázi nebo pokud není o objektu známo dost informací potřebných pro jeho načtení
-     * @throws NoDataException Pokud není třída s daným ID nebo názvem nalezena v databázi
-     * @return boolean TRUE, pokud jsou vlastnosti této třídy úspěšně načteny z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::load()
-     */
-    public function load()
-    {
-        if ($this->savedInDb === false)
-        {
-            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
-        }
-        
-        Db::connect();
-        
-        if ($this->isDefined($this->id))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['name'].','.self::COLUMN_DICTIONARY['groupsCount'].','.self::COLUMN_DICTIONARY['status'].','.self::COLUMN_DICTIONARY['code'].','.self::COLUMN_DICTIONARY['admin'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($this->id));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_CLASS);
-            }
-            
-            $name = $result[self::COLUMN_DICTIONARY['name']];
-        }
-        else if ($this->isDefined($this->name))
-        {
-            $result = Db::fetchQuery('SELECT '.self::COLUMN_DICTIONARY['id'].','.self::COLUMN_DICTIONARY['groupsCount'].','.self::COLUMN_DICTIONARY['status'].','.self::COLUMN_DICTIONARY['code'].','.self::COLUMN_DICTIONARY['admin'].' FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($this->name));
-            if (empty($result))
-            {
-                throw new NoDataException(NoDataException::UNKNOWN_CLASS);
-            }
-            
-            $this->id = $result[self::COLUMN_DICTIONARY['id']];
-            $name = $this->name;
-        }
-        else
-        {
-            throw new BadMethodCallException('Not enough properties are know about the item to be able to load the rest');
-        }
-        
-        $groupsCount = $result[self::COLUMN_DICTIONARY['groupsCount']];
-        $status = $result[self::COLUMN_DICTIONARY['status']];
-        $code = $result[self::COLUMN_DICTIONARY['code']];
-        $admin = new User(false, $result[self::COLUMN_DICTIONARY['admin']]);
-        
-        $this->initialize($name, $status, $code, null, $groupsCount, null, $admin);
-        
-        return true;
-    }
-    
-    /**
      * Metoda navracející jméno této třídy
      * @return string Jméno třídy
      */
