@@ -204,11 +204,16 @@ abstract class DatabaseItem
     /**
      * Metoda načítající podle údajů uložených ve známých vlastnostech hodnoty všech ostatních vlastností z databáze
      * Z databáze jsou vybrány záznamy, které jejichž hodnoty odpovídají hodnotám uložených v definovaným vlastnostech objektu
-     * @throws BadMethodCallException V případě, že není z databáze navrácen ani jeden záznam odpovídající definovaným vlastnostem, nebo pokud jich je navrácených více
+     * @throws BadMethodCallException V případě, že není objekt zatím uložen v databázi, není z databáze navrácen ani jeden záznam odpovídající definovaným vlastnostem, nebo pokud jich je navrácených více
      * @return boolean TRUE, pokud jsou data položky úspěšně načtena
      */
     public function load()
     {
+        if ($this->savedInDb === false)
+        {
+            throw new BadMethodCallException('Cannot load data about an item that is\'t saved in the database yet');
+        }
+        
         //Získej seznam nedefinovaných vlastností
         $undefinedProperties = $this->getUndefinedProperties();
         
@@ -238,9 +243,40 @@ abstract class DatabaseItem
         
         foreach ($undefinedProperties as $propertyName => $columnName)
         {
-            $this->$propertyName = $result[$columnName];
+            if (isset($this::NON_PRIMITIVE_PROPERTIES[$propertyName]))
+            {
+                //Přiřazení do objektového datového typu
+                if ($this::NON_PRIMITIVE_PROPERTIES[$$propertyName] instanceof self)
+                {
+                    //Konstrukce databázového modelu
+                    $this->$propertyName = new $this->NON_PRIMITIVE_PROPERTIES[$propertyName](false, $result[$columnName]);
+                }
+                else if ($this::NON_PRIMITIVE_PROPERTIES[$$propertyName] instanceof DateTime)
+                {
+                    //Konstrukce objektu DateTime
+                    $this->$propertyName = new $this->NON_PRIMITIVE_PROPERTIES[$propertyName]($result[$columnName]);
+                }
+                else
+                {
+                    $message = '
+                        Okay, I am not sure what you had to done to cause this,
+                        but this error occured, because you saved a representation
+                        of a non-primitive data time in the database and tried to
+                        load item with this property. However, the program doesn\'t
+                        know how to constuct the object just with the value loaded
+                        from the database. If you want to fix this, you have to
+                        manually add a new implementation for this class into the
+                        DatabaseItem::load() method.
+                    ';
+                    throw new UnexpectedValueException($message);
+                }
+            }
+            else
+            {
+                //Přiřazení primitivního datového typu
+                $this->$propertyName = $result[$columnName];
+            }
         }
-        
         return true;
     }
     
