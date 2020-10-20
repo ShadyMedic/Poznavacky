@@ -14,6 +14,11 @@ class Invitation extends DatabaseItem
         'expiration' => 'expirace'
     );
     
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'user' => User,
+        'class' => ClassObject
+    );
+    
     protected const DEFAULT_VALUES = array(
         /*Všechny vlastnosti musí být vyplněné před uložením do databáze*/
     );

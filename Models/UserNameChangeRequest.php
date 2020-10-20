@@ -14,6 +14,11 @@ class UserNameChangeRequest extends NameChangeRequest
         'requestedAt' => 'cas'
     );
     
+    
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'subject' => User
+    );
+    
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
     

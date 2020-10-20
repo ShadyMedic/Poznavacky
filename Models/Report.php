@@ -15,6 +15,10 @@ class Report extends DatabaseItem
         'reportersCount' => 'pocet'
     );
     
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'picture' => Picture
+    );
+    
     protected const DEFAULT_VALUES = array(
         'additionalInformation' => null,
         'reportersCount' => 1

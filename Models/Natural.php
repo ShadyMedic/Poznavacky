@@ -16,6 +16,12 @@ class Natural extends DatabaseItem
         'part' => 'casti_id'
     );
     
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'class' => ClassObject,
+        'group' => Group,
+        'part' => Part
+    );
+    
     protected const DEFAULT_VALUES = array(
         'picturesCount' => 0,
         'group' => null,

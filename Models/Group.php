@@ -14,6 +14,10 @@ class Group extends DatabaseItem
         'partsCount' => 'casti'
     );
     
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'class' => ClassObject
+    );
+    
     protected const DEFAULT_VALUES = array(
         'partsCount' => 0,
         'parts' => array()

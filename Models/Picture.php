@@ -14,6 +14,10 @@ class Picture extends DatabaseItem
         'enabled' => 'povoleno'
     );
     
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'natural' => Natural
+    );
+    
     protected const DEFAULT_VALUES = array(
         'enabled' => true
     );

@@ -16,6 +16,10 @@ class ClassObject extends DatabaseItem
         'admin' => 'spravce'
     );
     
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'admin' => User
+    );
+    
     protected const DEFAULT_VALUES = array(
         'status' => self::CLASS_STATUS_PRIVATE,
         'code' => 0,

@@ -15,6 +15,10 @@ class Part extends DatabaseItem
         'picturesCount' => 'obrazky'
     );
     
+    private const NON_PRIMITIVE_PROPERTIES = array(
+        'group' => Group
+    );
+    
     protected const DEFAULT_VALUES = array(
         'picturesCount' => 0,
         'naturalsCount' => 0,
