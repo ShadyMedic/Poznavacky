@@ -21,7 +21,7 @@ class LoggedUser extends User
         'status' => 'status'
     );
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         /* Žádná z vlastností neukládá objekt */
     );
     

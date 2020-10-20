@@ -14,7 +14,7 @@ class Invitation extends DatabaseItem
         'expiration' => 'expirace'
     );
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         'user' => User,
         'class' => ClassObject
     );

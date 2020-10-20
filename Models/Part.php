@@ -15,7 +15,7 @@ class Part extends DatabaseItem
         'picturesCount' => 'obrazky'
     );
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         'group' => Group
     );
     

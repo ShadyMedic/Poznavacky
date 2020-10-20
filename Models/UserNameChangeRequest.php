@@ -15,7 +15,7 @@ class UserNameChangeRequest extends NameChangeRequest
     );
     
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         'subject' => User
     );
     

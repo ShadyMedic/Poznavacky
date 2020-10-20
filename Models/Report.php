@@ -15,7 +15,7 @@ class Report extends DatabaseItem
         'reportersCount' => 'pocet'
     );
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         'picture' => Picture
     );
     

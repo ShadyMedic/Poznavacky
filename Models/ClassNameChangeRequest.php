@@ -14,7 +14,7 @@ class ClassNameChangeRequest extends NameChangeRequest
         'requestedAt' => 'cas'
     );
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         'subject' => ClassObject
     );
     

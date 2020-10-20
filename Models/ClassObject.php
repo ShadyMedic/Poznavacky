@@ -16,7 +16,7 @@ class ClassObject extends DatabaseItem
         'admin' => 'spravce'
     );
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         'admin' => User
     );
     

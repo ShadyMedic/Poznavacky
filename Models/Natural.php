@@ -16,7 +16,7 @@ class Natural extends DatabaseItem
         'part' => 'casti_id'
     );
     
-    private const NON_PRIMITIVE_PROPERTIES = array(
+    protected const NON_PRIMITIVE_PROPERTIES = array(
         'class' => ClassObject,
         'group' => Group,
         'part' => Part
