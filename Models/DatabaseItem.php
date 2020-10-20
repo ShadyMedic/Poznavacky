@@ -195,10 +195,47 @@ abstract class DatabaseItem
     }
     
     /**
-     * Metoda načítající podle údajů poskytnutých v konstruktoru a metodě initialize všechny ostatní vlastnosti objektu
-     * @param bool $rewriteKnown TRUE, pokud mají být načtenými hodnotami přepsány vlastnosti obsahující i něco jiného než instanci třídy undefined
+     * Metoda načítající podle údajů uložených ve známých vlastnostech hodnoty všech ostatních vlastností z databáze
+     * Z databáze jsou vybrány záznamy, které jejichž hodnoty odpovídají hodnotám uložených v definovaným vlastnostech objektu
+     * @throws BadMethodCallException V případě, že není z databáze navrácen ani jeden záznam odpovídající definovaným vlastnostem, nebo pokud jich je navrácených více
+     * @return boolean TRUE, pokud jsou data položky úspěšně načtena
      */
-    public abstract function load(/*bool $rewriteKnown = false*/);
+    public function load()
+    {
+        //Získej seznam nedefinovaných vlastností
+        $undefinedProperties = $this->getUndefinedProperties();
+        
+        $propertiesToLoad = array_keys($undefinedProperties);
+        $columnsToLoad = array_intersect_key($this::COLUMN_DICTIONARY, array_flip($propertiesToLoad));
+        $selectString = implode(',', $columnsToLoad);
+        
+        //Získej seznam definovaných vlastností, podle kterých se provede vyhledávání
+        if ($this->isDefined($this->id))
+        {
+            //Je-li definováno ID, prováděj vyhledávání pouze podle něj
+            $definedProperties = array('id' => $this->id);
+        }
+        else
+        {
+            $definedProperties = $this->getDefinedProperties();
+        }
+        $columnsToFilterBy = array_intersect_key($this::COLUMN_DICTIONARY, array_flip($definedProperties));
+        $whereString = implode(' = ? AND ', $columnsToFilterBy);
+        $whereString .= ' = ?'; //Přidání rovnítka s otazníkem za název posledního sloupce
+        
+        //Proveď SQL dotaz
+        Db::connect();
+        $result = Db::fetchQuery('SELECT '.$selectString.' FROM '.self::TABLE_NAME.' WHERE .'.$whereString.';', array_values($columnsToFilterBy), true);
+        if ($result === false) { throw new BadMethodCallException('No record in the database matches the search criteria, make sure the object is saved in the database'); }
+        if (count($result) > 1) { throw new BadMethodCallException('More than one record in the database matches the search criteria, try to specify more properties'); }
+        
+        foreach ($undefinedProperties as $propertyName => $columnName)
+        {
+            $this->$propertyName = $result[$columnName];
+        }
+        
+        return true;
+    }
     
     /**
      * Metoda ukládající známá data této položky do databáze
@@ -262,6 +299,7 @@ abstract class DatabaseItem
         $valuesString = str_repeat('?,', count($databaseColumnNames) - 1).'?';
         
         //Proveď SQL dotaz
+        Db::connect();
         $this->id = Db::executeQuery('INSERT INTO '.$this::TABLE_NAME.' ('.$columnString.') VALUES ('.$valuesString.')', $databaseColumnValues, true);
         if (!empty($this->id))
         {
