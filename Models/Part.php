@@ -16,7 +16,7 @@ class Part extends DatabaseItem
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'group' => Group
+        'group' => Group::class
     );
     
     protected const DEFAULT_VALUES = array(

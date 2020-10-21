@@ -16,7 +16,7 @@ class Report extends DatabaseItem
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'picture' => Picture
+        'picture' => Picture::class
     );
     
     protected const DEFAULT_VALUES = array(

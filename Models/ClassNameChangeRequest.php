@@ -15,7 +15,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'subject' => ClassObject
+        'subject' => ClassObject::class
     );
     
     protected const CAN_BE_CREATED = true;

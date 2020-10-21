@@ -15,8 +15,8 @@ class Invitation extends DatabaseItem
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'user' => User,
-        'class' => ClassObject
+        'user' => User::class,
+        'class' => ClassObject::class
     );
     
     protected const DEFAULT_VALUES = array(

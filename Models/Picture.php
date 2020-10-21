@@ -15,7 +15,7 @@ class Picture extends DatabaseItem
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'natural' => Natural
+        'natural' => Natural::class
     );
     
     protected const DEFAULT_VALUES = array(

@@ -17,9 +17,9 @@ class Natural extends DatabaseItem
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'class' => ClassObject,
-        'group' => Group,
-        'part' => Part
+        'class' => ClassObject::class,
+        'group' => Group::class,
+        'part' => Part::class
     );
     
     protected const DEFAULT_VALUES = array(

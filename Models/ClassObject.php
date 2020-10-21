@@ -17,7 +17,7 @@ class ClassObject extends DatabaseItem
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'admin' => User
+        'admin' => User::class
     );
     
     protected const DEFAULT_VALUES = array(

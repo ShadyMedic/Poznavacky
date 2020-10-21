@@ -16,7 +16,7 @@ class UserNameChangeRequest extends NameChangeRequest
     
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'subject' => User
+        'subject' => User::class
     );
     
     protected const CAN_BE_CREATED = true;

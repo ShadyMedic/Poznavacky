@@ -15,7 +15,7 @@ class Group extends DatabaseItem
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'class' => ClassObject
+        'class' => ClassObject::class
     );
     
     protected const DEFAULT_VALUES = array(
