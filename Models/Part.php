@@ -61,6 +61,7 @@ class Part extends DatabaseItem
             if ($naturalsCount === null){ $naturalsCount = $this->naturalsCount; }
         }
         else { $naturalsCount = count($naturals); }
+        if ($picturesCount === null){ $picturesCount = $this->picturesCount; }
         
         $this->name = $name;
         $this->group = $group;
