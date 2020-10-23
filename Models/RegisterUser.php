@@ -144,7 +144,7 @@ class RegisterUser
      * Metoda registrující uživatele do systému po ověření platnosti zadaných dat
      * @param string $name Přezdívka vybraná uživatelem
      * @param string $password Heslo zvolené uživatelem
-     * @param string $email E-mail zadaný uživatelem (null, pokud žádný nezadal)
+     * @param string|null $email E-mail zadaný uživatelem (null, pokud žádný nezadal)
      * @return boolean TRUE, pokud je uživatel úspěšně zaregistrován
      */
     private static function register(string $name, string $password, $email)
@@ -152,11 +152,10 @@ class RegisterUser
         Db::connect();
         
         //Uložení dat do databáze
-        if ($email === null){ $email = ''; }
         $password = password_hash($password, PASSWORD_DEFAULT);
         
         $user = new LoggedUser(true);
-        $user->initialize($name, $email, new DateTime(), -1, -1, -1, '', $password, -1, -1, -1, -1);
+        $user->initialize($name, $email, new DateTime(), null, null, null, '', $password, null, null, null, null);
         $user->save();
         
         //Přihlášení
