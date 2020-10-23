@@ -231,37 +231,62 @@ abstract class DatabaseItem
         {
             $definedProperties = $this->getDefinedProperties();
         }
-        $columnsToFilterBy = array_intersect_key($this::COLUMN_DICTIONARY, array_flip($definedProperties));
+        $columnsToFilterBy = array_values(array_intersect_key($this::COLUMN_DICTIONARY, array_flip(array_keys($definedProperties))));
         $whereString = implode(' = ? AND ', $columnsToFilterBy);
         $whereString .= ' = ?'; //Přidání rovnítka s otazníkem za název posledního sloupce
         
+        $whereValues = array();
+        foreach ($definedProperties as $propertyName => $propertyValue)
+        {
+            if (!isset($this::COLUMN_DICTIONARY[$propertyName]))
+            {
+                //Filtruj pouze podle vlasností ukládaných v databázi
+                continue;
+            }
+            
+            if ($propertyValue instanceof DatabaseItem) { $whereValues[] = $propertyValue->getId(); } //Pro případ, že vlastnost ukládá odkaz na objekt
+            else if ($propertyValue instanceof  DateTime) { $whereValues[] = $propertyValue->format('Y-m-d H:i:s'); } //Pro případ, že vlastnost ukládá objekt typu DateTime
+            else { $whereValues[] = $propertyValue; }
+        }
+        
         //Proveď SQL dotaz
         Db::connect();
-        $result = Db::fetchQuery('SELECT '.$selectString.' FROM '.self::TABLE_NAME.' WHERE .'.$whereString.';', array_values($columnsToFilterBy), true);
+        $query = 'SELECT '.$selectString.' FROM '.$this::TABLE_NAME.' WHERE '.$whereString.';';
+        $result = Db::fetchQuery($query, $whereValues, true);
         if ($result === false) { throw new BadMethodCallException('No record in the database matches the search criteria, make sure the object is saved in the database'); }
         if (count($result) > 1) { throw new BadMethodCallException('More than one record in the database matches the search criteria, try to specify more properties'); }
         
-        foreach ($undefinedProperties as $propertyName => $columnName)
+        //Byl navrácen právě jeden výsledek
+        $result = $result[0];
+        
+        foreach ($undefinedProperties as $propertyName => $propertyValue)
         {
+            if (!isset($this::COLUMN_DICTIONARY[$propertyName]))
+            {
+                //Přiřazuj pouze do vlasností ukládaných v databázi
+                continue;
+            }
+            
             if (isset($this::NON_PRIMITIVE_PROPERTIES[$propertyName]))
             {
                 //Přiřazení do objektového datového typu
-                if ($this::NON_PRIMITIVE_PROPERTIES[$$propertyName] instanceof self)
+                if (is_subclass_of($this::NON_PRIMITIVE_PROPERTIES[$propertyName], __CLASS__))
                 {
                     //Konstrukce databázového modelu
-                    $this->$propertyName = new $this->NON_PRIMITIVE_PROPERTIES[$propertyName](false, $result[$columnName]);
+                    $ref = new ReflectionClass($this::NON_PRIMITIVE_PROPERTIES[$propertyName]);
+                    $this->$propertyName = $ref->newInstanceArgs(array(false, $result[$this::COLUMN_DICTIONARY[$propertyName]]));
                 }
-                else if ($this::NON_PRIMITIVE_PROPERTIES[$$propertyName] instanceof DateTime)
+                else if (is_subclass_of(self::NON_PRIMITIVE_PROPERTIES[$propertyName], 'DateTime'))
                 {
                     //Konstrukce objektu DateTime
-                    $this->$propertyName = new $this->NON_PRIMITIVE_PROPERTIES[$propertyName]($result[$columnName]);
+                    $this->$propertyName = new DateTime($result[$this::COLUMN_DICTIONARY[$propertyName]]);
                 }
                 else
                 {
                     $message = '
                         Okay, I am not sure what you had to done to cause this,
                         but this error occured, because you saved a representation
-                        of a non-primitive data time in the database and tried to
+                        of a non-primitive data tipe in the database and tried to
                         load item with this property. However, the program doesn\'t
                         know how to constuct the object just with the value loaded
                         from the database. If you want to fix this, you have to
@@ -274,7 +299,7 @@ abstract class DatabaseItem
             else
             {
                 //Přiřazení primitivního datového typu
-                $this->$propertyName = $result[$columnName];
+                $this->$propertyName = $result[$this::COLUMN_DICTIONARY[$propertyName]];
             }
         }
         return true;
