@@ -243,27 +243,34 @@ class ClassObject extends DatabaseItem
     /**
      * Metoda navracející pole členů této třídy jako objekty
      * Pokud zatím nebyly členové načteny, budou načteny z databáze
+     * @param boolean $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
      * @return User[] Pole členů patřících do této třídy jako instance třídy User
      */
-    public function getMembers()
+    public function getMembers($includeLogged = true)
     {
         if (!$this->isDefined($this->members))
         {
             $this->loadMembers();
         }
-        return $this->members;
+        $result = $this->members;
+        if (!$includeLogged && count($result) > 0)
+        {
+            //Odeber z kopie pole členů přihlášeného uživatele
+            for ($i = 0; $result[$i]->getId() !== UserManager::getId(); $i++) {}
+            array_splice($result, $i, 1);
+        }
+        return $result;
     }
     
     /**
      * Metoda načítající členy patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
-     * Přihlášený uživatel není zahrnut do tohoto pole, i když je třeba členem třídy
      */
     public function loadMembers()
     {
         $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].' FROM clenstvi JOIN '.User::TABLE_NAME.' ON clenstvi.uzivatele_id = '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].' WHERE clenstvi.tridy_id = ? AND '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].' != ? ORDER BY '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].' DESC;', array($this->id, UserManager::getId()), true);
+        $result = Db::fetchQuery('SELECT '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].' FROM clenstvi JOIN '.User::TABLE_NAME.' ON clenstvi.uzivatele_id = '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].' WHERE clenstvi.tridy_id = ? ORDER BY '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].' DESC;', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádní členové nenalezeni

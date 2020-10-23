@@ -105,7 +105,7 @@ class ManageController extends Controller
             $this->data['className'] = $_SESSION['selection']['class']->getName();
             $this->data['classStatus'] = $_SESSION['selection']['class']->getStatus();
             $this->data['classCode'] = $_SESSION['selection']['class']->getCode();
-            $this->data['members'] = $_SESSION['selection']['class']->getMembers();
+            $this->data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
             $this->data['groups'] = $_SESSION['selection']['class']->getGroups();
             
             $this->view = 'manage';
