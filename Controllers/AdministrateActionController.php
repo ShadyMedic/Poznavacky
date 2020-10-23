@@ -119,8 +119,9 @@ class AdministrateActionController extends Controller
                     $approved = (mb_stripos($_POST['action'], 'decline') !== false) ? false : true;
                     if (!$approved){ $reason = $_POST['reason']; }
                     else { $reason = ""; }
-                    $administration->resolveNameChange($requestId, $classNameChange, $approved, $reason);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Změna jména úspěšně schválena nebo zamítnuta'));
+                    $result = $administration->resolveNameChange($requestId, $classNameChange, $approved, $reason);
+                    if ($result) { echo json_encode(array('messageType' => 'success', 'message' => 'Změna jména úspěšně schválena nebo zamítnuta'));}
+                    else { echo json_encode(array('messageType' => 'warning', 'message' => 'Někde se vyskytla chyba, nejspíše se nepodařilo odeslat žadatelovi e-mail.')); }
                     break;
                 case 'preview email':
                     $msg = $_POST['htmlMessage'];
@@ -135,8 +136,9 @@ class AdministrateActionController extends Controller
                     $footer = $_POST['htmlFooter'];
                     $fromAddress = $_POST['fromAddress'];
                     $sender = $_POST['sender'];
-                    $administration->sendEmail($to, $subject, $msg, $footer, $sender, $fromAddress);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'E-mail byl úspěšně odeslán'));
+                    $result = $administration->sendEmail($to, $subject, $msg, $footer, $sender, $fromAddress);
+                    if ($result) { echo json_encode(array('messageType' => 'success', 'message' => 'E-mail byl úspěšně odeslán')); }
+                    else { echo json_encode(array('messageType' => 'error', 'message' => 'E-mail nemohl být odeslán')); }
                     break;
                 case 'execute sql query':
                     $query = $_POST['query'];

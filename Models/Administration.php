@@ -332,19 +332,21 @@ class Administration
      * @param bool $classNameChange TRUE, pokud se žádost týká změny jména třídy, FALSE, pokud změny uživatelského jména
      * @param bool $approved TRUE, pokud byla žádost schválena, FALSE, pokud zamítnuta
      * @param string $reason V případě zamítnutí žádosti důvod jejího zamítnutí - je odesláno e-mailem uživateli; při schválení žádosti nepovinné
+     * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
      */
     public function resolveNameChange(int $requestId, bool $classNameChange, bool $approved, string $reason = "")
     {
         $request = ($classNameChange) ? new ClassNameChangeRequest(false, $requestId) : new UserNameChangeRequest(false, $requestId);
         if ($approved)
         {
-            $request->approve();
+            $result = $request->approve();
         }
         else
         {
-            $request->decline($reason);
+            $result = $request->decline($reason);
         }
         $request->delete();
+        return $result;
     }
     
     /**

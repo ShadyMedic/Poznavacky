@@ -83,6 +83,7 @@ abstract class NameChangeRequest extends DatabaseItem
     /**
      * Metoda schvalující tuto žádost
      * Jméno uživatele nebo třídy je změněno a žadatel obdrží e-mail (pokud jej zadal)
+     * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
      */
     public function approve()
     {
@@ -94,20 +95,21 @@ abstract class NameChangeRequest extends DatabaseItem
         Db::executeQuery('UPDATE '.$this::SUBJECT_TABLE_NAME.' SET '.$this::SUBJECT_NAME_DB_NAME.' = ? WHERE '.$this::SUBJECT_TABLE_NAME.'_id = ?;', array($this->newName, $this->subject->getId()));
         
         //Odeslat e-mail
-        $this->sendApprovedEmail();
+        return $this->sendApprovedEmail();
     }
     
     /**
      * Metoda zamítající tuto žádost
      * Pokud žadatel zadal svůj e-mail, obdrží zprávu s důvodem zamítnutí
      * @param string $reason Důvod zamítnutí žádosti
+     * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
      */
     public function decline(string $reason)
     {
         $this->loadIfNotLoaded($this->subject);
         
         //Odeslat e-mail
-        $this->sendDeclinedEmail($reason);
+        return $this->sendDeclinedEmail($reason);
     }
     
     /**

@@ -49,6 +49,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     
     /**
      * Metoda odesílající správci třídy, které se tato žádost týká, e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
+     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
      * @see NameChangeRequest::sendApprovedEmail()
      */
@@ -62,12 +63,13 @@ class ClassNameChangeRequest extends NameChangeRequest
         $composer->composeMail(EmailComposer::EMAIL_TYPE_CLASS_NAME_CHANGE_APPROVED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'newName' => $this->newName));
         $subject = 'Vaše žádost o změnu jména třídy '.$this->getOldName().' na '.$this->newName.' byla schválena';
         
-        $sender->sendMail($addressee, $subject, $composer->getMail());
+        return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
     
     /**
      * Metoda odesílající správci třídy, které se tato žádost týká, e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména zadaný správcem
+     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
      * @see NameChangeRequest::sendDeclinedEmail()
      */
@@ -81,6 +83,6 @@ class ClassNameChangeRequest extends NameChangeRequest
         $composer->composeMail(EmailComposer::EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'declineReason' => $reason));
         $subject = 'Vaše žádost o změnu jména třídy '.$this->getOldName().' byla zamítnuta';
         
-        $sender->sendMail($addressee, $subject, $composer->getMail());
+        return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
 }

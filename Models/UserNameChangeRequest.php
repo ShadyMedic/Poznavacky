@@ -52,6 +52,7 @@ class UserNameChangeRequest extends NameChangeRequest
     
     /**
      * Metoda odesílající autorovi této žádosti e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
+     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
      * @see NameChangeRequest::sendApprovedEmail()
      */
@@ -65,12 +66,13 @@ class UserNameChangeRequest extends NameChangeRequest
         $composer->composeMail(EmailComposer::EMAIL_TYPE_USER_NAME_CHANGE_APPROVED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'newName' => $this->newName));
         $subject = 'Vaše žádost o změnu jména na '.$this->newName.' byla přijata';
         
-        $sender->sendMail($addressee, $subject, $composer->getMail());
+        return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
     
     /**
      * Metoda odesílající autorovi této žádosti e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména zadaný správcem
+     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
      * @see NameChangeRequest::sendDeclinedEmail()
      */
@@ -84,6 +86,6 @@ class UserNameChangeRequest extends NameChangeRequest
         $composer->composeMail(EmailComposer::EMAIL_TYPE_USER_NAME_CHANGE_DECLINED, array('websiteAddress' => $_SERVER['SERVER_NAME'], 'oldName' => $this->getOldName(), 'declineReason' => $reason));
         $subject = 'Vaše žádost o změnu jména byla zamítnuta';
         
-        $sender->sendMail($addressee, $subject, $composer->getMail());
+        return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
 }
