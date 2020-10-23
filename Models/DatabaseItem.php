@@ -334,6 +334,7 @@ abstract class DatabaseItem
             }
             $databaseColumnNames[] = $columnName;
             if ($propertyValue instanceof DatabaseItem) { $databaseColumnValues[] = $propertyValue->getId(); }  //Pro případ, že vlastnost ukládá odkaz na objekt
+            else if ($propertyValue instanceof DateTime) { $databaseColumnValues[] = $propertyValue->format('Y-m-d H:i:s'); } //Pro případ, že vlastnost ukládá objekt typu DateTime
             else { $databaseColumnValues[] = $propertyValue; }
         }
         
@@ -388,6 +389,7 @@ abstract class DatabaseItem
             {
                 $databaseColumnNames[] = $this::COLUMN_DICTIONARY[$propertyName];
                 if ($propertyValue instanceof DatabaseItem) { $databaseColumnValues[] = $propertyValue->getId(); }  //Pro případ, že vlastnost ukládá odkaz na objekt
+                else if ($propertyValue instanceof  DateTime) { $databaseColumnValues[] = $propertyValue->format('Y-m-d H:i:s'); } //Pro případ, že vlastnost ukládá objekt typu DateTime
                 else { $databaseColumnValues[] = $propertyValue; }
             }
         }
