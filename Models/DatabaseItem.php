@@ -146,7 +146,7 @@ abstract class DatabaseItem
     
     /**
      * Metoda nastavující do vlastností objektu základní hodnoty, které by byly uloženy do databáze i v případě jejich nespecifikování v SQL INSERT dotazu
-     * @param bool $overwriteAll TRUE, pokud mají být základními hodnotami přepsány všechny vlastnosti objektu, FALSE pouze pro přepsání vlastností, jejichž hodnota není nastavena nebo je nastavena na NULL
+     * @param bool $overwriteAll TRUE, pokud mají být základními hodnotami přepsány všechny vlastnosti objektu, FALSE pouze pro přepsání vlastností, jejichž hodnota není nastavena (je nastavena na instanci třídy undefined)
      */
     protected function loadDefaultValues(bool $overwriteAll = false)
     {
@@ -154,7 +154,7 @@ abstract class DatabaseItem
         {
             if (!$overwriteAll)
             {
-                if ($this->$fieldName !== null){ continue; }
+                if ($this->isDefined($this->$fieldName)){ continue; }
             }
             $this->$fieldName = $fieldValue;
         }
