@@ -6,8 +6,7 @@
 class LeaveController extends Controller
 {
     /**
-     * (non-PHPdoc)
-     *
+     * Metoda odstraňujícího přihlášeného uživatele ze zvolené třídy (ruší jeho členství)
      * @see Controller::process()
      */
     public function process(array $parameters)
