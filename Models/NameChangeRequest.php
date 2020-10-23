@@ -36,10 +36,7 @@ abstract class NameChangeRequest extends DatabaseItem
      * @see DatabaseItem::initialize()
      */
     public function initialize($subject = null, $newName = null, $requestedAt = null)
-    {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
+    {   
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($subject === null){ $subject = $this->subject; }
         if ($newName === null){ $newName = $this->newName; }

@@ -44,9 +44,6 @@ class Picture extends DatabaseItem
      */
     public function initialize($src = null, $natural = null, $enabled = null, $reports = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($src === null){ $src = $this->src; }
         if ($natural === null){ $natural = $this->natural; }

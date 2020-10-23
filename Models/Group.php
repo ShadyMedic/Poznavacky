@@ -45,9 +45,6 @@ class Group extends DatabaseItem
      */
     public function initialize($name = null, $class = null, $parts = null, $partsCount = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
         if ($class === null){ $class = $this->class; }

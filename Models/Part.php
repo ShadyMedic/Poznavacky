@@ -49,9 +49,6 @@ class Part extends DatabaseItem
      */
     public function initialize($name = null, $group = null, $naturals = null, $naturalsCount = null, $picturesCount = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
         if ($group === null){ $group = $this->group; }

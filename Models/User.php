@@ -62,9 +62,6 @@ class User extends DatabaseItem implements ArrayAccess
      */
     public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
         if ($email === null){ $email = $this->email; }

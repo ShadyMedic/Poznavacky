@@ -67,10 +67,7 @@ class ClassObject extends DatabaseItem
      * @see DatabaseItem::initialize()
      */
     public function initialize($name = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null)
-    {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
+    {        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
         if ($status === null){ $status = $this->status; }

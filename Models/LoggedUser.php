@@ -67,9 +67,6 @@ class LoggedUser extends User
      */
     public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null, $theme = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Nastav vlastnosti zděděné z mateřské třídy
         parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
         

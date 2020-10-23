@@ -44,9 +44,6 @@ class Invitation extends DatabaseItem
      */
     public function initialize($user = null, $class = null, $expiration = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($user === null){ $user = $this->user; }
         if ($class === null){ $class = $this->class; }

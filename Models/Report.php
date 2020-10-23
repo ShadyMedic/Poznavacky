@@ -59,9 +59,6 @@ class Report extends DatabaseItem
      */
     public function initialize($picture = null, $reason = null, $additionalInformation = null, $reportersCount = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($picture === null){ $picture = $this->picture; }
         if ($reason === null){ $reason = $this->reason; }

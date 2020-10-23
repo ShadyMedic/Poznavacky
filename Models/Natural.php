@@ -54,9 +54,6 @@ class Natural extends DatabaseItem
      */
     public function initialize($name = null, $pictures = null, $picturesCount = null, $class = null, $group = null, $part = null)
     {
-        //Načtení defaultních hodnot do nenastavených vlastností
-        $this->loadDefaultValues();
-        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
         if ($pictures === null)
