@@ -34,20 +34,20 @@
                     <img src='images/pencil.svg'/>
                 </button>
                 <div class="report-edit-buttons" style="display:none;">
-                    <button class='report-edit-action active-btn' onclick='confirmPictureEdit(<?= $report->getPictureId() ?>)' title='Uložit'>
+                    <button class='report-edit-action active-btn' onclick='confirmPictureEdit(<?= $report->getPictureId() ?>, true)' title='Uložit'>
                     	<img src='images/tick.svg'/>
                     </button>
                     <button class='report-edit-action active-btn' onclick='cancelPictureEdit()' title='Zrušit'>
                     	<img src='images/cross.svg'/>
                     </button>
                 </div>
-                <button class='report-action active-btn' onclick='disablePicture(event, <?= $report->getPictureId() ?>)' title='Skrýt obrázek'>
+                <button class='report-action active-btn' onclick='disablePicture(event, <?= $report->getPictureId() ?>, true)' title='Skrýt obrázek'>
                     <img src='images/dot.svg'/>
                 </button>
-                <button class='report-action active-btn' onclick='deletePicture(event, <?= $report->getPictureId() ?>)' title='Odstranit obrázek'>
+                <button class='report-action active-btn' onclick='deletePicture(event, <?= $report->getPictureId() ?>, true)' title='Odstranit obrázek'>
                     <img src='images/cross.svg'/>
                 </button>
-                <button class='report-action active-btn' onclick='deleteReport(event, <?= $report->getId() ?>)' title='Odstranit hlášení'>
+                <button class='report-action active-btn' onclick='deleteReport(event, <?= $report->getId() ?>, true)' title='Odstranit hlášení'>
                     <img src='images/minus.svg'/>
                 </button>
             </td>

@@ -55,7 +55,7 @@ function cancelPictureEdit()
 
 	$("#editable-report-row").removeAttr("id");
 }
-function confirmPictureEdit(picId, asAdmin)
+function confirmPictureEdit(picId, asAdmin = false)
 {
 	//Uložení nových hodnot
 	for (let i = 0; i <= 1; i++)
@@ -97,14 +97,28 @@ function confirmPictureEdit(picId, asAdmin)
 	let reportsToUpdateCount = $("#reports-table .picture-id" + picId).length;
 	for (let i = 0; i < reportsToUpdateCount; i++)
 	{
-		$("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text(newPart);  //Změna názvu části
+		//Změna názvu části v prvním sloupci
+		if (asAdmin)
+		{
+			//Změna názvu části nahrazením části textu za posledním lomítkem
+			let content = $("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text();
+			let stringParts = content.split(" / ");
+			stringParts[2] = newPart;
+			content = stringParts.join(" / ");
+			$("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text(content);
+		}
+		else
+		{
+		    //Změna názvu části nahrazením celého obsahu
+			$("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text(newPart);
+		}
 		for (let j = 0; j <= 1; j++)
 		{
 			$("#reports-table .picture-id" + picId + ":eq(" + i + ") .report-field:eq("+ j +")").val(currentReportValues[j]);
 		}
 	}
 }
-function disablePicture(event, picId, asAdmin)
+function disablePicture(event, picId, asAdmin = false)
 {
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
@@ -127,7 +141,7 @@ function disablePicture(event, picId, asAdmin)
 	//Odebrání všechna hlášení daného obrázku z DOM
 	$("#reports-table .picture-id" + picId).remove();
 }
-function deletePicture(event, picId, asAdmin)
+function deletePicture(event, picId, asAdmin = false)
 {
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
@@ -150,7 +164,7 @@ function deletePicture(event, picId, asAdmin)
 	//Odebrání všechna hlášení daného obrázku z DOM
 	$("#reports-table .picture-id" + picId).remove();
 }
-function deleteReport(event, reportId, asAdmin)
+function deleteReport(event, reportId, asAdmin = false)
 {
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
