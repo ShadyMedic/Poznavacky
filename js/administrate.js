@@ -7,54 +7,67 @@ function hideAllTabs()
 	$("#tab5").hide();
 	$("#tab6").hide();
 	
-	$("#tab1").removeClass("activeTab");
-	$("#tab2").removeClass("activeTab");
-	$("#tab3").removeClass("activeTab");
-	$("#tab4").removeClass("activeTab");
-	$("#tab5").removeClass("activeTab");
-	$("#tab6").removeClass("activeTab");
+	$("#tab1").removeClass("active-tab");
+	$("#tab2").removeClass("active-tab");
+	$("#tab3").removeClass("active-tab");
+	$("#tab4").removeClass("active-tab");
+	$("#tab5").removeClass("active-tab");
+	$("#tab6").removeClass("active-tab");
+
+	$("#tab1-link").removeClass("active-tab");
+	$("#tab2-link").removeClass("active-tab");
+	$("#tab3-link").removeClass("active-tab");
+	$("#tab4-link").removeClass("active-tab");
+	$("#tab5-link").removeClass("active-tab");
+	$("#tab6-link").removeClass("active-tab");
 }
 function firstTab()
 {
 	hideAllTabs();
 	
 	$("#tab1").show();
-	$("#tab1").addClass("activeTab");
+	$("#tab1").addClass("active-tab");
+	$("#tab1-link").addClass("active-tab");
 }
 function secondTab()
 {
 	hideAllTabs();
 	
 	$("#tab2").show();
-	$("#tab2").addClass("activeTab");
+	$("#tab2").addClass("active-tab");
+	$("#tab2-link").addClass("active-tab");
 }
 function thirdTab()
 {
 	hideAllTabs();
 	
 	$("#tab3").show();
-	$("#tab3").addClass("activeTab");
+	$("#tab3").addClass("active-tab");
+	$("#tab3-link").addClass("active-tab");
 }
 function fourthTab()
 {
 	hideAllTabs();
 	
 	$("#tab4").show();
-	$("#tab4").addClass("activeTab");
+	$("#tab4").addClass("active-tab");
+	$("#tab4-link").addClass("active-tab");
 }
 function fifthTab()
 {
 	hideAllTabs();
 	
 	$("#tab5").show();
-	$("#tab5").addClass("activeTab");
+	$("#tab5").addClass("active-tab");
+	$("#tab5-link").addClass("active-tab");
 }
 function sixthTab()
 {
 	hideAllTabs();
 	
 	$("#tab6").show();
-	$("#tab6").addClass("activeTab");
+	$("#tab6").addClass("active-tab");
+	$("#tab6-link").addClass("active-tab");
 }
 
 /*-------------------------------------------------------*/
@@ -69,52 +82,52 @@ var currentUserValues = new Array(4);
 function editUser(event)
 {
 	//Dočasné znemožnění ostatních akcí u všech uživatelů
-	$(".userAction:not(.grayscale)").addClass("grayscale_temp_user");
-	$(".userAction").addClass("grayscale");
-	$(".userAction").attr("disabled", "");
+	$(".user-action:not(.grayscale)").addClass("grayscale-temp-user");
+	$(".user-action").addClass("grayscale");
+	$(".user-action").attr("disabled", "");
 	
 	//Získat <tr> element upravované řádky
 	let row = $(event.target.parentNode.parentNode.parentNode);
-	row.attr("id", "editableUserRow");
+	row.attr("id", "editable-user-row");
 	
 	//Uložení současných hodnot
 	for (let i = 0; i <= 3; i++)
 	{
-		currentUserValues[i] = $("#editableUserRow .userField:eq("+ i +")").val();
+		currentUserValues[i] = $("#editable-user-row .user-field:eq("+ i +")").val();
 	}
 	
-	$("#editableUserRow .userAction").hide();					//Skrytí ostatních tlačítek akcí
-	$("#editableUserRow .userEditButtons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
-	$("#editableUserRow .userField").addClass("editableField");	//Obarvení políček (//TODO)
-	$("#editableUserRow .userField").removeAttr("readonly");	//Umožnění editace (pro <input>)
-	$("#editableUserRow .userField").removeAttr("disabled");	//Umožnění editace (pro <select>)
+	$("#editable-user-row .user-action").hide();					//Skrytí ostatních tlačítek akcí
+	$("#editable-user-row .user-edit-buttons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
+	$("#editable-user-row .user-field").addClass("editable-field");	//Obarvení políček (//TODO)
+	$("#editable-user-row .user-field").removeAttr("readonly");	//Umožnění editace (pro <input>)
+	$("#editable-user-row .user-field").removeAttr("disabled");	//Umožnění editace (pro <select>)
 }
 function cancelUserEdit()
 {
 	//Opětovné zapnutí ostatních tlačítek akcí
-	$(".grayscale_temp_user").removeAttr("disabled");
-	$(".grayscale_temp_user").removeClass("grayscale grayscale_temp_user");
+	$(".grayscale-temp-user").removeAttr("disabled");
+	$(".grayscale-temp-user").removeClass("grayscale grayscale-temp-user");
 	
 	//Obnova hodnot vstupních polí
 	for (let i = 0; i <= 3; i++)
 	{
-		$("#editableUserRow .userField:eq("+ i +")").val(currentUserValues[i]);
+		$("#editable-user-row .user-field:eq("+ i +")").val(currentUserValues[i]);
 	}
 	
-	$("#editableUserRow .userAction").show();						//Znovuzobrazení ostatních tlačítek akcí
-	$("#editableUserRow .userEditButtons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
-	$("#editableUserRow .userField").removeClass("editableField");	//Odbarvení políček
-	$("#editableUserRow input.userField").attr("readonly", "");		//Znemožnění editace (pro <input>)
-	$("#editableUserRow select.userField").attr("disabled", "");	//Znemožnění editace (pro <select>)
+	$("#editable-user-row .user-action").show();						//Znovuzobrazení ostatních tlačítek akcí
+	$("#editable-user-row .user-edit-buttons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
+	$("#editable-user-row .user-field").removeClass("editable-field");	//Odbarvení políček
+	$("#editable-user-row input.user-field").attr("readonly", "");		//Znemožnění editace (pro <input>)
+	$("#editable-user-row select.user-field").attr("disabled", "");	//Znemožnění editace (pro <select>)
 
-	$("#editableUserRow").removeAttr("id");
+	$("#editable-user-row").removeAttr("id");
 }
 function confirmUserEdit(userId)
 {
 	//Uložení nových hodnot
 	for (let i = 0; i <= 3; i++)
 	{
-		currentUserValues[i] = $("#editableUserRow .userField:eq("+ i +")").val();
+		currentUserValues[i] = $("#editable-user-row .user-field:eq("+ i +")").val();
 	}
 	
 	//Odeslat data na server
@@ -174,76 +187,76 @@ var currentClassValues = new Array(2);
 function editClass(event)
 {
 	//Dočasné znemožnění ostatních akcí u všech tříd
-	$(".classAction:not(.grayscale)").addClass("grayscale_temp_class");
-	$(".classAction").addClass("grayscale");
-	$(".classAction").attr("disabled", "");
+	$(".class-action:not(.grayscale)").addClass("grayscale-temp-class");
+	$(".class-action").addClass("grayscale");
+	$(".class-action").attr("disabled", "");
 	
 	//Získat <tr> element upravované řádky
 	let row = $(event.target.parentNode.parentNode.parentNode);
-	row.attr("id", "editableClassRow");
+	row.attr("id", "editable-class-row");
 	
 	//Uložení současných hodnot
 	for (let i = 0; i <= 1; i++)
 	{
-		currentClassValues[i] = $("#editableClassRow .classField:eq("+ i +")").val();
+		currentClassValues[i] = $("#editable-class-row .class-field:eq("+ i +")").val();
 	}
 	
-	$("#editableClassRow .classAction").hide();						//Skrytí ostatních tlačítek akcí
-	$("#editableClassRow .classEditButtons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
-	$("#editableClassRow .classField").addClass("editableField");	//Obarvení políček (//TODO)
-	$("#editableClassRow .classField").removeAttr("disabled");		//Umožnění editace (pro <select>)
+	$("#editable-class-row .class-action").hide();						//Skrytí ostatních tlačítek akcí
+	$("#editable-class-row .class-edit-buttons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
+	$("#editable-class-row .class-field").addClass("editable-field");	//Obarvení políček (//TODO)
+	$("#editable-class-row .class-field").removeAttr("disabled");		//Umožnění editace (pro <select>)
 	classStatusEdited();		//Umožnění nastavení kódu třídy, pokud je současný stav nastaven na "private" a kód tak má smysl
 }
 function classStatusEdited()
 {
-	let newStatus = $("#editableClassRow select.classField").val();
+	let newStatus = $("#editable-class-row select.class-field").val();
 	if (newStatus !== "private")
 	{
 		//Kód nemá smysl --> vymazat jej
-		$("#editableClassRow input.classField").val("");
-		$("#editableClassRow input.classField").attr("readonly", "");
+		$("#editable-class-row input.class-field").val("");
+		$("#editable-class-row input.class-field").attr("readonly", "");
 	}
 	else
 	{
 		//Je potřeba nastavit kód --> umožnit editaci
 		if (currentClassValues[1] === "")
 		{
-			$("#editableClassRow input.classField").val("0000");
+			$("#editable-class-row input.class-field").val("0000");
 		}
 		else
 		{
-			$("#editableClassRow input.classField").val(currentClassValues[1]);
+			$("#editable-class-row input.class-field").val(currentClassValues[1]);
 		}
 		
-		$("#editableClassRow input.classField").removeAttr("readonly");
+		$("#editable-class-row input.class-field").removeAttr("readonly");
 	}
 }
 function cancelClassEdit()
 {
 	//Opětovné zapnutí ostatních tlačítek akcí
-	$(".grayscale_temp_class").removeAttr("disabled");
-	$(".grayscale_temp_class").removeClass("grayscale grayscale_temp_class");
+	$(".grayscale-temp-class").removeAttr("disabled");
+	$(".grayscale-temp-class").removeClass("grayscale grayscale-temp-class");
 	
 	//Obnova hodnot vstupních polí
 	for (let i = 0; i <= 1; i++)
 	{
-		$("#editableClassRow .classField:eq("+ i +")").val(currentClassValues[i]);
+		$("#editable-class-row .class-field:eq("+ i +")").val(currentClassValues[i]);
 	}
 	
-	$("#editableClassRow .classAction").show();							//Znovuzobrazení ostatních tlačítek akcí
-	$("#editableClassRow .classEditButtons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
-	$("#editableClassRow .classField").removeClass("editableField");	//Odbarvení políček
-	$("#editableClassRow input.classField").attr("readonly", "");		//Znemožnit editaci (pro <input>)
-	$("#editableClassRow select.classField").attr("disabled", "");		//Znemožnit editaci (pro <select>)
+	$("#editable-class-row .class-action").show();							//Znovuzobrazení ostatních tlačítek akcí
+	$("#editable-class-row .class-edit-buttons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
+	$("#editable-class-row .class-field").removeClass("editable-field");	//Odbarvení políček
+	$("#editable-class-row input.class-field").attr("readonly", "");		//Znemožnit editaci (pro <input>)
+	$("#editable-class-row select.class-field").attr("disabled", "");		//Znemožnit editaci (pro <select>)
 
-	$("#editableClassRow").removeAttr("id");
+	$("#editable-class-row").removeAttr("id");
 }
 function confirmClassEdit(classId)
 {
 	//Uložení nových hodnot
 	for (let i = 0; i <= 1; i++)
 	{
-		currentClassValues[i] = $("#editableClassRow .classField:eq("+ i +")").val();
+		currentClassValues[i] = $("#editable-class-row .class-field:eq("+ i +")").val();
 	}
 	
 	//Odeslat data na server
@@ -277,76 +290,76 @@ var changedIdentifier;
 function changeClassAdmin(event)
 {
 	//Dočasné znemožnění ostatních akcí u všech tříd
-	$(".classAction:not(.grayscale)").addClass("grayscale_temp_class");
-	$(".classAction").addClass("grayscale");
-	$(".classAction").attr("disabled", "");
+	$(".class-action:not(.grayscale)").addClass("grayscale-temp-class");
+	$(".class-action").addClass("grayscale");
+	$(".class-action").attr("disabled", "");
 	
 	//Získat <tr> element upravované řádky
 	let row = $(event.target.parentNode.parentNode.parentNode);
-	row.attr("id", "editableClassAdminRow");
+	row.attr("id", "editable-class-admin-row");
 	
 	//Uložení současných hodnot
 	for (let i = 0; i <= 1; i++)
 	{
-		currentClassAdminValues[i] = $("#editableClassAdminRow .classAdminTable .classAdminField:eq("+ i +")").val();
+		currentClassAdminValues[i] = $("#editable-class-admin-row .class-admin-table .class-admin-field:eq("+ i +")").val();
 	}
 	
-	$("#editableClassAdminRow .classAction").hide();											//Skrytí ostatních tlačítek akcí
-	$("#editableClassAdminRow .classEditAdminButtons").show();									//Zobrazení tlačítek pro uložení nebo zrušení editace
-	$("#editableClassAdminRow .classAdminTable .classAdminField").addClass("editableField");	//Obarvení políček (//TODO)
-	$("#editableClassAdminRow .classAdminField").removeAttr("readonly");						//Umožnění editace
+	$("#editable-class-admin-row .class-action").hide();											//Skrytí ostatních tlačítek akcí
+	$("#editable-class-admin-row .class-edit-admin-buttons").show();									//Zobrazení tlačítek pro uložení nebo zrušení editace
+	$("#editable-class-admin-row .class-admin-table .class-admin-field").addClass("editable-field");	//Obarvení políček (//TODO)
+	$("#editable-class-admin-row .class-admin-field").removeAttr("readonly");						//Umožnění editace
 }
 function adminNameChanged()
 {
 	changedIdentifier = "name";
-	if ($("#editableClassAdminRow .classAdminField:eq(0)").val() === currentClassAdminValues[0])
+	if ($("#editable-class-admin-row .class-admin-field:eq(0)").val() === currentClassAdminValues[0])
 	{
 		//Umožnit změnu ID - jméno je stejné jako na začátku
-		$("#editableClassAdminRow .classAdminField:eq(1)").removeAttr("readonly");
+		$("#editable-class-admin-row .class-admin-field:eq(1)").removeAttr("readonly");
 	}
 	else
 	{
 		//Znemožnit změnu ID - jméno se změnilo
-		$("#editableClassAdminRow .classAdminField:eq(1)").attr("readonly", "");
+		$("#editable-class-admin-row .class-admin-field:eq(1)").attr("readonly", "");
 	}
 }
 function adminIdChanged()
 {
 	changedIdentifier = "id";
-	if ($("#editableClassAdminRow .classAdminField:eq(1)").val() === currentClassAdminValues[1])
+	if ($("#editable-class-adminrow .class-admin-field:eq(1)").val() === currentClassAdminValues[1])
 	{
 		//Umožnit změnu ID - jméno je stejné jako na začátku
-		$("#editableClassAdminRow .classAdminField:eq(0)").removeAttr("readonly");
+		$("#editable-class-admin-row .class-admin-field:eq(0)").removeAttr("readonly");
 	}
 	else
 	{
 		//Znemožnit změnu ID - jméno se změnilo
-		$("#editableClassAdminRow .classAdminField:eq(0)").attr("readonly", "");
+		$("#editable-class-admin-row .class-admin-field:eq(0)").attr("readonly", "");
 	}
 }
 function cancelClassAdminEdit()
 {
 	//Opětovné zapnutí ostatních tlačítek akcí
-	$(".grayscale_temp_class").removeAttr("disabled");
-	$(".grayscale_temp_class").removeClass("grayscale grayscale_temp_class");
+	$(".grayscale-temp-class").removeAttr("disabled");
+	$(".grayscale-temp-class").removeClass("grayscale grayscale-temp-class");
 	
 	//Obnova hodnot vstupních polí
 	for (let i = 0; i <= 1; i++)
 	{
-		$("#editableClassAdminRow .classAdminTable .classAdminField:eq("+ i +")").val(currentClassAdminValues[i]);
+		$("#editable-class-admin-row .class-admin-table .class-admin-field:eq("+ i +")").val(currentClassAdminValues[i]);
 	}
 	
-	$("#editableClassAdminRow .classAction").show();											//Znovuzobrazení ostatních tlačítek akcí
-	$("#editableClassAdminRow .classEditAdminButtons").hide();									//Skrytí tlačítek pro uložení nebo zrušení editace
-	$("#editableClassAdminRow .classAdminTable .classAdminField").removeClass("editableField");	//Odbarvení políček
-	$("#editableClassAdminRow .classAdminField").attr("readonly", "");							//Znemožnit editaci (pro <input>)
+	$("#editable-class-admin-row .class-action").show();											//Znovuzobrazení ostatních tlačítek akcí
+	$("#editable-class-admin-row .class-edit-admin-buttons").hide();									//Skrytí tlačítek pro uložení nebo zrušení editace
+	$("#editable-class-admin-row .class-admin-table .class-admin-field").removeClass("editable-field");	//Odbarvení políček
+	$("#editable-class-admin-row .class-admin-field").attr("readonly", "");							//Znemožnit editaci (pro <input>)
 	
-	$("#editableClassAdminRow").removeAttr("id");
+	$("#editable-class-admin-row").removeAttr("id");
 }
 function confirmClassAdminEdit(classId)
 {
-	let newId = $("#editableClassAdminRow .classAdminTable .classAdminField:eq(0)").val();
-	let newName = $("#editableClassAdminRow .classAdminTable .classAdminField:eq(1)").val();
+	let newId = $("#editable-class-admin-row .class-admin-table .class-admin-field:eq(0)").val();
+	let newName = $("#editable-class-adminRow .class-admin-table .class-admin-field:eq(1)").val();
 	
 	//Odeslat data na server
 	$.post("administrate-action",
@@ -354,8 +367,8 @@ function confirmClassAdminEdit(classId)
 			action: 'change class admin',
 			classId: classId,
 			changedIdentifier: changedIdentifier,
-			adminId: $("#editableClassAdminRow .classAdminTable .classAdminField:eq(1)").val(),
-			adminName: $("#editableClassAdminRow .classAdminTable .classAdminField:eq(0)").val()
+			adminId: $("#editable-class-admin-row .class-admin-table .class-admin-field:eq(1)").val(),
+			adminName: $("#editable-class-admin-row .class-admin-table .class-admin-field:eq(0)").val()
 		},
 		function (response)
 		{
@@ -371,29 +384,29 @@ function confirmClassAdminEdit(classId)
 				
 				currentClassAdminValues[0] = newName;
 				currentClassAdminValues[1] = newId;
-				$("#editableClassAdminRow .classAdminTable .classAdminData:eq(0)").text(newEmail);
-				$("#editableClassAdminRow .classAdminTable .classAdminData:eq(1)").text(newKarma);
-				$("#editableClassAdminRow .classAdminTable .classAdminData:eq(2)").text(newStatus);
+				$("#editable-class-admin-row .class-admin-table .class-admin-data:eq(0)").text(newEmail);
+				$("#editable-class-admin-row .class-admin-table .class-admin-data:eq(1)").text(newKarma);
+				$("#editable-class-admin-row .class-admin-table .class-admin-data:eq(2)").text(newStatus);
 				
 				//Vypnutí nebo zapnutí tlačítka pro kontaktování správce třídy a změna adresáta předávaného jako parametr
 				if (newEmail.length === 0)
 				{
 					//Nový správce nemá e-mail --> vypnout tlačítko
-					$("#editableClassAdminRow .classAdminMailButton").attr("disabled", "");
-					$("#editableClassAdminRow .classAdminMailButton").addClass("grayscale");
-					$("#editableClassAdminRow .classAdminMailButton").removeClass("grayscale_temp_class");	//Aby nebyla třída "grayscale" odebrána při zavolání metody cancelClassAdminEdit() níže
-					$("#editableClassAdminRow .classAdminMailButton").removeClass("activeBtn");
-					$("#editableClassAdminRow .classAdminMailButton").removeAttr("onclick");
-					$("#editableClassAdminRow .classAdminMailButton").removeAttr("title");
+					$("#editable-class-admin-row .class-admin-mail-btn").attr("disabled", "");
+					$("#editable-class-admin-row .class-admin-mail-btn").addClass("grayscale");
+					$("#editable-class-admin-row .class-admin-mail-btn").removeClass("grayscale-temp-class");	//Aby nebyla třída "grayscale" odebrána při zavolání metody cancelClassAdminEdit() níže
+					$("#editable-class-admin-row .class-admin-mail-btn").removeClass("active-btn");
+					$("#editable-class-admin-row .class-admin-mail-btn").removeAttr("onclick");
+					$("#editable-class-admin-row .class-admin-mail-btn").removeAttr("title");
 				}
 				else
 				{
 					//Zapnutí tlačítka a aktualizace e-mailové adresy adresáta
-					$("#editableClassAdminRow .classAdminMailButton").removeAttr("disabled");
-					$("#editableClassAdminRow .classAdminMailButton").removeClass("grayscale");
-					$("#editableClassAdminRow .classAdminMailButton").addClass("activeBtn");
-					$("#editableClassAdminRow .classAdminMailButton").attr("onclick", "startMail(\""+ newEmail +"\")");
-					$("#editableClassAdminRow .classAdminMailButton").attr("title", "Kontaktovat správce");
+					$("#editable-class-admin-row .class-admin-mail-btn").removeAttr("disabled");
+					$("#editable-class-admin-row .class-admin-mail-btn").removeClass("grayscale");
+					$("#editable-class-admin-row .class-admin-mail-btn").addClass("active-btn");
+					$("#editable-class-admin-row .class-admin-mail-btn").attr("onclick", "startMail(\""+ newEmail +"\")");
+					$("#editable-class-admin-row .class-admin-mail-btn").attr("title", "Kontaktovat správce");
 				}
 				
 				//Reset DOM
@@ -435,7 +448,7 @@ function deleteClass(classId)
 	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 3-------------------------*/
-//Zahrnuto v souboru reports.js
+//Zahrnuto v souboru resolveReports.js
 /*-------------------------Tab 4-------------------------*/
 function acceptNameChange(event, objectType, requestId)
 {
@@ -490,8 +503,8 @@ function emailModification()
 }
 function previewEmailMessage()
 {
-	let rawHTMLbody = $("#emailMessage").val();
-	let rawHTMLfooter = $("#emailFooter").val();
+	let rawHTMLbody = $("#email-message").val();
+	let rawHTMLfooter = $("#email-footer").val();
 	$.post('administrate-action',
 		{
 			action:"preview email",
@@ -501,22 +514,22 @@ function previewEmailMessage()
 		function(response)
 		{
 			let result = JSON.parse(response)['content'];
-			$("#emailEditor").hide();
-			$("#emailPreviewButton").hide();
+			$("#email-editor").hide();
+			$("#email-preview-btn").hide();
 			
-			$("#emailPreview").html(result);
-			$("#emailPreview").show();
-			$("#emailEditButton").show();
+			$("#email-preview").html(result);
+			$("#email-preview").show();
+			$("#email-edit-btn").show();
 		}
 	);
 }
 function editEmailMessage()
 {
-	$("#emailEditButton").hide();
-	$("#emailPreview").hide();
+	$("#email-edit-btn").hide();
+	$("#email-preview").hide();
 	
-	$("#emailEditor").show();
-	$("#emailPreviewButton").show();
+	$("#email-editor").show();
+	$("#email-preview-btn").show();
 }
 function sendMail()
 {
@@ -529,15 +542,15 @@ function sendMail()
 		}
 	}
 	
-	let sender = $("#emailSender").val();
-	let fromAddress = $("#emailSenderAddress").val();
-	let addressee = $("#emailAddressee").val();
-	let subject = $("#emailSubject").val();
-	let rawHTMLbody = $("#emailMessage").val();
-	let rawHTMLfooter = $("#emailFooter").val();
+	let sender = $("#email-sender").val();
+	let fromAddress = $("#email-sender-address").val();
+	let addressee = $("#email-address").val();
+	let subject = $("#email-subject").val();
+	let rawHTMLbody = $("#email-message").val();
+	let rawHTMLfooter = $("#email-footer").val();
 	
-	$("#statusInfo").show();
-	$("#emailSendButton").attr("disabled", true);
+	$("#status-info").show();
+	$("#email-send-btn").attr("disabled", true);
 	
 	$.post('administrate-action',
 		{
@@ -551,8 +564,8 @@ function sendMail()
 		},
 		function(response)
 		{
-			$("#statusInfo").hide();
-			$("#emailSendButton").removeAttr("disabled");
+			$("#status-info").hide();
+			$("#email-send-btn").removeAttr("disabled");
 			
 			emailModified = false;
 			
@@ -571,7 +584,7 @@ function sendMail()
 /*-------------------------Tab 6-------------------------*/
 function sendSqlQuery()
 {
-	let query = $("#sqlQueryInput").val();
+	let query = $("#sql-query-input").val();
 	$.post('administrate-action',
 		{
 			action:"execute sql query",
@@ -580,7 +593,7 @@ function sendSqlQuery()
 		function(response)
 		{
 			let result = JSON.parse(response)['dbResult'];
-			$("#sqlResult").html(result);
+			$("#sql-result").html(result);
 		}
 	);
 }

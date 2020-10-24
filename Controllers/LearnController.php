@@ -37,7 +37,7 @@ class LearnController extends Controller
         $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/learn.js','js/reportForm.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/learn.js','js/reportForm.js', 'js/menu.js');
         $this->pageHeader['bodyId'] = 'learn';
         
         $controllerName = "nonexistant-controller";

@@ -2,12 +2,13 @@
 
 body#index {
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
 	position: relative;
 	color: $gray1;
 	font-size: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
+	@include scrollbar(12px, $gray3, $gray2);
 	.container {
 		min-height: 100%;
 		display: grid;
@@ -38,14 +39,29 @@ body#index {
 	}
 	header {
 		background: $greenDark;
-		padding: 1rem 3rem;
+		padding: 1rem 1rem;
+		@media screen and (min-width: $mobile) {
+			padding: 1rem 3rem;
+		}
+		@media screen and (min-width: $tablet) {
+			padding: 1rem 4.8rem;
+		}
+		@media screen and (min-width: $smallDesktop) {
+			padding: 1rem 6rem;
+		}
 		grid-row: 1/2;
 		.content {
 			display: flex;
 			flex-wrap: wrap;
-			justify-content: flex-end;
+			justify-content: center;
 			.btn {
-				margin-left: 1.2rem;
+				margin: 0.4rem 1.6rem;
+			}
+			@media screen and (min-width: $mobile) {
+				justify-content: flex-end;
+				.btn {
+					margin: 0 0 0 1.2rem;
+				}
 			}
 		}
 	}
@@ -53,8 +69,11 @@ body#index {
 		grid-row: 2/4;
 		h1 {
 			margin: 1.8rem 0;
-			font-size: 3.6rem;
-			font-weight: 1000;
+			font-size: 3.2rem;
+			@media screen and (min-width: $smallMobile) {
+				font-size: 3.6rem;
+			}
+			font-weight: bold;
 			text-align: center;
 			@media screen and (min-width: $tablet) {
 				text-align: justify;
@@ -66,22 +85,24 @@ body#index {
 			text-align: justify;
 		}
 	}
-	#index-buttons-section .content,
-	#index-text-section .content {
-		opacity: 0;
-		//transform: translateY(5%);
-	}
 
 	#index-text-section {
 		background: white;
 		display: block;
 		@media screen and (min-width: $tablet) {
 			display: grid;
-			grid-template-columns: 6fr 4fr 1fr;
-			grid-template-rows: 1fr 8fr 1fr;
+			grid-template-columns: 2fr 1fr 3fr;
+			grid-template-rows: 1fr 6fr 1fr;
+		}
+		@media screen and (min-width: $tablet) {
+			grid-template-columns: 4fr 1fr 3fr;
+			grid-template-rows: 1fr 6fr 1fr;
 		}
 		> .content {
-			padding: 3rem;
+			padding: 3rem 1rem;
+			@media screen and (min-width: $mobile) {
+				padding: 3rem 3rem;
+			}
 			@media screen and (min-width: $tablet) {
 				padding: 3rem 4rem;
 			}
@@ -93,7 +114,7 @@ body#index {
 			}
 			@media screen and (min-width: $tablet) {
 				grid-row: 1/3;
-				grid-column: 1/2;
+				grid-column: 1/3;
 			}
 			text-align: center;
 			@media screen and (min-width: $tablet) {
@@ -136,26 +157,33 @@ body#index {
 				bottom: -5px;
 			}
 		}
-		
 	}
+
 	#index-buttons-section {
 		background: $gray1;
-		padding: 3rem;
+		padding: 3rem 1rem;
+		@media screen and (min-width: $mobile) {
+				padding: 3rem;
+		}
 		.content {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			.btn {
-				width: 10em;
+				width: 100%;
+				@media screen and (min-width: $smallMobile) {
+					width: 10em;
+				}
 				margin: 1rem 0;
 				font-size: 1.8rem;
 			}
 		}
 	}
+
 	#index-info-section {
-		padding: 3rem;
+		padding: 3rem 1rem;
 		@media screen and (min-width: $mobile) {
-			padding: 4rem;
+			padding: 3rem 3rem;
 		}
 		@media screen and (min-width: $tablet) {
 			padding: 4rem 6rem;
@@ -170,40 +198,74 @@ body#index {
 			font-size: 1.32rem;
 		}
 	}	
+
 	#index-login-section {
-		border-right: 12px solid $gray1;
+		display: grid;
 		position: fixed;
-		overflow: auto;
+		overflow: hidden;
 		color: black;
-		padding: 1rem;
-		font-size: 1.32rem;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 2;
-		background: $gray2;
-		transform: translateX(-100%);
-		transition: transform 0.32s ease-out;
+		border: 1.2rem solid white;
+		@media screen and (min-width: $mobile) {
+			border-width: 2rem;
+		}
+		border-radius: 1rem;
+		//font-size: 1.2rem;
+		top: 50vh;
+		left: 50vw;
+		transform: translate(-50%, calc(-50% + 5px));
+		width: 90vw;
+		height: 90vh;
+		max-width: 520px;
+		z-index: 5;
+		background: white;
+		//transform: translateY(5px);
+		opacity: 0;
+		pointer-events: none;
+		transition: transform 0.32s ease-out, opacity 0.32s ease-out;
+		&.show {
+			transform: translate(-50%, -50%);
+			opacity: 1;
+			pointer-events: auto;
+		}
+		> #register,
+		> #login,
+		> #password-recovery {
+			overflow: auto;
+			@include scrollbar(12px, $gray3, $gray2);
+			height: 100%;
+		}
+		.cross {
+			justify-self: right;
+			margin-bottom: 0.8rem;
+			height: 2rem;
+			width: 2rem;
+		}
 		h2 {
-			padding: 0.2rem 0.8rem;	
+			margin: 0 0 0.8rem 0;
+			> img {
+				height: 1em;
+				width: 1em;
+				margin-right: 0.4rem;
+				transform: translateY(10%);
+			}
 		}
 		.user-data {
 			display: flex;
 			flex-direction: column;
-			margin: 0.8rem 0;
-			label,
+			label, 
 			input.text-field {
 				margin: 0.2rem 0;
 			}
-			label:not(:nth-of-type(1)) { //kromě prvního labelu
-				margin-top: 0.72rem;
+			label:not(:nth-of-type(1)), //kromě prvního labelu
+			.checkbox { 
+				margin-top: 1rem;
 			}
 			input.text-field {
 				color: $gray1;
 				font-family: 'Roboto', sans-serif;
-				font-size: 1.4rem;
-				background: white;
+				//font-size: 1.2rem;
+				background: #eee;
+				padding: 0.6em 0.72em;
 			}
 		}
 		.btn.inline,
@@ -211,56 +273,63 @@ body#index {
 			font-size: inherit;
 		}
 		p {
-			padding: 0.2rem 0.8rem;
 			text-align: left;
+			padding: 0;
+		}
+		.border-btn {
+			margin: 0.8rem auto;
+			font-size: 1.2rem;
 		}
 	}
+
 	footer {
-		color: white;
 		grid-row: 4/5;
-		.content {
-			opacity: 0;
-			//transform: translateY(5%);
-			a {
-				color: white;
-				&:after {
-					background: white;
-				}
-			}
-		}
 	}
+
 	#cookies-alert {
 		position: fixed;
 		bottom: 0;
 		width: 100%;
 		transform: translateY(100%);
-		background: $gray1;
+		background: #444;
 		color: white;
 		display: block;
 		text-align: justify;
-		z-index: 5;
-		padding: 1rem;
+		z-index: 6;
+		padding: 1rem 1rem;
+		@media screen and (min-width: $mobile) {
+			padding: 1rem 3rem;
+		}
+		@media screen and (min-width: $tablet) {
+			padding: 1rem 4.8rem;
+		}
+		@media screen and (min-width: $smallDesktop) {
+			padding: 1rem 6rem;
+		}
 		display: flex;
 		justify-content: space-between;
 		transition: transform 0.6s ease-in-out;
+		&.show {
+			transform: translateY(0);
+		}
 		span {
-			padding-right: 0.8rem;
+			padding-right: 2rem;
 		}
 		button {
-			height: 1rem;
-			width: 1rem;
 			flex-shrink: 0;
 		}
 	}
 
-	#backToTop {
+	#back-to-top {
 		width: fit-content;
 		height: fit-content;
 		padding: 0;
 		transition: opacity 0.2s ease-in-out;
-		&.hidden {
-			opacity: 0;
-			pointer-events: none;
+		opacity: 0;
+		pointer-events: none;
+		&.show {
+			opacity: 1;
+			pointer-events: auto;
 		}
 		height: 4rem;
 		width: 4rem;
@@ -283,6 +352,7 @@ body#index {
 		}
 	}
 
+	/*
 	&.loaded {
 		#index-text-section .content {
 			opacity: 1;
@@ -326,4 +396,5 @@ body#index {
 			pointer-events: auto;
 		}
 	}
+	*/
 }

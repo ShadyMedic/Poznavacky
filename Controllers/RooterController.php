@@ -12,7 +12,7 @@ class RooterController extends Controller
     public function process(array $parameters)
     {
         $urlArguments = $this->parseURL($parameters[0]);
-        $controllerName = NULL;
+        $controllerName = null;
         
         //Úvodní stránka
         if (empty($urlArguments[0])){$controllerName = 'Index'.self::ControllerExtension;}

@@ -66,7 +66,7 @@ class MenuController extends Controller
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php') && $argumentCount === 1)
             {
                 //AdministrateController nebo AccountSettingsController
-                $this->controllerToCall = new $controllerName();
+                $this->controllerToCall = new $controllerName;
                 
                 //Vymazání objektů skladujících vybranou složku ze $_SESSION
                 $this->unsetSelection(true, true, true);

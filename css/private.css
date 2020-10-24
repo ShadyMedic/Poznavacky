@@ -12,6 +12,7 @@ body {
   line-height: 1.2rem;
   overflow: hidden;
   position: relative;
+  font-family: serif;
 }
 
 .container {
@@ -32,7 +33,7 @@ body {
   z-index: 9;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   display: none;
 }
 
@@ -63,6 +64,7 @@ nav {
 }
 
 nav a {
+  text-decoration: none;
   padding: 0.6rem;
   height: 2.4rem;
 }
@@ -71,14 +73,18 @@ nav a:last-child {
   color: gray;
 }
 
-nav .activeTab {
+nav .active-tab {
   background: lightgray;
   cursor: default;
 }
 
-nav :not(.activeTab):hover {
+nav :not(.active-tab):hover {
   cursor: pointer;
   background: #eee;
+}
+
+footer {
+  display: none;
 }
 
 table {
@@ -90,6 +96,8 @@ input {
   padding-right: 0.2rem;
   background: none;
   border: 1px solid gray;
+  font-family: serif;
+  font-size: 100%;
 }
 
 td,
@@ -119,17 +127,17 @@ button:hover {
   cursor: pointer;
 }
 
-.borderBtn {
+.border-btn {
   border: 1px solid gray;
   padding: 0.26rem 0.4rem 0.2rem 0.4rem;
-  margin: 0.3rem auto;
+  margin: 0.4rem auto;
 }
 
-.borderBtn:hover {
+.border-btn:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.activeBtn,
+.active-btn,
 .grayscale {
   height: 1.2rem;
   width: 1.2rem;
@@ -138,7 +146,7 @@ button:hover {
   vertical-align: middle;
 }
 
-.activeBtn img,
+.active-btn img,
 .grayscale img {
   height: 1.2rem;
   width: 1.2rem;
@@ -181,27 +189,26 @@ button:hover {
 }
 
 /*----------- Tab1 ------------*/
-#tab1 table {
-  margin: auto;
-  text-align: center;
-}
-
-#tab1 #constants {
-  margin: auto;
-  text-align: center;
-}
-
-#tab1 h3 {
-  text-align: center;
-  margin: 0.4rem;
-  font-size: 1.2rem;
-}
-
-#tab1 .constantField {
-  border: 0;
-}
-
+/*#tab1 {
+	table {
+		margin: auto;
+		text-align: center;
+	}
+	#constants {
+		margin: auto;
+		text-align: center;
+	}
+	h3 {
+		text-align: center;
+		margin: 0.4rem;
+		font-size: 1.2rem;
+	}
+	.constantField {
+		border: 0;
+	}
+}*/
 /*----------- Tab2, Tab3, Tab4 ------------*/
+#tab1 table,
 #tab2 table,
 #tab3 table,
 #tab4 table {
@@ -210,6 +217,7 @@ button:hover {
   text-align: center;
 }
 
+#tab1 th,
 #tab2 th,
 #tab3 th,
 #tab4 th {
@@ -220,24 +228,35 @@ button:hover {
   padding: 0.1rem 0.4rem;
 }
 
+#tab1 tr:nth-child(odd),
 #tab2 tr:nth-child(odd),
 #tab3 tr:nth-child(odd),
 #tab4 tr:nth-child(odd) {
   background: #eee;
 }
 
+#tab1 .class-admin-table tr:nth-child(odd),
+#tab2 .class-admin-table tr:nth-child(odd),
+#tab3 .class-admin-table tr:nth-child(odd),
+#tab4 .class-admin-table tr:nth-child(odd) {
+  background: transparent;
+}
+
+#tab1 td,
 #tab2 td,
 #tab3 td,
 #tab4 td {
   padding: 0.1rem 0.4rem;
 }
 
+#tab1 td:not(:last-child),
 #tab2 td:not(:last-child),
 #tab3 td:not(:last-child),
 #tab4 td:not(:last-child) {
   border-right: 1px solid lightgray;
 }
 
+#tab1 input,
 #tab2 input,
 #tab3 input,
 #tab4 input {
@@ -245,6 +264,7 @@ button:hover {
   text-align: center;
 }
 
+#tab1 input[type='number'],
 #tab2 input[type='number'],
 #tab3 input[type='number'],
 #tab4 input[type='number'] {
@@ -252,6 +272,7 @@ button:hover {
   padding-left: 1.2rem;
 }
 
+#tab1 select,
 #tab2 select,
 #tab3 select,
 #tab4 select {
@@ -259,7 +280,7 @@ button:hover {
   background: transparent;
 }
 
-#singleReport {
+#image-preview {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -270,28 +291,29 @@ button:hover {
 }
 
 @media screen and (min-width: 576px) {
-  #singleReport {
+  #image-preview {
     width: 80%;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #singleReport {
+  #image-preview {
     width: 65%;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #singleReport {
+  #image-preview {
     width: 45%;
   }
 }
 
-#singleReport img {
+#image-preview img {
   width: 100%;
+  border: 1px solid black;
 }
 
-#singleReport .borderBtn {
+#image-preview .border-btn {
   display: block;
   margin: auto;
   background: white;
@@ -340,26 +362,51 @@ button:hover {
   padding: 0.1rem 0.2rem 0.1rem 0;
 }
 
-#tab5 .borderBtn {
+#tab5 .border-btn {
   margin: 0 0.2rem 0 0;
 }
 
-#tab5 textarea {
-  border: 1px solid gray;
-  padding: 0.2rem;
-  resize: vertical;
-  min-height: 3.8rem;
-  max-height: 40vh;
-  margin-bottom: -0.24rem;
-  width: 100%;
+#tab5 #email-info {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 1fr;
+      grid-template-columns: auto 1fr;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  margin: 0.4rem 0;
 }
 
-#tab5 #emailPreview {
+#tab5 #email-info * {
+  margin: 0.2rem 0;
+  padding: 0.2rem 0.4rem;
+}
+
+#tab5 #email-info label {
+  margin-right: 0.2rem;
+}
+
+#tab5 #email-editor {
+  margin: 0.4rem 0;
+}
+
+#tab5 #email-editor textarea {
+  border: 1px solid gray;
+  padding: 0.2rem 0.4rem;
+  resize: vertical;
+  height: 16vh;
+  min-height: 3.8rem;
+  max-height: 36vh;
+  width: 100%;
+  margin: 0.2rem 0;
+}
+
+#tab5 #email-preview {
   width: 100%;
   margin: 1rem auto;
 }
 
-#tab5 #emailPreview span {
+#tab5 #email-preview span {
   margin-bottom: 1rem;
 }
 
@@ -372,7 +419,7 @@ button:hover {
   width: 100%;
 }
 
-#tab6 .sqlCenter {
+#tab6 .sql-center {
   display: block;
   margin: auto;
   text-align: justify;
@@ -380,51 +427,88 @@ button:hover {
 }
 
 @media screen and (min-width: 576px) {
-  #tab6 .sqlCenter {
+  #tab6 .sql-center {
     width: 88%;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #tab6 .sqlCenter {
+  #tab6 .sql-center {
     width: 72%;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #tab6 .sqlCenter {
+  #tab6 .sql-center {
     width: 56%;
   }
 }
 
-#tab6 #sqlWarning {
-  margin: 0.2rem auto 0.3rem auto;
+#tab6 #sql-warning {
+  margin: 0.4rem auto;
 }
 
-#tab6 textarea {
+#tab6 #sql-query {
+  margin: 0.4rem auto;
+}
+
+#tab6 #sql-query textarea {
   border: 1px solid gray;
-  padding: 0.2rem;
+  padding: 0.2rem 0.4rem;
   resize: vertical;
   min-height: 3.8rem;
-  max-height: 40vh;
-  margin-bottom: -0.24rem;
+  max-height: 24vh;
   width: 100%;
+  margin: 0.2rem 0;
 }
 
-#tab6 table {
-  border-collapse: collapse;
-  margin: 0.2rem auto;
+#tab6 #sql-result p {
+  display: block;
+  margin: 0 auto 0.4rem auto;
+  width: 96%;
 }
 
-#tab6 table tr:nth-child(even) {
-  background: #eee;
+@media screen and (min-width: 576px) {
+  #tab6 #sql-result p {
+    width: 88%;
+  }
 }
 
-#tab6 table td {
+@media screen and (min-width: 768px) {
+  #tab6 #sql-result p {
+    width: 72%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #tab6 #sql-result p {
+    width: 56%;
+  }
+}
+
+#tab6 #sql-result table {
+  position: relative;
+  margin: auto;
+  text-align: center;
+}
+
+#tab6 #sql-result table th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background: lightgray;
   padding: 0.1rem 0.4rem;
 }
 
-#tab6 table td:not(:last-child) {
+#tab6 #sql-result table tr:nth-child(odd) {
+  background: #eee;
+}
+
+#tab6 #sql-result table td {
+  padding: 0.1rem 0.4rem;
+}
+
+#tab6 #sql-result table td:not(:last-child) {
   border-right: 1px solid lightgray;
 }
 /*# sourceMappingURL=private.css.map */

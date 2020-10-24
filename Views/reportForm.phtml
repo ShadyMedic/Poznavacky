@@ -1,20 +1,47 @@
-<button id="reportButton" onclick="reportImg()"></button>
-<div id="reportMenu" style="display:none;">
-    <select id="reportReason" onchange="updateReport()">
-    	<?php foreach (Report::ALL_REASONS as $report) : ?>
-    	<option><?= $report ?></option>
-    	<?php endforeach ?>
-    </select>
-    <div id="additionalReportInfo">
-    	<select id="longLoadingInfo" class='text dropList' style="display:none;">
-		<?php foreach (Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
-    		<option><?= $delay ?></option>
-		<?php endforeach ?>
-		</select>
-		<input id="incorrectNaturalInfo" type='text' class='text' placeholder='Přírodnina na obrázku' maxlength=31 style="display:none;">
-		<textarea id="otherInfo" class='text' placeholder='Specifikujte prosím důvod.&#10;Toto hlášení obdrží pouze správce této třídy.' maxlength=255 style="display:none;"></textarea>
-		<textarea id="otherAdminInfo" class='text' placeholder='Specifikujte prosím důvod.&#10;Toto hlášení obdrží pouze správce celého systému.&#10;Používejte prosím tuto možnost pouze pro případy, při kterých je nutný zásah administrátora.' maxlength=255 style="display:none;"></textarea>
-    </div>
-    <button onclick="submitReport(event)">Odeslat</button>
-    <button onclick="cancelReport(event)">Zrušit</button>
+<div class="custom-select-wrapper" id="report-reason">
+	<div class="custom-select">
+		<div class="custom-select-main">
+			<span><?= Report::REASON_NOT_DISPLAYING ?></span>
+			<img class="arrow" src="../images/arrowBlack.svg">
+		</div>
+		<ul class="custom-options">
+			<li class="custom-option"><?= Report::REASON_NOT_DISPLAYING ?></li>
+			<li class="custom-option"><?= Report::REASON_LONG_LOADING ?></li>
+			<li class="custom-option"><?= Report::REASON_INCORRECT_NATURAL ?></li>
+			<li class="custom-option"><?= Report::REASON_CONTAINS_NAME ?></li>
+			<li class="custom-option"><?= Report::REASON_BAD_RESOLUTION ?></li>
+			<li class="custom-option"><?= Report::REASON_COPYRIGHT ?></li>
+			<li class="custom-option"><?= Report::REASON_OTHER ?></li>
+			<li class="custom-option"><?= Report::REASON_OTHER_ADMIN ?></li>
+		</ul>
+	</div>
 </div>
+<div class="additional-report-info">
+	<div class="custom-select-wrapper" id="long-loading-info" style="display:none">
+		<div class="custom-select">
+			<div class="custom-select-main">
+				<span><?= Report::LONG_LOADING_AVAILABLE_DELAYS[0] ?></span>
+				<img class="arrow" src="../images/arrowBlack.svg">
+			</div>
+			<ul class="custom-options">
+				<?php foreach (Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
+					<li class="custom-option"><?= $delay ?></li>
+				<?php endforeach ?>
+			</ul>
+		</div>
+	</div>
+	<div class="incorrect-natural-info-wrapper" style="display:none;">
+		<label for="incorrect-natural-info">Přírodnina na obrázku: </label>
+		<input id="incorrect-natural-info" type='text' class='text-field' maxlength=31>
+	</div>
+	<div class="other-info-wrapper" style="display:none;">
+		<label for="other-info">Specifikujte prosím důvod:</label>
+		<textarea id="other-info" class='text-field' maxlength=255></textarea>
+	</div>
+	<div class="other-admin-info-wrapper" style="display:none;">
+		<label for="other-admin-info">Specifikujte prosím důvod:</label>
+		<textarea id="other-admin-info" class='text-field' maxlength=255></textarea>
+	</div>
+</div>
+<button id="submit-report-button" class="btn border-btn non-transparent black">Odeslat</button>
+<button id="cancel-report-button" class="btn cross icon"><img src="../images/crossButtonBlack.svg"></button>

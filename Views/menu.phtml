@@ -1,21 +1,45 @@
 <header>
-	<h1>Poznávačky</h1>
-	<div class="login-info">
-		<span>Přihlášen: <?= $loggedUserName ?></span>
-		<a href='logout'><button>Odhlásit se</button></a>
+	<button class="btn hamburger-btn" id="show-full-panel-button"><img src="../images/hamburger.svg"></button>
+	<div class="logo">
+		<img src=""> <!-- LOGO -->
+		<h1>Poznávačky</h1>
 	</div>
 </header>
-<aside class="aside-left">
-	<nav>
-		<?php if ($adminLogged) : ?>
-			<a href="menu/administrate">Správa systému</a>
-		<?php endif ?>
-		<a href="menu/account-settings">Nastavení účtu</a>
-		<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
+<aside>
+	<nav id="aside-main-panel">
+		<button class="btn" id="show-aside-login-info-button"><img src="../images/user.svg" alt=""></button> <!--zobrazí info o uživateli-->
+		<button class="btn" id="show-aside-nav-button"><img src="../images/navigation.svg" alt=""></button> <!--zobrazí navigaci-->
+		<button class="btn" id="show-aside-settings-button"><img src="../images/settings.svg" alt=""></button> <!--zobrazí nastavení-->
+		<button class="btn cross" id="close-panel-button"><img src="../images/cross2.svg" alt=""></button>
 	</nav>
+	<div id="aside-additional-panel">
+		<div id="aside-login-info">
+			<span>Přihlášen: <?= $loggedUserName ?></span>
+			<a href="menu/account-settings" class="btn inline black">Nastavení účtu</a>
+			<a href='logout' class="btn inline black">Odhlásit se</a>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam eius fugiat error! Debitis itaque excepturi ratione eaque labore? Explicabo commodi maxime excepturi in praesentium porro quia quisquam provident, voluptatem molestias numquam modi aut consequatur fugiat veritatis aspernatur aliquid quibusdam totam sint quidem atque. Distinctio autem minima ducimus fugit ullam totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aspernatur hic perferendis ipsa voluptas cum quo amet modi ex natus odit, dignissimos sit nam consequuntur numquam. Atque incidunt quos alias corrupti asperiores quia placeat nisi esse adipisci nam numquam explicabo recusandae repudiandae expedita ipsam, officiis autem! Iusto sunt sint saepe?</p>
+		</div>
+		<nav id="aside-nav">
+			<?php if ($adminLogged) : ?>
+				<a href="administrate">Správa systému</a>
+			<?php endif ?>
+			<a href="menu/account-settings">Nastavení účtu</a>
+			<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
+		</nav>
+		<div id="aside-settings">
+			<button id="change-folders-layout-button" class="btn transparent white border-btn">Přepnout zobrazení menu</button>
+		</div>
+	</div>
 </aside>
-<main>
-	<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
+<main class="menu">
+	<h2><!--  --><button class="btn"></button></h2>
+		<!-- 
+		BUĎ Menu, 
+		NEBO Správa účtu,
+		NEBO *třída* -> Správa třídy, 
+		NEBO *třída* -> *poznávačka* -> *část* -> *akce* (Učit se/Vyzkoušet se/Přidat obrázky)
+		-->
+	<div class="wrapper">
+		<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
+	</div>
 </main>
-<aside class="aside-right">
-</aside>

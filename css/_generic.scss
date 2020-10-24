@@ -15,7 +15,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 	line-height: 1.25em;
 	font-size: 100%;
-	min-width: 100vw;
+	min-width: 100%;
 	min-height: 100vh;
 	.btn:focus {
 		outline: none;
@@ -31,8 +31,10 @@ body {
 }
 
 footer {
-	padding: 0.6rem 1rem;
+	color: white;
+	padding: 0.2rem 1rem;
 	background: $gray1;
+	font-size: 0.8rem;
 	.content {
 		display: flex;
 		justify-content: space-evenly;
@@ -43,29 +45,29 @@ footer {
 			flex-wrap: wrap;
 		}
 		a, span {
-			margin: 0.4rem 0.4rem;
-			display: inline;
+			margin: 0.2rem 0.4rem;
 		}
 		a {
-			position: relative;
-			text-decoration: none;
 			&:after {
-				content: "";
-				display: block;
-				width: 0%;
-				left: 50%;
-				height: 2px;
-				position: absolute;
-				bottom: -0.1rem;
-				transition: all 0.16s ease-in;
-			}
-			&:hover:after {
-				width: 100%;
-				left: 0;
+				background: white;
 			}
 		}
 	}
 
+}
+
+.overlay {
+	position: fixed;
+	z-index: 4;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(black, 0.6);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.32s ease-out;
+	&.show {
+		opacity: 1;
+	}
 }
 
 h1,
@@ -73,7 +75,7 @@ h2,
 h3,
 h4,
 h5 {
-	line-height: 1.3rem;
+	line-height: 1.3em;
 	font-weight: bold;
 	margin: 0.8em 0 0.4em 0;
 }
@@ -84,24 +86,28 @@ h3 {
 	font-size: 1.6rem;
 }
 h4 {
-	font-size: 1.4rem;
+	font-size: 1.6rem;
 }
 h5 {
-	font-size: 1.32rem;
+	font-size: 1.4rem;
 }
 
 .btn {
 	font-family: 'Roboto', sans-serif;
 	background: none;
 	border: none;
+	text-decoration: none;
 	font-size: 1em;
+	//display: inline-block;
 	transition: transform 0.1s ease-in;
 	&:hover {
 		cursor: pointer;
 	}
 	&.border-btn {
+		text-align: center;
 		position: relative;
-		padding: 0.8rem 1.6rem;
+		padding: 0.4em 1em;
+		border-radius: 3.2px;
 		&.non-transparent {
 			&.white {
 				background: white;
@@ -115,6 +121,14 @@ h5 {
 				background: $black1;
 				color: white;
 				border: 2px solid $black1;
+				&:after {
+					background: rgba(white, 0.06);
+				}
+			}
+			&.dark-green {
+				background: $greenDark;
+				color: white;
+				border: 2px solid $greenDark;
 				&:after {
 					background: rgba(white, 0.06);
 				}
@@ -152,6 +166,7 @@ h5 {
 			top: -2px;
 			left: -2px;
 			transition: transform 0.1s ease-out;
+			border-radius: 0.2em;
 			}
 		&:hover {
 			&:after {
@@ -189,32 +204,62 @@ h5 {
 	&.inline {
 		font-size: 1em;
 		position: relative;
-			text-decoration: none;
-			color: white;
-			&:after {
-				content: "";
-				display: block;
-				width: 0%;
-				left: 50%;
-				height: 2px;
-				position: absolute;
-				bottom: -0.1rem;
-				transition: all 0.1s ease-in;
-			}
-			&:hover:after {
-				width: 100%;
-				left: 0;
-			}
+		text-decoration: none;
+		color: white;
+		&:hover {
+			text-decoration: underline;
+		}
+		/*
+		&:after {
+			content: "";
+			display: block;
+			width: 0%;
+			left: 50%;
+			height: 2px;
+			position: absolute;
+			bottom: -0.1rem;
+			transition: all 0.1s ease-in;
+		}
+		&:hover:after {
+			width: 100%;
+			left: 0;
+		}
+		*/
 		&.white {
 			color: white;
+			/*
 			&:after {
 				background: white;
-			}
+			}*/
 		}
 		&.black {
 			color: black;
+			/*
 			&:after {
 				background: black;
+			}
+			*/
+		}
+	}
+	&.cross {
+		height: 1em;
+		width: 1em;
+		> img {
+			height: 100%;
+			width: 100%;
+		}
+		&:active {
+			transform: scale(0.88);
+		}
+	}
+	&.icon {
+		img {
+			filter: drop-shadow(0 0 6px rgba(black, 0.32));
+			transition: transform 0.2s ease-out;
+		}
+		&:active {
+			img {
+				transform: scale(0.96);
 			}
 		}
 	}
@@ -230,28 +275,111 @@ h5 {
 	height: 1em;
 }
 
-input {
+input, select {
 	border: none;
 	&.text-field {
-		padding: 0.48em 0.6em;
-		&:focus {
-			box-shadow: 0 2px 0 0 darkblue;
+		font-size: 100%;
+		padding: 0.4em 0.72em;
+		border-radius: 0.2em;
+		/*&:focus {
+			box-shadow: 0 2px 0 0 $greenMid;
 			outline: none;
 		}
 		&:invalid {
 			box-shadow: 0 2px 0 0 $red1;
-		}
+		}*/
 	}
 }
 
 label {
-	&:not([for=login-persist]) {
-		padding: 0.32em 0.6em;
-	}
 	&.required {
 		&:after {
 			content: " *";
 			color: $red1;
+		}
+	}
+}
+
+
+.custom-select-wrapper {
+	position: relative;
+	user-select: none;
+	width: 100%;
+	margin: 0;
+	.custom-select {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		&.open {
+			.custom-options {
+				opacity: 1;
+				visibility: visible;
+				pointer-events: all;
+				transform: rotateX(0deg);
+			}
+			.custom-select-main {
+				border-radius: 3.2px 3.2px 0 0;
+				.arrow {
+					transform: rotate(270deg);
+				}
+			}			
+		}
+	}
+	.custom-select-main {
+		position: relative;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		font-size: 1em;
+		color: $gray1;
+		padding: 0.4em 1em;
+		background: #fff;
+		cursor: pointer;
+		border-radius: 3.2px;
+		span {
+			flex-grow: 1;
+		}
+		.arrow {
+			height: 1em;
+			width: 1em;
+			transform: rotate(90deg);
+			transition: transform 0.4s ease-in-out;
+		}
+	}
+	.custom-options {
+		@include scrollbar(12px, $gray3, white);
+		position: absolute;
+		display: block;
+		top: 100%;
+		left: 0;
+		right: 0;
+		background: #fff;
+		transition: all 0.4s ease-out;
+		opacity: 0;
+		transform: rotateX(90deg);
+		transform-origin: top;
+		visibility: hidden;
+		pointer-events: none;
+		z-index: 2;
+		max-height: 50vh;
+		border-radius: 0 0 3.2px 3.2px;
+		box-shadow: 0 3px 2px -1px rgba(black, 0.2);
+		overflow: auto;
+		.custom-option {
+			position: relative;
+			display: block;
+			padding: 0.4em 0.72em;
+			color: $black1;
+			cursor: pointer;
+			border-top: 1px solid $gray2;
+			&:hover {
+				cursor: pointer;
+				background-color: $gray2;
+			}
+			&.selected {
+				color: #fff;
+				background-color: $greenMid;
+			}
 		}
 	}
 }

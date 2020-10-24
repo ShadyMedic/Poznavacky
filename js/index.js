@@ -1,63 +1,121 @@
 
-/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/* Funkce upravující viditelný obsah stránky */
 
-$(function() { //až po načtení stránky
-
-	//přidává třídu na zpracování úvodních animací
-	if (getCookie("recentLogin") == 1) { //Je aktivní cookie, že se uživatel nedávno přihlásil nebo se právě odhlásil? --> přeskoč animace
-		$("body").addClass("loaded");
-	}
-	else {
-		$("body").addClass("load");
-	}
+//zpracování eventů
+$(function() { 
 	setTimeout(() => {
-		$("#cookies-alert").css("transform", "translateY(0)");
-	}, 4000);
+		$("#cookies-alert").addClass("show");
+	}, 1000);
+
+	$(window).resize(function() {
+		checkLoginSize();
+	})
+
+	//zasunutí cookies alertu
+	$("#hide-cookies-alert-button").click(function(){
+		$("#cookies-alert").removeClass("show");
+	})
+
+	//skrytí login sekce kliknutím na tlačítko
+	$("#hide-login-section-button").click(function(){hideLoginSection();})
+	
+	//skrytí login sekce tím, že se klikne mimo
+	$(document).mouseup(function(e) 
+	{
+		var container = $("#index-login-section");
+		var cookiesAlert = $("#cookies-alert");
+
+		if (!container.is(e.target) && !cookiesAlert.is(e.target) && container.has(e.target).length === 0 && cookiesAlert.has(e.target).length === 0) 
+		{
+			hideLoginSection();
+		}
+	});
+
+	//zobrazení login sekce
+	$(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event){
+		if(!$("#index-login-section").hasClass("show")) {
+			$("#index-login-section").addClass("show");
+			$(".overlay").addClass("show");
+			$("body").css("overflowY", "hidden");	
+		}
+		if ($(event.target).hasClass("show-login-section-login-button"))
+			showLoginDiv('login');
+		else if ($(event.target).hasClass("show-login-section-register-button"))
+			showLoginDiv('register');
+		else if ($(event.target).hasClass("show-login-section-password-recovery-button"))
+			showLoginDiv('password-recovery');
+	})
+
+	//zobrazení/skrytí back-to-top tlačítka podle toho, kolik je odscrollováno
+	var documentHeight = $(window).height();
+	var scrollOffset = 50;
+	$(window).scroll(function(event) {
+		var scrolled = $(window).scrollTop();
+		console.log(scrolled);
+		if (scrolled > (documentHeight + scrollOffset)) {
+			$("#back-to-top").addClass("show");
+		}
+		else if (scrolled <= (documentHeight + scrollOffset)) {
+			$("#back-to-top").removeClass("show");
+		}
+	})
+
 });
 
-var documentHeight = $(window).height();
-var scrollOffset = 50;
-$(window).scroll(function(event) {
-	var scrolled = $(window).scrollTop();
-	console.log(scrolled);
-	if (scrolled > (documentHeight + scrollOffset)) {
-		$("#backToTop").removeClass("hidden");
-	}
-	else if (scrolled <= (documentHeight + scrollOffset)) {
-		$("#backToTop").addClass("hidden");
-	}
-})
-
-//zasunutí elementu dolů
-function hideDown(elementId)
-{	
-	$("#" + elementId).css("transform", "translateY(100%)");
+//skrytí login sekce
+function hideLoginSection() {
+	$("#index-login-section").removeClass("show");
+	$(".overlay").removeClass("show");
+	$("body").css("overflowY", "auto");
+	emptyForms(".user-data input.text-field");
 }
 
-//vysunutí sekce s přihlašováním, registrací a obnovou hesla
-function showLoginSection(specification)
-{
-	$("#index-login-section").css("transform", "translateX(0)");
-	$("body").css("overflowY", "hidden");
-	let divId = specification;
-	showLoginDiv(divId);
+//vymaže obsah textových polí ve formuláři
+function emptyForms(fields) {
+	var formTextFields = [];
+	formTextFields = $(fields);
+	formTextFields.val('');
 }
 
-//zobrazení požadované části v přihlašovací sekci
-function showLoginDiv(divId)
-{
+//zobrazení požadované části v login sekci
+function showLoginDiv(divId) {
+	$("#index-login-section").css("height", "auto");
+	$("#" + divId).css("height", "auto");
+	let loginDivHeight = $("#" + divId).outerHeight() + $("#hide-login-section-button").outerHeight();
+	if (loginDivHeight > (0.9*$(window).height()-64)) {
+		$("#index-login-section").css("height", "90vh");
+		$("#" + divId).css("height", "100%");
+	}
 	$("#register").hide();
 	$("#login").hide();
 	$("#password-recovery").hide();
+	$("#register").removeClass("show");
+	$("#login").removeClass("show");
+	$("#password-recovery").removeClass("show");
 	$("#" + divId).show();
+	$("#" + divId).addClass("show");
 }
 
-function hideLoginSection() 
-{
-	$("#index-login-section").css("transform", "translateX(-100%)");
-	$("body").css("overflowY", "auto");
+//
+function checkLoginSize() {
+	let divId = $("#index-login-section > .show").attr("id");
+	let loginDivHeight = $("#" + divId).outerHeight() + $("#hide-login-section-button").outerHeight();
+	if ($("#index-login-section").hasClass("show")) {
+		if (loginDivHeight >= (0.9*$(window).height()-64)) {
+			if ($("#index-login-section").css("height") != "90vh") {
+				$("#index-login-section").css("height", "90vh");
+				$("#" + divId).css("height", "100%");
+			}
+		}
+		else {
+			if ($("#index-login-section").css("height") != "auto") {
+				$("#index-login-section").css("height", "auto");
+				$("#" + divId).css("height", "auto");
+			}
+		}
+	}
 }
-
 /*--------------------------------------------------------------------------*/
 /* Odesílání dat z formulářů na server */
 function formSubmitted(event)

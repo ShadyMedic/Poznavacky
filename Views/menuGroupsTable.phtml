@@ -1,17 +1,22 @@
-<table>
-	<tr>
-		<th>Název poznávačky</th>
-		<th>Části</th>
-	</tr>
+<div id="menu-groups-table" class="folders">
+	<div class="table-title rows">
+		<span class="col1">Název poznávačky</span>
+		<span class="col3">Části</span>
+	</div>
+	<ul class="tiles">
 	<?php foreach ($table as $tableRow) : ?>
-		<tr>
-    		<?php for ($i = 0; $i < 2; $i++) : ?>
-    		<td>
-    			<a href="<?= $tableRow['rowLink'] ?>">
-    			<?= $tableRow[$i] ?>
-				</a>
-    		</td>
-    		<?php endfor ?>
-		</tr>
+		<button class="btn" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>
+    		
+    		<h4 class="col1">
+    			<!--<a href="<?= $tableRow['rowLink'] ?>">-->
+    			<?= $tableRow[0] ?>
+				<!--</a>-->
+    		</h4>
+			<span class="col3">
+				<span>částí: </span>
+				<span><?= $tableRow[1] ?></span>
+			</span>	
+		</li></button>
 	<?php endforeach ?>
-</table>
+	</ul>
+</div>

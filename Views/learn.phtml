@@ -1,33 +1,39 @@
-<h2>Učit se</h2>
-<div tabindex="-1" onkeypress="keyPressed(event)">
-<section>
-	<select id="selectBox" onchange="sel()">
-	<?php foreach ($naturals as $natural) : ?>
-        <option><?= $natural->getName() ?></option>
-	<?php endforeach; ?>
-	</select>
-	<br>
-	<button onclick="updateNatural(-1)" class="button">
-		Předchozí přírodnina
-		<span class="key_short">[S]</span>
-	</button>
-		<button onclick="updateNatural(1)" class="button">
-		Následující přírodnina
-		<span class="key_short">[W]</span>
-	</button>
-</section>
-<section>
-	<button onclick="updatePicture(-1)">
-		<img src="images/arrow.png" style="transform: rotate(180deg);" />
-		<span>[A]</span>
-	</button>
-	<img id="mainImg" src="images/imagePreview.png"> <!-- Adresa bude dodána JavaScriptem -->
-	<button onclick="updatePicture(1)">
-		<img src="images/arrow.png" />
-		<span>[D]</span>
-	</button>
-	<div>
-		<?php require 'Views/reportForm.phtml'; ?>
-	</div>
-</section>
+<div id="learn-wrapper" tabindex="-1">
+	<section class="controllers">
+		<!--<select id="select-box" class="text-field" onchange="sel()">
+		<?php foreach ($naturals as $natural) : ?>
+			<option><?= $natural->getName() ?></option>
+		<?php endforeach; ?>
+		</select>-->
+
+		<div class="custom-select-wrapper" id="natural-select">
+			<div class="custom-select">
+				<div class="custom-select-main">
+					<span><?= $naturals[0]->getName() ?></span>
+					<img class="arrow" src="../images/arrowBlack.svg">
+				</div>
+				<ul class="custom-options">
+					<?php foreach ($naturals as $natural) :?>
+						<li class="custom-option"><?= $natural->getName() ?></li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		</div>
+
+		<button id="natural-back-button" class="btn border-btn non-transparent black">Předchozí přírodnina</button>
+		<button id="natural-forward-button" class="btn border-btn non-transparent black">Následující přírodnina</button>
+	</section>
+	<section class="picture">
+		<button id="picture-back-button" class="btn icon picture-control">
+			<img src="images/arrowWhite.svg" style="transform: rotate(180deg);" />
+		</button>
+		<img id="main-img" src="images/imagePreview.png"> <!-- Adresa bude dodána JavaScriptem -->
+		<button id="picture-forward-button" class="btn icon picture-control">
+			<img src="images/arrowWhite.svg" />
+		</button>
+		<button class="btn report-button"></button>
+		<div class="report-box">
+			<?php require 'Views/reportForm.phtml'; ?>
+		</div>
+	</section>
 </div>

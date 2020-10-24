@@ -21,18 +21,6 @@
 
 <?= $this->controllerToCall->displayView() ?>
 
-<a href="menu/request-new-class"><button class='button'>Zažádat o vytvoření nové třídy</button></a>
-
-<div id='classCodeButton' style='display:block;'>
-    <button class='button' onclick='enterClassCode()'>Zadat kód soukromé třídy</button>
-</div>
-<div id='classCode' style="display:none;">
-    <form id='classCodeForm' action="menu/enter-class-code" method="POST">
-        <input id='classCodeInput' type="number" name="code" min=0 max=9999 maxlength=4 style='width: 2rem;' required/>
-        <input class='button' type="submit">OK</button>
-        <button class='button' onclick='closeClassCode()'>Zpět</button>
-    </form>
-</div>
 <div id='invitationsButton' style='display:block;'>
 	<div class='button' onclick='showInvitations()'>Pozvánky do tříd<sup style="vertical-align:super;font-size:smaller;"><?= $invitationsCount ?></sup></div>
 </div>

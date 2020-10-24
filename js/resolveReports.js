@@ -1,24 +1,25 @@
 function showPicture(url)
 {
-	$("#previewImgElement").attr("src", url);
-	$("#imagePreview").show();
+	$("#image-preview img").attr("src", url);
+	$("#image-preview").show();
+	$(".overlay").show();
 }
 var currentReportValues = new Array(2);
 function editPicture(event)
 {
 	//Dočasné znemožnění ostatních akcí u všech hlášení
-	$(".reportAction").addClass("grayscale_temp_report");
-	$(".reportAction").addClass("grayscale");
-	$(".reportAction").attr("disabled", "");
+	$(".report-action").addClass("grayscale-temp-report");
+	$(".report-action").addClass("grayscale");
+	$(".report-action").attr("disabled", "");
 	
 	//Získat <tr> element upravované řádky
 	let row = $(event.target.parentNode.parentNode.parentNode);
-	row.attr("id", "editableReportRow");
+	row.attr("id", "editable-report-row");
 	
 	//Uložení současných hodnot
 	for (let i = 0; i <= 1; i++)
 	{
-		currentReportValues[i] = $("#editableReportRow .reportField:eq("+ i +")").val();
+		currentReportValues[i] = $("#editable-report-row .report-field:eq("+ i +")").val();
 	}
 	
 	/*
@@ -26,40 +27,40 @@ function editPicture(event)
 	V takovém případě nahradíme tuto hodnotu textem zobrazeném v <select> elementu
 	Tento text je innerText prvního <option> elementu
 	*/
-	if (currentReportValues[0] === null){ currentReportValues[0] = $("#editableReportRow .reportField:eq(0)>option:eq(0)").text(); }
+	if (currentReportValues[0] === null){ currentReportValues[0] = $("#editable-report-row .report-field:eq(0)>option:eq(0)").text(); }
 	
-	$("#editableReportRow .reportAction").hide();					//Skrytí ostatních tlačítek akcí
-	$("#editableReportRow .reportEditButtons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
-	$("#editableReportRow .reportField").addClass("editableField");	//Obarvení políček (//TODO)
-	$("#editableReportRow .reportField").removeAttr("readonly");	//Umožnění editace (pro <input>)
-	$("#editableReportRow .reportField").removeAttr("disabled");	//Umožnění editace (pro <select>)
+	$("#editable-report-row .report-action").hide();					//Skrytí ostatních tlačítek akcí
+	$("#editable-report-row .report-edit-buttons").show();				//Zobrazení tlačítek pro uložení nebo zrušení editace
+	$("#editable-report-row .report-field").addClass("editable-field");	//Obarvení políček (//TODO)
+	$("#editable-report-row .report-field").removeAttr("readonly");	//Umožnění editace (pro <input>)
+	$("#editable-report-row .report-field").removeAttr("disabled");	//Umožnění editace (pro <select>)
 }
 function cancelPictureEdit()
 {
 	//Opětovné zapnutí ostatních tlačítek akcí
-	$(".grayscale_temp_report").removeAttr("disabled");
-	$(".grayscale_temp_report").removeClass("grayscale grayscale_temp_report");
+	$(".grayscale-temp-report").removeAttr("disabled");
+	$(".grayscale-temp-report").removeClass("grayscale grayscale-temp-report");
 	
 	//Obnova hodnot vstupních polí
 	for (let i = 0; i <= 1; i++)
 	{
-		$("#editableReportRow .reportField:eq("+ i +")").val(currentReportValues[i]);
+		$("#editable-report-row .report-field:eq("+ i +")").val(currentReportValues[i]);
 	}
 	
-	$("#editableReportRow .reportAction").show();						//Znovuzobrazení ostatních tlačítek akcí
-	$("#editableReportRow .reportEditButtons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
-	$("#editableReportRow .reportField").removeClass("editableField");	//Odbarvení políček
-	$("#editableReportRow input.reportField").attr("readonly", "");		//Znemožnění editace (pro <input>)
-	$("#editableReportRow select.reportField").attr("disabled", "");	//Znemožnění editace (pro <select>)
+	$("#editable-report-row .report-action").show();						//Znovuzobrazení ostatních tlačítek akcí
+	$("#editable-report-row .report-edit-buttons").hide();					//Skrytí tlačítek pro uložení nebo zrušení editace
+	$("#editable-report-row .report-field").removeClass("editable-field");	//Odbarvení políček
+	$("#editable-report-row input.report-field").attr("readonly", "");		//Znemožnění editace (pro <input>)
+	$("#editable-report-row select.report-field").attr("disabled", "");	//Znemožnění editace (pro <select>)
 
-	$("#editableReportRow").removeAttr("id");
+	$("#editable-report-row").removeAttr("id");
 }
 function confirmPictureEdit(picId, asAdmin)
 {
 	//Uložení nových hodnot
 	for (let i = 0; i <= 1; i++)
 	{
-		currentReportValues[i] = $("#editableReportRow .reportField:eq("+ i +")").val();
+		currentReportValues[i] = $("#editable-report-row .report-field:eq("+ i +")").val();
 	}
 	//Uložení názvu nové části, do které nová příronina patří
 	let newPart = $("#editableReportRow select option:selected").attr("data-part-name");
@@ -93,13 +94,13 @@ function confirmPictureEdit(picId, asAdmin)
 	);
 	
 	//Aktualizuj údaje u hlášení stejného obrázku v DOM
-	let reportsToUpdateCount = $("#reportsTable .pictureId" + picId).length;
+	let reportsToUpdateCount = $("#reports-table .picture-id" + picId).length;
 	for (let i = 0; i < reportsToUpdateCount; i++)
 	{
-		$("#reportsTable .pictureId" + picId + ":eq(" + i + ") td:eq(0)").text(newPart);  //Změna názvu části
+		$("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text(newPart);  //Změna názvu části
 		for (let j = 0; j <= 1; j++)
 		{
-			$("#reportsTable .pictureId" + picId + ":eq(" + i + ") .reportField:eq("+ j +")").val(currentReportValues[j]);
+			$("#reports-table .picture-id" + picId + ":eq(" + i + ") .report-field:eq("+ j +")").val(currentReportValues[j]);
 		}
 	}
 }
@@ -108,23 +109,23 @@ function disablePicture(event, picId, asAdmin)
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
 	$.post(ajaxUrl,
+		{
+			action: 'disable picture',
+			pictureId: picId
+		},
+		function(response)
+		{
+			response = JSON.parse(response);
+			if (response["messageType"] === "error")
 			{
-				action: 'disable picture',
-				pictureId: picId
-			},
-			function(response)
-			{
-				response = JSON.parse(response);
-				if (response["messageType"] === "error")
-				{
-					//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-					alert(response["message"]);
-				}
+				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
 			}
-		);
+		}
+	);
 		
-		//Odebrání všechna hlášení daného obrázku z DOM
-		$("#reportsTable .pictureId" + picId).remove();
+	//Odebrání všechna hlášení daného obrázku z DOM
+	$("#reports-table .picture-id" + picId).remove();
 }
 function deletePicture(event, picId, asAdmin)
 {
@@ -146,8 +147,8 @@ function deletePicture(event, picId, asAdmin)
 			}
 		);
 		
-		//Odebrání všechna hlášení daného obrázku z DOM
-		$("#reportsTable .pictureId" + picId).remove();
+	//Odebrání všechna hlášení daného obrázku z DOM
+	$("#reports-table .picture-id" + picId).remove();
 }
 function deleteReport(event, reportId, asAdmin)
 {
