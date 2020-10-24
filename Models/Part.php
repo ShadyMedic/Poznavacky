@@ -116,7 +116,13 @@ class Part extends DatabaseItem
         for ($i = 0; $i < $count; $i++)
         {
             $randomNaturalNum = rand(0, $this->naturalsCount - 1);
-            $result[] = $this->naturals[$randomNaturalNum]->getRandomPicture();
+            $picture = $this->naturals[$randomNaturalNum]->getRandomPicture();
+            if ($picture === null)  //Kontrola, zda byl u vybrané přírodniny alespoň jeden obrázek
+            {
+                $i--;
+                continue;
+            }
+            $result[] = $picture;
         }
         
         return $result;

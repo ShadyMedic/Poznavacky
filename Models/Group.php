@@ -108,7 +108,13 @@ class Group extends DatabaseItem
         for ($i = 0; $i < $count; $i++)
         {
             $randomNaturalNum = rand(0, $naturalsCount - 1);
-            $result[] = $naturals[$randomNaturalNum]->getRandomPicture();
+            $picture = $naturals[$randomNaturalNum]->getRandomPicture();
+            if ($picture === null)  //Kontrola, zda byl u vybrané přírodniny alespoň jeden obrázek
+            {
+                $i--;
+                continue;
+            }
+            $result[] = $picture;
         }
         
         return $result;

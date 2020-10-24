@@ -128,16 +128,18 @@ class Natural extends DatabaseItem
     /**
      * Metoda navracející náhodný obrázek této příodniny jako objekt
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
-     * @return Picture Náhodný obrázek této přírodniny
+     * @return Picture|null Náhodný obrázek této přírodniny nebo NULL, pokud k této přírodnině zatím nebyly přidány žádné obrázky
      */
     public function getRandomPicture()
     {
         if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
+        if ($this->picturesCount === 0) { return null; }
         return $this->pictures[rand(0, $this->picturesCount - 1)];
     }
     
     /**
      * Metoda načítající z databáze obrázky přírodniny a ukládající je jako vlastnost objektu
+     * Vlastnost $picturesCount je nastavena / upravena podle počtu načtených obrázků
      */
     public function loadPictures()
     {
@@ -162,6 +164,7 @@ class Natural extends DatabaseItem
                 $this->pictures[] = $picture;
             }
         }
+        $this->picturesCount = count($this->pictures);
     }
     
     /**
