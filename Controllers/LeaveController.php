@@ -17,6 +17,7 @@ class LeaveController extends Controller
         {
             //Správce třídy jí nemůže opustit
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Jako správce třídy nemůžete třídu opustit');
+            $this->redirect('menu');
         }
         $class->removeMember($userId);
         $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Třída úspěšně opuštěna');
