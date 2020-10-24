@@ -175,23 +175,6 @@ class User extends DatabaseItem implements ArrayAccess
     }
     
     /**
-     * Metoda odstraňující tohoto uživatele
-     * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::delete()
-     */
-    public function delete()
-    {
-        $this->loadIfNotLoaded($this->id);
-        
-        Db::connect();
-        Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
-        $this->id = new undefined();
-        $this->savedInDb = false;
-        return true;
-    }
-    
-    /**
      * Metoda pro zjišťování existence některé vlastnosti uživatele
      * {@inheritDoc}
      * @see ArrayAccess::offsetExists()

@@ -111,21 +111,4 @@ abstract class NameChangeRequest extends DatabaseItem
         //Odeslat e-mail
         return $this->sendDeclinedEmail($reason);
     }
-    
-    /**
-     * Metoda odstraňující tuto žádost z databáze
-     * @return boolean TRUE, pokud je žádost úspěšně odstraněna z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::delete()
-     */
-    public function delete()
-    {
-        $this->loadIfNotLoaded($this->id);
-        
-        Db::connect();
-        Db::executeQuery('DELETE FROM '.$this::TABLE_NAME.' WHERE '.$this::TABLE_NAME.'_id = ? LIMIT 1;', array($this->id));
-        $this->id = new undefined();
-        $this->savedInDb = false;
-        return true;
-    }
 }

@@ -175,21 +175,4 @@ class Report extends DatabaseItem
         $this->loadIfNotLoaded($this->reportersCount);
         $this->reportersCount++;
     }
-    
-    /**
-     * Metoda odstraňující toto hlášení z databáze
-     * @return boolean TRUE, pokud je hlášení úspěšně odstraněno z databáze
-     * {@inheritDoc}
-     * @see DatabaseItem::delete()
-     */
-    public function delete()
-    {
-    	$this->loadIfNotLoaded($this->id);
-    	
-    	Db::connect();
-    	Db::executeQuery('DELETE FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
-    	$this->id = new undefined();
-    	$this->savedInDb = false;
-    	return true;
-    }
 }

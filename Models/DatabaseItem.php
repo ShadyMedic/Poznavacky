@@ -428,7 +428,17 @@ abstract class DatabaseItem
     }
     
     /**
-     * Metoda odstraňující záznam reprezentovaný tímto objektem z databáze a nulující vlastnost ID objektu
+     * Metoda odstraňující tuto položku z databáze
+     * @return boolean TRUE, pokud je položka úspěšně odstraněna z databáze
      */
-    public abstract function delete();
+    public function delete()
+    {
+    	$this->loadIfNotLoaded($this->id);
+    	
+    	Db::connect();
+    	Db::executeQuery('DELETE FROM '.$this::TABLE_NAME.' WHERE '.$this::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
+    	$this->id = new undefined();
+    	$this->savedInDb = false;
+    	return true;
+    }
 }
