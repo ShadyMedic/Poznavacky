@@ -424,7 +424,7 @@ abstract class DatabaseItem
         $columnString .= ' = ?'; //Přidání rovnítka s otazníkem za název posledního sloupce
         
         Db::connect();
-        return Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$columnString.' WHERE '.$this::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array_merge(array_values($definedProperties), array_pad($databaseColumnValues, count($databaseColumnValues) + 1, $this->id)));
+        return Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$columnString.' WHERE '.$this::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array_pad($databaseColumnValues, count($databaseColumnValues) + 1, $this->id));
     }
     
     /**
