@@ -38,6 +38,7 @@ class AccessDeniedException extends Exception
     const REASON_USER_NOT_HAVING_ACCESS_TO_GROUP = 'Nemáte přístup do třídy do které patří tato poznávačka';
     const REASON_CLASS_NOT_CHOSEN = 'Nebyla vybrána žádná třída';
     const REASON_CLASS_NOT_FOUND = 'Tato třída nebyla nalezena';
+    const REASON_GROUP_NOT_CHOSEN = 'Nebyla vybrána žádná poznávačka';
     const REASON_GROUP_NOT_FOUND = 'Tato poznávačka nebyla nalezena';
     const REASON_PART_NOT_FOUND = 'Tato část nebyla nalezena';
     const REASON_NATURAL_NOT_FOUND = 'Tato přírodnina nebyla nalezena';
@@ -97,6 +98,7 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG = 'Název poznávačky nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT = 'Název poznávačky musí být alespoň 3 znaky dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS = 'Název poznávačky může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
+    const REASON_MANAGEMENT_REPORTS_EDIT_PICTURE_ANOTHER_GROUP = 'Obrázek nelze přesunout k přírodnině, která není součástí té samé poznávačky';
     const REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
     const REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA = self::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA;
     const REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';

@@ -16,7 +16,7 @@
             <td><?= $report->getPartWithPicture()->getName() ?></td>
             <td>
             	<select disabled class='reportField'>
-            	<option selected hidden disabled value="<?= $report->getNaturalName() ?>"><?= $report->getNaturalName() ?></option>
+            	<option selected hidden><?= $report->getNaturalName() ?></option>
             	<?php foreach($report->getPicture()->getNatural()->getPart()->getGroup()->getNaturals() as $natural) : ?>
             		<option><?= $natural->getName() ?></option>
             	<?php endforeach ?>

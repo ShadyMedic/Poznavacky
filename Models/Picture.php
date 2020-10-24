@@ -87,32 +87,27 @@ class Picture extends DatabaseItem
     }
     
     /**
-     * Metoda upravující přírodninu a adresu tohoto obrázku z rozhodnutí administrátora
+     * Metoda upravující přírodninu a adresu tohoto obrázku z rozhodnutí administrátora nebo správce třídy
+     * Údaje v databázi nejsou aktualizovány - pro potvrzení změn je nutné zavolat metodu Picture::save()
      * @param Natural $newNatural Objekt reprezentující nově zvolenou přírodninu
      * @param string $newUrl Nová adresa k obrázku
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
+     * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou údaje tohoto obrázku úspěšně aktualizovány
      */
     public function updatePicture(Natural $newNatural, string $newUrl)
     {
-        //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
-        }
-        
         $this->loadIfNotLoaded($this->natural);
-        $this->loadIfNotLoaded($this->id);
+        //$this->loadIfNotLoaded($this->id);
         
         //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
-        $checker = new PictureAdder($this->natural->getGroup());
-        $checker->checkData($newNatural->getName(), $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
+        //$checker = new PictureAdder($this->natural->getGroup());
+        //$checker->checkData($newNatural->getName(), $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
         
         //Kontrola dat OK
         
         //Upravit údaje v databázi
-        Db::connect();
-        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['natural'].' = ?, '.self::COLUMN_DICTIONARY['src'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newNatural->getId(), $newUrl, $this->id));
+        //Db::connect();
+        //Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['natural'].' = ?, '.self::COLUMN_DICTIONARY['src'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newNatural->getId(), $newUrl, $this->id));
         
         //Aktualizovat údaje ve vlastnostech této instance
         $this->natural = $newNatural;
@@ -171,20 +166,10 @@ class Picture extends DatabaseItem
     
     /**
      * Metoda skrývající tento obrázek v databázi
-     * Tato metoda může být použita pouze v případě, že právě přihlášený uživatel je systémový administrátor
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud je obrázek úspěšně skryt v databázi
      */
     public function disable()
     {
-        //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
-        }
-        
-        //Kontrola dat OK
-        
         $this->loadIfNotLoaded($this->id);
         
         //Vypnout obrázek v databázi
