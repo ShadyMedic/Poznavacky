@@ -27,6 +27,18 @@ class Administration
         'USER ');
     
     /**
+     * Konstruktor zajišťující, že instanci této třídy lze vytvořit pouze pokud je přihlášen administrátor
+     * @throws AccessDeniedException V případě, že není přihlášen administrátor
+     */
+    public function __construct()
+    {
+        if (!AccessChecker::checkSystemAdmin())
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+    }
+    
+    /**
      * Metoda navracející většinu informací o všech uživatelích v databázi
      * @param bool $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
      * @return User[] Pole instancí třídy User
@@ -288,8 +300,10 @@ class Administration
     {
         $picture = new Picture(false, $pictureId);
         $natural = new Natural(false, 0);
-        $natural->initialize($newNaturalName, null, null, null, null, null);
+        $group = $picture->getNatural()->getGroup();
+        $natural->initialize($newNaturalName, null, null, null, $group, null);  //Je nutné specifikovat poznávačku staré přírodniny, aby bylo jasné, ve které poznávačce se má hledat nová přířodnina
         $picture->updatePicture($natural, $newUrl);
+        $picture->save();
     }
     
     /**
