@@ -61,6 +61,8 @@ function confirmPictureEdit(picId, asAdmin)
 	{
 		currentReportValues[i] = $("#editableReportRow .reportField:eq("+ i +")").val();
 	}
+	//Uložení názvu nové části, do které nová příronina patří
+	let newPart = $("#editableReportRow select option:selected").attr("data-part-name");
 	
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
@@ -94,6 +96,7 @@ function confirmPictureEdit(picId, asAdmin)
 	let reportsToUpdateCount = $("#reportsTable .pictureId" + picId).length;
 	for (let i = 0; i < reportsToUpdateCount; i++)
 	{
+		$("#reportsTable .pictureId" + picId + ":eq(" + i + ") td:eq(0)").text(newPart);  //Změna názvu části
 		for (let j = 0; j <= 1; j++)
 		{
 			$("#reportsTable .pictureId" + picId + ":eq(" + i + ") .reportField:eq("+ j +")").val(currentReportValues[j]);
