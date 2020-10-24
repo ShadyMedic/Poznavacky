@@ -89,6 +89,16 @@ function confirmPictureEdit(picId, asAdmin)
 			}
 		}
 	);
+	
+	//Aktualizuj údaje u hlášení stejného obrázku v DOM
+	let reportsToUpdateCount = $("#reportsTable .pictureId" + picId).length;
+	for (let i = 0; i < reportsToUpdateCount; i++)
+	{
+		for (let j = 0; j <= 1; j++)
+		{
+			$("#reportsTable .pictureId" + picId + ":eq(" + i + ") .reportField:eq("+ j +")").val(currentReportValues[j]);
+		}
+	}
 }
 function disablePicture(event, picId, asAdmin)
 {
