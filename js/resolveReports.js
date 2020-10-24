@@ -63,7 +63,7 @@ function confirmPictureEdit(picId, asAdmin)
 		currentReportValues[i] = $("#editable-report-row .report-field:eq("+ i +")").val();
 	}
 	//Uložení názvu nové části, do které nová příronina patří
-	let newPart = $("#editableReportRow select option:selected").attr("data-part-name");
+	let newPart = $("#editable-report-row select option:selected").attr("data-part-name");
 	
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
