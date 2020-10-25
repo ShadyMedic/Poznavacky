@@ -28,7 +28,6 @@ class RecoverPasswordController extends Controller
             $code = $parameters[0];
             $this->data['token'] = $code;
             
-            PasswordRecoveryCodeVerificator::deleteOutdatedCodes();
             $userId = PasswordRecoveryCodeVerificator::verifyCode($code);
             if (empty($userId))
             {

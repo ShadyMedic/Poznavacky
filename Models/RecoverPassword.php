@@ -8,6 +8,7 @@ class RecoverPassword
     //Počet náhodných bajtů, ze kterých se tvoří kód
     private const CODE_BYTE_LENGTH = 16;   //16 bytů --> 128 bitů --> maximálně třicetidvoumístný kód
     private const EMAIL_SUBJECT = 'Žádost o obnovu hesla na Poznávačkách';
+    private const CODE_EXPIRATION = 86400;   //86400 sekund --> 24 hodin
     
     /**
      * Metoda starající se o celý proces obnový hesla
@@ -68,10 +69,10 @@ class RecoverPassword
     {
         //Smazat starý kód z databáze (pokud existuje)
         Db::connect();
-        Db::executeQuery('DELETE FROM obnoveni_hesel WHERE uzivatele_id=?', array($userId));
+        Db::executeQuery('DELETE FROM obnoveni_hesel WHERE uzivatele_id = ?', array($userId));
         
         //Uložit kód do databáze
-        Db::executeQuery('INSERT INTO obnoveni_hesel (kod, uzivatele_id) VALUES (?,?)', array(md5($code), $userId));
+        Db::executeQuery('INSERT INTO obnoveni_hesel (kod, uzivatele_id, expirace) VALUES (?,?,?)', array(md5($code), $userId, time() + self::CODE_EXPIRATION));
     }
     
     /**
