@@ -18,7 +18,7 @@ class MenuTableController extends Controller
         $this->pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/menu.js', 'js/folders.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/menu.js', 'js/folders.js', 'js/invitations.js');
         $this->pageHeader['bodyId'] = 'menu';
         
         //Získání dat
@@ -26,6 +26,8 @@ class MenuTableController extends Controller
         {
             if (!isset($_SESSION['selection']['class']))
             {
+                $this->data['invitations'] = UserManager::getUser()->getActiveInvitations();
+                $this->data['invitationsCount'] = count($this->data['invitations']);
                 $this->view = 'menuClassesForms';
                 $classes = TestGroupsManager::getClasses();
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);

@@ -31,10 +31,8 @@ class ReportAdder
         $additionalInformation = $_POST['info'];
         
         //Kontrola, zda je zadaný důvod platný
-        $rc = new ReflectionClass('Report');
-        $availableReasons = $rc->getConstants();
-        unset($availableReasons['ADMIN_REQUIRING_REASONS']);    //Odebrání konstanty neobsahující důvod
-        unset($availableReasons['LONG_LOADING_AVAILABLE_DELAYS']);   //Odebrání konstanty neobsahující důvod, ale povolené časové intervaly jako dodatečné informace pro jeden z důvodů
+        $availableReasons = REPORT::ALL_REASONS;
+        
         if (!in_array($reason, $availableReasons, true))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_REASON, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
@@ -44,7 +42,7 @@ class ReportAdder
         if ($reason === Report::REASON_LONG_LOADING)
         {
             //Kontrola, zda je specifikován jeden z časových intervalů
-            if (!in_array($additionalInformation, $rc->getConstants()['LONG_LOADING_AVAILABLE_DELAYS']))
+            if (!in_array($additionalInformation, Report::LONG_LOADING_AVAILABLE_DELAYS))
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
             }
@@ -67,13 +65,13 @@ class ReportAdder
         Db::connect();
         $dbResult = Db::fetchQuery('
         SELECT
-        casti.casti_id, casti.nazev AS "p_nazev", casti.prirodniny, casti.obrazky AS "p_obrazky",
-        prirodniny.prirodniny_id, prirodniny.nazev AS "n_nazev", prirodniny.obrazky AS "n_obrazky",
-        obrazky.obrazky_id, obrazky.prirodniny_id, obrazky.zdroj, obrazky.povoleno
-        FROM obrazky
-        JOIN prirodniny ON obrazky.prirodniny_id = prirodniny.prirodniny_id
-        JOIN casti ON prirodniny.casti_id = casti.casti_id
-        WHERE obrazky.zdroj = ? AND prirodniny.poznavacky_id = ?;
+        '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
+        '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
+        '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].'
+        FROM '.Picture::TABLE_NAME.'
+        JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
+        JOIN '.Part::TABLE_NAME.' ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].'
+        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
         ', array($url, $this->group->getId()), false);
         
         //Obrázek nebyl v databázi podle zdroje nalezen
@@ -82,12 +80,25 @@ class ReportAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_UNKNOWN_PICTURE, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
         }
         
-        $part = new Part($dbResult['casti_id'], $dbResult['p_nazev'], $this->group, $dbResult['prirodniny'], $dbResult['p_obrazky']);
-        $natural = new Natural($dbResult['prirodniny_id'], $dbResult['n_nazev'], $this->group, $part, $dbResult['n_obrazky']);
-        $picture = new Picture($dbResult['obrazky_id'], $url, $natural, $dbResult['povoleno']);
-        $report = new Report(0, $picture, $reason, $additionalInformation);
-        $report->load();    //Zjištění, zda již takovéto hlášení v databázi existuje, popřípadě načtení jejich počtu
-        $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1
+        $part = new Part(false, $dbResult[Part::COLUMN_DICTIONARY['id']]);
+        $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult[Part::COLUMN_DICTIONARY['naturalsCount']], $dbResult['p_obrazky']);
+        $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);
+        $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], null, $this->group, $part);
+        $picture = new Picture(false, $dbResult[Picture::COLUMN_DICTIONARY['id']]);
+        $picture->initialize($url, $natural, $part, $dbResult[Picture::COLUMN_DICTIONARY['enabled']], null);
+        
+        $report = new Report(false, 0);    //Pokus s hlášením, které již v datbázi existuje, ale u kterého neznáme ID
+        $report->initialize($picture, $reason, $additionalInformation, null);
+        try
+        {
+            $report->load();    //Pokud hlášení zatím v databázi neexistuje, je vyvolána výjimka typu NoDataException
+            $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1
+        }
+        catch (NoDataException $e)
+        {
+            $report = new Report(true); //Tvorba nového hlášení
+            $report->initialize($picture, $reason, $additionalInformation, 1);
+        }
         $report->save();    //Uložení hlášení do databáze
     }
 }

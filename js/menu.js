@@ -87,6 +87,3 @@ function closePanel() {
 	$("aside").removeClass("show");
 	$(".btn.cross").removeClass("show");
 }
-
-
-

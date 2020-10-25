@@ -13,10 +13,12 @@ class LearnPicturesController extends Controller
      */
     public function process(array $parameters)
     {
+        $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
         $naturalName = $_POST['name'];
         
-        $natural = new Natural(0, $naturalName, $group);
+        $natural = new Natural(false);
+        $natural->initialize($naturalName, null, null, $class, $group, null);
         $pictures = $natural->getPictures();
         
         $picturesArr = array();

@@ -40,7 +40,7 @@ class EnterClassCodeController extends Controller
         $accessedClasses = array();
         foreach($classes as $class)
         {
-            if ($class->addMember($userId))
+            if ($class->getStatus() !== ClassObject::CLASS_STATUS_LOCKED && $class->addMember($userId))
             {
                 $accessedClasses[] = $class->getName();
             }

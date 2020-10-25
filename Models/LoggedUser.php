@@ -5,7 +5,41 @@
  */
 class LoggedUser extends User
 {
-    static $isLogged = false;
+    public const COLUMN_DICTIONARY = array(
+        'id' => 'uzivatele_id',
+        'name' => 'jmeno',
+        'hash' => 'heslo',
+        'email' => 'email',
+        'lastLogin' => 'posledni_prihlaseni',
+        'lastChangelog' => 'posledni_changelog',
+        'lastLevel' => 'posledni_uroven',
+        'lastFolder' => 'posledni_slozka',
+        'theme' => 'vzhled',
+        'addedPictures' => 'pridane_obrazky',
+        'guessedPictures' => 'uhodnute_obrazky',
+        'karma' => 'karma',
+        'status' => 'status'
+    );
+    
+    protected const NON_PRIMITIVE_PROPERTIES = array(
+        /* Žádná z vlastností neukládá objekt */
+    );
+    
+    protected const DEFAULT_VALUES = array(
+        'email' => null,
+        'lastChangelog' => 0,
+        'lastLevel' => 0,
+        'lastFolder' => null,
+        'theme' => 0,
+        'addedPictures' => 0,
+        'guessedPictures' => 0,
+        'karma' => 0,
+        'status' => self::STATUS_MEMBER,
+    );
+    
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
     protected $hash;
     protected $lastChangelog;
     protected $lastLevel;
@@ -13,24 +47,36 @@ class LoggedUser extends User
     protected $theme;
     
     /**
-     *
-     * @param int $id ID uživatele v databázi
-     * @param string $name Přezdívka uživatele
-     * @param string $hash Heš uživatelova hesla z databáze
-     * @param string $email E-mailová adresa uživatele
-     * @param DateTime $lastLogin Datum a čas posledního přihlášení uživatele
-     * @param float $lastChangelog Poslední zobrazený changelog
-     * @param int $lastLevel Poslední navštívěná úroveň složek na menu stránce
-     * @param int $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
-     * @param int $theme Zvolený vzhled stránek
-     * @param int $addedPictures Počet obrázků přidaných uživatelem
-     * @param int $guessedPictures Počet obrázků uhodnutých uživatelem
-     * @param int $karma Uživatelova karma
-     * @param string $status Uživatelův status
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param string|undefined|null $name Přezdívka uživatele
+     * @param string|undefined|null $email E-mailová adresa uživatele
+     * @param DateTime|undefined|null $lastLogin Datum a čas posledního přihlášení uživatele
+     * @param int|undefined|null $addedPictures Počet obrázků přidaných uživatelem
+     * @param int|undefined|null $guessedPictures Počet obrázků uhodnutých uživatelem
+     * @param int|undefined|null $karma Uživatelova karma
+     * @param string|undefined|null $status Uživatelův status
+     * @param string|undefined|null $hash Heš uživatelova hesla z databáze
+     * @param float|undefined|null $lastChangelog Poslední zobrazený changelog
+     * @param int|undefined|null $lastLevel Poslední navštívěná úroveň složek na menu stránce
+     * @param int|undefined|null $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
+     * @param int|undefined|null $theme Zvolený vzhled stránek
+     * {@inheritDoc}
+     * @see User::initialize()
      */
-    public function __construct(int $id, string $name, string $hash, string $email = null, DateTime $lastLogin = null, float $lastChangelog = 0, int $lastLevel = 0, int $lastFolder = null, int $theme = 0, int $addedPictures = 0, int $guessedPictures = 0, int $karma = 0, string $status = self::STATUS_MEMBER)
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null, $theme = null)
     {
-        parent::__construct($id, $name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
+        //Nastav vlastnosti zděděné z mateřské třídy
+        parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
+        
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($hash === null){ $hash = $this->hash; }
+        if ($lastChangelog === null){ $lastChangelog = $this->lastChangelog; }
+        if ($lastLevel === null){ $lastLevel = $this->lastLevel; }
+        if ($lastFolder === null){ $lastFolder = $this->lastFolder; }
+        if ($theme === null){ $theme = $this->theme; }
+        
         $this->hash = $hash;
         $this->lastChangelog = $lastChangelog;
         $this->lastLevel = $lastLevel;
@@ -90,16 +136,18 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Zkontrolovat, zda již existuje žádost o změnu jména od přihlášeného uživatele
-        $applications = Db::fetchQuery('SELECT zadosti_jmena_uzivatele_id FROM zadosti_jmena_uzivatele WHERE uzivatele_id = ?', array(UserManager::getId()));
-        if (!empty($applications['zadosti_jmena_uzivatele_id']))
+        $applications = Db::fetchQuery('SELECT '.UserNameChangeRequest::COLUMN_DICTIONARY['id'].' FROM '.UserNameChangeRequest::TABLE_NAME.' WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' = ? LIMIT 1', array(UserManager::getId()));
+        if (!empty($applications[UserNameChangeRequest::COLUMN_DICTIONARY['id']]))
         {
             //Přepsání existující žádosti
-            Db::executeQuery('UPDATE zadosti_jmena_uzivatele SET nove = ?, cas = NOW() WHERE zadosti_jmena_uzivatele_id = ? LIMIT 1', array($newName, $applications['zadosti_jmena_uzivatele_id']));
+            $this->loadIfNotLoaded($this->id);
+            
+            Db::executeQuery('UPDATE '.UserNameChangeRequest::TABLE_NAME.' SET '.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].' = ?, '.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].' = NOW() WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newName, $applications[UserNameChangeRequest::COLUMN_DICTIONARY['id']]));
         }
         else
         {
             //Uložení nové žádosti
-            Db::executeQuery('INSERT INTO zadosti_jmena_uzivatele (uzivatele_id,nove,cas) VALUES (?,?,NOW())', array($this->id, $newName));
+            Db::executeQuery('INSERT INTO '.UserNameChangeRequest::TABLE_NAME.' ('.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].','.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].','.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,NOW())', array($this->id, $newName));
         }
         return true;
     }
@@ -161,9 +209,11 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Aktualizovat heslo v databázi
+        $this->loadIfNotLoaded($this->id);
+        
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         Db::connect();
-        Db::executeQuery('UPDATE uzivatele SET heslo = ? WHERE uzivatele_id = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['hash'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
         $this->hash = $hashedPassword;
         return true;
     }
@@ -188,7 +238,7 @@ class LoggedUser extends User
         }
         
         //Kontrola délky a unikátnosti e-mailu (pokud ho uživatel nechce odstranit)
-        if ($newEmail !== NULL)
+        if (!empty($newEmail))
         {
             $validator = new DataValidator();
             try
@@ -215,8 +265,10 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Aktualizovat databázi
+        $this->loadIfNotLoaded($this->id);
+        
         Db::connect();
-        Db::executeQuery('UPDATE uzivatele SET email = ? WHERE uzivatele_id = ? LIMIT 1', array($newEmail, UserManager::getId()));
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['email'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;
         return true;
     }
@@ -229,7 +281,7 @@ class LoggedUser extends User
     {
         $this->addedPictures++;
         Db::connect();
-        return Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = (pridane_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
     
     /**
@@ -238,9 +290,11 @@ class LoggedUser extends User
      */
     public function incrementGuessedPictures()
     {
+        $this->loadIfNotLoaded($this->id);
+        
         $this->guessedPictures++;
         Db::connect();
-        return Db::executeQuery('UPDATE uzivatele SET uhodnute_obrazky = (uhodnute_obrazky + 1) WHERE uzivatele_id = ?', array($this->id));
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['guessedPictures'].' = (uhodnute_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
     
     /**
@@ -264,7 +318,7 @@ class LoggedUser extends User
         
         //Kontrola, zda uživatel není správcem žádné třídy
         Db::connect();
-        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array(UserManager::getId()));
+        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array(UserManager::getId()));
         if ($administratedClasses['cnt'] > 0)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR);
@@ -273,26 +327,11 @@ class LoggedUser extends User
         //Kontrola dat OK
         
         //Odstranit uživatele z databáze
-        Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array(UserManager::getId()));
+        $result = $this->delete();
         
         //Odhlásit uživatele
         unset($_SESSION['user']);
         
-        //Vymazat data z této instance uživatele
-        $this->id = null;
-        $this->hash = null;
-        $this->lastChangelog = null;
-        $this->lastLevel = null;
-        $this->lastFolder = null;
-        $this->theme = null;
-        $this->name = null;
-        $this->email = null;
-        $this->lastLogin = null;
-        $this->addedPictures = null;
-        $this->guessedPictures = null;
-        $this->karma = null;
-        $this->status = null;
-        
-        return true;
+        return $result;
     }
 }

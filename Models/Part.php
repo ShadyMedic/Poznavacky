@@ -3,102 +3,77 @@
  * Třída reprezentující objekt části obsahující přírodniny
  * @author Jan Štěch
  */
-class Part
+class Part extends DatabaseItem
 {
-    private $id;
-    private $name;
-    private $group;
-    private $picturesCount;
-    private $naturalsCount;
-    private $naturals;
+    public const TABLE_NAME = 'casti';
+    
+    public const COLUMN_DICTIONARY = array(
+        'id' => 'casti_id',
+        'name' => 'nazev',
+        'group' => 'poznavacky_id',
+        'naturalsCount' => 'prirodniny',
+        'picturesCount' => 'obrazky'
+    );
+    
+    protected const NON_PRIMITIVE_PROPERTIES = array(
+        'group' => Group::class
+    );
+    
+    protected const DEFAULT_VALUES = array(
+        'picturesCount' => 0,
+        'naturalsCount' => 0,
+        'naturals' => array()
+    );
+    
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
+    protected $name;
+    protected $group;
+    protected $naturalsCount;
+    protected $picturesCount;
+    
+    protected $naturals;
     
     /**
-     * Konstruktor části nastavující jeji vlastnosti.
-     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
-     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
-     * @param int $id ID části (nepovinné, pokud je specifikováno jméno)
-     * @param string $name Název části (nepovinné, pokud je specifikováno ID)
-     * @param Group $group Objekt poznávačky, do které tato třída patří (pokud není zadáno, bude zjištěno z databáze)
-     * @param int $naturalsCount Počet přírodnin, které tato část obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze, pro nevyplnění zadejte -1 nebo nic)
-     * @param int $picturesCount Počet obrázků, které tato část obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze, pro nevyplnění zadejte -1 nebo nic)
-     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná část
-     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param string|undefined|null $name Název části
+     * @param Group|undefined|null $group Odkaz na objekt poznávačky, do níž tato část patří
+     * @param Natural[]|undefined|null $naturals Pole přírodnin, které patří do této části poznávačky, jako objekty
+     * @param int|undefined|null $naturalsCount Počet přírodnin v této části poznávačky (při vyplnění parametru $naturals je ignorováno a je použita délka poskytnutého pole)
+     * @param int|undefined|null $picturesCount Počet obrázků v této části poznávačky
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id, string $name = "", Group $group = null, int $naturalsCount = -1, int $picturesCount = -1)
+    public function initialize($name = null, $group = null, $naturals = null, $naturalsCount = null, $picturesCount = null)
     {
-        if (mb_strlen($name) !== 0 && !empty($id) && !empty($group) && $naturalsCount !== -1 && $picturesCount !== -1)
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($name === null){ $name = $this->name; }
+        if ($group === null){ $group = $this->group; }
+        if ($naturals === null)
         {
-            //Vše je vyplněno --> nastavit
-            $this->id = $id;
-            $this->name = $name;
-            $groupId = $group->getId();
-            $this->naturalsCount = $naturalsCount;
-            $this->picturesCount = $picturesCount;
+            $naturals = $this->naturals;
+            if ($naturalsCount === null){ $naturalsCount = $this->naturalsCount; }
         }
-        else if (mb_strlen($name) !== 0)
-        {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT casti_id,prirodniny,obrazky,poznavacky_id FROM casti WHERE nazev = ? LIMIT 1',array($name));
-            if (!$result)
-            {
-                //Část nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_PART_NOT_FOUND);
-            }
-            $id = $result['casti_id'];
-            $this->naturalsCount = $result['prirodniny'];
-            $this->picturesCount = $result['obrazky'];
-            $groupId = $result['poznavacky_id'];
-        }
-        else if (!empty($id))
-        {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT nazev,prirodniny,obrazky,poznavacky_id FROM casti WHERE casti_id = ? LIMIT 1',array($id));
-            if (!$result)
-            {
-                //Část nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_PART_NOT_FOUND);
-            }
-            $name = $result['nazev'];
-            $this->naturalsCount = $result['prirodniny'];
-            $this->picturesCount = $result['obrazky'];
-            $groupId = $result['poznavacky_id'];
-        }
-        else
-        {
-            throw new BadMethodCallException('Either ID or name and group must be specified.', null, null);
-        }
+        else { $naturalsCount = count($naturals); }
+        if ($picturesCount === null){ $picturesCount = $this->picturesCount; }
         
-        $this->id = $id;
         $this->name = $name;
+        $this->group = $group;
+        $this->naturals = $naturals;
+        $this->naturalsCount = $naturalsCount;
+        $this->picturesCount = $picturesCount;
+    }
         
-        //Nastavit nebo zjistit poznávačku
-        if (!empty($group) && $group->getId() === $groupId)
-        {
-            //ID souhlasí a objekt je poskytnut --> nastavit
-            $this->group = $group;
-        }
-        else
-        {
-            //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
-            $this->group = new Group($groupId);
-        }
-    }
-    
-    /**
-     * Metoda navracející ID této části
-     * @return int ID části
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    
     /**
      * Metoda navracející jméno této části
      * @return string Jméno části
      */
     public function getName()
     {
+        $this->loadIfNotLoaded($this->name);
         return $this->name;
     }
     
@@ -108,6 +83,7 @@ class Part
      */
     public function getGroup()
     {
+        $this->loadIfNotLoaded($this->group);
         return $this->group;
     }
     
@@ -117,6 +93,7 @@ class Part
      */
     public function getPicturesCount()
     {
+        $this->loadIfNotLoaded($this->picturesCount);
         return $this->picturesCount;
     }
     
@@ -129,7 +106,7 @@ class Part
      */
     public function getRandomPictures(int $count)
     {
-        if (!isset($this->naturals))
+        if (!$this->isDefined($this->naturals))
         {
             $this->loadNaturals();
         }
@@ -139,7 +116,13 @@ class Part
         for ($i = 0; $i < $count; $i++)
         {
             $randomNaturalNum = rand(0, $this->naturalsCount - 1);
-            $result[] = $this->naturals[$randomNaturalNum]->getRandomPicture();
+            $picture = $this->naturals[$randomNaturalNum]->getRandomPicture();
+            if ($picture === null)  //Kontrola, zda byl u vybrané přírodniny alespoň jeden obrázek
+            {
+                $i--;
+                continue;
+            }
+            $result[] = $picture;
         }
         
         return $result;
@@ -151,6 +134,7 @@ class Part
      */
     public function getNaturalsCount()
     {
+        $this->loadIfNotLoaded($this->naturalsCount);
         return $this->naturalsCount;
     }
     
@@ -161,7 +145,7 @@ class Part
      */
     public function getNaturals()
     {
-        if (!isset($this->naturals))
+        if (!$this->isDefined($this->naturals))
         {
             $this->loadNaturals();
         }
@@ -171,12 +155,12 @@ class Part
     /**
      * Metoda načítající přírodniny patřící do této části a ukládající je jako vlastnost
      */
-    private function loadNaturals()
+    public function loadNaturals()
     {
-        $this->naturals = array();
+        $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky FROM prirodniny WHERE casti_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['part'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné části přírodniny
@@ -184,9 +168,12 @@ class Part
         }
         else
         {
+            $this->naturals = array();
             foreach ($result as $naturalData)
             {
-                $this->naturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this->getGroup(), $this, $naturalData['obrazky']);
+                $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
+                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, $this->getGroup(), $this);
+                $this->naturals[] = $natural;
             }
         }
     }

@@ -64,16 +64,23 @@ class NewClassRequester
         
         $validator = new DataValidator();
         
-        //Kontrola délky a unikátnosti jména
+        //Kontrola délky jména a znaků v něm
         try
         {
-            $validator->checkLength($name, 5, 31, 0);
-            $validator->checkUniqueness($name, 3);
+            $validator->checkLength($name, 5, 31, 3);
+            $validator->checkCharacters($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-', 3);
         }
         catch(RangeException $e)
         {
             if ($e->getMessage() === 'long'){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
             else if ($e->getMessage() === 'short'){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        }
+        catch(InvalidArgumentException $e){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        
+        //Kontrola unikátnosti jména
+        try
+        {
+            $validator->checkUniqueness($name, 3);
         }
         catch(InvalidArgumentException $e){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
         

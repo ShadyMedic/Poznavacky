@@ -15,7 +15,7 @@ class ClassManager
     public static function classExists(string $className)
     {
         Db::connect();
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE nazev = ?', array($className), false);
+        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ?', array($className), false);
         if ($cnt['cnt'] > 0)
         {
             return true;
@@ -38,11 +38,11 @@ class ClassManager
         Db::connect();
         $result = Db::fetchQuery('
         SELECT
-        tridy.tridy_id, tridy.nazev, tridy.status AS "c_status", tridy.poznavacky, tridy.kod,
-        uzivatele.uzivatele_id, uzivatele.jmeno, uzivatele.email, uzivatele.posledni_prihlaseni, uzivatele.pridane_obrazky, uzivatele.uhodnute_obrazky, uzivatele.karma, uzivatele.status AS "u_status"
-        FROM tridy
-        JOIN uzivatele ON spravce = uzivatele_id
-        WHERE kod = ? AND tridy.status = ? AND tridy_id NOT IN
+        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
+        '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].' AS "u_status"
+        FROM '.ClassObject::TABLE_NAME.'
+        JOIN '.User::TABLE_NAME.' ON '.ClassObject::COLUMN_DICTIONARY['admin'].' = '.User::COLUMN_DICTIONARY['id'].'
+        WHERE '.ClassObject::COLUMN_DICTIONARY['code'].' = ? AND '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' = ? AND '.ClassObject::COLUMN_DICTIONARY['id'].' NOT IN
         (
             SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?
         )
@@ -57,8 +57,11 @@ class ClassManager
         $classes = array();
         foreach($result as $classInfo)
         {
-            $classAdmin = new User($classInfo['uzivatele_id'], $classInfo['jmeno'], $classInfo['email'], new DateTime($classInfo['posledni_prihlaseni']), $classInfo['pridane_obrazky'], $classInfo['uhodnute_obrazky'], $classInfo['karma'], $classInfo['u_status']);
-            $classes[] = new ClassObject($classInfo['tridy_id'], $classInfo['nazev'], $classInfo['c_status'], $classInfo['kod'], $classInfo['poznavacky'], $classAdmin);
+            $classAdmin = new User(false, $classInfo[User::COLUMN_DICTIONARY['id']]);
+            $classAdmin->initialize($classInfo[User::COLUMN_DICTIONARY['name']], $classInfo[User::COLUMN_DICTIONARY['email']], new DateTime($classInfo[User::COLUMN_DICTIONARY['lastLogin']]), $classInfo[User::COLUMN_DICTIONARY['addedPictures']], $classInfo[User::COLUMN_DICTIONARY['guessedPictures']], $classInfo[User::COLUMN_DICTIONARY['karma']], $classInfo['u_status']);
+            $class = new ClassObject(false, $classInfo[ClassObject::COLUMN_DICTIONARY['id']]);
+            $class->initialize($classInfo[ClassObject::COLUMN_DICTIONARY['name']], $classInfo['c_status'], $classInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $classInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $classAdmin);
+            $classes[] = $class;
         }
         
         return $classes;
