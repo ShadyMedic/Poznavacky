@@ -166,7 +166,7 @@
 		padding: 1rem 1rem;
 		overflow: hidden;
 		@media screen and (min-width: $mobile) {
-			padding: 2rem 2rem;
+			padding: 1.6rem 2rem;
 		}
 		@media screen and (min-width: $smallDesktop) {
 			padding:  2.4rem 3rem;
@@ -333,12 +333,15 @@
 	}
 }
 #learn {
-	main > .wrapper {
-		padding: 1rem 2rem;
-	}
 	#learn-wrapper {
 		&:focus {
 			outline: none;
+		}
+		@media screen and (min-width: $smallMobile) and (max-width: $mobile) {
+			width: 80%;
+		}
+		@media screen and (min-width: $mobile) and (max-width: $smallTablet) {
+			width: 64%;
 		}
 		@media screen and (min-width: $smallTablet) {
 			display: grid;
@@ -415,8 +418,7 @@
 				&#picture-forward-button {
 					top: 0;
 					bottom: 0;
-					right: 0;
-					
+					right: 0;	
 				}
 			}
 			.report-button {
@@ -425,18 +427,81 @@
 				bottom: 0;
 				height: 16px;
 				width: 16px;
+				margin: 6px;
+				> img {
+					position: relative;
+					width: 100%;
+					height: 100%;
+					filter: drop-shadow(0 0 4px rgba(black, 0.6));
+				}
 			}
 			.report-box {
+				overflow-y: auto;
+				padding: 0.6rem;
+				@media screen and (min-width: $tablet) {
+					padding: 1rem;
+				}
+				font-size: 0.9rem;
 				position: absolute;
 				bottom: 0;
-				height: 50%;
-				width: 100%;
+				height: 100%;
 				background: white;
+				width: 100%;
 				transform: translateY(100%);
 				transition: transform 0.4s ease-out;
-				border-radius: 0 0 3.2px 3.2px;
 				&.show {
 					transform: translateY(0);
+					box-shadow: 0px -4px 6px 0px rgba(black, 0.4);
+				}
+				.custom-select {
+					margin: 4px 0 8px 0;
+					.custom-select-main {
+						background: $gray2;
+					}
+					.custom-option {
+						border-top: 1px solid white;
+						&:not(.selected) {
+							background: $gray2;
+						}
+					}
+				}
+				.custom-options {
+					max-height: 120px;
+					overflow: auto;
+				}
+				.additional-report-info {
+					> * {
+						display: flex;
+						flex-direction: column;
+						margin: 6px auto;
+						width: 100%;
+						> * {
+							margin: 4px 0;
+						}
+						textarea {
+							width: 100%;
+							resize: vertical;
+							height: 100px;
+							max-height: 120px;
+							@media screen and (min-width: $smallMobile) {
+								max-height: 160px;
+							}
+						}	
+						label {
+							font-size: inherit;
+						}
+					}
+				}
+				.text-field {
+					background: $gray2;
+				}
+				.cross {
+					position: absolute;
+					right: 0;
+					bottom: 0;
+					margin: 8px;
+					height: 16px;
+					width: 16px;
 				}
 			}
 		}
