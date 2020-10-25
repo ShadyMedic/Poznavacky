@@ -26,7 +26,7 @@ class EmailSender
      * @param string $fromAddress Adresa odesílatele e-maulu (defaultně poznavacky@email.com)
      * @param string $fromName Jméno odesílatele e-mailu (defaultně Poznávačky)
      * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
-     * @return boolean TRUE, pokud se odeslání e-mailu zdařilo
+     * @return boolean TRUE, pokud se odeslání e-mailu zdařilo, FALSE, pokud ne
      */
     public function sendMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true)
     {
@@ -72,17 +72,16 @@ class EmailSender
     /**
      * Metoda odesílající přednastavený e-mailový objekt
      * @param \PHPMailer\PHPMailer $mail Nastavený e-mailový objekt
-     * @throws Exception Pokud selže odeslání e-mailu
-     * @return boolean TRUE, pokud se odeslání e-mailu zdaří
+     * @return boolean TRUE, pokud se odeslání e-mailu zdaří, FALSE, pokud ne
      */
     public function sendPreparedEmail($mail)
     {
         $result = $mail->Send();
         if(!$result)
         {
-            throw new Exception('E-mail nemohl být odeslán. Zkuste to prosím znovu později');
+            //throw new Exception('E-mail nemohl být odeslán. Zkuste to prosím znovu později: '.$mail->ErrorInfo);
+            return false;
         }
-
         return true;
     }
 }

@@ -3,8 +3,35 @@
  * Třída uchovávající data o uživateli (ne nutně přihlášeném)
  * @author Jan Štěch
  */
-class User implements ArrayAccess
+class User extends DatabaseItem implements ArrayAccess
 {
+    public const TABLE_NAME = 'uzivatele';
+    
+    public const COLUMN_DICTIONARY = array(
+        'id' => 'uzivatele_id',
+        'name' => 'jmeno',
+        'email' => 'email',
+        'lastLogin' => 'posledni_prihlaseni',
+        'addedPictures' => 'pridane_obrazky',
+        'guessedPictures' => 'uhodnute_obrazky',
+        'karma' => 'karma',
+        'status' => 'status'
+    );
+    
+    protected const NON_PRIMITIVE_PROPERTIES = array(
+        /* Žádná z vlastností neukládá objekt */
+    );
+    
+    protected const DEFAULT_VALUES = array(
+        'email' => null,
+        'addedPictures' => 0,
+        'guessedPictures' => 0,
+        'karma' => 0,
+    );
+    
+    protected const CAN_BE_CREATED = false;
+    protected const CAN_BE_UPDATED = true;
+    
     const STATUS_GUEST = 'Guest';
     const STATUS_MEMBER = 'Member';
     const STATUS_CLASS_OWNER = 'Class Owner';
@@ -20,19 +47,30 @@ class User implements ArrayAccess
     protected $status;
     
     /**
-     * Konstruktor pro nového uživatele
-     * @param int $id ID uživatele v databázi
-     * @param string $name Přezdívka uživatele
-     * @param string $email E-mailová adresa uživatele
-     * @param DateTime $lastLogin Datum a čas posledního přihlášení uživatele
-     * @param int $addedPictures Počet obrázků přidaných uživatelem
-     * @param int $guessedPictures Počet obrázků uhodnutých uživatelem
-     * @param int $karma Uživatelova karma
-     * @param string $status Uživatelův status
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param string|undefined|null $name Přezdívka uživatele
+     * @param string|undefined|null $email E-mailová adresa uživatele
+     * @param DateTime|undefined|null $lastLogin Datum a čas posledního přihlášení uživatele
+     * @param int|undefined|null $addedPictures Počet obrázků přidaných uživatelem
+     * @param int|undefined|null $guessedPictures Počet obrázků uhodnutých uživatelem
+     * @param int|undefined|null $karma Uživatelova karma
+     * @param string|undefined|null $status Uživatelův status
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id, string $name, string $email = null, DateTime $lastLogin = null, int $addedPictures = 0, int $guessedPictures = 0, int $karma = 0, string $status = self::STATUS_MEMBER)
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null)
     {
-        $this->id = $id;
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($name === null){ $name = $this->name; }
+        if ($email === null){ $email = $this->email; }
+        if ($lastLogin === null){ $lastLogin = $this->lastLogin; }
+        if ($addedPictures === null){ $addedPictures = $this->addedPictures; }
+        if ($guessedPictures === null){ $guessedPictures = $this->guessedPictures; }
+        if ($karma === null){ $karma = $this->karma; }
+        if ($status === null){ $status = $this->status; }
+        
         $this->name = $name;
         $this->email = $email;
         $this->lastLogin = $lastLogin;
@@ -40,6 +78,34 @@ class User implements ArrayAccess
         $this->guessedPictures = $guessedPictures;
         $this->karma = $karma;
         $this->status = $status;
+    }
+    
+    /**
+     * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
+     * @return Invitation[] Pole aktivních pozvánek jako objekty
+     */
+    public function getActiveInvitations()
+    {
+        $this->loadIfNotLoaded($this->id);
+        
+        Db::connect();
+        $invitationsData = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND expirace > NOW()', array($this->id), true);
+        if ($invitationsData === false)
+        {
+            //Žádné pozvánky
+            return array();
+        }
+        
+        $invitations = array();
+        
+        foreach ($invitationsData as $invitationData)
+        {
+            $invitation = new Invitation(false, $invitationData[Invitation::COLUMN_DICTIONARY['id']]);
+            $invitation->initialize($this, new ClassObject(false, $invitationData[Invitation::COLUMN_DICTIONARY['class']]), new DateTime($invitationData[Invitation::COLUMN_DICTIONARY['expiration']]));
+            $invitations[] = $invitation;
+        }
+        
+        return $invitations;
     }
     
     /**
@@ -67,21 +133,26 @@ class User implements ArrayAccess
         
         //Kontrola dat OK
         
-        Db::connect();
-        Db::executeQuery('UPDATE uzivatele SET pridane_obrazky = ?, uhodnute_obrazky = ?, karma = ?, status = ? WHERE uzivatele_id = ?;', array($addedPictures, $guessedPictures, $karma, $status, $this->id), false);
+        $this->addedPictures = $addedPictures;
+        $this->guessedPictures = $guessedPictures;
+        $this->karma = $karma;
+        $this->status = $status;
+        
+        $this->save();
         
         return true;
     }
     
     /**
      * Metoda odstraňující tento uživatelský účet na základě rozhodnutí administrátora
-     * Data z vlastností této instance jsou vynulována
-     * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
+     * Před samotným odstraněním je provedena kontrola, zda je možné uživatele odstranit
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
      */
     public function deleteAccountAsAdmin()
     {
+        $this->loadIfNotLoaded($this->id);
+        
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         if (!AccessChecker::checkSystemAdmin())
         {
@@ -90,7 +161,7 @@ class User implements ArrayAccess
         
         //Kontrola, zda uživatel není správcem žádné třídy
         Db::connect();
-        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM tridy WHERE spravce = ? LIMIT 1', array($this->id));
+        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array($this->id));
         if ($administratedClasses['cnt'] > 0)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR);
@@ -98,19 +169,7 @@ class User implements ArrayAccess
         
         //Kontrola dat OK
         
-        //Odstranit uživatele z databáze
-        Db::connect();
-        Db::executeQuery('DELETE FROM uzivatele WHERE uzivatele_id = ?', array($this->id));
-        
-        //Vymazat data z této instance uživatele
-        $this->id = null;
-        $this->name = null;
-        $this->email = null;
-        $this->lastLogin = null;
-        $this->addedPictures = null;
-        $this->guessedPictures = null;
-        $this->karma = null;
-        $this->status = null;
+        $this->delete();
         
         return true;
     }
@@ -122,6 +181,7 @@ class User implements ArrayAccess
      */
     public function offsetExists($offset)
     {
+        $this->loadIfNotLoaded($this->$offset);
         return (isset($this->$offset));
     }
     
@@ -132,6 +192,7 @@ class User implements ArrayAccess
      */
     public function offsetGet($offset)
     {
+        $this->loadIfNotLoaded($this->$offset);
         return $this->$offset;
     }
     

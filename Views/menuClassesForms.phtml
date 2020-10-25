@@ -1,11 +1,57 @@
+<style>
+/* Toto je pouze dočasné stylování, odstraň jej, nebo jej přesuň do .css souboru */
+.actionButton {
+    height: 1.2em;
+    width: 1.2em;
+    position: relative;
+    top: -0.08rem;
+    padding: 0;
+    vertical-align: middle;
+    background: none;
+}
+.actionButton img {
+
+    object-fit: contain;
+}
+.testEditorNaturalRow
+{
+    display: none;
+}
+</style>
+
 <?= $this->controllerToCall->displayView() ?>
 
-<!--<div id="menu-classes-forms">
-	<button id="enter-class-code-btn" class='btn border-btn non-transparent rounded black' onclick='enterClassCode()'>Zadat kód soukromé třídy</button>
-	<form id='class-code-form' action="menu/enter-class-code" method="POST" style="display: none">
-		<input id='class-code-input' class="text-field" type="number" name="code" min=0 max=9999 maxlength=4 required/>
-		<input class='btn border-btn non-transparent rounded black' type="submit" value="OK">
-		<button class='btn border-btn transparent rounded black' onclick='closeClassCode()'>Zpět</button>
-	</form>
-	<a href="menu/request-new-class" class='btn border-btn non-transparent rounded black'>Zažádat o vytvoření nové třídy</a>
-</div>-->
+<div id='invitationsButton' style='display:block;'>
+	<div class='button' onclick='showInvitations()'>Pozvánky do tříd<sup style="vertical-align:super;font-size:smaller;"><?= $invitationsCount ?></sup></div>
+</div>
+<div id='invitations' style="display:none;">
+    <table>
+    	<?php if ($invitationsCount === 0) : ?>
+    	<tr><td cellspan=4>Zatím jste neobdrželi pozvánku do žádné třídy</td></tr>
+    	<?php endif ?>
+    	<?php if ($invitationsCount > 0) : ?>
+    		<tr>
+    			<th>Název třídy</th>
+    			<th>Počet poznávaček</th>
+    			<th>Expirace pozvánky</th>
+    			<th>Akce</th>
+    		</tr>
+        	<?php foreach ($invitations as $invitation) : ?>
+        	<tr>
+        		<td><?= $invitation->getClass()->getName(); ?></td>
+        		<td><?= $invitation->getClass()->getGroupsCount(); ?></td>
+        		<td><?= $invitation->getExpirationDate(); ?></td>
+        		<td>
+        			<form action="menu/answer-invitation" method="POST">
+        				<input type='hidden' name='invitationId' value=<?= $invitation->getId() ?> />
+        				<input type='hidden' name='invitationAnswer' value='unselected' />
+        				<button class='actionButton' onclick='acceptInvitation(event)' title='Přijmout pozvánku'><img src='images/tick.svg'/></button>
+        				<button class='actionButton' onclick='rejectInvitation(event)' title='Odmítnout pozvánku'><img src='images/cross.svg'/></button>
+        			</form>
+        		</td>
+        	</tr>
+        	<?php endforeach ?>
+    	<?php endif ?>
+    </table>
+    <button class='button' onclick='hideInvitations()'>Zpět</button>
+</div>

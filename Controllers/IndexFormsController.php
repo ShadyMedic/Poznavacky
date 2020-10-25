@@ -38,6 +38,10 @@ class IndexFormsController extends Controller
                     {
                         echo json_encode(array('messageType' => 'success', 'message' => 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', 'origin' => $form));
                     }
+                    else
+                    {
+                        echo json_encode(array('messageType' => 'error', 'message' => 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.'));
+                    }
                     break;
             }
         }

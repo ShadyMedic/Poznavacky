@@ -13,7 +13,7 @@ class RecoverPassword
      * Metoda starající se o celý proces obnový hesla
      * @param array $POSTdata Data obdržená z formuláře na index stránce
      * @throws AccessDeniedException Pokud nebyl vyplněn platný e-mail
-     * @return boolean Pokud se všechny kroky podařily
+     * @return boolean TRUE, Pokud se všechny kroky podařily, FALSE, pokud se nepodařilo odeslat e-mail
      */
     public static function processRecovery(array $POSTdata)
     {
@@ -28,9 +28,9 @@ class RecoverPassword
         
         $code = self::generateCode();
         self::saveCode($code, $userId);
-        self::sendCode($code, $email);
+        $result = self::sendCode($code, $email);
         
-        return true;
+        return $result;
     }
     
     /**
@@ -76,8 +76,9 @@ class RecoverPassword
     
     /**
      * Metoda odesílající uživateli e-mail s odkazem obsahujícím kód k obnovení hesla
-     * @param string $code
-     * @param string $email
+     * @param string $code Kód pro obnovení hesla k odeslání
+     * @param string $email E-mailová adresa pro odeslání e-mailu
+     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      */
     private static function sendCode(string $code, string $email)
     {
@@ -85,7 +86,7 @@ class RecoverPassword
         $message->composeMail(EmailComposer::EMAIL_TYPE_PASSWORD_RECOVERY, array('recoveryLink' => $_SERVER['SERVER_NAME'].'/recover-password/'.$code));
         
         $sender = new EmailSender();
-        $sender->sendMail($email, self::EMAIL_SUBJECT, $message->getMail());
+        return $sender->sendMail($email, self::EMAIL_SUBJECT, $message->getMail());
     }
 }
 

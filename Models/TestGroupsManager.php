@@ -17,7 +17,7 @@ class TestGroupsManager
     {
         //Získej data
         Db::connect();
-        $classes = Db::fetchQuery('SELECT nazev,poznavacky,status,spravce FROM `tridy` WHERE status = "public" OR tridy_id IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
         if (!$classes)
         {
             throw new NoDataException(NoDataException::NO_CLASSES, null, null, 0);
@@ -28,16 +28,16 @@ class TestGroupsManager
         foreach ($classes as $dataRow)
         {
             $tableRow = array();
-            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($dataRow['nazev']);
-            $tableRow[0] = $dataRow['nazev'];
-            $tableRow[1] = $dataRow['poznavacky'];
+            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($dataRow[ClassObject::COLUMN_DICTIONARY['name']]);
+            $tableRow[0] = $dataRow[ClassObject::COLUMN_DICTIONARY['name']];
+            $tableRow[1] = $dataRow[ClassObject::COLUMN_DICTIONARY['groupsCount']];
             //Tlačítko pro správu třídy, pokud je přihlášený uživatel správcem třídy
-            if (UserManager::getId() === $dataRow['spravce'])
+            if (UserManager::getId() === $dataRow[ClassObject::COLUMN_DICTIONARY['admin']])
             {
                 $tableRow[2] = self::CLASS_MANAGE_BUTTON_KEYWORD;
             }
             //Tlačítko pro opuštění třídy, pokud není třída veřejná
-            else if ($dataRow['status'] !== self::CLASS_STATUS_PUBLIC)
+            else if ($dataRow[ClassObject::COLUMN_DICTIONARY['status']] !== self::CLASS_STATUS_PUBLIC)
             {
                 $tableRow[2] = self::CLASS_LEAVE_BUTTON_KEYWORD;
             }

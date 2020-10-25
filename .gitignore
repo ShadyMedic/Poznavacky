@@ -1,6 +1,7 @@
 .buildpath
 .project
 .settings/
+.idea/
 vendor/
 local/
 Models/DebugLogger.php

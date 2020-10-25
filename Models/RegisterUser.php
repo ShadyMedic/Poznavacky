@@ -51,7 +51,10 @@ class RegisterUser
         {
             $validator->checkLength($name, 4, 15, 0);
             $validator->checkLength($pass, 6, 31, 1);
-            $validator->checkLength($email, 0, 255, 2);
+            if (!empty($email))    //Pouze, pokud je e-mail vyplněn
+            {
+                $validator->checkLength($email, 0, 255, 2);
+            }
         }
         catch(RangeException $e)
         {
@@ -139,9 +142,9 @@ class RegisterUser
     
     /**
      * Metoda registrující uživatele do systému po ověření platnosti zadaných dat
-     * @param string $name
-     * @param string $password
-     * @param string $email
+     * @param string $name Přezdívka vybraná uživatelem
+     * @param string $password Heslo zvolené uživatelem
+     * @param string|null $email E-mail zadaný uživatelem (null, pokud žádný nezadal)
      * @return boolean TRUE, pokud je uživatel úspěšně zaregistrován
      */
     private static function register(string $name, string $password, $email)
@@ -150,10 +153,12 @@ class RegisterUser
         
         //Uložení dat do databáze
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $id = Db::executeQuery('INSERT INTO uzivatele (jmeno, heslo, email, posledni_prihlaseni, vzhled, karma, status) VALUES (?,?,?,NOW(),?,?,?)', array($name, $password, $email, self::DEFAULT_THEME, self::DEFAULT_KARMA, self::DEFAULT_STATUS), true);
+        
+        $user = new LoggedUser(true);
+        $user->initialize($name, $email, new DateTime(), null, null, null, '', $password, null, null, null, null);
+        $user->save();
         
         //Přihlášení
-        $user = new LoggedUser($id, $name, $password, $email, new DateTime(null, new DateTimeZone('EUROPE/PRAGUE')), 0, 0, null, self::DEFAULT_THEME, 0, 0, self::DEFAULT_KARMA, self::DEFAULT_STATUS);
         $_SESSION['user'] = $user;
         
         //Nastavení cookie pro zabránění přehrávání animace

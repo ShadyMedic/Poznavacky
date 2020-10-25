@@ -3,89 +3,62 @@
  * Třída reprezentující objekt poznávačky obsahující části
  * @author Jan Štěch
  */
-class Group
+class Group extends DatabaseItem
 {
-    private $id;
-    private $name;
-    private $class;
-    private $partsCount;
-    private $parts;
+    public const TABLE_NAME = 'poznavacky';
+    
+    public const COLUMN_DICTIONARY = array(
+        'id' => 'poznavacky_id',
+        'name' => 'nazev',
+        'class' => 'tridy_id',
+        'partsCount' => 'casti'
+    );
+    
+    protected const NON_PRIMITIVE_PROPERTIES = array(
+        'class' => ClassObject::class
+    );
+    
+    protected const DEFAULT_VALUES = array(
+        'partsCount' => 0,
+        'parts' => array()
+    );
+    
+    protected const CAN_BE_CREATED = true;
+    protected const CAN_BE_UPDATED = true;
+    
+    protected $name;
+    protected $class;
+    protected $partsCount;
+    
+    protected $parts;
     
     /**
-     * Konstruktor poznávačky nastavující její ID, jméno, třídu, do které patří a počet jejích částí.
-     * Pokud je vše specifikováno, nebude potřeba provádět další SQL dotazy
-     * Pokud je vyplněno jméno i ID, ale chybí nějaký z dalších argumentů, má jméno přednost před ID
-     * @param int $id ID poztnávačky (nepovinné, pokud je specifikováno jméno)
-     * @param string $name Jméno poztnávačky (nepovinné, pokud je specifikováno ID)
-     * @param ClassObject $class Objekt třídy, do které poznávačka patří (nepovinné, v případě nevyplnění bude zjištěno z databáze)
-     * @param int $partsCount Počet částí, které tato poznávačka obsahuje (nepovinné, v případě nevyplnění bude zjištěno z databáze)
-     * @throws AccessDeniedException V případě, že podle ID nebo jména není v databázi nalezena žádná poznávačka
-     * @throws BadMethodCallException V případě, že není specifikován dostatek parametrů
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param string|undefined|null $name Název této poznávačky
+     * @param ClassObject|undefined|null $class Odkaz na objekt třídy, do které tato poznávačka patří
+     * @param Part[]|undefined|null $parts Pole částí, jako objekty, na které je tato poznávačka rozdělená
+     * @param int|undefined|null Počet částí, do kterých je tato poznávačka rozdělena (při vyplnění parametru $parts je ignorováno a je použita délka poskytnutého pole)
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
      */
-    public function __construct(int $id, string $name = "", ClassObject $class = null, int $partsCount = 0)
+    public function initialize($name = null, $class = null, $parts = null, $partsCount = null)
     {
-        if (mb_strlen($name) !== 0 && !empty($id) && !empty($partsCount))
+        //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
+        if ($name === null){ $name = $this->name; }
+        if ($class === null){ $class = $this->class; }
+        if ($parts === null)
         {
-            //Je vše je specifikováno --> nastavit
-            $this->id = $id;
-            $this->name = $name;
-            $this->partsCount = $partsCount;
-            $classId = $class->getId();
+            $parts = $this->parts;
+            if ($partsCount === null){ $partsCount = $this->partsCount; }
         }
-        else if (mb_strlen($name) !== 0)
-        {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT poznavacky_id,casti,tridy_id FROM poznavacky WHERE nazev = ? LIMIT 1',array($name));
-            if (!$result)
-            {
-                //Poznávačka nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_FOUND);
-            }
-            $id = $result['poznavacky_id'];
-            $this->partsCount = $result['casti'];
-            $classId = $result['tridy_id'];
-        }
-        else if (!empty($id))
-        {
-            Db::connect();
-            $result = Db::fetchQuery('SELECT nazev,casti,tridy_id FROM poznavacky WHERE poznavacky_id = ? LIMIT 1',array($id));
-            if (!$result)
-            {
-                //Poznávačka nebyla v databázi nalezena
-                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_FOUND);
-            }
-            $name = $result['nazev'];
-            $this->partsCount = $result['casti'];
-            $classId = $result['tridy_id'];
-        }
-        else
-        {
-            throw new BadMethodCallException('Either ID or name must be specified.', null, null);
-        }
+        else { $partsCount = count($parts); }
         
-        $this->id = $id;
         $this->name = $name;
-        
-        //Nastavit nebo zjistit třídu
-        if (!empty($class) && $class->getId() === $classId)
-        {
-            //ID souhlasí a objekt je poskytnut --> nastavit
-            $this->class = $class;
-        }
-        else
-        {
-            //Objekt není poskytnut, nebo nesouhlasí ID --> vytvořit
-            $this->class = new ClassObject($classId);
-        }
-    }
-    
-    /**
-     * Metoda navracející ID této poznávačky
-     * @return int ID poznávačky
-     */
-    public function getId()
-    {
-        return $this->id;
+        $this->class = $class;
+        $this->parts = $parts;
+        $this->partsCount = $partsCount;
     }
     
     /**
@@ -94,6 +67,7 @@ class Group
      */
     public function getName()
     {
+        $this->loadIfNotLoaded($this->name);
         return $this->name;
     }
     
@@ -103,6 +77,7 @@ class Group
      */
     public function getClass()
     {
+        $this->loadIfNotLoaded($this->class);
         return $this->class;
     }
     
@@ -112,15 +87,17 @@ class Group
      */
     public function getPartsCount()
     {
+        $this->loadIfNotLoaded($this->partsCount);
         return $this->partsCount;
     }
     
     /**
-     * Metoda navracející objekt náhodně zvoleného obrázku z nějaké části této poznávačky
+     * Metoda navracející pole náhodně zvolených obrázků z nějaké části této poznávačky jako objekty
      * Šance na výběr části je přímo úměrná počtu přírodnin, které obsahuje
      * Všechny přírodniny této poznávačky tak mají stejnou šanci, že jejich obrázek bude vybrán
      * Počet obrázků u jednotlivých přírodniny nemá na výběr vliv
      * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
+     * @return Picture[] Polé náhodně vybraných obrázků obsahující specifikovaný počet prvků
      */
     public function getRandomPictures(int $count)
     {
@@ -131,7 +108,13 @@ class Group
         for ($i = 0; $i < $count; $i++)
         {
             $randomNaturalNum = rand(0, $naturalsCount - 1);
-            $result[] = $naturals[$randomNaturalNum]->getRandomPicture();
+            $picture = $naturals[$randomNaturalNum]->getRandomPicture();
+            if ($picture === null)  //Kontrola, zda byl u vybrané přírodniny alespoň jeden obrázek
+            {
+                $i--;
+                continue;
+            }
+            $result[] = $picture;
         }
         
         return $result;
@@ -144,10 +127,7 @@ class Group
      */
     public function getNaturals()
     {
-        if (!isset($this->parts))
-        {
-            $this->loadParts();
-        }
+        if (!$this->isDefined($this->parts)){ $this->loadParts(); }
         
         $allPartsIds = array();
         foreach ($this->parts as $part)
@@ -159,11 +139,13 @@ class Group
         Db::connect();
         //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
         $in = str_repeat('?,', count($allPartsIds) - 1).'?';
-        $result = Db::fetchQuery('SELECT prirodniny_id,nazev,obrazky,casti_id FROM prirodniny WHERE casti_id IN ('.$in.')', $allPartsIds, true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);
         foreach ($result as $naturalData)
         {
-            $part = $this->getPartById($naturalData['casti_id']);
-            $allNaturals[] = new Natural($naturalData['prirodniny_id'], $naturalData['nazev'], $this, $part, $naturalData['obrazky']);
+            $part = $this->getPartById($naturalData[Natural::COLUMN_DICTIONARY['part']]);
+            $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
+            $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, $this, $part);
+            $allNaturals[] = $natural;
         }
         return $allNaturals;
     }
@@ -174,7 +156,7 @@ class Group
      */
     public function getParts()
     {
-        if (!isset($this->parts))
+        if (!$this->isDefined($this->parts))
         {
             $this->loadParts();
         }
@@ -184,12 +166,12 @@ class Group
     /**
      * Metoda načítající části patřící do této poznávačky a ukládající je jako vlastnost
      */
-    private function loadParts()
+    public function loadParts()
     {
-        $this->parts = array();
+        $this->loadIfNotLoaded($this->id);
         
         Db::connect();
-        $result = Db::fetchQuery('SELECT casti_id,nazev,prirodniny,obrazky FROM casti WHERE poznavacky_id = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].','.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné části nenalezeny
@@ -197,9 +179,12 @@ class Group
         }
         else
         {
+            $this->parts = array();
             foreach ($result as $partData)
             {
-                $this->parts[] = new Part($partData['casti_id'], $partData['nazev'], $this, $partData['prirodniny'], $partData['obrazky']);
+                $part = new Part(false, $partData[Part::COLUMN_DICTIONARY['id']]);
+                $part->initialize($partData[Part::COLUMN_DICTIONARY['name']], $this, null, $partData[Part::COLUMN_DICTIONARY['naturalsCount']], $partData[Part::COLUMN_DICTIONARY['picturesCount']]);
+                $this->parts[] = $part;
             }
         }
     }
@@ -211,10 +196,7 @@ class Group
      */
     private function getPartById(int $id)
     {
-        if (!isset($this->parts))
-        {
-            $this->loadParts();
-        }
+        if (!$this->isDefined($this->parts)){ $this->loadParts(); }
         foreach ($this->parts as $part)
         {
             if ($part->getId() === $id)
@@ -222,5 +204,49 @@ class Group
                 return $part;
             }
         }
+    }
+    
+    public function getReports()
+    {
+        $this->loadIfNotLoaded($this->id);
+        
+        //Získání důvodů hlášení vyřizovaných správcem třídy
+        $availableReasons = array_diff(Report::ALL_REASONS, Report::ADMIN_REQUIRING_REASONS);
+        
+        $in = str_repeat('?,', count($availableReasons) - 1).'?';
+        $sqlArguments = array_values($availableReasons);
+        $sqlArguments[] = $this->id;
+        Db::connect();
+        $result = Db::fetchQuery('
+            SELECT
+            '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
+            '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
+            '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' AS "prirodniny_cast"
+            FROM hlaseni
+            JOIN '.Picture::TABLE_NAME.' ON '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['picture'].' = '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].'
+            JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
+            WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.')
+            AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
+        ', $sqlArguments, true);
+        
+        if ($result === false)
+        {
+            //Žádná hlášení nenalezena
+            return array();
+        }
+        
+        $reports = array();
+        foreach ($result as $reportInfo)
+        {
+            $natural = new Natural(false, $reportInfo['prirodniny_id']);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null, $this, new Part(false, $reportInfo['prirodniny_cast']));
+            $picture = new Picture(false, $reportInfo['obrazky_id']);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, null, $reportInfo['obrazky_povoleno'], $natural->getPart());
+            $report = new Report(false, $reportInfo['hlaseni_id']);
+            $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
+            $reports[] = $report;
+        }
+        
+        return $reports;
     }
 }

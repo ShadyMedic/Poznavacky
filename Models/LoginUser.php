@@ -31,7 +31,7 @@ class LoginUser
             //Vygenerovat a uložit token pro trvalé přihlášení
             if ($POSTdata['stayLogged'] === 'true')
             {
-                self::setLoginCookie($userData['uzivatele_id']);
+                self::setLoginCookie($userData[User::COLUMN_DICTIONARY['id']]);
             }
         }
     }
@@ -61,9 +61,9 @@ class LoginUser
     private static function authenticate(string $username, string $password)
     {
         Db::connect();
-        $userData = Db::fetchQuery('SELECT * FROM uzivatele WHERE jmeno = ? LIMIT 1', array($username), false);
+        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($username), false);
         if ($userData === FALSE){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NONEXISTANT_USER, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
-        if (!password_verify($password, $userData['heslo'])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_WRONG_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
+        if (!password_verify($password, $userData[LoggedUser::COLUMN_DICTIONARY['hash']])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_WRONG_PASSWORD, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login')); }
         else {return $userData;}
         return false;
     }
@@ -77,7 +77,7 @@ class LoginUser
     private static function verifyCode(string $code)
     {
         Db::connect();
-        $userData = Db::fetchQuery('SELECT * FROM uzivatele WHERE uzivatele_id = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
+        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
         if ($userData === FALSE) {throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login'));}
         else {return $userData;}
         return false;
@@ -89,10 +89,11 @@ class LoginUser
      */
     private static function login(array $userData)
     {
-        $user = new LoggedUser($userData['uzivatele_id'], $userData['jmeno'], $userData['heslo'], $userData['email'], new Datetime(), $userData['posledni_changelog'], $userData['posledni_uroven'], $userData['posledni_slozka'], $userData['vzhled'], $userData['pridane_obrazky'], $userData['uhodnute_obrazky'], $userData['karma'], $userData['status']);
+        $user = new LoggedUser(false, $userData[LoggedUser::COLUMN_DICTIONARY['id']]);
+        $user->initialize($userData[LoggedUser::COLUMN_DICTIONARY['name']], $userData[LoggedUser::COLUMN_DICTIONARY['email']], new Datetime(), $userData[LoggedUser::COLUMN_DICTIONARY['addedPictures']], $userData[LoggedUser::COLUMN_DICTIONARY['guessedPictures']], $userData[LoggedUser::COLUMN_DICTIONARY['karma']], $userData[LoggedUser::COLUMN_DICTIONARY['status']], $userData[LoggedUser::COLUMN_DICTIONARY['hash']], $userData[LoggedUser::COLUMN_DICTIONARY['lastChangelog']], $userData[LoggedUser::COLUMN_DICTIONARY['lastLevel']], $userData[LoggedUser::COLUMN_DICTIONARY['lastFolder']], $userData[LoggedUser::COLUMN_DICTIONARY['theme']]);
         $_SESSION['user'] = $user;
         
-        Db::executeQuery('UPDATE uzivatele SET posledni_prihlaseni = NOW() WHERE uzivatele_id = ?', array($userData['uzivatele_id']));
+        Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].' = NOW() WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array($userData[LoggedUser::COLUMN_DICTIONARY['id']]));
         
         //Nastavení cookie pro zabránění přehrávání animace
         self::setRecentLoginCookie();
