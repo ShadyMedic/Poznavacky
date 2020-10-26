@@ -21,15 +21,12 @@
 
 <?= $this->controllerToCall->displayView() ?>
 
-<div id='invitationsButton' style='display:block;'>
-	<div class='button' onclick='showInvitations()'>Pozvánky do tříd<sup style="vertical-align:super;font-size:smaller;"><?= $invitationsCount ?></sup></div>
-</div>
-<div id='invitations' style="display:none;">
-    <table>
-    	<?php if ($invitationsCount === 0) : ?>
-    	<tr><td cellspan=4>Zatím jste neobdrželi pozvánku do žádné třídy</td></tr>
-    	<?php endif ?>
-    	<?php if ($invitationsCount > 0) : ?>
+<?php if ($invitationsCount > 0) : ?>
+    <div id='invitationsButton' style='display:block;'>
+    	<div class='button' onclick='showInvitations()'>Pozvánky do tříd<sup style="vertical-align:super;font-size:smaller;"><?= $invitationsCount ?></sup></div>
+    </div>
+    <div id='invitations' style="display:none;">
+        <table>
     		<tr>
     			<th>Název třídy</th>
     			<th>Počet poznávaček</th>
@@ -51,7 +48,7 @@
         		</td>
         	</tr>
         	<?php endforeach ?>
-    	<?php endif ?>
-    </table>
-    <button class='button' onclick='hideInvitations()'>Zpět</button>
-</div>
+        </table>
+        <button class='button' onclick='hideInvitations()'>Zpět</button>
+    </div>
+<?php endif ?>
