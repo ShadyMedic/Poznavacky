@@ -6,7 +6,8 @@
  */
 class ManageController extends Controller
 {
-
+    private $argumentsToPass = array();
+    
     /**
      * Metoda ověřující, zda má uživatel do správy třídy přístup (je její správce nebo administrátor systému) a nastavující hlavičku stránky a pohled
      * @see Controller::process()
@@ -31,16 +32,15 @@ class ManageController extends Controller
             $this->redirect('error403');
         }
         
-        //Kontrola, zda nebyla zvolena správa hlášení v nějaké poznávačce nebo její editace
+        //Kontrola, zda nebyla zvolena správa členů nebo poznávaček
         //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu/nazev-tridy/manage)
-        //Maximálně 2 (v případě domena.cz/menu/nazev-tridy/manage/nazev-poznavacky/akce)
+        //Maximálně 3 (v případě domena.cz/menu/nazev-tridy/manage/tests/nazev-poznavacky/akce)
         $manageArguments = array();
-        for ($i = 0; $i < 2 && $arg = array_shift($parameters); $i++)
+        for ($i = 0; $i < 3 && $arg = array_shift($parameters); $i++)
         {
             $manageArguments[] = $arg;
         }
-        
         $argumentCount = count($manageArguments);
         
         # if ($argumentCount === 0)
@@ -49,26 +49,11 @@ class ManageController extends Controller
         # }
         if ($argumentCount > 0)
         {
-            //Název poznávačky
-
-            //Uložení objektu třídy do $_SESSION
-            $_SESSION['selection']['group'] = new Group(false);
-            $_SESSION['selection']['group']->initialize(urldecode($manageArguments[0]), $_SESSION['selection']['class'], null, null);
-        
-            //Musí být specifikována i akce
-            if ($argumentCount === 1)
-            {
-                //Přesměrovat na manage bez parametrů
-                $this->redirect('menu/'.$_SESSION['selection']['class']->getName().'/manage');
-            }
-        }
-        if ($argumentCount > 1)
-        {
-            $controllerName = $this->kebabToCamelCase($manageArguments[1]).self::ControllerExtension;
+            $controllerName = $this->kebabToCamelCase($manageArguments[0]).self::ControllerExtension;
             if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
             {
                 $this->controllerToCall = new $controllerName;
-                $this->argumentsToPass = array_slice($manageArguments, 3);
+                $this->argumentsToPass = array_slice($manageArguments, 1);
             }
             else
             {
@@ -80,7 +65,7 @@ class ManageController extends Controller
         if (isset($this->controllerToCall))
         {
             //Kontroler je nastaven --> předat mu řízení
-            $this->controllerToCall->process(array());
+            $this->controllerToCall->process($this->argumentsToPass);
             
             $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
             $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
@@ -89,13 +74,15 @@ class ManageController extends Controller
             $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
             
+            $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
+            
             $this->view = 'manageAction';
         }
         else
         {
-            //Kontroler není nastaven --> obecnou správu třídy
+            //Kontroler není nastaven --> obecná správa třídy
             $this->pageHeader['title'] = 'Správa třídy';
-            $this->pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující snadnou správu poznávaček a členů.';
+            $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu třídy';
             $this->pageHeader['keywords'] = '';
             $this->pageHeader['cssFiles'] = array('css/css.css');
             $this->pageHeader['jsFiles'] = array('js/generic.js','js/manage.js');
@@ -105,8 +92,6 @@ class ManageController extends Controller
             $this->data['className'] = $_SESSION['selection']['class']->getName();
             $this->data['classStatus'] = $_SESSION['selection']['class']->getStatus();
             $this->data['classCode'] = $_SESSION['selection']['class']->getCode();
-            $this->data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
-            $this->data['groups'] = $_SESSION['selection']['class']->getGroups();
             
             $this->view = 'manage';
         }

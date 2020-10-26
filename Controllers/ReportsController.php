@@ -22,6 +22,8 @@ class ReportsController extends Controller
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/resolveReports.js');
         $this->pageHeader['bodyId'] = 'resolveReports';
         
+        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName().'/manage/tests';
+        
         $this->view = 'reports';
     }
 }

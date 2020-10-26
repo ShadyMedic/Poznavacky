@@ -21,6 +21,8 @@ class EditController extends Controller
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/editGroup.js');
         $this->pageHeader['bodyId'] = 'editGroup';
         
+        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName().'/manage/tests';
+        
         $this->view = 'editGroup';
     }
 }
