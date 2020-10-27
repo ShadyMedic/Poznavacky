@@ -11,21 +11,15 @@ class Natural extends DatabaseItem
         'id' => 'prirodniny_id',
         'name' => 'nazev',
         'picturesCount' => 'obrazky',
-        'class' => 'tridy_id',
-        'group' => 'poznavacky_id',
-        'part' => 'casti_id'
+        'class' => 'tridy_id'
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
-        'class' => ClassObject::class,
-        'group' => Group::class,
-        'part' => Part::class
+        'class' => ClassObject::class
     );
     
     protected const DEFAULT_VALUES = array(
-        'picturesCount' => 0,
-        'group' => null,
-        'part' => null
+        'picturesCount' => 0
     );
     
     protected const CAN_BE_CREATED = true;
@@ -34,8 +28,6 @@ class Natural extends DatabaseItem
     protected $name;
     protected $picturesCount;
     protected $class;
-    protected $group;
-    protected $part;
 
     protected $pictures;
     
@@ -47,12 +39,10 @@ class Natural extends DatabaseItem
      * @param Picture[]|undefined|null $pictures Pole obrázků nahraných k této přírodnině, jako objekty
      * @param int|undefined|null $picturesCount Počet obrázků nahraných k této přírodnině (při vyplnění parametru $pictures je ignorováno a je použita délka poskytnutého pole)
      * @param ClassObject|undefined|null $class Třída, se kterou je tato přírodnina svázána
-     * @param Group|undefined|null $group Poznávačka, do které tato přírodnina patří
-     * @param Part|undefined|null $part Část poznávačky, do které je tato přírodnina v současné době přiřazena
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $pictures = null, $picturesCount = null, $class = null, $group = null, $part = null)
+    public function initialize($name = null, $pictures = null, $picturesCount = null, $class = null)
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
@@ -63,15 +53,11 @@ class Natural extends DatabaseItem
         }
         else { $picturesCount = count($pictures); }
         if ($class === null){ $class = $this->class; }
-        if ($group === null){ $group = $this->group; }
-        if ($part === null){ $part = $this->part; }
         
         $this->name = $name;
         $this->pictures = $pictures;
         $this->picturesCount = $picturesCount;
         $this->class = $class;
-        $this->group = $group;
-        $this->part = $part;
     }
         
     /**
@@ -82,26 +68,6 @@ class Natural extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
-    }
-    
-    /**
-     * Metoda navracející objekt poznávačky, do které tato přírodnina patří
-     * @return Group Poznávačka, do které přírodnina spadá
-     */
-    public function getGroup()
-    {
-        $this->loadIfNotLoaded($this->group);
-        return $this->group;
-    }
-    
-    /**
-     * Metoda navracející objekt části, do které je tato přírodnina přiřazena
-     * @return Part Část, do které přírodnina spadá
-     */
-    public function getPart()
-    {
-        $this->loadIfNotLoaded($this->part);
-        return $this->part;
     }
     
     /**

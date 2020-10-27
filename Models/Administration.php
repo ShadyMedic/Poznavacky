@@ -107,7 +107,7 @@ class Administration
             JOIN '.Group::TABLE_NAME.' ON '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['group'].' = '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['id'].'
             JOIN '.ClassObject::TABLE_NAME.' ON '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['class'].' = '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].'
             WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.');
-        ', Report::ADMIN_REQUIRING_REASONS, true);
+        ', Report::ADMIN_REQUIRING_REASONS, true);  //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje (4 řádky zpátky)
         
         if ($result === false)
         {
@@ -300,7 +300,7 @@ class Administration
     {
         $picture = new Picture(false, $pictureId);
         $natural = new Natural(false, 0);
-        $group = $picture->getNatural()->getGroup();
+        $group = $picture->getNatural()->getGroup();  //TODO - Natural->getGroup() již neexistuje
         $natural->initialize($newNaturalName, null, null, null, $group, null);  //Je nutné specifikovat poznávačku staré přírodniny, aby bylo jasné, ve které poznávačce se má hledat nová přířodnina
         $picture->updatePicture($natural, $newUrl);
         $picture->save();

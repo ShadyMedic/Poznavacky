@@ -139,10 +139,10 @@ class Group extends DatabaseItem
         Db::connect();
         //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
         $in = str_repeat('?,', count($allPartsIds) - 1).'?';
-        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);  //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje
         foreach ($result as $naturalData)
         {
-            $part = $this->getPartById($naturalData[Natural::COLUMN_DICTIONARY['part']]);
+            $part = $this->getPartById($naturalData[Natural::COLUMN_DICTIONARY['part']]);  //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje
             $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
             $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, $this, $part);
             $allNaturals[] = $natural;
@@ -227,7 +227,7 @@ class Group extends DatabaseItem
             JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
             WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.')
             AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
-        ', $sqlArguments, true);
+        ', $sqlArguments, true);  //TODO - Natural::COLUMN_DICTIONARY['group'] již neexistuje (předchozí řádek),   //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje (6 řádků zpátky)
         
         if ($result === false)
         {
@@ -241,7 +241,7 @@ class Group extends DatabaseItem
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
             $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null, $this, new Part(false, $reportInfo['prirodniny_cast']));
             $picture = new Picture(false, $reportInfo['obrazky_id']);
-            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, null, $reportInfo['obrazky_povoleno'], $natural->getPart());
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, null, $reportInfo['obrazky_povoleno'], $natural->getPart());  //TODO - Natural->getPart() již neexistuje
             $report = new Report(false, $reportInfo['hlaseni_id']);
             $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;

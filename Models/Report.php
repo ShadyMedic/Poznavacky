@@ -110,7 +110,7 @@ class Report extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
-        $part = $natural->getPart();
+        $part = $natural->getPart();  //TODO - Natural->getPart() již neexistuje
         $group = $part->getGroup();
         $class = $group->getClass();
         return $class->getName().' / '.$group->getName().' / '.$part->getName();
@@ -124,7 +124,7 @@ class Report extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
-        return $natural->getPart();
+        return $natural->getPart();  //TODO - Natural->getPart() již neexistuje
     }
     
     /**

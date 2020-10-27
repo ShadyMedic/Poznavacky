@@ -72,7 +72,7 @@ class ReportAdder
         JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
         JOIN '.Part::TABLE_NAME.' ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].'
         WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
-        ', array($url, $this->group->getId()), false);
+        ', array($url, $this->group->getId()), false);  //TODO - Natural::COLUMN_DICTIONARY['group'] již neexistuje (předchozí řádek)  //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje (2 řádky zpátky)
         
         //Obrázek nebyl v databázi podle zdroje nalezen
         if ($dbResult === false)
