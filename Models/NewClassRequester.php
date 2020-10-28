@@ -54,13 +54,13 @@ class NewClassRequester
     private function validate($email, string $name, $code, $text, $antispam)
     {
         //Kontrola, zda jsou všechna povinná pole vyplněna
-        if (mb_strlen($email) === 0 && empty(UserManager::getEmail())){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_EMAIL, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
-        if (mb_strlen($name) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_NAME, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
-        if (mb_strlen($code) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_CODE, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
-        if (mb_strlen($antispam) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_ANTISPAM, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (mb_strlen($email) === 0 && empty(UserManager::getEmail())) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_EMAIL, null, null); }
+        if (mb_strlen($name) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_NAME, null, null); }
+        if (mb_strlen($code) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_CODE, null, null); }
+        if (mb_strlen($antispam) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_ANTISPAM, null, null); }
         
         //Kontrola formátu e-mailu
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_EMAIL, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_EMAIL, null, null); }
         
         $validator = new DataValidator();
         
@@ -72,24 +72,24 @@ class NewClassRequester
         }
         catch(RangeException $e)
         {
-            if ($e->getMessage() === 'long'){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
-            else if ($e->getMessage() === 'short'){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+            if ($e->getMessage() === 'long') { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG, null, $e); }
+            else if ($e->getMessage() === 'short') { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT, null, $e); }
         }
-        catch(InvalidArgumentException $e){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS, null, $e); }
         
         //Kontrola unikátnosti jména
         try
         {
             $validator->checkUniqueness($name, 3);
         }
-        catch(InvalidArgumentException $e){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e); }
         
         //Kontrola platnosti kódu
-        if (!$validator->validateClassCode($code)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_CODE, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (!$validator->validateClassCode($code)) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_CODE, null, null); }
         
         //Kontrola antispamu
         $captchaChecker = new NumberAsWordCaptcha();
-        if (!$captchaChecker->checkAnswer($antispam, NumberAsWordCaptcha::SESSION_INDEX)){throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED, null, null, array('originFile' => 'NewClassRequester.php', 'displayOnView' => 'requestNewClass.phtml'));}
+        if (!$captchaChecker->checkAnswer($antispam, NumberAsWordCaptcha::SESSION_INDEX)) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED, null, null); }
         
         return true;
     }

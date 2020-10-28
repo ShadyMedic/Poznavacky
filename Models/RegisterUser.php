@@ -42,9 +42,9 @@ class RegisterUser
         $validator = new DataValidator();
         
         //Kontrola existence vyplněných dat
-        if (mb_strlen($name) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (mb_strlen($pass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
-        if (mb_strlen($repass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register')); }
+        if (mb_strlen($name) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null); }
+        if (mb_strlen($pass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null); }
+        if (mb_strlen($repass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null); }
         
         //Kontrola délky jména, hesla a e-mailu
         try
@@ -63,13 +63,13 @@ class RegisterUser
                 switch ($e->getCode())
                 {
                     case 0:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_TOO_LONG, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_TOO_LONG, null, $e);
                         break;
                     case 1:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG, null, $e);
                         break;
                     case 2:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_EMAIL_TOO_LONG, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_EMAIL_TOO_LONG, null, $e);
                         break;
                 }
             }
@@ -78,10 +78,10 @@ class RegisterUser
                 switch ($e->getCode())
                 {
                     case 0:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_TOO_SHORT, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_TOO_SHORT, null, $e);
                         break;
                     case 1:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_SHORT, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_SHORT, null, $e);
                         break;
                 }
             }
@@ -98,10 +98,10 @@ class RegisterUser
             switch ($e->getCode())
             {
                 case 0:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_INVALID_CHARACTERS, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_INVALID_CHARACTERS, null, $e);
                     break;
                 case 1:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS, null, $e);
                     break;
             }
         }
@@ -117,10 +117,10 @@ class RegisterUser
             switch ($e->getCode())
             {
                 case 0:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DUPLICATE_NAME, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DUPLICATE_NAME, null, $e);
                     break;
                 case 2:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DUPLICATE_EMAIL, null, $e, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DUPLICATE_EMAIL, null, $e);
                     break;
             }
         }
@@ -128,7 +128,7 @@ class RegisterUser
         //Kontrola platnosti e-mailu
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL, null, null);
         }
         
         //Kontrola shodnosti hesel

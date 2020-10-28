@@ -107,34 +107,4 @@ class AccessDeniedException extends Exception
     const REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS = 'Neplatná adresa odesílatele';
     const REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS = 'Neplatná adresa adresáta';
     const REASON_SEND_EMAIL_EMPTY_FIELDS = 'S výjimkou patičky e-mailu musí být všechna pole vyplněna';
-    
-    private $additionalInfo = array();
-    
-    /**
-     * Konstruktor přístupové podmínky
-     * @param string $message Obecná zpráva, která může být zobrazena běžnému uživateli
-     * @param int $code Číslo chyby, které může být zobrazeno běžnému uživateli
-     * @param Exception $previous Předcházející podmínka (pro účely propagace podmínek)
-     */
-    public function __construct(string $message = null, $code = null, $previous = null, array $additionalInfo = null)
-    {
-        parent::__construct($message, $code, $previous);
-        $this->additionalInfo = $additionalInfo;
-    }
-    
-    /**
-     * Funkce navracející určitý prvek z pole s přídavnými informacemi
-     * @param mixed $subject Klíč prvku pro získání
-     */
-    public function getAdditionalInfo($subject)
-    {
-        if (isset($this->additionalInfo[$subject]))
-        {
-            return $this->additionalInfo[$subject];
-        }
-        else
-        {
-            throw new OutOfBoundsException('Invalid array offset in the AccessDeniedException: '.$subject);
-        }
-    }
 }

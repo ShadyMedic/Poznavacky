@@ -64,21 +64,21 @@ class TokenPasswordChanger
         {
             if ($e->getMessage() === 'long')
             {
-                throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG, null, null, array('originalFile' => 'TokenPasswordChanger.php', 'displayOnView' => 'recoverPassword.phtml'));
+                throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG, null, null);
             }
             else if ($e->getMessage() === 'short')
             {
-                throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_SHORT, null, null, array('originalFile' => 'TokenPasswordChanger.php', 'displayOnView' => 'recoverPassword.phtml'));
+                throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_SHORT, null, null);
             }
         }
         catch (InvalidArgumentException $e)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS, null, null, array('originalFile' => 'TokenPasswordChanger.php', 'displayOnView' => 'recoverPassword.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS, null, null);
         }
         
         if ($this->pass !== $this->repass)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS, null, null, array('originalFile' => 'TokenPasswordChanger.php', 'displayOnView' => 'recoverPassword.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS, null, null);
         }
         $this->checked = true;
     }

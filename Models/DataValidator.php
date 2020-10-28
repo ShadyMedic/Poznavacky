@@ -101,7 +101,7 @@ class DataValidator
         $userId = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($email), false);
         if (!$userId)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_ACCOUNT, null, null, array('originFile' => 'RecoverPassword.php', 'displayOnView' => 'index.phtml', 'form' => 'passRecovery'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_ACCOUNT, null, null);
         }
         return $userId[User::COLUMN_DICTIONARY['id']];
     }

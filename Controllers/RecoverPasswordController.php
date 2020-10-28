@@ -23,7 +23,7 @@ class RecoverPasswordController extends Controller
             //Zjištění, zda je v adrese přítomen kód pro obnovu hesla
             if (!isset($parameters[0]))
             {
-                throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_NO_TOKEN, null, null, array('originalFile' => 'RecoverPasswordController.php', 'displayOnView' => 'recoverPasseword.phtml'));
+                throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_NO_TOKEN, null, null);
             }
             $code = $parameters[0];
             $this->data['token'] = $code;
@@ -31,7 +31,7 @@ class RecoverPasswordController extends Controller
             $userId = PasswordRecoveryCodeVerificator::verifyCode($code);
             if (empty($userId))
             {
-                throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_INVALID_TOKEN, null, null, array('originalFile' => 'RecoverPasswordController.php', 'displayOnView' => 'recoverPasseword.phtml'));
+                throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_INVALID_TOKEN, null, null);
             }
             
             //Získat jméno uživatele pro zobrazení na stránce

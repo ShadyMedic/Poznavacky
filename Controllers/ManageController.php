@@ -18,7 +18,7 @@ class ManageController extends Controller
         {
             if (!isset($_SESSION['selection']['class']))
             {
-                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN, null, null, array('originFile' => 'ManageController.php', 'displayOnView' => 'manage.phtml'));
+                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN, null, null);
             }
         }
         catch (AccessDeniedException $e)

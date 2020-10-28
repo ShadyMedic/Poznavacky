@@ -82,7 +82,7 @@ class TestGroupsManager
         }
         else
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_MEMBER_IN_CLASS, null, null, array('originFile' => 'TestGroupsManager.php', 'displayOnView' => 'menu.phtml', 'menuTableLevel' => 1));
+            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_MEMBER_IN_CLASS, null, null);
         }
         
         return $table;
@@ -135,7 +135,7 @@ class TestGroupsManager
         }
         else
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_HAVING_ACCESS_TO_GROUP, null, null, array('originFile' => 'TestGroupsManager.php', 'displayOnView' => 'menu.phtml', 'menuTableLevel' => 2));
+            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_HAVING_ACCESS_TO_GROUP, null, null);
         }
         
         return $table;

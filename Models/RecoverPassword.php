@@ -20,7 +20,7 @@ class RecoverPassword
     {
         if (!isset($POSTdata['email']))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_EMAIL, null, null, array('originFile' => 'RecoverPassword.php', 'displayOnView' => 'index.phtml', 'form' => 'passRecovery'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_EMAIL, null, null);
         }
         $email = $POSTdata['email'];
         

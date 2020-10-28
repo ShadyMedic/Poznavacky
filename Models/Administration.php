@@ -363,11 +363,11 @@ class Administration
     public function sendEmail(string $addressee, string $subject, string $rawMessage, string $rawFooter, string $sender, string $fromAddress)
     {
         //Kontrola platnosti e-mailů
-        if (!filter_var($addressee, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
-        if (!filter_var($fromAddress, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
+        if (!filter_var($addressee, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS, null, null); }
+        if (!filter_var($fromAddress, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS, null, null); }
         
         //Kontrola vyplněnosti ostatních polí
-        if (mb_strlen($subject) === 0 || mb_strlen($rawMessage) === 0 || mb_strlen($sender) === 0){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_EMPTY_FIELDS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
+        if (mb_strlen($subject) === 0 || mb_strlen($rawMessage) === 0 || mb_strlen($sender) === 0){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_EMPTY_FIELDS, null, null); }
         
         $emailBody = $this->previewEmail($rawMessage, $rawFooter);
         $emailSender = new EmailSender();

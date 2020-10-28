@@ -20,7 +20,7 @@ class AnswerChecker
     {
         if (!isset($_SESSION['testAnswers'][$questionNum]))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_TEST_ANSWER_CHECK_INVALID_QUESTION, null, null, array('originalFile' => 'AnswerChecker.php', 'displayOnView' => 'test.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_TEST_ANSWER_CHECK_INVALID_QUESTION, null, null);
         }
         $correct = $_SESSION['testAnswers'][$questionNum];
         $this->lastSavedAnswer = $correct;

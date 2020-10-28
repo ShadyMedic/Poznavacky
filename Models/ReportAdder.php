@@ -35,7 +35,7 @@ class ReportAdder
         
         if (!in_array($reason, $availableReasons, true))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_REASON, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_REASON, null, null);
         }
         
         //Kontrola vyplnění dodatečných informací (jsou-li potřeba)
@@ -44,14 +44,14 @@ class ReportAdder
             //Kontrola, zda je specifikován jeden z časových intervalů
             if (!in_array($additionalInformation, Report::LONG_LOADING_AVAILABLE_DELAYS))
             {
-                throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+                throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null);
             }
         }
         if ($reason === Report::REASON_OTHER || $reason === Report::REASON_OTHER_ADMIN)
         {
             if (!mb_strlen($additionalInformation) > 0)
             {
-                throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+                throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_ADDITIONAL_INFORMATION, null, null);
             }
         }
         
@@ -79,7 +79,7 @@ class ReportAdder
         //Obrázek nebyl v databázi podle zdroje nalezen
         if ($dbResult === false)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_UNKNOWN_PICTURE, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_UNKNOWN_PICTURE, null, null);
         }
         
         $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);

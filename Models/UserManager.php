@@ -82,7 +82,7 @@ class UserManager
         }
         else
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null, array('originFile' => 'UserManager.php', 'requestedIndex' => $index));
+            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_LOGGED_IN, null, null);
         }
     }
 }

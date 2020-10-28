@@ -57,7 +57,7 @@ class PictureAdder
         //Přírodnina s tímto názvem ve zvolené poznávačce neexistuje
         if ($i === count($naturals))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL, null, null, array('originFile' => 'PictureAdder.php', 'displayOnView' => 'addPictures.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL, null, null);
         }
         
         $natural = $naturals[$i];
@@ -76,13 +76,13 @@ class PictureAdder
         
         if ($typeCheck === false)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_FORMAT, null, null, array('originFile' => 'PictureAdder.php', 'displayOnView' => 'addPictures.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_FORMAT, null, null);
         }
         
         //Ověření, zda již obrázek u stejné přírodniny není nahrán
         if ($natural->pictureExists($url))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_DUPLICATE_PICTURE, null, null, array('originFile' => 'PictureAdder.php', 'displayOnView' => 'addPictures.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_DUPLICATE_PICTURE, null, null);
         }
         
         return $natural;
@@ -100,7 +100,7 @@ class PictureAdder
         //Vložení obrázku do databáze
         if (!$natural->addPicture($url))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_UNEXPECTED, null, null, array('originFile' => 'PictureAdder.php', 'displayOnView' => 'addPictures.phtml'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_UNEXPECTED, null, null);
         }
         
         //Zvýšení počtu přidaných obrázků u uživatele
