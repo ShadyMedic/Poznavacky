@@ -14,6 +14,8 @@ class ReportsController extends Controller
     {
         $group = $_SESSION['selection']['group'];
         $this->data['reports'] = $group->getReports();
+        $this->data['naturalsInGroup'] = $group->getNaturals();
+        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName().'/manage/tests';
         
         $this->pageHeader['title'] = 'Řešit hlášení';
         $this->pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
@@ -21,8 +23,6 @@ class ReportsController extends Controller
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/resolveReports.js');
         $this->pageHeader['bodyId'] = 'resolveReports';
-        
-        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName().'/manage/tests';
         
         $this->view = 'reports';
     }

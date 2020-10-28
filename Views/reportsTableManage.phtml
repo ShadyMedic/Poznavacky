@@ -11,7 +11,6 @@ button img {
 </style>
 <table id="reports-table">
     <tr>
-        <th>Část</th>
         <th>Přírodnina</th>
         <th>Zdroj</th>
         <th>Důvod</th>
@@ -24,12 +23,11 @@ button img {
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
         <tr class="picture-id<?= $report->getPictureId() ?>">
-            <td><?= $report->getPartWithPicture()->getName() ?></td>
             <td>
             	<select disabled class='report-field'>
             	<option selected hidden><?= $report->getNaturalName() ?></option>
-            	<?php foreach($report->getPicture()->getNatural()->getPart()->getGroup()->getNaturals() as $natural) : ?>
-            		<option data-part-name="<?= $natural->getPart()->getName() ?>"><?= $natural->getName() ?></option>
+            	<?php foreach($naturalsInGroup as $natural) : ?>
+            		<option><?= $natural->getName() ?></option>
             	<?php endforeach ?>
         		</select>
         	</td>
