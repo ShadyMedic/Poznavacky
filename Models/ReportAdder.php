@@ -69,8 +69,12 @@ class ReportAdder
         '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].'
         FROM '.Picture::TABLE_NAME.'
         JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
-        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
-        ', array($url, $this->group->getId()), false);  //TODO - Natural::COLUMN_DICTIONARY['group'] již neexistuje (předchozí řádek)
+        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' IN (
+            SELECT prirodniny_id FROM prirodniny_casti WHERE casti_id IN (
+                SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?
+            )
+        );
+        ', array($url, $this->group->getId()), false);
         
         //Obrázek nebyl v databázi podle zdroje nalezen
         if ($dbResult === false)

@@ -127,23 +127,26 @@ class Group extends DatabaseItem
      */
     public function getNaturals()
     {
-        if (!$this->isDefined($this->parts)){ $this->loadParts(); }
-        
-        $allPartsIds = array();
-        foreach ($this->parts as $part)
-        {
-            $allPartsIds[] = $part->getId();
-        }
+        $this->loadIfNotLoaded($this->id);
+        $this->loadIfNotLoaded($this->class);
         
         $allNaturals = array();
         Db::connect();
-        //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
-        $in = str_repeat('?,', count($allPartsIds) - 1).'?';
-        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);  //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje
+        $result = Db::fetchQuery('
+            SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' 
+            FROM '.Natural::TABLE_NAME.' 
+            WHERE '.Natural::COLUMN_DICTIONARY['id'].' IN (
+                SELECT prirodniny_id FROM prirodniny_casti 
+                WHERE casti_id IN (
+                    SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.' 
+                    WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?
+                )
+            );
+        ', array($this->id), true);
         foreach ($result as $naturalData)
         {
             $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
-            $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null);
+            $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], $this->class);
             $allNaturals[] = $natural;
         }
         return $allNaturals;
@@ -225,8 +228,16 @@ class Group extends DatabaseItem
             JOIN '.Picture::TABLE_NAME.' ON '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['picture'].' = '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].'
             JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
             WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.')
-            AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
-        ', $sqlArguments, true);  //TODO - Natural::COLUMN_DICTIONARY['group'] již neexistuje (předchozí řádek)
+            AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' IN (
+                SELECT prirodniny_id 
+                FROM prirodniny_casti 
+                WHERE casti_id IN (
+                    SELECT '.Part::COLUMN_DICTIONARY['id'].' 
+                    FROM '.Part::TABLE_NAME.' 
+                    WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?
+                )
+            );
+        ', $sqlArguments, true);
         
         if ($result === false)
         {

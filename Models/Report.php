@@ -106,25 +106,37 @@ class Report extends DatabaseItem
      * Metoda navracející řetězec se zařazením obrázku ve formátu <Název třídy> / <Název poznávačky> / <Název části> / <Název přírodniny>
      * @return string Řetězec obsahující cestu k obrázku
      */
-    public function getPicturePath()
-    {
-        $this->loadIfNotLoaded($this->picture);
-        $natural = $this->picture->getNatural();
-        $part = $natural->getPart();  //TODO - Natural->getPart() již neexistuje
-        $group = $part->getGroup();
-        $class = $group->getClass();
-        return $class->getName().' / '.$group->getName().' / '.$part->getName();
+    public function getPicturePaths()
+    {   
+        $allPaths = array();
+        foreach ($this->getPartsWithPicture() as $part)
+        {
+            $allPaths[] = $part->getGroup()->getClass()->getName().' / '.$part->getGroup()->getName().' / '.$part->getName();
+        }
+        return $allPaths;
     }
     
     /**
-     * Metoda navracející objekt části, do které patří nahlášený obrázek
-     * @return Part Objekt části, do které nahlášený obrázek patří
+     * Metoda navracející pole objektů částí, do kterých patří přírodnina, které patří nahlášený obrázek
+     * @throws NoDataException Pokud není přírodnina, se kterou je obrázek spojen nalezena v databázi nebo není přiřazena k žádné části
+     * @return Part[] Pole objektů částí, pouze s vyplněným ID, ve kterých se obrázek může zobrazit
      */
-    public function getPartWithPicture()
+    public function getPartsWithPicture()
     {
         $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
-        return $natural->getPart();  //TODO - Natural->getPart() již neexistuje
+        
+        Db::connect();
+        $result = Db::fetchQuery('SELECT casti_id FROM prirodniny_casti WHERE prirodniny_id = ?', array($natural->getId()), true);
+        
+        if (!$result) { throw new NoDataException(NoDataException::NATURAL_UNASSIGNED); }
+        $allParts = array();
+        foreach ($result as $partInfo)
+        {
+            $partId = $partInfo['casti_id'];
+            $allParts[] = new Part(false, $partId);
+        }
+        return $allParts;
     }
     
     /**
