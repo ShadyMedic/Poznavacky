@@ -65,14 +65,12 @@ class ReportAdder
         Db::connect();
         $dbResult = Db::fetchQuery('
         SELECT
-        '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['name'].' AS "p_nazev", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['naturalsCount'].', '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "p_obrazky",
-        '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "n_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "n_obrazky",
+        '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].', 
         '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].', '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].'
         FROM '.Picture::TABLE_NAME.'
         JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
-        JOIN '.Part::TABLE_NAME.' ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].'
         WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
-        ', array($url, $this->group->getId()), false);  //TODO - Natural::COLUMN_DICTIONARY['group'] již neexistuje (předchozí řádek)  //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje (2 řádky zpátky)
+        ', array($url, $this->group->getId()), false);  //TODO - Natural::COLUMN_DICTIONARY['group'] již neexistuje (předchozí řádek)
         
         //Obrázek nebyl v databázi podle zdroje nalezen
         if ($dbResult === false)
@@ -80,10 +78,8 @@ class ReportAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_UNKNOWN_PICTURE, null, null, array('originalFile' => 'ReportAdder.php', 'displayOnView' => 'learn.phtml|test.phtml'));
         }
         
-        $part = new Part(false, $dbResult[Part::COLUMN_DICTIONARY['id']]);
-        $part->initialize($dbResult['p_nazev'], $this->group, null, $dbResult[Part::COLUMN_DICTIONARY['naturalsCount']], $dbResult['p_obrazky']);
         $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);
-        $natural->initialize($dbResult['n_nazev'], null, $dbResult['n_obrazky'], null, $this->group, $part);
+        $natural->initialize($dbResult[Natural::COLUMN_DICTIONARY['name']], null, $dbResult[Natural::COLUMN_DICTIONARY['picturesCount']], null);
         $picture = new Picture(false, $dbResult[Picture::COLUMN_DICTIONARY['id']]);
         $picture->initialize($url, $natural, $part, $dbResult[Picture::COLUMN_DICTIONARY['enabled']], null);
         

@@ -45,7 +45,7 @@ class ReportResolver
     {
         $picture = new Picture(false, $pictureId);
         $natural = new Natural(false, 0);
-        $natural->initialize($newNaturalName, null, null, null, $this->group, null);
+        $natural->initialize($newNaturalName, null, null, null);
         
         try
         {

@@ -97,17 +97,13 @@ class Administration
             '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
             '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
             '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky",
-            '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].' AS "casti_id", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['name'].' AS "casti_nazev", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['naturalsCount'].' AS "casti_prirodniny", '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['picturesCount'].' AS "casti_obrazky",
-            '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['id'].' AS "poznavacky_id", '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['name'].' AS "poznavacky_nazev", '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['partsCount'].' AS "poznavacky_casti",
             '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].' AS "tridy_id", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].' AS "tridy_nazev"
             FROM '.Report::TABLE_NAME.'
             JOIN '.Picture::TABLE_NAME.' ON '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['picture'].' = '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].'
             JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
-            JOIN '.Part::TABLE_NAME.' ON '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' = '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['id'].'
-            JOIN '.Group::TABLE_NAME.' ON '.Part::TABLE_NAME.'.'.Part::COLUMN_DICTIONARY['group'].' = '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['id'].'
             JOIN '.ClassObject::TABLE_NAME.' ON '.Group::TABLE_NAME.'.'.Group::COLUMN_DICTIONARY['class'].' = '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].'
             WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.');
-        ', Report::ADMIN_REQUIRING_REASONS, true);  //TODO - Natural::COLUMN_DICTIONARY['part'] již neexistuje (4 řádky zpátky)
+        ', Report::ADMIN_REQUIRING_REASONS, true);
         
         if ($result === false)
         {
@@ -122,14 +118,10 @@ class Administration
             //V případě, že tohle bude po mně někdo muset předělávat... tak se ti ty nešťastníku omlouvám
             $class = new ClassObject(false, $reportInfo['tridy_id']);
             $class->initialize($reportInfo['tridy_nazev']);
-            $group = new Group(false, $reportInfo['poznavacky_id']);
-            $group->initialize($reportInfo['poznavacky_nazev'], $class, null, $reportInfo['poznavacky_casti']);
-            $part = new Part(false, $reportInfo['casti_id']);
-            $part->initialize($reportInfo['casti_nazev'], $group, null, $reportInfo['casti_prirodniny'], $reportInfo['casti_obrazky']);
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
-            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $class, $group, $part);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], $class);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
-            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $part, $reportInfo['obrazky_povoleno'], null);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno'], null);
             $report = new Report(false, $reportInfo['hlaseni_id']);
             $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;
@@ -300,8 +292,7 @@ class Administration
     {
         $picture = new Picture(false, $pictureId);
         $natural = new Natural(false, 0);
-        $group = $picture->getNatural()->getGroup();  //TODO - Natural->getGroup() již neexistuje
-        $natural->initialize($newNaturalName, null, null, null, $group, null);  //Je nutné specifikovat poznávačku staré přírodniny, aby bylo jasné, ve které poznávačce se má hledat nová přířodnina
+        $natural->initialize($newNaturalName, null, null, null);
         $picture->updatePicture($natural, $newUrl);
         $picture->save();
     }
