@@ -81,7 +81,7 @@ class ReportAdder
         $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);
         $natural->initialize($dbResult[Natural::COLUMN_DICTIONARY['name']], null, $dbResult[Natural::COLUMN_DICTIONARY['picturesCount']], null);
         $picture = new Picture(false, $dbResult[Picture::COLUMN_DICTIONARY['id']]);
-        $picture->initialize($url, $natural, $part, $dbResult[Picture::COLUMN_DICTIONARY['enabled']], null);
+        $picture->initialize($url, $natural, $dbResult[Picture::COLUMN_DICTIONARY['enabled']], null);
         
         $report = new Report(false, 0);    //Pokus s hlášením, které již v datbázi existuje, ale u kterého neznáme ID
         $report->initialize($picture, $reason, $additionalInformation, null);

@@ -126,7 +126,7 @@ class Natural extends DatabaseItem
             {
                 $status = ($pictureData[Picture::COLUMN_DICTIONARY['enabled']] === 1) ? true : false;
                 $picture = new Picture(false, $pictureData[Picture::COLUMN_DICTIONARY['id']]);
-                $picture->initialize($pictureData[Picture::COLUMN_DICTIONARY['src']], $this, $this->part, $status, null);
+                $picture->initialize($pictureData[Picture::COLUMN_DICTIONARY['src']], $this, $status, null);
                 $this->pictures[] = $picture;
             }
         }
@@ -139,11 +139,9 @@ class Natural extends DatabaseItem
      * @return boolean TRUE, pokud je obrázek přidán úspěšně, FALSE, pokud ne
      */
     public function addPicture(string $url)
-    {
-        $this->loadIfNotLoaded($this->part);
-        
+    {   
         $picture = new Picture(true);
-        $picture->initialize($url, $this, $this->part, null, null);
+        $picture->initialize($url, $this, null, null);
         $result = $picture->save();
         if ($result)
         {
