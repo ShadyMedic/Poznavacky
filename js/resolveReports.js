@@ -55,20 +55,16 @@ function cancelPictureEdit()
 
 	$("#editable-report-row").removeAttr("id");
 }
-function confirmPictureEdit(picId, asAdmin = false)
+function confirmPictureEdit(picId)
 {
 	//Uložení nových hodnot
 	for (let i = 0; i <= 1; i++)
 	{
 		currentReportValues[i] = $("#editable-report-row .report-field:eq("+ i +")").val();
 	}
-	//Uložení názvu nové části, do které nová příronina patří
-	let newPart = $("#editable-report-row select option:selected").attr("data-part-name");
-	
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
 	//Odeslat data na server
-	$.post(ajaxUrl,
+	$.post("report-action",
 		{
 			action: 'update picture',
 			pictureId: picId,
@@ -97,21 +93,6 @@ function confirmPictureEdit(picId, asAdmin = false)
 	let reportsToUpdateCount = $("#reports-table .picture-id" + picId).length;
 	for (let i = 0; i < reportsToUpdateCount; i++)
 	{
-		//Změna názvu části v prvním sloupci
-		if (asAdmin)
-		{
-			//Změna názvu části nahrazením části textu za posledním lomítkem
-			let content = $("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text();
-			let stringParts = content.split(" / ");
-			stringParts[2] = newPart;
-			content = stringParts.join(" / ");
-			$("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text(content);
-		}
-		else
-		{
-		    //Změna názvu části nahrazením celého obsahu
-			$("#reports-table .picture-id" + picId + ":eq(" + i + ") td:eq(0)").text(newPart);
-		}
 		for (let j = 0; j <= 1; j++)
 		{
 			$("#reports-table .picture-id" + picId + ":eq(" + i + ") .report-field:eq("+ j +")").val(currentReportValues[j]);

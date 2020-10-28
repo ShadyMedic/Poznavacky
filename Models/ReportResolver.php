@@ -45,18 +45,26 @@ class ReportResolver
     {
         $picture = new Picture(false, $pictureId);
         $natural = new Natural(false, 0);
-        $natural->initialize($newNaturalName, null, null, null, $this->group, null);
+        $natural->initialize($newNaturalName, null, null, $this->group->getClass());
         
         try
         {
-            $natural->load();   //Pokud není v té samé poznávačce nalezena přírodnina se stejným jménem, je vyhozena výjimka
+            $picture->updatePicture($natural, $newUrl, $this->group);
         }
-        catch (NoDataException $e)
+        catch (AccessDeniedException $e)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_EDIT_PICTURE_ANOTHER_GROUP);
+            if ($e->getMessage() === AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL)
+            {
+                //Nahraď hlášku
+                throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_EDIT_PICTURE_ANOTHER_GROUP);
+            }
+            else
+            {
+                //Nech hlášku tak, jak je
+                throw $e;
+            }
         }
         
-        $picture->updatePicture($natural, $newUrl);
         $picture->save();
     }
     

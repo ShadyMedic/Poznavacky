@@ -31,6 +31,7 @@ class Group extends DatabaseItem
     protected $partsCount;
     
     protected $parts;
+    protected $naturals;
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -127,27 +128,55 @@ class Group extends DatabaseItem
      */
     public function getNaturals()
     {
-        if (!$this->isDefined($this->parts)){ $this->loadParts(); }
-        
-        $allPartsIds = array();
-        foreach ($this->parts as $part)
+        if (!$this->isDefined($this->parts))
         {
-            $allPartsIds[] = $part->getId();
+            $this->loadNaturals();
         }
+        return $this->naturals;
+    }
+    
+    /**
+     * Metoda načítající seznam přírodnin patřících do této poznávačky a ukládající jejich instance do vlastnosti $naturals jako pole
+     */
+    private function loadNaturals()
+    {
+        $this->loadIfNotLoaded($this->id);
+        $this->loadIfNotLoaded($this->class);
         
         $allNaturals = array();
         Db::connect();
-        //Problém jak vložit do SQL hodnoty z pole vyřešen podle této odpovědi na StackOverflow: https://stackoverflow.com/a/14767651
-        $in = str_repeat('?,', count($allPartsIds) - 1).'?';
-        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].','.Natural::COLUMN_DICTIONARY['part'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['part'].' IN ('.$in.')', $allPartsIds, true);
+        $result = Db::fetchQuery('
+            SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].'
+            FROM '.Natural::TABLE_NAME.'
+            WHERE '.Natural::COLUMN_DICTIONARY['id'].' IN (
+                SELECT prirodniny_id FROM prirodniny_casti
+                WHERE casti_id IN (
+                    SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.'
+                    WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?
+                )
+            );
+        ', array($this->id), true);
         foreach ($result as $naturalData)
         {
-            $part = $this->getPartById($naturalData[Natural::COLUMN_DICTIONARY['part']]);
             $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
-            $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, $this, $part);
+            $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], $this->class);
             $allNaturals[] = $natural;
         }
-        return $allNaturals;
+        $this->naturals = $allNaturals;
+    }
+    
+    /**
+     * Metoda zjišťující, zda se přírodnina s daným ID vyskytuje v této poznávačce
+     * @param Natural $natural Objekt přírodniny pro ověření (mělo by být vyplněné její ID)
+     * @return boolean TRUE, pokud se poskytnutá přírodnina nachází v této poznávačce, FALSE, pokud ne
+     */
+    public function containsNatural(Natural $natural)
+    {
+        foreach ($this->getNaturals() as $presentNatural)
+        {
+            if ($presentNatural->getId() === $natural->getId()) { return true; }
+        }
+        return false;
     }
     
     /**
@@ -221,12 +250,20 @@ class Group extends DatabaseItem
             SELECT
             '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
             '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
-            '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['part'].' AS "prirodniny_cast"
+            '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky" 
             FROM hlaseni
             JOIN '.Picture::TABLE_NAME.' ON '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['picture'].' = '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].'
             JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
             WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.')
-            AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['group'].' = ?;
+            AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' IN (
+                SELECT prirodniny_id 
+                FROM prirodniny_casti 
+                WHERE casti_id IN (
+                    SELECT '.Part::COLUMN_DICTIONARY['id'].' 
+                    FROM '.Part::TABLE_NAME.' 
+                    WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?
+                )
+            );
         ', $sqlArguments, true);
         
         if ($result === false)
@@ -239,9 +276,9 @@ class Group extends DatabaseItem
         foreach ($result as $reportInfo)
         {
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
-            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null, $this, new Part(false, $reportInfo['prirodniny_cast']));
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
-            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, null, $reportInfo['obrazky_povoleno'], $natural->getPart());
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno'], null);
             $report = new Report(false, $reportInfo['hlaseni_id']);
             $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;

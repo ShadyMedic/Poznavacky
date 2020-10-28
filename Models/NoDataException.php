@@ -17,6 +17,7 @@ class NoDataException extends Exception
     const UNKNOWN_USER = 'Uživatel nenalezen';
     const UNKNOWN_INVITATION = 'Pozvánka nenalezena';
     const UNKNOWN_NAME_CHANGE_REQUEST = 'Žádost o změnu jména nenalezena';
+    const NATURAL_UNASSIGNED = 'Tato přířodnina není přiřazena do žádné poznávačky nebo neexistuje';
     
     /**
      * Konstruktor podmínky

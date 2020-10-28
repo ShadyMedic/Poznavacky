@@ -1,0 +1,29 @@
+<h1>Poznávačky ve třídě</h1>
+<div id='testsManagement'>
+    <table id='testsTable'>
+        <tr>
+            <th>Název</th>
+            <th>Části</th>
+            <th>Akce</th>
+        </tr>
+        <?php foreach ($groups as $group) : ?>
+        <tr class='testsTableRow'>
+            <td class='testsTableCell'><?= $group->getName() ?></td>
+            <td class='testsTableCell'><?= $group->getPartsCount() ?></td>
+            <td class='testsTableCell'>
+                <button class='actionButton' onclick='window.location.href=window.location.href+"/<?= $group->getName() ?>/reports";' title='Spravovat hlášení'><img src='images/management.svg'></button>
+                <button class='actionButton' onclick='window.location.href=window.location.href+"/<?= $group->getName() ?>/edit";' title='Upravit poznávačku'><img src='images/pencil.svg'></button>
+                <button class='actionButton' onclick='deleteTest(<?= $group->getId() ?>,"<?= $group->getName(); ?>")' title='Odstranit poznávačku'><img src='images/cross.svg'/></button>
+            </td>
+        </tr>
+        <?php endforeach ?>
+    </table>
+    
+    <button id='createButton' class='actionButton' onclick='createTest()' title='Vytvořit novou poznávačku'><img src='images/plus.svg'></button>
+    <div id='createForm' style="display:none;">
+        <div id='createInfo'>Zadejte název nové poznávačky. Do poznávačky budete moci přidat části a přírodniny později.</div>
+        <input id='createInput' placeholder='Název poznávačky' type='text' class='text' maxlength=31>
+        <button onclick='createTestSubmit()' class='button'>Vytvořit</button>
+        <button onclick='createTestHide()' class='button'>Zrušit</button>
+    </div>
+</div>

@@ -13,16 +13,13 @@
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
         <tr class="picture-id<?= $report->getPictureId() ?>">
-            <td><?= $report->getPicturePath() ?></td>
             <td>
-            	<select disabled class='report-field'>
-            	<option selected hidden><?= $report->getNaturalName() ?></option>
-            	<?php foreach($report->getPicture()->getNatural()->getPart()->getGroup()->getNaturals() as $natural) : ?>
-            		<option data-part-name="<?= $natural->getPart()->getName() ?>"><?= $natural->getName() ?></option>
-            	<?php endforeach ?>
-        		</select>
-        	</td>
-            <td><input type=url readonly value="<?= $report->getUrl() ?>" class='report-field'/></td>
+            <?php foreach ($report->getPicturePaths() as $path) : ?>
+        		<li><?= $path ?></li>
+        	<?php endforeach ?>
+            </td>
+            <td><?= $report->getUrl() ?></td>
+            <td><?= $report->getUrl() ?></td>
             <td><?= $report->getReason() ?></td>
             <td><?= $report->getAdditionalInformation() ?>
             <td><?= $report->getReportersCount() ?></td>
@@ -30,17 +27,6 @@
                 <button class='report-action active-btn' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
                     <img src='images/eye.svg'/>
                 </button>
-                <button class='report-action active-btn' onclick='editPicture(event)' title='Upravit údaje obrázku'>
-                    <img src='images/pencil.svg'/>
-                </button>
-                <div class="report-edit-buttons" style="display:none;">
-                    <button class='report-edit-action active-btn' onclick='confirmPictureEdit(<?= $report->getPictureId() ?>, true)' title='Uložit'>
-                    	<img src='images/tick.svg'/>
-                    </button>
-                    <button class='report-edit-action active-btn' onclick='cancelPictureEdit()' title='Zrušit'>
-                    	<img src='images/cross.svg'/>
-                    </button>
-                </div>
                 <button class='report-action active-btn' onclick='disablePicture(event, <?= $report->getPictureId() ?>, true)' title='Skrýt obrázek'>
                     <img src='images/dot.svg'/>
                 </button>

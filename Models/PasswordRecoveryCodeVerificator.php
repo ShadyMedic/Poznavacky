@@ -13,23 +13,12 @@ class PasswordRecoveryCodeVerificator
     public static function verifyCode(string $code)
     {
         Db::connect();
-        $result = Db::fetchQuery('SELECT uzivatele_id FROM obnoveni_hesel WHERE kod = ?', array(md5($code)), false);
+        $result = Db::fetchQuery('SELECT uzivatele_id FROM obnoveni_hesel WHERE kod = ? AND expirace > ?', array(md5($code), time()), false);
         if (!$result)
         {
             return false;
         }
         return $result['uzivatele_id'];
-    }
-    
-    /**
-     * Metoda odstraňující kódy pro obnovu hesla vytvořené déle než před jedním dnem z databáze
-     */
-    public static function deleteOutdatedCodes()
-    {
-        Db::connect();
-        
-        $yesterday = new DateTime('1 day ago');
-        Db::executeQuery('DELETE FROM obnoveni_hesel WHERE vytvoreno < ?', array($yesterday->format('Y-m-d H:i:s')));
     }
     
     /**

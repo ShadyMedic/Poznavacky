@@ -77,7 +77,7 @@ class LoginUser
     private static function verifyCode(string $code)
     {
         Db::connect();
-        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? LIMIT 1);', array(md5($code)), false);
+        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? AND expirace > ? LIMIT 1);', array(md5($code), time()), false);
         if ($userData === FALSE) {throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null, array('originFile' => 'LoginUser.php', 'displayOnView' => 'index.phtml', 'form' => 'login'));}
         else {return $userData;}
         return false;
@@ -111,7 +111,7 @@ class LoginUser
         //Uložit kód do databáze
         try
         {
-            Db::executeQuery('INSERT INTO sezeni (kod_cookie, uzivatele_id) VALUES(?,?)', array(md5($code), $userId));
+            Db::executeQuery('INSERT INTO sezeni (kod_cookie, uzivatele_id, expirace) VALUES(?,?,?)', array(md5($code), $userId, time() + self::INSTALOGIN_COOKIE_LIFESPAN));
         }
         catch (DatabaseException $e)
         {

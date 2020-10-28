@@ -18,7 +18,7 @@ class LearnPicturesController extends Controller
         $naturalName = $_POST['name'];
         
         $natural = new Natural(false);
-        $natural->initialize($naturalName, null, null, $class, $group, null);
+        $natural->initialize($naturalName, null, null, $class);
         $pictures = $natural->getPictures();
         
         $picturesArr = array();
