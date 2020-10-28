@@ -276,21 +276,6 @@ class Administration
     }
     
     /**
-     * Metoda upravující přírodninu a/nebo adresu obrázku uloženého v databázi
-     * @param int $pictureId ID obrázku, jehož data chceme změnit
-     * @param string $newNaturalName Název nové přírodniny, kterou obrázek zobrazuje
-     * @param string $newUrl Nová adresa obrázku
-     */
-    public function editPicture(int $pictureId, string $newNaturalName, string $newUrl)
-    {
-        $picture = new Picture(false, $pictureId);
-        $natural = new Natural(false, 0);
-        $natural->initialize($newNaturalName, null, null, null);
-        $picture->updatePicture($natural, $newUrl);
-        $picture->save();
-    }
-    
-    /**
      * Metoda skrývající obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
      */
