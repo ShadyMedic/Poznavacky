@@ -31,6 +31,7 @@ class Group extends DatabaseItem
     protected $partsCount;
     
     protected $parts;
+    protected $naturals;
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -127,18 +128,30 @@ class Group extends DatabaseItem
      */
     public function getNaturals()
     {
+        if (!$this->isDefined($this->parts))
+        {
+            $this->loadNaturals();
+        }
+        return $this->naturals;
+    }
+    
+    /**
+     * Metoda načítající seznam přírodnin patřících do této poznávačky a ukládající jejich instance do vlastnosti $naturals jako pole
+     */
+    private function loadNaturals()
+    {
         $this->loadIfNotLoaded($this->id);
         $this->loadIfNotLoaded($this->class);
         
         $allNaturals = array();
         Db::connect();
         $result = Db::fetchQuery('
-            SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' 
-            FROM '.Natural::TABLE_NAME.' 
+            SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].'
+            FROM '.Natural::TABLE_NAME.'
             WHERE '.Natural::COLUMN_DICTIONARY['id'].' IN (
-                SELECT prirodniny_id FROM prirodniny_casti 
+                SELECT prirodniny_id FROM prirodniny_casti
                 WHERE casti_id IN (
-                    SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.' 
+                    SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.'
                     WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?
                 )
             );
@@ -149,7 +162,21 @@ class Group extends DatabaseItem
             $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], $this->class);
             $allNaturals[] = $natural;
         }
-        return $allNaturals;
+        $this->naturals = $allNaturals;
+    }
+    
+    /**
+     * Metoda zjišťující, zda se přírodnina s daným ID vyskytuje v této poznávačce
+     * @param Natural $natural Objekt přírodniny pro ověření (mělo by být vyplněné její ID)
+     * @return boolean TRUE, pokud se poskytnutá přírodnina nachází v této poznávačce, FALSE, pokud ne
+     */
+    public function containsNatural(Natural $natural)
+    {
+        foreach ($this->getNaturals() as $presentNatural)
+        {
+            if ($presentNatural->getId() === $natural->getId()) { return true; }
+        }
+        return false;
     }
     
     /**

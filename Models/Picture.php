@@ -91,23 +91,17 @@ class Picture extends DatabaseItem
      * Údaje v databázi nejsou aktualizovány - pro potvrzení změn je nutné zavolat metodu Picture::save()
      * @param Natural $newNatural Objekt reprezentující nově zvolenou přírodninu
      * @param string $newUrl Nová adresa k obrázku
+     * @param Group $group Objekt reprezentující poznávačku, do které musí nová přírodnina patřit (pro kontrolu)
      * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou údaje tohoto obrázku úspěšně aktualizovány
      */
-    public function updatePicture(Natural $newNatural, string $newUrl)
+    public function updatePicture(Natural $newNatural, string $newUrl, Group $group)
     {
-        $this->loadIfNotLoaded($this->natural);
-        //$this->loadIfNotLoaded($this->id);
-        
         //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
-        //$checker = new PictureAdder($this->natural->getGroup());
-        //$checker->checkData($newNatural->getName(), $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
+        $checker = new PictureAdder($group);
+        $checker->checkData($newNatural->getName(), $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
         
         //Kontrola dat OK
-        
-        //Upravit údaje v databázi
-        //Db::connect();
-        //Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['natural'].' = ?, '.self::COLUMN_DICTIONARY['src'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newNatural->getId(), $newUrl, $this->id));
         
         //Aktualizovat údaje ve vlastnostech této instance
         $this->natural = $newNatural;
