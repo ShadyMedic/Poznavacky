@@ -49,11 +49,11 @@ class RegisterUser
         //Kontrola délky jména, hesla a e-mailu
         try
         {
-            $validator->checkLength($name, 4, 15, 0);
-            $validator->checkLength($pass, 6, 31, 1);
+            $validator->checkLength($name, DataValidator::USER_NAME_MIN_LENGTH, DataValidator::USER_NAME_MAX_LENGTH, DataValidator::TYPE_USER_NAME);
+            $validator->checkLength($pass, DataValidator::USER_PASSWORD_MIN_LENGTH, DataValidator::USER_PASSWORD_MAX_LENGTH, DataValidator::TYPE_USER_PASSWORD);
             if (!empty($email))    //Pouze, pokud je e-mail vyplněn
             {
-                $validator->checkLength($email, 0, 255, 2);
+                $validator->checkLength($email, DataValidator::USER_EMAIL_MIN_LENGTH, DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAILE);
             }
         }
         catch(RangeException $e)
@@ -90,8 +90,8 @@ class RegisterUser
         //Kontrola znaků ve jméně a hesle
         try
         {
-            $validator->checkCharacters($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ', 0);
-            $validator->checkCharacters($pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'', 1);
+            $validator->checkCharacters($name, DataValidator::USER_NAME_ALLOWED_CHARS, DataValidator::TYPE_USER_NAME);
+            $validator->checkCharacters($pass, DataValidator::USER_PASSWORD_ALLOWED_CHARS, DataValidator::TYPE_USER_PASSWORD);
         }
         catch (InvalidArgumentException $e)
         {
@@ -109,8 +109,8 @@ class RegisterUser
         //Kontrola unikátnosti jména a e-mailu
         try
         {
-            $validator->checkUniqueness($name, 0);
-            $validator->checkUniqueness($email, 2);
+            $validator->checkUniqueness($name, DataValidator::TYPE_USER_NAME);
+            $validator->checkUniqueness($email, DataValidator::TYPE_USER_EMAIL);
         }
         catch (InvalidArgumentException $e)
         {

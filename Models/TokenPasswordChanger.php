@@ -57,8 +57,8 @@ class TokenPasswordChanger
         $validator = new DataValidator();
         try
         {
-            $validator->checkLength($this->pass, 6, 31, 1);
-            $validator->checkCharacters($this->pass, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'', 1);
+            $validator->checkLength($this->pass, DataValidator::USER_PASSWORD_MIN_LENGTH, DataValidator::USER_PASSWORD_MAX_LENGTH, DataValidator::TYPE_USER_PASSWORD);
+            $validator->checkCharacters($this->pass, DataValidator::USER_PASSWORD_ALLOWED_CHARS, DataValidator::TYPE_USER_PASSWORD);
         }
         catch (RangeException $e)
         {

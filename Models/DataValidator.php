@@ -6,16 +6,40 @@
  */
 class DataValidator
 {
+    public const TYPE_USER_NAME = 0;
+    public const TYPE_USER_PASSWORD = 1;
+    public const TYPE_USER_EMAIL = 2;
+    public const TYPE_CLASS_NAME = 3;
+    public const TYPE_GROUP_NAME = 4;
+    
+    public const USER_NAME_MIN_LENGTH = 4;
+    public const USER_NAME_MAX_LENGTH = 15;
+    public const USER_PASSWORD_MIN_LENGTH = 6;
+    public const USER_PASSWORD_MAX_LENGTH = 31;
+    public const USER_EMAIL_MIN_LENGTH = 0;
+    public const USER_EMAIL_MAX_LENGTH = 255;
+    public const CLASS_NAME_MIN_LENGTH = 5;
+    public const CLASS_NAME_MAX_LENGTH = 31;
+    public const GROUP_NAME_MIN_LENGTH = 3;
+    public const GROUP_NAME_MAX_LENGTH = 31;
+    
+    public const USER_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ';
+    public const USER_PASSWORD_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'';
+    public const USER_EMAIL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@.!#$%&\'*+-/=?^_`{|}~';  //Inspirováno https://stackoverflow.com/a/2049510/14011077
+    public const CLASS_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
+    public const GROUP_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
+    
     /**
      * Metoda ověřující, zda se délka řetězce nachází mezi minimální a maximální hodnotou.
+     * Všechny parametry (kromě prvního) by měly nabývat hodnoty jedné z konstant této třídy.
      * @param string $subject Řetězec, jehož délku ověřujeme
      * @param int $min Minimální povolená délka řetězce (včetně)
      * @param int $max Maximální povolená délka řetězce (včetně)
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail, 3 pro název třídy
+     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - viz konstanty této třídy začínající na "TYPE_"
      * @throws RangeException Pokud délka řetězce nespadá mezi $min a $max. Zpráva výjimky je 'long' nebo 'short' podle toho, jaká hranice byla přesažena
      * @return boolean TRUE, pokud délka řetězce spadá mezi $min a $max
      */
-    public function checkLength($subject, int $min, int $max, int $stringType = null)
+    public function checkLength($subject, int $min, int $max, int $stringType)
     {
         if (mb_strlen($subject) > $max)
         {
@@ -30,13 +54,14 @@ class DataValidator
     
     /**
      * Metoda ověřující, zda se řetězec skládá pouze z povolených znaků
+     * Všechny parametry (kromě prvního) by měly nabývat hodnoty jedné z konstant této třídy.
      * @param string $subject Řetězec, jehož znaky ověřujeme
      * @param string $allowedChars Řetězec skládající se z výčtu všech povolených znaků
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno, 1 pro heslo, 2 pro e-mail (nepoužívané), 3 pro název třídy, 4 pro název poznávačky
+     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - viz konstanty této třídy začínající na "TYPE_"
      * @throws InvalidArgumentException Pokud se řetězec skládá i z jiných než povolených znaků
      * @returns boolean TRUE, pokud se řetězec skládá pouze z povolených znaků
      */
-    public function checkCharacters(string $subject, string $allowedChars, int $stringType = null)
+    public function checkCharacters(string $subject, string $allowedChars, int $stringType)
     {
         
         //Není nutné (v tomto případě to ani tak být nesmí) používat mb_strlent
@@ -50,10 +75,12 @@ class DataValidator
     }
     
     /**
-     * Metoda ověřující, zda se již řetězec v databázi (v tabulce uzivatele) nevyskytuje
+     * Metoda ověřující, zda se již řetězec v adekvátní databázové tabulce nevyskytuje
+     * Takto lze kontrolovat pouze uživatelské jméno, jméno třídy nebo uživatelský e-mail
      * @param string $subject Řetězec jehož unikátnost chceme zjistit
-     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - 0 pro jméno uživatele, 2 pro e-mail, 3 pro jméno třídy
+     * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - viz konstanty této třídy začínající na "TYPE_"
      * @throws InvalidArgumentException Pokud se již řetězec v databázi vyskytuje
+     * @throws BadMethodCallException Pokud druhý argument neoznačuje jméno uživatele, název třídy nebo e-mail uživatele
      * @return boolean TRUE, pokud se řetězec zatím v databázi nevyskytuje
      */
     public function checkUniqueness($subject, int $stringType)
@@ -61,14 +88,14 @@ class DataValidator
         Db::connect();
         switch ($stringType)
         {
-            case 0:
+            case self::TYPE_USER_NAME:
                 $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.User::COLUMN_DICTIONARY['name'].') AS "items" FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT('.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM '.UserNameChangeRequest::TABLE_NAME.' WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].'= ?) AS tmp', array($subject, $subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
                 }
                 break;
-            case 2:
+            case self::TYPE_USER_EMAIL:
                 if (empty($subject))
                 {
                     //Nevyplněný e-mail
@@ -80,12 +107,15 @@ class DataValidator
                     throw new InvalidArgumentException(null, $stringType);
                 }
                 break;
-            case 3:
+            case self::TYPE_CLASS_NAME:
                 $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.ClassObject::COLUMN_DICTIONARY['name'].') AS "items" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT('.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM '.ClassNameChangeRequest::TABLE_NAME.' WHERE '.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].'= ?) AS tmp', array($subject, $subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
                 }
+                break;
+            default:
+                throw new BadMethodCallException('Invalid string type');
         }
         return true;
     }

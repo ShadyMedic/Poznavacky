@@ -67,8 +67,8 @@ class NewClassRequester
         //Kontrola délky jména a znaků v něm
         try
         {
-            $validator->checkLength($name, 5, 31, 3);
-            $validator->checkCharacters($name, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-', 3);
+            $validator->checkLength($name, DataValidator::CLASS_NAME_MIN_LENGTH, DataValidator::CLASS_NAME_MAX_LENGTH, DataValidator::TYPE_CLASS_NAME);
+            $validator->checkCharacters($name, DataValidator::CLASS_NAME_ALLOWED_CHARS, DataValidator::TYPE_CLASS_NAME);
         }
         catch(RangeException $e)
         {
@@ -80,7 +80,7 @@ class NewClassRequester
         //Kontrola unikátnosti jména
         try
         {
-            $validator->checkUniqueness($name, 3);
+            $validator->checkUniqueness($name, DataValidator::TYPE_CLASS_NAME);
         }
         catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e); }
         

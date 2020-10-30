@@ -48,8 +48,8 @@ class GroupAdder
         //Kontrola, zda není název příliš krátký nebo dlouhý nebo neobsahuje nepovolené znaky
         try
         {
-            $validator->checkLength($groupName, 3, 31, 4);
-            $validator->checkCharacters($groupName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-', 4);
+            $validator->checkLength($groupName, DataValidator::GROUP_NAME_MIN_LENGTH, DataValidator::GROUP_NAME_MAX_LENGTH, DataValidator::TYPE_GROUP_NAME);
+            $validator->checkCharacters($groupName, DataValidator::GROUP_NAME_ALLOWED_CHARS, DataValidator::TYPE_GROUP_NAME);
         }
         catch(RangeException $e)
         {

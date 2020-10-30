@@ -99,7 +99,7 @@ class LoggedUser extends User
         $validator = new DataValidator();
         try
         {
-            $validator->checkLength($newName, 4, 15, 0);
+            $validator->checkLength($newName, DataValidator::USER_NAME_MIN_LENGTH, DataValidator::USER_NAME_MAX_LENGTH, DataValidator::TYPE_USER_NAME);
         }
         catch(RangeException $e)
         {
@@ -116,7 +116,7 @@ class LoggedUser extends User
         //Kontrola znaků ve jméně
         try
         {
-            $validator->checkCharacters($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ', 0);
+            $validator->checkCharacters($newName, DataValidator::USER_NAME_ALLOWED_CHARS, DataValidator::TYPE_USER_NAME);
         }
         catch (InvalidArgumentException $e)
         {
@@ -126,7 +126,7 @@ class LoggedUser extends User
         //Kontrola dostupnosti jména
         try
         {
-            $validator->checkUniqueness($newName, 0);
+            $validator->checkUniqueness($newName, DataValidator::TYPE_USER_NAME);
         }
         catch (InvalidArgumentException $e)
         {
@@ -177,7 +177,7 @@ class LoggedUser extends User
         $validator = new DataValidator();
         try
         {
-            $validator->checkLength($newPassword, 6, 31, 1);
+            $validator->checkLength($newPassword, DataValidator::USER_PASSWORD_MIN_LENGTH, DataValidator::USER_PASSWORD_MAX_LENGTH, DataValidator::TYPE_USER_PASSWORD);
         }
         catch (RangeException $e)
         {
@@ -194,7 +194,7 @@ class LoggedUser extends User
         //Kontrola znaků v novém hesle
         try
         {
-            $validator->checkCharacters($newPassword, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'', 1);
+            $validator->checkCharacters($newPassword, DataValidator::USER_PASSWORD_ALLOWED_CHARS, DataValidator::TYPE_USER_PASSWORD);
         }
         catch(InvalidArgumentException $e)
         {
@@ -243,8 +243,8 @@ class LoggedUser extends User
             $validator = new DataValidator();
             try
             {
-                $validator->checkLength($newEmail, 0, 255, 2);
-                $validator->checkUniqueness($newEmail, 2);
+                $validator->checkLength($newEmail, DataValidator::USER_EMAIL_MIN_LENGTH, DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAIL);
+                $validator->checkUniqueness($newEmail, DataValidator::TYPE_USER_EMAIL);
             }
             catch (RangeException $e)
             {

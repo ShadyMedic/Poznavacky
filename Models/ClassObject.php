@@ -492,7 +492,7 @@ class ClassObject extends DatabaseItem
         $validator = new DataValidator();
         try
         {
-            $validator->checkLength($newName, 5, 31, 3);
+            $validator->checkLength($newName, DataValidator::CLASS_NAME_MIN_LENGTH, DataValidator::CLASS_NAME_MAX_LENGTH, DataValidator::TYPE_CLASS_NAME);
         }
         catch(RangeException $e)
         {
@@ -509,7 +509,7 @@ class ClassObject extends DatabaseItem
         //Kontrola znaků v názvu
         try
         {
-            $validator->checkCharacters($newName, '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-', 0);
+            $validator->checkCharacters($newName, DataValidator::CLASS_NAME_ALLOWED_CHARS, DataValidator::TYPE_CLASS_NAME);
         }
         catch (InvalidArgumentException $e)
         {
@@ -519,7 +519,7 @@ class ClassObject extends DatabaseItem
         //Kontrola dostupnosti jména
         try
         {
-            $validator->checkUniqueness($newName, 3);
+            $validator->checkUniqueness($newName, DataValidator::TYPE_CLASS_NAME);
         }
         catch (InvalidArgumentException $e)
         {
