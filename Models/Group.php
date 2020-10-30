@@ -128,7 +128,7 @@ class Group extends DatabaseItem
      */
     public function getNaturals()
     {
-        if (!$this->isDefined($this->parts))
+        if (!$this->isDefined($this->naturals))
         {
             $this->loadNaturals();
         }
