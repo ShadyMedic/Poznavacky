@@ -73,7 +73,6 @@ function confirmPictureEdit(picId)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Reset DOM
@@ -110,7 +109,6 @@ function disablePicture(event, picId, asAdmin = false)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -133,7 +131,6 @@ function deletePicture(event, picId, asAdmin = false)
 			},
 			function(response)
 			{
-				response = JSON.parse(response);
 				if (response["messageType"] === "error")
 				{
 					//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -156,7 +153,6 @@ function deleteReport(event, reportId, asAdmin = false)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup

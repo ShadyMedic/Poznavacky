@@ -142,7 +142,6 @@ function confirmUserEdit(userId)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Reset DOM
@@ -171,7 +170,6 @@ function deleteUser(userId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error" || response["messageType"] === "success")
 			{
 				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -269,7 +267,6 @@ function confirmClassEdit(classId)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Reset DOM
@@ -372,7 +369,6 @@ function confirmClassAdminEdit(classId)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Aktualizace údajů o správci třídy v DOM
@@ -436,7 +432,6 @@ function deleteClass(classId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error" || response["messageType"] === "success")
 			{
 				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -460,7 +455,6 @@ function acceptNameChange(event, objectType, requestId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -484,7 +478,6 @@ function declineNameChange(event, objectType, requestId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -513,7 +506,7 @@ function previewEmailMessage()
 		},
 		function(response)
 		{
-			let result = JSON.parse(response)['content'];
+			let result = response['content'];
 			$("#email-editor").hide();
 			$("#email-preview-btn").hide();
 			
@@ -569,7 +562,7 @@ function sendMail()
 			
 			emailModified = false;
 			
-			response = JSON.parse(response)['message']
+			response = response['message']
 			{
 				if (response["messageType"] === "error" || response["messageType"] === "success")
 				{
@@ -592,7 +585,7 @@ function sendSqlQuery()
 		},
 		function(response)
 		{
-			let result = JSON.parse(response)['dbResult'];
+			let result = response['dbResult'];
 			$("#sql-result").html(result);
 		}
 	);

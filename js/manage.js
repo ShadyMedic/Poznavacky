@@ -26,7 +26,6 @@ function confirmNameChange()
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Reset DOM
@@ -133,7 +132,6 @@ function confirmStatusChange()
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				initialStatus = newStatus;
@@ -190,7 +188,6 @@ function deleteClassVerify()
 }
 function deleteClassConfirm(response)
 {
-	response = JSON.parse(response);
 	if (response.verified === true)
 	{
 		$("#deleteClassInput1").hide();
@@ -212,7 +209,6 @@ function deleteClassFinal()
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup

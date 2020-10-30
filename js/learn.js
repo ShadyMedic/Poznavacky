@@ -82,7 +82,7 @@ function natural(name)
 		}, function(response)
 		{
 			//Nastavení obrázků
-			selectedNatural.pictures = JSON.parse(response);
+			selectedNatural.pictures = response;
 			selectedNatural.lastPicture = 0;
 			selectedNatural.status = "loaded";
 			

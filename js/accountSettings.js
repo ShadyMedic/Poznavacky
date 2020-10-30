@@ -41,7 +41,6 @@ function changePasswordVerify()
 
 function changePasswordStage2(response)
 {
-	response = JSON.parse(response);
 	if (response.verified === true)
 	{
 		displayChangePasswordStage2();
@@ -118,7 +117,6 @@ function changeEmailVerify()
 
 function changeEmailStage2(response)
 {
-	response = JSON.parse(response);
 	if (response.verified === true)
 	{
 		$("#change-email-button").hide();
@@ -158,7 +156,7 @@ function confirmEmailChange()
 		newEmail: newEmail
 	}, function (response, code){
 		//Funkce zajišťující změnu e-mailu v DOM v případě úspěšné změny
-		if (JSON.parse(response).messageType === 'success')
+		if (response.messageType === 'success')
 		{
 			$("#email-address").text(decodeURIComponent(newEmail));
 		}
@@ -198,7 +196,6 @@ function deleteAccountVerify()
 
 function deleteAccountConfirm(response)
 {
-	response = JSON.parse(response);
 	if (response.verified === true)
 	{
 		$("#delete-account-input2").show();
@@ -242,7 +239,6 @@ function deleteAccountCancel()
  */
 function evaluateResponse(response, status)
 {
-	var response = JSON.parse(response);
 	//Přesměrování
 	if (response.hasOwnProperty("redirect"))
 	{

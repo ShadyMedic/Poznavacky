@@ -133,7 +133,7 @@ function submitReport()
 		info:reasonInfo
 	}, function(response)
 	{
-		$msg = JSON.parse(response)['msg'];
+		$msg = response['msg'];
 		//TODO - nějak šikovně zobrazit hlášku ze serveru
 		alert($msg);
 	});

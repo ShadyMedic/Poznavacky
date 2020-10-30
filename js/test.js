@@ -39,12 +39,11 @@ function pictureList()
 	 */
 	this.importPictures = function(response)
 	{
-		let arr = JSON.parse(response);
 		//Přepsání dvourozměrného pole do jednorozměrného s objekty
-		for (let i = 0; i < arr.length; i++) { arr[i] = new picture(arr[i]["num"], arr[i]["url"]); }
+		for (let i = 0; i < response.length; i++) { response[i] = new picture(response[i]["num"], response[i]["url"]); }
 		
 		//Z nějakého důvodu nejde odkazovat pomocí this
-		pictureManager.pictures = arr;
+		pictureManager.pictures = response;
 		
 		//Zkontrolovat, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
 		if (pictureManager.callNext === true)
@@ -113,9 +112,7 @@ function answer(event)
  * @param response Odpověď se serveru obsahující objekt s vlastnostmi "result" (hodnoty "correct"/"wrong") a answer (správná odpověď)
  */
 function displayResult(response)
-{
-	response = JSON.parse(response)
-	
+{	
 	if (response.result === "correct")
 	{
 		//Odpověď byla uznána

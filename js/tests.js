@@ -21,7 +21,6 @@ function createTestSubmit()
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -50,7 +49,6 @@ function deleteTest(testId, name)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup

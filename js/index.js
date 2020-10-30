@@ -163,9 +163,8 @@ function formSubmitted(event)
 	}, serverResponse);
 }
 
-function serverResponse(data, status)
+function serverResponse(response, status)
 {
-	var response = JSON.parse(data);
 	//Přesměrování
 	if (response.hasOwnProperty("redirect"))
 	{

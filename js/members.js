@@ -14,7 +14,6 @@ function kickUser(memberId, memberName)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
@@ -51,7 +50,6 @@ function inviteUser()
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Vynuluj a skryj formulář
