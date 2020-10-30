@@ -14,6 +14,7 @@ class CheckTestAnswerController extends Controller
         $questionNum = $_POST['qNum'];
         $answer = $_POST['ans'];
         
+        header('Content-Type: application/json');
         $checker = new AnswerChecker();
         try
         {

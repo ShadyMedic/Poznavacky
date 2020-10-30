@@ -11,6 +11,7 @@ class NewReportController extends Controller
      */
     public function process(array $parameters)
     {
+        header('Content-Type: application/json');
         $adder = new ReportAdder($_SESSION['selection']['group']);
         try
         {

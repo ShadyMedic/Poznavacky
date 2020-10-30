@@ -17,6 +17,7 @@ class ClassUpdateController extends Controller
             exit();
         }
         
+        header('Content-Type: application/json');
         //Kontrola, zda je zvolena nějaká třída
         if (!isset($_SESSION['selection']['class']))
         {

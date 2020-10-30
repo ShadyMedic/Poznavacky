@@ -24,6 +24,7 @@ class AccountUpdateController extends Controller
             exit();
         }
         
+        header('Content-Type: application/json');
         try
         {
             switch ($_POST['action'])

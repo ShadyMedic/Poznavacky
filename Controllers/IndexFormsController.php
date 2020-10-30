@@ -14,6 +14,7 @@ class IndexFormsController extends Controller
      */
     public function process(array $paremeters)
     {
+        header('Content-Type: application/json');
         try
         {
             $type = $_POST['type'];

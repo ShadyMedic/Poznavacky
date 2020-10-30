@@ -26,6 +26,8 @@ class LearnPicturesController extends Controller
         {
             $picturesArr[] = $picture->getSrc();
         }
+        
+        header('Content-Type: application/json');
         echo json_encode($picturesArr);
         
         //Zastav zpracování PHP, aby se nevypsala šablona

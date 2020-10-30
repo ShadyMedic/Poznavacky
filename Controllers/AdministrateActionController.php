@@ -30,6 +30,7 @@ class AdministrateActionController extends Controller
             exit();
         }
         
+        header('Content-Type: application/json');
         $administration = new Administration();
         try
         {
