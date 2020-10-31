@@ -18,24 +18,51 @@ abstract class Controller
     protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
     
     /**
-     * Funkce zpracovávající parametry z URL adresy
+     * Metoda zpracovávající parametry z URL adresy
      * @param array $parameters Paremetry ke zpracování jako pole
      */
     abstract function process(array $parameters);
     
     /**
-     * Funkce zahrnující pohled a vypysující do něj proměnné z vlastnosti $data
+     * Metoda zahrnující pohled a vypysující do něj proměnné z vlastnosti $data
      */
     public function displayView()
     {
         if ($this->view)
         {
+            //Vytvoř pole ošetřených hodnot
+            $sanitized = $this->sanitizeData($this->data);
+            
+            //Přejmenuj klíče v originálním poli neošetřených hodnot
+            foreach ($this->data as $key => $value)
+            {
+                $this->data['_'.$key.'_'] = $value;
+                unset($this->data[$key]);
+            }
+            
             extract($this->data);
+            extract($sanitized);
             require self::ViewFolder.'/'.$this->view.'.phtml';
         }
     }
+    
     /**
-     * Funkce přesměrovávající uživatele na jinou adresu a ukončující běh skriptu
+     * Metoda ošetřující všechny hodnoty určené k využití pohledem proti XSS útoku
+     * @param array $data Pole proměnných k ošetření
+     * @return mixed Pole s ošetřenými hodnotami
+     */
+    private function sanitizeData(array $data)
+    {
+        $sanitizer = new AntiXssSanitizer();
+        foreach ($data as $key => $value)
+        {
+            $data[$key] = $sanitizer->sanitize($value);
+        }
+        return $data;
+    }
+    
+    /**
+     * Metoda přesměrovávající uživatele na jinou adresu a ukončující běh skriptu
      * @param string $url
      */
     public function redirect(string $url)

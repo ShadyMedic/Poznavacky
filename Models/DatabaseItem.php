@@ -53,6 +53,13 @@ abstract class DatabaseItem
      */
     protected $savedInDb;
     
+    /**
+     * TRUE, pokud jsou vlastnosti tohoto objektu právě ošetřovány proti XSS útoku metodou DatabaseItem::sanitize()
+     * Tato vlastnost slouží pro zabránění rekurze
+     * @var bool
+     */
+    private $sanitizationStarted = false;
+    
     protected $id;
     
     /**
@@ -95,6 +102,27 @@ abstract class DatabaseItem
      * V případě nespecifikování všech argumentů jsou neznámé vlastnosti naplněny základními hodnotami
      */
     public abstract function initialize();
+    
+    /**
+     * Metoda ošetřující definované vlastnosti objektu proti XSS útoku
+     * Pokud je vlastnost $sanitizationStarted nastavena na TRUE, nic se nestane
+     * POZOR! Pokud byly po zavolání této metody ovlivňovány některé vlastnosti tohoto objektu, nebudou ošetřené, ale znovuzavolání této metody je také neoštří.
+     * Tato metoda by proto měla být volána pouze jednou pro každý objekt a to těsně před výpisem dat do pohledu
+     */
+    public function sanitizeSelf()
+    {
+        //Zabraň rekurzi
+        if ($this->sanitizationStarted) { return; }
+        $this->sanitizationStarted = true;
+        
+        //Ošetři postupně všechny definované vlastnosti objektu
+        $sanitizer = new AntiXssSanitizer();
+        $properties = $this->getDefinedProperties();
+        foreach ($properties as $propertyName => $propertyValue)
+        {
+            $this->$propertyName = $sanitizer->sanitize($propertyValue);
+        }
+    }
     
     /**
      * Metoda navracející ID tohoto databázového záznamu
