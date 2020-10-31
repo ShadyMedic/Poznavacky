@@ -24,54 +24,36 @@ class EmailComposer
     public function composeMail($emailType, array $data)
     {
         extract($data);
+        ob_start();
         switch ($emailType)
         {
             case self::EMAIL_TYPE_EMPTY_LAYOUT:
-                $template = file_get_contents('Views/EmailTemplates/emptyLayout.phtml');
-                $template = str_replace('<?= $content ?>', $content, $template);
-                $template = str_replace('<?= $footer ?>', $footer, $template);
+                require 'Views/EmailTemplates/emptyLayout.phtml';
                 break;
             case self::EMAIL_TYPE_PASSWORD_RECOVERY:
-                $template = file_get_contents('Views/EmailTemplates/passwordRecovery.phtml');
-                $template = str_replace('<?= $recoveryLink ?>', $recoveryLink, $template);
+                require 'Views/EmailTemplates/passwordRecovery.phtml';
                 break;
             case self::EMAIL_TYPE_USER_NAME_CHANGE_APPROVED:
-                $template = file_get_contents('Views/EmailTemplates/usernameChangeApproved.phtml');
-                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
-                $template = str_replace('<?= $oldName ?>', $oldName, $template);
-                $template = str_replace('<?= $newName ?>', $newName, $template);
+                require 'Views/EmailTemplates/usernameChangeApproved.phtml';
                 break;
             case self::EMAIL_TYPE_USER_NAME_CHANGE_DECLINED:
-                $template = file_get_contents('Views/EmailTemplates/usernameChangeDeclined.phtml');
-                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
-                $template = str_replace('<?= $oldName ?>', $oldName, $template);
-                $template = str_replace('<?= $declineReason ?>', $declineReason, $template);
+                require 'Views/EmailTemplates/usernameChangeDeclined.phtml';
                 break;
             case self::EMAIL_TYPE_CLASS_NAME_CHANGE_APPROVED:
-                $template = file_get_contents('Views/EmailTemplates/classnameChangeApproved.phtml');
-                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
-                $template = str_replace('<?= $oldName ?>', $oldName, $template);
-                $template = str_replace('<?= $newName ?>', $newName, $template);
+                require 'Views/EmailTemplates/classnameChangeApproved.phtml';
                 break;
             case self::EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED:
-                $template = file_get_contents('Views/EmailTemplates/classnameChangeDeclined.phtml');
-                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
-                $template = str_replace('<?= $oldName ?>', $oldName, $template);
-                $template = str_replace('<?= $declineReason ?>', $declineReason, $template);
+                require 'Views/EmailTemplates/classnameChangeDeclined.phtml';
                 break;
             case self::EMAIL_TYPE_NEW_CLASS_REQUEST:
-                $template = file_get_contents('Views/EmailTemplates/newClassRequest.phtml');
-                $template = str_replace('<?= $username ?>', $username, $template);
-                $template = str_replace('<?= $websiteAddress ?>', $websiteAddress, $template);
-                $template = str_replace('<?= $name ?>', $name, $template);
-                $template = str_replace('<?= $code ?>', $code, $template);
-                $template = str_replace('<?= $message ?>', $message, $template);
-                $template = str_replace('<?= $email ?>', $email, $template);
+                require 'Views/EmailTemplates/newClassRequest.phtml';
                 break;
             default:
+                ob_end_clean();
                 throw new InvalidArgumentException('Neznámá e-mailová šablona');
         }
-        $this->message = $template;
+        $this->message = ob_get_contents();
+        ob_end_clean();
     }
     
     /**
