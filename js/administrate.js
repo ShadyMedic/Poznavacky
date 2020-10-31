@@ -561,16 +561,12 @@ function sendMail()
 			$("#email-send-btn").removeAttr("disabled");
 			
 			emailModified = false;
-			
-			response = response['message']
+		
+			if (response["messageType"] === "error" || response["messageType"] === "success")
 			{
-				if (response["messageType"] === "error" || response["messageType"] === "success")
-				{
-					//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-					alert(response["message"]);
-				}
+				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
 			}
-			alert(result);
 		}
 	);
 }
