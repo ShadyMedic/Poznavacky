@@ -3,7 +3,7 @@
  * Třída získávající seznamy tříd, skupin a částí
  * @author Jan Štěch
  */
-class TestGroupsManager
+class TestGroupsFetcher
 {
     public const CLASS_STATUS_PUBLIC = 'public';
     public const CLASS_MANAGE_BUTTON_KEYWORD = 'admin';
@@ -13,7 +13,7 @@ class TestGroupsManager
      * Metoda pro získání seznamu všech tříd a vytvoření tabulky pro předání pohledu
      * @return array Dvourozměrné pole obsahující seznam tříd a další informace potřebné pro pohled
      */
-    public static function getClasses()
+    public function getClasses()
     {
         //Získej data
         $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
@@ -56,7 +56,7 @@ class TestGroupsManager
      * @param ClassObject $class Objekt třídy ze které je potřeba získat seznam poznávaček
      * @return array Dvourozměrné pole obsahující seznam poznávaček a další informace potřebné pro pohled
      */
-    public static function getGroups(ClassObject $class)
+    public function getGroups(ClassObject $class)
     {
         if ($class->checkAccess(UserManager::getId()))
         {
@@ -92,7 +92,7 @@ class TestGroupsManager
      * @param Group $group Objekt poznávačky, ze které je potřeba získat seznam částí
      * @return array Dvourozměrné pole obsahující seznam částí a další informace potřebné pro pohled
      */
-    public static function getParts(Group $group)
+    public function getParts(Group $group)
     {
         if ($group->getClass()->checkAccess(UserManager::getId()))
         {

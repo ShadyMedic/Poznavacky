@@ -29,21 +29,24 @@ class MenuTableController extends Controller
                 $this->data['invitations'] = UserManager::getUser()->getActiveInvitations();
                 $this->data['invitationsCount'] = count($this->data['invitations']);
                 $this->view = 'menuClassesForms';
-                $classes = TestGroupsManager::getClasses();
+                $classesGetter = new TestGroupsFetcher();
+                $classes = $classesGetter->getClasses();
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
             else if (!isset($_SESSION['selection']['group']))
             {
                 $this->data['returnButtonLink'] = 'menu';
                 $this->view = 'menuGroupsButton';
-                $groups = TestGroupsManager::getGroups($_SESSION['selection']['class']);
+                $groupsGetter = new TestGroupsFetcher();
+                $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
                 $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
             }
             else
             {
                 $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName();
                 $this->view = 'menuPartsButton';
-                $parts = TestGroupsManager::getParts($_SESSION['selection']['group']);
+                $partsGetter = new TestGroupsFetcher();
+                $parts = $partsGetter->getParts($_SESSION['selection']['group']);
                 $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
             }
         }
