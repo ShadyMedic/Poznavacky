@@ -16,7 +16,7 @@ class RecoverPassword
      * @throws AccessDeniedException Pokud nebyl vyplněn platný e-mail
      * @return boolean TRUE, Pokud se všechny kroky podařily, FALSE, pokud se nepodařilo odeslat e-mail
      */
-    public static function processRecovery(array $POSTdata)
+    public function processRecovery(array $POSTdata)
     {
         if (!isset($POSTdata['email']))
         {
@@ -39,7 +39,7 @@ class RecoverPassword
      * Metoda zajišťuje, že je kód unikátní a ještě se v databázi nevyskytuje.
      * @return string Vygenerovaný unikátní kód
      */
-    private static function generateCode()
+    private function generateCode()
     {
         $done = false;
         $code = NULL;
@@ -64,7 +64,7 @@ class RecoverPassword
      * @param string $code Nezašifrovaný kód pro obnovu hesla
      * @param int $userId ID uživatele, jež si pomocí kódu může změnit heslo
      */
-    private static function saveCode(string $code, int $userId)
+    private function saveCode(string $code, int $userId)
     {
         //Smazat starý kód z databáze (pokud existuje)
         Db::executeQuery('DELETE FROM obnoveni_hesel WHERE uzivatele_id = ?', array($userId));
@@ -79,7 +79,7 @@ class RecoverPassword
      * @param string $email E-mailová adresa pro odeslání e-mailu
      * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      */
-    private static function sendCode(string $code, string $email)
+    private function sendCode(string $code, string $email)
     {
         $message = new EmailComposer();
         $message->composeMail(EmailComposer::EMAIL_TYPE_PASSWORD_RECOVERY, array('recoveryLink' => $_SERVER['SERVER_NAME'].'/recover-password/'.$code));

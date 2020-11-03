@@ -9,7 +9,7 @@ class RegisterUser
     const DEFAULT_KARMA = 0;
     const DEFAULT_STATUS = User::STATUS_MEMBER;
     
-    public static function processRegister(array $POSTdata)
+    public function processRegister(array $POSTdata)
     {
         $name = $POSTdata['name'];
         $pass = $POSTdata['pass'];
@@ -37,7 +37,7 @@ class RegisterUser
      * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky
      * @return boolean TRUE, pokud všechny údaje splňují podmínky
      */
-    private static function validateData($name, $pass, $repass, $email)
+    private function validateData($name, $pass, $repass, $email)
     {
         $validator = new DataValidator();
         
@@ -147,7 +147,7 @@ class RegisterUser
      * @param string|null $email E-mail zadaný uživatelem (null, pokud žádný nezadal)
      * @return boolean TRUE, pokud je uživatel úspěšně zaregistrován
      */
-    private static function register(string $name, string $password, $email)
+    private function register(string $name, string $password, $email)
     {        
         //Uložení dat do databáze
         $password = password_hash($password, PASSWORD_DEFAULT);
@@ -160,7 +160,8 @@ class RegisterUser
         $_SESSION['user'] = $user;
         
         //Nastavení cookie pro zabránění přehrávání animace
-        LoginUser::setRecentLoginCookie();
+        $userLogger = new LoginUser();
+        $userLogger->setRecentLoginCookie();
         
         return true;
     }

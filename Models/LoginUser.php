@@ -13,7 +13,7 @@ class LoginUser
      * Metoda která se stará o všechny kroky přihlašování
      * @param array $POSTdata Data odeslaná přihlašovacím formulářem, pole s klíči loginName, loginPass a popřípadě stay_logged
      */
-    public static function processLogin(array $POSTdata)
+    public function processLogin(array $POSTdata)
     {
         //Ověřit vyplněnost dat
         if (mb_strlen($POSTdata['name']) === 0){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NO_NAME, null, null); }
@@ -40,7 +40,7 @@ class LoginUser
      * Metoda, která se stará o všechny kroky přihlášení pomocí kódu ze souboru cookie pro trvalé přihlášení
      * @param string $code Kód uložený v souboru cookie
      */
-    public static function processCookieLogin(string $code)
+    public function processCookieLogin(string $code)
     {
         //Kontrola správnosti kódu
         $userData = self::verifyCode($code);
@@ -58,7 +58,7 @@ class LoginUser
      * @throws AccessDeniedException Pokud uživatel neexistuje nebo heslo nesouhlasí
      * @return array|boolean Pole s daty o uživateli z databáze v případě úspěchu
      */
-    private static function authenticate(string $username, string $password)
+    private function authenticate(string $username, string $password)
     {
         $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($username), false);
         if ($userData === FALSE){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NONEXISTANT_USER, null, null); }
@@ -73,7 +73,7 @@ class LoginUser
      * @throws AccessDeniedException Pokud není kód platný
      * @return array|boolean Data o uživateli uložená v databázi, k jehož účtu se lze pomocí daného kódu přihlásit nebo FALSE, pokud je kód neplatný
      */
-    private static function verifyCode(string $code)
+    private function verifyCode(string $code)
     {
         $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = (SELECT uzivatele_id FROM sezeni WHERE kod_cookie = ? AND expirace > ? LIMIT 1);', array(md5($code), time()), false);
         if ($userData === FALSE) { throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_INVALID_COOKIE_CODE, null, null); }
@@ -85,7 +85,7 @@ class LoginUser
      * Metoda ukládající data o uživateli z databáze do $_SESSION a aktualizující datum posledního přihlášení v databázi
      * @param array $userData
      */
-    private static function login(array $userData)
+    private function login(array $userData)
     {
         $user = new LoggedUser(false, $userData[LoggedUser::COLUMN_DICTIONARY['id']]);
         $user->initialize($userData[LoggedUser::COLUMN_DICTIONARY['name']], $userData[LoggedUser::COLUMN_DICTIONARY['email']], new Datetime(), $userData[LoggedUser::COLUMN_DICTIONARY['addedPictures']], $userData[LoggedUser::COLUMN_DICTIONARY['guessedPictures']], $userData[LoggedUser::COLUMN_DICTIONARY['karma']], $userData[LoggedUser::COLUMN_DICTIONARY['status']], $userData[LoggedUser::COLUMN_DICTIONARY['hash']], $userData[LoggedUser::COLUMN_DICTIONARY['lastChangelog']], $userData[LoggedUser::COLUMN_DICTIONARY['lastLevel']], $userData[LoggedUser::COLUMN_DICTIONARY['lastFolder']], $userData[LoggedUser::COLUMN_DICTIONARY['theme']]);
@@ -101,7 +101,7 @@ class LoginUser
      * Metoda generující kód pro cookie trvalého přihlášení a ukládající jej do databáze
      * @param int $userId ID uživatele, s nímž bude kód svázán
      */
-    private static function setLoginCookie(int $userId)
+    private function setLoginCookie(int $userId)
     {
         //Vygenerovat čtrnáctimístný kód
         $code = bin2hex(random_bytes(7));   //56 bitů --> maximálně čtrnáctimístný kód
@@ -125,7 +125,7 @@ class LoginUser
      * Metoda nastavující cookie indukující, že se z tohoto počítače nedávno přihlásil nějaký uživatel a zabraňuje tak přehrávání animace na index stránce
      * Metoda je využívána i modelem Register.php a kontrolerem LogoutController.php
      */
-    public static function setRecentLoginCookie()
+    public function setRecentLoginCookie()
     {
         setcookie('recentLogin', true, time() + self::RECENTLOGIN_COOKIE_LIFESPAN, '/');
     }

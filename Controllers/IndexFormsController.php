@@ -23,19 +23,22 @@ class IndexFormsController extends Controller
                 //Přihlašování
                 case 'l':
                     $form = 'login';
-                    LoginUser::processLogin($_POST);
+                    $userLogger = new LoginUser();
+                    $userLogger->processLogin($_POST);
                     echo json_encode(array('redirect' => 'menu'));
                     break;
                 //Registrace
                 case 'r':
                     $form = 'register';
-                    RegisterUser::processRegister($_POST);
+                    $userRegister = RegisterUser();
+                    $userRegister->processRegister($_POST);
                     echo json_encode(array('redirect' => 'menu'));
                     break;
                 //Obnova hesla
                 case 'p':
                     $form = 'passRecovery';
-                    if (RecoverPassword::processRecovery($_POST))
+                    $passwordRecoverer = new RecoverPassword();
+                    if ($passwordRecoverer->processRecovery($_POST))
                     {
                         echo json_encode(array('messageType' => 'success', 'message' => 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', 'origin' => $form));
                     }

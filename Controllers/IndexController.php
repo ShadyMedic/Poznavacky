@@ -25,7 +25,8 @@ class IndexController extends Controller
         {
             try
             {
-                LoginUser::processCookieLogin($_COOKIE['instantLogin']);
+                $userLogger = new LoginUser();
+                $userLogger->processCookieLogin($_COOKIE['instantLogin']);
                 
                 //Přihlášení proběhlo úspěšně
                 $this->redirect('menu');

@@ -24,7 +24,8 @@ class MenuController extends Controller
             {
                 try
                 {
-                    LoginUser::processCookieLogin($_COOKIE['instantLogin']);
+                    $userLogger = new LoginUser();
+                    $userLogger->processCookieLogin($_COOKIE['instantLogin']);
                     //Přihlášení obnoveno
                 }
                 catch(AccessDeniedException $e)
