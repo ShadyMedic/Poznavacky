@@ -10,7 +10,7 @@ class PasswordRecoveryCodeVerificator
      * @param string $code Kód pro obnovu hesla z URL adresy
      * @return int|boolean ID uživatele, který může použít tento kód pro obnovu svého hesla nebo FALSE, pokud kód nebyl v databázi nalezen
      */
-    public static function verifyCode(string $code)
+    public function verifyCode(string $code)
     {
         $result = Db::fetchQuery('SELECT uzivatele_id FROM obnoveni_hesel WHERE kod = ? AND expirace > ?', array(md5($code), time()), false);
         if (!$result)
@@ -24,7 +24,7 @@ class PasswordRecoveryCodeVerificator
      * Metoda odstraňující specifikovaný kód pro obnovu hesla z databáze
      * @param string $code Nezašifrovaný kód k odstranění
      */
-    public static function deleteCode(string $code)
+    public function deleteCode(string $code)
     {
         Db::executeQuery('DELETE FROM obnoveni_hesel WHERE kod = ?', array(md5($code)));
     }

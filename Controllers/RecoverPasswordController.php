@@ -28,7 +28,8 @@ class RecoverPasswordController extends Controller
             $code = $parameters[0];
             $this->data['token'] = $code;
             
-            $userId = PasswordRecoveryCodeVerificator::verifyCode($code);
+            $codeVerificator = new PasswordRecoveryCodeVerificator();
+            $userId = $codeVerificator::verifyCode($code);
             if (empty($userId))
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_INVALID_TOKEN, null, null);

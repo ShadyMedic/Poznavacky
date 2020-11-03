@@ -31,8 +31,9 @@ class TokenPasswordChanger
      */
     public function verifyToken()
     {
-        PasswordRecoveryCodeVerificator::deleteOutdatedCodes();
-        $this->userId = PasswordRecoveryCodeVerificator::verifyCode($this->token);
+        $codeVerificator = new PasswordRecoveryCodeVerificator();
+        $codeVerificator::deleteOutdatedCodes();
+        $this->userId = $codeVerificator::verifyCode($this->token);
         if (empty($this->userId))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_INVALID_TOKEN);
@@ -45,7 +46,8 @@ class TokenPasswordChanger
      */
     public function devalueToken()
     {
-        PasswordRecoveryCodeVerificator::deleteCode($this->token);
+        $codeVerificator = new PasswordRecoveryCodeVerificator();
+        $codeVerificator->deleteCode($this->token);
     }
     
     /**
