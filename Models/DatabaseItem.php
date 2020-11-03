@@ -112,7 +112,7 @@ abstract class DatabaseItem
     public function sanitizeSelf()
     {
         //Zabraň rekurzi
-        if ($this->sanitizationStarted) { return; }
+        if ($this->sanitizationStarted === true) { return; }       //POZOR! Základní hodnota $this->sanitizationStarted není FALSE, ale undefined (definované FALSE je přepsáno v konstruktoru)
         $this->sanitizationStarted = true;
         
         //Ošetři postupně všechny definované vlastnosti objektu
