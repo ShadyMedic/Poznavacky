@@ -134,7 +134,7 @@ class RegisterUser
         //Kontrola shodnosti hesel
         if ($pass !== $repass)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS, null, null, array('originalFile' => 'RegisterUser.php', 'displayOnView' => 'index.phtml', 'form' => 'register'));
+            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS, null, null);
         }
         
         return true;
