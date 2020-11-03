@@ -30,7 +30,7 @@ class EnterClassCodeController extends Controller
         }
         
         $classes = ClassManager::getNewClassesByAccessCode($code, $userId);
-        if (!$classes)
+        if (count($classes) === 0)
         {
             //Se zadaným kódem se nelze dostat do žádné třídy
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Zadaný kód není platný');

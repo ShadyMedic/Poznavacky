@@ -30,7 +30,7 @@ class ClassManager
      * 3) Uživatel, jehož ID je specifikováno jako druhý argument této metody nesmí být členem daných tříd
      * @param int $code Kód podle kterého vyhledáváme
      * @param int $userId ID uživatele, který se pokouší použít kód k získání přístupu do nových tříd
-     * @return ClassObject[]|boolean Pole tříd, které splňují podmínky výše, jako objekty, nebo FALSE, pokud žádné takové třídy neexistují
+     * @return ClassObject[] Pole tříd, které splňují podmínky výše, jako objekty, nebo prázdné pole, pokud žádné takové třídy neexistují
      */
     public static function getNewClassesByAccessCode(int $code, int $userId)
     {
@@ -49,7 +49,7 @@ class ClassManager
         //Kontrola, zda je navrácen alespoň jeden výsledek
         if (!$result)
         {
-            return false;
+            return array();
         }
         
         $classes = array();
