@@ -3,7 +3,7 @@
 require __DIR__.'/vendor/autoload.php';
 
 //Definuj a nastav autoloader tříd
-function autoloader($name)
+function autoloader(string $name): void
 {
     if (preg_match('/Controller$/', $name)){ require 'Controllers/'.$name.'.php'; }
     else { require 'Models/'.$name.'.php'; }
