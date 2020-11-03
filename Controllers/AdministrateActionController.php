@@ -18,13 +18,14 @@ class AdministrateActionController extends Controller
         }
         
         //Kontrola, zda je nějaký uživatel přihlášen
-        if (!AccessChecker::checkUser())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkUser())
         {
             header('HTTP/1.0 403 Forbidden');
             exit();
         }
         //Kontrola, zda je přihlášený uživatel administrátorem
-        if (!AccessChecker::checkSystemAdmin())
+        if (!$aChecker->checkSystemAdmin())
         {
             header('HTTP/1.0 403 Forbidden');
             exit();

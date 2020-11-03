@@ -32,7 +32,8 @@ class Administration
      */
     public function __construct()
     {
-        if (!AccessChecker::checkSystemAdmin())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }

@@ -27,7 +27,8 @@ class ManageController extends Controller
         }
         
         $class = $_SESSION['selection']['class'];
-        if (!($class->checkAdmin(UserManager::getId()) || AccessChecker::checkSystemAdmin()))
+        $aChecker = new AccessChecker();
+        if (!($class->checkAdmin(UserManager::getId()) || $aChecker::checkSystemAdmin()))
         {
             $this->redirect('error403');
         }

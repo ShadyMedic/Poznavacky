@@ -10,7 +10,7 @@ class AccessChecker
      * Metoda kontrolující, zda je přihlášený nějaký uživatel
      * @return boolean TRUE, pokud je nějaký uživatel přihlášen, FALSE, pokud ne
      */
-    public static function checkUser()
+    public function checkUser()
     {
         return (isset($_SESSION['user']));
     }
@@ -20,7 +20,7 @@ class AccessChecker
      * @param string $password Heslo k ověření
      * @return boolean TRUE, pokud je specifikované heslo správné, FALSE, pokud ne
      */
-    public static function recheckPassword(string $password)
+    public function recheckPassword(string $password)
     {
         if (password_verify($password, UserManager::getHash()))
         {
@@ -37,7 +37,7 @@ class AccessChecker
      * Metoda kontrolující, zda je přihlášený uživatel systémovým správcem
      * @return boolean TRUE, pokud je daný uživatelem systémovým správcem, FALSE, pokud ne
      */
-    public static function checkSystemAdmin()
+    public function checkSystemAdmin()
     {
         return (UserManager::getOtherInformation()['status'] === User::STATUS_ADMIN) ? true : false;
     }

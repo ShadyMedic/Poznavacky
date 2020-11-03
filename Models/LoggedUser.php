@@ -168,7 +168,8 @@ class LoggedUser extends User
         if (mb_strlen($newPasswordAgain) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_REPEATED_PASSWORD);}
         
         //Kontrola hesla
-        if (!AccessChecker::recheckPassword($oldPassword))
+        $aChecker = new AccessChecker();
+        if (!$aChecker->recheckPassword($oldPassword))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_WRONG_PASSWORD);
         }
@@ -231,7 +232,8 @@ class LoggedUser extends User
         if (mb_strlen($newEmail) === 0){$newEmail = NULL;}
         
         //Kontrola hesla
-        if (!AccessChecker::recheckPassword($password))
+        $aChecker = new AccessChecker();
+        if (!$aChecker->recheckPassword($password))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_WRONG_PASSWORD);
         }
@@ -307,7 +309,8 @@ class LoggedUser extends User
         if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_NO_PASSWORD);}
         
         //Kontrola hesla
-        if (!AccessChecker::recheckPassword($password))
+        $aChecker = new AccessChecker();
+        if (!$aChecker->recheckPassword($password))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_WRONG_PASSWORD);
         }

@@ -76,7 +76,8 @@ class UserManager
      */
     private static function getData(string $index)
     {
-        if (AccessChecker::checkUser())
+        $aChecker = new AccessChecker();
+        if ($aChecker->checkUser())
         {
             return $_SESSION['user'][$index];
         }

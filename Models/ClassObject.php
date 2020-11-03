@@ -553,7 +553,8 @@ class ClassObject extends DatabaseItem
         }
         
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
+        $aChecker = new AccessChecker();
+        if (!$aChecker::checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
@@ -624,7 +625,8 @@ class ClassObject extends DatabaseItem
     public function changeClassAdminAsAdmin(User $newAdmin)
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
@@ -648,7 +650,8 @@ class ClassObject extends DatabaseItem
     public function deleteAsAdmin()
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
@@ -679,7 +682,8 @@ class ClassObject extends DatabaseItem
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
         }
-        if (!AccessChecker::recheckPassword($password))
+        $aChecker = new AccessChecker();
+        if (!$aChecker->recheckPassword($password))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
         }

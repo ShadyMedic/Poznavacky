@@ -15,7 +15,8 @@ class MenuController extends Controller
     public function process(array $parameters)
     {
         //Kontrola, zda je uživatel přihlášen
-        if (!AccessChecker::checkUser())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkUser())
         {
             //Přihlášení uživatele vypršelo
             //Kontrola instantcookie sezení
@@ -197,7 +198,7 @@ class MenuController extends Controller
         $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
         
         $this->data['loggedUserName'] = UserManager::getName();
-        $this->data['adminLogged'] = AccessChecker::checkSystemAdmin();
+        $this->data['adminLogged'] = $aChecker->checkSystemAdmin();
         
         $this->view = 'menu';
     }

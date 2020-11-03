@@ -119,7 +119,8 @@ class User extends DatabaseItem implements ArrayAccess
     public function updateAccount(int $addedPictures, int $guessedPictures, int $karma, string $status)
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
@@ -153,7 +154,8 @@ class User extends DatabaseItem implements ArrayAccess
         $this->loadIfNotLoaded($this->id);
         
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
-        if (!AccessChecker::checkSystemAdmin())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }

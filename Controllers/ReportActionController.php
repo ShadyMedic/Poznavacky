@@ -27,7 +27,8 @@ class ReportActionController extends Controller
         $class = $_SESSION['selection']['class'];
         
         //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy
-        if (!AccessChecker::checkUser() || !$class->checkAdmin(UserManager::getId()))
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkUser() || !$class->checkAdmin(UserManager::getId()))
         {
             header('HTTP/1.0 403 Forbidden');
             exit();

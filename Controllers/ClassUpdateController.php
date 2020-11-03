@@ -27,7 +27,8 @@ class ClassUpdateController extends Controller
         $class = $_SESSION['selection']['class'];
         
         //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy
-        if (!AccessChecker::checkUser() || !$class->checkAdmin(UserManager::getId()))
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkUser() || !$class->checkAdmin(UserManager::getId()))
         {
             header('HTTP/1.0 403 Forbidden');
             exit();
@@ -83,7 +84,7 @@ class ClassUpdateController extends Controller
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
-                    if (!AccessChecker::recheckPassword($password))
+                    if (!$aChecker->recheckPassword($password))
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }

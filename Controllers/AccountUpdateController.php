@@ -18,7 +18,8 @@ class AccountUpdateController extends Controller
         }
         
         //Kontrola, zda je nějaký uživatel přihlášen
-        if (!AccessChecker::checkUser())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkUser())
         {
             header('HTTP/1.0 403 Forbidden');
             exit();
@@ -65,7 +66,7 @@ class AccountUpdateController extends Controller
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
-                    if (!AccessChecker::recheckPassword($password))
+                    if (!$aChecker->recheckPassword($password))
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }
