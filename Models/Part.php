@@ -159,7 +159,6 @@ class Part extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['id'].' IN (SELECT prirodniny_id FROM prirodniny_casti WHERE casti_id = ?)', array($this->id), true);
         if ($result === false || count($result) === 0)
         {

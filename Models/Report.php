@@ -126,7 +126,6 @@ class Report extends DatabaseItem
         $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
         
-        Db::connect();
         $result = Db::fetchQuery('SELECT casti_id FROM prirodniny_casti WHERE prirodniny_id = ?', array($natural->getId()), true);
         
         if (!$result) { throw new NoDataException(NoDataException::NATURAL_UNASSIGNED); }

@@ -212,7 +212,6 @@ class LoggedUser extends User
         $this->loadIfNotLoaded($this->id);
         
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['hash'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
         $this->hash = $hashedPassword;
         return true;
@@ -267,7 +266,6 @@ class LoggedUser extends User
         //Aktualizovat databázi
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['email'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;
         return true;
@@ -280,7 +278,6 @@ class LoggedUser extends User
     public function incrementAddedPictures()
     {
         $this->addedPictures++;
-        Db::connect();
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
     
@@ -293,7 +290,6 @@ class LoggedUser extends User
         $this->loadIfNotLoaded($this->id);
         
         $this->guessedPictures++;
-        Db::connect();
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['guessedPictures'].' = (uhodnute_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
     
@@ -317,7 +313,6 @@ class LoggedUser extends User
         }
         
         //Kontrola, zda uživatel není správcem žádné třídy
-        Db::connect();
         $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array(UserManager::getId()));
         if ($administratedClasses['cnt'] > 0)
         {

@@ -94,7 +94,6 @@ class TokenPasswordChanger
         {
             throw new RuntimeException('Zatím nebyl ověřen kód pro obnovu hesla nebo platnost hesel. Pokud toto čtete, kontaktujte prosím správce');
         }
-        Db::connect();
         Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['hash'].' = ? WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array(password_hash($this->pass, PASSWORD_DEFAULT), $this->userId));
         return true;
     }

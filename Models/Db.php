@@ -18,21 +18,17 @@ class Db
     );
     
     /**
-     * Metoda zakládající spojení s databází
-     * 
-     * Nové spojení je vytvořeno pouze v případě, že již nějaké neexistuje
-     * @param string $host  Server hostující databázi
-     * @param string $username  Přihlašovací jméno pro databázi
-     * @param string $password  Heslo k databázi
-     * @param string $database  Jméno databáze
+     * Metoda zakládající spojení s databází a ukládající jej do vlastnosti $connection
+     * Všechny parametry mají nastavené základní hodnoty podle konstant této třídy
+     * @param string $host Server hostující databázi
+     * @param string $username Přihlašovací jméno pro databázi
+     * @param string $password Heslo k databázi
+     * @param string $database Jméno databáze
      * @return PDO Připojení k databázi
      */
     public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME, string $password = self::DEFAULT_PASSWORD, string $database = self::DEFAULT_DATABASE)
     {
-        if (!isset(self::$connection))
-        {
-            self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password, self::$settings);
-        }
+        self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password, self::$settings);
         return self::$connection;
     }
     
@@ -46,7 +42,7 @@ class Db
     
     /**
      * Metoda provádějící SQL dotaz na databázi bez navracení výsledků
-     * 
+     * Pokud zatím nebylo vytvořeno spojení s databází, bude vytvořeno
      * Vhodné pro dotazy jako INSERT, UPDATE a DELETE
      * @param string $query Dotaz pro provedení s otazníky místo parametrů
      * @param array $parameters Pole parametrů, které budou doplněny místo otazníků do dotazu
@@ -56,6 +52,7 @@ class Db
      */
     public static function executeQuery(string $query, array $parameters = array(), bool $returnLastId = false)
     {
+        if (!isset(self::$connection)) { self::connect(); }
         try
         {
             $statement = self::$connection->prepare($query);
@@ -75,7 +72,7 @@ class Db
     
     /**
      * Metoda provádějící SQL dotaz na databázi a navracející jeden nebo více řádků výsledků jako pole
-     * 
+     * Pokud zatím nebylo vytvořeno spojení s databází, bude vytvořeno
      * Vhodné pro SELECT dotazy
      * @param string $query Dotaz pro provedení s otazníky místo parametrů
      * @param array $parameters Pole parametrů, které budou doplněny místo otazníků do dotazu
@@ -85,6 +82,7 @@ class Db
      */
     public static function fetchQuery(string $query, array $parameters = array(), bool $all = false)
     {
+        if (!isset(self::$connection)) { self::connect(); }
         try
         {
             $statement = self::$connection->prepare($query);
@@ -111,13 +109,14 @@ class Db
     
     /**
      * Metoda provádějící nepřipravený SQL dotaz na databázi a navracející jeho výsledek
-     * 
+     * Pokud zatím nebylo vytvořeno spojení s databází, bude vytvořeno
      * POZOR! Nesmí být využíváno při jakékoliv akci, kterou mohou vyvolat nepověření uživatelé - může dojít k SQL injekci
      * @param string $query SQL dotaz k vykonání, s vloženými proměnnými
      * @return boolean|array TRUE, v případě úspěšného vykonání dotazu bez navrácení výsledků; FALSE v případě selhání dotazu; Jednorozměrné nebo dvojrozměrné pole obsahující všechny výsledky dotazu, pokud nějaké navrátil
      */
     public static function unpreparedQuery(string $query)
     {
+        if (!isset(self::$connection)) { self::connect(); }
         try
         {
             $result = self::$connection->query($query);

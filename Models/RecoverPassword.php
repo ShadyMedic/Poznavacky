@@ -49,7 +49,6 @@ class RecoverPassword
             $code = bin2hex(random_bytes(self::CODE_BYTE_LENGTH));
             
             //Zkontrolovat, zda již kód v databázi neexistuje
-            Db::connect();
             $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM obnoveni_hesel WHERE kod=?', array(md5($code)), FALSE);
             //Kontrola případné potřeby opakování generování kódu
             if ($result['cnt'] === 0)
@@ -68,7 +67,6 @@ class RecoverPassword
     private static function saveCode(string $code, int $userId)
     {
         //Smazat starý kód z databáze (pokud existuje)
-        Db::connect();
         Db::executeQuery('DELETE FROM obnoveni_hesel WHERE uzivatele_id = ?', array($userId));
         
         //Uložit kód do databáze

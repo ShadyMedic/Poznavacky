@@ -162,7 +162,6 @@ class ClassObject extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].','.Group::COLUMN_DICTIONARY['name'].','.Group::COLUMN_DICTIONARY['partsCount'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['class'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
@@ -269,7 +268,6 @@ class ClassObject extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         $result = Db::fetchQuery('SELECT '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].','.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].' FROM clenstvi JOIN '.User::TABLE_NAME.' ON clenstvi.uzivatele_id = '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].' WHERE clenstvi.tridy_id = ? ORDER BY '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].' DESC;', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
@@ -306,7 +304,6 @@ class ClassObject extends DatabaseItem
         }
         
         //Konstrukce objektu uživatele
-        Db::connect();
         $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['karma'].','.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($userName));
         if (empty($result))
         {
@@ -359,9 +356,7 @@ class ClassObject extends DatabaseItem
         #     //Nelze získat členství ve veřejné nebo uzamčené třídě
         #     return false;
         # }
-        
-        Db::connect();
-        
+                
         //Zkontroluj, zda již uživatel není členem této třídy
         //Není třeba - metoda getNewClassesByAccessCode ve třídě ClassManager navrací pouze třídy, ve kterých přihlášený uživatel ještě není členem
         # if ($this->checkAccess($userId))
@@ -415,7 +410,6 @@ class ClassObject extends DatabaseItem
         }
         
         //Odstranit členství z databáze
-        Db::connect();
         if (Db::executeQuery('DELETE FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1', array($this->id, $userId)))
         {
             return true;
@@ -441,7 +435,6 @@ class ClassObject extends DatabaseItem
         
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "public" OR '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
         $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
         return ($result['cnt'] === 1) ? true : false;
@@ -468,7 +461,6 @@ class ClassObject extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['name'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ?', array($groupName, $this->id), false);
         if ($cnt['cnt'] > 0)
         {
@@ -580,7 +572,6 @@ class ClassObject extends DatabaseItem
         
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['status'].' = ?, '.self::COLUMN_DICTIONARY['code'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($status, $code, $this->id), false);
         
         return true;
@@ -619,7 +610,6 @@ class ClassObject extends DatabaseItem
         
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['status'].' = ?, '.self::COLUMN_DICTIONARY['code'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($status, $code, $this->id), false);
         
         return true;
@@ -645,7 +635,6 @@ class ClassObject extends DatabaseItem
         
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['admin'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($newAdmin->getId(), $this->id));
         
         return true;

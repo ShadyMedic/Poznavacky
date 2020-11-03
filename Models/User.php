@@ -88,7 +88,6 @@ class User extends DatabaseItem implements ArrayAccess
     {
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         $invitationsData = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND expirace > NOW()', array($this->id), true);
         if ($invitationsData === false)
         {
@@ -160,7 +159,6 @@ class User extends DatabaseItem implements ArrayAccess
         }
         
         //Kontrola, zda uživatel není správcem žádné třídy
-        Db::connect();
         $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array($this->id));
         if ($administratedClasses['cnt'] > 0)
         {

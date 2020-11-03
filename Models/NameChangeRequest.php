@@ -91,7 +91,6 @@ abstract class NameChangeRequest extends DatabaseItem
         $this->loadIfNotLoaded($this->subject);
         
         //Změnit jméno
-        Db::connect();
         Db::executeQuery('UPDATE '.$this::SUBJECT_TABLE_NAME.' SET '.$this::SUBJECT_NAME_DB_NAME.' = ? WHERE '.$this::SUBJECT_TABLE_NAME.'_id = ?;', array($this->newName, $this->subject->getId()));
         
         //Odeslat e-mail

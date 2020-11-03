@@ -25,7 +25,6 @@ class LogoutController extends Controller
             setcookie('instantLogin', null, -1);
             
             //Vymaž kód pro trvalé přihlášení z databáze
-            Db::connect();
             Db::executeQuery('DELETE FROM sezeni WHERE kod_cookie = ? LIMIT 1', array(md5($code)));
             unset($code);
         }

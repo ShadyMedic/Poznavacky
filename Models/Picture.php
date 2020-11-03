@@ -117,7 +117,6 @@ class Picture extends DatabaseItem
      */
     public function deleteReports()
     {
-        Db::connect();
         Db::executeQuery('DELETE FROM '.Report::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id));
         $this->reports = array();
         return true;
@@ -139,7 +138,6 @@ class Picture extends DatabaseItem
      */
     public function loadReports()
     {
-        Db::connect();
         $result = Db::fetchQuery('SELECT '.Report::COLUMN_DICTIONARY['id'].','.Report::COLUMN_DICTIONARY['reason'].','.Report::COLUMN_DICTIONARY['additionalInformation'].','.Report::COLUMN_DICTIONARY['reportersCount'].' FROM '.Report::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id), true);
         
         if (count($result) === 0)
@@ -167,7 +165,6 @@ class Picture extends DatabaseItem
         $this->loadIfNotLoaded($this->id);
         
         //Vypnout obrázek v databázi
-        Db::connect();
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['enabled'].' = 0 WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
         
         //Přenastavit vlastnost této instance

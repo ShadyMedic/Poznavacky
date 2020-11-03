@@ -14,7 +14,6 @@ class ClassManager
      */
     public static function classExists(string $className)
     {
-        Db::connect();
         $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ?', array($className), false);
         if ($cnt['cnt'] > 0)
         {
@@ -35,7 +34,6 @@ class ClassManager
      */
     public static function getNewClassesByAccessCode(int $code, int $userId)
     {
-        Db::connect();
         $result = Db::fetchQuery('
         SELECT
         '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',

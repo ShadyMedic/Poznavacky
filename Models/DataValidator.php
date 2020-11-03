@@ -85,7 +85,6 @@ class DataValidator
      */
     public function checkUniqueness($subject, int $stringType)
     {
-        Db::connect();
         switch ($stringType)
         {
             case self::TYPE_USER_NAME:
@@ -127,7 +126,6 @@ class DataValidator
      */
     public function getUserIdByEmail(string $email)
     {
-        Db::connect();
         $userId = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($email), false);
         if (!$userId)
         {

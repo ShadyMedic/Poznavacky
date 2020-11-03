@@ -62,7 +62,6 @@ class ReportAdder
         }
         
         //Získání objektu přírodniny
-        Db::connect();
         $dbResult = Db::fetchQuery('
         SELECT
         '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['name'].', '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['picturesCount'].', 

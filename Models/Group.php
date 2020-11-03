@@ -144,7 +144,6 @@ class Group extends DatabaseItem
         $this->loadIfNotLoaded($this->class);
         
         $allNaturals = array();
-        Db::connect();
         $result = Db::fetchQuery('
             SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].'
             FROM '.Natural::TABLE_NAME.'
@@ -199,7 +198,6 @@ class Group extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        Db::connect();
         $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].','.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
@@ -245,7 +243,6 @@ class Group extends DatabaseItem
         $in = str_repeat('?,', count($availableReasons) - 1).'?';
         $sqlArguments = array_values($availableReasons);
         $sqlArguments[] = $this->id;
-        Db::connect();
         $result = Db::fetchQuery('
             SELECT
             '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",

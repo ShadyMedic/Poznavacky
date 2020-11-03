@@ -278,7 +278,6 @@ abstract class DatabaseItem
         }
         
         //Proveď SQL dotaz
-        Db::connect();
         $query = 'SELECT '.$selectString.' FROM '.$this::TABLE_NAME.' WHERE '.$whereString.';';
         $result = Db::fetchQuery($query, $whereValues, true);
         if ($result === false) { throw new BadMethodCallException('No record in the database matches the search criteria, make sure the object is saved in the database'); }
@@ -396,7 +395,6 @@ abstract class DatabaseItem
         $valuesString = str_repeat('?,', count($databaseColumnNames) - 1).'?';
         
         //Proveď SQL dotaz
-        Db::connect();
         $this->id = Db::executeQuery('INSERT INTO '.$this::TABLE_NAME.' ('.$columnString.') VALUES ('.$valuesString.')', $databaseColumnValues, true);
         if (!empty($this->id))
         {
@@ -451,7 +449,6 @@ abstract class DatabaseItem
         $columnString = implode(' = ?,', $databaseColumnNames);
         $columnString .= ' = ?'; //Přidání rovnítka s otazníkem za název posledního sloupce
         
-        Db::connect();
         return Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$columnString.' WHERE '.$this::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array_pad($databaseColumnValues, count($databaseColumnValues) + 1, $this->id));
     }
     
@@ -463,7 +460,6 @@ abstract class DatabaseItem
     {
     	$this->loadIfNotLoaded($this->id);
     	
-    	Db::connect();
     	Db::executeQuery('DELETE FROM '.$this::TABLE_NAME.' WHERE '.$this::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
     	$this->id = new undefined();
     	$this->savedInDb = false;

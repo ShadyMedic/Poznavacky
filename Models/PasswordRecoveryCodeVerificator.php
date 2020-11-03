@@ -12,7 +12,6 @@ class PasswordRecoveryCodeVerificator
      */
     public static function verifyCode(string $code)
     {
-        Db::connect();
         $result = Db::fetchQuery('SELECT uzivatele_id FROM obnoveni_hesel WHERE kod = ? AND expirace > ?', array(md5($code), time()), false);
         if (!$result)
         {
@@ -27,7 +26,6 @@ class PasswordRecoveryCodeVerificator
      */
     public static function deleteCode(string $code)
     {
-        Db::connect();
         Db::executeQuery('DELETE FROM obnoveni_hesel WHERE kod = ?', array(md5($code)));
     }
 }

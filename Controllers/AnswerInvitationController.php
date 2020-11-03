@@ -30,7 +30,6 @@ class AnswerInvitationController extends Controller
         }
         
         //Kontrola, zda pozvánka existuje
-        Db::connect();
         $invitationData = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['user'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['id'].' = ? AND '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['expiration'].' > NOW() LIMIT 1', array($invitationId, UserManager::getId()));
         if (empty($invitationData))
         {

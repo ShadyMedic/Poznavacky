@@ -148,9 +148,7 @@ class RegisterUser
      * @return boolean TRUE, pokud je uživatel úspěšně zaregistrován
      */
     private static function register(string $name, string $password, $email)
-    {
-        Db::connect();
-        
+    {        
         //Uložení dat do databáze
         $password = password_hash($password, PASSWORD_DEFAULT);
         
