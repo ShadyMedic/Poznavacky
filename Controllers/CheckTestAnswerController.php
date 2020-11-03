@@ -9,7 +9,7 @@ class CheckTestAnswerController extends Controller
      * Metoda načítající odpověď z $_POST a ověřuje jí proti správné odpovědi uložené v $_SESSION
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $questionNum = $_POST['qNum'];
         $answer = $_POST['ans'];

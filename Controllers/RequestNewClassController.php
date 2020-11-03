@@ -9,7 +9,7 @@ class RequestNewClassController extends Controller
      * Metoda nastavující hlavičky a pohled
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         //Kontrola, zda právě nebyl formulář odeslán
         if (!empty($_POST))

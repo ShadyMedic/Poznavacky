@@ -11,7 +11,7 @@ class LearnPicturesController extends Controller
      * Adresy jsou odeslány jako pole v JSON formátu
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];

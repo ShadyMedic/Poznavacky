@@ -12,7 +12,7 @@ class MenuController extends Controller
      * Metoda nejprve zkontroluje, zda je uživatel přihlášen
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         //Kontrola, zda je uživatel přihlášen
         $aChecker = new AccessChecker();
@@ -210,7 +210,7 @@ class MenuController extends Controller
      * @param bool $unsetGroup TRUE, pokud se má odstranit poznávačka; defaultně FALSE
      * @param bool $unsetClass TRUE, pokud se má odstranit třída; defaultně FALSE
      */
-    private function unsetSelection(bool $unsetPart = false, bool $unsetGroup = false, bool $unsetClass = false)
+    private function unsetSelection(bool $unsetPart = false, bool $unsetGroup = false, bool $unsetClass = false): void
     {
         if ($unsetPart){ unset($_SESSION['selection']['part']); }
         if ($unsetGroup){ unset($_SESSION['selection']['group']); }

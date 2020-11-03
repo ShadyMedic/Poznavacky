@@ -7,7 +7,7 @@ class MenuTableContentController extends Controller
 {
     private $aquiredData;
     
-    public function __construct(string $viewWithTable, $data)
+    public function __construct(string $viewWithTable, $data): void
     {
         $this->view = $viewWithTable;
         $this->aquiredData = $data;

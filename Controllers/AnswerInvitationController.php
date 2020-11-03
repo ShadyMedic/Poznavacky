@@ -9,7 +9,7 @@ class AnswerInvitationController extends Controller
      * Metoda zpracovávající odpověď na pozvánku
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         //Validace odeslaných dat
         if (!isset($_POST) || !isset($_POST['invitationId']) || !isset($_POST['invitationAnswer']) || filter_var($_POST['invitationId'], FILTER_VALIDATE_INT) === false)

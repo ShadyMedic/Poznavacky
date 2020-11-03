@@ -9,7 +9,7 @@ class RooterController extends Controller
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
      * @param array $parameters Pole parametrů, na indexu 0 musí být nezpracovaná URL adresa
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $urlArguments = $this->parseURL($parameters[0]);
         $controllerName = null;
@@ -48,7 +48,7 @@ class RooterController extends Controller
      * Metoda načítající hlášky pro uživatele uložené v $_SESSION a přidávající jejich obsah do dat, které jsou později předány pohledu
      * Hlášky jsou poté ze sezení vymazány
      */
-    protected function getMessages()
+    protected function getMessages(): array
     {
         if (isset($_SESSION['messages']))
         {
@@ -70,7 +70,7 @@ class RooterController extends Controller
     /**
      * Metoda odstraňující všechny hlášky pro uživatele uloženy v $_SESSION
      */
-    protected function clearMessages()
+    protected function clearMessages(): void
     {
         unset($_SESSION['messages']);
     }
@@ -80,7 +80,7 @@ class RooterController extends Controller
      * @param string $url Nezpracovaná URL adresa
      * @return array Pole argumentů následujících po doméně
      */
-    private function parseURL(string $url)
+    private function parseURL(string $url): array
     {
         $parsedURL = parse_url($url)['path'];   # Z http(s)://domena.net/abc/def/ghi získá /abc/def/ghi
         $parsedURL = ltrim($parsedURL, '/');    # Odstranění prvního lomítka

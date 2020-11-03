@@ -11,7 +11,7 @@ class AdministrateController extends Controller
      * Metoda ověřující, zda má uživatel do administrace přístup a nastavující hlavičku stránky a pohled
      * @see Controller::process()
      */
-    public function process(array $paremeters)
+    public function process(array $paremeters): void
     {
         $aChecker = new AccessChecker();
         if (!$aChecker::checkSystemAdmin())

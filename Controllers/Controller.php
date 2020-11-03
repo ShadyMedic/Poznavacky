@@ -21,12 +21,12 @@ abstract class Controller
      * Metoda zpracovávající parametry z URL adresy
      * @param array $parameters Paremetry ke zpracování jako pole
      */
-    abstract function process(array $parameters);
+    abstract function process(array $parameters): void;
     
     /**
      * Metoda zahrnující pohled a vypysující do něj proměnné z vlastnosti $data
      */
-    public function displayView()
+    public function displayView(): void
     {
         if ($this->view)
         {
@@ -51,7 +51,7 @@ abstract class Controller
      * @param array $data Pole proměnných k ošetření
      * @return mixed Pole s ošetřenými hodnotami
      */
-    private function sanitizeData(array $data)
+    private function sanitizeData(array $data): array
     {
         $sanitizer = new AntiXssSanitizer();
         foreach ($data as $key => $value)
@@ -65,7 +65,7 @@ abstract class Controller
      * Metoda přesměrovávající uživatele na jinou adresu a ukončující běh skriptu
      * @param string $url
      */
-    public function redirect(string $url)
+    public function redirect(string $url): void
     {
         header('Location: /'.$url);
         header('Connection: close');
@@ -78,7 +78,7 @@ abstract class Controller
      * @param bool $capitalizeFirst Má být první písmeno velké (default TRUE)
      * @return string Řetězec konvertovaný do CamelCase
      */
-    protected function kebabToCamelCase(string $str, bool $capitalizeFirst = true)
+    protected function kebabToCamelCase(string $str, bool $capitalizeFirst = true): string
     {
         $camel = str_replace('-', ' ', $str);
         $camel = ucwords($camel);
@@ -92,7 +92,7 @@ abstract class Controller
      * @param int $type
      * @param string $msg
      */
-    protected function addMessage(int $type, string $msg)
+    protected function addMessage(int $type, string $msg): void
     {
         $messageBox = new MessageBox($type, $msg);
         if (isset($_SESSION['messages']))

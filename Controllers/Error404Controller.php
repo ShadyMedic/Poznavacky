@@ -10,7 +10,7 @@ class Error404Controller extends Controller
      * Metoda nastavující hlavičku požadavku, titulek stránky a zobrazovaný pohled chybové stránky
      * @see Controller::process()
      */
-    public function process(array $paremeters)
+    public function process(array $paremeters): void
     {
         header('HTTP/1.0 404 Not Found');
         

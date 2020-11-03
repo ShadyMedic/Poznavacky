@@ -11,7 +11,7 @@ class TokenPasswordChangeController extends Controller
      * Také nastavuje úspěchovou nebo chybové hlášky a přesměrovává zpět nebo nastavuje pohled pro zobrazení zprávy.
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $token = $_POST['token'];
         $pass = $_POST['pass'];

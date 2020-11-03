@@ -12,7 +12,7 @@ class IndexFormsController extends Controller
      * Podle výsledku zpracování dat odesílá instrukce k přesměrování na menu stránku nebo odesílá chybovou hlášku.
      * @see Controller::process()
      */
-    public function process(array $paremeters)
+    public function process(array $paremeters): void
     {
         header('Content-Type: application/json');
         try

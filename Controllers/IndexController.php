@@ -10,7 +10,7 @@ class IndexController extends Controller
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @see Controller::process()
      */
-    public function process(array $paremeters)
+    public function process(array $paremeters): void
     {
         //Kontrola, zda již uživatel není přihlášen
         $aChecker = new AccessChecker();

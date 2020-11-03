@@ -10,7 +10,7 @@ class ReportsController extends Controller
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $group = $_SESSION['selection']['group'];
         $this->data['reports'] = $group->getReports();

@@ -11,7 +11,7 @@ class MembersController extends Controller
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $this->pageHeader['title'] = 'Správa členů';
         $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu členů';

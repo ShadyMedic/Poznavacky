@@ -9,7 +9,7 @@ class AdministrateActionController extends Controller
      * Metoda odlišující, jaká akce má být vykonána a volající příslušný model
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         if (empty($_POST))
         {

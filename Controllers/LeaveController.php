@@ -9,7 +9,7 @@ class LeaveController extends Controller
      * Metoda odstraňujícího přihlášeného uživatele ze zvolené třídy (ruší jeho členství)
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $userId = UserManager::getId();
         $class = $_SESSION['selection']['class'];

@@ -12,7 +12,7 @@ class TestsController extends Controller
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         //Kontrola, zda nebyla zvolena správa hlášení v nějaké poznávačce nebo její editace
         //Načtení argumentů vztahujících se k této stránce

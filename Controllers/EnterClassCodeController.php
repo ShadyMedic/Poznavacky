@@ -9,7 +9,7 @@ class EnterClassCodeController extends Controller
      * Metoda zpracovávající data odeslaná formulářem
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         if (!isset($_POST) || !isset($_POST['code']))
         {

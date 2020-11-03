@@ -12,7 +12,7 @@ class TestPicturesController extends Controller
      * Adresy jsou odeslány jako pole v JSON formátu
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $group = $_SESSION['selection']['group'];
         if (isset($_SESSION['selection']['part']))

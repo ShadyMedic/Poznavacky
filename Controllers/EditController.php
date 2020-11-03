@@ -10,7 +10,7 @@ class EditController extends Controller
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         //TODO - získat data pro pohled
         

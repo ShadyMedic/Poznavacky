@@ -12,7 +12,7 @@ class MenuTableController extends Controller
      * Metoda nastavující informace pro hlavičku stránky a získávající data do tabulky
      * @see Controller::process()
      */
-    public function process(array $chosenFolder)
+    public function process(array $chosenFolder): void
     {
         $this->pageHeader['title'] = 'Volba poznávačky';
         $this->pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';

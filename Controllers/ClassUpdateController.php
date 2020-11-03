@@ -9,7 +9,7 @@ class ClassUpdateController extends Controller
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         if (empty($_POST))
         {

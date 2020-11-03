@@ -9,7 +9,7 @@ class NewReportController extends Controller
      * Metoda přijímající URL nahlašovaného obrázku, důvod a přídavné informace skrz $_POST a po ověření ukládající data do databáze
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         header('Content-Type: application/json');
         $adder = new ReportAdder($_SESSION['selection']['group']);

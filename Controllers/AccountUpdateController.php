@@ -9,7 +9,7 @@ class AccountUpdateController extends Controller
      * Metoda odlišující, jaká data si přeje uživatel změnit a volající příslušný model
      * @see Controller::process()
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         if (empty($_POST))
         {
