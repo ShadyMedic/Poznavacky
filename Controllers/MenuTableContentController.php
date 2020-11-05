@@ -7,13 +7,13 @@ class MenuTableContentController extends Controller
 {
     private $aquiredData;
     
-    public function __construct(string $viewWithTable, $data): void
+    public function __construct(string $viewWithTable, $data)
     {
         $this->view = $viewWithTable;
         $this->aquiredData = $data;
     }
     
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         if (gettype($this->aquiredData) === 'string')
         {
