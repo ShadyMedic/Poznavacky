@@ -32,7 +32,7 @@ class DatabaseException extends Exception
      * @param bool $code TRUE, pokud se má navrátit chybový kód
      * @return string Řetězec ve formátu "<zpráva> - error code: <kód>" nebo "Error code: <kód>" nebo "<zpráva>" nebo prázdný řetězec
      */
-    public function getSafeInfo(bool $message, bool $code)
+    public function getSafeInfo(bool $message, bool $code): string
     {
         $result = '';
         if ($message){$result .= $this->message;}
@@ -47,7 +47,7 @@ class DatabaseException extends Exception
      * TYTO INFORMACE NESMÍ BÝT ZOBRAZOVÁNY BĚŽNÉMU UŽIVATELI - METODA SLOUŽÍ POUZE PRO VÝVOJÁŘSKÉ ÚČELY
      * @return array Pole s indexy "query", "code" a "message" obsahující informace o výjimce
      */
-    public function getDbInfo()
+    public function getDbInfo(): array
     {
         return array('query' => $this->query, 'code' => $this->dbErrorCode, 'message' => $this->dbErrorMessage);
     }
@@ -57,7 +57,7 @@ class DatabaseException extends Exception
      * {@inheritDoc}
      * @see Exception::__toString()
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getSafeInfo(true, true);
     }

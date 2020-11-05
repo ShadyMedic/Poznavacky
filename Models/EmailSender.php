@@ -28,7 +28,7 @@ class EmailSender
      * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
      * @return boolean TRUE, pokud se odeslání e-mailu zdařilo, FALSE, pokud ne
      */
-    public function sendMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true)
+    public function sendMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true): bool
     {
         $mail = $this->setMail($to, $subject, $message, $fromAddress, $fromName, $isHTML);
         return $this->sendPreparedEmail($mail);
@@ -44,7 +44,7 @@ class EmailSender
      * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
      * @return \PHPMailer\PHPMailer Nastavený e-mailový objekt
      */
-    public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true)
+    public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true) //TODO - opravit namespace a nastavit zde návratový typ na \PHPMailer\PHPMailer
     {
         $mail = new PHPMailer();
         
@@ -74,7 +74,7 @@ class EmailSender
      * @param \PHPMailer\PHPMailer $mail Nastavený e-mailový objekt
      * @return boolean TRUE, pokud se odeslání e-mailu zdaří, FALSE, pokud ne
      */
-    public function sendPreparedEmail($mail)
+    public function sendPreparedEmail($mail): bool
     {
         $result = $mail->Send();
         if(!$result)

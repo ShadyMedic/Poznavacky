@@ -11,13 +11,13 @@ abstract class Captcha
     /**
      * Metoda generující otázku i odpověď Turingova testu a nastavuje je jako vlastnosti objektu
      */
-    public abstract function generate();
+    public abstract function generate(): void;
     
     /**
      * Metoda ukládající dříve vygenerovanou odpověď uloženou jako vlastnost objektu do $_SESSION
      * @param string $index Klíč, pod kterým bude odpoveď v $_SESSION dostupná
      */
-    protected function setAnswer(string $index)
+    protected function setAnswer(string $index): void
     {
         $_SESSION[$index] = $this->answer;
     }
@@ -26,7 +26,7 @@ abstract class Captcha
      * Metoda odstraňující správnou odpoveď ze $_SESSION
      * @param string $index Klíč, pod kterým se v $_SESSION nachází správná odpoveď
      */
-    protected function unsetAnswer($index)
+    protected function unsetAnswer($index): void
     {
         unset($_SESSION[$index]);
     }
@@ -38,7 +38,7 @@ abstract class Captcha
      * @param string $index Klíč, pod kterým se v $_SESSION nachází správná odpoveď
      * @return boolean TRUE, pokud se odpoveď shoduje s dříve uloženou správnou odpovědí (i typem), FALSE, pokud ne
      */
-    public function checkAnswer($answer, $index)
+    public function checkAnswer($answer, $index): bool
     {
         $result = $_SESSION[$index] === (int)$answer;
         

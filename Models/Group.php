@@ -44,7 +44,7 @@ class Group extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $class = null, $parts = null, $partsCount = null)
+    public function initialize($name = null, $class = null, $parts = null, $partsCount = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
@@ -66,7 +66,7 @@ class Group extends DatabaseItem
      * Metoda navracející jméno této poztnávačky
      * @return string Jméno poznávačky
      */
-    public function getName()
+    public function getName(): string
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
@@ -74,9 +74,9 @@ class Group extends DatabaseItem
     
     /**
      * Metoda navracející ID třídy, do které tato poznávačka patří
-     * @return ClassObject ID třídy
+     * @return ClassObject objekt třídy
      */
-    public function getClass()
+    public function getClass(): ClassObject
     {
         $this->loadIfNotLoaded($this->class);
         return $this->class;
@@ -86,7 +86,7 @@ class Group extends DatabaseItem
      * Metoda navracející počet částí v této poznávačce
      * @return int Počet částí poznávačky
      */
-    public function getPartsCount()
+    public function getPartsCount(): int
     {
         $this->loadIfNotLoaded($this->partsCount);
         return $this->partsCount;
@@ -100,7 +100,7 @@ class Group extends DatabaseItem
      * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
      * @return Picture[] Polé náhodně vybraných obrázků obsahující specifikovaný počet prvků
      */
-    public function getRandomPictures(int $count)
+    public function getRandomPictures(int $count): array
     {
         $result = array();
         
@@ -126,7 +126,7 @@ class Group extends DatabaseItem
      * Pokud zatím nebyly načteny části této poznávačky, budou načteny z databáze
      * @return Natural[] Pole přírodnin patřících do této poznávačky jako objekty
      */
-    public function getNaturals()
+    public function getNaturals(): array
     {
         if (!$this->isDefined($this->naturals))
         {
@@ -138,7 +138,7 @@ class Group extends DatabaseItem
     /**
      * Metoda načítající seznam přírodnin patřících do této poznávačky a ukládající jejich instance do vlastnosti $naturals jako pole
      */
-    private function loadNaturals()
+    private function loadNaturals(): void
     {
         $this->loadIfNotLoaded($this->id);
         $this->loadIfNotLoaded($this->class);
@@ -169,7 +169,7 @@ class Group extends DatabaseItem
      * @param Natural $natural Objekt přírodniny pro ověření (mělo by být vyplněné její ID)
      * @return boolean TRUE, pokud se poskytnutá přírodnina nachází v této poznávačce, FALSE, pokud ne
      */
-    public function containsNatural(Natural $natural)
+    public function containsNatural(Natural $natural): bool
     {
         foreach ($this->getNaturals() as $presentNatural)
         {
@@ -182,7 +182,7 @@ class Group extends DatabaseItem
      * Metoda navracející část patřící do této poznávačky jako pole objektů
      * @return array Pole částí jako objekty
      */
-    public function getParts()
+    public function getParts(): array
     {
         if (!$this->isDefined($this->parts))
         {
@@ -194,7 +194,7 @@ class Group extends DatabaseItem
     /**
      * Metoda načítající části patřící do této poznávačky a ukládající je jako vlastnost
      */
-    public function loadParts()
+    public function loadParts(): void
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -221,7 +221,7 @@ class Group extends DatabaseItem
      * @param int $id Požadované ID části
      * @return Part Objekt reprezentující část se zadaným ID
      */
-    private function getPartById(int $id)
+    private function getPartById(int $id): Part
     {
         if (!$this->isDefined($this->parts)){ $this->loadParts(); }
         foreach ($this->parts as $part)
@@ -233,7 +233,11 @@ class Group extends DatabaseItem
         }
     }
     
-    public function getReports()
+    /**
+     * Metoda získávající hlášení všech obrázků patřících k přírodninám, které jsou součástí této poznávačky
+     * @return Report[] Pole objektů hlášení
+     */
+    public function getReports(): array
     {
         $this->loadIfNotLoaded($this->id);
         

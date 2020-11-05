@@ -14,7 +14,7 @@ class NewClassRequester
      * @throws AccessDeniedException Pokud odeslaná data nesplňují podmínky
      * @return boolean TRUE, pokud se podařilo odeslat e-mail, FALSE, pokud ne
      */
-    public function processFormData(array $POSTdata)
+    public function processFormData(array $POSTdata): bool
     {
         $email = @$POSTdata['email'];
         $name = @$POSTdata['className'];
@@ -51,7 +51,7 @@ class NewClassRequester
      * @throws AccessDeniedException Pokud jsou data vyplněna nesprávně
      * @return boolean TRUE, pokud jsou všechna data vyplněna správně
      */
-    private function validate($email, string $name, $code, $text, $antispam)
+    private function validate($email, string $name, $code, $text, $antispam): bool
     {
         //Kontrola, zda jsou všechna povinná pole vyplněna
         if (mb_strlen($email) === 0 && empty(UserManager::getEmail())) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_EMAIL, null, null); }

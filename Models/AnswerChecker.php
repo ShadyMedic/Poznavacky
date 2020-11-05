@@ -16,7 +16,7 @@ class AnswerChecker
      * @param int $questionNum Číslo, pod kterým je v $_SESSION['testAnswers'] uložena správná odpověď
      * @return bool TRUE, pokud je odpověď správná, FALSE, pokud ne
      */
-    public function verify(string $answer, int $questionNum)
+    public function verify(string $answer, int $questionNum): bool
     {
         if (!isset($_SESSION['testAnswers'][$questionNum]))
         {
@@ -38,7 +38,7 @@ class AnswerChecker
      * @param string $correct
      * @return bool TRUE, pokud lze odpověď uznat, FALSE, pokud ne
      */
-    private function isCorrect(string $answer, string $correct)
+    private function isCorrect(string $answer, string $correct): bool
     {
         //Převést vše na malá písmena
         $answer = mb_strtolower($answer);

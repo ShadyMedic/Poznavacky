@@ -41,7 +41,7 @@ class ReportResolver
      * @param string $newUrl Nová adresa obrázku
      * @throws AccessDeniedException V případě, že nově zvolená přírodnina nepatří do té samé poznávačky, jako ta stávající
      */
-    public function editPicture(int $pictureId, string $newNaturalName, string $newUrl)
+    public function editPicture(int $pictureId, string $newNaturalName, string $newUrl): void
     {
         $picture = new Picture(false, $pictureId);
         $natural = new Natural(false, 0);
@@ -72,7 +72,7 @@ class ReportResolver
      * Metoda skrývající obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
      */
-    public function disablePicture(int $pictureId)
+    public function disablePicture(int $pictureId): void
     {
         $picture = new Picture(false, $pictureId);
         $picture->disable();
@@ -83,7 +83,7 @@ class ReportResolver
      * Metoda odstraňující obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
      */
-    public function deletePicture(int $pictureId)
+    public function deletePicture(int $pictureId): void
     {
         $picture = new Picture(false, $pictureId);
         $picture->delete();
@@ -93,7 +93,7 @@ class ReportResolver
      * Metoda odstraňující hlášení s daným ID z databáze
      * @param int $reportId ID hlášení k odstranění
      */
-    public function deleteReport(int $reportId)
+    public function deleteReport(int $reportId): void
     {
         $report = new Report(false, $reportId);
         $report->delete();

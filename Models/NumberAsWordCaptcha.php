@@ -13,7 +13,7 @@ class NumberAsWordCaptcha extends Captcha
      * Otázka i odpověď jsou uloženy jako vlastnosti objektu a odpověď je uložena i do $_SESSION
      * @see Captcha::generate()
      */
-    public function generate()
+    public function generate(): void
     {
         $digits = explode(',','nula,jedna,dva,tři,čtyři,pět,šest,sedm,osm,devět');
         $tens = explode(',', 'nula,deset,dvacet,třicet,čtyřicet,padesát,šedesát,sedmdesát,osmdesát,devadesát');

@@ -39,7 +39,7 @@ class DataValidator
      * @throws RangeException Pokud délka řetězce nespadá mezi $min a $max. Zpráva výjimky je 'long' nebo 'short' podle toho, jaká hranice byla přesažena
      * @return boolean TRUE, pokud délka řetězce spadá mezi $min a $max
      */
-    public function checkLength($subject, int $min, int $max, int $stringType)
+    public function checkLength($subject, int $min, int $max, int $stringType): bool
     {
         if (mb_strlen($subject) > $max)
         {
@@ -61,7 +61,7 @@ class DataValidator
      * @throws InvalidArgumentException Pokud se řetězec skládá i z jiných než povolených znaků
      * @returns boolean TRUE, pokud se řetězec skládá pouze z povolených znaků
      */
-    public function checkCharacters(string $subject, string $allowedChars, int $stringType)
+    public function checkCharacters(string $subject, string $allowedChars, int $stringType): bool
     {
         
         //Není nutné (v tomto případě to ani tak být nesmí) používat mb_strlent
@@ -83,7 +83,7 @@ class DataValidator
      * @throws BadMethodCallException Pokud druhý argument neoznačuje jméno uživatele, název třídy nebo e-mail uživatele
      * @return boolean TRUE, pokud se řetězec zatím v databázi nevyskytuje
      */
-    public function checkUniqueness($subject, int $stringType)
+    public function checkUniqueness($subject, int $stringType): bool
     {
         switch ($stringType)
         {
@@ -123,8 +123,9 @@ class DataValidator
      * Metoda získávající ID uživatele přidruženého k e-mailové adrese
      * @param string $email E-mailová adresa, jejíhož vlastníka chceme najít
      * @throws AccessDeniedException Pokud taková adresa nepatří žádnému zaregistrovanému uživateli
+     * @return int ID uživatele, kterému patří daná e-mailová adresa
      */
-    public function getUserIdByEmail(string $email)
+    public function getUserIdByEmail(string $email): int
     {
         $userId = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($email), false);
         if (!$userId)
@@ -137,9 +138,9 @@ class DataValidator
     /**
      * Metoda kontrolující, zda je zadaný kód třídy platný
      * @param string $code Kód zadaný uživatelem
-     * @return TRUE, pokud je kód tvořen čtyřmi číslicemi, FALSE, pokud ne
+     * @return boolean TRUE, pokud je kód tvořen čtyřmi číslicemi, FALSE, pokud ne
      */
-    public function validateClassCode(string $code)
+    public function validateClassCode(string $code): bool
     {
         if (preg_match('/^\d\d\d\d$/', $code)){ return true; }
         return false;

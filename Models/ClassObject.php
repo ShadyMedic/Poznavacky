@@ -66,7 +66,7 @@ class ClassObject extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null)
+    public function initialize($name = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null): void
     {        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
@@ -94,7 +94,7 @@ class ClassObject extends DatabaseItem
      * Metoda navracející jméno této třídy
      * @return string Jméno třídy
      */
-    public function getName()
+    public function getName(): string
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
@@ -104,7 +104,7 @@ class ClassObject extends DatabaseItem
      * Metoda navracející počet poznávaček v této třídě
      * @return int Počet poznávaček
      */
-    public function getGroupsCount()
+    public function getGroupsCount(): int
     {
         $this->loadIfNotLoaded($this->groupsCount);
         return $this->groupsCount;
@@ -114,7 +114,7 @@ class ClassObject extends DatabaseItem
      * Metoda navracející uložený status této třídy.
      * @return string Status třídy (viz konstanty třídy)
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         $this->loadIfNotLoaded($this->status);
         return $this->status;
@@ -122,7 +122,7 @@ class ClassObject extends DatabaseItem
     
     /**
      * Metoda navracející uložený vstupní kód této třídy
-     * @return int Čtyřmístný kód této třídy
+     * @return int|null Čtyřmístný kód této třídy nebo NULL, pokud žádný kód není nastaven
      */
     public function getCode()
     {
@@ -134,7 +134,7 @@ class ClassObject extends DatabaseItem
      * Metoda pro získání objektu uživatele, který je správcem této třídy
      * @return User Objekt správce třídy
      */
-    public function getAdmin()
+    public function getAdmin(): User
     {
         $this->loadIfNotLoaded($this->admin);
         return $this->admin;
@@ -145,7 +145,7 @@ class ClassObject extends DatabaseItem
      * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
      * @return Group[] Pole poznávaček patřících do této třídy jako objekty
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         if (!$this->isDefined($this->groups))
         {
@@ -158,7 +158,7 @@ class ClassObject extends DatabaseItem
      * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
      * Počet poznávaček v této třídě je také aktualizován (vlastnost ClassObject::$groupsCount)
      */
-    public function loadGroups()
+    public function loadGroups(): void
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -187,7 +187,7 @@ class ClassObject extends DatabaseItem
      * @param string $groupName Ošetřený název nové poznávačky
      * @return boolean TRUE, pokud je poznávačka vytvořena a přidána úspěšně, FALSE, pokud ne
      */
-    public function addGroup(string $groupName)
+    public function addGroup(string $groupName): bool
     {
         if (!$this->isDefined($this->groups))
         {
@@ -217,7 +217,7 @@ class ClassObject extends DatabaseItem
      * @throws BadMethodCallException Pokud daná poznávačka není součástí této třídy
      * @return boolean TRUE, v případě, že se odstranění poznávačky povede, FALSE, pokud ne
      */
-    public function removeGroup(Group $group)
+    public function removeGroup(Group $group): bool
     {
         if (!$this->isDefined($this->groups))
         {
@@ -245,7 +245,7 @@ class ClassObject extends DatabaseItem
      * @param boolean $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
      * @return User[] Pole členů patřících do této třídy jako instance třídy User
      */
-    public function getMembers($includeLogged = true)
+    public function getMembers($includeLogged = true): array
     {
         if (!$this->isDefined($this->members))
         {
@@ -264,7 +264,7 @@ class ClassObject extends DatabaseItem
     /**
      * Metoda načítající členy patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
      */
-    public function loadMembers()
+    public function loadMembers(): void
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -293,7 +293,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem neexistuje nebo je již členem této třídy
      * @return boolean TRUE, pokud je pozvánka úspěšně vytvořena
      */
-    public function inviteUser(string $userName)
+    public function inviteUser(string $userName): bool
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -345,7 +345,7 @@ class ClassObject extends DatabaseItem
      * @param int $userId ID uživatele získávajícího členství
      * @return boolean TRUE, pokud je členství ve třídě úspěšně přidáno, FALSE, pokud ne
      */
-    public function addMember(int $userId)
+    public function addMember(int $userId): bool
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -382,7 +382,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud se jedná o veřejnou třídu, pokud uživatel s daným ID není členem této třídy nebo pokud se vyskytne chyba při odstraňování iživatelova členství z databáze
      * @return boolean TRUE, v případě, že se odstranění uživatele povede
      */
-    public function removeMember(int $userId)
+    public function removeMember(int $userId): bool
     {
         $this->loadIfNotLoaded($this->status);
         
@@ -426,7 +426,7 @@ class ClassObject extends DatabaseItem
      * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
      * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
      */
-    public function checkAccess(int $userId, bool $forceAgain = false)
+    public function checkAccess(int $userId, bool $forceAgain = false): bool
     {
         if (isset($this->accessCheckResult) && $forceAgain === false)
         {
@@ -446,7 +446,7 @@ class ClassObject extends DatabaseItem
      * @param int $userId ID ověřovaného uživatele
      * @return boolean TRUE, pokud je uživatelem správce třídy, FALSE pokud ne
      */
-    public function checkAdmin(int $userId)
+    public function checkAdmin(int $userId): bool
     {
         $this->loadIfNotLoaded($this->admin);
         return ($this->admin->getId() === $userId) ? true : false;
@@ -457,7 +457,7 @@ class ClassObject extends DatabaseItem
      * @param string $groupName Jméno poznávačky
      * @return boolean TRUE, pokud byla poznávačka nalezene, FALSE, pokud ne
      */
-    public function groupExists(string $groupName)
+    public function groupExists(string $groupName): bool
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -476,7 +476,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
      * @return boolean TRUE, pokud je žádost úspěšně vytvořena/aktualizována
      */
-    public function requestNameChange(string $newName)
+    public function requestNameChange(string $newName): bool
     {
         if (mb_strlen($newName) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_NO_NAME);}
         
@@ -544,7 +544,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
      */
-    public function updateAccessDataAsAdmin(string $status, $code)
+    public function updateAccessDataAsAdmin(string $status, $code): bool
     {
         //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
         if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
@@ -585,7 +585,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
      */
-    public function updateAccessData(string $status, $code)
+    public function updateAccessData(string $status, $code): bool
     {
         //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
         if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
@@ -622,7 +622,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
      */
-    public function changeClassAdminAsAdmin(User $newAdmin)
+    public function changeClassAdminAsAdmin(User $newAdmin): bool
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         $aChecker = new AccessChecker();
@@ -647,7 +647,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
      */
-    public function deleteAsAdmin()
+    public function deleteAsAdmin(): bool
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         $aChecker = new AccessChecker();
@@ -669,7 +669,7 @@ class ClassObject extends DatabaseItem
      * @throws AccessDeniedException Pokud přihlášený uživatel není správcem této třídy nebo zadal špatné / žádné heslo
      * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
      */
-    public function deleteAsClassAdmin(string $password)
+    public function deleteAsClassAdmin(string $password): bool
     {
         //Kontrola, zda je přihlášený uživatel správcem této třídy
         if (!$this->checkAdmin(UserManager::getId()))

@@ -10,7 +10,7 @@ class UserManager
      * Metoda navracející objekt s vlastnostmi přihlášeného uživatele uložený v $_SESSION
      * @return LoggedUser Objekt obsahující data přihlášeného uživatele
      */
-    public static function getUser()
+    public static function getUser(): User
     {
         return $_SESSION['user'];
     }
@@ -19,7 +19,7 @@ class UserManager
      * Metoda získávající ID aktuálně přihlášeného uživatele
      * @return int ID přihlášeného uživatele
      */
-    public static function getId()
+    public static function getId(): int
     {
         return self::getData('id');
     }
@@ -28,7 +28,7 @@ class UserManager
      * Metoda získávající jméno aktuálně přihlášeného uživatele
      * @return string Jméno přihlášeného uživatele
      */
-    public static function getName()
+    public static function getName(): string
     {
         return self::getData('name');
     }
@@ -37,7 +37,7 @@ class UserManager
      * Metoda získávající hash hesla aktuálně přihlášeného uživatele
      * @return string Hash hesla přihlášeného uživatele
      */
-    public static function getHash()
+    public static function getHash(): string
     {
         return self::getData('hash');
     }
@@ -46,7 +46,7 @@ class UserManager
      * Metoda získávající e-mail aktuálně přihlášeného uživatele (pokud jej zadal)
      * @return string|boolean E-mail přihlášeného uživatele nebo FALSE, pokud žádný nezadal
      */
-    public static function getEmail()
+    public static function getEmail(): string
     {
             $email = self::getData('email');
             if (!empty($email))
@@ -63,7 +63,7 @@ class UserManager
      * Metoda získávající pole obsahující další informace, konkrétně počet přidaných a uhodnutých obrázků, karmu a status
      * @return array Pole s hodnotami s indexy "addedPictures", "guessedPictures", "karma" a "status"
      */
-    public static function getOtherInformation()
+    public static function getOtherInformation(): array
     {
         return array('addedPictures' => self::getData('addedPictures'), 'guessedPictures' => self::getData('guessedPictures'), 'karma' => self::getData('karma'), 'status' => self::getData('status'));
     }

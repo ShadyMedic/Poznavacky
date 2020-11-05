@@ -42,7 +42,7 @@ class Natural extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $pictures = null, $picturesCount = null, $class = null)
+    public function initialize($name = null, $pictures = null, $picturesCount = null, $class = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
@@ -64,7 +64,7 @@ class Natural extends DatabaseItem
      * Metoda navracející jméno této přírodniny
      * @return string Jméno přírodniny
      */
-    public function getName()
+    public function getName(): string
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
@@ -74,7 +74,7 @@ class Natural extends DatabaseItem
      * Metoda navracející počet obrázků této přírodniny
      * @return int Počet obrázků této přírodniny uložené v databázi
      */
-    public function getPicturesCount()
+    public function getPicturesCount(): int
     {
         $this->loadIfNotLoaded($this->picturesCount);
         return $this->picturesCount;
@@ -85,7 +85,7 @@ class Natural extends DatabaseItem
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
      * @return Picture[] Pole obrázků této přírodniny z databáze jako objekty
      */
-    public function getPictures()
+    public function getPictures(): array
     {
         if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
         return $this->pictures;
@@ -107,7 +107,7 @@ class Natural extends DatabaseItem
      * Metoda načítající z databáze obrázky přírodniny a ukládající je jako vlastnost objektu
      * Vlastnost $picturesCount je nastavena / upravena podle počtu načtených obrázků
      */
-    public function loadPictures()
+    public function loadPictures(): void
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -137,7 +137,7 @@ class Natural extends DatabaseItem
      * @param string $url Ošetřená adresa obrázku
      * @return boolean TRUE, pokud je obrázek přidán úspěšně, FALSE, pokud ne
      */
-    public function addPicture(string $url)
+    public function addPicture(string $url): bool
     {   
         $picture = new Picture(true);
         $picture->initialize($url, $this, null, null);
@@ -156,7 +156,7 @@ class Natural extends DatabaseItem
      * @param string $url Adresa obrázku, kterou hledáme
      * @return boolean TRUE, pokud tato přírodnina již má tento obrázek přidaný, FALSE, pokud ne
      */
-    public function pictureExists(string $url)
+    public function pictureExists(string $url): bool
     {
         if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
         

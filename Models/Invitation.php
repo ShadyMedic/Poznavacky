@@ -42,7 +42,7 @@ class Invitation extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($user = null, $class = null, $expiration = null)
+    public function initialize($user = null, $class = null, $expiration = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($user === null){ $user = $this->user; }
@@ -58,7 +58,7 @@ class Invitation extends DatabaseItem
      * Metoda navracející objekt třídy, do které je možné pomocí této pozvánky získat přístup
      * @return ClassObject Objekt třídy, které se týká tato pozvánka
      */
-    public function getClass()
+    public function getClass(): ClassObject
     {
         $this->loadIfNotLoaded($this->class);
         return $this->class;
@@ -68,7 +68,7 @@ class Invitation extends DatabaseItem
      * Metoda navracející datum (bez času), ve kterém tato pozvánka expiruje
      * @return string Datum expirace této pozvánky ve formátu "den. měsíc. rok" (například 24. 07. 2020)
      */
-    public function getExpirationDate()
+    public function getExpirationDate(): string
     {
         $this->loadIfNotLoaded($this->expiration);
         return $this->expiration->format('d. m. Y');
@@ -77,7 +77,7 @@ class Invitation extends DatabaseItem
     /**
      * Metoda přijímající pozvánku a vytvářející členství v dané třídě pro daného uživatele
      */
-    public function accept()
+    public function accept(): void
     {
         $this->loadIfNotLoaded($this->class);
         $this->class->addMember($this->user['id']);

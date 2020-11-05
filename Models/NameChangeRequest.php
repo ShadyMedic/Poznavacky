@@ -35,7 +35,7 @@ abstract class NameChangeRequest extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($subject = null, $newName = null, $requestedAt = null)
+    public function initialize($subject = null, $newName = null, $requestedAt = null): void
     {   
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($subject === null){ $subject = $this->subject; }
@@ -51,7 +51,7 @@ abstract class NameChangeRequest extends DatabaseItem
      * Metoda navracejícící požadované jméno
      * @return string Požadované nové jméno
      */
-    public function getNewName()
+    public function getNewName(): string
     {
         $this->loadIfNotLoaded($this->newName);
         return $this->newName;
@@ -61,31 +61,31 @@ abstract class NameChangeRequest extends DatabaseItem
      * Metoda navracející aktuální jméno uživatele nebo název třídy
      * @return string Stávající jméno uživatele nebo název třídy
      */
-    public abstract function getOldName();
+    public abstract function getOldName(): string;
     
     /**
      * Metoda navracející e-mail uživatele žádající o změnu svého jména nebo názvu třídy (v takovém případě e-mail správce třídy)
      * @return string E-mailová adresa autora této žádosti
      */
-    public abstract function getRequestersEmail();
+    public abstract function getRequestersEmail(): string;
     
     /**
      * Metoda odesílající autorovi této žádosti e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
      */
-    public abstract function sendApprovedEmail();
+    public abstract function sendApprovedEmail(): bool;
     
     /**
      * Metoda odesílající autorovi této žádosti e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména uživatele nebo názvu třídy zadaný správcem
      */
-    public abstract function sendDeclinedEmail(string $reason);
+    public abstract function sendDeclinedEmail(string $reason): bool;
     
     /**
      * Metoda schvalující tuto žádost
      * Jméno uživatele nebo třídy je změněno a žadatel obdrží e-mail (pokud jej zadal)
      * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
      */
-    public function approve()
+    public function approve(): bool
     {
         $this->loadIfNotLoaded($this->newName);
         $this->loadIfNotLoaded($this->subject);
@@ -103,7 +103,7 @@ abstract class NameChangeRequest extends DatabaseItem
      * @param string $reason Důvod zamítnutí žádosti
      * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
      */
-    public function decline(string $reason)
+    public function decline(string $reason): bool
     {
         $this->loadIfNotLoaded($this->subject);
         

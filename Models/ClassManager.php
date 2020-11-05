@@ -12,7 +12,7 @@ class ClassManager
      * @param string $className Jméno třídy
      * @return boolean TRUE, pokud byla třída nalezene, FALSE, pokud ne
      */
-    public static function classExists(string $className)
+    public static function classExists(string $className): bool
     {
         $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ?', array($className), false);
         if ($cnt['cnt'] > 0)
@@ -32,7 +32,7 @@ class ClassManager
      * @param int $userId ID uživatele, který se pokouší použít kód k získání přístupu do nových tříd
      * @return ClassObject[] Pole tříd, které splňují podmínky výše, jako objekty, nebo prázdné pole, pokud žádné takové třídy neexistují
      */
-    public static function getNewClassesByAccessCode(int $code, int $userId)
+    public static function getNewClassesByAccessCode(int $code, int $userId): array
     {
         $result = Db::fetchQuery('
         SELECT

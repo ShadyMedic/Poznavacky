@@ -13,7 +13,7 @@ class TestGroupsFetcher
      * Metoda pro získání seznamu všech tříd a vytvoření tabulky pro předání pohledu
      * @return array Dvourozměrné pole obsahující seznam tříd a další informace potřebné pro pohled
      */
-    public function getClasses()
+    public function getClasses(): array
     {
         //Získej data
         $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
@@ -56,7 +56,7 @@ class TestGroupsFetcher
      * @param ClassObject $class Objekt třídy ze které je potřeba získat seznam poznávaček
      * @return array Dvourozměrné pole obsahující seznam poznávaček a další informace potřebné pro pohled
      */
-    public function getGroups(ClassObject $class)
+    public function getGroups(ClassObject $class): array
     {
         if ($class->checkAccess(UserManager::getId()))
         {
@@ -92,7 +92,7 @@ class TestGroupsFetcher
      * @param Group $group Objekt poznávačky, ze které je potřeba získat seznam částí
      * @return array Dvourozměrné pole obsahující seznam částí a další informace potřebné pro pohled
      */
-    public function getParts(Group $group)
+    public function getParts(Group $group): array
     {
         if ($group->getClass()->checkAccess(UserManager::getId()))
         {

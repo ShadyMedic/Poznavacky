@@ -24,7 +24,7 @@ class PasswordRecoveryCodeVerificator
      * Metoda odstraňující specifikovaný kód pro obnovu hesla z databáze
      * @param string $code Nezašifrovaný kód k odstranění
      */
-    public function deleteCode(string $code)
+    public function deleteCode(string $code): void
     {
         Db::executeQuery('DELETE FROM obnoveni_hesel WHERE kod = ?', array(md5($code)));
     }

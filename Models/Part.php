@@ -47,7 +47,7 @@ class Part extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $group = null, $naturals = null, $naturalsCount = null, $picturesCount = null)
+    public function initialize($name = null, $group = null, $naturals = null, $naturalsCount = null, $picturesCount = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
@@ -71,7 +71,7 @@ class Part extends DatabaseItem
      * Metoda navracející jméno této části
      * @return string Jméno části
      */
-    public function getName()
+    public function getName(): string
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
@@ -81,7 +81,7 @@ class Part extends DatabaseItem
      * Metoda navracející objekt poznávačky, do které tato část patří
      * @return Group Poznávačka do které patří část
      */
-    public function getGroup()
+    public function getGroup(): Group
     {
         $this->loadIfNotLoaded($this->group);
         return $this->group;
@@ -91,7 +91,7 @@ class Part extends DatabaseItem
      * Metoda navracející počet obrázků v této části
      * @return int počet obrázků v části
      */
-    public function getPicturesCount()
+    public function getPicturesCount(): int
     {
         $this->loadIfNotLoaded($this->picturesCount);
         return $this->picturesCount;
@@ -103,8 +103,9 @@ class Part extends DatabaseItem
      * Počet obrázků u jednotlivých přírodniny nemá na výběr vliv
      * Pokud nejsou při volání této funkce načteny přírodniny této části, budou načteny
      * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
+     * @return array Pole náhodně vybraných obrázků z této části jako objekty
      */
-    public function getRandomPictures(int $count)
+    public function getRandomPictures(int $count): array
     {
         if (!$this->isDefined($this->naturals))
         {
@@ -132,7 +133,7 @@ class Part extends DatabaseItem
      * Metoda navracející počet přírodnin patřících do této části
      * @return int Počet přírodnin v části
      */
-    public function getNaturalsCount()
+    public function getNaturalsCount(): int
     {
         $this->loadIfNotLoaded($this->naturalsCount);
         return $this->naturalsCount;
@@ -143,7 +144,7 @@ class Part extends DatabaseItem
      * Pokud zatím nebyly přírodniny načteny, budou načteny z databáze
      * @return array Pole přírodnin v této části jako objekty
      */
-    public function getNaturals()
+    public function getNaturals(): array
     {
         if (!$this->isDefined($this->naturals))
         {
@@ -155,7 +156,7 @@ class Part extends DatabaseItem
     /**
      * Metoda načítající přírodniny které jsou součástí této části a ukládající je jako vlastnost
      */
-    public function loadNaturals()
+    public function loadNaturals(): void
     {
         $this->loadIfNotLoaded($this->id);
         

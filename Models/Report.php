@@ -58,7 +58,7 @@ class Report extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($picture = null, $reason = null, $additionalInformation = null, $reportersCount = null)
+    public function initialize($picture = null, $reason = null, $additionalInformation = null, $reportersCount = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($picture === null){ $picture = $this->picture; }
@@ -76,7 +76,7 @@ class Report extends DatabaseItem
      * Metoda navracející objekt nahlášeného obrázku
      * @return Picture Nahlášený obrázek
      */
-    public function getPicture()
+    public function getPicture(): Picture
     {
         $this->loadIfNotLoaded($this->picture);
         return $this->picture;
@@ -86,7 +86,7 @@ class Report extends DatabaseItem
      * Metoda navracející ID nahlášeného obrázku
      * @return int ID obrázku
      */
-    public function getPictureId()
+    public function getPictureId(): int
     {
         $this->loadIfNotLoaded($this->picture);
         return $this->picture->getId();
@@ -96,7 +96,7 @@ class Report extends DatabaseItem
      * Metoda navracející URL nahlášeného obrázku
      * @return string Zdroj obrázku
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         $this->loadIfNotLoaded($this->picture);
         return $this->picture->getSrc();
@@ -104,9 +104,9 @@ class Report extends DatabaseItem
     
     /**
      * Metoda navracející řetězec se zařazením obrázku ve formátu <Název třídy> / <Název poznávačky> / <Název části> / <Název přírodniny>
-     * @return string Řetězec obsahující cestu k obrázku
+     * @return string[] Pole řetězeců obsahujících cesty k obrázku
      */
-    public function getPicturePaths()
+    public function getPicturePaths(): array
     {   
         $allPaths = array();
         foreach ($this->getPartsWithPicture() as $part)
@@ -121,7 +121,7 @@ class Report extends DatabaseItem
      * @throws NoDataException Pokud není přírodnina, se kterou je obrázek spojen nalezena v databázi nebo není přiřazena k žádné části
      * @return Part[] Pole objektů částí, pouze s vyplněným ID, ve kterých se obrázek může zobrazit
      */
-    public function getPartsWithPicture()
+    public function getPartsWithPicture(): array
     {
         $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
@@ -142,7 +142,7 @@ class Report extends DatabaseItem
      * Metoda navracející název přírodniny, ke které byl nahlášený obrázek nahrán
      * @return string Název přírodniny na obrázku
      */
-    public function getNaturalName()
+    public function getNaturalName(): string
     {
         $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
@@ -153,7 +153,7 @@ class Report extends DatabaseItem
      * Metoda navracející důvod hlášení
      * @return string Důvod hlášení (měl by být jednou z konstant této třídy)
      */
-    public function getReason()
+    public function getReason(): string
     {
         $this->loadIfNotLoaded($this->reason);
         return $this->reason;
@@ -163,7 +163,7 @@ class Report extends DatabaseItem
      * Metoda navracející další informace o hlášení
      * @return string Další informace o hlášení (pokud žádné nebyly poskytnuty, tak prázdný řetězec)
      */
-    public function getAdditionalInformation()
+    public function getAdditionalInformation(): string
     {
         $this->loadIfNotLoaded($this->additionalInformation);
         return $this->additionalInformation;
@@ -173,7 +173,7 @@ class Report extends DatabaseItem
      * Metoda navracející počet hlášení stejného typu
      * @return int Počet hlášení
      */
-    public function getReportersCount()
+    public function getReportersCount(): int
     {
         $this->loadIfNotLoaded($this->reportersCount);
         return $this->reportersCount;
@@ -182,7 +182,7 @@ class Report extends DatabaseItem
     /**
      * Metoda zvyšující počet hlášení tohoto typu o 1
      */
-    public function increaseReportersCount()
+    public function increaseReportersCount(): void
     {
         $this->loadIfNotLoaded($this->reportersCount);
         $this->reportersCount++;

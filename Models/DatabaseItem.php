@@ -101,7 +101,7 @@ abstract class DatabaseItem
      * Metoda nastavující všechny vlastnosti objektu podle proměnných poskytnutých v argumentech
      * V případě nespecifikování všech argumentů jsou neznámé vlastnosti naplněny základními hodnotami
      */
-    public abstract function initialize();
+    public abstract function initialize(): void;
     
     /**
      * Metoda ošetřující definované vlastnosti objektu proti XSS útoku
@@ -109,7 +109,7 @@ abstract class DatabaseItem
      * POZOR! Pokud byly po zavolání této metody ovlivňovány některé vlastnosti tohoto objektu, nebudou ošetřené, ale znovuzavolání této metody je také neoštří.
      * Tato metoda by proto měla být volána pouze jednou pro každý objekt a to těsně před výpisem dat do pohledu
      */
-    public function sanitizeSelf()
+    public function sanitizeSelf(): void
     {
         //Zabraň rekurzi
         if ($this->sanitizationStarted === true) { return; }       //POZOR! Základní hodnota $this->sanitizationStarted není FALSE, ale undefined (definované FALSE je přepsáno v konstruktoru)
@@ -128,7 +128,7 @@ abstract class DatabaseItem
      * Metoda navracející ID tohoto databázového záznamu
      * @return int ID záznamu
      */
-    public function getId()
+    public function getId(): int
     {
         $this->loadIfNotLoaded($this->id);
         return $this->id;
@@ -139,7 +139,7 @@ abstract class DatabaseItem
      * @param mixed $property
      * @return boolean TRUE, pokud proměnná obsahuje cokoliv jiného než objekt typu undefined (včetně null)
      */
-    public function isDefined($property)
+    public function isDefined($property): bool
     {
         return (!$property instanceof undefined);
     }
@@ -147,7 +147,7 @@ abstract class DatabaseItem
     /**
      * Metoda načítající všechny vlastnosti objektu z databáze, pokud jakákoliv z vlastností objektů není definována
      */
-    protected function loadIfNotAllLoaded()
+    protected function loadIfNotAllLoaded(): void
     {
         //Kontrola, zda není nějaká vlastnost nedefinována
         $properties = get_object_vars($this);
@@ -164,7 +164,7 @@ abstract class DatabaseItem
     /**
      * Metoda načítající všechny vlastnosti objektu z databáze, pokud vlastnost specifikovaná jako argument není definována
      */
-    protected function loadIfNotLoaded($property)
+    protected function loadIfNotLoaded($property): void
     {
         if (!$this->isDefined($property))
         {
@@ -176,7 +176,7 @@ abstract class DatabaseItem
      * Metoda nastavující do vlastností objektu základní hodnoty, které by byly uloženy do databáze i v případě jejich nespecifikování v SQL INSERT dotazu
      * @param bool $overwriteAll TRUE, pokud mají být základními hodnotami přepsány všechny vlastnosti objektu, FALSE pouze pro přepsání vlastností, jejichž hodnota není nastavena (je nastavena na instanci třídy undefined)
      */
-    protected function loadDefaultValues(bool $overwriteAll = false)
+    protected function loadDefaultValues(bool $overwriteAll = false): void
     {
         foreach ($this::DEFAULT_VALUES as $fieldName => $fieldValue)
         {
@@ -193,7 +193,7 @@ abstract class DatabaseItem
      * Jako nedefinovaná vlastnost se rozumí vlastnost, která ukládá instanci třídy undefined, vlastnost ukládající hodnotu NULL je definovaná
      * @return string[] Pole obsahující názvy vlastností, které nejsou definované jako klíče a instance třídy undefined jako hodnoty
      */
-    protected function getUndefinedProperties()
+    protected function getUndefinedProperties(): array
     {
         //Ukládání nedefinovaných vlastností objektu
         return $this->getPropertyList(false);
@@ -204,7 +204,7 @@ abstract class DatabaseItem
      * Jako definovaná vlastnost se rozumí vlastnost, která ukládá cokoliv jiného než instanci třídy undefined, vlastnost ukládající hodnotu NULL je definovaná
      * @return string[] Pole obsahující názvy vlastností, které jsou definované jako klíče a jejich hodnoty jako hodnoty
      */
-    protected function getDefinedProperties()
+    protected function getDefinedProperties(): array
     {
         //Ukládání definovaných vlastností objektu
         return $this->getPropertyList(true);
@@ -215,7 +215,7 @@ abstract class DatabaseItem
      * @param bool $getDefined TRUE, pokud má být navrácen seznam názvů definovaných vlastností, FALSE, pokud nedefinovaných
      * @return array Pole obsahující názvy definovaných nebo nedefinovaných vlastností objektu jako klíče a jejich hodnoty jako hodnoty
      */
-    private function getPropertyList(bool $getDefined)
+    private function getPropertyList(bool $getDefined): array
     {
         $result = array();
         $properties = get_object_vars($this);
@@ -235,7 +235,7 @@ abstract class DatabaseItem
      * @throws BadMethodCallException V případě, že není objekt zatím uložen v databázi, není z databáze navrácen ani jeden záznam odpovídající definovaným vlastnostem, nebo pokud jich je navrácených více
      * @return boolean TRUE, pokud jsou data položky úspěšně načtena
      */
-    public function load()
+    public function load(): bool
     {
         if ($this->savedInDb === false)
         {
@@ -342,7 +342,7 @@ abstract class DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::save()
      */
-    public function save()
+    public function save(): bool
     {
         if ($this->savedInDb)
         {
@@ -363,7 +363,7 @@ abstract class DatabaseItem
      * @throws BadMethodCallException Pokud některá z vlastností ukládaných do databáze není známa
      * @return boolean TRUE, pokud je úspěšně vytvořen v databázi nový záznam a ID položky nastaveno / aktualizováno, FALSE, pokud ne
      */
-    protected function create()
+    protected function create(): bool
     {
         //Zkontroluj, zda je možné položku tohoto typu do databáze vložit
         if (!$this::CAN_BE_CREATED)
@@ -411,7 +411,7 @@ abstract class DatabaseItem
      * @throws BadMethodCallException Pokud není známo ID záznamu
      * @return boolean TRUE, pokud je položka úspěšně v databázi aktualizována, FALSE, pokud nejsou známy žádné vlastnosti nebo pokud selže SQL dotaz
      */
-    protected function update()
+    protected function update(): bool
     {
         //Zkontrolovat, za je možné tuto položku v databázi upravovat
         if (!$this::CAN_BE_UPDATED)
@@ -456,7 +456,7 @@ abstract class DatabaseItem
      * Metoda odstraňující tuto položku z databáze
      * @return boolean TRUE, pokud je položka úspěšně odstraněna z databáze
      */
-    public function delete()
+    public function delete(): bool
     {
     	$this->loadIfNotLoaded($this->id);
     	

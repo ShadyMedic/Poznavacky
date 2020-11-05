@@ -29,7 +29,7 @@ class TokenPasswordChanger
      * Metoda ověřující platnost kódu pro obnovení hesla a ukládající ID uživatele s jehož účtem je svázán
      * @throws AccessDeniedException Pokud není kód v databázi nalezen
      */
-    public function verifyToken()
+    public function verifyToken(): void
     {
         $codeVerificator = new PasswordRecoveryCodeVerificator();
         $codeVerificator::deleteOutdatedCodes();
@@ -44,7 +44,7 @@ class TokenPasswordChanger
     /**
      * Metoda odstraňující použitý kód pro obnovu hesla z databáze
      */
-    public function devalueToken()
+    public function devalueToken(): void
     {
         $codeVerificator = new PasswordRecoveryCodeVerificator();
         $codeVerificator->deleteCode($this->token);
@@ -54,7 +54,7 @@ class TokenPasswordChanger
      * Metoda ověřující, zda je možné zadané heslo použít
      * @throws AccessDeniedException Pokud se hesla neshodují
      */
-    function checkPasswords()
+    function checkPasswords(): void
     {
         $validator = new DataValidator();
         try
@@ -90,7 +90,7 @@ class TokenPasswordChanger
      * @throws RuntimeException Pokud zatím nebyl ověřen kód pro obnovu hesla nebo platnost hesel
      * @return boolean TRUE, pokud je heslo úspěšně změněno
      */
-    function changePassword()
+    function changePassword(): bool
     {
         if (!($this->verified && $this->checked))
         {

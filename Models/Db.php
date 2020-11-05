@@ -26,7 +26,7 @@ class Db
      * @param string $database Jméno databáze
      * @return PDO Připojení k databázi
      */
-    public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME, string $password = self::DEFAULT_PASSWORD, string $database = self::DEFAULT_DATABASE)
+    public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME, string $password = self::DEFAULT_PASSWORD, string $database = self::DEFAULT_DATABASE): PDO
     {
         self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password, self::$settings);
         return self::$connection;
@@ -35,7 +35,7 @@ class Db
     /**
      * Metoda ničící PDO objekt zajišťující spojení s databází
      */
-    public static function disconnect()
+    public static function disconnect(): void
     {
         unset(self::$connection);
     }

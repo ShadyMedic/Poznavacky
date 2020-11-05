@@ -32,7 +32,7 @@ class UserNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::getOldName()
      */
-    public function getOldName()
+    public function getOldName(): string
     {
         $this->loadIfNotLoaded($this->subject);
         return $this->subject['name'];
@@ -44,7 +44,7 @@ class UserNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::getRequestersEmail()
      */
-    public function getRequestersEmail()
+    public function getRequestersEmail(): string
     {
         $this->loadIfNotLoaded($this->subject);
         return $this->subject[User::COLUMN_DICTIONARY['email']];
@@ -56,10 +56,10 @@ class UserNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::sendApprovedEmail()
      */
-    public function sendApprovedEmail()
+    public function sendApprovedEmail(): bool
     {
         $addressee = $this->getRequestersEmail();
-        if (!$this->isDefined($addressee)){ return; }   //E-mail není zadán
+        if (!$this->isDefined($addressee)){ return false; }   //E-mail není zadán
         $composer = new EmailComposer();
         $sender = new EmailSender();
         
@@ -76,10 +76,10 @@ class UserNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::sendDeclinedEmail()
      */
-    public function sendDeclinedEmail(string $reason)
+    public function sendDeclinedEmail(string $reason): bool
     {
         $addressee = $this->getRequestersEmail();
-        if (!$this->isDefined($addressee)){ return; }   //E-mail není zadán
+        if (!$this->isDefined($addressee)){ return false; }   //E-mail není zadán
         $composer = new EmailComposer();
         $sender = new EmailSender();
         

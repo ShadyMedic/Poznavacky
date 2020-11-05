@@ -9,7 +9,12 @@ class RegisterUser
     const DEFAULT_KARMA = 0;
     const DEFAULT_STATUS = User::STATUS_MEMBER;
     
-    public function processRegister(array $POSTdata)
+    /**
+     * Metoda která se stará o všechny kroky registrace
+     * @param array $POSTdata Data odeslaná registračním formulářem, pole s klíči name, pass, repass a email
+     * @throws RuntimeException Pokud proces registrace selže
+     */
+    public function processRegister(array $POSTdata): void
     {
         $name = $POSTdata['name'];
         $pass = $POSTdata['pass'];
@@ -19,7 +24,7 @@ class RegisterUser
         if (mb_strlen($email) === 0){$email = null;}
         
         //Ověření dat
-        if (self::validateData($name, $pass, $repass, $email))
+        if (self::validateData($name, $pass, $repass, $email))  //Pokud nejsou data v pořádku, je vyhozena výjimka
         {
             if (!self::register($name, $pass, $email))
             {
@@ -37,7 +42,7 @@ class RegisterUser
      * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky
      * @return boolean TRUE, pokud všechny údaje splňují podmínky
      */
-    private function validateData($name, $pass, $repass, $email)
+    private function validateData($name, $pass, $repass, $email): bool
     {
         $validator = new DataValidator();
         
@@ -147,7 +152,7 @@ class RegisterUser
      * @param string|null $email E-mail zadaný uživatelem (null, pokud žádný nezadal)
      * @return boolean TRUE, pokud je uživatel úspěšně zaregistrován
      */
-    private function register(string $name, string $password, $email)
+    private function register(string $name, string $password, $email): bool
     {        
         //Uložení dat do databáze
         $password = password_hash($password, PASSWORD_DEFAULT);

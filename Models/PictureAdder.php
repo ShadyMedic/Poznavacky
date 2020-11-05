@@ -33,7 +33,7 @@ class PictureAdder
      * @param array $POSTdata Pole dat odeslaných z formuláře
      * @return boolean TRUE, pokud vše proběhne tak, jak má
      */
-    public function processFormData(array $POSTdata)
+    public function processFormData(array $POSTdata): bool
     {
         $naturalName = $POSTdata['naturalName'];
         $url = $POSTdata['url'];
@@ -49,7 +49,7 @@ class PictureAdder
      * @throws AccessDeniedException V případě že data nesplňují podmínky
      * @return Natural Objekt reprezentující přírodninu, ke které hodláme přidat nový obrázek, pokud jsou data v pořádku
      */
-    public function checkData(string $naturalName, string $url)
+    public function checkData(string $naturalName, string $url): Natural
     {
         $naturals = $this->group->getNaturals();
         for ($i = 0; $i < count($naturals) && $naturals[$i]->getName() !== $naturalName; $i++){}
@@ -95,7 +95,7 @@ class PictureAdder
      * @throws AccessDeniedException V případě, že se obrázek nepodaří přidat
      * @return boolean TRUE, pokud je úspěšně uložen nový obrázek
      */
-    private function addPicture(Natural $natural, string $url)
+    private function addPicture(Natural $natural, string $url): bool
     {
         //Vložení obrázku do databáze
         if (!$natural->addPicture($url))

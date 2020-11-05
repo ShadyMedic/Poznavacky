@@ -31,7 +31,7 @@ class ClassNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::getOldName()
      */
-    public function getOldName()
+    public function getOldName(): string
     {
         return $this->subject->getName();
     }
@@ -42,7 +42,7 @@ class ClassNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::getRequestersEmail()
      */
-    public function getRequestersEmail()
+    public function getRequestersEmail(): string
     {
         return $this->subject->getAdmin()[User::COLUMN_DICTIONARY['email']];
     }
@@ -53,10 +53,10 @@ class ClassNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::sendApprovedEmail()
      */
-    public function sendApprovedEmail()
+    public function sendApprovedEmail(): bool
     {
         $addressee = $this->getRequestersEmail();
-        if (empty($addressee)){ return; }   //E-mail není zadán
+        if (empty($addressee)){ return false; }   //E-mail není zadán
         $composer = new EmailComposer();
         $sender = new EmailSender();
         
@@ -73,10 +73,10 @@ class ClassNameChangeRequest extends NameChangeRequest
      * {@inheritDoc}
      * @see NameChangeRequest::sendDeclinedEmail()
      */
-    public function sendDeclinedEmail(string $reason)
+    public function sendDeclinedEmail(string $reason): bool
     {
         $addressee = $this->getRequestersEmail();
-        if (empty($addressee)){ return; }   //E-mail není zadán
+        if (empty($addressee)){ return false; }   //E-mail není zadán
         $composer = new EmailComposer();
         $sender = new EmailSender();
         

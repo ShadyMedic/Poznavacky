@@ -42,7 +42,7 @@ class Picture extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($src = null, $natural = null, $enabled = null, $reports = null)
+    public function initialize($src = null, $natural = null, $enabled = null, $reports = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($src === null){ $src = $this->src; }
@@ -60,7 +60,7 @@ class Picture extends DatabaseItem
      * Metoda navracející URL adresu toho obrázku
      * @return string Zdroj (URL) obrázku
      */
-    public function getSrc()
+    public function getSrc(): string
     {
         $this->loadIfNotLoaded($this->src);
         return $this->src;
@@ -70,7 +70,7 @@ class Picture extends DatabaseItem
      * Metoda navracející objekt přírodniny, kterou zachycuje tento obrázek
      * @return Natural Přírodnina na obrázku
      */
-    public function getNatural()
+    public function getNatural(): Natural
     {
         $this->loadIfNotLoaded($this->natural);
         return $this->natural;
@@ -80,7 +80,7 @@ class Picture extends DatabaseItem
      * Metoda navracející stav obrázku
      * @return bool TRUE, je-li obrázek povolený, FALSE, pokud je skrytý
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         $this->loadIfNotLoaded($this->enabled);
         return $this->enabled;
@@ -95,7 +95,7 @@ class Picture extends DatabaseItem
      * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou údaje tohoto obrázku úspěšně aktualizovány
      */
-    public function updatePicture(Natural $newNatural, string $newUrl, Group $group)
+    public function updatePicture(Natural $newNatural, string $newUrl, Group $group): bool
     {
         //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
         $checker = new PictureAdder($group);
@@ -115,7 +115,7 @@ class Picture extends DatabaseItem
      * Vlastnost pole uchovávající hlášení tohoto obrázku, které je uložené jako vlastnost je nahrazeno prázdným polem
      * @return boolean TRUE, pokud jsou hlášení úspěšně odstraněna
      */
-    public function deleteReports()
+    public function deleteReports(): bool
     {
         Db::executeQuery('DELETE FROM '.Report::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id));
         $this->reports = array();
@@ -127,7 +127,7 @@ class Picture extends DatabaseItem
      * Pokud hlášení zatím nebyla načtena z databáze, budou před navrácením načtena
      * @return Report[] Pole hlášení tohoto obrázku jako objekty
      */
-    public function getReports()
+    public function getReports(): array
     {
         if (!$this->isDefined($this->reports)){ $this->loadReports(); }
         return $this->reports;
@@ -136,7 +136,7 @@ class Picture extends DatabaseItem
     /**
      * Metoda načítající hlášení tohoto obrázku z databáze a ukládající je do vlastnosti této instance jako objekty
      */
-    public function loadReports()
+    public function loadReports(): void
     {
         $result = Db::fetchQuery('SELECT '.Report::COLUMN_DICTIONARY['id'].','.Report::COLUMN_DICTIONARY['reason'].','.Report::COLUMN_DICTIONARY['additionalInformation'].','.Report::COLUMN_DICTIONARY['reportersCount'].' FROM '.Report::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id), true);
         
@@ -160,7 +160,7 @@ class Picture extends DatabaseItem
      * Metoda skrývající tento obrázek v databázi
      * @return boolean TRUE, pokud je obrázek úspěšně skryt v databázi
      */
-    public function disable()
+    public function disable(): bool
     {
         $this->loadIfNotLoaded($this->id);
         

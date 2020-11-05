@@ -21,7 +21,7 @@ class EmailComposer
      * @param array $data Asociativní pole obsahující proměnné pro doplnění šablon (viz šablony ve složce Views/EmailTemplates pro požadované názvy klíčů)
      * @throws InvalidArgumentException Pokud je specifikován neplatný typ šablony
      */
-    public function composeMail($emailType, array $data)
+    public function composeMail($emailType, array $data): void
     {
         extract($data);
         ob_start();
@@ -60,7 +60,7 @@ class EmailComposer
      * Metoda navracející poskládanou e-mailovou zprávu
      * @return string Tělo poskládané e-mailové zprávy
      */
-    public function getMail()
+    public function getMail(): string
     {
         return $this->message;
     }
@@ -68,7 +68,7 @@ class EmailComposer
     /**
      * Metoda odstraňující obsah vlastnosti objektu s poskládanou e-mailovou zprávou
      */
-    public function clearMail()
+    public function clearMail(): void
     {
         unset($this->message);
     }

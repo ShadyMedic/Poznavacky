@@ -22,7 +22,7 @@ class GroupAdder
      * @param array $POSTdata Pole dat odeslaných z formuláře
      * @return boolean TRUE, pokud vše proběhne tak, jak má
      */
-    public function processFormData(array $POSTdata)
+    public function processFormData(array $POSTdata): bool
     {
         $groupName = $POSTdata['testName'];
         
@@ -36,7 +36,7 @@ class GroupAdder
      * @throws AccessDeniedException V případě že data nesplňují podmínky
      * @return boolean TRUE, pokud může být daný název použit
      */
-    public function checkData(string $groupName)
+    public function checkData(string $groupName): bool
     {
         //Kontrola, zda již poznávačka s tímto názvem ve třídě neexistuje
         if ($this->class->groupExists($groupName))
@@ -67,7 +67,7 @@ class GroupAdder
      * @throws AccessDeniedException V případě, že se poznávačku nepodaří vytvořit
      * @return boolean TRUE, pokud je úspěšně uložen nový obrázek
      */
-    private function addGroup(string $groupName)
+    private function addGroup(string $groupName): bool
     {
         //Vložení poznávačky do databáze
         if (!$this->class->addGroup($groupName))

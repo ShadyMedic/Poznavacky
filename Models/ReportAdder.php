@@ -24,7 +24,7 @@ class ReportAdder
      * @throws AccessDeniedException V případě že data nesplňují podmínky
      * @return boolean TRUE, pokud je úspěšně uloženo nové hlášení
      */
-    public function processFormData(array $POSTdata)
+    public function processFormData(array $POSTdata): bool
     {
         $url = $_POST['picUrl'];
         $reason = $_POST['reason'];

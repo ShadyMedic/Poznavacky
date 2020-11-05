@@ -65,7 +65,7 @@ class LoggedUser extends User
      * {@inheritDoc}
      * @see User::initialize()
      */
-    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null, $theme = null)
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null, $theme = null): void
     {
         //Nastav vlastnosti zděděné z mateřské třídy
         parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
@@ -91,7 +91,7 @@ class LoggedUser extends User
      * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
      * @return boolean TRUE, pokud je žádost úspěšně vytvořena/aktualizována
      */
-    public function requestNameChange(string $newName)
+    public function requestNameChange(string $newName): bool
     {
         if (mb_strlen($newName) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NO_NAME);}
         
@@ -161,7 +161,7 @@ class LoggedUser extends User
      * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
      * @return boolean TRUE, pokud je heslo úspěšně změněno
      */
-    public function changePassword(string $oldPassword, string $newPassword, string $newPasswordAgain)
+    public function changePassword(string $oldPassword, string $newPassword, string $newPasswordAgain): bool
     {
         if (mb_strlen($oldPassword) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_OLD_PASSWORD);}
         if (mb_strlen($newPassword) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_PASSWORD);}
@@ -226,7 +226,7 @@ class LoggedUser extends User
      * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
      * @return boolean TRUE, pokud je e-mail úspěšně změněn
      */
-    public function changeEmail(string $password, string $newEmail)
+    public function changeEmail(string $password, string $newEmail): bool
     {
         if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_NO_PASSWORD);}
         if (mb_strlen($newEmail) === 0){$newEmail = NULL;}
@@ -277,7 +277,7 @@ class LoggedUser extends User
      * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli přidaných obrázků
      * @return boolean TRUE, pokud vše proběhne hladce
      */
-    public function incrementAddedPictures()
+    public function incrementAddedPictures(): bool
     {
         $this->addedPictures++;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
@@ -287,7 +287,7 @@ class LoggedUser extends User
      * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli uhodnutých obrázků
      * @return boolean TRUE, pokud vše proběhne hladce
      */
-    public function incrementGuessedPictures()
+    public function incrementGuessedPictures(): bool
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -304,7 +304,7 @@ class LoggedUser extends User
      * @throws AccessDeniedException Pokud není heslo správné, vyplněné nebo uživatel nemůže smazat svůj účet
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze a odhlášen
      */
-    public function deleteAccount(string $password)
+    public function deleteAccount(string $password): bool
     {
         if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_NO_PASSWORD);}
         

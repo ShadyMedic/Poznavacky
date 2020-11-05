@@ -60,7 +60,7 @@ class User extends DatabaseItem implements ArrayAccess
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null)
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
@@ -84,7 +84,7 @@ class User extends DatabaseItem implements ArrayAccess
      * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
      * @return Invitation[] Pole aktivních pozvánek jako objekty
      */
-    public function getActiveInvitations()
+    public function getActiveInvitations(): array
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -116,7 +116,7 @@ class User extends DatabaseItem implements ArrayAccess
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou uživatelova data úspěšně aktualizována
      */
-    public function updateAccount(int $addedPictures, int $guessedPictures, int $karma, string $status)
+    public function updateAccount(int $addedPictures, int $guessedPictures, int $karma, string $status): bool
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         $aChecker = new AccessChecker();
@@ -149,7 +149,7 @@ class User extends DatabaseItem implements ArrayAccess
      * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
      */
-    public function deleteAccountAsAdmin()
+    public function deleteAccountAsAdmin(): bool
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -179,7 +179,7 @@ class User extends DatabaseItem implements ArrayAccess
      * {@inheritDoc}
      * @see ArrayAccess::offsetExists()
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         $this->loadIfNotLoaded($this->$offset);
         return (isset($this->$offset));
@@ -204,7 +204,7 @@ class User extends DatabaseItem implements ArrayAccess
      * @see ArrayAccess::offsetSet()
      * @throws BadMethodCallException Při pokusu změnit ID
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset !== 'id')
         {
@@ -224,7 +224,7 @@ class User extends DatabaseItem implements ArrayAccess
      * @see ArrayAccess::offsetUnset()
      * @throws BadMethodCallException Při pokusu odebrat jakoukoli vlastnost
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new BadMethodCallException('It isn\'t allowed to remove user\'s properities.');
     }
