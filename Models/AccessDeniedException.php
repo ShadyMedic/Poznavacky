@@ -8,6 +8,7 @@ class AccessDeniedException extends Exception
 {
     const REASON_UNEXPECTED = 'Něco se pokazilo. Opakujte prosím akci později a pokud problém přetrvá, kontaktujte správce';
     const REASON_INSUFFICIENT_PERMISSION = 'Nemáte oprávnění k této akci';
+    const REASON_CSRF_TOKEN_INVALID = 'CSRF token nesouhlasí. Aktualizujte prosím stránku. Pokud jste zadávali nějaká data, nejprve si je zkopírujte, jinak budou ztracena.';
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
     const REASON_NO_PASSWORD_GENERAL = 'Musíte zadat své heslo';
     const REASON_WRONG_PASSWORD_GENERAL = 'Špatné heslo';

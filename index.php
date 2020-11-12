@@ -14,6 +14,10 @@ spl_autoload_register('autoloader');
 session_start();
 mb_internal_encoding('UTF-8');
 
+//Zkontroluj a obnov CSRF token
+$antiCSRF = new AntiCsrfMiddleware();
+$antiCSRF->verifyRequest(); //V případě chyby je na tomto řádku skript zastaven
+
 //Zpracuj URL adresu a zobraz vygenerovanou webovou stránku
 $rooter = new RooterController();
 $rooter->process(array($_SERVER['REQUEST_URI']));
