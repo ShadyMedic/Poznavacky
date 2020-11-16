@@ -169,5 +169,6 @@ class Picture extends DatabaseItem
         
         //Přenastavit vlastnost této instance
         $this->enabled = false;
+        return true;
     }
 }
