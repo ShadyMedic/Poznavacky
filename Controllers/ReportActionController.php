@@ -21,7 +21,8 @@ class ReportActionController extends Controller
         //Kontrola, zda je zvolena nějaká třída
         if (!isset($_SESSION['selection']['class']))
         {
-            echo json_encode(array('messageType' => 'error', 'message' => AccessDeniedException::REASON_CLASS_NOT_CHOSEN, 'origin' => $_POST['action']));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_CLASS_NOT_CHOSEN, array('origin' => $_POST['action']));
+            echo $response->getResponseString();
             exit();
         }
         $class = $_SESSION['selection']['class'];
@@ -45,22 +46,27 @@ class ReportActionController extends Controller
                     $newNatural = $_POST['natural'];
                     $newUrl = $_POST['url'];
                     $resolver->editPicture($pictureId, $newNatural, $newUrl);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Údaje obrázku úspěšně upraveny'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny');
+                    echo $response->getResponseString();
                     break;
                 case 'disable picture':
                     $pictureId = $_POST['pictureId'];
                     $resolver->disablePicture($pictureId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Obrázek úspěšně skryt'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně skryt');
+                    echo $response->getResponseString();
                     break;
                 case 'delete picture':
                     $pictureId = $_POST['pictureId'];
                     $resolver->deletePicture($pictureId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Obrázek úspěšně odstraněn'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn');
+                    echo $response->getResponseString();
                     break;
                 case 'delete report':
                     $reportId = $_POST['reportId'];
+                    //TODO - ověrit, zda se dané hlášení vztahuje k obrázku patřícímu do spravované třídy
                     $resolver->deleteReport($reportId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Hlášení úspěšně odstraněno'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Hlášení úspěšně odstraněno');
+                    echo $response->getResponseString();
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
@@ -69,7 +75,8 @@ class ReportActionController extends Controller
         }
         catch (AccessDeniedException | NoDataException $e)
         {
-            echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $_POST['action']));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
+            echo $response->getResponseString();
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona

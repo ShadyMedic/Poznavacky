@@ -21,7 +21,7 @@ class ReportsController extends Controller
         $this->pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/resolveReports.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/resolveReports.js');
         $this->pageHeader['bodyId'] = 'resolveReports';
         
         $this->view = 'reports';

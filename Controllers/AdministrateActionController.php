@@ -95,22 +95,26 @@ class AdministrateActionController extends Controller
                     $newNatural = $_POST['natural'];
                     $newUrl = $_POST['url'];
                     $administration->editPicture($pictureId, $newNatural, $newUrl);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Údaje obrázku úspěšně upraveny'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny');
+                    echo $response->getResponseString();
                     break;
                 case 'disable picture':
                     $pictureId = $_POST['pictureId'];
-                    $administration->disablePicture($pictureId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Obrázek úspěšně skryt'));
+                    $administration->disablePicture($pictureId)
+                    ;$response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně skryt');
+                    echo $response->getResponseString();
                     break;
                 case 'delete picture':
                     $pictureId = $_POST['pictureId'];
                     $administration->deletePicture($pictureId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Obrázek úspěšně odstraněn'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn');
+                    echo $response->getResponseString();
                     break;
                 case 'delete report':
                     $reportId = $_POST['reportId'];
                     $administration->deleteReport($reportId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Hlášení úspěšně odstraněno'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Hlášení úspěšně odstraněno');
+                    echo $response->getResponseString();
                     break;
                 case 'accept user name change':
                 case 'accept class name change':
@@ -154,7 +158,8 @@ class AdministrateActionController extends Controller
         }
         catch (AccessDeniedException $e)
         {
-            echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $_POST['action']));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
+            echo $response->getResponseString();
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona
