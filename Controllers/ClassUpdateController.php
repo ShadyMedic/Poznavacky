@@ -69,13 +69,15 @@ class ClassUpdateController extends Controller
                     $adder = new GroupAdder($class);
                     $adder->processFormData($_POST);
                     $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena');
-                    echo json_encode(array('messageType' => 'success'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS);
+                    echo $response->getResponseString();
                     break;
                 case 'delete test':
                     $deletedTestId = $_POST['testId'];
                     $test = new Group(false, $deletedTestId);
                     try { $class->removeGroup($test); } catch (BadMethodCallException $e) { throw new NoDataException(NoDataException::UNKNOWN_GROUP); }
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Poznávačka byla odstraněna'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Poznávačka byla odstraněna');
+                    echo $response->getResponseString();
                     break;
                 case 'delete class':
                     $adminPassword = $_POST['password'];

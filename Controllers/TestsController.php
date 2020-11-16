@@ -82,7 +82,7 @@ class TestsController extends Controller
             $this->pageHeader['description'] = 'Nástroj pro správce tříd umožnňující snadnou správu poznávaček';
             $this->pageHeader['keywords'] = '';
             $this->pageHeader['cssFiles'] = array('css/css.css');
-            $this->pageHeader['jsFiles'] = array('js/generic.js','js/tests.js');
+            $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/tests.js');
             $this->pageHeader['bodyId'] = 'tests';
             
             $this->data['groups'] = $_SESSION['selection']['class']->getGroups();

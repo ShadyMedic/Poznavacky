@@ -19,19 +19,25 @@ function createTestSubmit()
     		action: 'create test',
 			testName: testName
 		},
-		function (response)
+		function (response, status)
 		{
-			if (response["messageType"] === "error")
-			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-			else if (response["messageType"] === "success")
-			{
-				//Znovu načti stránku, ať se zobrazí nová poznávačka v DOM
-				location.reload();
-			}
-		}
+			ajaxCallback(response, status,
+				function (messageType, message, data) 
+				{
+					if (messageType === "error")
+					{
+						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(message);
+					}
+					else if (messageType === "success")
+					{
+						//Znovu načti stránku, ať se zobrazí nová poznávačka v DOM
+						location.reload();
+					}
+				}
+			);
+		},
+		"json"
 	);
 }
 /*-------------------------------------------------------*/
@@ -47,18 +53,24 @@ function deleteTest(testId, name)
     		action: 'delete test',
 			testId: testId
 		},
-		function (response)
+		function (response, status)
 		{
-			if (response["messageType"] === "error")
-			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-			else if (response["messageType"] === "success")
-			{
-				deletedTableRow.remove();
-			}
-			deletedTableRow = undefined;
-		}
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (response["messageType"] === "error")
+					{
+						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(response["message"]);
+					}
+					else if (response["messageType"] === "success")
+					{
+						deletedTableRow.remove();
+					}
+					deletedTableRow = undefined;
+				}
+			);
+		},
+		"json"
 	);
 }
