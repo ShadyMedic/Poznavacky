@@ -170,7 +170,7 @@ function softCheck(answer, correct)
 function next()
 {
 	//Nastavení načítání
-	$("#mainImg").attr("src","images/loading.gif");
+	$("#main-img").attr("src","images/loading.gif");
 	
 	$("#result").hide();
 	$("#answerForm").show();
@@ -189,6 +189,6 @@ function next()
 	let newNum = newPicture["num"];
 	let newUrl = newPicture["url"];
 	
-	$("#mainImg").attr("src", newUrl);
+	$("#main-img").attr("src", newUrl);
 	$("#hiddenInput").val(newNum);
 }
