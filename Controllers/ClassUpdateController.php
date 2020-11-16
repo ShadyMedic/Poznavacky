@@ -56,12 +56,14 @@ class ClassUpdateController extends Controller
                 case 'kick member':
                     $kickedUserId = $_POST['memberId'];
                     $class->removeMember($kickedUserId);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Uživatel byl úspěšně odebrán ze třídy'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Uživatel byl úspěšně odebrán ze třídy');
+                    echo $response->getResponseString();
                     break;
                 case 'invite user':
                     $invitedUserName = $_POST['userName'];
                     $class->inviteUser($invitedUserName);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Pozvánka úspěšně odeslána'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Pozvánka úspěšně odeslána');
+                    echo $response->getResponseString();
                     break;
                 case 'create test':
                     $adder = new GroupAdder($class);
