@@ -31,7 +31,7 @@ class IndexFormsController extends Controller
                 //Registrace
                 case 'r':
                     $form = 'register';
-                    $userRegister = RegisterUser();
+                    $userRegister = new RegisterUser();
                     $userRegister->processRegister($_POST);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
                     echo $response->getResponseString();

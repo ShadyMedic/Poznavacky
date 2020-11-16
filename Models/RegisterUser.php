@@ -58,7 +58,7 @@ class RegisterUser
             $validator->checkLength($pass, DataValidator::USER_PASSWORD_MIN_LENGTH, DataValidator::USER_PASSWORD_MAX_LENGTH, DataValidator::TYPE_USER_PASSWORD);
             if (!empty($email))    //Pouze, pokud je e-mail vyplněn
             {
-                $validator->checkLength($email, DataValidator::USER_EMAIL_MIN_LENGTH, DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAILE);
+                $validator->checkLength($email, DataValidator::USER_EMAIL_MIN_LENGTH, DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAIL);
             }
         }
         catch(RangeException $e)
