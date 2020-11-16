@@ -21,7 +21,8 @@ class ClassUpdateController extends Controller
         //Kontrola, zda je zvolena nějaká třída
         if (!isset($_SESSION['selection']['class']))
         {
-            echo json_encode(array('messageType' => 'error', 'message' => AccessDeniedException::REASON_CLASS_NOT_CHOSEN, 'origin' => $_POST['action']));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_CLASS_NOT_CHOSEN, array('origin' => $_POST['action']));
+            echo $response->getResponseString();
             exit();
         }
         $class = $_SESSION['selection']['class'];
@@ -41,14 +42,16 @@ class ClassUpdateController extends Controller
                 case 'request name change':
                     $newName =$_POST['newName'];
                     $class->requestNameChange($newName);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Žádost o změnu názvu třídy byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši žádost posoudí správce, dostanete zprávu.'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Žádost o změnu názvu třídy byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši žádost posoudí správce, dostanete zprávu.');
+                    echo $response->getResponseString();
                     break;
                 case 'update access':
                     $newStatus = @ClassObject::CLASS_STATUSES_DICTIONARY[mb_strtolower($_POST['newStatus'])];
                     if (empty($newStatus)){ $newStatus = 'unknown'; }
                     $newCode = $_POST['newCode'];
                     $class->updateAccessData($newStatus, $newCode);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Přístupová data třídy byla úspěšně změněna'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přístupová data třídy byla úspěšně změněna');
+                    echo $response->getResponseString();
                     break;
                 case 'kick member':
                     $kickedUserId = $_POST['memberId'];
@@ -76,7 +79,8 @@ class ClassUpdateController extends Controller
                     $adminPassword = $_POST['password'];
                     $class->deleteAsClassAdmin($adminPassword);
                     $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
-                    echo json_encode(array('messageType' => 'success'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    echo $response->getResponseString();
                     break;
                 case 'verify password':
                     $password = urldecode($_POST['password']);
@@ -88,7 +92,8 @@ class ClassUpdateController extends Controller
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }
-                    echo json_encode(array('verified' => true));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('verified' => true));
+                    echo $response->getResponseString();
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
@@ -97,7 +102,8 @@ class ClassUpdateController extends Controller
         }
         catch (AccessDeniedException | NoDataException $e)
         {
-            echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $_POST['action']));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
+            echo $response->getResponseString();
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona

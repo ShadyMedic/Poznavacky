@@ -24,21 +24,27 @@ function confirmNameChange()
     		action: 'request name change',
 			newName: newName
 		},
-		function (response)
+		function (response, status)
 		{
-			if (response["messageType"] === "success")
-			{
-				//Reset DOM
-				cancelNameChange();
-				//TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-			if (response["messageType"] === "error")
-			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-		}
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						//Reset DOM
+						cancelNameChange();
+						//TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(message);
+					}
+					else if (messageType === "error")
+					{
+						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(message);
+					}
+				}
+			);
+		},
+		"json"
 	);
     
     //Reset HTML
@@ -130,34 +136,40 @@ function confirmStatusChange()
 			newStatus: newStatus,
 			newCode: newCode
 		},
-		function (response)
+		function (response, status)
 		{
-			if (response["messageType"] === "success")
-			{
-				initialStatus = newStatus;
-				initialCode = newCode;
-				//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-				//alert(response["message"]);
-				
-				//Skrytí nastavení členů, pokud byla třída změněna na veřejnou
-				if (newStatus === "Veřejná")
+			ajaxCallback(response, status,
+				function (messageType, message, data)
 				{
-					$("#membersManagementButton").hide();
+					if (messageType === "success")
+					{
+						initialStatus = newStatus;
+						initialCode = newCode;
+						//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+						//alert(message);
+						
+						//Skrytí nastavení členů, pokud byla třída změněna na veřejnou
+						if (newStatus === "Veřejná")
+						{
+							$("#membersManagementButton").hide();
+						}
+						else
+						{
+							$("#membersManagementButton").show();
+						}
+						
+					    //Reset HTML
+					    cancelStatusChange();
+					}
+					if (messageType === "error")
+					{
+						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(message);
+					}
 				}
-				else
-				{
-					$("#membersManagementButton").show();
-				}
-				
-			    //Reset HTML
-			    cancelStatusChange();
-			}
-			if (response["messageType"] === "error")
-			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-		}
+			);
+		},
+		"json"
 	);
 }
 function cancelStatusChange()
@@ -184,11 +196,13 @@ function deleteClassVerify()
     		action: 'verify password',
 			password: password
 		},
-		deleteClassConfirm);
+		function (response, status) { ajaxCallback(response, status, deleteClassConfirm); },
+		"json"
+	);
 }
-function deleteClassConfirm(response)
+function deleteClassConfirm(messageType, messgae, data)
 {
-	if (response.verified === true)
+	if (data.verified === true)
 	{
 		$("#deleteClassInput1").hide();
 		$("#deleteClassInput2").show();
@@ -207,19 +221,21 @@ function deleteClassFinal()
     		action: 'delete class',
 			password: password
 		},
-		function (response)
+		function (response, status)
 		{
-			if (response["messageType"] === "error")
-			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-			else if (response["messageType"] === "success")
-			{
-				//Přesměrování na seznam tříd
-				window.location = "menu";
-			}
-		}
+			ajaxCallback(response, status, 
+				function (response)
+				{
+					if (response["messageType"] === "error")
+					{
+						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(response["message"]);
+					}
+					//V případě úspěchu je přesměrování zařízeno v js/ajaxMediator.js
+				}
+			);
+		},
+		"json"
 	);
 }
 function deleteClassCancel()

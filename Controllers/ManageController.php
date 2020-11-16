@@ -86,7 +86,7 @@ class ManageController extends Controller
             $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu třídy';
             $this->pageHeader['keywords'] = '';
             $this->pageHeader['cssFiles'] = array('css/css.css');
-            $this->pageHeader['jsFiles'] = array('js/generic.js','js/manage.js');
+            $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/manage.js');
             $this->pageHeader['bodyId'] = 'manage';
             
             $this->data['classId'] = $_SESSION['selection']['class']->getId();
