@@ -31,7 +31,7 @@ class ReportAdder
         $additionalInformation = $_POST['info'];
         
         //Kontrola, zda je zadaný důvod platný
-        $availableReasons = REPORT::ALL_REASONS;
+        $availableReasons = Report::ALL_REASONS;
         
         if (!in_array($reason, $availableReasons, true))
         {
@@ -93,11 +93,11 @@ class ReportAdder
             $report->load();    //Pokud hlášení zatím v databázi neexistuje, je vyvolána výjimka typu NoDataException
             $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1
         }
-        catch (NoDataException $e)
+        catch (BadMethodCallException $e)
         {
             $report = new Report(true); //Tvorba nového hlášení
             $report->initialize($picture, $reason, $additionalInformation, 1);
         }
-        $report->save();    //Uložení hlášení do databáze
+        return $report->save();    //Uložení hlášení do databáze
     }
 }
