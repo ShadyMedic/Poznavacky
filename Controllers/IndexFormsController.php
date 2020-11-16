@@ -25,14 +25,16 @@ class IndexFormsController extends Controller
                     $form = 'login';
                     $userLogger = new LoginUser();
                     $userLogger->processLogin($_POST);
-                    echo json_encode(array('redirect' => 'menu'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    echo $response->getResponseString();
                     break;
                 //Registrace
                 case 'r':
                     $form = 'register';
                     $userRegister = RegisterUser();
                     $userRegister->processRegister($_POST);
-                    echo json_encode(array('redirect' => 'menu'));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    echo $response->getResponseString();
                     break;
                 //Obnova hesla
                 case 'p':
@@ -40,18 +42,20 @@ class IndexFormsController extends Controller
                     $passwordRecoverer = new RecoverPassword();
                     if ($passwordRecoverer->processRecovery($_POST))
                     {
-                        echo json_encode(array('messageType' => 'success', 'message' => 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', 'origin' => $form));
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', array('origin' => $form));
                     }
                     else
                     {
-                        echo json_encode(array('messageType' => 'error', 'message' => 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.'));
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.', array('origin' => $form));
                     }
+                    echo $response->getResponseString();
                     break;
             }
         }
         catch (AccessDeniedException $e)
         {
-            echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $form));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $form));
+            echo $response->getResponseString();
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona

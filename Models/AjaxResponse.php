@@ -6,7 +6,7 @@
 class AjaxResponse
 {
     public const MESSAGE_TYPE_REDIRECT = 'redirect';    //Při změně hodnoty této konstanty je nutné změnit řetězec i v souboru js/ajaxMediator.js !!!
-    public const MESSAGE_TYPE_SUCCESS = 'success';
+    public const MESSAGE_TYPE_SUCCESS = 'success';      //Při změně hodnot následujících čtyř konstant je potřeba změnit hodnoty i ve všech JS souborech zpracovávajících odpověď na AJAX požadavky !!!
     public const MESSAGE_TYPE_INFO = 'info';
     public const MESSAGE_TYPE_WARNING = 'warning';
     public const MESSAGE_TYPE_ERROR = 'error';
@@ -22,11 +22,11 @@ class AjaxResponse
     
     /**
      * Konstruktor objektu pro odpověď na AJAX request nastavující všechny jeho vlastnosti
-     * @param string $result Typ zprávy, musí být jedna z veřejných konstant této třídy
+     * @param string $result Typ zprávy, musí být jedna z veřejných konstant této třídy, jediný povinný argument
      * @param string $message Zpráva
      * @param array $data Pole dalších dat pro odeslání
      */
-    public function __construct(string $result, string $message, array $data = array())
+    public function __construct(string $result, string $message = '', array $data = array())
     {
         $this->messageType = $result;
         $this->message = $message;

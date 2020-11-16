@@ -46,7 +46,7 @@ class IndexController extends Controller
         $this->pageHeader['description'] = 'Čeká vás poznávačka z biologie? Není lepší způsob, jak se na ni naučit, než použitím této webové aplikace. Vytvořte si vlastní poznávačku, společně do ní přidávejte obrázky, učte se z nich a nechte si generovat náhodné testy.';
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda, poznávačka, přírodopis, přírodověda, test, výuka, naučit, učit, testy, učení';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/index.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/index.js');
         $this->pageHeader['bodyId'] = 'index';
         
         $this->view = 'index';
