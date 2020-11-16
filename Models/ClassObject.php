@@ -236,7 +236,7 @@ class ClassObject extends DatabaseItem
         array_splice($this->groups, $i, 1);
         
         //Odstranění poznávačky z databáze
-        $group->delete();
+        return $group->delete();
     }
     
     /**

@@ -162,7 +162,7 @@ function formSubmitted(event)
 			email: email,
 			stayLogged: stayLogged
 		},
-		function (response, status) { ajaxCallback(response, status, serverResponse) },
+		function (response, status) { ajaxCallback(response, status, serverResponse); },
 		"json"
 	);
 }
