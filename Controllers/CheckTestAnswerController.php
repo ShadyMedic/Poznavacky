@@ -23,18 +23,21 @@ class CheckTestAnswerController extends Controller
         catch(AccessDeniedException $e)
         {
             //Neplatné číslo otázky nebo jiná chyba při ověřování odpovědi
-            echo json_encode(array('result' => 'error', 'answer' => $e->getMessage()));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage());
+            echo $response->getResponseString();
             exit();
         }
         
         if ($result)
         {
             UserManager::getUser()->incrementGuessedPictures();
-            echo json_encode(array('result' => 'correct', 'answer' => $checker->lastSavedAnswer));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_INFO, 'correct', array('answer' => $checker->lastSavedAnswer));
+            echo $response->getResponseString();
         }
         else
         {
-            echo json_encode(array('result' => 'wrong', 'answer' => $checker->lastSavedAnswer));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_INFO, 'wrong', array('answer' => $checker->lastSavedAnswer));
+            echo $response->getResponseString();
         }
         
         //Vymaž využitou odpověď ze $_SESSION['testAnswers']

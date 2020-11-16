@@ -103,7 +103,7 @@ function answer(event)
 				qNum: num,
 				ans: ans
 			},
-			displayResult
+			function (response, status) { ajaxCallback(response, status, displayResult); }
 		);
 }
 
@@ -111,36 +111,39 @@ function answer(event)
  * Funkce volaná po obdržení odpovědi ze serveru (požadavek je vyvolán funkcí answer()), která zobrazuje výsledek vyhodnocení
  * @param response Odpověď se serveru obsahující objekt s vlastnostmi "result" (hodnoty "correct"/"wrong") a answer (správná odpověď)
  */
-function displayResult(response)
-{	
-	if (response.result === "correct")
+function displayResult(messageType, message, data)
+{
+	if (messageType === "info")
 	{
-		//Odpověď byla uznána
-		if (softCheck($("#textfield").val(), response.answer))
+		if (message === "correct")
 		{
-			//Odpověď bez překlepů
-			//TODO - tohle asi budeš chtít nějak líp nastylovat
-			$("#resultText").text("Správně!");
+			//Odpověď byla uznána
+			if (softCheck($("#textfield").val(), data.answer))
+			{
+				//Odpověď bez překlepů
+				//TODO - tohle asi budeš chtít nějak líp nastylovat
+				$("#resultText").text("Správně!");
+			}
+			else
+			{
+				//Odpověď s překlepy
+				//TODO - tohle asi budeš chtít nějak líp nastylovat
+				$("#resultText").text("Správně, ale s překlepem. Správná odpověď: " + data.answer);
+			}
 		}
-		else
+		else if (message === "wrong")
 		{
-			//Odpověď s překlepy
+			//Odpověď nebyla uznána
 			//TODO - tohle asi budeš chtít nějak líp nastylovat
-			$("#resultText").text("Správně, ale s překlepem. Správná odpověď: " + response.answer);
+			$("#resultText").text("Špatně. Správná odpověď: " + data.answer);
 		}
-	}
-	else if (response.result === "wrong")
-	{
-		//Odpověď nebyla uznána
-		//TODO - tohle asi budeš chtít nějak líp nastylovat
-		$("#resultText").text("Špatně. Správná odpověď: " + response.answer);
 	}
 	else
 	{
-		//Vyskytla se chyba - v response.result je "error" nebo něco úplně jiného
-		//V response.answer je cybová hláška
+		//Vyskytla se chyba - v messageType je nejspíše "error" nebo něco úplně jiného
+		//V message je chybová hláška
 		//TODO - tohle asi budeš chtít udělat jinak, nebo to přesunout úplně jinam
-		$("#resultText").text("Vyskytla se chyba: " + response.answer);
+		$("#resultText").text("Vyskytla se chyba: " + message);
 	}
 	
 	$("#result").show();
