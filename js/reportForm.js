@@ -1,3 +1,5 @@
+//DO VŠECH STRÁNEK POUŽÍVAJÍCÍCH TENTO SKRIPT MUSÍ BÝT ZAHRNUT I SOUBOR ajaxMediator.js
+
 // proměnné obsahující elementy select boxu s důvody nahlášení
 var reasonNotDisplaying;
 var reasonLongLoading;
@@ -125,18 +127,25 @@ function submitReport()
 			return;
 		}
 	}
-	
 	$.post('new-report',
-	{
-		picUrl:picUrl,
-		reason:reason.text(),
-		info:reasonInfo
-	}, function(response)
-	{
-		$msg = response['msg'];
-		//TODO - nějak šikovně zobrazit hlášku ze serveru
-		alert($msg);
-	});
+		{
+			picUrl:picUrl,
+			reason:reason.text(),
+			info:reasonInfo
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					$msg = message
+					//TODO - nějak šikovně zobrazit hlášku ze serveru
+					alert($msg);
+				}
+			);
+		},
+		"json"
+	);
   
 	//Skrýt formulář pro nahlašování
 	cancelReport();

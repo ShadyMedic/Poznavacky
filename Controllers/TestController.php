@@ -23,14 +23,14 @@ class TestController extends Controller
         $this->pageHeader['description'] = 'Vyzkoušejte si, jak dobře znáte přírodniny v poznávačce pomocí náhodného testování';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/test.js','js/reportForm.js','js/menu.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/test.js','js/reportForm.js','js/menu.js');
         $this->pageHeader['bodyId'] = 'test';
         
         $controllerName = "nonexistant-controller";
         if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::ControllerExtension; }
         if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
         {
-            //URL obsajuje požadavek na další kontroler používaný na menu stránce
+            //URL obsajuje požadavek na další kontroler používaný na test stránce
             $this->controllerToCall = new $controllerName;
             $this->controllerToCall->process($parameters);
             

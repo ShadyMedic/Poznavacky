@@ -16,11 +16,13 @@ class NewReportController extends Controller
         try
         {
             $adder->processFormData($_POST);
-            echo json_encode(array('msg' => 'Obrázek byl nahlášen. Správce bude moci hlášení posoudit a vyřešit.'));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek byl nahlášen. Správce bude moci hlášení posoudit a vyřešit.');
+            echo $response->getResponseString();
         }
         catch (AccessDeniedException $e)
         {
-            echo json_encode(array('msg' => $e->getMessage()));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage());
+            echo $response->getResponseString();
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona

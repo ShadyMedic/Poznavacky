@@ -37,14 +37,14 @@ class LearnController extends Controller
         $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/learn.js','js/reportForm.js', 'js/menu.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/learn.js','js/reportForm.js', 'js/menu.js');
         $this->pageHeader['bodyId'] = 'learn';
         
         $controllerName = "nonexistant-controller";
         if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::ControllerExtension; }
         if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
         {
-            //URL obsajuje požadavek na další kontroler používaný na menu stránce
+            //URL obsajuje požadavek na další kontroler používaný na learn stránce
             $this->controllerToCall = new $controllerName;
             $this->controllerToCall->process($parameters);
             
