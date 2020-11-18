@@ -45,8 +45,8 @@ function natural(name)
 	 */
 	this.getPicture = function(picture)
 	{
-		//Kontrola, zda jsou obrázky načteny
-		if (this.status !== "loaded")
+		//Kontrola, zda jsou obrázky načteny nebo se právě načítají
+		if (this.status !== "loaded" && this.status !== "loading")
 		{
 			//Po načtení obrázků je tato metoda znovu zavolána automaticky
 			this.loadPictures(picture);
