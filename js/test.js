@@ -18,7 +18,7 @@ function pictureList()
 	
 	/**
 	 * Metoda získávající ze serveru náhodné obrázky z části/poznávačky pomocí AJAX get požadavku
-	 * Po obdržení odpovědi jsou data z požadavku předána metodě importPictures()
+	 * Po obdržení odpovědi je sezma, obrázků naplněn (staré obrázky jsou přepsány)
 	 * Parametr callNextUponResponse - TRUE, pokud se má po obdržení odpovědi zavolat funkce pro zobrazení dalšího obrázku
 	 */
 	this.loadPictures = function(callNextUponResponse)
@@ -31,25 +31,36 @@ function pictureList()
 		{
 			this.callNext = false;
 		}
-		$.get(document.location.href+"/test-pictures", this.importPictures);
-	}
-	
-	/**
-	 * Metoda nastavující nový seznam obrázků, přičemž staré obrázky jsou přepsány
-	 */
-	this.importPictures = function(response)
-	{
-		//Přepsání dvourozměrného pole do jednorozměrného s objekty
-		for (let i = 0; i < response.length; i++) { response[i] = new picture(response[i]["num"], response[i]["url"]); }
-		
-		//Z nějakého důvodu nejde odkazovat pomocí this
-		pictureManager.pictures = response;
-		
-		//Zkontrolovat, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
-		if (pictureManager.callNext === true)
-		{
-			next();
-		}
+		$.get(document.location.href+"/test-pictures",
+			function (response, status)
+			{
+				ajaxCallback(response, status,
+					function(messageType, message, data)
+					{
+						if (messageType === "success")
+						{
+							//Přepsání dvourozměrného pole do jednorozměrného s objekty
+							for (let i = 0; i < data.pictures.length; i++) { data.pictures[i] = new picture(data.pictures[i]["num"], data.pictures[i]["url"]); }
+							
+							//Z nějakého důvodu nejde odkazovat pomocí this
+							pictureManager.pictures = data.pictures;
+							
+							//Zkontrolovat, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
+							if (pictureManager.callNext === true)
+							{
+								next();
+							}
+						}
+						else
+						{
+							//Požadavek nebyl úspěšný
+							alert(message);
+						}
+					}
+				);
+			},
+			"json"
+		);
 	}
 	
 	/**

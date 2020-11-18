@@ -48,7 +48,8 @@ class TestPicturesController extends Controller
         
         //Odeslání dvourozměrného pole s čísly otázek a adresami obrázků
         header('Content-Type: application/json');
-        echo json_encode($picturesArr);
+        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('pictures' => $picturesArr));
+        echo $response->getResponseString();
         
         //Zastav zpracování PHP, aby se nevypsala šablona
         exit();
