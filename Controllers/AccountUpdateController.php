@@ -34,7 +34,8 @@ class AccountUpdateController extends Controller
                     $newName = urldecode($_POST['name']);
                     $user = UserManager::getUser();
                     $user->requestNameChange($newName);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Žádost o změnu jména byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši změnu posoudí správce, dostanete zprávu.', 'origin' => $_POST['action']));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Žádost o změnu jména byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši změnu posoudí správce, dostanete zprávu.', array('origin' => $_POST['action']));
+                    echo $response->getResponseString();
                     break;
                 case 'change password':
                     $oldPassword = urldecode($_POST['oldPassword']);
@@ -42,14 +43,16 @@ class AccountUpdateController extends Controller
                     $rePassword = urldecode($_POST['rePassword']);
                     $user = UserManager::getUser();
                     $user->changePassword($oldPassword, $newPassword, $rePassword);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'Heslo bylo úspěšně změněno', 'origin' => $_POST['action']));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno', array('origin' => $_POST['action']));
+                    echo $response->getResponseString();
                     break;
                 case 'change email':
                     $password = urldecode($_POST['password']);
                     $email = urldecode($_POST['newEmail']);
                     $user = UserManager::getUser();
                     $user->changeEmail($password, $email);
-                    echo json_encode(array('messageType' => 'success', 'message' => 'E-mail byl úspěšně změněn', 'origin' => $_POST['action']));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'E-mail byl úspěšně změněn', array('origin' => $_POST['action']));
+                    echo $response->getResponseString();
                     break;
                 case 'delete account':
                     $password = urldecode($_POST['password']);
@@ -57,7 +60,8 @@ class AccountUpdateController extends Controller
                     $user->deleteAccount($password);
                     unset($user);
                     //Naposled přesměruj uživatele ven ze systému
-                    echo json_encode(array('redirect' => ''));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, '');
+                    echo $response->getResponseString();
                     exit();
                     break;
                 case 'verify password':
@@ -70,7 +74,8 @@ class AccountUpdateController extends Controller
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }
-                    echo json_encode(array('verified' => true));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('verified' => true));
+                    echo $response->getResponseString();
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
@@ -79,7 +84,8 @@ class AccountUpdateController extends Controller
         }
         catch (AccessDeniedException $e)
         {
-            echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $_POST['action']));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
+            echo $response->getResponseString();
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona
