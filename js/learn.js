@@ -77,18 +77,32 @@ function natural(name)
 	{
 		//Odeslání AJAX požadavku
 		selectedNatural.status = "loading";
-		$.post(document.location.href+"/learn-pictures", {
-			name: this.name
-		}, function(response)
-		{
-			//Nastavení obrázků
-			selectedNatural.pictures = response;
-			selectedNatural.lastPicture = 0;
-			selectedNatural.status = "loaded";
-			
-			//Zobrazení obrázku
-			selectedNatural.getPicture(pictureOffset);
-		});
+		$.post(document.location.href+"/learn-pictures",
+			{ name: this.name },
+			function (response, status)
+			{
+				ajaxCallback(response, status, function (messageType, message, data)
+					{
+					    if (messageType === "success")
+					    {
+							//Nastavení obrázků
+							selectedNatural.pictures = data.pictures;
+							selectedNatural.lastPicture = 0;
+							selectedNatural.status = "loaded";
+							
+							//Zobrazení obrázku
+							selectedNatural.getPicture(pictureOffset);
+					    }
+					    else
+					    {
+					    	//Nastala požadavek nebyl úspěšný
+					    	alert(message);
+					    }
+				    }
+				);
+			},
+			"json"
+		);
 	}
 }
 

@@ -14,7 +14,6 @@ class LearnPicturesController extends Controller
     public function process(array $parameters): void
     {
         $class = $_SESSION['selection']['class'];
-        $group = $_SESSION['selection']['group'];
         $naturalName = $_POST['name'];
         
         $natural = new Natural(false);
@@ -28,7 +27,8 @@ class LearnPicturesController extends Controller
         }
         
         header('Content-Type: application/json');
-        echo json_encode($picturesArr);
+        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('pictures' => $picturesArr));
+        echo $response->getResponseString();
         
         //Zastav zpracování PHP, aby se nevypsala šablona
         exit();
