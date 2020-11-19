@@ -74,7 +74,7 @@ function sixthTab()
 /*-----------------------Všeobecné-----------------------*/
 function startMail(addressee)
 {
-	$("#emailAddressee").val(addressee)	//Nastav adresu
+	$("#email-address").val(addressee);  //Nastav adresu
 	fifthTab();	//Zobraz formulář
 }
 /*-------------------------Tab 1-------------------------*/
@@ -170,8 +170,8 @@ function deleteUser(userId, event)
 		},
 		function(response)
 		{
-				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
+			//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+			alert(response["message"]);
 			
 			if (response["messageType"] === "success")
 			{
@@ -433,8 +433,8 @@ function deleteClass(classId, event)
 		},
 		function(response)
 		{
-				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
+			//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+			alert(response["message"]);
 			
 			if (response["messageType"] === "success")
 			{
@@ -466,7 +466,7 @@ function acceptNameChange(event, objectType, requestId)
 			{
 				//Odebrání žádosti z DOM
 				event.target.parentNode.parentNode.parentNode.remove();
-		}
+			}
 		}
 	);
 }
@@ -492,7 +492,7 @@ function declineNameChange(event, objectType, requestId)
 			{
 				//Odebrání žádosti z DOM
 				event.target.parentNode.parentNode.parentNode.remove();
-		}
+			}
 		}
 	);
 }
