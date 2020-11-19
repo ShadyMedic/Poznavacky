@@ -157,7 +157,7 @@ function confirmUserEdit(userId)
 		}
 	);
 }
-function deleteUser(userId)
+function deleteUser(userId, event)
 {
 	if (!confirm("Opravdu chcete odstranit tohoto uživatele?\nTato akce je nevratná!"))
 	{
@@ -420,7 +420,7 @@ function confirmClassAdminEdit(classId)
 		}
 	);
 }
-function deleteClass(classId)
+function deleteClass(classId, event)
 {
 	if (!confirm("Opravdu chcete odstranit tuto třídu?\nTato akce je nevratná!"))
 	{
