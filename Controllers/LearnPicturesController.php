@@ -14,7 +14,7 @@ class LearnPicturesController extends Controller
     public function process(array $parameters): void
     {
         $class = $_SESSION['selection']['class'];
-        $naturalName = $_POST['name'];
+        $naturalName = urldecode($_GET['natural']);
         
         $natural = new Natural(false);
         $natural->initialize($naturalName, null, null, $class);

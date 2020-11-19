@@ -77,8 +77,7 @@ function natural(name)
 	{
 		//Odeslání AJAX požadavku
 		selectedNatural.status = "loading";
-		$.post(document.location.href+"/learn-pictures",
-			{ name: this.name },
+		$.get(document.location.href + "/learn-pictures?natural=" + encodeURIComponent(this.name),
 			function (response, status)
 			{
 				ajaxCallback(response, status, function (messageType, message, data)
