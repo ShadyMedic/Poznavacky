@@ -63,7 +63,6 @@ class ReportActionController extends Controller
                     break;
                 case 'delete report':
                     $reportId = $_POST['reportId'];
-                    //TODO - ověrit, zda se dané hlášení vztahuje k obrázku patřícímu do spravované třídy
                     $resolver->deleteReport($reportId);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Hlášení úspěšně odstraněno');
                     echo $response->getResponseString();

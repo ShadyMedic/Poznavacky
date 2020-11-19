@@ -71,6 +71,16 @@ class Natural extends DatabaseItem
     }
     
     /**
+     * Metoda navracející objekt třídy, do které tato přírodnina patří
+     * @return ClassObject Třída, se kterou je tato přírodnina svázána
+     */
+    public function getClass(): ClassObject
+    {
+        $this->loadIfNotLoaded($this->class);
+        return $this->class;
+    }
+    
+    /**
      * Metoda navracející počet obrázků této přírodniny
      * @return int Počet obrázků této přírodniny uložené v databázi
      */

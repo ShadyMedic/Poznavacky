@@ -100,6 +100,7 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT = 'Název poznávačky musí být alespoň 3 znaky dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS = 'Název poznávačky může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
     const REASON_MANAGEMENT_REPORTS_EDIT_PICTURE_ANOTHER_GROUP = 'Obrázek nelze přesunout k přírodnině, která není součástí té samé poznávačky';
+    const REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL = 'Hlášení se vztahuje k obrázku, který není nahrán k žádné přírodnině ve vaší třídě';
     const REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
     const REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA = self::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA;
     const REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';
