@@ -48,7 +48,7 @@ class ReportResolver
         $picture = new Picture(false, $pictureId);
         
         //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy
-        if ($this->checkPictureBelongsToClass($picture))
+        if (!$this->checkPictureBelongsToClass($picture))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
@@ -85,7 +85,7 @@ class ReportResolver
     {
         $picture = new Picture(false, $pictureId);
         //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy
-        if ($this->checkPictureBelongsToClass($picture))
+        if (!$this->checkPictureBelongsToClass($picture))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
@@ -101,7 +101,7 @@ class ReportResolver
     {
         $picture = new Picture(false, $pictureId);
         //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy
-        if ($this->checkPictureBelongsToClass($picture));
+        if (!$this->checkPictureBelongsToClass($picture))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
@@ -116,7 +116,7 @@ class ReportResolver
     {
         $report = new Report(false, $reportId);
         //Kontrola, zda se odstraňované hlášení vztahuje k obrázku, který je součástí nějaké přírodniny patřící do spravované třídy
-        if (!$this->checkPictureBelongsToClass($report->getPicture()));
+        if (!$this->checkPictureBelongsToClass($report->getPicture()))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
