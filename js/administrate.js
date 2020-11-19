@@ -170,15 +170,16 @@ function deleteUser(userId)
 		},
 		function(response)
 		{
-			if (response["messageType"] === "error" || response["messageType"] === "success")
-			{
 				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
+			
+			if (response["messageType"] === "success")
+			{
+				//Odebrání uživatele z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
 			}
 		}
 	);
-	//Odebrání uživatele z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 2-------------------------*/
 var currentClassValues = new Array(2);
@@ -432,15 +433,16 @@ function deleteClass(classId)
 		},
 		function(response)
 		{
-			if (response["messageType"] === "error" || response["messageType"] === "success")
-			{
 				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
+			
+			if (response["messageType"] === "success")
+			{
+				//Odebrání třídy z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
 			}
 		}
 	);
-	//Odebrání třídy z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 3-------------------------*/
 //Zahrnuto v souboru resolveReports.js
@@ -460,10 +462,13 @@ function acceptNameChange(event, objectType, requestId)
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
+			else
+			{
+				//Odebrání žádosti z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
+		}
 		}
 	);
-	//Odebrání žádosti z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 function declineNameChange(event, objectType, requestId)
 {
@@ -483,10 +488,13 @@ function declineNameChange(event, objectType, requestId)
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
+			else
+			{
+				//Odebrání žádosti z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
+		}
 		}
 	);
-	//Odebrání žádosti z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 5-------------------------*/
 var emailModified = true;	//Proměnná uchovávající informaci o tom, zda byl formulář pro odeslání e-mailu od posledního odeslání modifikován

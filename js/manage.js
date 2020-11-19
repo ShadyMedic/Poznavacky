@@ -35,6 +35,9 @@ function confirmNameChange()
 						cancelNameChange();
 						//TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
 						alert(message);
+						
+					    //Reset HTML
+					    cancelNameChange();
 					}
 					else if (messageType === "error")
 					{
@@ -46,9 +49,6 @@ function confirmNameChange()
 		},
 		"json"
 	);
-    
-    //Reset HTML
-    cancelNameChange();
 }
 function cancelNameChange()
 {

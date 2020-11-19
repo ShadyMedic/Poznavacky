@@ -138,15 +138,14 @@ function submitReport()
 			ajaxCallback(response, status,
 				function (messageType, message, data)
 				{
-					$msg = message
 					//TODO - nějak šikovně zobrazit hlášku ze serveru
-					alert($msg);
+					alert(message);
+					
+					//Skrýt formulář pro nahlašování
+					cancelReport();
 				}
 			);
 		},
 		"json"
 	);
-  
-	//Skrýt formulář pro nahlašování
-	cancelReport();
 }

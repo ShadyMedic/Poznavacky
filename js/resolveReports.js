@@ -88,21 +88,23 @@ function confirmPictureEdit(picId)
 						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 						alert(message);
 					}
+					else
+					{
+						//Aktualizuj údaje u hlášení stejného obrázku v DOM
+						let reportsToUpdateCount = $("#reports-table .picture-id" + picId).length;
+						for (let i = 0; i < reportsToUpdateCount; i++)
+						{
+							for (let j = 0; j <= 1; j++)
+							{
+								$("#reports-table .picture-id" + picId + ":eq(" + i + ") .report-field:eq("+ j +")").val(currentReportValues[j]);
+							}
+						}
+					}
 				}
 			);
 		},
 		"json"
 	);
-	
-	//Aktualizuj údaje u hlášení stejného obrázku v DOM
-	let reportsToUpdateCount = $("#reports-table .picture-id" + picId).length;
-	for (let i = 0; i < reportsToUpdateCount; i++)
-	{
-		for (let j = 0; j <= 1; j++)
-		{
-			$("#reports-table .picture-id" + picId + ":eq(" + i + ") .report-field:eq("+ j +")").val(currentReportValues[j]);
-		}
-	}
 }
 function disablePicture(event, picId, asAdmin = false)
 {
@@ -123,14 +125,16 @@ function disablePicture(event, picId, asAdmin = false)
 						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 						alert(message);
 					}
+					else
+					{
+						//Odebrání všechna hlášení daného obrázku z DOM
+						$("#reports-table .picture-id" + picId).remove();
+					}
 				}
 			);
 		},
 		"json"
 	);
-		
-	//Odebrání všechna hlášení daného obrázku z DOM
-	$("#reports-table .picture-id" + picId).remove();
 }
 function deletePicture(event, picId, asAdmin = false)
 {
@@ -151,14 +155,16 @@ function deletePicture(event, picId, asAdmin = false)
 							//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 							alert(message);
 						}
+						else
+						{
+							//Odebrání všechna hlášení daného obrázku z DOM
+							$("#reports-table .picture-id" + picId).remove();
+						}
 					}
 				);
 			},
 			"json"
 		);
-		
-	//Odebrání všechna hlášení daného obrázku z DOM
-	$("#reports-table .picture-id" + picId).remove();
 }
 function deleteReport(event, reportId, asAdmin = false)
 {
@@ -179,11 +185,14 @@ function deleteReport(event, reportId, asAdmin = false)
 						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 						alert(message);
 					}
+					else
+					{
+						//Odebrání hlášení z DOM
+						event.target.parentNode.parentNode.parentNode.remove();
+					}
 				}
 			);
 		},
 		"json"
 	);
-	//Odebrání hlášení z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }

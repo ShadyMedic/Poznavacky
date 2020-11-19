@@ -14,14 +14,25 @@ function confirmNameChange()
 			action: "request name change",
 			name: newName
 		},
-		function (response, status) { ajaxCallback(response, status, evaluateResponse); },
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						//Reset HTML
+						$("#change-name-input-field").val("");
+						$("#change-name-input").hide();
+						$("#change-name-button").show();
+					}
+					
+					evaluateResponse(messageType, message, data);
+				}
+			);
+		},
 		"json"
 	);
-	
-	//Reset HTML
-	$("#change-name-input-field").val("");
-	$("#change-name-input").hide();
-	$("#change-name-button").show();
 }
 
 /*-----------------------------------------------------------------------------*/
@@ -93,16 +104,34 @@ function confirmPasswordChange()
 			newPassword: newPass,
 			rePassword: rePass
 		},
-		function (response, status) { ajaxCallback(response, status, evaluateResponse); },
-		"json"
-		);
-	
-	//Reset HTML
-	$("#change-password-input-field-old").val("");
-	$("#change-password-input-field-new").val("");
-	$("#change-password-input-field-re-new").val("");
-	$("#change-password-input3").hide();
-	$("#change-password-button").show();
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						//Reset HTML
+						$("#change-password-input-field-old").val("");
+						$("#change-password-input-field-new").val("");
+						$("#change-password-input-field-re-new").val("");
+						$("#change-password-input3").hide();
+						$("#change-password-button").show();
+					}
+					else if (messageType === "error")
+					{
+						//Výmaz nového hesla a zobrazení pole pro nové heslo poprvé
+						$("#change-password-input-field-new").val("");
+						$("#change-password-input-field-re-new").val("");
+						displayChangePasswordStage2();
+					}
+					
+					evaluateResponse(messageType, message, data);
+				}
+			);
+		},
+	"json"
+	);
 }
 
 /*-----------------------------------------------------------------------------*/
@@ -173,6 +202,13 @@ function confirmEmailChange()
 					if (messageType === 'success')
 					{
 						$("#email-address").text(decodeURIComponent(newEmail));
+						
+						//Reset HTML
+						$("#change-email-password-input-field").val("");
+						$("#change-email-input-field").val("");
+						$("#change-email-input1").hide();
+						$("#change-email-input2").hide();
+						$("#change-email-button").show();
 					}
 					evaluateResponse(messageType, message, data);
 				}
@@ -180,13 +216,6 @@ function confirmEmailChange()
 		},
 		"json"
 	);
-	
-	//Reset HTML
-	$("#change-email-password-input-field").val("");
-	$("#change-email-input-field").val("");
-	$("#change-email-input1").hide();
-	$("#change-email-input2").hide();
-	$("#change-email-button").show();
 }
 
 function updateEmail(newEmail)
@@ -242,12 +271,23 @@ function deleteAccountFinal()
 			action: "delete account",
 			password: password
 		},
-		function (response, status) { ajaxCallback(response, status, evaluateResponse) },
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Uvedení HTML do původního stavu (má smysl pouze v případě selhání)
+						deleteAccountCancel();
+					}
+					
+					evaluateResponse(messageType, message, data);
+				}
+			)
+		},
 		"json"
 	);
-	
-	//Uvedení HTML do původního stavu (má smysl pouze v případě selhání)
-	deleteAccountCancel();
 }
 
 function deleteAccountCancel()
