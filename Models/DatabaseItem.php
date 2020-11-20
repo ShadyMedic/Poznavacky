@@ -253,27 +253,30 @@ abstract class DatabaseItem
         if ($this->isDefined($this->id))
         {
             //Je-li definováno ID, prováděj vyhledávání pouze podle něj
-            $definedProperties = array('id' => $this->id);
+            $propertiesToFilterBy = array('id' => $this->id);
         }
         else
         {
-            $definedProperties = $this->getDefinedProperties();
+            $propertiesToFilterBy = $this->getDefinedProperties();
         }
-        $columnsToFilterBy = array_values(array_intersect_key($this::COLUMN_DICTIONARY, array_flip(array_keys($definedProperties))));
-        $whereString = implode(' = ? AND ', $columnsToFilterBy);
-        $whereString .= ' = ?'; //Přidání rovnítka s otazníkem za název posledního sloupce
         
-        $whereValues = array();
-        foreach ($definedProperties as $propertyName => $propertyValue)
+        foreach ($propertiesToFilterBy as $propertyName => $propertyValue)
         {
-            if (!isset($this::COLUMN_DICTIONARY[$propertyName]))
+            unset($propertiesToFilterBy[$propertyName]);
+            if (isset($this::COLUMN_DICTIONARY[$propertyName]))
             {
                 //Filtruj pouze podle vlasností ukládaných v databázi
-                continue;
+                $propertiesToFilterBy[$this::COLUMN_DICTIONARY[$propertyName]] = $propertyValue;
             }
-            
+        }
+        
+        $whereString = implode(' = ? AND ', array_keys($propertiesToFilterBy));
+        $whereString .= ' = ?'; //Přidání rovnítka s otazníkem za název posledního sloupce
+        $whereValues = array();
+        foreach ($propertiesToFilterBy as $propertyValue)
+        {
             if ($propertyValue instanceof DatabaseItem) { $whereValues[] = $propertyValue->getId(); } //Pro případ, že vlastnost ukládá odkaz na objekt
-            else if ($propertyValue instanceof  DateTime) { $whereValues[] = $propertyValue->format('Y-m-d H:i:s'); } //Pro případ, že vlastnost ukládá objekt typu DateTime
+            else if ($propertyValue instanceof DateTime) { $whereValues[] = $propertyValue->format('Y-m-d H:i:s'); } //Pro případ, že vlastnost ukládá objekt typu DateTime
             else { $whereValues[] = $propertyValue; }
         }
         

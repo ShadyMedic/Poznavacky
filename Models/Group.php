@@ -3,7 +3,7 @@
  * Třída reprezentující objekt poznávačky obsahující části
  * @author Jan Štěch
  */
-class Group extends DatabaseItem
+class Group extends Folder
 {
     public const TABLE_NAME = 'poznavacky';
     
@@ -27,8 +27,6 @@ class Group extends DatabaseItem
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
     
-    protected $name;
-    protected $url;
     protected $class;
     protected $partsCount;
     
@@ -65,26 +63,6 @@ class Group extends DatabaseItem
         $this->class = $class;
         $this->parts = $parts;
         $this->partsCount = $partsCount;
-    }
-    
-    /**
-     * Metoda navracející jméno této poztnávačky
-     * @return string Jméno poznávačky
-     */
-    public function getName(): string
-    {
-        $this->loadIfNotLoaded($this->name);
-        return $this->name;
-    }
-    
-    /**
-     * Metoda navracející reprezentaci jména této poznávačky pro použití v url
-     * @return string URL jméno poznávačky
-     */
-    public function getUrl(): string
-    {
-        $this->loadIfNotLoaded($this->url);
-        return $this->url;
     }
     
     /**

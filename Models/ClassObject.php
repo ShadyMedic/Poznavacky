@@ -3,7 +3,7 @@
  * Třída reprezentující objekt třídy (jakože té z reálného světa / obsahující poznávačky)
  * @author Jan Štěch
  */
-class ClassObject extends DatabaseItem
+class ClassObject extends Folder
 {
     public const TABLE_NAME = 'tridy';
     
@@ -42,8 +42,6 @@ class ClassObject extends DatabaseItem
         'uzamčená' => self::CLASS_STATUS_LOCKED
     );
     
-    protected $name;
-    protected $url;
     protected $status;
     protected $code;
     protected $groupsCount;
@@ -93,26 +91,6 @@ class ClassObject extends DatabaseItem
         $this->groupsCount = $groupsCount;
         $this->members = $members;
         $this->admin = $admin;
-    }
-    
-    /**
-     * Metoda navracející jméno této třídy
-     * @return string Jméno třídy
-     */
-    public function getName(): string
-    {
-        $this->loadIfNotLoaded($this->name);
-        return $this->name;
-    }
-    
-    /**
-     * Metoda navracející reprezentaci jména této třídy pro použití v url
-     * @return string URL jméno třídy
-     */
-    public function getUrl(): string
-    {
-        $this->loadIfNotLoaded($this->url);
-        return $this->url;
     }
     
     /**

@@ -3,7 +3,7 @@
  * Třída reprezentující objekt části obsahující přírodniny
  * @author Jan Štěch
  */
-class Part extends DatabaseItem
+class Part extends Folder
 {
     public const TABLE_NAME = 'casti';
     
@@ -29,8 +29,6 @@ class Part extends DatabaseItem
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
     
-    protected $name;
-    protected $url;
     protected $group;
     protected $naturalsCount;
     protected $picturesCount;
@@ -70,26 +68,6 @@ class Part extends DatabaseItem
         $this->naturals = $naturals;
         $this->naturalsCount = $naturalsCount;
         $this->picturesCount = $picturesCount;
-    }
-        
-    /**
-     * Metoda navracející jméno této části
-     * @return string Jméno části
-     */
-    public function getName(): string
-    {
-        $this->loadIfNotLoaded($this->name);
-        return $this->name;
-    }
-    
-    /**
-     * Metoda navracející reprezentaci jména této části pro použití v url
-     * @return string URL jméno části
-     */
-    public function getUrl(): string
-    {
-        $this->loadIfNotLoaded($this->url);
-        return $this->url;
     }
     
     /**
