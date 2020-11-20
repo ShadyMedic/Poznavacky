@@ -10,6 +10,7 @@ class Group extends DatabaseItem
     public const COLUMN_DICTIONARY = array(
         'id' => 'poznavacky_id',
         'name' => 'nazev',
+        'url' => 'url',
         'class' => 'tridy_id',
         'partsCount' => 'casti'
     );
@@ -27,6 +28,7 @@ class Group extends DatabaseItem
     protected const CAN_BE_UPDATED = true;
     
     protected $name;
+    protected $url;
     protected $class;
     protected $partsCount;
     
@@ -38,16 +40,18 @@ class Group extends DatabaseItem
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
      * @param string|undefined|null $name Název této poznávačky
+     * @param string|undefined|null $url Reprezentace názvu poznávačky pro použití v URL
      * @param ClassObject|undefined|null $class Odkaz na objekt třídy, do které tato poznávačka patří
      * @param Part[]|undefined|null $parts Pole částí, jako objekty, na které je tato poznávačka rozdělená
      * @param int|undefined|null Počet částí, do kterých je tato poznávačka rozdělena (při vyplnění parametru $parts je ignorováno a je použita délka poskytnutého pole)
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $class = null, $parts = null, $partsCount = null): void
+    public function initialize($name = null, $url = null, $class = null, $parts = null, $partsCount = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
+        if ($url === null){ $url = $this->url; }
         if ($class === null){ $class = $this->class; }
         if ($parts === null)
         {
@@ -57,6 +61,7 @@ class Group extends DatabaseItem
         else { $partsCount = count($parts); }
         
         $this->name = $name;
+        $this->url = $url;
         $this->class = $class;
         $this->parts = $parts;
         $this->partsCount = $partsCount;
@@ -70,6 +75,16 @@ class Group extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
+    }
+    
+    /**
+     * Metoda navracející reprezentaci jména této poznávačky pro použití v url
+     * @return string URL jméno poznávačky
+     */
+    public function getUrl(): string
+    {
+        $this->loadIfNotLoaded($this->url);
+        return $this->url;
     }
     
     /**

@@ -177,7 +177,7 @@ class ClassObject extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].','.Group::COLUMN_DICTIONARY['name'].','.Group::COLUMN_DICTIONARY['partsCount'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['class'].' = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].','.Group::COLUMN_DICTIONARY['url'].','.Group::COLUMN_DICTIONARY['name'].','.Group::COLUMN_DICTIONARY['partsCount'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['class'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné poznávačky nenalezeny
@@ -189,7 +189,7 @@ class ClassObject extends DatabaseItem
             foreach ($result as $groupData)
             {
                 $group = new Group(false, $groupData[Group::COLUMN_DICTIONARY['id']]);
-                $group->initialize($groupData[Group::COLUMN_DICTIONARY['name']], $this, null, $groupData[Group::COLUMN_DICTIONARY['partsCount']]);
+                $group->initialize($groupData[Group::COLUMN_DICTIONARY['name']], $groupData[Group::COLUMN_DICTIONARY['url']], $this, null, $groupData[Group::COLUMN_DICTIONARY['partsCount']]);
                 $this->groups[] = $group;
             }
         }
@@ -210,7 +210,7 @@ class ClassObject extends DatabaseItem
         }
         
         $group = new Group(true);
-        $group->initialize($groupName, $this, null, 0);
+        $group->initialize($groupName, null, $this, null, 0);
         try
         {
             $result = $group->save();

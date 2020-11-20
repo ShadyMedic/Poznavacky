@@ -72,7 +72,7 @@ class TestGroupsFetcher
             foreach ($groups as $group)
             {
                 $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($group->getName());
+                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.$group->getUrl();
                 $tableRow[0] = $group->getName();
                 $tableRow[1] = $group->getPartsCount();
                 
