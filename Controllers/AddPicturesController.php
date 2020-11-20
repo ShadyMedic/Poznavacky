@@ -46,11 +46,11 @@ class AddPicturesController extends Controller
                     //Vymaž data z $_POST
                     if ($allParts)
                     {
-                        $this->redirect('menu/'.$class->getName().'/'.$group->getName().'/add-pictures');
+                        $this->redirect('menu/'.$class->getUrl().'/'.$group->getUrl().'/add-pictures');
                     }
                     else
                     {
-                        $this->redirect('menu/'.$class->getName().'/'.$group->getName().'/'.$part->getName().'/add-pictures');
+                        $this->redirect('menu/'.$class->getUrl().'/'.$group->getUrl().'/'.$part->getUrl().'/add-pictures');
                     }
                 }
             }
@@ -80,7 +80,7 @@ class AddPicturesController extends Controller
             $this->data['naturals'] = $part->getNaturals();
         }
         
-        $this->data['returnUrl'] = 'menu/'.$class->getName().'/'.$group->getName();
+        $this->data['returnUrl'] = 'menu/'.$class->getUrl().'/'.$group->getUrl();
         
         $this->view = 'addPictures';
     }
