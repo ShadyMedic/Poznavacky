@@ -19,9 +19,11 @@
 		<input type="hidden" name="naturalName" id="hiddenInput" value="<?= $previousNatural ?>" />
 	</fieldset>
 	<fieldset id="field2" <?php if (empty($previousNatural)) : ?> style="display:none;" <?php endif ?>>
-		<div id="duckLink_div"><a id="duckLink" target=_blank>  
-			<div><span>Vyhledat na </span><img id="duckLogo" src="images/duckLogo.png"></div>       
-		</a></div>       
+		<div id="duckLink_div">
+			<a id="duckLink" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
+				<div><span>Vyhledat na </span><img id="duckLogo" src="images/duckLogo.png"></div>       
+			</a>
+		</div>       
 		<input type=url name="url" placeholder="Vložte URL obrázku" id="urlInput" class="text" value="<?= $previousUrl ?>"/>
 		<button id="urlConfirm" onclick="pictureSelected(event)" class="button">OK</button>
 		<img id="previewImg" class="img" src="images/imagePreview.png">
