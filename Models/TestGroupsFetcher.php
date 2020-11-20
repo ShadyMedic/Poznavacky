@@ -110,7 +110,7 @@ class TestGroupsFetcher
             foreach ($parts as $part)
             {
                 $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getName());
+                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getUrl());
                 $tableRow[0] = $part->getName();
                 $tableRow[1] = $part->getNaturalsCount();
                 $tableRow[2] = $part->getPicturesCount();

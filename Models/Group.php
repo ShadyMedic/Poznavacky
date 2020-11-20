@@ -213,7 +213,7 @@ class Group extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].','.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].','.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['url'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné části nenalezeny
@@ -225,7 +225,7 @@ class Group extends DatabaseItem
             foreach ($result as $partData)
             {
                 $part = new Part(false, $partData[Part::COLUMN_DICTIONARY['id']]);
-                $part->initialize($partData[Part::COLUMN_DICTIONARY['name']], $this, null, $partData[Part::COLUMN_DICTIONARY['naturalsCount']], $partData[Part::COLUMN_DICTIONARY['picturesCount']]);
+                $part->initialize($partData[Part::COLUMN_DICTIONARY['name']], $partData[Part::COLUMN_DICTIONARY['url']], $this, null, $partData[Part::COLUMN_DICTIONARY['naturalsCount']], $partData[Part::COLUMN_DICTIONARY['picturesCount']]);
                 $this->parts[] = $part;
             }
         }

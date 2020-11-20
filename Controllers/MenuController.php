@@ -157,7 +157,7 @@ class MenuController extends Controller
                 {
                     //Uložení objektu části do $_SESSION
                     $_SESSION['selection']['part'] = new Part(false);
-                    $_SESSION['selection']['part']->initialize(urldecode($menuArguments[2]), $_SESSION['selection']['group'], null, null, null);
+                    $_SESSION['selection']['part']->initialize(null, $menuArguments[2], $_SESSION['selection']['group'], null, null, null);
                 }
             }
         }
