@@ -10,6 +10,7 @@ class ClassObject extends DatabaseItem
     public const COLUMN_DICTIONARY = array(
         'id' => 'tridy_id',
         'name' => 'nazev',
+        'url' => 'url',
         'status' => 'status',
         'code' => 'kod',
         'groupsCount' => 'poznavacky',
@@ -42,6 +43,7 @@ class ClassObject extends DatabaseItem
     );
     
     protected $name;
+    protected $url;
     protected $status;
     protected $code;
     protected $groupsCount;
@@ -57,6 +59,7 @@ class ClassObject extends DatabaseItem
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
      * @param string|undefined|null $name Název třídy
+     * @param string|undefined|null $url Reprezentace názvu třídy pro použití v URL
      * @param string|undefined|null $status Status přístupnosti třídy (musí být jedna z konstant této třídy začínající na CLASS_STATUS_)
      * @param int|undefined|null $code Přístupový kód třídy
      * @param Group[]|undefined|null $groups Pole poznávaček patřících do této třídy jako objekty
@@ -66,10 +69,11 @@ class ClassObject extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null): void
+    public function initialize($name = null, $url = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null): void
     {        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
+        if ($url === null){ $url = $this->url; }
         if ($status === null){ $status = $this->status; }
         if ($code === null){ $code = $this->code; }
         if ($groups === null)
@@ -82,6 +86,7 @@ class ClassObject extends DatabaseItem
         if ($admin === null){ $admin = $this->admin; }
         
         $this->name = $name;
+        $this->url = $url;
         $this->status = $status;
         $this->code = $code;
         $this->groups = $groups;
@@ -98,6 +103,16 @@ class ClassObject extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
+    }
+    
+    /**
+     * Metoda navracející reprezentaci jména této třídy pro použití v url
+     * @return string URL jméno třídy
+     */
+    public function getUrl(): string
+    {
+        $this->loadIfNotLoaded($this->url);
+        return $this->url;
     }
     
     /**
