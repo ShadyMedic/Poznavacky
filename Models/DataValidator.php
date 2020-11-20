@@ -28,6 +28,9 @@ class DataValidator
     public const USER_EMAIL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@.!#$%&\'*+-/=?^_`{|}~';  //Inspirováno https://stackoverflow.com/a/2049510/14011077
     public const CLASS_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
     public const GROUP_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
+    public const PART_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
+    
+    public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
     
     /**
      * Metoda ověřující, zda se délka řetězce nachází mezi minimální a maximální hodnotou.
