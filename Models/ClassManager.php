@@ -36,7 +36,7 @@ class ClassManager
     {
         $result = Db::fetchQuery('
         SELECT
-        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
+        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['url'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
         '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].' AS "u_status"
         FROM '.ClassObject::TABLE_NAME.'
         JOIN '.User::TABLE_NAME.' ON '.ClassObject::COLUMN_DICTIONARY['admin'].' = '.User::COLUMN_DICTIONARY['id'].'
@@ -58,7 +58,7 @@ class ClassManager
             $classAdmin = new User(false, $classInfo[User::COLUMN_DICTIONARY['id']]);
             $classAdmin->initialize($classInfo[User::COLUMN_DICTIONARY['name']], $classInfo[User::COLUMN_DICTIONARY['email']], new DateTime($classInfo[User::COLUMN_DICTIONARY['lastLogin']]), $classInfo[User::COLUMN_DICTIONARY['addedPictures']], $classInfo[User::COLUMN_DICTIONARY['guessedPictures']], $classInfo[User::COLUMN_DICTIONARY['karma']], $classInfo['u_status']);
             $class = new ClassObject(false, $classInfo[ClassObject::COLUMN_DICTIONARY['id']]);
-            $class->initialize($classInfo[ClassObject::COLUMN_DICTIONARY['name']], $classInfo['c_status'], $classInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $classInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $classAdmin);
+            $class->initialize($classInfo[ClassObject::COLUMN_DICTIONARY['name']], $classInfo[ClassObject::COLUMN_DICTIONARY['url']], $classInfo['c_status'], $classInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $classInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $classAdmin);
             $classes[] = $class;
         }
         

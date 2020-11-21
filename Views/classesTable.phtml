@@ -90,7 +90,7 @@
                 <button class='class-action active-btn edit-btn' onclick='changeClassAdmin(event)' title='Změnit správce'>
                 	<img src='images/dot.svg'/>
                 </button>
-                <button class='class-action active-btn' onclick="window.location.href='menu/<?= $class->getName() ?>/manage';" title='Spravovat'>
+                <button class='class-action active-btn' onclick="window.location.href='menu/<?= $class->getUrl() ?>/manage';" title='Spravovat'>
                 	<img src='images/management.svg'/>
                 </button>
                 <?php if (empty($class->getAdmin()['email'])) : ?>

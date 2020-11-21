@@ -35,7 +35,7 @@ class TestsController extends Controller
 
             //Uložení objektu poznávačky do $_SESSION
             $_SESSION['selection']['group'] = new Group(false);
-            $_SESSION['selection']['group']->initialize(urldecode($testsArguments[0]), $_SESSION['selection']['class'], null, null);
+            $_SESSION['selection']['group']->initialize(null, $testsArguments[0], $_SESSION['selection']['class'], null, null);
         
             //Musí být specifikována i akce
             if ($argumentCount === 1)

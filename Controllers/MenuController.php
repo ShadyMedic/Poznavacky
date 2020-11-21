@@ -82,7 +82,7 @@ class MenuController extends Controller
                 {
                     //Uložení objektu třídy do $_SESSION
                     $_SESSION['selection']['class'] = new ClassObject(false, 0);
-                    $_SESSION['selection']['class']->initialize(urldecode($menuArguments[0]));
+                    $_SESSION['selection']['class']->initialize(null, $menuArguments[0]);
                     $_SESSION['selection']['class']->load();
                     
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
@@ -116,7 +116,7 @@ class MenuController extends Controller
                 {
                     //Uložení objektu poznávačky do $_SESSION
                     $_SESSION['selection']['group'] = new Group(false);
-                    $_SESSION['selection']['group']->initialize(urldecode($menuArguments[1]), $_SESSION['selection']['class'], null, null);
+                    $_SESSION['selection']['group']->initialize(null, $menuArguments[1], $_SESSION['selection']['class'], null, null);
                     
                     //Vymazání objektů skladujících vybranou část ze $_SESSION
                     $this->unsetSelection(true);
@@ -157,7 +157,7 @@ class MenuController extends Controller
                 {
                     //Uložení objektu části do $_SESSION
                     $_SESSION['selection']['part'] = new Part(false);
-                    $_SESSION['selection']['part']->initialize(urldecode($menuArguments[2]), $_SESSION['selection']['group'], null, null, null);
+                    $_SESSION['selection']['part']->initialize(null, $menuArguments[2], $_SESSION['selection']['group'], null, null, null);
                 }
             }
         }

@@ -28,6 +28,9 @@ class DataValidator
     public const USER_EMAIL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@.!#$%&\'*+-/=?^_`{|}~';  //Inspirováno https://stackoverflow.com/a/2049510/14011077
     public const CLASS_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
     public const GROUP_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
+    public const PART_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
+    
+    public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
     
     /**
      * Metoda ověřující, zda se délka řetězce nachází mezi minimální a maximální hodnotou.
@@ -107,7 +110,10 @@ class DataValidator
                 }
                 break;
             case self::TYPE_CLASS_NAME:
-                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.ClassObject::COLUMN_DICTIONARY['name'].') AS "items" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT('.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM '.ClassNameChangeRequest::TABLE_NAME.' WHERE '.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].'= ?) AS tmp', array($subject, $subject), false);
+                //Převedení jména na URL
+                $url = Folder::generateUrl($subject);
+                //TODO - následující SQL dotaz nemusí fungovat úplně spolehlivě, protože zatímco porovnávání s ostatními názvy tříd funguje na 100%, jelikož je děláno přes URL, tak u názvů čekajících na schválení se porovnává pouze podle jména a dvě různá jména mohou vyvolat konfliktní URL
+                $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.ClassObject::COLUMN_DICTIONARY['url'].') AS "items" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['url'].'= ? UNION ALL SELECT COUNT('.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM '.ClassNameChangeRequest::TABLE_NAME.' WHERE '.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].'= ?) AS tmp', array($url, $subject), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);

@@ -3,13 +3,14 @@
  * Třída reprezentující objekt poznávačky obsahující části
  * @author Jan Štěch
  */
-class Group extends DatabaseItem
+class Group extends Folder
 {
     public const TABLE_NAME = 'poznavacky';
     
     public const COLUMN_DICTIONARY = array(
         'id' => 'poznavacky_id',
         'name' => 'nazev',
+        'url' => 'url',
         'class' => 'tridy_id',
         'partsCount' => 'casti'
     );
@@ -26,7 +27,6 @@ class Group extends DatabaseItem
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
     
-    protected $name;
     protected $class;
     protected $partsCount;
     
@@ -38,16 +38,18 @@ class Group extends DatabaseItem
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
      * @param string|undefined|null $name Název této poznávačky
+     * @param string|undefined|null $url Reprezentace názvu poznávačky pro použití v URL
      * @param ClassObject|undefined|null $class Odkaz na objekt třídy, do které tato poznávačka patří
      * @param Part[]|undefined|null $parts Pole částí, jako objekty, na které je tato poznávačka rozdělená
      * @param int|undefined|null Počet částí, do kterých je tato poznávačka rozdělena (při vyplnění parametru $parts je ignorováno a je použita délka poskytnutého pole)
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $class = null, $parts = null, $partsCount = null): void
+    public function initialize($name = null, $url = null, $class = null, $parts = null, $partsCount = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
+        if ($url === null){ $url = $this->url; }
         if ($class === null){ $class = $this->class; }
         if ($parts === null)
         {
@@ -57,19 +59,10 @@ class Group extends DatabaseItem
         else { $partsCount = count($parts); }
         
         $this->name = $name;
+        $this->url = $url;
         $this->class = $class;
         $this->parts = $parts;
         $this->partsCount = $partsCount;
-    }
-    
-    /**
-     * Metoda navracející jméno této poztnávačky
-     * @return string Jméno poznávačky
-     */
-    public function getName(): string
-    {
-        $this->loadIfNotLoaded($this->name);
-        return $this->name;
     }
     
     /**
@@ -198,7 +191,7 @@ class Group extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].','.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Part::COLUMN_DICTIONARY['id'].','.Part::COLUMN_DICTIONARY['name'].','.Part::COLUMN_DICTIONARY['url'].','.Part::COLUMN_DICTIONARY['naturalsCount'].','.Part::COLUMN_DICTIONARY['picturesCount'].' FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné části nenalezeny
@@ -210,7 +203,7 @@ class Group extends DatabaseItem
             foreach ($result as $partData)
             {
                 $part = new Part(false, $partData[Part::COLUMN_DICTIONARY['id']]);
-                $part->initialize($partData[Part::COLUMN_DICTIONARY['name']], $this, null, $partData[Part::COLUMN_DICTIONARY['naturalsCount']], $partData[Part::COLUMN_DICTIONARY['picturesCount']]);
+                $part->initialize($partData[Part::COLUMN_DICTIONARY['name']], $partData[Part::COLUMN_DICTIONARY['url']], $this, null, $partData[Part::COLUMN_DICTIONARY['naturalsCount']], $partData[Part::COLUMN_DICTIONARY['picturesCount']]);
                 $this->parts[] = $part;
             }
         }

@@ -3,13 +3,14 @@
  * Třída reprezentující objekt části obsahující přírodniny
  * @author Jan Štěch
  */
-class Part extends DatabaseItem
+class Part extends Folder
 {
     public const TABLE_NAME = 'casti';
     
     public const COLUMN_DICTIONARY = array(
         'id' => 'casti_id',
         'name' => 'nazev',
+        'url' => 'url',
         'group' => 'poznavacky_id',
         'naturalsCount' => 'prirodniny',
         'picturesCount' => 'obrazky'
@@ -28,7 +29,6 @@ class Part extends DatabaseItem
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
     
-    protected $name;
     protected $group;
     protected $naturalsCount;
     protected $picturesCount;
@@ -40,6 +40,7 @@ class Part extends DatabaseItem
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
      * @param string|undefined|null $name Název části
+     * @param string|undefined|null $url Reprezentace názvu části pro použití v URL
      * @param Group|undefined|null $group Odkaz na objekt poznávačky, do níž tato část patří
      * @param Natural[]|undefined|null $naturals Pole přírodnin, které patří do této části poznávačky, jako objekty
      * @param int|undefined|null $naturalsCount Počet přírodnin v této části poznávačky (při vyplnění parametru $naturals je ignorováno a je použita délka poskytnutého pole)
@@ -47,10 +48,11 @@ class Part extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $group = null, $naturals = null, $naturalsCount = null, $picturesCount = null): void
+    public function initialize($name = null, $url = null, $group = null, $naturals = null, $naturalsCount = null, $picturesCount = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
+        if ($url === null){ $url = $this->url; }
         if ($group === null){ $group = $this->group; }
         if ($naturals === null)
         {
@@ -61,20 +63,11 @@ class Part extends DatabaseItem
         if ($picturesCount === null){ $picturesCount = $this->picturesCount; }
         
         $this->name = $name;
+        $this->url = $url;
         $this->group = $group;
         $this->naturals = $naturals;
         $this->naturalsCount = $naturalsCount;
         $this->picturesCount = $picturesCount;
-    }
-        
-    /**
-     * Metoda navracející jméno této části
-     * @return string Jméno části
-     */
-    public function getName(): string
-    {
-        $this->loadIfNotLoaded($this->name);
-        return $this->name;
     }
     
     /**

@@ -72,13 +72,13 @@ class Administration
      */
     public function getAllClasses(): array
     {
-        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME, array(), true);
+        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME, array(), true);
         
         $classes = array();
         foreach($dbResult as $dbRow)
         {
             $class = new ClassObject(false, $dbRow[ClassObject::COLUMN_DICTIONARY['id']]);
-            $class->initialize($dbRow[ClassObject::COLUMN_DICTIONARY['name']], $dbRow[ClassObject::COLUMN_DICTIONARY['status']], $dbRow[ClassObject::COLUMN_DICTIONARY['code']], null, $dbRow[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, new User(false, $dbRow[ClassObject::COLUMN_DICTIONARY['admin']]));
+            $class->initialize($dbRow[ClassObject::COLUMN_DICTIONARY['name']], $dbRow[ClassObject::COLUMN_DICTIONARY['url']], $dbRow[ClassObject::COLUMN_DICTIONARY['status']], $dbRow[ClassObject::COLUMN_DICTIONARY['code']], null, $dbRow[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, new User(false, $dbRow[ClassObject::COLUMN_DICTIONARY['admin']]));
             $classes[] = $class;
         }
         
@@ -163,7 +163,7 @@ class Administration
         $result = Db::fetchQuery('
         SELECT
         '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].' AS "u_status",
-        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
+        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['url'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
         '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].', '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].', '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
         FROM '.ClassNameChangeRequest::TABLE_NAME.'
         JOIN '.ClassObject::TABLE_NAME.' ON '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].' = '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].'
@@ -179,7 +179,7 @@ class Administration
             $admin = new User(false, $requestInfo[User::COLUMN_DICTIONARY['id']]);
             $admin->initialize($requestInfo[User::COLUMN_DICTIONARY['name']], $requestInfo[User::COLUMN_DICTIONARY['email']], new DateTime($requestInfo[User::COLUMN_DICTIONARY['lastLogin']]), $requestInfo[User::COLUMN_DICTIONARY['addedPictures']], $requestInfo[User::COLUMN_DICTIONARY['guessedPictures']], $requestInfo[User::COLUMN_DICTIONARY['karma']], $requestInfo['u_status']);
             $class = new ClassObject(false, $requestInfo[ClassObject::COLUMN_DICTIONARY['id']]);
-            $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']], $requestInfo['c_status'], $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
+            $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']], $requestInfo[ClassObject::COLUMN_DICTIONARY['url']], $requestInfo['c_status'], $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
             $request = new ClassNameChangeRequest(false, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
             $request->initialize($class, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['newName']], new DateTime($requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt']]));
             

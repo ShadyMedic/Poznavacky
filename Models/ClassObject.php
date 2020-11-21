@@ -3,13 +3,14 @@
  * Třída reprezentující objekt třídy (jakože té z reálného světa / obsahující poznávačky)
  * @author Jan Štěch
  */
-class ClassObject extends DatabaseItem
+class ClassObject extends Folder
 {
     public const TABLE_NAME = 'tridy';
     
     public const COLUMN_DICTIONARY = array(
         'id' => 'tridy_id',
         'name' => 'nazev',
+        'url' => 'url',
         'status' => 'status',
         'code' => 'kod',
         'groupsCount' => 'poznavacky',
@@ -41,7 +42,6 @@ class ClassObject extends DatabaseItem
         'uzamčená' => self::CLASS_STATUS_LOCKED
     );
     
-    protected $name;
     protected $status;
     protected $code;
     protected $groupsCount;
@@ -57,6 +57,7 @@ class ClassObject extends DatabaseItem
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
      * @param string|undefined|null $name Název třídy
+     * @param string|undefined|null $url Reprezentace názvu třídy pro použití v URL
      * @param string|undefined|null $status Status přístupnosti třídy (musí být jedna z konstant této třídy začínající na CLASS_STATUS_)
      * @param int|undefined|null $code Přístupový kód třídy
      * @param Group[]|undefined|null $groups Pole poznávaček patřících do této třídy jako objekty
@@ -66,10 +67,11 @@ class ClassObject extends DatabaseItem
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null): void
+    public function initialize($name = null, $url = null, $status = null, $code = null, $groups = null, $groupsCount = null, $members = null, $admin = null): void
     {        
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($name === null){ $name = $this->name; }
+        if ($url === null){ $url = $this->url; }
         if ($status === null){ $status = $this->status; }
         if ($code === null){ $code = $this->code; }
         if ($groups === null)
@@ -82,22 +84,13 @@ class ClassObject extends DatabaseItem
         if ($admin === null){ $admin = $this->admin; }
         
         $this->name = $name;
+        $this->url = $url;
         $this->status = $status;
         $this->code = $code;
         $this->groups = $groups;
         $this->groupsCount = $groupsCount;
         $this->members = $members;
         $this->admin = $admin;
-    }
-    
-    /**
-     * Metoda navracející jméno této třídy
-     * @return string Jméno třídy
-     */
-    public function getName(): string
-    {
-        $this->loadIfNotLoaded($this->name);
-        return $this->name;
     }
     
     /**
@@ -162,7 +155,7 @@ class ClassObject extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].','.Group::COLUMN_DICTIONARY['name'].','.Group::COLUMN_DICTIONARY['partsCount'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['class'].' = ?', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].','.Group::COLUMN_DICTIONARY['url'].','.Group::COLUMN_DICTIONARY['name'].','.Group::COLUMN_DICTIONARY['partsCount'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['class'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné poznávačky nenalezeny
@@ -174,7 +167,7 @@ class ClassObject extends DatabaseItem
             foreach ($result as $groupData)
             {
                 $group = new Group(false, $groupData[Group::COLUMN_DICTIONARY['id']]);
-                $group->initialize($groupData[Group::COLUMN_DICTIONARY['name']], $this, null, $groupData[Group::COLUMN_DICTIONARY['partsCount']]);
+                $group->initialize($groupData[Group::COLUMN_DICTIONARY['name']], $groupData[Group::COLUMN_DICTIONARY['url']], $this, null, $groupData[Group::COLUMN_DICTIONARY['partsCount']]);
                 $this->groups[] = $group;
             }
         }
@@ -195,7 +188,7 @@ class ClassObject extends DatabaseItem
         }
         
         $group = new Group(true);
-        $group->initialize($groupName, $this, null, 0);
+        $group->initialize($groupName, $this->generateUrl($groupName), $this, null, 0);
         try
         {
             $result = $group->save();
@@ -460,8 +453,8 @@ class ClassObject extends DatabaseItem
     public function groupExists(string $groupName): bool
     {
         $this->loadIfNotLoaded($this->id);
-        
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['name'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ?', array($groupName, $this->id), false);
+        $url = $this->generateUrl($groupName);
+        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ?', array($url, $this->id), false);
         if ($cnt['cnt'] > 0)
         {
             return true;

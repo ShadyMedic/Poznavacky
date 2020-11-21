@@ -16,7 +16,7 @@ class TestGroupsFetcher
     public function getClasses(): array
     {
         //Získej data
-        $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
         if (!$classes)
         {
             throw new NoDataException(NoDataException::NO_CLASSES, null, null, 0);
@@ -27,7 +27,7 @@ class TestGroupsFetcher
         foreach ($classes as $dataRow)
         {
             $tableRow = array();
-            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($dataRow[ClassObject::COLUMN_DICTIONARY['name']]);
+            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.$dataRow[ClassObject::COLUMN_DICTIONARY['url']];
             $tableRow[0] = $dataRow[ClassObject::COLUMN_DICTIONARY['name']];
             $tableRow[1] = $dataRow[ClassObject::COLUMN_DICTIONARY['groupsCount']];
             //Tlačítko pro správu třídy, pokud je přihlášený uživatel správcem třídy
@@ -72,7 +72,7 @@ class TestGroupsFetcher
             foreach ($groups as $group)
             {
                 $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($group->getName());
+                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.$group->getUrl();
                 $tableRow[0] = $group->getName();
                 $tableRow[1] = $group->getPartsCount();
                 
@@ -110,7 +110,7 @@ class TestGroupsFetcher
             foreach ($parts as $part)
             {
                 $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getName());
+                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getUrl());
                 $tableRow[0] = $part->getName();
                 $tableRow[1] = $part->getNaturalsCount();
                 $tableRow[2] = $part->getPicturesCount();
