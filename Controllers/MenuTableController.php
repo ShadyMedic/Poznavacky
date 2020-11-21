@@ -43,7 +43,7 @@ class MenuTableController extends Controller
             }
             else
             {
-                $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName();
+                $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl();
                 $this->view = 'menuPartsButton';
                 $partsGetter = new TestGroupsFetcher();
                 $parts = $partsGetter->getParts($_SESSION['selection']['group']);
