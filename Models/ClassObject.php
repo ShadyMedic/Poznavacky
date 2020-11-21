@@ -188,7 +188,7 @@ class ClassObject extends Folder
         }
         
         $group = new Group(true);
-        $group->initialize($groupName, null, $this, null, 0);
+        $group->initialize($groupName, $this->generateUrl($groupName), $this, null, 0);
         try
         {
             $result = $group->save();
@@ -453,8 +453,8 @@ class ClassObject extends Folder
     public function groupExists(string $groupName): bool
     {
         $this->loadIfNotLoaded($this->id);
-        
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['name'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ?', array($groupName, $this->id), false);
+        $url = $this->generateUrl($groupName);
+        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ?', array($url, $this->id), false);
         if ($cnt['cnt'] > 0)
         {
             return true;
