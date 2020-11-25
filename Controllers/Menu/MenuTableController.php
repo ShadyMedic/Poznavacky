@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\NoDataException;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\TestGroupsFetcher;
+
 /** 
  * Kontroler starající se o rozhodnutí, jaká tabulka se bude zobrazovat na menu stránce
  * Tato třída nastavuje pohled obsahující poze tlačítko pro návrat a/nebo chybovou hlášku
