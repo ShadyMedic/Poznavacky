@@ -1,6 +1,13 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Statics\ClassManager;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\MessageBox;
+
 /**
  * Kontroler zpracovávající data z formuláře pro zadání kódu od soukromé třídy na menu stránce
  * @author Jan Štěch
