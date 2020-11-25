@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\MessageBox;
+
 /**
  * Kontroler starající se o opuštění třídy
  * @author Jan Štěch
