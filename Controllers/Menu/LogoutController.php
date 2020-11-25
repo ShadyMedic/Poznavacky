@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Processors\LoginUser;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\MessageBox;
+
 /**
  * Kontroler starající se o odhlášení uživatele a jeho přesměrování na index stránku.
  * @author Jan Štěch
