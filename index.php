@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky;
 
+use Poznavacky\Models\Security\AntiCsrfMiddleware;
+use Poznavacky\Controllers\RooterController;
+
 //Nastav dependencies pomocí composeru
 require __DIR__.'/vendor/autoload.php';
 
