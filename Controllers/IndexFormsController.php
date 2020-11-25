@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Processors\LoginUser;
+use Poznavacky\Models\Processors\RecoverPassword;
+use Poznavacky\Models\Processors\RegisterUser;
+
 /** 
  * Kontroler zpracovávající data z formulářů na index stránce
  * (přihlášení, registrace, obnova hesla)
