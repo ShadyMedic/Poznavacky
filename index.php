@@ -7,8 +7,14 @@ require __DIR__.'/vendor/autoload.php';
 //Definuj a nastav autoloader tříd
 function autoloader(string $name): void
 {
-    if (preg_match('/Controller$/', $name)){ require 'Controllers/'.$name.'.php'; }
-    else { require 'Models/'.$name.'.php'; }
+    //Nahraď zpětná lomítka (používaných v namespacové cestě) běznými lomítky (používaných pro navigaci adresáři)
+    $name = str_replace('\\', '/', $name);
+    //Odstraň z cesty ke třídě kořenovou složku (v té už je tento soubor)
+    $folders = explode('/', $name);
+    unset($folders[0]);
+    $name = implode('/', $folders);
+    
+    require $name.'.php';
 }
 spl_autoload_register('autoloader');
 
