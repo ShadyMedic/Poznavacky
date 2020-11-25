@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Models;
+
 /** 
  * Třída ověřující, zda je kód pro obnovu hesla platný a jakému patří uživateli
  * @author Jan Štěch

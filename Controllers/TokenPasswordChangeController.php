@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /**
  * Kontroler starající se o zpracování dat odeslaných z formuláře pro obnovení hesla
  * @author Jan Štěch

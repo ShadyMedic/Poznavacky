@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky;
+
 //Nastav dependencies pomocí composeru
 require __DIR__.'/vendor/autoload.php';
 

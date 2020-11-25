@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Models;
+
 /** 
  * Třída umožňující změnu hesla uživatele po odeslání formuláře na recover-password stránce
  * @author Jan Štěch

@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /** 
  * Kontroler starající se o vypsání úvodní stránky webu
  * @author Jan Štěch
@@ -52,3 +54,4 @@ class IndexController extends Controller
         $this->view = 'index';
     }
 }
+

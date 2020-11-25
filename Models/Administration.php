@@ -1,4 +1,5 @@
 <?php
+namespace Poznavacky\Models;
 
 /** 
  * Třída získávající informace pro stránku se správou systému
@@ -462,3 +463,4 @@ class Administration
         return $output;
     }
 }
+

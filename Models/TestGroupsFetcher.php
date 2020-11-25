@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Models;
+
 /** 
  * Třída získávající seznamy tříd, skupin a částí
  * @author Jan Štěch
@@ -140,3 +142,4 @@ class TestGroupsFetcher
         return $table;
     }
 }
+

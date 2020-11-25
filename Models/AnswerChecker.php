@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Models;
+
 /** 
  * Třída ověřující odpověď zadanou uživatelem na testovací stránce
  * @author Jan Štěch
@@ -99,3 +101,4 @@ class AnswerChecker
         return true;
     }
 }
+

@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Models;
+
 /**
  * Třída starající se o řešení hlášení z pohledu správce třídy
  * @author Jan Štěch
@@ -133,3 +135,4 @@ class ReportResolver
         return ($picture->getNatural()->getClass()->getId() === $this->class->getId());
     }
 }
+

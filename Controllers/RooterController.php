@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /**
  * Třída směrovače přesměrovávající uživatele z index.php na správný kontroler
  * @author Jan Štěch       
@@ -89,3 +91,4 @@ class RooterController extends Controller
         return $urlArray;
     }
 }
+

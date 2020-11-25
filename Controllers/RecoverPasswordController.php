@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /** 
  * Kontroler starající se o výpis stránky pro obnovu hesla
  * @author Jan Štěch
@@ -54,3 +56,4 @@ class RecoverPasswordController extends Controller
         }
     }
 }
+

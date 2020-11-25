@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /** 
  * Kontroler zpracovávající data z formulářů na index stránce
  * (přihlášení, registrace, obnova hesla)
@@ -62,3 +64,4 @@ class IndexFormsController extends Controller
         exit();
     }
 }
+

@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /** 
  * Obecný kontroler pro MVC architekturu
  * Mateřská třída všech kontrolerů
@@ -105,3 +107,4 @@ abstract class Controller
         }
     }
 }
+
