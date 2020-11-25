@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\MessageBox;
+use Poznavacky\Models\TokenPasswordChanger;
+
 /**
  * Kontroler starající se o zpracování dat odeslaných z formuláře pro obnovení hesla
  * @author Jan Štěch
