@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use Poznavacky\Models\Security\AntiXssSanitizer;
+use Poznavacky\Models\MessageBox;
+
 /** 
  * Obecný kontroler pro MVC architekturu
  * Mateřská třída všech kontrolerů
