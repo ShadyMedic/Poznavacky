@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
+use Poznavacky\Controllers\Controller;
+
 /** 
  * Kontroler starající se o výpis tabulky a jejího obsahu do menu stránky
  * @author Jan Štěch
