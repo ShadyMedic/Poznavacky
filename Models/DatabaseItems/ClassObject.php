@@ -1,6 +1,17 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\undefined;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\UserManager;
+use \BadMethodCallException;
+use \DateTime;
+use \InvalidArgumentException;
+use \RangeException;
+
 /**
  * Třída reprezentující objekt třídy (jakože té z reálného světa / obsahující poznávačky)
  * @author Jan Štěch
