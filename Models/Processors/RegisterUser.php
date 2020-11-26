@@ -1,6 +1,15 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use Poznavacky\Models\DatabaseItems\LoggedUser;
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\DataValidator;
+use \DateTime;
+use \InvalidArgumentException;
+use \RangeException;
+use \RuntimeException;
+
 /** 
  * Třída ověřující uživatelovi registrační údaje a registrující jej
  * @author Jan Štěch
