@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Models\Emails;
 
+use \InvalidArgumentException;
+
 /** 
  * Třída skládající e-maily do předpřipravených šablon a navracející hotová těla e-mailů
  * @author Jan Štěch
