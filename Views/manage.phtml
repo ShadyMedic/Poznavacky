@@ -1,3 +1,6 @@
+<?php
+use Poznavacky;
+?>
 <h1>Správa třídy</h1>
 <table id="static_info">
     <tr>
@@ -21,9 +24,9 @@
         <td class='table_left'>Stav třídy</td>
         <td class='table_right' id="status">
             <select id="statusInput" onchange="statusChange()" class="text dropList">
-				<option value='Veřejná' <?php if ($classStatus === ClassObject::CLASS_STATUS_PUBLIC) : ?>selected<?php endif ?> title='Do veřejných tříd mají přístup všichni přihlášení uživatelé.'>Veřejná</option>
-                <option value='Soukromá' <?php if ($classStatus === ClassObject::CLASS_STATUS_PRIVATE) : ?>selected<?php endif ?> title='Do soukromých tříd mohou vstoupit pouze uživatelé, kteří alespoň jednou zadali platný vstupní kód.'>Soukromá</option>
-                <option value='Uzamčená' <?php if ($classStatus === ClassObject::CLASS_STATUS_LOCKED) : ?>selected<?php endif ?> title='Do uzamčených tříd nemohou vstoupit žádní uživatelé, kteří nedostali pozvánku.'>Uzamčená</option>
+				<option value='Veřejná' <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>selected<?php endif ?> title='Do veřejných tříd mají přístup všichni přihlášení uživatelé.'>Veřejná</option>
+                <option value='Soukromá' <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>selected<?php endif ?> title='Do soukromých tříd mohou vstoupit pouze uživatelé, kteří alespoň jednou zadali platný vstupní kód.'>Soukromá</option>
+                <option value='Uzamčená' <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>selected<?php endif ?> title='Do uzamčených tříd nemohou vstoupit žádní uživatelé, kteří nedostali pozvánku.'>Uzamčená</option>
             </select>
         </td>
         <td class='table_action'>
