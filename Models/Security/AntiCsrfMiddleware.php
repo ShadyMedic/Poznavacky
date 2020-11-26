@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Models\Security;
 
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+
 /**
  * Třída obsahující metody pro kontrolu, nastavení a obnovení tokenu sloužícího pro obranu před CSFR útokem
  * @author Jan Štěch
