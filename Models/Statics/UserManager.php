@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\Models\Statics;
 
+use Poznavacky\Models\DatabaseItems\LoggedUser;
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+
 /** 
  * Třída získávající a nastavující informace o přihlášením uživateli do session
  * @author Jan Štěch
