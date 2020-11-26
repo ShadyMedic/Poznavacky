@@ -1,6 +1,14 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Security\AntiXssSanitizer;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\undefined;
+use \BadMethodCallException;
+use \DateTime;
+use \ReflectionClass;
+use \UnexpectedValueException;
+
 /**
  * Abstraktní mateřská třída pro třídy reprezentující záznamy v různých databázových tabulkách
  * @author Jan Štěch
