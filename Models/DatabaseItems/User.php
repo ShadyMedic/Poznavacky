@@ -1,6 +1,14 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\undefined;
+use \ArrayAccess;
+use \BadMethodCallException;
+use \DateTime;
+
 /** 
  * Třída uchovávající data o uživateli (ne nutně přihlášeném)
  * @author Jan Štěch
