@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Models\Security;
 
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Statics\UserManager;
+
 /** 
  * Třída kontrolující, zda má nějaký uživatel přístup do nějaké třídy nebo její součásti
  * @author Jan Štěch
