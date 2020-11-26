@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
+use Poznavacky\Controllers\Controller;
+
 /**
  * Kontroler starající se o stránku umožňující úpravu poznávaček pro administrátory tříd
  * @author Jan Štěch
