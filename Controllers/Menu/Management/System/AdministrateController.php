@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\System;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Administration;
+
 /** 
  * Kontroler starající se o výpis administrační stránky správcům služby
  * @author Jan Štěch
