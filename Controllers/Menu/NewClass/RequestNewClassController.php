@@ -1,6 +1,13 @@
 <?php
 namespace Poznavacky\Controllers\Menu\NewClass;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Processors\NewClassRequester;
+use Poznavacky\Models\Security\NumberAsWordCaptcha;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\MessageBox;
+
 /**
  * Kontroler starající se o stránku s formulářem pro zažádání o založení nové třídy
  * @author Jan Štěch
