@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Statics\UserManager;
+
 /** 
  * Kontroler starající se o výpis stránky pro testování
  * @author Jan Štěch
