@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\DataValidator;
+use \InvalidArgumentException;
+use \RangeException;
+
 /**
  * Třída starající se o zpracování dat odeslaných z formuláře pro přidání poznávačky do třídy a případně vytvářející novou poznávačku
  * @author Jan Štěch
