@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\AjaxResponse;
+
 /** 
  * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro testovací stránku
  * @author Jan Štěch
