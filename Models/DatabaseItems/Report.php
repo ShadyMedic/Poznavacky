@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\NoDataException;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\undefined;
+
 /** 
  * Třída reprezentující hlášení obrázku
  * @author Jan Štěch
