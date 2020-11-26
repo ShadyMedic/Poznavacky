@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\undefined;
+
 /** 
  * Třída reprezentující objekt části obsahující přírodniny
  * @author Jan Štěch
