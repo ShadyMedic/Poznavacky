@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\AddPictures;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Processors\PictureAdder;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\MessageBox;
+
 /** 
  * Kontroler starající se o výpis stránky pro přidání obrázků
  * @author Jan Štěch
