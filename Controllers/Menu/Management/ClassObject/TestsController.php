@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\DatabaseItems\Group;
+
 /** 
  * Kontroler starající se o výpis stránky pro správu poznávaček správcům třídy, do které patří
  * @author Jan Štěch
