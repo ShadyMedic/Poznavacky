@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Models\Statics;
 
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\User;
+use \DateTime;
+
 /** 
  * Třída získávající informace o třídě z databáze, například za účelem pro získání ID z názvu a obráceně
  * Dále ověřuje zda třída nebo poznávačka do ní patřící existuje.

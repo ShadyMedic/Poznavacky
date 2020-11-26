@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Models\Statics;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
+use \PDO;
+use \PDOException;
+
 /** 
  * PDO databázový wrapper
  * @author Jan Štěch
