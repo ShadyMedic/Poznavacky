@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\Account;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Statics\UserManager;
+
 /**
  * Kontroler starající se o výpis stránky s nastavením účtu
  * @author Jan Štěch
