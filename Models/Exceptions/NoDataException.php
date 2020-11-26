@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Models\Exceptions;
 
+use \Exception;
+
 /**
  * Výjimka sloužící pro případ, že z databáze nejsou navrácena žádná data, která pohled vyžaduje
  * @author Jan Štěch

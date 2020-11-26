@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Models\Exceptions;
 
+use \Exception;
+
 /** 
  * Výjimka sloužící pro případ zjištění nedostatečných oprávnění při sestavování webové stránky
  * @author Jan Štěch

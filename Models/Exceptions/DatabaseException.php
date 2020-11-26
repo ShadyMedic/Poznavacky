@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Models\Exceptions;
 
+use \Exception;
+
 /**
  * Výjimka sloužící pro databázové chyby
  * @author Jan Štěch
