@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\Account;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\AjaxResponse;
+
 /** 
  * Kontroler zpracovávající data odeslaná ze stránky account-settings
  * @author Jan Štěch
