@@ -1,6 +1,14 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\NoDataException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\ReportResolver;
+
 /**
  * Kontroler zpracovávající data odeslaná ze stránky reports (správa hlášení v jedné poznávačce)
  * @author Jan Štěch
