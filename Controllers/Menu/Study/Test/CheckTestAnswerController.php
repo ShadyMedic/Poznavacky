@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\AnswerChecker;
+
 /** 
  * Kontroler volaný pomocí AJAX, který ověřuje odpověď zadanou uživatelem na testovací stránce
  * @author Jan Štěch
