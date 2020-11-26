@@ -2,7 +2,6 @@
 namespace Poznavacky\Models\Emails;
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 /** 
  * Třída sloužící k odesílání e-mailových zpráv
@@ -44,7 +43,7 @@ class EmailSender
      * @param string $fromAddress Adresa odesílatele e-maulu (defaultně poznavacky@email.com)
      * @param string $fromName Jméno odesílatele e-mailu (defaultně Poznávačky)
      * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
-     * @return \PHPMailer\PHPMailer Nastavený e-mailový objekt
+     * @return PHPMailer Nastavený e-mailový objekt
      */
     public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true) //TODO - opravit namespace a nastavit zde návratový typ na \PHPMailer\PHPMailer
     {
@@ -73,7 +72,7 @@ class EmailSender
     
     /**
      * Metoda odesílající přednastavený e-mailový objekt
-     * @param \PHPMailer\PHPMailer $mail Nastavený e-mailový objekt
+     * @param PHPMailer $mail Nastavený e-mailový objekt
      * @return boolean TRUE, pokud se odeslání e-mailu zdaří, FALSE, pokud ne
      */
     public function sendPreparedEmail($mail): bool
