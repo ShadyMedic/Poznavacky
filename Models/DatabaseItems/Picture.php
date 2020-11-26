@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Processors\PictureAdder;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\undefined;
+
 /** 
  * Třída reprezentující objekt obrázku
  * @author Jan Štěch
