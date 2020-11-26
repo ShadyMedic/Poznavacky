@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Emails\EmailComposer;
+use Poznavacky\Models\Emails\EmailSender;
+
 /**
  * Třída reprezenzující žádost o změnu jména uživatele
  * @author Jan Štech
