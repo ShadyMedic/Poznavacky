@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use Poznavacky\Models\DatabaseItems\Group;
+use Poznavacky\Models\DatabaseItems\Natural;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Statics\UserManager;
+
 /** 
  * Třída starající se o zpracování dat odeslaných z formuláře pro přidání obrázku a případné uložení obrázku do databáze
  * @author Jan Štěch
