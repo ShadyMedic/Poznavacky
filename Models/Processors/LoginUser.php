@@ -1,6 +1,13 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use Poznavacky\Models\DatabaseItems\LoggedUser;
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Statics\Db;
+use \DateTime;
+
 /** 
  * Třída ověřující uživatelovi přihlašovací údaje a přihlašující jej
  * @author Jan Štěch
