@@ -1,6 +1,16 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\undefined;
+use \DateTime;
+use \InvalidArgumentException;
+use \RangeException;
+
 /** 
  * Třída uchovávající data o právě přihlášeném uživateli
  * @author Jan Štěch
