@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Processors\ReportAdder;
+use Poznavacky\Models\AjaxResponse;
+
 /** 
  * Kontroler volaný pomocí AJAX, který zajišťuje uložení nového hlášení do databáze
  * @author Jan Štěch
