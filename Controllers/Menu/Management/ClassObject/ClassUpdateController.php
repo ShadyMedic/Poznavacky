@@ -1,6 +1,18 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Group;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\NoDataException;
+use Poznavacky\Models\Processors\GroupAdder;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\MessageBox;
+use \BadMethodCallException;
+
 /**
  * Kontroler zpracovávající data odeslaná ze stránky manage
  * @author Jan Štěch
