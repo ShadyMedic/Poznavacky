@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Models;
 
+use Poznavacky\Models\DatabaseItems\Natural;
+use Poznavacky\Models\DatabaseItems\Picture;
+use Poznavacky\Models\DatabaseItems\Report;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Statics\UserManager;
+
 /**
  * Třída starající se o řešení hlášení z pohledu správce třídy
  * @author Jan Štěch
