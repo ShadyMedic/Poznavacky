@@ -1,6 +1,17 @@
 <?php
 namespace Poznavacky\Models\Security;
 
+use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Folder;
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\DatabaseItems\UserNameChangeRequest;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Statics\Db;
+use \BadMethodCallException;
+use \InvalidArgumentException;
+use \RangeException;
+
 /** 
  * Třída sloužící k ověřování různých dat získaných od uživatele
  * @author Jan Štěch
