@@ -1,6 +1,15 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use Poznavacky\Models\Emails\EmailComposer;
+use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Security\NumberAsWordCaptcha;
+use Poznavacky\Models\Statics\UserManager;
+use InvalidArgumentException;
+use RangeException;
+
 /**
  * Kontroler zpracovávající data odeslaná z formuláře pro odeslání žádosti o založení nové třídy
  * Data ověřuje a v případě úspěchu odesílá správci služby e-mail s detaily žádosti
