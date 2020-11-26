@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management;
 
+use Poznavacky\Controllers\Controller;
+
 /**
  * Kontroler starající se o stránku se správou hlášení pro administrátory tříd
  * @author Jan Štěch
