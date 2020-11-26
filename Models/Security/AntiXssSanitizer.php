@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Models\Security;
 
+use Poznavacky\Models\DatabaseItems\DatabaseItem;
+use \DateTime;
+use \ErrorException;
+
 /** 
  * Třída obsahující metodu pro ošetření dat proti XSS útoku
  * @author Jan Štěch
