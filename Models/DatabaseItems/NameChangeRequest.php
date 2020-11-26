@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\undefined;
+use \DateTime;
+
 /** 
  * Abstrasktní třída definující společné metody a vlastnosti pro žádost o změnu jména uživatele a žádost o změnu názvu třídy
  * @author Jan Štěch
