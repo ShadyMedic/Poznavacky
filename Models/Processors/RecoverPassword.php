@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use Poznavacky\Models\Emails\EmailComposer;
+use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Statics\Db;
+
 /** 
  * Třída generující kód pro obnovu hesla a odesílající jej na uživatelův e-mail
  * @author Jan Štěch
