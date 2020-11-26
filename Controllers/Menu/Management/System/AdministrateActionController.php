@@ -1,6 +1,12 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\System;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Administration;
+use Poznavacky\Models\AjaxResponse;
+
 /**
  * Kontroler zpracovávající data odeslaná ze stránky administrate AJAX požadavkem
  * @author Jan Štěch
