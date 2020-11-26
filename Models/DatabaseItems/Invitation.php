@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\undefined;
+use \DateTime;
+
 /**
  * Třída reprezentující pozvánku do třídy
  * @author Jan Štěch
