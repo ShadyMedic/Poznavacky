@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
+use Poznavacky\Controllers\Controller;
+
 /** 
  * Kontroler starající se o výpis stránky pro správu členů třídy jejím správcům
  * @author Jan Štěch
