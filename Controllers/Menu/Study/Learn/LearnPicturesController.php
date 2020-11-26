@@ -1,6 +1,10 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Learn;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\DatabaseItems\Natural;
+use Poznavacky\Models\AjaxResponse;
+
 /** 
  * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro učební stránku
  * @author Jan Štěch
