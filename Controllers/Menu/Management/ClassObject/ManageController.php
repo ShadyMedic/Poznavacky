@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\UserManager;
+
 /** 
  * Kontroler starající se o výpis stránky pro administraci třídy jejím správcům
  * @author Jan Štěch
