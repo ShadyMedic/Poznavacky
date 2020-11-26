@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Security\DataValidator;
+use \Transliterator;
+
 /** 
  * Abstraktní třída obsahující vlastnosti a metody společné pro třídy, poznávačky i části
  * @author Jan Štěch
