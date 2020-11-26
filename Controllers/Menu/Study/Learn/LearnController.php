@@ -1,6 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Learn;
 
+use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Statics\UserManager;
+
 /** 
  * Kontroler starající se o výpis stránky pro učení se
  * @author Jan Štěch
