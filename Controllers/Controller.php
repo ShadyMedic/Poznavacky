@@ -121,7 +121,7 @@ abstract class Controller
     {
         $fileName = $controllerName.'.php';
         $files = scandir($directory, SCANDIR_SORT_NONE);
-        foreach($files as $key => $value)
+        foreach($files as $value)
         {
             $path = realpath($directory.DIRECTORY_SEPARATOR.$value);
             $pathWithoutExtensionIfThereIsAny = mb_substr($path, 0, ((mb_strpos($path, '.') === false) ? mb_strlen($path) : mb_strpos($path, '.'))); //Předem se omlouvám
