@@ -1,4 +1,13 @@
 <?php
+namespace Poznavacky\Models;
+
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Group;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\NoDataException;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\UserManager;
+
 /** 
  * Třída získávající seznamy tříd, skupin a částí
  * @author Jan Štěch
@@ -140,3 +149,4 @@ class TestGroupsFetcher
         return $table;
     }
 }
+

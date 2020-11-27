@@ -1,4 +1,9 @@
 <?php
+namespace Poznavacky\Models;
+
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use \Transliterator;
+
 /** 
  * Třída ověřující odpověď zadanou uživatelem na testovací stránce
  * @author Jan Štěch
@@ -99,3 +104,4 @@ class AnswerChecker
         return true;
     }
 }
+

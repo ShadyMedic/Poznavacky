@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Models;
+
 /**
  * Třída obsahující vlastnosti a metody pro různé chybové, varovné, informativní či úspěchové hlášky zobrazované uživateli
  * @author Jan Štěch
@@ -34,3 +36,4 @@ class MessageBox
         return array('message' => $this->message, 'messageClass' => $this->cssClass);
     }
 }
+

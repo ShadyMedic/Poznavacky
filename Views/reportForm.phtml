@@ -1,18 +1,18 @@
 <div class="custom-select-wrapper" id="report-reason">
 	<div class="custom-select">
 		<div class="custom-select-main">
-			<span><?= Report::REASON_NOT_DISPLAYING ?></span>
+			<span><?= Poznavacky\Models\DatabaseItems\Report::REASON_NOT_DISPLAYING ?></span>
 			<img class="arrow" src="../images/arrowBlack.svg">
 		</div>
 		<ul class="custom-options">
-			<li class="custom-option"><?= Report::REASON_NOT_DISPLAYING ?></li>
-			<li class="custom-option"><?= Report::REASON_LONG_LOADING ?></li>
-			<li class="custom-option"><?= Report::REASON_INCORRECT_NATURAL ?></li>
-			<li class="custom-option"><?= Report::REASON_CONTAINS_NAME ?></li>
-			<li class="custom-option"><?= Report::REASON_BAD_RESOLUTION ?></li>
-			<li class="custom-option"><?= Report::REASON_COPYRIGHT ?></li>
-			<li class="custom-option"><?= Report::REASON_OTHER ?></li>
-			<li class="custom-option"><?= Report::REASON_OTHER_ADMIN ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_NOT_DISPLAYING ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_LONG_LOADING ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_INCORRECT_NATURAL ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_CONTAINS_NAME ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_BAD_RESOLUTION ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_COPYRIGHT ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_OTHER ?></li>
+			<li class="custom-option"><?= Poznavacky\Models\DatabaseItems\Report::REASON_OTHER_ADMIN ?></li>
 		</ul>
 	</div>
 </div>
@@ -20,11 +20,11 @@
 	<div class="custom-select-wrapper" id="long-loading-info" style="display:none">
 		<div class="custom-select">
 			<div class="custom-select-main">
-				<span><?= Report::LONG_LOADING_AVAILABLE_DELAYS[0] ?></span>
+				<span><?= Poznavacky\Models\DatabaseItems\Report::LONG_LOADING_AVAILABLE_DELAYS[0] ?></span>
 				<img class="arrow" src="../images/arrowBlack.svg">
 			</div>
 			<ul class="custom-options">
-				<?php foreach (Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
+				<?php foreach (Poznavacky\Models\DatabaseItems\Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
 					<li class="custom-option"><?= $delay ?></li>
 				<?php endforeach ?>
 			</ul>

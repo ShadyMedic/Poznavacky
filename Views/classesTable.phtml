@@ -42,25 +42,25 @@
             </td>
             <td>
                 <select disabled class='class-field' onchange='classStatusEdited()'>
-                    <?php if ($class->getStatus() === ClassObject::CLASS_STATUS_PUBLIC) : ?>
-                    <option selected><?= ClassObject::CLASS_STATUS_PUBLIC ?></option>
+                    <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC ?></option>
                     <?php endif ?>
-                    <?php if ($class->getStatus() !== ClassObject::CLASS_STATUS_PUBLIC) : ?>
-                    <option><?= ClassObject::CLASS_STATUS_PUBLIC ?></option>
-                    <?php endif ?>
-                    
-                    <?php if ($class->getStatus() === ClassObject::CLASS_STATUS_PRIVATE) : ?>
-                    <option selected><?= ClassObject::CLASS_STATUS_PRIVATE ?></option>
-                    <?php endif ?>
-                    <?php if ($class->getStatus() !== ClassObject::CLASS_STATUS_PRIVATE) : ?>
-                    <option><?= ClassObject::CLASS_STATUS_PRIVATE ?></option>
+                    <?php if ($class->getStatus() !== Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC ?></option>
                     <?php endif ?>
                     
-                    <?php if ($class->getStatus() === ClassObject::CLASS_STATUS_LOCKED) : ?>
-                    <option selected><?= ClassObject::CLASS_STATUS_LOCKED ?></option>
+                    <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE ?></option>
                     <?php endif ?>
-                    <?php if ($class->getStatus() !== ClassObject::CLASS_STATUS_LOCKED) : ?>
-                    <option><?= ClassObject::CLASS_STATUS_LOCKED ?></option>
+                    <?php if ($class->getStatus() !== Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE ?></option>
+                    <?php endif ?>
+                    
+                    <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED ?></option>
+                    <?php endif ?>
+                    <?php if ($class->getStatus() !== Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED ?></option>
                     <?php endif ?>
                 </select>
             </td>

@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /**
  * Kontroler chybové stránky 403
  * @author Jan Štěch
@@ -21,3 +23,4 @@ class Error403Controller extends Controller
         $this->view = 'error403';
     }
 }
+

@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Models;
+
 /**
  * Třída, s jejíž pomocí se odesílá formálně sjednocená odpověď na všechny AJAX požadavky
  * @author Jan Štěch

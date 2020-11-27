@@ -1,4 +1,11 @@
 <?php
+namespace Poznavacky\Controllers;
+
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\MessageBox;
+use Poznavacky\Models\Processors\LoginUser;
+use Poznavacky\Models\Security\AccessChecker;
+
 /** 
  * Kontroler starající se o vypsání úvodní stránky webu
  * @author Jan Štěch
@@ -52,3 +59,4 @@ class IndexController extends Controller
         $this->view = 'index';
     }
 }
+

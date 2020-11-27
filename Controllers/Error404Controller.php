@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /**
  * Kontroler chybové stránky 404
  * @author Jan Štěch

@@ -1,4 +1,12 @@
 <?php
+namespace Poznavacky\Controllers;
+
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\MessageBox;
+use Poznavacky\Models\PasswordRecoveryCodeVerificator;
+use Poznavacky\Models\Statics\Db;
+
 /** 
  * Kontroler starající se o výpis stránky pro obnovu hesla
  * @author Jan Štěch
@@ -54,3 +62,4 @@ class RecoverPasswordController extends Controller
         }
     }
 }
+

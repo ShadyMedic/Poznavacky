@@ -1,4 +1,20 @@
 <?php
+namespace Poznavacky\Models;
+
+use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Natural;
+use Poznavacky\Models\DatabaseItems\Picture;
+use Poznavacky\Models\DatabaseItems\Report;
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\DatabaseItems\UserNameChangeRequest;
+use Poznavacky\Models\Emails\EmailComposer;
+use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\UserManager;
+use \DateTime;
 
 /** 
  * Třída získávající informace pro stránku se správou systému
@@ -462,3 +478,4 @@ class Administration
         return $output;
     }
 }
+

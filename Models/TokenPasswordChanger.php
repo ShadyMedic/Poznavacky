@@ -1,4 +1,15 @@
 <?php
+namespace Poznavacky\Models;
+
+use Poznavacky\Models\DatabaseItems\LoggedUser;
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Statics\Db;
+use \InvalidArgumentException;
+use \RangeException;
+use \RuntimeException;
+
 /** 
  * Třída umožňující změnu hesla uživatele po odeslání formuláře na recover-password stránce
  * @author Jan Štěch
