@@ -109,5 +109,42 @@ abstract class Controller
             $_SESSION['messages'] = array($messageBox);
         }
     }
+    
+    /**
+     * Metoda kontrolující, zda ve složce ukládající kontrolery existuje daný soubor a v případě že ano, vrací jeho celé jméno (obsahující jeho jmenný prostor)
+     * Kód této metody byl z části inspirován touto odpovědi na StackOverflow https://stackoverflow.com/a/44315881/14011077
+     * @param string $controllerName Jméno kontroleru, který hledáme
+     * @param string $directory Složka, ve které má probíhat hledání, základně kořenová složka kontrolerů
+     * @return string Plné jméno třídy kontroleru
+     */
+    protected function controllerExists(string $controllerName, string $directory = self::ControllerFolder): string
+    {
+        $fileName = $controllerName.'.php';
+        $files = scandir($directory, SCANDIR_SORT_NONE);
+        foreach($files as $key => $value)
+        {
+            $path = realpath($directory.DIRECTORY_SEPARATOR.$value);
+            $pathWithoutExtensionIfThereIsAny = mb_substr($path, 0, ((mb_strpos($path, '.') === false) ? mb_strlen($path) : mb_strpos($path, '.'))); //Předem se omlouvám
+            
+            if (!is_dir($path) && $fileName == $value) //Soubor
+            {
+                //Ořízni cestu vedoucí ke složce obsahující kontrolery
+                $path = mb_substr($path, mb_strpos($path, __NAMESPACE__));
+                //Nahraď běžná lomítka (v adresářové struktuře) zpětnými lomítky (navigace jmenými prostor)
+                $path = str_replace('/', '\\', $path);
+                //Ořízni příponu zdrojového souboru
+                $path = mb_substr($path, 0, mb_strpos($path, '.')); //Odstřihnutí přípony
+                return $path;
+            }
+            else if (is_dir($path) && !($value === '.' || $value === '..' || empty($pathWithoutExtensionIfThereIsAny))) //Složka
+            {
+                //Nalezena složka --> proveď na ní rekurzivní vyhledávání stejnou metodou
+                $resultFromSubdirectory = $this->controllerExists($controllerName, $pathWithoutExtensionIfThereIsAny);
+                //Pokud byl soubor nalezen, navrať cestu k němu, jinak pokračuj v prohledávání souborů v současném adresáři
+                if ($resultFromSubdirectory) { return $resultFromSubdirectory; }
+            }
+        }
+        return false;
+    }
 }
 
