@@ -13,13 +13,16 @@ function autoloader(string $name): void
     //Nahraď zpětná lomítka (používaných v namespacové cestě) běznými lomítky (používaných pro navigaci adresáři)
     $name = str_replace('\\', '/', $name);
     //Odstraň z cesty ke třídě kořenovou složku (v té už je tento soubor)
-    $folders = explode('/', $name);
-    unset($folders[0]);
-    $name = implode('/', $folders);
-    
-    require $name.'.php';
+    if (strpos($name, '/') !== false)
+    {
+        $folders = explode('/', $name);
+        unset($folders[0]);
+        $name = implode('/', $folders);
+    }
+    $name .= '.php';
+    require $name;
 }
-spl_autoload_register('autoloader');
+spl_autoload_register('Poznavacky\\autoloader');
 
 //Obnov session a nastav kódování
 session_start();
