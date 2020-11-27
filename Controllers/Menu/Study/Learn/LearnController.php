@@ -47,10 +47,11 @@ class LearnController extends Controller
         
         $controllerName = "nonexistant-controller";
         if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::ControllerExtension; }
-        if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+        $pathToController = $this->controllerExists($controllerName);
+        if ($pathToController)
         {
             //URL obsajuje požadavek na další kontroler používaný na learn stránce
-            $this->controllerToCall = new $controllerName;
+            $this->controllerToCall = new $pathToController();
             $this->controllerToCall->process($parameters);
             
             $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];

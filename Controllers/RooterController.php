@@ -20,11 +20,11 @@ class RooterController extends Controller
         if (empty($urlArguments[0])){$controllerName = 'Index'.self::ControllerExtension;}
         //Jiná kontroler je specifikován
         else {$controllerName = $this->kebabToCamelCase(array_shift($urlArguments)).self::ControllerExtension;}
-        
         //Zjištění, zda kontroler existuje
-        if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+        $pathToController = $this->controllerExists($controllerName);
+        if ($pathToController)
         {
-            $this->controllerToCall = new $controllerName();
+            $this->controllerToCall = new $pathToController();
         }
         else
         {

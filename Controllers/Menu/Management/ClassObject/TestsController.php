@@ -51,9 +51,10 @@ class TestsController extends Controller
         if ($argumentCount > 1)
         {
             $controllerName = $this->kebabToCamelCase($testsArguments[1]).self::ControllerExtension;
-            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+            $pathToController = $this->controllerExists($controllerName);
+            if ($pathToController)
             {
-                $this->controllerToCall = new $controllerName;
+                $this->controllerToCall = new $pathToController();
                 $this->argumentsToPass = array_slice($testsArguments, 1);
             }
             else

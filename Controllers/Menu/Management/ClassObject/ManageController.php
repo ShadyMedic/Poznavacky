@@ -57,9 +57,10 @@ class ManageController extends Controller
         if ($argumentCount > 0)
         {
             $controllerName = $this->kebabToCamelCase($manageArguments[0]).self::ControllerExtension;
-            if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+            $pathToController = $this->controllerExists($controllerName);
+            if ($pathToController)
             {
-                $this->controllerToCall = new $controllerName;
+                $this->controllerToCall = new $pathToController();
                 $this->argumentsToPass = array_slice($manageArguments, 1);
             }
             else
