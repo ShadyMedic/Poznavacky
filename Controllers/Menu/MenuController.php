@@ -9,6 +9,7 @@ use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\LoginUser;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
+use \BadMethodCallException;
 
 /**
  * Kontroler starající se o zobrazení layoutu pro všechny stránky kromě indexu
@@ -95,8 +96,15 @@ class MenuController extends Controller
                     //Uložení objektu třídy do $_SESSION
                     $_SESSION['selection']['class'] = new ClassObject(false, 0);
                     $_SESSION['selection']['class']->initialize(null, $menuArguments[0]);
-                    $_SESSION['selection']['class']->load();
-                    
+                    try
+                    {
+                        $_SESSION['selection']['class']->load();
+                    }
+                    catch (BadMethodCallException $e)
+                    {
+                        //Třída splňující daná kritéria neexistuje
+                        $this->redirect('error404');
+                    }
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
                     $this->unsetSelection(true, true);
                 }
@@ -130,7 +138,15 @@ class MenuController extends Controller
                     //Uložení objektu poznávačky do $_SESSION
                     $_SESSION['selection']['group'] = new Group(false);
                     $_SESSION['selection']['group']->initialize(null, $menuArguments[1], $_SESSION['selection']['class'], null, null);
-                    
+                    try
+                    {
+                        $_SESSION['selection']['group']->load();
+                    }
+                    catch (BadMethodCallException $e)
+                    {
+                        //Poznávačka splňující daná kritéria neexistuje
+                        $this->redirect('error404');
+                    }
                     //Vymazání objektů skladujících vybranou část ze $_SESSION
                     $this->unsetSelection(true);
                 }
@@ -172,6 +188,15 @@ class MenuController extends Controller
                     //Uložení objektu části do $_SESSION
                     $_SESSION['selection']['part'] = new Part(false);
                     $_SESSION['selection']['part']->initialize(null, $menuArguments[2], $_SESSION['selection']['group'], null, null, null);
+                    try
+                    {
+                        $_SESSION['selection']['part']->load();
+                    }
+                    catch (BadMethodCallException $e)
+                    {
+                        //Část splňující daná kritéria neexistuje
+                        $this->redirect('error404');
+                    }
                 }
             }
         }
