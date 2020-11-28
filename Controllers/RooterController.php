@@ -1,4 +1,6 @@
 <?php
+namespace Poznavacky\Controllers;
+
 /**
  * Třída směrovače přesměrovávající uživatele z index.php na správný kontroler
  * @author Jan Štěch       
@@ -9,20 +11,20 @@ class RooterController extends Controller
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
      * @param array $parameters Pole parametrů, na indexu 0 musí být nezpracovaná URL adresa
      */
-    public function process(array $parameters)
+    public function process(array $parameters): void
     {
         $urlArguments = $this->parseURL($parameters[0]);
         $controllerName = null;
         
         //Úvodní stránka
-        if (empty($urlArguments[0])){$controllerName = 'Index'.self::ControllerExtension;}
+        if (empty($urlArguments[0])){$controllerName = 'Index'.self::CONTROLLER_EXTENSION;}
         //Jiná kontroler je specifikován
-        else {$controllerName = $this->kebabToCamelCase(array_shift($urlArguments)).self::ControllerExtension;}
-        
+        else {$controllerName = $this->kebabToCamelCase(array_shift($urlArguments)).self::CONTROLLER_EXTENSION;}
         //Zjištění, zda kontroler existuje
-        if (file_exists(self::ControllerFolder.'/'.$controllerName.'.php'))
+        $pathToController = $this->controllerExists($controllerName);
+        if ($pathToController)
         {
-            $this->controllerToCall = new $controllerName();
+            $this->controllerToCall = new $pathToController();
         }
         else
         {
@@ -48,7 +50,7 @@ class RooterController extends Controller
      * Metoda načítající hlášky pro uživatele uložené v $_SESSION a přidávající jejich obsah do dat, které jsou později předány pohledu
      * Hlášky jsou poté ze sezení vymazány
      */
-    protected function getMessages()
+    protected function getMessages(): array
     {
         if (isset($_SESSION['messages']))
         {
@@ -70,7 +72,7 @@ class RooterController extends Controller
     /**
      * Metoda odstraňující všechny hlášky pro uživatele uloženy v $_SESSION
      */
-    protected function clearMessages()
+    protected function clearMessages(): void
     {
         unset($_SESSION['messages']);
     }
@@ -80,7 +82,7 @@ class RooterController extends Controller
      * @param string $url Nezpracovaná URL adresa
      * @return array Pole argumentů následujících po doméně
      */
-    private function parseURL(string $url)
+    private function parseURL(string $url): array
     {
         $parsedURL = parse_url($url)['path'];   # Z http(s)://domena.net/abc/def/ghi získá /abc/def/ghi
         $parsedURL = ltrim($parsedURL, '/');    # Odstranění prvního lomítka
@@ -89,3 +91,4 @@ class RooterController extends Controller
         return $urlArray;
     }
 }
+

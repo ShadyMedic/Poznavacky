@@ -1,4 +1,9 @@
 <?php
+namespace Poznavacky\Controllers;
+
+use Poznavacky\Models\Security\AntiXssSanitizer;
+use Poznavacky\Models\MessageBox;
+
 /** 
  * Obecný kontroler pro MVC architekturu
  * Mateřská třída všech kontrolerů
@@ -6,11 +11,11 @@
  */
 abstract class Controller
 {
-    const ControllerExtension = 'Controller';
-    const ModelExtension = 'Model';
-    const ControllerFolder = 'Controllers';
-    const ModelFolder = 'Models';
-    const ViewFolder = 'Views';
+    const CONTROLLER_EXTENSION = 'Controller';
+    const MODEL_EXTENSION = 'Model';
+    const CONTROLLER_FOLDER = 'Controllers';
+    const MODEL_FOLDER = 'Models';
+    const VIEW_FOLDER = 'Views';
     
     protected $controllerToCall;
     protected $data = array();
@@ -18,27 +23,54 @@ abstract class Controller
     protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
     
     /**
-     * Funkce zpracovávající parametry z URL adresy
+     * Metoda zpracovávající parametry z URL adresy
      * @param array $parameters Paremetry ke zpracování jako pole
      */
-    abstract function process(array $parameters);
+    abstract function process(array $parameters): void;
     
     /**
-     * Funkce zahrnující pohled a vypysující do něj proměnné z vlastnosti $data
+     * Metoda zahrnující pohled a vypysující do něj proměnné z vlastnosti $data
      */
-    public function displayView()
+    public function displayView(): void
     {
         if ($this->view)
         {
+            //Vytvoř pole ošetřených hodnot
+            $sanitized = $this->sanitizeData($this->data);
+            
+            //Přejmenuj klíče v originálním poli neošetřených hodnot
+            foreach ($this->data as $key => $value)
+            {
+                $this->data['_'.$key.'_'] = $value;
+                unset($this->data[$key]);
+            }
+            
             extract($this->data);
-            require self::ViewFolder.'/'.$this->view.'.phtml';
+            extract($sanitized);
+            require self::VIEW_FOLDER.'/'.$this->view.'.phtml';
         }
     }
+    
     /**
-     * Funkce přesměrovávající uživatele na jinou adresu a ukončující běh skriptu
+     * Metoda ošetřující všechny hodnoty určené k využití pohledem proti XSS útoku
+     * @param array $data Pole proměnných k ošetření
+     * @return mixed Pole s ošetřenými hodnotami
+     */
+    private function sanitizeData(array $data): array
+    {
+        $sanitizer = new AntiXssSanitizer();
+        foreach ($data as $key => $value)
+        {
+            $data[$key] = $sanitizer->sanitize($value);
+        }
+        return $data;
+    }
+    
+    /**
+     * Metoda přesměrovávající uživatele na jinou adresu a ukončující běh skriptu
      * @param string $url
      */
-    public function redirect(string $url)
+    public function redirect(string $url): void
     {
         header('Location: /'.$url);
         header('Connection: close');
@@ -51,7 +83,7 @@ abstract class Controller
      * @param bool $capitalizeFirst Má být první písmeno velké (default TRUE)
      * @return string Řetězec konvertovaný do CamelCase
      */
-    protected function kebabToCamelCase(string $str, bool $capitalizeFirst = true)
+    protected function kebabToCamelCase(string $str, bool $capitalizeFirst = true): string
     {
         $camel = str_replace('-', ' ', $str);
         $camel = ucwords($camel);
@@ -65,7 +97,7 @@ abstract class Controller
      * @param int $type
      * @param string $msg
      */
-    protected function addMessage(int $type, string $msg)
+    protected function addMessage(int $type, string $msg): void
     {
         $messageBox = new MessageBox($type, $msg);
         if (isset($_SESSION['messages']))
@@ -77,4 +109,42 @@ abstract class Controller
             $_SESSION['messages'] = array($messageBox);
         }
     }
+    
+    /**
+     * Metoda kontrolující, zda ve složce ukládající kontrolery existuje daný soubor a v případě že ano, vrací jeho celé jméno (obsahující jeho jmenný prostor)
+     * Kód této metody byl z části inspirován touto odpovědi na StackOverflow https://stackoverflow.com/a/44315881/14011077
+     * @param string $controllerName Jméno kontroleru, který hledáme
+     * @param string $directory Složka, ve které má probíhat hledání, základně kořenová složka kontrolerů
+     * @return string Plné jméno třídy kontroleru
+     */
+    protected function controllerExists(string $controllerName, string $directory = self::CONTROLLER_FOLDER): string
+    {
+        $fileName = $controllerName.'.php';
+        $files = scandir($directory, SCANDIR_SORT_NONE);
+        foreach($files as $value)
+        {
+            $path = realpath($directory.DIRECTORY_SEPARATOR.$value);
+            $pathWithoutExtensionIfThereIsAny = mb_substr($path, 0, ((mb_strpos($path, '.') === false) ? mb_strlen($path) : mb_strpos($path, '.'))); //Předem se omlouvám
+            
+            if (!is_dir($path) && $fileName == $value) //Soubor
+            {
+                //Ořízni cestu vedoucí ke složce obsahující kontrolery
+                $path = mb_substr($path, mb_strpos($path, __NAMESPACE__));
+                //Nahraď běžná lomítka (v adresářové struktuře) zpětnými lomítky (navigace jmenými prostor)
+                $path = str_replace('/', '\\', $path);
+                //Ořízni příponu zdrojového souboru
+                $path = mb_substr($path, 0, mb_strpos($path, '.')); //Odstřihnutí přípony
+                return $path;
+            }
+            else if (is_dir($path) && !($value === '.' || $value === '..' || empty($pathWithoutExtensionIfThereIsAny))) //Složka
+            {
+                //Nalezena složka --> proveď na ní rekurzivní vyhledávání stejnou metodou
+                $resultFromSubdirectory = $this->controllerExists($controllerName, $pathWithoutExtensionIfThereIsAny);
+                //Pokud byl soubor nalezen, navrať cestu k němu, jinak pokračuj v prohledávání souborů v současném adresáři
+                if ($resultFromSubdirectory) { return $resultFromSubdirectory; }
+            }
+        }
+        return false;
+    }
 }
+

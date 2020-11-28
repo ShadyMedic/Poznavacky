@@ -1,4 +1,20 @@
 <?php
+namespace Poznavacky\Models;
+
+use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Natural;
+use Poznavacky\Models\DatabaseItems\Picture;
+use Poznavacky\Models\DatabaseItems\Report;
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\DatabaseItems\UserNameChangeRequest;
+use Poznavacky\Models\Emails\EmailComposer;
+use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\UserManager;
+use \DateTime;
 
 /** 
  * Třída získávající informace pro stránku se správou systému
@@ -32,7 +48,8 @@ class Administration
      */
     public function __construct()
     {
-        if (!AccessChecker::checkSystemAdmin())
+        $aChecker = new AccessChecker();
+        if (!$aChecker->checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
@@ -43,9 +60,8 @@ class Administration
      * @param bool $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
      * @return User[] Pole instancí třídy User
      */
-    public function getAllUsers(bool $includeLogged = true)
+    public function getAllUsers(bool $includeLogged = true): array
     {
-        Db::connect();
         if ($includeLogged)
         {
             $dbResult = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.User::COLUMN_DICTIONARY['addedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['guessedPictures'].','.User::COLUMN_DICTIONARY['karma'].','.User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME, array(), true);
@@ -66,16 +82,19 @@ class Administration
         return $users;
     }
     
-    public function getAllClasses()
+    /**
+     * Metoda navracející pole všech tříd uložených v databázi jako objekty
+     * @return array Pole objektů tříd
+     */
+    public function getAllClasses(): array
     {
-        Db::connect();
-        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME, array(), true);
+        $dbResult = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['id'].','.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME, array(), true);
         
         $classes = array();
         foreach($dbResult as $dbRow)
         {
             $class = new ClassObject(false, $dbRow[ClassObject::COLUMN_DICTIONARY['id']]);
-            $class->initialize($dbRow[ClassObject::COLUMN_DICTIONARY['name']], $dbRow[ClassObject::COLUMN_DICTIONARY['status']], $dbRow[ClassObject::COLUMN_DICTIONARY['code']], null, $dbRow[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, new User(false, $dbRow[ClassObject::COLUMN_DICTIONARY['admin']]));
+            $class->initialize($dbRow[ClassObject::COLUMN_DICTIONARY['name']], $dbRow[ClassObject::COLUMN_DICTIONARY['url']], $dbRow[ClassObject::COLUMN_DICTIONARY['status']], $dbRow[ClassObject::COLUMN_DICTIONARY['code']], null, $dbRow[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, new User(false, $dbRow[ClassObject::COLUMN_DICTIONARY['admin']]));
             $classes[] = $class;
         }
         
@@ -87,10 +106,9 @@ class Administration
      * Důvody, které musí být řešeny touto cestou jsou specifikovány v konstantách třídy Report
      * @return Report[] Pole instancí třídy Report
      */
-    public function getAdminReports()
+    public function getAdminReports(): array
     {
         $in = str_repeat('?,', count(Report::ADMIN_REQUIRING_REASONS) - 1).'?'; 
-        Db::connect();
         $result = Db::fetchQuery('
             SELECT
             '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
@@ -127,9 +145,8 @@ class Administration
      * Metoda získávající seznam všech žádostí o změnu uživatelského jména a navrací je jako objekty
      * @return UserNameChangeRequest[] Pole objektů se žádostmi
      */
-    public function getUserNameChangeRequests()
+    public function getUserNameChangeRequests(): array
     {
-        Db::connect();
         $result = Db::fetchQuery('
         SELECT
         '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].',
@@ -157,13 +174,12 @@ class Administration
      * Metoda získávající seznam všech žádostí o změnu názvu třídy a navrací je jako objekty
      * @return ClassNameChangeRequest[] Pole objektů se žádostmi
      */
-    public function getClassNameChangeRequests()
+    public function getClassNameChangeRequests(): array
     {
-        Db::connect();
         $result = Db::fetchQuery('
         SELECT
         '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['name'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['email'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['lastLogin'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['addedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['guessedPictures'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['karma'].', '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['status'].' AS "u_status",
-        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
+        '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['name'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['url'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['code'].',
         '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].', '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].', '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
         FROM '.ClassNameChangeRequest::TABLE_NAME.'
         JOIN '.ClassObject::TABLE_NAME.' ON '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].' = '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['id'].'
@@ -179,7 +195,7 @@ class Administration
             $admin = new User(false, $requestInfo[User::COLUMN_DICTIONARY['id']]);
             $admin->initialize($requestInfo[User::COLUMN_DICTIONARY['name']], $requestInfo[User::COLUMN_DICTIONARY['email']], new DateTime($requestInfo[User::COLUMN_DICTIONARY['lastLogin']]), $requestInfo[User::COLUMN_DICTIONARY['addedPictures']], $requestInfo[User::COLUMN_DICTIONARY['guessedPictures']], $requestInfo[User::COLUMN_DICTIONARY['karma']], $requestInfo['u_status']);
             $class = new ClassObject(false, $requestInfo[ClassObject::COLUMN_DICTIONARY['id']]);
-            $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']], $requestInfo['c_status'], $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
+            $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']], $requestInfo[ClassObject::COLUMN_DICTIONARY['url']], $requestInfo['c_status'], $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
             $request = new ClassNameChangeRequest(false, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
             $request->initialize($class, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['newName']], new DateTime($requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt']]));
             
@@ -196,7 +212,7 @@ class Administration
      * @param int $userId ID uživatele, jehož data mají být změněna
      * @param array $values Pole nových hodnot, podporované indexy jsou "addedPics", "guessedPics", "karma" a "status"
      */
-    public function editUser(int $userId, array $values)
+    public function editUser(int $userId, array $values): void
     {
         $user = new User(false, $userId);
         $user->updateAccount($values['addedPics'], $values['guessedPics'], $values[User::COLUMN_DICTIONARY['karma']], $values['status']);
@@ -207,7 +223,7 @@ class Administration
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda může být daný uživatel odstraněn
      * @param int $userId ID uživatele k odstranění
      */
-    public function deleteUser(int $userId)
+    public function deleteUser(int $userId): void
     {
         $user = new User(false, $userId);
         $user->deleteAccountAsAdmin();
@@ -219,7 +235,7 @@ class Administration
      * @param int $classId ID třídy, jejíž data mají být změněna
      * @param array $values Pole nových hodnot, podporované indexy jsou "status" a "code"
      */
-    public function editClass(int $classId, array $values)
+    public function editClass(int $classId, array $values): void
     {
         $class = new ClassObject(false, $classId);
         $class->updateAccessDataAsAdmin($values['status'], $values['code']);
@@ -234,10 +250,9 @@ class Administration
      * @throws AccessDeniedException Pokud není některý z údajů platný (například pokud uživatel s daným ID nebo jménem neexistuje)
      * @return User Objekt uživatele reprezentující právě nastaveného správce třídy
      */
-    public function changeClassAdmin(int $classId, $newAdminIdentifier, string $changedIdentifier)
+    public function changeClassAdmin(int $classId, $newAdminIdentifier, string $changedIdentifier): User
     {
         //Konstrukce objektu uživatele
-        Db::connect();
         switch ($changedIdentifier)
         {
             case 'id':
@@ -268,7 +283,7 @@ class Administration
      * Metoda odstraňující třídu z databáze společně se všemi jejími poznávačkami, skupinami, přírodninami, obrázky a hlášeními
      * @param int $classId ID třídy k odstranění
      */
-    public function deleteClass(int $classId)
+    public function deleteClass(int $classId): void
     {
         $class = new ClassObject(false, $classId);
         $class->deleteAsAdmin();
@@ -279,7 +294,7 @@ class Administration
      * Metoda skrývající obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
      */
-    public function disablePicture(int $pictureId)
+    public function disablePicture(int $pictureId): void
     {
         $picture = new Picture(false, $pictureId);
         $picture->disable();
@@ -290,7 +305,7 @@ class Administration
      * Metoda odstraňující obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
      */
-    public function deletePicture(int $pictureId)
+    public function deletePicture(int $pictureId): void
     {
         $picture = new Picture(false, $pictureId);
         $picture->delete();
@@ -300,7 +315,7 @@ class Administration
      * Metoda odstraňující hlášení s daným ID z databáze
      * @param int $reportId ID hlášení k odstranění
      */
-    public function deleteReport(int $reportId)
+    public function deleteReport(int $reportId): void
     {
         $report = new Report(false, $reportId);
         $report->delete();
@@ -317,7 +332,7 @@ class Administration
      * @param string $reason V případě zamítnutí žádosti důvod jejího zamítnutí - je odesláno e-mailem uživateli; při schválení žádosti nepovinné
      * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
      */
-    public function resolveNameChange(int $requestId, bool $classNameChange, bool $approved, string $reason = "")
+    public function resolveNameChange(int $requestId, bool $classNameChange, bool $approved, string $reason = ""): bool
     {
         $request = ($classNameChange) ? new ClassNameChangeRequest(false, $requestId) : new UserNameChangeRequest(false, $requestId);
         if ($approved)
@@ -338,7 +353,7 @@ class Administration
      * @param string $rawFooter Obsah patičky e-mailu (může být zformátován pomocí HTML)
      * @return string Kompletní HTML těla e-mailu, které by bylo odesláno
      */
-    public function previewEmail(string $rawMessage, string $rawFooter)
+    public function previewEmail(string $rawMessage, string $rawFooter): string
     {
         //Převod konců řádků na zobrazitelné <br> tagy
         $rawMessage = nl2br($rawMessage);
@@ -360,14 +375,14 @@ class Administration
      * @throws AccessDeniedException V případě, že některý z parametrů je nedostatečně nebo chybně vyplněn
      * @return boolean TRUE, pokud se e-mail podaří odeslat
      */
-    public function sendEmail(string $addressee, string $subject, string $rawMessage, string $rawFooter, string $sender, string $fromAddress)
+    public function sendEmail(string $addressee, string $subject, string $rawMessage, string $rawFooter, string $sender, string $fromAddress): bool
     {
         //Kontrola platnosti e-mailů
-        if (!filter_var($addressee, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
-        if (!filter_var($fromAddress, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
+        if (!filter_var($addressee, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS, null, null); }
+        if (!filter_var($fromAddress, FILTER_VALIDATE_EMAIL)){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS, null, null); }
         
         //Kontrola vyplněnosti ostatních polí
-        if (mb_strlen($subject) === 0 || mb_strlen($rawMessage) === 0 || mb_strlen($sender) === 0){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_EMPTY_FIELDS, null, null, array('originalFile' => 'Administration.php', 'displayOnView' => 'administrate.phtml')); }
+        if (mb_strlen($subject) === 0 || mb_strlen($rawMessage) === 0 || mb_strlen($sender) === 0){ throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_EMPTY_FIELDS, null, null); }
         
         $emailBody = $this->previewEmail($rawMessage, $rawFooter);
         $emailSender = new EmailSender();
@@ -379,7 +394,7 @@ class Administration
      * @param string $queries SQL dotaz/y, v případě více dotazů musí být ukončeny středníky
      * @return string Zformátovaný výstup dotazu jako HTML určené k zobrazení uživateli
      */
-    public function executeSqlQueries(string $queries)
+    public function executeSqlQueries(string $queries): string
     {
         //Kontrola pro nebezpečná klíčová slova
         $tempQuery = strtoupper($queries);
@@ -399,8 +414,6 @@ class Administration
         
         $queries = rtrim($queries, ';'); //Odebrání posledního střeníku (pokud exisutje), aby následující příkaz vygeneroval čisté pole jednotlivých dotazů
         $queries = explode(';',$queries); //Pro případ, že je zadáno více příkazů.
-        
-        Db::connect();
         
         $cnt = count($queries);
         if (empty($cnt) && !empty($queries)){$cnt++;}     //Pokud není přítomen žádný středník (a byl odeslán nějaký text), provedeme ten jeden jediný, co nekončí středníkem
@@ -465,3 +478,4 @@ class Administration
         return $output;
     }
 }
+

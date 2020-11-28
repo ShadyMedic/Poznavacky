@@ -1,4 +1,12 @@
 <?php
+namespace Poznavacky\Controllers;
+
+use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Processors\LoginUser;
+use Poznavacky\Models\Processors\RecoverPassword;
+use Poznavacky\Models\Processors\RegisterUser;
+
 /** 
  * Kontroler zpracovávající data z formulářů na index stránce
  * (přihlášení, registrace, obnova hesla)
@@ -12,8 +20,9 @@ class IndexFormsController extends Controller
      * Podle výsledku zpracování dat odesílá instrukce k přesměrování na menu stránku nebo odesílá chybovou hlášku.
      * @see Controller::process()
      */
-    public function process(array $paremeters)
+    public function process(array $paremeters): void
     {
+        header('Content-Type: application/json');
         try
         {
             $type = $_POST['type'];
@@ -22,35 +31,43 @@ class IndexFormsController extends Controller
                 //Přihlašování
                 case 'l':
                     $form = 'login';
-                    LoginUser::processLogin($_POST);
-                    echo json_encode(array('redirect' => 'menu'));
+                    $userLogger = new LoginUser();
+                    $userLogger->processLogin($_POST);
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    echo $response->getResponseString();
                     break;
                 //Registrace
                 case 'r':
                     $form = 'register';
-                    RegisterUser::processRegister($_POST);
-                    echo json_encode(array('redirect' => 'menu'));
+                    $userRegister = new RegisterUser();
+                    $userRegister->processRegister($_POST);
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    echo $response->getResponseString();
                     break;
                 //Obnova hesla
                 case 'p':
                     $form = 'passRecovery';
-                    if (RecoverPassword::processRecovery($_POST))
+                    $passwordRecoverer = new RecoverPassword();
+                    if ($passwordRecoverer->processRecovery($_POST))
                     {
-                        echo json_encode(array('messageType' => 'success', 'message' => 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', 'origin' => $form));
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', array('origin' => $form));
                     }
                     else
                     {
-                        echo json_encode(array('messageType' => 'error', 'message' => 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.'));
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.', array('origin' => $form));
                     }
+                    echo $response->getResponseString();
                     break;
             }
         }
         catch (AccessDeniedException $e)
         {
-            echo json_encode(array('messageType' => 'error', 'message' => $e->getMessage(), 'origin' => $form));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $form));
+            echo $response->getResponseString();
         }
         
         //Zastav zpracování PHP, aby se nevypsala šablona
         exit();
     }
 }
+

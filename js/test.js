@@ -39,7 +39,7 @@ function pictureList()
 	
 	/**
 	 * Metoda získávající ze serveru náhodné obrázky z části/poznávačky pomocí AJAX get požadavku
-	 * Po obdržení odpovědi jsou data z požadavku předána metodě importPictures()
+	 * Po obdržení odpovědi je sezma, obrázků naplněn (staré obrázky jsou přepsány)
 	 * Parametr callNextUponResponse - TRUE, pokud se má po obdržení odpovědi zavolat funkce pro zobrazení dalšího obrázku
 	 */
 	this.loadPictures = function(callNextUponResponse)
@@ -52,26 +52,36 @@ function pictureList()
 		{
 			this.callNext = false;
 		}
-		$.get(document.location.href+"/test-pictures", this.importPictures);
-	}
-	
-	/**
-	 * Metoda nastavující nový seznam obrázků, přičemž staré obrázky jsou přepsány
-	 */
-	this.importPictures = function(response)
-	{
-		let arr = JSON.parse(response);
-		//Přepsání dvourozměrného pole do jednorozměrného s objekty
-		for (let i = 0; i < arr.length; i++) { arr[i] = new picture(arr[i]["num"], arr[i]["url"]); }
-		
-		//Z nějakého důvodu nejde odkazovat pomocí this
-		pictureManager.pictures = arr;
-		
-		//Zkontrolovat, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
-		if (pictureManager.callNext === true)
-		{
-			next();
-		}
+		$.get(document.location.href+"/test-pictures",
+			function (response, status)
+			{
+				ajaxCallback(response, status,
+					function(messageType, message, data)
+					{
+						if (messageType === "success")
+						{
+							//Přepsání dvourozměrného pole do jednorozměrného s objekty
+							for (let i = 0; i < data.pictures.length; i++) { data.pictures[i] = new picture(data.pictures[i]["num"], data.pictures[i]["url"]); }
+							
+							//Z nějakého důvodu nejde odkazovat pomocí this
+							pictureManager.pictures = data.pictures;
+							
+							//Zkontrolovat, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
+							if (pictureManager.callNext === true)
+							{
+								next();
+							}
+						}
+						else
+						{
+							//Požadavek nebyl úspěšný
+							alert(message);
+						}
+					}
+				);
+			},
+			"json"
+		);
 	}
 	
 	/**
@@ -125,7 +135,7 @@ function answer(event)
 				qNum: num,
 				ans: ans
 			},
-			displayResult
+			function (response, status) { ajaxCallback(response, status, displayResult); }
 		);
 }
 
@@ -133,10 +143,8 @@ function answer(event)
  * Funkce volaná po obdržení odpovědi ze serveru (požadavek je vyvolán funkcí answer()), která zobrazuje výsledek vyhodnocení
  * @param response Odpověď se serveru obsahující objekt s vlastnostmi "result" (hodnoty "correct"/"wrong") a answer (správná odpověď)
  */
-function displayResult(response)
+function displayResult(messageType, message, data)
 {
-	response = JSON.parse(response)
-
 	var correctAnswer = $("<p class='correct'></>").text("Správně!"); 
 	var correctTypoAnswer = $("<p class='correct-typo'></p>").text("Správně, ale s překlepem."); 
 	var incorrectAnswer = $("<p class='incorrect'></p>").text("Špatně."); 
@@ -145,10 +153,10 @@ function displayResult(response)
 	
 	$("#result-text").empty();
 
-	if (response.result === "correct")
+	if (message === "correct")
 	{
 		//Odpověď byla uznána
-		if (softCheck($("#answer").val(), response.answer))
+		if (softCheck($("#answer").val(), data.answer))
 		{
 			//Odpověď bez překlepů
 			//TODO - tohle asi budeš chtít nějak líp nastylovat
@@ -160,24 +168,24 @@ function displayResult(response)
 			//TODO - tohle asi budeš chtít nějak líp nastylovat
 			$("#result-text").append(correctTypoAnswer);
 			$("#result-text").append(correction);
-			correction.append("<span>" + response.answer + "</span>");
+			correction.append("<span>" + data.answer + "</span>");
 		}
 	}
-	else if (response.result === "wrong")
+	else if (message === "wrong")
 	{
 		//Odpověď nebyla uznána
 		//TODO - tohle asi budeš chtít nějak líp nastylovat
 		$("#result-text").append(incorrectAnswer);
 		$("#result-text").append(correction);
-		correction.append("<span>" + response.answer + "</span>");
+		correction.append("<span>" + data.answer + "</span>");
 	}
 	else
 	{
 		//Vyskytla se chyba - v response.result je "error" nebo něco úplně jiného
-		//V response.answer je cybová hláška
+		//V data.answer je chybová hláška
 		//TODO - tohle asi budeš chtít udělat jinak, nebo to přesunout úplně jinam
 		$("#result-text").append(error);
-		error.append("<span>" + response.answer + "</span>");
+		error.append("<span>" + data.answer + "</span>");
 	}
 	
 	$("#result").show();

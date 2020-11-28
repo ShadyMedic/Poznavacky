@@ -45,8 +45,8 @@ function natural(name)
 	 */
 	this.getPicture = function(picture)
 	{
-		//Kontrola, zda jsou obrázky načteny
-		if (this.status !== "loaded")
+		//Kontrola, zda jsou obrázky načteny nebo se právě načítají
+		if (this.status !== "loaded" && this.status !== "loading")
 		{
 			//Po načtení obrázků je tato metoda znovu zavolána automaticky
 			this.loadPictures(picture);
@@ -77,18 +77,31 @@ function natural(name)
 	{
 		//Odeslání AJAX požadavku
 		selectedNatural.status = "loading";
-		$.post(document.location.href+"/learn-pictures", {
-			name: this.name
-		}, function(response)
-		{
-			//Nastavení obrázků
-			selectedNatural.pictures = JSON.parse(response);
-			selectedNatural.lastPicture = 0;
-			selectedNatural.status = "loaded";
-			
-			//Zobrazení obrázku
-			selectedNatural.getPicture(pictureOffset);
-		});
+		$.get(document.location.href + "/learn-pictures?natural=" + encodeURIComponent(this.name),
+			function (response, status)
+			{
+				ajaxCallback(response, status, function (messageType, message, data)
+					{
+					    if (messageType === "success")
+					    {
+							//Nastavení obrázků
+							selectedNatural.pictures = data.pictures;
+							selectedNatural.lastPicture = 0;
+							selectedNatural.status = "loaded";
+							
+							//Zobrazení obrázku
+							selectedNatural.getPicture(pictureOffset);
+					    }
+					    else
+					    {
+					    	//Nastala požadavek nebyl úspěšný
+					    	alert(message);
+					    }
+				    }
+				);
+			},
+			"json"
+		);
 	}
 }
 

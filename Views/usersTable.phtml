@@ -35,32 +35,32 @@
             </td>
             <td>
                 <select disabled class='user-field'>
-                    <?php if ($user['status'] === User::STATUS_ADMIN) : ?>
-                    <option selected><?= User::STATUS_ADMIN ?></option>
+                    <?php if ($user['status'] === Poznavacky\Models\DatabaseItems\User::STATUS_ADMIN) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\User::STATUS_ADMIN ?></option>
                     <?php endif ?>
-                    <?php if ($user['status'] !== User::STATUS_ADMIN) : ?>
-                    <option><?= User::STATUS_ADMIN ?></option>
-                    <?php endif ?>
-                    
-                    <?php if ($user['status'] === User::STATUS_CLASS_OWNER) : ?>
-                    <option selected><?= User::STATUS_CLASS_OWNER ?></option>
-                    <?php endif ?>
-                    <?php if ($user['status'] !== User::STATUS_CLASS_OWNER) : ?>
-                    <option><?= User::STATUS_CLASS_OWNER ?></option>
+                    <?php if ($user['status'] !== Poznavacky\Models\DatabaseItems\User::STATUS_ADMIN) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\User::STATUS_ADMIN ?></option>
                     <?php endif ?>
                     
-                    <?php if ($user['status'] === User::STATUS_MEMBER) : ?>
-                    <option selected><?= User::STATUS_MEMBER ?></option>
+                    <?php if ($user['status'] === Poznavacky\Models\DatabaseItems\User::STATUS_CLASS_OWNER) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\User::STATUS_CLASS_OWNER ?></option>
                     <?php endif ?>
-                    <?php if ($user['status'] !== User::STATUS_MEMBER) : ?>
-                    <option><?= User::STATUS_MEMBER ?></option>
+                    <?php if ($user['status'] !== Poznavacky\Models\DatabaseItems\User::STATUS_CLASS_OWNER) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\User::STATUS_CLASS_OWNER ?></option>
                     <?php endif ?>
                     
-                    <?php if ($user['status'] === User::STATUS_GUEST) : ?>
-                    <option selected><?= User::STATUS_GUEST ?></option>
+                    <?php if ($user['status'] === Poznavacky\Models\DatabaseItems\User::STATUS_MEMBER) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\User::STATUS_MEMBER ?></option>
                     <?php endif ?>
-                    <?php if ($user['status'] !== User::STATUS_GUEST) : ?>
-                    <option><?= User::STATUS_GUEST ?></option>
+                    <?php if ($user['status'] !== Poznavacky\Models\DatabaseItems\User::STATUS_MEMBER) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\User::STATUS_MEMBER ?></option>
+                    <?php endif ?>
+                    
+                    <?php if ($user['status'] === Poznavacky\Models\DatabaseItems\User::STATUS_GUEST) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\User::STATUS_GUEST ?></option>
+                    <?php endif ?>
+                    <?php if ($user['status'] !== Poznavacky\Models\DatabaseItems\User::STATUS_GUEST) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\User::STATUS_GUEST ?></option>
                     <?php endif ?>
                 </select>
             </td>
@@ -84,7 +84,7 @@
                 <?php endif ?>
                     <img src='images/mail.svg'/>
                 </button>
-                <button class='user-action active-btn' onclick='deleteUser(<?= $user['id'] ?>)' title='Odstranit'>
+                <button class='user-action active-btn' onclick='deleteUser(<?= $user['id'] ?>, event)' title='Odstranit'>
                     <img src='images/cross.svg'/>
                 </button>
             </td>

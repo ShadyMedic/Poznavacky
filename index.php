@@ -1,18 +1,36 @@
 <?php
+namespace Poznavacky;
+
+use Poznavacky\Models\Security\AntiCsrfMiddleware;
+use Poznavacky\Controllers\RooterController;
+
 //Nastav dependencies pomocí composeru
 require __DIR__.'/vendor/autoload.php';
 
 //Definuj a nastav autoloader tříd
-function autoloader($name)
+function autoloader(string $name): void
 {
-    if (preg_match('/Controller$/', $name)){ require 'Controllers/'.$name.'.php'; }
-    else { require 'Models/'.$name.'.php'; }
+    //Nahraď zpětná lomítka (používaných v namespacové cestě) běznými lomítky (používaných pro navigaci adresáři)
+    $name = str_replace('\\', '/', $name);
+    //Odstraň z cesty ke třídě kořenovou složku (v té už je tento soubor)
+    if (strpos($name, '/') !== false)
+    {
+        $folders = explode('/', $name);
+        unset($folders[0]);
+        $name = implode('/', $folders);
+    }
+    $name .= '.php';
+    require $name;
 }
-spl_autoload_register('autoloader');
+spl_autoload_register('Poznavacky\\autoloader');
 
 //Obnov session a nastav kódování
 session_start();
 mb_internal_encoding('UTF-8');
+
+//Zkontroluj a obnov CSRF token
+$antiCSRF = new AntiCsrfMiddleware();
+$antiCSRF->verifyRequest(); //V případě chyby je na tomto řádku skript zastaven
 
 //Zpracuj URL adresu a zobraz vygenerovanou webovou stránku
 $rooter = new RooterController();

@@ -153,30 +153,25 @@ function formSubmitted(event)
 	}
 	
 	//Odeslání dat
-	$.post("index-forms", {
-		type: type,
-		name: name,
-		pass: pass,
-		repass: repass,
-		email: email,
-		stayLogged: stayLogged
-	}, serverResponse);
+	$.post("index-forms",
+		{
+			type: type,
+			name: name,
+			pass: pass,
+			repass: repass,
+			email: email,
+			stayLogged: stayLogged
+		},
+		function (response, status) { ajaxCallback(response, status, serverResponse); },
+		"json"
+	);
 }
 
-function serverResponse(data, status)
+function serverResponse(messageType, message, data)
 {
-	var response = JSON.parse(data);
-	//Přesměrování
-	if (response.hasOwnProperty("redirect"))
-	{
-		window.location = response.redirect;
-		return;
-	}
-	
-	//Zobrazení hlášky
-	var messageType = response.messageType;	//success / info / warning / error
-	var message = response.message; //Chybová hláška
-	var form = response.origin; //Formulář z něhož byla odeslána data - login / register / passRecovery
+	//var messageType == //success / info / warning / error
+	//var message == //Chybová hláška
+	//var form == //Formulář z něhož byla odeslána data - login / register / passRecovery
 	
 	//TODO - zobrazení chybové nebo úspěchové hlášky
 }

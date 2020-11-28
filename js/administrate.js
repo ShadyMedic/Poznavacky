@@ -74,7 +74,7 @@ function sixthTab()
 /*-----------------------Všeobecné-----------------------*/
 function startMail(addressee)
 {
-	$("#emailAddressee").val(addressee)	//Nastav adresu
+	$("#email-address").val(addressee);  //Nastav adresu
 	fifthTab();	//Zobraz formulář
 }
 /*-------------------------Tab 1-------------------------*/
@@ -142,7 +142,6 @@ function confirmUserEdit(userId)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Reset DOM
@@ -158,7 +157,7 @@ function confirmUserEdit(userId)
 		}
 	);
 }
-function deleteUser(userId)
+function deleteUser(userId, event)
 {
 	if (!confirm("Opravdu chcete odstranit tohoto uživatele?\nTato akce je nevratná!"))
 	{
@@ -171,16 +170,16 @@ function deleteUser(userId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
-			if (response["messageType"] === "error" || response["messageType"] === "success")
+			//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+			alert(response["message"]);
+			
+			if (response["messageType"] === "success")
 			{
-				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
+				//Odebrání uživatele z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
 			}
 		}
 	);
-	//Odebrání uživatele z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 2-------------------------*/
 var currentClassValues = new Array(2);
@@ -269,7 +268,6 @@ function confirmClassEdit(classId)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Reset DOM
@@ -372,7 +370,6 @@ function confirmClassAdminEdit(classId)
 		},
 		function (response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "success")
 			{
 				//Aktualizace údajů o správci třídy v DOM
@@ -423,7 +420,7 @@ function confirmClassAdminEdit(classId)
 		}
 	);
 }
-function deleteClass(classId)
+function deleteClass(classId, event)
 {
 	if (!confirm("Opravdu chcete odstranit tuto třídu?\nTato akce je nevratná!"))
 	{
@@ -436,16 +433,16 @@ function deleteClass(classId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
-			if (response["messageType"] === "error" || response["messageType"] === "success")
+			//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+			alert(response["message"]);
+			
+			if (response["messageType"] === "success")
 			{
-				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
+				//Odebrání třídy z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
 			}
 		}
 	);
-	//Odebrání třídy z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 3-------------------------*/
 //Zahrnuto v souboru resolveReports.js
@@ -460,16 +457,18 @@ function acceptNameChange(event, objectType, requestId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
+			else
+			{
+				//Odebrání žádosti z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
+			}
 		}
 	);
-	//Odebrání žádosti z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 function declineNameChange(event, objectType, requestId)
 {
@@ -484,16 +483,18 @@ function declineNameChange(event, objectType, requestId)
 		},
 		function(response)
 		{
-			response = JSON.parse(response);
 			if (response["messageType"] === "error")
 			{
 				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
 				alert(response["message"]);
 			}
+			else
+			{
+				//Odebrání žádosti z DOM
+				event.target.parentNode.parentNode.parentNode.remove();
+			}
 		}
 	);
-	//Odebrání žádosti z DOM
-	event.target.parentNode.parentNode.parentNode.remove();
 }
 /*-------------------------Tab 5-------------------------*/
 var emailModified = true;	//Proměnná uchovávající informaci o tom, zda byl formulář pro odeslání e-mailu od posledního odeslání modifikován
@@ -513,7 +514,7 @@ function previewEmailMessage()
 		},
 		function(response)
 		{
-			let result = JSON.parse(response)['content'];
+			let result = response['content'];
 			$("#email-editor").hide();
 			$("#email-preview-btn").hide();
 			
@@ -568,16 +569,12 @@ function sendMail()
 			$("#email-send-btn").removeAttr("disabled");
 			
 			emailModified = false;
-			
-			response = JSON.parse(response)['message']
+		
+			if (response["messageType"] === "error" || response["messageType"] === "success")
 			{
-				if (response["messageType"] === "error" || response["messageType"] === "success")
-				{
-					//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-					alert(response["message"]);
-				}
+				//TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+				alert(response["message"]);
 			}
-			alert(result);
 		}
 	);
 }
@@ -592,7 +589,7 @@ function sendSqlQuery()
 		},
 		function(response)
 		{
-			let result = JSON.parse(response)['dbResult'];
+			let result = response['dbResult'];
 			$("#sql-result").html(result);
 		}
 	);

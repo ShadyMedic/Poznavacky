@@ -12,22 +12,27 @@ function kickUser(memberId, memberName)
     		action: 'kick member',
 			memberId: memberId
 		},
-		function (response)
+		function (response, status)
 		{
-			response = JSON.parse(response);
-			if (response["messageType"] === "error")
-			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-			else if (response["messageType"] === "success")
-			{
-				//TODO - nějak odstraň řádek s uživatelem z DOM
-				//Odebrání uživatele z DOM
-				deletedTableRow.remove();
-			}
-			deletedTableRow = undefined;
-		}
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(message);
+					}
+					else if (messageType === "success")
+					{
+						//TODO - nějak odstraň řádek s uživatelem z DOM
+						//Odebrání uživatele z DOM
+						deletedTableRow.remove();
+					}
+					deletedTableRow = undefined;
+				}
+			);
+		},
+		"json"
 	);
 }
 function inviteFormShow()
@@ -49,22 +54,27 @@ function inviteUser()
     		action: 'invite user',
 			userName: userName
 		},
-		function (response)
+		function (response, status)
 		{
-			response = JSON.parse(response);
-			if (response["messageType"] === "success")
-			{
-				//Vynuluj a skryj formulář
-			    inviteFormHide();
-			    
-			    //TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-			if (response["messageType"] === "error")
-			{
-				//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-				alert(response["message"]);
-			}
-		}
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						//Vynuluj a skryj formulář
+					    inviteFormHide();
+					    
+					    //TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(message);
+					}
+					if (messageType === "error")
+					{
+						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
+						alert(message);
+					}
+				}
+			);
+		},
+		"json"
 	);
 }

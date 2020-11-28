@@ -9,15 +9,30 @@ function confirmNameChange()
 	var newName = $("#change-name-input-field").val();
 	newName = encodeURIComponent(newName);
 	
-	$.post("account-update",{
-		action: "request name change",
-		name: newName
-	}, evaluateResponse);
-	
-	//Reset HTML
-	$("#change-name-input-field").val("");
-	$("#change-name-input").hide();
-	$("#change-name-button").show();
+	$.post("account-update",
+		{
+			action: "request name change",
+			name: newName
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						//Reset HTML
+						$("#change-name-input-field").val("");
+						$("#change-name-input").hide();
+						$("#change-name-button").show();
+					}
+					
+					evaluateResponse(messageType, message, data);
+				}
+			);
+		},
+		"json"
+	);
 }
 
 /*-----------------------------------------------------------------------------*/
@@ -33,27 +48,27 @@ function changePasswordVerify()
 {
 	var password = $("#change-password-input-field-old").val();
 	
-	$.post("account-update",{
-		action: "verify password",
-		password: password
-	}, changePasswordStage2);
+	$.post("account-update",
+		{
+			action: "verify password",
+			password: password
+		},
+		function (response, status) { ajaxCallback(response, status, changePasswordStage2); },
+		"json"
+	);
 }
 
-function changePasswordStage2(response)
+function changePasswordStage2(messageType, message, data)
 {
-	response = JSON.parse(response);
-	if (response.verified === true)
+	if (data.verified === true)
 	{
 		displayChangePasswordStage2();
 	}
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		var messageType = response.messageType;
-		var message = response.message;
-		var origin = response.origin;
-		console.log("["+messageType+" - " + origin + "] " + message);
-		alert("["+messageType+" - " + origin + "] " + message);
+		console.log("["+messageType+" - " + data.origin + "] " + message);
+		alert("["+messageType+" - " + data.origin + "] " + message);
 		
 		$("#change-password-input-field-old").val("");
 	}
@@ -82,19 +97,41 @@ function confirmPasswordChange()
 	newPass = encodeURIComponent(newPass);
 	rePass = encodeURIComponent(rePass);
 	
-	$.post("account-update", {
-		action: "change password",
-		oldPassword: oldPass,
-		newPassword: newPass,
-		rePassword: rePass
-	}, evaluateResponse);
-	
-	//Reset HTML
-	$("#change-password-input-field-old").val("");
-	$("#change-password-input-field-new").val("");
-	$("#change-password-input-field-re-new").val("");
-	$("#change-password-input3").hide();
-	$("#change-password-button").show();
+	$.post("account-update",
+		{
+			action: "change password",
+			oldPassword: oldPass,
+			newPassword: newPass,
+			rePassword: rePass
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						//Reset HTML
+						$("#change-password-input-field-old").val("");
+						$("#change-password-input-field-new").val("");
+						$("#change-password-input-field-re-new").val("");
+						$("#change-password-input3").hide();
+						$("#change-password-button").show();
+					}
+					else if (messageType === "error")
+					{
+						//Výmaz nového hesla a zobrazení pole pro nové heslo poprvé
+						$("#change-password-input-field-new").val("");
+						$("#change-password-input-field-re-new").val("");
+						displayChangePasswordStage2();
+					}
+					
+					evaluateResponse(messageType, message, data);
+				}
+			);
+		},
+	"json"
+	);
 }
 
 /*-----------------------------------------------------------------------------*/
@@ -110,16 +147,19 @@ function changeEmailVerify()
 {
 	var password = $("#change-email-password-input-field").val();
 	
-	$.post("account-update",{
-		action: "verify password",
-		password: password
-	}, changeEmailStage2);
+	$.post("account-update",
+		{
+			action: "verify password",
+			password: password
+		},
+		function (response, status) { ajaxCallback(response, status, changeEmailStage2); },
+		"json"
+	);
 }
 
-function changeEmailStage2(response)
+function changeEmailStage2(messageType, message, data)
 {
-	response = JSON.parse(response);
-	if (response.verified === true)
+	if (data.verified === true)
 	{
 		$("#change-email-button").hide();
 		$("#change-email-input1").hide();
@@ -128,11 +168,8 @@ function changeEmailStage2(response)
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		var messageType = response.messageType;
-		var message = response.message;
-		var origin = response.origin;
-		console.log("["+messageType+" - " + origin + "] " + message);
-		alert("["+messageType+" - " + origin + "] " + message);
+		console.log("["+messageType+" - " + data.origin + "] " + message);
+		alert("["+messageType+" - " + data.origin + "] " + message);
 		
 		$("#change-email-password-input-field").val("");
 	}
@@ -152,25 +189,33 @@ function confirmEmailChange()
 	newEmail = encodeURIComponent(newEmail);
 	var pass = $("#change-email-password-input-field").val();
 	
-	$.post("account-update",{
-		action: "change email",
-		password: password,
-		newEmail: newEmail
-	}, function (response, code){
-		//Funkce zajišťující změnu e-mailu v DOM v případě úspěšné změny
-		if (JSON.parse(response).messageType === 'success')
+	$.post("account-update",
 		{
-			$("#email-address").text(decodeURIComponent(newEmail));
-		}
-		evaluateResponse(response, code);
-	});
-	
-	//Reset HTML
-	$("#change-email-password-input-field").val("");
-	$("#change-email-input-field").val("");
-	$("#change-email-input1").hide();
-	$("#change-email-input2").hide();
-	$("#change-email-button").show();
+			action: "change email",
+			password: password,
+			newEmail: newEmail
+		},
+		function (response, code){
+			ajaxCallback(response, code,
+				function (messageType, message, data) {
+					//Funkce zajišťující změnu e-mailu v DOM v případě úspěšné změny
+					if (messageType === 'success')
+					{
+						$("#email-address").text(decodeURIComponent(newEmail));
+						
+						//Reset HTML
+						$("#change-email-password-input-field").val("");
+						$("#change-email-input-field").val("");
+						$("#change-email-input1").hide();
+						$("#change-email-input2").hide();
+						$("#change-email-button").show();
+					}
+					evaluateResponse(messageType, message, data);
+				}
+			);
+		},
+		"json"
+	);
 }
 
 function updateEmail(newEmail)
@@ -190,16 +235,19 @@ function deleteAccountVerify()
 {
 	var password = $("#delete-account-input-field").val();
 	
-	$.post("account-update",{
-		action: "verify password",
-		password: password
-	}, deleteAccountConfirm);
+	$.post("account-update",
+		{
+			action: "verify password",
+			password: password
+		},
+		function (response, status) { ajaxCallback(response, status, deleteAccountConfirm); },
+		"json"
+	);
 }
 
-function deleteAccountConfirm(response)
+function deleteAccountConfirm(messageType, message, data)
 {
-	response = JSON.parse(response);
-	if (response.verified === true)
+	if (data.verified === true)
 	{
 		$("#delete-account-input2").show();
 		$("#delete-account-input1").hide();
@@ -207,11 +255,8 @@ function deleteAccountConfirm(response)
 	else
 	{
 		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		var messageType = response.messageType;
-		var message = response.message;
-		var origin = response.origin;
-		console.log("["+messageType+" - " + origin + "] " + message);
-		alert("["+messageType+" - " + origin + "] " + message);
+		console.log("["+messageType+" - " + data.origin + "] " + message);
+		alert("["+messageType+" - " + data.origin + "] " + message);
 		
 		$("#delete-account-input-field").val("");
 	}
@@ -221,13 +266,28 @@ function deleteAccountFinal()
 {
 	var password = $("#delete-account-input-field").val();
 	
-	$.post("account-update",{
-		action: "delete account",
-		password: password
-	}, evaluateResponse);
-	
-	//Uvedení HTML do původního stavu (má smysl pouze v případě selhání)
-	deleteAccountCancel();
+	$.post("account-update",
+		{
+			action: "delete account",
+			password: password
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Uvedení HTML do původního stavu (má smysl pouze v případě selhání)
+						deleteAccountCancel();
+					}
+					
+					evaluateResponse(messageType, message, data);
+				}
+			)
+		},
+		"json"
+	);
 }
 
 function deleteAccountCancel()
@@ -240,22 +300,14 @@ function deleteAccountCancel()
 /**
  * Funkce vyhodocující odpověď serveru
  */
-function evaluateResponse(response, status)
-{
-	var response = JSON.parse(response);
-	//Přesměrování
-	if (response.hasOwnProperty("redirect"))
-	{
-		window.location = response.redirect;
-		return;
-	}
-	
+function evaluateResponse(messageType, message, data)
+{	
 	//Zobrazení hlášky
-	var messageType = response.messageType;	//success / info / warning / error
-	var message = response.message; //Chybová hláška
-	var origin = response.origin; //Akce která vyvolala požadavek
+	//messageType = success / info / warning / error
+	//message Chybová nebo úspěchová hláška
+	//data = Další informace, pod data.origin je název akce, která vyvolala AJAX požadavek
 	
 	//TODO - zobrazení chybové nebo úspěchové hlášky
-	console.log("["+messageType+" - " + origin + "] " + message);
-	alert("["+messageType+" - " + origin + "] " + message);
+	console.log("["+messageType+" - " + data.origin + "] " + message);
+	alert("["+messageType+" - " + data.origin + "] " + message);
 }

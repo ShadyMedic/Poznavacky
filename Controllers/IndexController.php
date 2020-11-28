@@ -1,4 +1,11 @@
 <?php
+namespace Poznavacky\Controllers;
+
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\MessageBox;
+use Poznavacky\Models\Processors\LoginUser;
+use Poznavacky\Models\Security\AccessChecker;
+
 /** 
  * Kontroler starající se o vypsání úvodní stránky webu
  * @author Jan Štěch
@@ -10,10 +17,11 @@ class IndexController extends Controller
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @see Controller::process()
      */
-    public function process(array $paremeters)
+    public function process(array $paremeters): void
     {
         //Kontrola, zda již uživatel není přihlášen
-        if (AccessChecker::checkUser())
+        $aChecker = new AccessChecker();
+        if ($aChecker->checkUser())
         {
             //Uživatel je již přihlášen
             $this->redirect('menu');
@@ -24,7 +32,8 @@ class IndexController extends Controller
         {
             try
             {
-                LoginUser::processCookieLogin($_COOKIE['instantLogin']);
+                $userLogger = new LoginUser();
+                $userLogger->processCookieLogin($_COOKIE['instantLogin']);
                 
                 //Přihlášení proběhlo úspěšně
                 $this->redirect('menu');
@@ -44,9 +53,10 @@ class IndexController extends Controller
         $this->pageHeader['description'] = 'Čeká vás poznávačka z biologie? Není lepší způsob, jak se na ni naučit, než použitím této webové aplikace. Vytvořte si vlastní poznávačku, společně do ní přidávejte obrázky, učte se z nich a nechte si generovat náhodné testy.';
         $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda, poznávačka, přírodopis, přírodověda, test, výuka, naučit, učit, testy, učení';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/index.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/index.js');
         $this->pageHeader['bodyId'] = 'index';
         
         $this->view = 'index';
     }
 }
+
