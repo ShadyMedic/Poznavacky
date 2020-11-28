@@ -32,7 +32,7 @@ class TestController extends Controller
         $this->pageHeader['bodyId'] = 'test';
         
         $controllerName = "nonexistant-controller";
-        if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::ControllerExtension; }
+        if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::CONTROLLER_EXTENSION; }
         $pathToController = $this->controllerExists($controllerName);
         if ($pathToController)
         {

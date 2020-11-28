@@ -75,7 +75,7 @@ class MenuController extends Controller
         }
         if ($argumentCount > 0)
         {
-            $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::ControllerExtension;
+            $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::CONTROLLER_EXTENSION;
             $pathToController = $this->controllerExists($controllerName);
             if ($pathToController && $argumentCount === 1)
             {
@@ -110,7 +110,7 @@ class MenuController extends Controller
         }
         if ($argumentCount > 1 && !isset($this->controllerToCall))
         {
-            $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::ControllerExtension;
+            $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::CONTROLLER_EXTENSION;
             $pathToController = $this->controllerExists($controllerName);
             if ($pathToController && ($argumentCount === 2 || $controllerName === 'ManageController'))
             {
@@ -145,7 +145,7 @@ class MenuController extends Controller
         if ($argumentCount > 2 && !isset($this->controllerToCall))
         {
             //Jsou zvoleny všechny části najednou?
-            $controllerName = $this->kebabToCamelCase($menuArguments[2]).self::ControllerExtension;
+            $controllerName = $this->kebabToCamelCase($menuArguments[2]).self::CONTROLLER_EXTENSION;
             $pathToController = $this->controllerExists($controllerName);
             if ($pathToController)
             {
@@ -178,7 +178,7 @@ class MenuController extends Controller
         if ($argumentCount > 3 && !isset($this->controllerToCall))
         {
             //Akce pro část
-            $controllerName = $this->kebabToCamelCase($menuArguments[3]).self::ControllerExtension;
+            $controllerName = $this->kebabToCamelCase($menuArguments[3]).self::CONTROLLER_EXTENSION;
             $pathToController = $this->controllerExists($controllerName);
             if ($pathToController)
             {
@@ -202,7 +202,7 @@ class MenuController extends Controller
         {
             //Kontroler není nastaven --> vypsat tabulku na menu stránkce
             $this->pageHeader['bodyId'] = 'menu';
-            $controllerName = __NAMESPACE__.'\\MenuTable'.self::ControllerExtension;
+            $controllerName = __NAMESPACE__.'\\MenuTable'.self::CONTROLLER_EXTENSION;
             $this->controllerToCall = new $controllerName();
             $this->controllerToCall->process(array());
         }

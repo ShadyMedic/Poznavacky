@@ -50,7 +50,7 @@ class TestsController extends Controller
         }
         if ($argumentCount > 1)
         {
-            $controllerName = $this->kebabToCamelCase($testsArguments[1]).self::ControllerExtension;
+            $controllerName = $this->kebabToCamelCase($testsArguments[1]).self::CONTROLLER_EXTENSION;
             $pathToController = $this->controllerExists($controllerName);
             if ($pathToController)
             {

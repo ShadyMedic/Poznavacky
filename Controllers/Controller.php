@@ -11,11 +11,11 @@ use Poznavacky\Models\MessageBox;
  */
 abstract class Controller
 {
-    const ControllerExtension = 'Controller';
-    const ModelExtension = 'Model';
-    const ControllerFolder = 'Controllers';
-    const ModelFolder = 'Models';
-    const ViewFolder = 'Views';
+    const CONTROLLER_EXTENSION = 'Controller';
+    const MODEL_EXTENSION = 'Model';
+    const CONTROLLER_FOLDER = 'Controllers';
+    const MODEL_FOLDER = 'Models';
+    const VIEW_FOLDER = 'Views';
     
     protected $controllerToCall;
     protected $data = array();
@@ -47,7 +47,7 @@ abstract class Controller
             
             extract($this->data);
             extract($sanitized);
-            require self::ViewFolder.'/'.$this->view.'.phtml';
+            require self::VIEW_FOLDER.'/'.$this->view.'.phtml';
         }
     }
     
@@ -117,7 +117,7 @@ abstract class Controller
      * @param string $directory Složka, ve které má probíhat hledání, základně kořenová složka kontrolerů
      * @return string Plné jméno třídy kontroleru
      */
-    protected function controllerExists(string $controllerName, string $directory = self::ControllerFolder): string
+    protected function controllerExists(string $controllerName, string $directory = self::CONTROLLER_FOLDER): string
     {
         $fileName = $controllerName.'.php';
         $files = scandir($directory, SCANDIR_SORT_NONE);

@@ -56,7 +56,7 @@ class ManageController extends Controller
         # }
         if ($argumentCount > 0)
         {
-            $controllerName = $this->kebabToCamelCase($manageArguments[0]).self::ControllerExtension;
+            $controllerName = $this->kebabToCamelCase($manageArguments[0]).self::CONTROLLER_EXTENSION;
             $pathToController = $this->controllerExists($controllerName);
             if ($pathToController)
             {
