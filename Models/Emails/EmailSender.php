@@ -45,7 +45,7 @@ class EmailSender
      * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
      * @return PHPMailer Nastavený e-mailový objekt
      */
-    public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true) //TODO - opravit namespace a nastavit zde návratový typ na \PHPMailer\PHPMailer
+    public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true)
     {
         $mail = new PHPMailer();
         
