@@ -275,12 +275,16 @@ h5 {
 	height: 1em;
 }
 
-input, select {
+input,
+select,
+textarea {
+	font-family: inherit;
 	border: none;
 	&.text-field {
 		font-size: 100%;
-		padding: 0.4em 0.72em;
+		padding: 0.48em 0.8em;
 		border-radius: 0.2em;
+		line-height: 1.32em;
 		/*&:focus {
 			box-shadow: 0 2px 0 0 $greenMid;
 			outline: none;
@@ -306,6 +310,8 @@ label {
 	user-select: none;
 	width: 100%;
 	margin: 0;
+	font-size: 100%;
+	line-height: 1.32em;
 	.custom-select {
 		position: relative;
 		display: flex;
@@ -322,7 +328,7 @@ label {
 				.arrow {
 					transform: rotate(270deg);
 				}
-			}			
+			}		
 		}
 	}
 	.custom-select-main {
@@ -332,7 +338,7 @@ label {
 		align-items: center;
 		font-size: 1em;
 		color: $gray1;
-		padding: 0.4em 1em;
+		padding: 0.48em 0.8em;
 		background: #fff;
 		cursor: pointer;
 		border-radius: 3.2px;
@@ -374,11 +380,11 @@ label {
 			border-top: 1px solid $gray2;
 			&:hover {
 				cursor: pointer;
-				background-color: $gray2;
+				background: $gray2;
 			}
 			&.selected {
 				color: #fff;
-				background-color: $greenMid;
+				background: $greenMid;
 			}
 		}
 	}

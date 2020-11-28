@@ -1,19 +1,22 @@
-<h2>Vyzkoušet se</h2>
-<section>
-	<img id="main-img" src="images/imagePreview.png" /> <!-- Adresa bude dodána JavaScriptem -->
-	<div>
-		<?php require 'Views/reportForm.phtml'; ?>
-	</div>
-</section>
-<section>
-	<form onsubmit="answer(event)" id="answerForm">
-		<input type=text autocomplete="off" placeholder="Zadejte odpověď" id="textfield" />
-		<input type=hidden id="hiddenInput" />
-		<input type=submit value="OK" />
-    </form>
-	<div id="result">
-		<!-- ZHODNOCENÍ ODPOVĚDI -->
-		<span id="resultText"></span>
-		<button onclick="next()" id="nextButton">Další obrázek</button>
-	</div>
-</section>
+<div id="test-wrapper">
+	<section class="picture">
+		<img id="main-img" src="images/imagePreview.png" /> <!-- Adresa bude dodána JavaScriptem -->
+		<button class="btn report-button icon"><img src="../images/report.svg" alt="Tlačítko na nahlášení obrázku"></button>
+		<div class="report-box">
+			<?php require 'Views/reportForm.phtml'; ?>
+		</div>
+	</section>
+	<section class="controllers">
+		<form id="answer-form">
+			<label for="answer">Zadejte odpověď:</label>
+			<input type=text autocomplete="off" id="answer" class="text-field" />
+			<input type=hidden id="answer-hidden" />
+			<input type=submit value="Odeslat odpověď" class="btn border-btn non-transparent black" />
+		</form>
+		<div id="result">
+			<!-- ZHODNOCENÍ ODPOVĚDI -->
+			<div id="result-text"></div>
+			<button id="next-button" class="btn border-btn non-transparent black">Další obrázek</button>
+		</div>
+	</section>
+</div>

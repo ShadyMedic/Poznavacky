@@ -1,3 +1,24 @@
+//vše, co se děje po načtení stránky
+$(function() {
+	//event listener formuláře na odeslání odpovědi
+	$("#answer-form").submit(function(event){answer(event)});
+
+	//eventy listenery tlačítek
+	$("#next-button").click(function(){next()});
+
+	resizeMainImg();
+})
+
+//vše, co se děje při změně velikosti okna
+$(window).resize(function() {
+	resizeMainImg();
+})
+
+//funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
+function resizeMainImg(){
+	$("#test-wrapper .picture").css("height", $("#test-wrapper .picture").outerWidth());
+}
+
 /**
  * Objekt reprezentující obrázek
  * @param num Číslo, pod kterým je v $_SESSION na serveru uložena správná odpověď
@@ -103,8 +124,8 @@ function answer(event)
 {
 	event.preventDefault();
 	
-	let ans = $("#textfield").val();
-	let num = $("#hiddenInput").val();
+	let ans = $("#answer").val();
+	let num = $("#answer-hidden").val();
 	
 	$("#answerForm").hide();
 	
@@ -124,41 +145,51 @@ function answer(event)
  */
 function displayResult(messageType, message, data)
 {
-	if (messageType === "info")
+	var correctAnswer = $("<p class='correct'></>").text("Správně!"); 
+	var correctTypoAnswer = $("<p class='correct-typo'></p>").text("Správně, ale s překlepem."); 
+	var incorrectAnswer = $("<p class='incorrect'></p>").text("Špatně."); 
+	var correction = $("<p class='correction'></p>").text("Správná odpověď je: ");
+	var error = $("<p class='error'></p>").text("Vyskytla se chyba: ");
+	
+	$("#result-text").empty();
+
+	if (message === "correct")
 	{
-		if (message === "correct")
+		//Odpověď byla uznána
+		if (softCheck($("#answer").val(), data.answer))
 		{
-			//Odpověď byla uznána
-			if (softCheck($("#textfield").val(), data.answer))
-			{
-				//Odpověď bez překlepů
-				//TODO - tohle asi budeš chtít nějak líp nastylovat
-				$("#resultText").text("Správně!");
-			}
-			else
-			{
-				//Odpověď s překlepy
-				//TODO - tohle asi budeš chtít nějak líp nastylovat
-				$("#resultText").text("Správně, ale s překlepem. Správná odpověď: " + data.answer);
-			}
-		}
-		else if (message === "wrong")
-		{
-			//Odpověď nebyla uznána
+			//Odpověď bez překlepů
 			//TODO - tohle asi budeš chtít nějak líp nastylovat
-			$("#resultText").text("Špatně. Správná odpověď: " + data.answer);
+			$("#result-text").append(correctAnswer);
 		}
+		else
+		{
+			//Odpověď s překlepy
+			//TODO - tohle asi budeš chtít nějak líp nastylovat
+			$("#result-text").append(correctTypoAnswer);
+			$("#result-text").append(correction);
+			correction.append("<span>" + data.answer + "</span>");
+		}
+	}
+	else if (message === "wrong")
+	{
+		//Odpověď nebyla uznána
+		//TODO - tohle asi budeš chtít nějak líp nastylovat
+		$("#result-text").append(incorrectAnswer);
+		$("#result-text").append(correction);
+		correction.append("<span>" + data.answer + "</span>");
 	}
 	else
 	{
-		//Vyskytla se chyba - v messageType je nejspíše "error" nebo něco úplně jiného
-		//V message je chybová hláška
+		//Vyskytla se chyba - v response.result je "error" nebo něco úplně jiného
+		//V data.answer je chybová hláška
 		//TODO - tohle asi budeš chtít udělat jinak, nebo to přesunout úplně jinam
-		$("#resultText").text("Vyskytla se chyba: " + message);
+		$("#result-text").append(error);
+		error.append("<span>" + data.answer + "</span>");
 	}
 	
 	$("#result").show();
-	$("#nextButton").focus();
+	$("#next-button").focus();
 }
 
 /**
@@ -188,8 +219,8 @@ function next()
 	
 	$("#result").hide();
 	$("#answerForm").show();
-	$("#textfield").val("");
-	$("#textfield").focus();
+	$("#answer").val("");
+	$("#answer").focus();
 	
 	
 	//Získání dalšího obrázku
@@ -204,5 +235,5 @@ function next()
 	let newUrl = newPicture["url"];
 	
 	$("#main-img").attr("src", newUrl);
-	$("#hiddenInput").val(newNum);
+	$("#answer-hidden").val(newNum);
 }
