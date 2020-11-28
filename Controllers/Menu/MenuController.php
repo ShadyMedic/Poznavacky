@@ -105,6 +105,13 @@ class MenuController extends Controller
                         //Třída splňující daná kritéria neexistuje
                         $this->redirect('error404');
                     }
+                    
+                    //Kontrola, zda má uživatel do třídy přístup
+                    if (!$_SESSION['selection']['class']->checkAccess(UserManager::getId()))
+                    {
+                        $this->unsetSelection(true, true, true);    //Vymaž právě nastavenou třídu ze $_SESSION
+                        $this->redirect('error403');
+                    }
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
                     $this->unsetSelection(true, true);
                 }

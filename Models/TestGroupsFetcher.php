@@ -28,7 +28,7 @@ class TestGroupsFetcher
         $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
         if (!$classes)
         {
-            throw new NoDataException(NoDataException::NO_CLASSES, null, null, 0);
+            throw new NoDataException(NoDataException::NO_CLASSES, null, null);
         }
         
         //Vytvoř tabulku
@@ -62,35 +62,29 @@ class TestGroupsFetcher
     
     /**
      * Metoda pro získání seznamu poznávaček v určité třídě a vytvoření tabulky pro předání pohledu
+     * Předpokládá se, že již bylo zkontrolováno, zda má přihlášený uživatel přístup do dané třídy
      * @param ClassObject $class Objekt třídy ze které je potřeba získat seznam poznávaček
      * @return array Dvourozměrné pole obsahující seznam poznávaček a další informace potřebné pro pohled
      */
     public function getGroups(ClassObject $class): array
     {
-        if ($class->checkAccess(UserManager::getId()))
+        //Získej data
+        $groups = $class->getGroups();
+        if (empty($groups))
         {
-            //Získej data
-            $groups = $class->getGroups();
-            if (empty($groups))
-            {
-                throw new NoDataException(NoDataException::NO_GROUPS, null, null, 1);
-            }
-            
-            //Vytvoř tabulku
-            $table = array();
-            foreach ($groups as $group)
-            {
-                $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.$group->getUrl();
-                $tableRow[0] = $group->getName();
-                $tableRow[1] = $group->getPartsCount();
-                
-                array_push($table, $tableRow);
-            }
+            throw new NoDataException(NoDataException::NO_GROUPS, null, null);
         }
-        else
+        
+        //Vytvoř tabulku
+        $table = array();
+        foreach ($groups as $group)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_MEMBER_IN_CLASS, null, null);
+            $tableRow = array();
+            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.$group->getUrl();
+            $tableRow[0] = $group->getName();
+            $tableRow[1] = $group->getPartsCount();
+            
+            array_push($table, $tableRow);
         }
         
         return $table;
@@ -98,52 +92,46 @@ class TestGroupsFetcher
     
     /**
      * Metoda pro získání seznamu částí určité poznávačky v určité třídě a vytvoření tabulky pro předání pohledu
+     * Předpokládá se, že již bylo zkontrolováno, zda má přihlášený uživatel přístup do třídy, ve které se nachází daná poznávačka
      * @param Group $group Objekt poznávačky, ze které je potřeba získat seznam částí
      * @return array Dvourozměrné pole obsahující seznam částí a další informace potřebné pro pohled
      */
     public function getParts(Group $group): array
     {
-        if ($group->getClass()->checkAccess(UserManager::getId()))
+        //Získej data
+        $parts = $group->getParts();
+        if (empty($parts))
         {
-            //Získej data
-            $parts = $group->getParts();
-            if (empty($parts))
-            {
-                throw new NoDataException(NoDataException::NO_PARTS, null, null, 2);
-            }
-            
-            //Vytvoř tabulku
-            $totalNaturals = 0;
-            $totalPictures = 0;
-            $table = array();
-            foreach ($parts as $part)
-            {
-                $tableRow = array();
-                $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getUrl());
-                $tableRow[0] = $part->getName();
-                $tableRow[1] = $part->getNaturalsCount();
-                $tableRow[2] = $part->getPicturesCount();
-                
-                $totalNaturals += $part->getNaturalsCount();
-                $totalPictures += $part->getPicturesCount();
-                
-                array_push($table, $tableRow);
-            }
-            //Přidej řádku pro výběr všech částí, pokud jich existuje více
-            if (count($parts) > 1)
-            {
-                $tableRow = array();
-                $tableRow['rowLink'] = ltrim($_SERVER['REQUEST_URI'], '/');
-                $tableRow[0] = 'Vše';
-                $tableRow[1] = $totalNaturals;
-                $tableRow[2] = $totalPictures;
-                
-                array_push($table, $tableRow);
-            }
+            throw new NoDataException(NoDataException::NO_PARTS, null, null);
         }
-        else
+        
+        //Vytvoř tabulku
+        $totalNaturals = 0;
+        $totalPictures = 0;
+        $table = array();
+        foreach ($parts as $part)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_USER_NOT_HAVING_ACCESS_TO_GROUP, null, null);
+            $tableRow = array();
+            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getUrl());
+            $tableRow[0] = $part->getName();
+            $tableRow[1] = $part->getNaturalsCount();
+            $tableRow[2] = $part->getPicturesCount();
+            
+            $totalNaturals += $part->getNaturalsCount();
+            $totalPictures += $part->getPicturesCount();
+            
+            array_push($table, $tableRow);
+        }
+        //Přidej řádku pro výběr všech částí, pokud jich existuje více
+        if (count($parts) > 1)
+        {
+            $tableRow = array();
+            $tableRow['rowLink'] = ltrim($_SERVER['REQUEST_URI'], '/');
+            $tableRow[0] = 'Vše';
+            $tableRow[1] = $totalNaturals;
+            $tableRow[2] = $totalPictures;
+            
+            array_push($table, $tableRow);
         }
         
         return $table;
