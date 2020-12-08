@@ -978,7 +978,6 @@ label.required:after {
 #addPictures .wrapper,
 #accountSettings .wrapper {
   padding: 1rem 1rem;
-  overflow: hidden;
 }
 
 @media screen and (min-width: 576px) {

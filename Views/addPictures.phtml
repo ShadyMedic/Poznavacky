@@ -1,36 +1,53 @@
 <form method="POST">
-	<fieldset id="field1">
-		<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div>
-		<select onchange="naturalSelected()" id="dropList" class="text">
-			<?php if (empty($previousNatural)) : ?>
-			<option value="" selected disabled hidden></option>
+	<!--<select onchange="naturalSelected()">
+		<?php if (empty($previousNatural)) : ?>
+		<option value="" selected disabled hidden></option>
+		<?php endif ?>
+		<?php foreach ($naturals as $natural) : ?>
+			<?php if ($previousNatural === $natural->getName()) : ?>
+				<option selected>
 			<?php endif ?>
-			<?php foreach ($naturals as $natural) : ?>
-				<?php if ($previousNatural === $natural->getName()) : ?>
-					<option selected>
-				<?php endif ?>
-				<?php if ($previousNatural !== $natural->getName()) : ?>
-					<option>
-				<?php endif ?>
-					<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
-				</option>
-			<?php endforeach ?>
-		</select>
-		<input type="hidden" name="naturalName" id="hiddenInput" value="<?= $previousNatural ?>" />
-	</fieldset>
-	<fieldset id="field2" <?php if (empty($previousNatural)) : ?> style="display:none;" <?php endif ?>>
-		<div id="duckLink_div">
-			<a id="duckLink" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
-				<div><span>Vyhledat na </span><img id="duckLogo" src="images/duckLogo.png"></div>       
+			<?php if ($previousNatural !== $natural->getName()) : ?>
+				<option>
+			<?php endif ?>
+				<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
+			</option>
+		<?php endforeach ?>
+	</select>-->
+	<div class="custom-select-wrapper" id="add-natural-select">
+		<div class="custom-select">
+			<div class="custom-select-main">
+				<span></span>
+				<img class="arrow" src="../images/arrowBlack.svg">
+			</div>
+			<ul class="custom-options">
+				<?php foreach ($naturals as $natural) :?>
+					<?php if ($previousNatural === $natural->getName()) : ?>
+						<li class="custom-option selected">
+					<?php endif ?>
+					<?php if ($previousNatural !== $natural->getName()) : ?>
+						<li class="custom-option">
+					<?php endif ?>
+						<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<input type="hidden" name="naturalName" id="natural-name-hidden" value="<?= $previousNatural ?>" />
+	<section id="prewiew-section" <?php if (empty($previousNatural)) : ?> style="display:none;" <?php endif ?>>
+		<div id="duck-link-wrapper">
+			<a id="duck-link" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
+				<div><span>Vyhledat na </span><img id="duck-logo" src="images/duckLogo.png"></div>       
 			</a>
 		</div>       
-		<input type=url name="url" placeholder="Vložte URL obrázku" id="urlInput" class="text" value="<?= $previousUrl ?>"/>
-		<button id="urlConfirm" onclick="pictureSelected(event)" class="button">OK</button>
-		<img id="previewImg" class="img" src="images/imagePreview.png">
-		<img id="previewImgHidden" style="display: none;" />
-	</fieldset>
-	<fieldset id="field3" <?php if (empty($previousUrl)) : ?> style="display:none;" <?php endif ?>>
-		<input type=submit value="Přidat" id="sendButton" class="button" />
-	</fieldset>
+		<input type=url name="url" id="url-input" class="text" value="<?= $previousUrl ?>"/>
+		<button id="url-confirm-button" class="btn">OK</button>
+		<img id="preview-img" class="img" src="images/imagePreview.png">
+		<img id="preview-img-hidden" style="display: none;" />
+	</section>
+	<section id="submit-section <?php if (empty($previousUrl)) : ?> style="display:none;" <?php endif ?>>
+		<input type=submit value="Přidat" id="send-button" class="btn" />
+	</section>
 </form>
-<a href="<?= $returnUrl ?>"><button class="button">Zpět</button></a>
+<a href="<?= $returnUrl ?>"><button class="btn">Zpět</button></a>

@@ -8,7 +8,8 @@ $(function() {
 
 	//event listener select boxů
 	for (const dropdown of $(".custom-select-wrapper")) {
-		$(dropdown).find(".custom-option").first().addClass("selected");
+		if ($(dropdown) != ("#add-natural-select"))
+			$(dropdown).find(".custom-option").first().addClass("selected");
 		$(dropdown).click(function() {
 			//$(this).find(".custom-option").first().addClass("selected");
 			manageSelectBox($(this));
