@@ -14,7 +14,7 @@ $(function()
 	$("#preview-img-hidden").on("error", function()
 	{
 		$("#preview-img").attr("src", "images/imagePreview.png");
-		$("#submit-section").hide();
+		$("#submit-fieldset").hide();
 	});
 	
 	//Obrázek načten úspěšně
@@ -22,7 +22,19 @@ $(function()
 	{
 		$("#preview-img").attr("src", $("#preview-img-hidden").attr("src"));
 	});
-});
+
+	resizeMainImg();
+})
+
+//vše, co se děje při změně velikosti okna
+$(window).resize(function() {
+	resizeMainImg();
+})
+
+//funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
+function resizeMainImg(){
+	$("#add-pictures-form-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
+}
 
 /**
  * Funkce, která se spouští po výberu přírodniny a nastavující název té vybrané
@@ -36,7 +48,7 @@ function naturalSelected()
 	for (var j = 0; j < i - 1; j++){selectedNatural += arr[j];}
 	$("#duck-link").attr("href", "https://duckduckgo.com/?q=" + selectedNatural + "&iax=images&ia=images");
 	$("#natural-name-hidden").val(selectedNatural);
-	$("#prewiew-section").show();
+	$("#prewiew-buttons-fieldset").show();
 }
 
 /**

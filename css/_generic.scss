@@ -104,6 +104,7 @@ h5 {
 		cursor: pointer;
 	}
 	&.border-btn {
+		display: inline-block;
 		text-align: center;
 		position: relative;
 		padding: 0.4em 1em;
@@ -175,6 +176,10 @@ h5 {
 		}
 		&:active {
 			transform: scale(0.98);
+		}
+		> img {
+			height: 1em;
+			width: 1em;
 		}
 	}
 	&.arrow-btn {

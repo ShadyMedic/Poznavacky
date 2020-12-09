@@ -1,4 +1,4 @@
-<form method="POST">
+<form method="POST" id="add-pictures-form-wrapper">
 	<!--<select onchange="naturalSelected()">
 		<?php if (empty($previousNatural)) : ?>
 		<option value="" selected disabled hidden></option>
@@ -17,7 +17,7 @@
 	<div class="custom-select-wrapper" id="add-natural-select">
 		<div class="custom-select">
 			<div class="custom-select-main">
-				<span></span>
+				<span>&#10240</span> <!-- neviditelný znak kvůli výšce elementu (nechci nastavovat natvrdo)-->
 				<img class="arrow" src="../images/arrowBlack.svg">
 			</div>
 			<ul class="custom-options">
@@ -35,19 +35,22 @@
 		</div>
 	</div>
 	<input type="hidden" name="naturalName" id="natural-name-hidden" value="<?= $previousNatural ?>" />
-	<section id="prewiew-section" <?php if (empty($previousNatural)) : ?> style="display:none;" <?php endif ?>>
-		<div id="duck-link-wrapper">
-			<a id="duck-link" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
-				<div><span>Vyhledat na </span><img id="duck-logo" src="images/duckLogo.png"></div>       
-			</a>
-		</div>       
-		<input type=url name="url" id="url-input" class="text" value="<?= $previousUrl ?>"/>
-		<button id="url-confirm-button" class="btn">OK</button>
+	<fieldset class="url-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">
+		<input type=url name="url" id="url-input" class="text-field" value="<?= $previousUrl ?>"/>
+		<button id="url-confirm-button" class="btn border-btn black non-transparent">OK</button>
+	</fieldset>
+	<fieldset class="prewiew-buttons-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">  
+		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
+			<span>Vyhledat na DuckDuckGo</span><img id="duck-logo" src="images/duckLogo.png">       
+		</a>  
+		<input type=submit value="Přidat" id="submit-button" class="btn border-btn black non-transparent" /> 
+	</fieldset>
+	<fieldset class="picture">
 		<img id="preview-img" class="img" src="images/imagePreview.png">
 		<img id="preview-img-hidden" style="display: none;" />
-	</section>
-	<section id="submit-section <?php if (empty($previousUrl)) : ?> style="display:none;" <?php endif ?>>
-		<input type=submit value="Přidat" id="send-button" class="btn" />
-	</section>
+	</fieldset>
+	<!--<fieldset id="submit-fieldset" <?php if (empty($previousUrl)) : ?> style="display:none" <?php endif ?>>
+		<input type=submit value="Přidat" id="send-button" class="btn border-btn black non-transparent" />
+	</fieldset>-->
 </form>
 <a href="<?= $returnUrl ?>"><button class="btn">Zpět</button></a>
