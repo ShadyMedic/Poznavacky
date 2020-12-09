@@ -8,7 +8,7 @@ $(function()
 {
 	//event listenery tlačítek
 	$("#url-confirm-button").click(function(event) {pictureSelected(event)});
-	$("#add-natural-select .custom-options .custom-option").click(function() {naturalSelected()});
+	$("#add-natural-select .custom-options .custom-option").click(function() {setTimeout(function() {naturalSelected()}), 0}); //nastaven setTimeout s intervalem 0 na změnu pořadí volaných funkcí (tato se nyní správně volá později než funkce spravující custom select box ze souboru generic.js)
 
 	//Chyba při načítání obrázku
 	$("#preview-img-hidden").on("error", function()
@@ -30,15 +30,13 @@ $(function()
  */
 function naturalSelected()
 {
-	setTimeout(function(){
-		let selectedNatural = "";
-		var arr = $("#add-natural-select .custom-options .selected").text();
-		for (var i = arr.length - 1; arr[i] != '('; i--){}
-		for (var j = 0; j < i - 1; j++){selectedNatural += arr[j];}
-		$("#duck-link").attr("href", "https://duckduckgo.com/?q=" + selectedNatural + "&iax=images&ia=images");
-		$("#natural-name-hidden").val(selectedNatural);
-		$("#prewiew-section").show();
-	},0);
+	let selectedNatural = "";
+	var arr = $("#add-natural-select .custom-options .selected").text();
+	for (var i = arr.length - 1; arr[i] != '('; i--){}
+	for (var j = 0; j < i - 1; j++){selectedNatural += arr[j];}
+	$("#duck-link").attr("href", "https://duckduckgo.com/?q=" + selectedNatural + "&iax=images&ia=images");
+	$("#natural-name-hidden").val(selectedNatural);
+	$("#prewiew-section").show();
 }
 
 /**
