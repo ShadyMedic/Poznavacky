@@ -34,13 +34,15 @@ class DataValidator
     public const CLASS_NAME_MAX_LENGTH = 31;
     public const GROUP_NAME_MIN_LENGTH = 3;
     public const GROUP_NAME_MAX_LENGTH = 31;
+    public const PART_NAME_MIN_LENGTH = 1;  //Při změně je nutné změnit hodnoty i v souboru editGroup.js
+    public const PART_NAME_MAX_LENGTH = 31; //Při změně je nutné změnit hodnoty i v souboru editGroup.js
     
     public const USER_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ';
     public const USER_PASSWORD_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'';
     public const USER_EMAIL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@.!#$%&\'*+-/=?^_`{|}~';  //Inspirováno https://stackoverflow.com/a/2049510/14011077
     public const CLASS_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
     public const GROUP_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
-    public const PART_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
+    public const PART_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';  //Při změně je nutné změnit hodnoty i v souboru editGroup.js
     
     public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
     
