@@ -14,17 +14,17 @@ function addPart()
 {
 	console.log("addPart");
 	$("#parts-boxes-container").append(`
-		<div class="part-box" style="border:1px solid black">
+	<div class="part-box" style="border:1px solid black">
         <button title="Odebrat část" class="actionButton">
         	<img src='images/cross.svg'/>
         </button>
-        <div class="part-name-box">
+        <div class="part-name-box" style="display:none;">
             <b class="part-name">Název části</b>
             <button title="Přejmenovat část" class="rename-part actionButton">
             	<img src='images/pencil.svg'/>
         	</button>
     	</div>
-        <div class="part-name-input-box" style="display:none;">
+        <div class="part-name-input-box">
         	<input type="text" maxlength="31" class="part-name-input"/>
         	<button class="rename-part-confirm actionButton">
         		<img src='images/tick.svg'/>
@@ -41,8 +41,9 @@ function addPart()
                 </button>
             </li>
         </ul>
-    </div>
+	</div>
 	`);
+	$(".part-box:last-child .part-name-input").focus(); //Uživatel by měl rovnou zadat jméno části
 }
 
 /**
