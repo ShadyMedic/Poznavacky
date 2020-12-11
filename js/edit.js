@@ -1,8 +1,10 @@
 $(function()
 {
+	$(".rename-group").click(function() { renameSomething(event, true); })
+	$(".rename-group-confirm").click(function() { renameSomethingConfirm(event, true); })
+	$(".rename-part").click(function() { renameSomething(event, false); })
+	$(".rename-part-confirm").click(function() { renameSomethingConfirm(event, false); })
 	$("#add-part-button").click(addPart);
-	$(".rename-part").click(function() { renamePart(event); })
-	$(".rename-part-confirm").click(function() { renamePartConfirm(event); })
 })
 
 /**
@@ -12,8 +14,8 @@ function addPart()
 {
 	console.log("addPart");
 	$("#parts-boxes-container").append(`
-		<div class="part-box">
-        <button title="Odebrat část">
+		<div class="part-box" style="border:1px solid black">
+        <button title="Odebrat část" class="actionButton">
         	<img src='images/cross.svg'/>
         </button>
         <div class="part-name-box">
@@ -24,7 +26,9 @@ function addPart()
     	</div>
         <div class="part-name-input-box" style="display:none;">
         	<input type="text" maxlength="31" class="part-name-input"/>
-        	<button class="rename-part-confirm actionButton"><img src='images/tick.svg'/></button>
+        	<button class="rename-part-confirm actionButton">
+        		<img src='images/tick.svg'/>
+    		</button>
         </div>
         <label>Přírodnina k přidání</label>
         <input type="text" />
@@ -32,8 +36,8 @@ function addPart()
             <!-- Zde budou řádky s názvy přidaných přírodnin -->
             <li>
             	<span>Vrbovka úzkolistá</span>
-                <button title="Odebrat">
-                	<img src='images/pencil.svg'/>
+                <button title="Odebrat" class="actionButton">
+                	<img src='images/cross.svg'/>
                 </button>
             </li>
         </ul>
@@ -42,39 +46,46 @@ function addPart()
 }
 
 /**
- * Funkce umožňující změnu jména části
+ * Funkce umožňující změnu jména poznávačky nebo části
  */
-function renamePart(event)
+function renameSomething(event, renamingGroup)
 {
-	console.log("renamePart");
+	let className = (renamingGroup) ? "group" : "part";
+	
 	$(event.target).parent().parent().hide();
-	$(event.target).parent().parent().siblings().filter(".part-name-input-box").show();
+	$(event.target).parent().parent().siblings().filter("." + className + "-name-input-box").show();
 }
 
 /**
- * Funkce ukládající změnu jména části
+ * Funkce ukládající změnu jména poznávačky nebo části
  */
-function renamePartConfirm(event)
+function renameSomethingConfirm(event, renamingGroup)
 {
-	console.log("renamePartConfirm");
-	let newName = $(event.target).parent().siblings().filter(".part-name-input-box > input").val();
+	let className = (renamingGroup) ? "group" : "part";
+	let errorString = (renamingGroup) ? "poznávačky" : "části";
+	let minChars = (renamingGroup) ? 3 : 1;
+	let maxChars = (renamingGroup) ? 31 : 31;
+	let allowedChars = (renamingGroup) ? "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-" : "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-";
+	
+	let newName = $(event.target).parent().siblings().filter("." + className + "-name-input-box > input").val();
 	
 	//Kontrola délky
-	if (newName === undefined || !(newName.length >= 1 && newName.length < 31))
+	if (newName === undefined || !(newName.length >= minChars && newName.length < maxChars))
 	{
-		alert("Jméno části musí mít 1 až 31 znaků");
+		alert("Jméno " + errorString + " musí mít 1 až 31 znaků");
 		return;
 	}
 	
 	//Kontrola znaků
-	if (newName.match(/^[0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-]*$/) === null)
+	let re = new RegExp("[^" + allowedChars + "]", 'g');
+	if (newName.match(re) !== null)
 	{
-		alert("Jméno části může obsahovat pouze písmena, číslice, mezeru a znaky . _ -");
+		alert("Jméno " + errorString + " může obsahovat pouze písmena, číslice, mezeru a znaky . _ -");
 		return;
 	}
 	
-	$(event.target).parent().parent().parent().find(".part-name").text(newName);
+	$(event.target).parent().parent().parent().find("." + className + "-name").text(newName);
 	
 	$(event.target).parent().parent().hide();
-	$(event.target).parent().parent().siblings().filter(".part-name-box").show();
+	$(event.target).parent().parent().siblings().filter("." + className + "-name-box").show();
 }

@@ -34,8 +34,8 @@ class DataValidator
     public const CLASS_NAME_MAX_LENGTH = 31;
     public const GROUP_NAME_MIN_LENGTH = 3;
     public const GROUP_NAME_MAX_LENGTH = 31;
-    public const PART_NAME_MIN_LENGTH = 1;  //Při změně je nutné změnit hodnoty i v souboru editGroup.js
-    public const PART_NAME_MAX_LENGTH = 31; //Při změně je nutné změnit hodnoty i v souboru editGroup.js
+    public const PART_NAME_MIN_LENGTH = 1;  //Při změně je nutné změnit hodnoty i v souboru edit.js a edit.phtml
+    public const PART_NAME_MAX_LENGTH = 31; //Při změně je nutné změnit hodnoty i v souboru edit.js a edit.phtml
     
     public const USER_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ';
     public const USER_PASSWORD_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\'';

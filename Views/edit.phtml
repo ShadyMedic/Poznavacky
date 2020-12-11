@@ -1,4 +1,17 @@
-<h1>Upravit poznávačku [Název poznávačky]</h1>
+<div id="group-name-container">
+    <div class="group-name-box">
+    	<b class="group-name">[Název poznávačky]</b>
+    	<button title="Přejmenovat poznávačku" class="rename-group actionButton">
+        	<img src='images/pencil.svg'/>
+    	</button>
+    </div>
+    <div class="group-name-input-box" style="display:none;">
+    	<input type="text" maxlength="31" class="group-name-input" value="[Název poznávačky]"/>
+    	<button class="rename-group-confirm actionButton">
+    		<img src='images/tick.svg'/>
+    	</button>
+    </div>
+</div>
 <div id="parts-boxes-container">
     <div class="part-box" style="border:1px solid black">
         <button title="Odebrat část" class="actionButton">
@@ -12,7 +25,9 @@
     	</div>
         <div class="part-name-input-box" style="display:none;">
         	<input type="text" maxlength="31" class="part-name-input"/>
-        	<button class="rename-part-confirm actionButton"><img src='images/tick.svg'/></button>
+        	<button class="rename-part-confirm actionButton">
+        		<img src='images/tick.svg'/>
+    		</button>
         </div>
         <label>Přírodnina k přidání</label>
         <input type="text" />
