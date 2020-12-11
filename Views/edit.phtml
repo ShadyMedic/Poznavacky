@@ -1,0 +1,34 @@
+<h1>Upravit poznávačku [Název poznávačky]</h1>
+<div id="parts-boxes-container">
+    <div class="part-box" style="border:1px solid black">
+        <button title="Odebrat část" class="actionButton">
+        	<img src='images/cross.svg'/>
+        </button>
+        <div class="part-name-box">
+            <b class="part-name">Název části</b>
+            <button title="Přejmenovat část" class="rename-part actionButton">
+            	<img src='images/pencil.svg'/>
+        	</button>
+    	</div>
+        <div class="part-name-input-box" style="display:none;">
+        	<input type="text" maxlength="31" class="part-name-input"/>
+        	<button class="rename-part-confirm actionButton"><img src='images/tick.svg'/></button>
+        </div>
+        <label>Přírodnina k přidání</label>
+        <input type="text" />
+        <ul class="naturals-in-part">
+            <!-- Zde budou řádky s názvy přidaných přírodnin -->
+            <li>
+            	<span>Vrbovka úzkolistá</span>
+                <button title="Odebrat" class="actionButton">
+                	<img src='images/cross.svg'/>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <!-- Sem se budou přidávat další části (div s třídou "part-box") -->
+</div>
+<button id="add-part-button" class="actionButton">
+	<img src='images/plus.svg'/>
+</button>
+<button id="submit">Uložit</button>
