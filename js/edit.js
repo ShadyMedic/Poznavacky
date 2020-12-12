@@ -1,5 +1,13 @@
+var groupUrls;    //Pole url poznávaček, které jsou v tétož třídě již obsaženy (včetně upravované)
+var naturalNames; //Pole názvů přírodnin, které patří do této třídy
 $(function()
 {
+	//Načtení dočasných dat do proměnných a jejich odstranění z DOM
+	groupUrls = JSON.parse($("#group-urls-json").text());
+	naturalNames = JSON.parse($("#natural-names-json").text());
+	$("#temp-data").remove();
+	
+	//Nastavení event handlerů
 	$("#help-button").click(function() { $("#help-text").toggle(); })
 	$(".rename-group").click(function() { renameSomething(event, true); })
 	$(".rename-group-confirm").click(function() { renameSomethingConfirm(event, true); })

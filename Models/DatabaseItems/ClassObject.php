@@ -39,7 +39,8 @@ class ClassObject extends Folder
         'code' => 0,
         'groups' => array(),
         'groupsCount' => 0,
-        'members' => array()
+        'members' => array(),
+        'naturals' => array()
     );
     
     protected const CAN_BE_CREATED = false;
@@ -62,6 +63,7 @@ class ClassObject extends Folder
     
     protected $members;
     protected $groups;
+    protected $naturals;
     
     private $accessCheckResult;
     
@@ -147,6 +149,45 @@ class ClassObject extends Folder
     }
     
     /**
+     * Metoda navracející pole přírodnin patřících do této třídy jako objekty
+     * Pokud zatím nebyly přírodniny načteny, budou načteny z databáze
+     * @return Natural[] Pole poznávaček patřících do této třídy jako objekty
+     */
+    public function getNaturals(): array
+    {
+        if (!$this->isDefined($this->naturals))
+        {
+            $this->loadNaturals();
+        }
+        return $this->naturals;
+    }
+    
+    /**
+     * Metoda načítající přírodniny patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
+     */
+    private function loadNaturals(): void
+    {
+        $this->loadIfNotLoaded($this->id);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['class'].' = ?;', array($this->id), true);
+        if ($result === false || count($result) === 0)
+        {
+            //Žádné poznávačky nenalezeny
+            $this->naturals = array();
+        }
+        else
+        {
+            $this->naturals = array();
+            foreach ($result as $naturalData)
+            {
+                $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
+                //Místo posledního null by se mělo nastavit $this, avšak výsledné pole obsahuje příliš mnoho úrovní vnořených objektů a jeho ošetření proti XSS útoku trvá strašně dlouho
+                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null);
+                $this->naturals[] = $natural;
+            }
+        }
+    }
+    
+    /**
      * Metoda navracející pole poznávaček patřících do této třídy jako objekty
      * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
      * @return Group[] Pole poznávaček patřících do této třídy jako objekty
@@ -164,7 +205,7 @@ class ClassObject extends Folder
      * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
      * Počet poznávaček v této třídě je také aktualizován (vlastnost ClassObject::$groupsCount)
      */
-    public function loadGroups(): void
+    private function loadGroups(): void
     {
         $this->loadIfNotLoaded($this->id);
         
