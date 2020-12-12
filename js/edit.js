@@ -97,9 +97,7 @@ function naturalTyped(event)
 	if (event.keyCode === 13)
 	{
 		//Byl stisknut Enter --> přidej přírodninu do seznamu
-		//TODO - proveď kontrolu unikátnosti
 		addNatural(event);
-		$(event.target).val("");
 	}
 	else
 	{
@@ -109,14 +107,27 @@ function naturalTyped(event)
 
 function addNatural(event)
 {
+	let naturalName = $(event.target).parent().children().filter(".natural-input").val();
+	
+	//Proveď kontrolu unikátnosti
+	let presentNaturals = $(event.target).siblings().filter(".naturals-in-part").children().filter("li").children().filter("span").map(function() {return $(this).text(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
+	if (presentNaturals.includes(naturalName))
+	{
+		alert("Tato přírodnina je již do této části přidána");
+		return;
+	}
+	
 	$(event.target).parent().children().filter(".naturals-in-part").prepend(`
 		<li>
-        	<span>` + $(event.target).parent().children().filter(".natural-input").val() + `</span>
+        	<span>` + naturalName + `</span>
             <button title="Odebrat" class="remove-natural actionButton">
             	<img src='images/cross.svg'/>
             </button>
         </li>
 	`);
+	
+	//Vymaž vstup
+	$(event.target).parent().children().filter(".natural-input").val("");
 }
 
 /**
