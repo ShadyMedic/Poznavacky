@@ -5,6 +5,7 @@ $(function()
 	$("#edit-interface").on("click", ".remove-part", function() { removePart(event); })
 	$("#edit-interface").on("click", ".rename-part", function() { renameSomething(event, false); })
 	$("#edit-interface").on("click", ".rename-part-confirm", function() { renameSomethingConfirm(event, false); })
+	$("#edit-interface").on("click", ".remove-natural", function() { removeNatural(event); })
 	$("#add-part-button").click(addPart);
 })
 
@@ -35,12 +36,6 @@ function addPart()
         <input type="text" />
         <ul class="naturals-in-part">
             <!-- Zde budou řádky s názvy přidaných přírodnin -->
-            <li>
-            	<span>Vrbovka úzkolistá</span>
-                <button title="Odebrat" class="actionButton">
-                	<img src='images/cross.svg'/>
-                </button>
-            </li>
         </ul>
 	</div>
 	`);
@@ -92,6 +87,16 @@ function renameSomethingConfirm(event, renamingGroup)
 	
 	$(event.target).parent().parent().hide();
 	$(event.target).parent().parent().siblings().filter("." + className + "-name-box").show();
+}
+
+/**
+ * Funkce odebírající určitou přírodninu
+ * @param event
+ * @returns
+ */
+function removeNatural(event)
+{
+	$(event.target).parent().parent().remove();
 }
 
 /**
