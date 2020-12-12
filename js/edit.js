@@ -1,5 +1,6 @@
 $(function()
 {
+	$("#help-button").click(function() { $("#help-text").toggle(); })
 	$(".rename-group").click(function() { renameSomething(event, true); })
 	$(".rename-group-confirm").click(function() { renameSomethingConfirm(event, true); })
 	$("#edit-interface").on("click", ".remove-part", function() { removePart(event); })
