@@ -6,6 +6,8 @@ $(function()
 	$("#edit-interface").on("click", ".remove-part", function() { removePart(event); })
 	$("#edit-interface").on("click", ".rename-part", function() { renameSomething(event, false); })
 	$("#edit-interface").on("click", ".rename-part-confirm", function() { renameSomethingConfirm(event, false); })
+	$("#edit-interface").on("keyup", ".natural-input", function() { naturalTyped(event) })
+	$("#edit-interface").on("click", ".natural-button", function() { addNatural(event) })
 	$("#edit-interface").on("click", ".remove-natural", function() { removeNatural(event); })
 	$("#add-part-button").click(addPart);
 })
@@ -90,10 +92,35 @@ function renameSomethingConfirm(event, renamingGroup)
 	$(event.target).parent().parent().siblings().filter("." + className + "-name-box").show();
 }
 
+function naturalTyped(event)
+{
+	if (event.keyCode === 13)
+	{
+		//Byl stisknut Enter --> přidej přírodninu do seznamu
+		//TODO - proveď kontrolu unikátnosti
+		addNatural(event);
+		$(event.target).val("");
+	}
+	else
+	{
+		//TODO - proveď filtraci a zobraz návrhy
+	}
+}
+
+function addNatural(event)
+{
+	$(event.target).parent().children().filter(".naturals-in-part").prepend(`
+		<li>
+        	<span>` + $(event.target).parent().children().filter(".natural-input").val() + `</span>
+            <button title="Odebrat" class="remove-natural actionButton">
+            	<img src='images/cross.svg'/>
+            </button>
+        </li>
+	`);
+}
+
 /**
  * Funkce odebírající určitou přírodninu
- * @param event
- * @returns
  */
 function removeNatural(event)
 {
