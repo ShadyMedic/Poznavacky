@@ -2,8 +2,9 @@ $(function()
 {
 	$(".rename-group").click(function() { renameSomething(event, true); })
 	$(".rename-group-confirm").click(function() { renameSomethingConfirm(event, true); })
-	$(".rename-part").click(function() { renameSomething(event, false); })
-	$(".rename-part-confirm").click(function() { renameSomethingConfirm(event, false); })
+	$("#edit-interface").on("click", ".remove-part", function() { removePart(event); })
+	$("#edit-interface").on("click", ".rename-part", function() { renameSomething(event, false); })
+	$("#edit-interface").on("click", ".rename-part-confirm", function() { renameSomethingConfirm(event, false); })
 	$("#add-part-button").click(addPart);
 })
 
@@ -15,7 +16,7 @@ function addPart()
 	console.log("addPart");
 	$("#parts-boxes-container").append(`
 	<div class="part-box" style="border:1px solid black">
-        <button title="Odebrat část" class="actionButton">
+        <button title="Odebrat část" class="remove-part actionButton">
         	<img src='images/cross.svg'/>
         </button>
         <div class="part-name-box" style="display:none;">
@@ -51,6 +52,7 @@ function addPart()
  */
 function renameSomething(event, renamingGroup)
 {
+	console.log("renameSomething");
 	let className = (renamingGroup) ? "group" : "part";
 	
 	$(event.target).parent().parent().hide();
@@ -62,6 +64,7 @@ function renameSomething(event, renamingGroup)
  */
 function renameSomethingConfirm(event, renamingGroup)
 {
+	console.log("renameSomethingConfirm");
 	let className = (renamingGroup) ? "group" : "part";
 	let errorString = (renamingGroup) ? "poznávačky" : "části";
 	let minChars = (renamingGroup) ? 3 : 1;
@@ -89,4 +92,18 @@ function renameSomethingConfirm(event, renamingGroup)
 	
 	$(event.target).parent().parent().hide();
 	$(event.target).parent().parent().siblings().filter("." + className + "-name-box").show();
+}
+
+/**
+ * Funkce odebírající určitou část
+ */
+function removePart(event)
+{
+	console.log("removePart");
+	if (!confirm("Opravdu si přejete odebrat tuto část?\nZměny se neprojeví, dokud nebude úprava poznávačky uložena.\nTouto akcí nebudou odstraněny žádné existující přírodniny, ani jejich obrázky."))
+	{
+		return;
+	}
+	
+	$(event.target).parent().parent().remove();
 }
