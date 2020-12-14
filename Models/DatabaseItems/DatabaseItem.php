@@ -326,7 +326,7 @@ abstract class DatabaseItem
                     $message = '
                         Okay, I am not sure what you had to done to cause this,
                         but this error occured, because you saved a representation
-                        of a non-primitive data tipe in the database and tried to
+                        of a non-primitive data type in the database and tried to
                         load item with this property. However, the program doesn\'t
                         know how to constuct the object just with the value loaded
                         from the database. If you want to fix this, you have to
