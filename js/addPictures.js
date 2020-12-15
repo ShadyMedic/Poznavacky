@@ -33,7 +33,8 @@ $(window).resize(function() {
 
 //funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
 function resizeMainImg(){
-	$("#add-pictures-form-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
+	$("#add-pictures-form-wrapper .picture").css("height", $("#add-pictures-form-wrapper .picture").outerWidth());
+	$(".preview-buttons-fieldset").css("height", $("#add-pictures-form-wrapper .picture").height());
 }
 
 /**

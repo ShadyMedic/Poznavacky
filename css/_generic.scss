@@ -180,6 +180,8 @@ h5 {
 		> img {
 			height: 1em;
 			width: 1em;
+			transform: translateY(10%) scale(140%);
+			margin: 0 0.5em;
 		}
 	}
 	&.arrow-btn {
@@ -301,6 +303,8 @@ textarea {
 }
 
 label {
+	line-height: 1.32em;
+	padding: 0.48em 0;
 	&.required {
 		&:after {
 			content: " *";

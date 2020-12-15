@@ -36,10 +36,11 @@
 	</div>
 	<input type="hidden" name="naturalName" id="natural-name-hidden" value="<?= $previousNatural ?>" />
 	<fieldset class="url-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">
+		<label for="url-input">Zadejte URL adresu obrázku:</label>
 		<input type=url name="url" id="url-input" class="text-field" value="<?= $previousUrl ?>"/>
 		<button id="url-confirm-button" class="btn border-btn black non-transparent">OK</button>
 	</fieldset>
-	<fieldset class="prewiew-buttons-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">  
+	<fieldset class="preview-buttons-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">  
 		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
 			<span>Vyhledat na DuckDuckGo</span><img id="duck-logo" src="images/duckLogo.png">       
 		</a>  
