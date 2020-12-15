@@ -20,7 +20,49 @@ $(function()
 	$("#edit-interface").on("click", ".natural-button", function() { addNatural(event) })
 	$("#edit-interface").on("click", ".remove-natural", function() { removeNatural(event); })
 	$("#add-part-button").click(addPart);
+	$("#submit").click(save);
 })
+
+/* -------------------------------------------------------------------------------------------- */
+
+/**
+ * Objekt pro uchování dat poznávačky
+ * @param {Název poznávačky} groupName 
+ */
+function groupData(groupName)
+{
+	this.name = groupName;
+	this.parts = new Array();
+	
+	/**
+	 * Metoda přidávající do této poznávačky další prázdnou část
+	 */
+	this.addPart = function(partName)
+	{
+		this.parts.push(new partData(partName));
+	}
+}
+
+/**
+ * Objekt pro uchování dat části
+ * @param {Název části} partName 
+ */
+function partData(partName)
+{
+	this.name = partName;
+	this.naturals = new Array();
+
+	/**
+	 * Metoda přidávající do této části další přírodninu
+	 * @param {Název přírodniny} naturalName 
+	 */
+	this.addNatural = function(naturalName)
+	{
+		this.naturals.push(naturalName);
+	}
+}
+
+/* -------------------------------------------------------------------------------------------- */
 
 /**
  * Funkce přidávající do DOM nový element části
@@ -234,7 +276,7 @@ function addNatural(event)
 	
 	$(event.target).parent().children().filter(".naturals-in-part").prepend(`
 		<li>
-        	<span>` + naturalName + `</span>
+        	<span class="natural-name">` + naturalName + `</span>
             <button title="Odebrat" class="remove-natural actionButton">
             	<img src='images/cross.svg'/>
             </button>
@@ -264,4 +306,74 @@ function removePart(event)
 	}
 	
 	$(event.target).parent().parent().remove();
+}
+
+/**
+ * Funkce volaná po kliknutí na tlačítko "Uložit", která poskládá JSON objekt obsahující všechna data poznávačky a odesílající je na backend
+ */
+function save()
+{
+	let data;
+
+	//Krok 1: Získej nový název poznávačky
+	let newGroupName = $(".group-name").text();
+	data = new groupData(newGroupName);
+
+	//Krok 2: Získej pole všech částí
+	let partsArray = $(".part-box").get();
+
+	//Krok 3: Z každé části získej její název
+	for (let i = 0; i < partsArray.length; i++)
+	{
+		data.addPart($(partsArray[i]).find(".part-name").text());
+	}
+
+	//Krok 4: Z každé části získej seznam přírodnin
+	for (let i = 0; i < partsArray.length; i++)
+	{
+		let naturalsArray = $(partsArray[i]).find(".naturals-in-part").children().get();
+		for (let j = 0; j < naturalsArray.length; j++)
+		{
+			data.parts[i].addNatural($(naturalsArray[j]).find(".natural-name").text());
+		}
+	}
+
+	//Odešli data na server
+	console.log(JSON.stringify(data));
+	$.post("confirm-group-edit",
+		{
+			data: JSON.stringify(data)
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						if (confirm(`
+						Změny byly úspěšně uloženy\n
+						Přejete si aktualizovat stránku pro ověření změn?
+						`)) { location.reload(); }
+					}
+					else if (messageType === "error")
+					{
+						//Chyba vstupu
+						alert(message);
+					}
+					else if (messageType = "warning")
+					{
+						//Chyba ukládání
+						alert(`
+							Došlo k chybě na straně serveru a změny nemohly být uloženy\n
+							Kontaktujte prosím administrátora\n
+							Abyste o provedené změny nepřišli, zkopírujte a uložte si prosím text níže\n
+							Omlouváme se za nepříjemnosti\n
+						` + data["json"]);
+					}
+				}
+			);
+		},
+		"json"
+	);
 }
