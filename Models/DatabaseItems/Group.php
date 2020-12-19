@@ -192,7 +192,7 @@ class Group extends Folder
     /**
      * Metoda načítající části patřící do této poznávačky a ukládající je jako vlastnost
      */
-    public function loadParts(): void
+    private function loadParts(): void
     {
         $this->loadIfNotLoaded($this->id);
         
