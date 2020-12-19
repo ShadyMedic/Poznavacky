@@ -145,6 +145,15 @@ abstract class DatabaseItem
     }
     
     /**
+     * Metoda navracející údaj o tom, zda je tato položka již uložena v databázi, nebo zda se jedná o novou položku
+     * @return bool TRUE, pokud se jedná o novou položku, FALSE, pokud je již položka se stejným ID uložena v databázi
+     */
+    public function isNew(): bool
+    {
+        return !$this->savedInDb;
+    }
+    
+    /**
      * Metoda zjišťující, zda je daná proměnná definována (zda je do ní přiřazeno cokoliv jiného než objekt typu undefined
      * @param mixed $property
      * @return boolean TRUE, pokud proměnná obsahuje cokoliv jiného než objekt typu undefined (včetně null)
