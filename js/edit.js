@@ -267,7 +267,7 @@ function addNatural(event)
 	let naturalName = $(event.target).parent().children().filter(".natural-input").val();
 	let naturalMinLength = 1;
 	let naturalMaxLength = 31;
-	let naturalAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-+/*%()\'\"";
+	let naturalAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci
 	
 	//Proveď kontrolu unikátnosti
 	let presentNaturals = $(event.target).siblings().filter(".naturals-in-part").children().filter("li").children().filter("span").map(function() {return $(this).text().toUpperCase(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
@@ -278,7 +278,7 @@ function addNatural(event)
 	}
 	
 	//Kontrola délky
-	if (naturalName === undefined || !(naturalName.length >= naturalMinLength && newName.length <= naturalMaxLength))
+	if (naturalName === undefined || !(naturalName.length >= naturalMinLength && naturalName.length <= naturalMaxLength))
 	{
 		alert("Název přírodniny musí mít 1 až 31 znaků");
 		return;

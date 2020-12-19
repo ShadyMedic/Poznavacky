@@ -148,7 +148,7 @@ class DataValidator
                     throw new BadMethodCallException('Parent object must be specified for this check');
                 }
                 
-                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Part::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($subject, $parentFolder->getId()), false);
+                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($subject, $parentFolder->getId()), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
