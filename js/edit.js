@@ -136,7 +136,7 @@ function renameSomethingConfirm(event, renamingGroup)
 	//Kontrola délky
 	if (newName === undefined || !(newName.length >= minChars && newName.length <= maxChars))
 	{
-		alert("Jméno " + errorString + " musí mít 1 až 31 znaků");
+		alert("Název " + errorString + " musí mít 1 až 31 znaků");
 		return;
 	}
 	
@@ -144,7 +144,7 @@ function renameSomethingConfirm(event, renamingGroup)
 	let re = new RegExp("[^" + allowedChars + "]", 'g');
 	if (newName.match(re) !== null)
 	{
-		alert("Jméno " + errorString + " může obsahovat pouze písmena, číslice, mezeru a znaky . _ -");
+		alert("Název " + errorString + " může obsahovat pouze písmena, číslice, mezeru a znaky . _ -");
 		return;
 	}
 
@@ -265,12 +265,30 @@ function naturalTyped(event)
 function addNatural(event)
 {
 	let naturalName = $(event.target).parent().children().filter(".natural-input").val();
+	let naturalMinLength = 1;
+	let naturalMaxLength = 31;
+	let naturalAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-+/*%()\'\"";
 	
 	//Proveď kontrolu unikátnosti
-	let presentNaturals = $(event.target).siblings().filter(".naturals-in-part").children().filter("li").children().filter("span").map(function() {return $(this).text(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
-	if (presentNaturals.includes(naturalName))
+	let presentNaturals = $(event.target).siblings().filter(".naturals-in-part").children().filter("li").children().filter("span").map(function() {return $(this).text().toUpperCase(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
+	if (presentNaturals.includes(naturalName.toUpperCase()))
 	{
 		alert("Tato přírodnina je již do této části přidána");
+		return;
+	}
+	
+	//Kontrola délky
+	if (naturalName === undefined || !(naturalName.length >= naturalMinLength && newName.length <= naturalMaxLength))
+	{
+		alert("Název přírodniny musí mít 1 až 31 znaků");
+		return;
+	}
+	
+	//Kontrola znaků
+	let re = new RegExp("[^" + naturalAllowedChars + "]", 'g');
+	if (naturalName.match(re) !== null)
+	{
+		alert("Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky _ . - + / * % ( ) \' \"");
 		return;
 	}
 	
