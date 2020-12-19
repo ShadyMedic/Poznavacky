@@ -555,10 +555,11 @@ class ClassObject extends Folder
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_INVALID_CHARACTERS, null, $e);
         }
         
-        //Kontrola dostupnosti jména
+        //Kontrola dostupnosti jména (konkrétně URL adresy)
         try
         {
-            $validator->checkUniqueness($newName, DataValidator::TYPE_CLASS_NAME);
+            $url = $this->generateUrl($newName);
+            $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         }
         catch (InvalidArgumentException $e)
         {
@@ -574,12 +575,16 @@ class ClassObject extends Folder
         if (!empty($applications[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]))
         {
             //Přepsání existující žádosti
-            Db::executeQuery('UPDATE '.ClassNameChangeRequest::TABLE_NAME.' SET '.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].' = ?, '.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].' = NOW() WHERE '.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newName, $applications['zadosti_jmena_tridy_id']));
+            $request = new ClassNameChangeRequest(false, $applications[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
+            $request->initialize($this, $newName, new DateTime(time()), $this->generateUrl($newName));
+            $request->save();
         }
         else
         {
             //Uložení nové žádosti
-            Db::executeQuery('INSERT INTO '.ClassNameChangeRequest::TABLE_NAME.' ('.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,NOW())', array($this->id, $newName));
+            $request = new ClassNameChangeRequest(true);
+            $request->initialize($this, $newName, new DateTime(time()), $this->generateUrl($newName));
+            $request->save();
         }
         return true;
     }
