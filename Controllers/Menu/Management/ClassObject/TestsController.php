@@ -36,16 +36,19 @@ class TestsController extends Controller
         if ($argumentCount > 0)
         {
             //Název poznávačky
-
-            //Uložení objektu poznávačky do $_SESSION
-            $_SESSION['selection']['group'] = new Group(false);
-            $_SESSION['selection']['group']->initialize(null, $testsArguments[0], $_SESSION['selection']['class'], null, null);
-        
+            
             //Musí být specifikována i akce
             if ($argumentCount === 1)
             {
                 //Přesměrovat na tests bez parametrů
                 $this->redirect('menu/'.$_SESSION['selection']['class']->getName().'/manage/tests');
+            }
+            
+            //Uložení objektu poznávačky do $_SESSION (pouze pokud už nějaká uložená není)
+            if (!isset($_SESSION['selection']['group']))
+            {
+                $_SESSION['selection']['group'] = new Group(false);
+                $_SESSION['selection']['group']->initialize(null, $testsArguments[0], $_SESSION['selection']['class'], null, null);
             }
         }
         if ($argumentCount > 1)
