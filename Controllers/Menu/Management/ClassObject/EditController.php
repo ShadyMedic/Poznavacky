@@ -25,7 +25,7 @@ class EditController extends Controller
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/edit.js');
         $this->pageHeader['bodyId'] = 'editGroup';
         
-        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName().'/manage/tests';
+        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
         
         //Metoda získání URL poznávaček a jmen přírodnin napsaná podle jednoho komentáře pod touto odpovědí na StackOverflow: https://stackoverflow.com/a/1119029/14011077
         $this->data['groupList'] = array_map(function (Group $group): string {return $group->getUrl(); }, $_SESSION['selection']['class']->getGroups());
