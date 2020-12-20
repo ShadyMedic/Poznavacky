@@ -285,5 +285,42 @@ class Group extends Folder
         
         return $reports;
     }
+    
+    /**
+     * Metoda nastavující poznávačce nový název a podle něj aktualizuje i URL
+     * Počítá se s tím, že jméno již bylo ošetřeno na délku, znaky a unikátnost
+     * Změna není uložena do databáze, aby bylo nové jméno trvale uloženo, musí být zavolána metoda Gruop::save()
+     * @param string $newName Nový název třídy
+     */
+    public function rename(string $newName)
+    {
+        $this->name = $newName;
+        $this->url = $this->generateUrl($newName);
+    }
+    
+    /**
+     * Metoda nahrazující všechny staré poznávačky patřící do této poznávačky novými
+     * Změny jsou provedeny na úrovni databáze - staré poznávačky jsou smazány a jsou nahrazeny novými
+     * I počet částí v této poznávačce je touto metodou aktualizován
+     * Vlastnosti $parts a $partsCount tohoto objektu jsou aktualizovány
+     * @param array $newParts Pole nových částí jako objekty
+     */
+    public function replaceParts(array $newParts)
+    {
+        $this->loadIfNotLoaded($this->id);
+        
+        //Smaž staré části z databáze
+        Db::executeQuery('DELETE FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id));
+        
+        //Ulož do databáze nové části
+        foreach ($newParts as $part) { $part->save(); }
+        
+        //Aktualizuj počet částí poznávačky
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['partsCount'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array(count($newParts), $this->id));
+        
+        //Nahraď poznávačky a aktualizuj počet částí uložený ve vlastnostech tohoto objektu 
+        $this->parts = $newParts;
+        $this->partsCount = count($newParts);
+    }
 }
 
