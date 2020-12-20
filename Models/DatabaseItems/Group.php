@@ -292,7 +292,7 @@ class Group extends Folder
      * Změna není uložena do databáze, aby bylo nové jméno trvale uloženo, musí být zavolána metoda Gruop::save()
      * @param string $newName Nový název třídy
      */
-    public function rename(string $newName)
+    public function rename(string $newName): void
     {
         $this->name = $newName;
         $this->url = $this->generateUrl($newName);
@@ -305,7 +305,7 @@ class Group extends Folder
      * Vlastnosti $parts a $partsCount tohoto objektu jsou aktualizovány
      * @param array $newParts Pole nových částí jako objekty
      */
-    public function replaceParts(array $newParts)
+    public function replaceParts(array $newParts): void
     {
         $this->loadIfNotLoaded($this->id);
         
