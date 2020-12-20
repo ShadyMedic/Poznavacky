@@ -86,7 +86,7 @@ function addPart()
         		<img src='images/tick.svg'/>
     		</button>
         </div>
-        <span class="part-name-url">V URL bude zobrazováno jako nazev-casti</span>
+        <div class="part-name-url">V URL bude zobrazováno jako nazev-casti</div>
         <label>Přírodnina k přidání</label>
         <input type="text" class="natural-input" />
         <button class="natural-button">↵</button>
