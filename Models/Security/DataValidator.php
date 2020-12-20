@@ -3,7 +3,6 @@ namespace Poznavacky\Models\Security;
 
 use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
 use Poznavacky\Models\DatabaseItems\ClassObject;
-use Poznavacky\Models\DatabaseItems\Folder;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Part;
 use Poznavacky\Models\DatabaseItems\User;
