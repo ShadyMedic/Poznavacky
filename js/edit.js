@@ -357,8 +357,8 @@ function save()
 	}
 
 	//Odešli data na server
-	console.log(JSON.stringify(data));
-	$.post("confirm-group-edit",
+	let url = window.location.href.replace(/\/$/, "").replace(/edit$/, "")+"confirm-group-edit"; //Adresa současné stránky (bez edit a lomena na konci)
+	$.post(url,
 		{
 			data: JSON.stringify(data)
 		},
@@ -382,12 +382,7 @@ function save()
 					else if (messageType = "warning")
 					{
 						//Chyba ukládání
-						alert(`
-							Došlo k chybě na straně serveru a změny nemohly být uloženy\n
-							Kontaktujte prosím administrátora\n
-							Abyste o provedené změny nepřišli, zkopírujte a uložte si prosím text níže\n
-							Omlouváme se za nepříjemnosti\n
-						` + data["json"]);
+						alert(message + data["json"]);
 					}
 				}
 			);
