@@ -91,7 +91,7 @@ class MenuController extends Controller
             {
                 //Název třídy
                 //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
-                if (!isset($_SESSION['selection']['class']) || urldecode($menuArguments[0]) !== $_SESSION['selection']['class']->getName())
+                if (!isset($_SESSION['selection']['class']) || $menuArguments[0] !== $_SESSION['selection']['class']->getUrl())
                 {
                     //Uložení objektu třídy do $_SESSION
                     $_SESSION['selection']['class'] = new ClassObject(false, 0);
@@ -131,16 +131,20 @@ class MenuController extends Controller
             {
                 //ManageController / LeaveController
                 $this->controllerToCall = new $pathToController();
-                
-                //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
-                $this->unsetSelection(true, true);
                 $this->argumentsToPass = array_slice($menuArguments, 2);
+                
+                if ($controllerName === 'LeaveController')
+                {
+                    //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
+                    //Toto nedělej při zvolení ManageController, protože v $_SESSION['selection'] mohou být uloženy pozměněné informace, které mají mít přednost před URL argumenty
+                    $this->unsetSelection(true, true);
+                }
             }
             else
             {
                 //Název poznávačky
                 //Kontrola, zda právě zvolený název souhlasí s názvem poznávačky uložené v $_SESSION
-                if (!isset($_SESSION['selection']['group']) || urldecode($menuArguments[1]) !== @$_SESSION['selection']['group']->getName())
+                if (!isset($_SESSION['selection']['group']) || $menuArguments[1] !== @$_SESSION['selection']['group']->getUrl())
                 {
                     //Uložení objektu poznávačky do $_SESSION
                     $_SESSION['selection']['group'] = new Group(false);
@@ -185,12 +189,12 @@ class MenuController extends Controller
                 if ($argumentCount === 3)
                 {
                     //Je specifikována část, ale ne akce --> návrat na seznam částí
-                    $this->redirect('menu/'.$_SESSION['selection']['class']->getName().'/'.$_SESSION['selection']['group']->getName());
+                    $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
                 }
                 
                 //Nastavení části (pouze, pokud nejsou vybrány všechny části najednou)
                 //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
-                if (!isset($_SESSION['selection']['part']) || urldecode($menuArguments[2]) !== @$_SESSION['selection']['part']->getName())
+                if (!isset($_SESSION['selection']['part']) || $menuArguments[2] !== @$_SESSION['selection']['part']->getUrl())
                 {
                     //Uložení objektu části do $_SESSION
                     $_SESSION['selection']['part'] = new Part(false);
