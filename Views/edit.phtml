@@ -1,80 +1,105 @@
 <div id="temp-data" style="display:none;">
-	<pre id="group-urls-json"><?= json_encode($groupList); ?></pre>
-	<pre id="natural-names-json"><?= json_encode($naturalList); ?></pre>
+    <pre id="group-urls-json"><?= json_encode($groupList); ?></pre>
+    <pre id="natural-names-json"><?= json_encode($naturalList); ?></pre>
 </div>
 <div id="edit-interface">
     <div id="help-container">
         <button title="Nápověda" id="help-button" class="actionButton">
-        	<img src='images/info.svg'/>
+            <img src='images/info.svg'/>
         </button>
         <div id="help-text" style="display:none">
-        	<p>
-        	Vítejte v rozhraní pro editaci poznávačky. Na této stránce můžete vybranou poznávačku přejmenovat, přidávat či odebírat z ní části a přejmenovávat i je. A samozřejmě můžete do těchto částí přidávat přírodniny.
-        	</p>
-        	<p>
-        	Při přejmenovávání poznávačky dávejte pozor, abyste nezvolili jméno, které už má nějaká z jiných poznávaček patřících do vaší třídy. V případě konfliktu budete okamžitě upozorněni. To samé se týká jmen částí, také musí být unikátní, avšak můžete mít v různých poznávačkách části se stejnými jmény.
-        	</p>
-        	<p>
-        	Odebráním části nebudou smazány žádné přírodniny ani obrázky k nim nahrané. Přírodniny, které jsou do takovýchto částí přiřazeny zůstanou dostupné a budete je moci později přiřadit do jiných částí a poznávaček.
-        	</p>
-        	<p>
-        	Každou přírodninu můžete přidat do více různých poznávaček a dokonce ji můžete mít i vícekrát v různých částech tétož poznávačky. Jediným pravidlem je, že tatáž přírodnina se nesmí vícekrát vyskytovat ve stejné části.
-        	</p>
-        	<p>
-        	Při přidávání přírodnin se vám budou automaticky nabízet přírodniny, které již ve vaší třídě existují. Pokud některou z existujících přírodnin vyberete, budou v této poznávačce rovnou dostupné i všechny obrázky, které k ní byly přidány v jiných poznávačkách. Funguje to i obráceně – pokud k dané přírodnině v této poznávačce někdo přidá obrázek, bude tento obrázek zobrazován i ve všech ostatních poznávačkách používajících danou přírodninu.
-        	</p>
-        	<p>
-        	Pokud pro přidání zvolíte přírodninu, která zatím neexistuje, bude po uložení změn vytvořena. Takováto přírodnina bude nejprve bez obrázků, ale to se změní s prvním přidaným obrázkem. Nově vytvořené přírodniny mohou být také použity v ostatních poznávačkách.
-        	</p>
-        	<p>
-        	Pokud při úpravách uděláte chybu, například že odeberete část, která obsahuje velké množství přírodnin, můžete poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy, dokud nekliknete na tlačítko "Uložit" v dolní části stránky. Nezapomeňte si proto změny průběžné ukládat.
-        	</p>
+            <p>
+                Vítejte v rozhraní pro editaci poznávačky. Na této stránce můžete vybranou poznávačku přejmenovat,
+                přidávat či odebírat z ní části a přejmenovávat i je. A samozřejmě můžete do těchto částí přidávat
+                přírodniny.
+            </p>
+            <p>
+                Při přejmenovávání poznávačky dávejte pozor, abyste nezvolili jméno, které už má nějaká z jiných
+                poznávaček patřících do vaší třídy. V případě konfliktu budete okamžitě upozorněni. To samé se týká jmen
+                částí, také musí být unikátní, avšak můžete mít v různých poznávačkách části se stejnými jmény.
+            </p>
+            <p>
+                Odebráním části nebudou smazány žádné přírodniny ani obrázky k nim nahrané. Přírodniny, které jsou do
+                takovýchto částí přiřazeny zůstanou dostupné a budete je moci později přiřadit do jiných částí a
+                poznávaček.
+            </p>
+            <p>
+                Každou přírodninu můžete přidat do více různých poznávaček a dokonce ji můžete mít i vícekrát v různých
+                částech tétož poznávačky. Jediným pravidlem je, že tatáž přírodnina se nesmí vícekrát vyskytovat ve
+                stejné části.
+            </p>
+            <p>
+                Při přidávání přírodnin se vám budou automaticky nabízet přírodniny, které již ve vaší třídě existují.
+                Pokud některou z existujících přírodnin vyberete, budou v této poznávačce rovnou dostupné i všechny
+                obrázky, které k ní byly přidány v jiných poznávačkách. Funguje to i obráceně – pokud k dané přírodnině
+                v této poznávačce někdo přidá obrázek, bude tento obrázek zobrazován i ve všech ostatních poznávačkách
+                používajících danou přírodninu.
+            </p>
+            <p>
+                Pokud pro přidání zvolíte přírodninu, která zatím neexistuje, bude po uložení změn vytvořena. Takováto
+                přírodnina bude nejprve bez obrázků, ale to se změní s prvním přidaným obrázkem. Nově vytvořené
+                přírodniny mohou být také použity v ostatních poznávačkách.
+            </p>
+            <p>
+                Pokud při úpravách uděláte chybu, například že odeberete část, která obsahuje velké množství přírodnin,
+                můžete poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy,
+                dokud nekliknete na tlačítko "Uložit" v dolní části stránky. Nezapomeňte si proto změny průběžné
+                ukládat.
+            </p>
         </div>
     </div>
     <div id="group-name-container">
         <div class="group-name-box">
-        	<b class="group-name">Název poznávačky</b>
-        	<button title="Přejmenovat poznávačku" class="rename-group actionButton">
-            	<img src='images/pencil.svg'/>
-        	</button>
+            <b class="group-name"><?= $groupName ?></b>
+            <button title="Přejmenovat poznávačku" class="rename-group actionButton">
+                <img src='images/pencil.svg'/>
+            </button>
         </div>
         <div class="group-name-input-box" style="display:none;">
-        	<input type="text" maxlength="31" class="group-name-input" value="Název poznávačky"/>
-        	<button class="rename-group-confirm actionButton">
-        		<img src='images/tick.svg'/>
-        	</button>
+            <input type="text" maxlength="31" class="group-name-input" value="<?= $groupName ?>"/>
+            <button class="rename-group-confirm actionButton">
+                <img src='images/tick.svg'/>
+            </button>
         </div>
-        <div class="group-name-url">V URL bude zobrazováno jako nazev-poznavacky</div>
+        <div class="group-name-url">V URL bude zobrazováno jako <?= $groupUrl ?></div>
     </div>
     <div id="parts-boxes-container">
+        <?php foreach ($parts as $part) : ?>
         <div class="part-box" style="border:1px solid black">
             <button title="Odebrat část" class="remove-part actionButton">
-            	<img src='images/cross.svg'/>
+                <img src='images/cross.svg'/>
             </button>
             <div class="part-name-box">
-                <b class="part-name">Název části</b>
+                <b class="part-name"><?= $part->getName() ?></b>
                 <button title="Přejmenovat část" class="rename-part actionButton">
-                	<img src='images/pencil.svg'/>
-            	</button>
-        	</div>
-            <div class="part-name-input-box" style="display:none;">
-            	<input type="text" maxlength="31" class="part-name-input"/>
-            	<button class="rename-part-confirm actionButton">
-            		<img src='images/tick.svg'/>
-        		</button>
+                    <img src='images/pencil.svg'/>
+                </button>
             </div>
-            <div class="part-name-url">V URL bude zobrazováno jako nazev-casti</div>
+            <div class="part-name-input-box" style="display:none;">
+                <input type="text" maxlength="31" class="part-name-input" value="<?= $part->getName() ?>"/>
+                <button class="rename-part-confirm actionButton">
+                    <img src='images/tick.svg'/>
+                </button>
+            </div>
+            <div class="part-name-url">V URL bude zobrazováno jako <?= $part->getUrl() ?></div>
             <label>Přírodnina k přidání</label>
-            <input type="text" class="natural-input" />
+            <input type="text" class="natural-input"/>
             <button class="natural-button">↵</button>
             <ul class="naturals-in-part">
-                <!-- Zde budou řádky s názvy přidaných přírodnin -->
+                <?php foreach ($part->getNaturals() as $natural) : ?>
+                <li>
+                    <span class="natural-name"><?= $natural->getName() ?></span>
+                    <button title="Odebrat" class="remove-natural actionButton">
+                        <img src='images/cross.svg'/>
+                    </button>
+                </li>
+                <?php endforeach ?>
             </ul>
         </div>
-        <!-- Sem se budou přidávat další části (div s třídou "part-box") -->
+        <?php endforeach ?>
     </div>
     <button id="add-part-button" class="actionButton">
-    	<img src='images/plus.svg'/>
+        <img src='images/plus.svg'/>
     </button>
     <button id="submit">Uložit</button>
 </div>
