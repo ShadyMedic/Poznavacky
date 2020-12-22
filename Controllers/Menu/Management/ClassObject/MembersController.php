@@ -24,7 +24,7 @@ class MembersController extends Controller
         $this->pageHeader['bodyId'] = 'members';
         
         $this->data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
-        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName().'/manage';
+        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
         
         $this->view = 'members';
     }

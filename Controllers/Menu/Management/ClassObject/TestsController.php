@@ -41,7 +41,7 @@ class TestsController extends Controller
             if ($argumentCount === 1)
             {
                 //Přesměrovat na tests bez parametrů
-                $this->redirect('menu/'.$_SESSION['selection']['class']->getName().'/manage/tests');
+                $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests');
             }
             
             //Uložení objektu poznávačky do $_SESSION (pouze pokud už nějaká uložená není)
@@ -63,7 +63,7 @@ class TestsController extends Controller
             else
             {
                 //Není specifikována platná akce --> přesměrovat na tests bez parametrů
-                $this->redirect('menu/'.$_SESSION['selection']['class']->getName().'/manage/tests');
+                $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests');
             }
         }
         
@@ -94,7 +94,7 @@ class TestsController extends Controller
             $this->pageHeader['bodyId'] = 'tests';
             
             $this->data['groups'] = $_SESSION['selection']['class']->getGroups();
-            $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getName().'/manage';
+            $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
             
             $this->view = 'tests';
         }

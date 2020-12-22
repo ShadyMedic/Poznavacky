@@ -66,7 +66,7 @@ class ManageController extends Controller
             else
             {
                 //Není specifikována platná akce --> přesměrovat na manage bez parametrů
-                $this->redirect('menu/'.$_SESSION['selection']['class']->getName().'/manage');
+                $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/manage');
             }
         }
         
