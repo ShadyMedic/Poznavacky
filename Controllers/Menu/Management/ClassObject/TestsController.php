@@ -29,10 +29,13 @@ class TestsController extends Controller
         }
         $argumentCount = count($testsArguments);
         
-        # if ($argumentCount === 0)
-        # {
-        #     //Vypisuje se seznam poznávaček
-        # }
+        if ($argumentCount === 0)
+        {
+            //Vypisuje se seznam poznávaček - vymaž zvolenou poznávačku
+            unset($_SESSION['selection']['group']);
+            //Část taky vymaž - sice by neměla být uložena, ale co mi víme ¯\_(ツ)_/¯
+            unset($_SESSION['selection']['part']);
+        }
         if ($argumentCount > 0)
         {
             //Název poznávačky
@@ -47,6 +50,8 @@ class TestsController extends Controller
             //Uložení objektu poznávačky do $_SESSION (pouze pokud už nějaká uložená není)
             if (!isset($_SESSION['selection']['group']))
             {
+                //Sice to může vypadat, že by dávalo smysl, kdyby se poznávačka přenastavovala i v případě, že se její URL název neshoduje s parametrem v URL,
+                //ale ve skutečnosti by to působilo problémy při přejmenovávání poznávačky na edit stránce (URL stáre obsahuje starý název)
                 $_SESSION['selection']['group'] = new Group(false);
                 $_SESSION['selection']['group']->initialize(null, $testsArguments[0], $_SESSION['selection']['class'], null, null);
             }
