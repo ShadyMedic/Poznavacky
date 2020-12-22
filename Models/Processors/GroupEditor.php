@@ -118,7 +118,7 @@ class GroupEditor
                 foreach ($result as $naturalData)
                 {
                     $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
-                    $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['id']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], $this->group->getClass());
+                    $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], $this->group->getClass());
                     $availableNaturals[mb_strtoupper($naturalData[Natural::COLUMN_DICTIONARY['name']])] = $natural;
                 }
                 
