@@ -83,16 +83,27 @@
             </div>
             <div class="part-name-url">V URL bude zobrazováno jako <?= $part->getUrl() ?></div>
             <label>Přírodnina k přidání</label>
-            <input type="text" class="natural-input"/>
-            <select class="natural-suggestions"></select><!-- TODO nahradit při stylování vhodnějším prvkem -->
-            <button class="natural-button">↵</button>
+            <input type="text" class="new-natural-name-input"/>
+            <select class="new-natural-name-suggestions"></select><!-- TODO nahradit při stylování vhodnějším prvkem -->
+            <button class="new-natural-button">↵</button>
             <ul class="naturals-in-part">
                 <?php foreach ($part->getNaturals() as $natural) : ?>
                 <li>
-                    <span class="natural-name"><?= $natural->getName() ?></span>
-                    <button title="Odebrat" class="remove-natural actionButton">
-                        <img src='images/cross.svg'/>
-                    </button>
+                    <div class="natural-name-box">
+                        <span class="natural-name"><?= $natural->getName() ?></span>
+                        <button title="Přejmenovat" class="rename-natural actionButton" style="display:none;">
+                            <img src='images/pencil.svg'/>
+                        </button>
+                        <button title="Odebrat" class="remove-natural actionButton">
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </div>
+                    <div class="natural-name-input-box" style="display:none;">
+                        <input type="text" maxlength="31" class="natural-name-input" value="<?= $natural->getName() ?>"/>
+                        <button class="rename-natural-confirm actionButton">
+                            <img src='images/tick.svg'/>
+                        </button>
+                    </div>
                 </li>
                 <?php endforeach ?>
             </ul>
