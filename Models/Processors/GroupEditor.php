@@ -18,6 +18,7 @@ use \RangeException;
 class GroupEditor
 {
     private $group;
+    private $originalGroupId;
     private $partsToSave;
     
     /**
@@ -27,7 +28,7 @@ class GroupEditor
     public function __construct(Group $group)
     {
         $this->group = $group;
-        $this->group->getId(); //Vynuť načtení ID potřebného pro volání některých metod - po změně vlastností již nepůjde nalézt v databázi
+        $this->originalGroupId = $group->getId(); //Vynuť načtení ID potřebného pro volání některých metod - po změně vlastností již nepůjde nalézt v databázi
     }
     
     /**
@@ -223,7 +224,20 @@ class GroupEditor
             }
             //Aktualizuj počet obrázků u části
             Db::executeQuery('UPDATE casti SET obrazky = (SELECT SUM(prirodniny.obrazky) FROM prirodniny WHERE prirodniny.prirodniny_id IN (SELECT prirodniny_casti.prirodniny_id FROM prirodniny_casti WHERE prirodniny_casti.casti_id = ?)) WHERE casti.casti_id = ?', array($part->getId(), $part->getId()));
-        }        
+        }
+
+        //Pokud je nastavená instance třídy, do které tato poznávačka patří a pokud má objekt oné třídy načtený seznam poznávaček, je v něm upravená poznávačka nalezena a její data (název, URL, části a jejich počet) jsou aktualizována
+        if ($this->group->isDefined($this->group->getClass()) && $this->group->getClass()->areGroupsLoaded())
+        {
+            //Najdi tuto poznávačku v seznamu a aktualizuj její data
+            foreach ($this->group->getClass()->getGroups() as $group)
+            {
+                if ($group->getId() === $this->originalGroupId)
+                {
+                    $group->initialize($this->group->getName(), $this->group->getUrl(), null, $this->group->getParts(), $group->getPartsCount()); //Ostatní vlasntosti nebudou změněny
+                }
+            }
+        }
     }
 }
 

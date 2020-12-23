@@ -455,7 +455,16 @@ class ClassObject extends Folder
             throw new AccessDeniedException(AccessDeniedException::REASON_UNEXPECTED);
         }
     }
-    
+
+    /**
+     * Metoda zjišťující, zda jsou poznávačky patřící do této třídy načteny (i když třeba žádné neexistují), nebo ne
+     * @return bool TRUE, pokud jsou poznávačky této třídy načteny, FALSE, pokud je vlastnost $groups nastavena na undefined
+     */
+    public function areGroupsLoaded(): bool
+    {
+        return $this->isDefined($this->groups);
+    }
+
     /**
      * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
      * @param int $userId ID ověřovaného uživatele
