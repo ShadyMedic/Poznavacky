@@ -255,7 +255,31 @@ function naturalTyped(event)
 	}
 	else
 	{
-		//TODO - proveď filtraci a zobraz návrhy
+		let inputElement = $(event.target).parent().children().filter(".natural-input");
+		let suggestionsElement = $(event.target).parent().children().filter(".natural-suggestions");
+		let currentTextLowecase = inputElement.val().toLowerCase();
+		if (naturalNames.includes(currentTextLowecase))
+		{
+			inputElement.css("backgroundColor", "#77FF77");
+		}
+		else if (currentTextLowecase !== "")
+		{
+			inputElement.css("backgroundColor", "#ff7777");
+			let suggestions = naturalNames.filter(word => word.startsWith(currentTextLowecase));
+			console.log(suggestions);
+
+			//TODO - zobraz nejbližší shodu (vázáno na element v edit.phtml)
+			let suggestionsHTML = "";
+			for (let i = 0; i < suggestions.length; i++)
+			{
+				suggestionsHTML += "<option>" + suggestions[i] + "</option>";
+			}
+			suggestionsElement.html(suggestionsHTML);
+		}
+		else
+		{
+			inputElement.css("backgroundColor", "");
+		}
 	}
 }
 

@@ -84,6 +84,7 @@
             <div class="part-name-url">V URL bude zobrazováno jako <?= $part->getUrl() ?></div>
             <label>Přírodnina k přidání</label>
             <input type="text" class="natural-input"/>
+            <select class="natural-suggestions"></select><!-- TODO nahradit při stylování vhodnějším prvkem -->
             <button class="natural-button">↵</button>
             <ul class="naturals-in-part">
                 <?php foreach ($part->getNaturals() as $natural) : ?>

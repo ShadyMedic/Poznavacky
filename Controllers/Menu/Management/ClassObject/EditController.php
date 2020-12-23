@@ -30,7 +30,7 @@ class EditController extends Controller
 
         //Metoda získání URL poznávaček a jmen přírodnin napsaná podle jednoho komentáře pod touto odpovědí na StackOverflow: https://stackoverflow.com/a/1119029/14011077
         $this->data['groupList'] = array_map(function (Group $group): string { return $group->getUrl(); }, $_SESSION['selection']['class']->getGroups());
-        $this->data['naturalList'] = array_map(function (Natural $natural): string { return $natural->getName(); }, $_SESSION['selection']['class']->getNaturals());
+        $this->data['naturalList'] = array_map(function (Natural $natural): string { return mb_strtolower($natural->getName()); }, $_SESSION['selection']['class']->getNaturals());
         $this->data['groupName'] = $_SESSION['selection']['group']->getName();
         $this->data['groupUrl'] = $_SESSION['selection']['group']->getUrl();
         //Seznam objektu částí vrať ořezaný od všech nepotřebných údajů
