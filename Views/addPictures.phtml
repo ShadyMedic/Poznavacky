@@ -14,6 +14,7 @@
 			</option>
 		<?php endforeach ?>
 	</select>-->
+	<label for="add-natural-select">Zvolte přírodninu, jejíž obrázek chcete přidat:</label>
 	<div class="custom-select-wrapper" id="add-natural-select">
 		<div class="custom-select">
 			<div class="custom-select-main">
@@ -44,7 +45,7 @@
 		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
 			<span>Vyhledat na DuckDuckGo</span><img id="duck-logo" src="images/duckLogo.png">       
 		</a>  
-		<input type=submit value="Přidat" id="submit-button" class="btn border-btn black non-transparent" /> 
+		<input type=submit value="Přidat obrázek" id="submit-button" class="btn border-btn black non-transparent" /> 
 	</fieldset>
 	<fieldset class="picture">
 		<img id="preview-img" class="img" src="images/imagePreview.png">

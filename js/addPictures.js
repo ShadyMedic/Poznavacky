@@ -1,3 +1,4 @@
+var smallTablet = 672;
 /**
  * Funkce, která po načtení stránky nastavuje even handlery na skrytý náhled obrázku.
  * src atributa skrytého náhledu se nastavuje po potvrzení zadané URL adresy
@@ -33,8 +34,11 @@ $(window).resize(function() {
 
 //funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
 function resizeMainImg(){
-	$("#add-pictures-form-wrapper .picture").css("height", $("#add-pictures-form-wrapper .picture").outerWidth());
-	$(".preview-buttons-fieldset").css("height", $("#add-pictures-form-wrapper .picture").height());
+	$("#add-pictures-form-wrapper #preview-img").css("height", $("#add-pictures-form-wrapper #preview-img").outerWidth());
+	if ($(window).width() >= smallTablet)
+		$(".preview-buttons-fieldset").css("height", $("#add-pictures-form-wrapper #preview-img").height());
+	else 
+		$(".preview-buttons-fieldset").css("height", "auto");
 }
 
 /**
