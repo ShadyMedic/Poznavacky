@@ -626,14 +626,21 @@
 				@media screen and (min-width: $smallTablet) {
 					margin: 0;
 				}
+				&:not(:last-child) {
+					margin-bottom: 8px;
+				}
+				> .logo {
+					height: 1em;
+					width: 1em;
+					display: inline-block;
+					transform: translateY(10%) scale(140%);
+					margin: 0 0.6em;
+				}
 			}
 			#submit-button {
 				@media screen and (min-width: $smallTablet) {
 					margin-top: auto;
 				}
-			}
-			#duck-logo {
-				margin: 0 0.6em;
 			}
 		}
 		.picture {

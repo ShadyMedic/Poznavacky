@@ -43,7 +43,10 @@
 	</fieldset>
 	<fieldset class="preview-buttons-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">  
 		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
-			<span>Vyhledat na DuckDuckGo</span><img id="duck-logo" src="images/duckLogo.png">       
+			<span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duckLogo.png">       
+		</a>  
+		<a id="google-link" class="btn border-btn black non-transparent" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://www.google.com/search?q=<?= $previousNatural ?>&tbm=isch"<?php endif ?>>  
+			<span>Vyhledat na Google</span><img class="logo" src="images/googleLogo.png">       
 		</a>  
 		<input type=submit value="Přidat obrázek" id="submit-button" class="btn border-btn black non-transparent" /> 
 	</fieldset>

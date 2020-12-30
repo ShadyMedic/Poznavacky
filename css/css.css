@@ -275,14 +275,6 @@ h5 {
           transform: scale(0.98);
 }
 
-.btn.border-btn > img {
-  height: 1em;
-  width: 1em;
-  -webkit-transform: translateY(10%) scale(140%);
-          transform: translateY(10%) scale(140%);
-  margin: 0 0.6em;
-}
-
 .btn.arrow-btn {
   font-size: 1.2rem;
   -webkit-transition: -webkit-transform 0.2s ease-out;
@@ -1831,14 +1823,23 @@ label.required:after {
   }
 }
 
+#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn > .logo {
+  height: 1em;
+  width: 1em;
+  display: inline-block;
+  -webkit-transform: translateY(10%) scale(140%);
+          transform: translateY(10%) scale(140%);
+  margin: 0 0.6em;
+}
+
 @media screen and (min-width: 672px) {
   #addPictures #add-pictures-form-wrapper .preview-buttons-fieldset #submit-button {
     margin-top: auto;
   }
-}
-
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset #duck-logo {
-  margin: 0 0.6em;
 }
 
 @media screen and (min-width: 672px) {

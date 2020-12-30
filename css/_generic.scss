@@ -177,12 +177,6 @@ h5 {
 		&:active {
 			transform: scale(0.98);
 		}
-		> img {
-			height: 1em;
-			width: 1em;
-			transform: translateY(10%) scale(140%);
-			margin: 0 0.6em;
-		}
 	}
 	&.arrow-btn {
 		font-size: 1.2rem;

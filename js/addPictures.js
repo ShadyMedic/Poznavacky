@@ -52,6 +52,7 @@ function naturalSelected()
 	for (var i = arr.length - 1; arr[i] != '('; i--){}
 	for (var j = 0; j < i - 1; j++){selectedNatural += arr[j];}
 	$("#duck-link").attr("href", "https://duckduckgo.com/?q=" + selectedNatural + "&iax=images&ia=images");
+	$("#google-link").attr("href", "https://www.google.com/search?q=" + selectedNatural + "&tbm=isch");
 	$("#natural-name-hidden").val(selectedNatural);
 	$("#prewiew-buttons-fieldset").show();
 }
