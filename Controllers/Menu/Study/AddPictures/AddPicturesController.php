@@ -19,7 +19,7 @@ class AddPicturesController extends Controller
      * @see Controller::process()
      */
     public function process(array $parameters): void
-    {   
+    {
         $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
         if (isset($_SESSION['selection']['part']))
@@ -38,45 +38,11 @@ class AddPicturesController extends Controller
             $this->redirect('error403');
         }
         
-        $this->data['previousNatural'] = '';
-        $this->data['previousUrl'] = '';
-        
-        //Kontrola odeslání formuláře
-        if (!empty($_POST))
-        {
-            $adder = new PictureAdder($group);
-            try
-            {
-                if ($adder->processFormData($_POST))
-                {
-                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně přidán');
-                    
-                    //Vymaž data z $_POST
-                    if ($allParts)
-                    {
-                        $this->redirect('menu/'.$class->getUrl().'/'.$group->getUrl().'/add-pictures');
-                    }
-                    else
-                    {
-                        $this->redirect('menu/'.$class->getUrl().'/'.$group->getUrl().'/'.$part->getUrl().'/add-pictures');
-                    }
-                }
-            }
-            catch (AccessDeniedException $e)
-            {
-                $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
-                
-                //Obnov data
-                $this->data['previousNatural'] = $_POST['naturalName'];
-                $this->data['previousUrl'] = $_POST['url'];
-            }
-        }
-        
         $this->pageHeader['title'] = 'Přidat obrázky';
         $this->pageHeader['description'] = 'Přidávejte obrázky do své poznávačky, aby se z nich mohli učit všichni členové třídy';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/addPictures.js', 'js/menu.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/addPictures.js', 'js/menu.js');
         $this->pageHeader['bodyId'] = 'addPictures';
         
         if ($allParts)

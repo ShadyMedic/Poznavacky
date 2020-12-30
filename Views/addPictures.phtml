@@ -1,8 +1,6 @@
-<form method="POST" id="add-pictures-form-wrapper">
+<div id="add-pictures-form-wrapper">
 	<!--<select onchange="naturalSelected()">
-		<?php if (empty($previousNatural)) : ?>
 		<option value="" selected disabled hidden></option>
-		<?php endif ?>
 		<?php foreach ($naturals as $natural) : ?>
 			<?php if ($previousNatural === $natural->getName()) : ?>
 				<option selected>
@@ -23,32 +21,27 @@
 			</div>
 			<ul class="custom-options">
 				<?php foreach ($naturals as $natural) :?>
-					<?php if ($previousNatural === $natural->getName()) : ?>
-						<li class="custom-option selected">
-					<?php endif ?>
-					<?php if ($previousNatural !== $natural->getName()) : ?>
-						<li class="custom-option">
-					<?php endif ?>
+                    <li class="custom-option">
 						<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
 					</li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
 	</div>
-	<input type="hidden" name="naturalName" id="natural-name-hidden" value="<?= $previousNatural ?>" />
-	<fieldset class="url-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">
+	<input type="hidden" name="naturalName" id="natural-name-hidden" value="" />
+	<fieldset class="url-fieldset" class="disabled">
 		<label for="url-input">Zadejte URL adresu obrázku:</label>
-		<input type=url name="url" id="url-input" class="text-field" value="<?= $previousUrl ?>"/>
+		<input type=url name="url" id="url-input" class="text-field" value=""/>
 		<button id="url-confirm-button" class="btn border-btn black non-transparent">OK</button>
 	</fieldset>
-	<fieldset class="preview-buttons-fieldset" class="<?php if (empty($previousNatural)) : ?>disabled<?php endif ?>">  
-		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
+	<fieldset class="preview-buttons-fieldset" class="disabled">
+		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank>
 			<span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duckLogo.png">       
 		</a>  
-		<a id="google-link" class="btn border-btn black non-transparent" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://www.google.com/search?q=<?= $previousNatural ?>&tbm=isch"<?php endif ?>>  
+		<a id="google-link" class="btn border-btn black non-transparent" target=_blank>
 			<span>Vyhledat na Google</span><img class="logo" src="images/googleLogo.png">       
 		</a>  
-		<input type=submit value="Přidat obrázek" id="submit-button" class="btn border-btn black non-transparent" /> 
+		<button id="submit-button" class="btn border-btn black non-transparent">Přidat obrázek</button>
 	</fieldset>
 	<fieldset class="picture">
 		<img id="preview-img" class="img" src="images/imagePreview.png">
@@ -57,5 +50,5 @@
 	<!--<fieldset id="submit-fieldset" <?php if (empty($previousUrl)) : ?> style="display:none" <?php endif ?>>
 		<input type=submit value="Přidat" id="send-button" class="btn border-btn black non-transparent" />
 	</fieldset>-->
-</form>
+</div>
 <a href="<?= $returnUrl ?>"><button class="btn">Zpět</button></a>

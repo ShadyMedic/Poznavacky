@@ -10,6 +10,7 @@ $(function()
 	//event listenery tlačítek
 	$("#url-confirm-button").click(function(event) {pictureSelected(event)});
 	$("#add-natural-select .custom-options .custom-option").click(function() {setTimeout(function() {naturalSelected()}), 0}); //nastaven setTimeout s intervalem 0 na změnu pořadí volaných funkcí (tato se nyní správně volá později než funkce spravující custom select box ze souboru generic.js)
+	$("#submit-button").click(function(event) {submitPicture(event)});
 
 	//Chyba při načítání obrázku
 	$("#preview-img-hidden").on("error", function()
@@ -66,4 +67,49 @@ function pictureSelected(event)
 	event.preventDefault();
 	$("#preview-img-hidden").attr("src", $("#url-input").val());
 	//Třetí fieldset je zobrazen, pokud je načten obrázek úspěšně (viz funkce $(function(){}))
+}
+
+/**
+ * Funkce, která se spouští po odeslání obrázku
+ * Odesílá AJAX požadavek na server
+ */
+function submitPicture(event)
+{
+	event.preventDefault();
+	let url = document.location.href;
+	if (url[url.length - 1] === '/'){ url = url.substr(0, url.length - 1); } //Odstraň trailing slash
+	url = url.substr(0, url.lastIndexOf("/")); //Odstraň název posledního kontroleru
+	url += "/submit-picture"
+	let naturalName = $(".custom-select-main>span").text();
+	naturalName = naturalName.trim();	//Ořež whitespace
+	naturalName = naturalName.substr(0, naturalName.lastIndexOf("(") - 1); //Odstraň mezeru následovanou závorkami s počtem obrázků
+	$.post(url,
+		{
+			naturalName: naturalName,
+			url: $("#url-input").val()
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						//TODO - zkusit tohle nedělat popupem
+						alert(message)
+
+						//Reset HTML
+						$("#url-input").val("");
+						$(".custom-select-main>span").text("&#10240");
+					}
+					else if (messageType === "error")
+					{
+						//TODO - zkusit tohle nedělat popupem
+						alert(message);
+					}
+				}
+			);
+		},
+		"json"
+	);
 }
