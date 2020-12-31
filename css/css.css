@@ -507,6 +507,7 @@ label.required:after {
           align-items: center;
   font-size: 1em;
   color: #222;
+  height: 2.28em;
   padding: 0.48em 0.8em;
   background: #fff;
   cursor: pointer;
