@@ -125,6 +125,16 @@ h5 {
 				&:after {
 					background: rgba(white, 0.06);
 				}
+				&.disabled {
+					background: #888;
+					border-color: #888;
+					color: #ddd;
+					pointer-events: none;
+					cursor: auto;
+					> img {
+						filter: grayscale(50%);
+					}
+				}
 			}
 			&.dark-green {
 				background: $greenDark;
@@ -286,6 +296,11 @@ textarea {
 		padding: 0.48em 0.8em;
 		border-radius: 0.2em;
 		line-height: 1.32em;
+		&.disabled {
+			background: #ddd;
+			pointer-events: none;
+			cursor: auto;
+		}
 		/*&:focus {
 			box-shadow: 0 2px 0 0 $greenMid;
 			outline: none;
@@ -300,6 +315,10 @@ label {
 	line-height: 1.32em;
 	padding: 0.48em 0;
 	display: inline-block;
+	&.disabled {
+		pointer-events: none;
+		color: #444; 
+	}
 	&.required {
 		&:after {
 			content: " *";
