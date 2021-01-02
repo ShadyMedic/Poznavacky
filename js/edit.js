@@ -442,10 +442,10 @@ function save()
 						//Zruš tlačítka pro rychlé prejmenování
 						$(".rename-natural").hide();
 
-						if (confirm(`
-						Změny byly úspěšně uloženy\n
-						Přejete si aktualizovat stránku pro ověření změn?
-						`)) { location.reload(); }
+						if (confirm("Změny byly úspěšně uloženy\nPřejete si aktualizovat stránku pro ověření změn?"))
+						{
+							location.reload();
+						}
 					}
 					else if (messageType === "error")
 					{
