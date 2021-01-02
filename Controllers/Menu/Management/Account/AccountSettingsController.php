@@ -32,7 +32,13 @@ class AccountSettingsController extends Controller
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/accountSettings.js');
         $this->pageHeader['bodyId'] = 'accountSettings';
-        
+        $this->data['navigationBar'] = array(
+            0 => array(
+                'text' => $this->pageHeader['title'],
+                'link' => 'menu/account-settings'
+            )
+        );
+
         $this->view = 'accountSettings';
     }
 }

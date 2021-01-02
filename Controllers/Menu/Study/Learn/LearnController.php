@@ -35,16 +35,36 @@ class LearnController extends Controller
             $this->redirect('error403');
         }
         
-        if ($allParts){ $this->data['naturals'] = $group->getNaturals(); }
-        else { $this->data['naturals'] = $part->getNaturals(); }
-        
         $this->pageHeader['title'] = 'Učit se';
         $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/learn.js','js/reportForm.js', 'js/menu.js');
         $this->pageHeader['bodyId'] = 'learn';
-        
+
+        if ($allParts)
+        {
+            $this->data['navigationBar'] = array(
+                0 => array(
+                    'text' => $this->pageHeader['title'],
+                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/learn'
+                )
+            );
+
+            $this->data['naturals'] = $group->getNaturals();
+        }
+        else
+        {
+            $this->data['navigationBar'] = array(
+                0 => array(
+                    'text' => $this->pageHeader['title'],
+                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl().'/learn'
+                )
+            );
+
+            $this->data['naturals'] = $part->getNaturals();
+        }
+
         $controllerName = "nonexistant-controller";
         if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::CONTROLLER_EXTENSION; }
         $pathToController = $this->controllerExists($controllerName);
@@ -60,6 +80,7 @@ class LearnController extends Controller
             $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
             $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
+            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
         }
         
         $this->view = 'learn';

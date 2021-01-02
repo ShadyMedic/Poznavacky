@@ -5,6 +5,14 @@
 		<h1>Poznávačky</h1>
 	</div>
 </header>
+<nav>
+    <?php for ($i = 0; $i < count($navigationBar); $i++) : ?>
+        <a href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
+        <?php if ($i < count($navigationBar) - 1) : ?>
+            <span>>></span>
+        <?php endif ?>
+    <?php endfor ?>
+</nav>
 <aside>
 	<nav id="aside-main-panel">
 		<button class="btn" id="show-aside-login-info-button"><img src="../images/user.svg" alt=""></button> <!--zobrazí info o uživateli-->

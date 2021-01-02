@@ -47,10 +47,24 @@ class AddPicturesController extends Controller
         
         if ($allParts)
         {
+            $this->data['navigationBar'] = array(
+                0 => array(
+                    'text' => $this->pageHeader['title'],
+                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/addPictures'
+                )
+            );
+
             $this->data['naturals'] = $group->getNaturals();
         }
         else
         {
+            $this->data['navigationBar'] = array(
+                0 => array(
+                    'text' => $this->pageHeader['title'],
+                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl().'/addPictures'
+                )
+            );
+
             $this->data['naturals'] = $part->getNaturals();
         }
         

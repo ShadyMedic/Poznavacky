@@ -55,7 +55,7 @@ class AccessDeniedException extends Exception
     const REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT = 'Název třídy musí být alespoň 5 znaků dlouhý';
     const REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG = 'Název třídy nesmí být více než 31 znaků dlouhý';
     const REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS = 'Název třídy může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
-    const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto názvem již existuje';
+    const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto nebo velmi podobným názvem již existuje';
     const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód třídy nemá platný formát - musí to být čtyři číslice';
     const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';
     const REASON_NAME_CHANGE_NO_NAME = self::REASON_REGISTER_NO_NAME;
@@ -104,6 +104,18 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS = 'Název poznávačky může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
     const REASON_MANAGEMENT_REPORTS_EDIT_PICTURE_ANOTHER_GROUP = 'Obrázek nelze přesunout k přírodnině, která není součástí té samé poznávačky';
     const REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL = 'Hlášení se vztahuje k obrázku, který není nahrán k žádné přírodnině ve vaší třídě';
+    const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_GROUP = 'Poznávačka s tímto nebo velmi podobným názvem již ve vaší třídě existuje';
+    const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_PART = 'Jedna nebo více částí se stejným nebo velmi podobným názvem je definována vícekrát'; //Zní to hloupě, ale k dosažení této hlášky je nutné modifikovat JavaScript
+    const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_NATURAL = 'V jedné nebo více částech se některá přírodnina vyskytuje vícekrát'; //Zní to hloupě, ale k dosažení této hlášky je nutné modifikovat JavaScript
+    const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_LONG = self::REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG;
+    const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_SHORT = self::REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT;
+    const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_INVALID_CHARACTERS = self::REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS;
+    const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_SHORT = 'Název části musí být alespoň 1 znak dlouhý';
+    const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_LONG = 'Název části nesmí být více než 31 znaků dlouhý';
+    const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_INVALID_CHARACTERS = 'Název části může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
+    const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_SHORT = 'Název přírodniny musí být alespoň 1 znak dlouhý';
+    const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_LONG = 'Název přírodniny nesmí být více než 31 znaků dlouhý';
+    const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_INVALID_CHARACTERS = 'Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky . _ - + / * % ( ) \' \"';
     const REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
     const REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA = self::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA;
     const REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';

@@ -145,6 +145,15 @@ abstract class DatabaseItem
     }
     
     /**
+     * Metoda navracející údaj o tom, zda je tato položka již uložena v databázi, nebo zda se jedná o novou položku
+     * @return bool TRUE, pokud se jedná o novou položku, FALSE, pokud je již položka se stejným ID uložena v databázi
+     */
+    public function isNew(): bool
+    {
+        return !$this->savedInDb;
+    }
+    
+    /**
      * Metoda zjišťující, zda je daná proměnná definována (zda je do ní přiřazeno cokoliv jiného než objekt typu undefined
      * @param mixed $property
      * @return boolean TRUE, pokud proměnná obsahuje cokoliv jiného než objekt typu undefined (včetně null)
@@ -326,7 +335,7 @@ abstract class DatabaseItem
                     $message = '
                         Okay, I am not sure what you had to done to cause this,
                         but this error occured, because you saved a representation
-                        of a non-primitive data tipe in the database and tried to
+                        of a non-primitive data type in the database and tried to
                         load item with this property. However, the program doesn\'t
                         know how to constuct the object just with the value loaded
                         from the database. If you want to fix this, you have to

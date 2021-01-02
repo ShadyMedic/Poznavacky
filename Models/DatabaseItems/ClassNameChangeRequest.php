@@ -3,6 +3,8 @@ namespace Poznavacky\Models\DatabaseItems;
 
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\undefined;
+use \DateTime;
 
 /**
  * Třída reprezenzující žádost o změnu jména uživatele
@@ -16,7 +18,8 @@ class ClassNameChangeRequest extends NameChangeRequest
         'id' => 'zadosti_jmena_tridy_id',
         'subject' => 'tridy_id',
         'newName' => 'nove',
-        'requestedAt' => 'cas'
+        'requestedAt' => 'cas',
+        'newUrl' => 'nove_url'
     );
     
     protected const NON_PRIMITIVE_PROPERTIES = array(
@@ -29,6 +32,28 @@ class ClassNameChangeRequest extends NameChangeRequest
     protected const SUBJECT_CLASS_NAME = 'ClassObject';
     protected const SUBJECT_TABLE_NAME = ClassObject::TABLE_NAME;
     protected const SUBJECT_NAME_DB_NAME = ClassObject::COLUMN_DICTIONARY['name'];
+    
+    protected $newUrl;
+    
+    /**
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param ClassObject|undefined|null $subject Instance třídy ClassObject reprezentující třídu, které se žádost týká
+     * @param string|undefined|null $newName Požadované nové jméno třídy
+     * @param DateTime|undefined|null $requestedAt Čas, ve kterém byla žádost podána
+     * @param string|undefined|null $newUrl URL reprezentace požadovaného názvu třídy
+     * {@inheritDoc}
+     * @see DatabaseItem::initialize()
+     */
+    public function initialize($subject = null, $newName = null, $requestedAt = null, $newUrl = null): void
+    {
+        parent::initialize($subject, $newName, $requestedAt);
+        
+        if ($newUrl === null){ $newUrl = $this->newUrl; }
+        
+        $this->newUrl = $newUrl;
+    }
     
     /**
      * Metoda navracející aktuální jméno třídy

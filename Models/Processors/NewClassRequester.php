@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use Poznavacky\Models\DatabaseItems\Folder;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
@@ -88,10 +89,11 @@ class NewClassRequester
         }
         catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS, null, $e); }
         
-        //Kontrola unikátnosti jména
+        //Kontrola unikátnosti jména (konkrétně jeho URL reprezentace)
         try
         {
-            $validator->checkUniqueness($name, DataValidator::TYPE_CLASS_NAME);
+            $url = Folder::generateUrl($name);
+            $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         }
         catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e); }
         

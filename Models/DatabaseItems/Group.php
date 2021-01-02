@@ -182,7 +182,13 @@ class Group extends Folder
      */
     public function getParts(): array
     {
-        if (!$this->isDefined($this->parts))
+        /*
+        Po znovunačítání edit stránky je z nějakýho důvodu vlastnost parts nastavena na NULL
+        Tohle je tak trochu hack, ale prostě se mi nepodařilo zjistit, kde se sakra do té vlastnosti
+        dostane NULL, když je nastavená jako protected a neukládá se do databáze (takže DatabaseItem
+        s ní nepracuje s výjimkou jejího nastavení na undefined v konstruktoru
+        */
+        if (!$this->isDefined($this->parts) || $this->parts === null)
         {
             $this->loadParts();
         }
@@ -192,7 +198,7 @@ class Group extends Folder
     /**
      * Metoda načítající části patřící do této poznávačky a ukládající je jako vlastnost
      */
-    public function loadParts(): void
+    private function loadParts(): void
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -284,6 +290,43 @@ class Group extends Folder
         }
         
         return $reports;
+    }
+    
+    /**
+     * Metoda nastavující poznávačce nový název a podle něj aktualizuje i URL
+     * Počítá se s tím, že jméno již bylo ošetřeno na délku, znaky a unikátnost
+     * Změna není uložena do databáze, aby bylo nové jméno trvale uloženo, musí být zavolána metoda Gruop::save()
+     * @param string $newName Nový název třídy
+     */
+    public function rename(string $newName): void
+    {
+        $this->name = $newName;
+        $this->url = $this->generateUrl($newName);
+    }
+    
+    /**
+     * Metoda nahrazující všechny staré poznávačky patřící do této poznávačky novými
+     * Změny jsou provedeny na úrovni databáze - staré poznávačky jsou smazány a jsou nahrazeny novými
+     * I počet částí v této poznávačce je touto metodou aktualizován
+     * Vlastnosti $parts a $partsCount tohoto objektu jsou aktualizovány
+     * @param array $newParts Pole nových částí jako objekty
+     */
+    public function replaceParts(array $newParts): void
+    {
+        $this->loadIfNotLoaded($this->id);
+        
+        //Smaž staré části z databáze
+        Db::executeQuery('DELETE FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?', array($this->id));
+        
+        //Ulož do databáze nové části
+        foreach ($newParts as $part) { $part->save(); }
+        
+        //Aktualizuj počet částí poznávačky
+        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['partsCount'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array(count($newParts), $this->id));
+        
+        //Nahraď poznávačky a aktualizuj počet částí uložený ve vlastnostech tohoto objektu 
+        $this->parts = $newParts;
+        $this->partsCount = count($newParts);
     }
 }
 

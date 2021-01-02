@@ -39,7 +39,8 @@ class ClassObject extends Folder
         'code' => 0,
         'groups' => array(),
         'groupsCount' => 0,
-        'members' => array()
+        'members' => array()//,
+        //'naturals' => array()
     );
     
     protected const CAN_BE_CREATED = false;
@@ -62,6 +63,7 @@ class ClassObject extends Folder
     
     protected $members;
     protected $groups;
+    //protected $naturals; //Nemůže se ukládat, protože při předání objektu třídy pohledu se ošetřuje obrovské množství dat proti XSS
     
     private $accessCheckResult;
     
@@ -147,6 +149,34 @@ class ClassObject extends Folder
     }
     
     /**
+     * Metoda načítající a navracející pole přírodnin patřících do této třídy jako objekty
+     * Data nejsou po navrácení výsledku nikde uložena, proto je v případě opakovaného použití potřeba uložit si je do nějaké proměnné, aby se opakovaným dotazováním databáze nezpomalovalo zpracování požadavku
+     * @return Natural[] Pole přírodnin patřících do této třídy jako objekty
+     */
+    public function getNaturals(): array
+    {
+        $this->loadIfNotLoaded($this->id);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['class'].' = ?;', array($this->id), true);
+        if ($result === false || count($result) === 0)
+        {
+            //Žádné poznávačky nenalezeny
+            return array();
+        }
+        else
+        {
+            $naturals = array();
+            foreach ($result as $naturalData)
+            {
+                $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
+                //Místo posledního null by se mělo nastavit $this, avšak výsledné pole obsahuje příliš mnoho úrovní vnořených objektů a jeho ošetření proti XSS útoku trvá strašně dlouho
+                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null);
+                $naturals[] = $natural;
+            }
+        }
+        return $naturals;
+    }
+    
+    /**
      * Metoda navracející pole poznávaček patřících do této třídy jako objekty
      * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
      * @return Group[] Pole poznávaček patřících do této třídy jako objekty
@@ -164,7 +194,7 @@ class ClassObject extends Folder
      * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
      * Počet poznávaček v této třídě je také aktualizován (vlastnost ClassObject::$groupsCount)
      */
-    public function loadGroups(): void
+    private function loadGroups(): void
     {
         $this->loadIfNotLoaded($this->id);
         
@@ -425,7 +455,16 @@ class ClassObject extends Folder
             throw new AccessDeniedException(AccessDeniedException::REASON_UNEXPECTED);
         }
     }
-    
+
+    /**
+     * Metoda zjišťující, zda jsou poznávačky patřící do této třídy načteny (i když třeba žádné neexistují), nebo ne
+     * @return bool TRUE, pokud jsou poznávačky této třídy načteny, FALSE, pokud je vlastnost $groups nastavena na undefined
+     */
+    public function areGroupsLoaded(): bool
+    {
+        return $this->isDefined($this->groups);
+    }
+
     /**
      * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
      * @param int $userId ID ověřovaného uživatele
@@ -514,10 +553,11 @@ class ClassObject extends Folder
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_INVALID_CHARACTERS, null, $e);
         }
         
-        //Kontrola dostupnosti jména
+        //Kontrola dostupnosti jména (konkrétně URL adresy)
         try
         {
-            $validator->checkUniqueness($newName, DataValidator::TYPE_CLASS_NAME);
+            $url = $this->generateUrl($newName);
+            $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         }
         catch (InvalidArgumentException $e)
         {
@@ -533,12 +573,16 @@ class ClassObject extends Folder
         if (!empty($applications[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]))
         {
             //Přepsání existující žádosti
-            Db::executeQuery('UPDATE '.ClassNameChangeRequest::TABLE_NAME.' SET '.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].' = ?, '.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].' = NOW() WHERE '.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newName, $applications['zadosti_jmena_tridy_id']));
+            $request = new ClassNameChangeRequest(false, $applications[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
+            $request->initialize($this, $newName, new DateTime(time()), $this->generateUrl($newName));
+            $request->save();
         }
         else
         {
             //Uložení nové žádosti
-            Db::executeQuery('INSERT INTO '.ClassNameChangeRequest::TABLE_NAME.' ('.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,NOW())', array($this->id, $newName));
+            $request = new ClassNameChangeRequest(true);
+            $request->initialize($this, $newName, new DateTime(time()), $this->generateUrl($newName));
+            $request->save();
         }
         return true;
     }
