@@ -30,7 +30,7 @@ $(function()
 
 /**
  * Objekt pro uchování dat poznávačky
- * @param {Název poznávačky} groupName 
+ * @param groupName Název poznávačky
  */
 function groupData(groupName)
 {
@@ -48,7 +48,7 @@ function groupData(groupName)
 
 /**
  * Objekt pro uchování dat části
- * @param {Název části} partName 
+ * @param partName Název části
  */
 function partData(partName)
 {
@@ -57,7 +57,7 @@ function partData(partName)
 
 	/**
 	 * Metoda přidávající do této části další přírodninu
-	 * @param {Název přírodniny} naturalName 
+	 * @param naturalName Název přírodniny
 	 */
 	this.addNatural = function(naturalName)
 	{
@@ -103,6 +103,8 @@ function addPart()
 
 /**
  * Funkce umožňující změnu jména poznávačky nebo části
+ * @param event
+ * @param type Typ měněného názvu ("group", "part" nebo "natural")
  */
 function renameSomething(event, type)
 {
@@ -115,6 +117,8 @@ function renameSomething(event, type)
 
 /**
  * Funkce ukládající změnu jména poznávačky nebo části
+ * @param event
+ * @param type Typ měněného názvu ("group", "part" nebo "natural")
  */
 function renameSomethingConfirm(event, type)
 {
@@ -218,7 +222,9 @@ function renameSomethingConfirm(event, type)
 
 /**
  * Funkce volaná při zadání dalšího znaku do pole pro přejmenování poznávačky nebo části a generující URL reprezentaci nového názvu a zobrazuje jej
- * @param type TRUE, pokud je zadávání jméno přírodniny, FALSE, pokud části
+ * @param event
+ * @param type Typ měněného názvu ("group", "part" nebo "natural")
+ * @param addAsNew Týká se pouze přejmenovávání přírodniny, TRUE, pokud se jedná o novou přírodninu, FALSE, pokud se přejmenovává již přidaná přírodnina
  */
 function nameTyped(event, type, addAsNew = false)
 {
@@ -311,6 +317,7 @@ function generateUrl(text)
 
 /**
  * Funkce volaná při stisknutí tlačítka pro přidání nové části
+ * @param event
  */
 function addNatural(event)
 {
@@ -368,6 +375,7 @@ function addNatural(event)
 
 /**
  * Funkce odebírající určitou přírodninu
+ * @param event
  */
 function removeNatural(event)
 {
@@ -376,6 +384,7 @@ function removeNatural(event)
 
 /**
  * Funkce odebírající určitou část
+ * @param event
  */
 function removePart(event)
 {
