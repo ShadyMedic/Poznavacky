@@ -18,6 +18,13 @@ class TestsController extends Controller
      */
     public function process(array $parameters): void
     {
+        $this->data['navigationBar'] = array(
+            0 => array(
+                'text' => $this->pageHeader['title'],
+                'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests'
+            )
+        );
+
         //Kontrola, zda nebyla zvolena správa hlášení v nějaké poznávačce nebo její editace
         //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu/nazev-tridy/manage/tests)
@@ -55,6 +62,11 @@ class TestsController extends Controller
                 $_SESSION['selection']['group'] = new Group(false);
                 $_SESSION['selection']['group']->initialize(null, $testsArguments[0], $_SESSION['selection']['class'], null, null);
             }
+
+            $this->data['navigationBar'][] = array(
+                'text' => $_SESSION['selection']['group']->getName(),
+                'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests/'.$_SESSION['selection']['group']->getUrl()
+            );
         }
         if ($argumentCount > 1)
         {
@@ -83,7 +95,7 @@ class TestsController extends Controller
             $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
             $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
-            
+            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
             $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
             
             $this->view = 'inherit';

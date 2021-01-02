@@ -25,7 +25,12 @@ class EditController extends Controller
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/edit.js');
         $this->pageHeader['bodyId'] = 'editGroup';
-
+        $this->data['navigationBar'] = array(
+            0 => array(
+                'text' => $this->pageHeader['title'],
+                'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/members/tests/'.$_SESSION['selection']['class']->getUrl().'/edit'
+            )
+        );
         $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
 
         //Metoda získání URL poznávaček a jmen přírodnin napsaná podle jednoho komentáře pod touto odpovědí na StackOverflow: https://stackoverflow.com/a/1119029/14011077

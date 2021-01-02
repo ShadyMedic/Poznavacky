@@ -55,7 +55,10 @@ class MenuController extends Controller
                 $this->redirect('');
             }
         }
-        
+
+        $this->data['navigationBar'] = array();
+        $this->data['navigationBar'][] = array('text' => 'menu', 'link' => 'menu');
+
         //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu)
         //Maximálně 5 (v případě domena.cz/menu/nazev-tridy/nazev-poznavacky/nazev-casti/akce/ajax-kontroller)
@@ -70,7 +73,7 @@ class MenuController extends Controller
         if ($argumentCount === 0)
         {
             //Vypisují se třídy
-            
+
             //Vymazání objektů skladujících vybranou složku ze $_SESSION
             $this->unsetSelection(true, true, true);
         }
@@ -115,6 +118,11 @@ class MenuController extends Controller
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
                     $this->unsetSelection(true, true);
                 }
+
+                $this->data['navigationBar'][] = array(
+                    'text' => $_SESSION['selection']['class']->getName(),
+                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl()
+                );
                 
                 if ($argumentCount === 1)
                 {
@@ -161,6 +169,11 @@ class MenuController extends Controller
                     //Vymazání objektů skladujících vybranou část ze $_SESSION
                     $this->unsetSelection(true);
                 }
+
+                $this->data['navigationBar'][] = array(
+                    'text' => $_SESSION['selection']['group']->getName(),
+                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl()
+                );
                 
                 if ($argumentCount === 2)
                 {
@@ -208,6 +221,11 @@ class MenuController extends Controller
                         //Část splňující daná kritéria neexistuje
                         $this->redirect('error404');
                     }
+
+                    $this->data['navigationBar'][] = array(
+                        'text' => $_SESSION['selection']['part']->getName(),
+                        'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl()
+                    );
                 }
             }
         }
@@ -233,10 +251,11 @@ class MenuController extends Controller
             //Kontroler je nastaven --> předat posbírané argumenty dál
             $this->controllerToCall->process($this->argumentsToPass);
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
+            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
         }
         else
         {
-            //Kontroler není nastaven --> vypsat tabulku na menu stránkce
+            //Kontroler není nastaven --> vypsat tabulku na menu stránce
             $this->pageHeader['bodyId'] = 'menu';
             $controllerName = __NAMESPACE__.'\\MenuTable'.self::CONTROLLER_EXTENSION;
             $this->controllerToCall = new $controllerName();

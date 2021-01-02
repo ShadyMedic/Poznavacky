@@ -38,7 +38,12 @@ class ManageController extends Controller
         {
             $this->redirect('error403');
         }
-        
+
+        $this->data['navigationBar'][] = array(
+            'text' => 'Správa třídy',
+            'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage'
+        );
+
         //Kontrola, zda nebyla zvolena správa členů nebo poznávaček
         //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu/nazev-tridy/manage)
@@ -81,6 +86,7 @@ class ManageController extends Controller
             $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
             $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
+            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
             
             $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
             
@@ -95,7 +101,7 @@ class ManageController extends Controller
             $this->pageHeader['cssFiles'] = array('css/css.css');
             $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/manage.js');
             $this->pageHeader['bodyId'] = 'manage';
-            
+
             $this->data['classId'] = $_SESSION['selection']['class']->getId();
             $this->data['className'] = $_SESSION['selection']['class']->getName();
             $this->data['classStatus'] = $_SESSION['selection']['class']->getStatus();

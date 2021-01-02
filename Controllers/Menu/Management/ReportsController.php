@@ -27,6 +27,12 @@ class ReportsController extends Controller
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/resolveReports.js');
         $this->pageHeader['bodyId'] = 'resolveReports';
+        $this->data['navigationBar'] = array(
+            0 => array(
+                'text' => $this->pageHeader['title'],
+                'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests/'.$_SESSION['selection']['group']->getUrl().'/reports'
+            )
+        );
         
         $this->view = 'reports';
     }

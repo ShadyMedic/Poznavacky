@@ -62,6 +62,12 @@ class RequestNewClassController extends Controller
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array();
         $this->pageHeader['bodyId'] = 'requestNewClassController';
+        $this->data['navigationBar'] = array(
+            0 => array(
+                'text' => $this->pageHeader['title'],
+                'link' => 'menu/request-new-class'
+            )
+        );
         
         $this->view = 'requestNewClass';
     }

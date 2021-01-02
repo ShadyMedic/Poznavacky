@@ -22,7 +22,12 @@ class MembersController extends Controller
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/members.js');
         $this->pageHeader['bodyId'] = 'members';
-        
+        $this->data['navigationBar'] = array(
+            0 => array(
+                'text' => $this->pageHeader['title'],
+                'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/members'
+            )
+        );
         $this->data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
         $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
         
