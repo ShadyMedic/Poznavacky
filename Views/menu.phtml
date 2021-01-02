@@ -5,14 +5,6 @@
 		<h1>Poznávačky</h1>
 	</div>
 </header>
-<nav>
-    <?php for ($i = 0; $i < count($navigationBar); $i++) : ?>
-        <a href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
-        <?php if ($i < count($navigationBar) - 1) : ?>
-            <span>>></span>
-        <?php endif ?>
-    <?php endfor ?>
-</nav>
 <aside>
 	<nav id="aside-main-panel">
 		<button class="btn" id="show-aside-login-info-button"><img src="../images/user.svg" alt=""></button> <!--zobrazí info o uživateli-->
@@ -40,13 +32,16 @@
 	</div>
 </aside>
 <main class="menu">
-	<h2><!--  --><button class="btn"></button></h2>
-		<!-- 
-		BUĎ Menu, 
-		NEBO Správa účtu,
-		NEBO *třída* -> Správa třídy, 
-		NEBO *třída* -> *poznávačka* -> *část* -> *akce* (Učit se/Vyzkoušet se/Přidat obrázky)
-		-->
+	<h2>
+		<nav>
+		<?php for ($i = 0; $i < count($navigationBar); $i++) : ?>
+			<a class="btn inline black" href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
+			<?php if ($i < count($navigationBar) - 1) : ?>
+				<span>>></span>
+			<?php endif ?>
+		<?php endfor ?>
+		</nav>
+	</h2>
 	<div class="wrapper">
 		<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
 	</div>

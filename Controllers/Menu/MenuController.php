@@ -57,7 +57,7 @@ class MenuController extends Controller
         }
 
         $this->data['navigationBar'] = array();
-        $this->data['navigationBar'][] = array('text' => 'menu', 'link' => 'menu');
+        $this->data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
 
         //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu)
