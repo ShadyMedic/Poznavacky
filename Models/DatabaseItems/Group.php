@@ -182,7 +182,13 @@ class Group extends Folder
      */
     public function getParts(): array
     {
-        if (!$this->isDefined($this->parts))
+        /*
+        Po znovunačítání edit stránky je z nějakýho důvodu vlastnost parts nastavena na NULL
+        Tohle je tak trochu hack, ale prostě se mi nepodařilo zjistit, kde se sakra do té vlastnosti
+        dostane NULL, když je nastavená jako protected a neukládá se do databáze (takže DatabaseItem
+        s ní nepracuje s výjimkou jejího nastavení na undefined v konstruktoru
+        */
+        if (!$this->isDefined($this->parts) || $this->parts === null)
         {
             $this->loadParts();
         }
