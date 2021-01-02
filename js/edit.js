@@ -133,17 +133,20 @@ function renameSomethingConfirm(event, type)
 	let allowedSpecialChars = (type === "group") ? ". _ -" : (type === "part") ? ". _ -" : "_ . - + / * % ( ) \' \"" //Pouze pro použití v chybových hláškách
 
 	let newName;
+	let oldName; //Pro kotnrolu unikátnosti u částí a poznávačky
 	if ($(event.target).prop("tagName") === "IMG")
 	{
 		//Potvrzení tlačítkem (kliknuto na obrázek, který jej vyplňuje)
-		newName = $(event.target).parent().siblings().filter("." + className + "-name-input-box > input").val();
+		newName = $(event.target).parent().siblings().filter("input").val()
+		oldName = $(event.target).parent().parent().siblings().find("." + className + "-name").text();
 	}
 	else
 	{
 		//Potvrzení Enterem
 		newName = $(event.target).val();
+		oldName = $(event.target).parent().siblings().find("." + className + "-name").text();
 	}
-	
+
 	//Kontrola délky
 	if (newName === undefined || !(newName.length >= minChars && newName.length <= maxChars))
 	{
@@ -160,24 +163,30 @@ function renameSomethingConfirm(event, type)
 	}
 
 	//Kontrola unikátnosti
+	let url = generateUrl(newName);
+	let oldUrl = generateUrl(oldName);
 	if (type === "group")
 	{
-		let url = generateUrl(newName);
-		
-		if (groupUrls.includes(url))
+		if (url !== oldUrl)
 		{
-			alert("Poznávačka se stejným URL již ve vybrané třídě existuje");
-			return;
+			if (groupUrls.includes(url))
+			{
+				alert("Poznávačka se stejným URL již ve vybrané třídě existuje");
+				return;
+			}
 		}
 	}
 	else if (type === "part")
 	{
 		//Získej pole jmen všech částí
-		let partNames = $(".part-name").map(function () { return generateUrl($(this).text()); }).get();
-		if (partNames.includes(generateUrl(newName)))
+		let partUrls = $(".part-name").map(function () { return generateUrl($(this).text()); }).get();
+		if (url !== oldUrl)
 		{
-			alert("Část se stejným URL již ve vybrané poznávačce existuje");
-			return;
+			if (partUrls.includes(url))
+			{
+				alert("Část se stejným URL již ve vybrané poznávačce existuje");
+				return;
+			}
 		}
 	}
 	else
