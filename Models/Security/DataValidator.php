@@ -106,9 +106,9 @@ class DataValidator
      * Takto lze kontrolovat pouze uživatelské jméno, jméno třídy nebo uživatelský e-mail
      * @param string $subject Řetězec jehož unikátnost chceme zjistit
      * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - viz konstanty této třídy začínající na "TYPE_"
-     * @parem Folder|null $parentFolder Objekt složky, jejíž součástí je kontrolovaný objekt (pouze u poznávaček a jejich částí) - bude tak kontrolována unikátnout pouze vůči položkám ve stejné složce (u ostatních typů nepovinné)
+     * @param Folder|null $parentFolder Objekt složky, jejíž součástí je kontrolovaný objekt (pouze u poznávaček a jejich částí) - bude tak kontrolována unikátnout pouze vůči položkám ve stejné složce (u ostatních typů nepovinné)
      * @throws InvalidArgumentException Pokud se již řetězec v databázi vyskytuje
-     * @throws BadMethodCallException Pokud druhý argument neoznačuje položku, pro kterou je tato operace podporována nebo pokud není vyplněn poslední argument a je kontrolována unikátnost řetězce poznávačky nebo části
+     * @throws BadMethodCallException Pokud druhý argument neoznačuje položku, pro kterou je tato operace podporována nebo pokud není vyplněn poslední argument a je kontrolována unikátnost URL poznávačky nebo části
      * @return boolean TRUE, pokud se řetězec zatím v databázi nevyskytuje
      */
     public function checkUniqueness($subject, int $stringType, object $parentFolder = null): bool
