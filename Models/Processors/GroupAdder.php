@@ -2,6 +2,8 @@
 namespace Poznavacky\Models\Processors;
 
 use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Folder;
+use Poznavacky\Models\DatabaseItems\Part;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\DataValidator;
 use \InvalidArgumentException;
@@ -13,6 +15,8 @@ use \RangeException;
  */
 class GroupAdder
 {
+    private const DEFAULT_PART_NAME = "Hlavní část";
+
     private $class;
     
     /**
@@ -76,7 +80,7 @@ class GroupAdder
     }
     
     /**
-     * Metoda vkládající poznávačku do databáze
+     * Metoda vkládající poznávačku do databáze a přidávající do ní první, prázdnou část
      * @param string $groupName Název pro novou poznávačku (musí být ověřen metodou GroupAdder::checkData())
      * @throws AccessDeniedException V případě, že se poznávačku nepodaří vytvořit
      * @return boolean TRUE, pokud je úspěšně uložen nový obrázek
@@ -84,11 +88,16 @@ class GroupAdder
     private function addGroup(string $groupName): bool
     {
         //Vložení poznávačky do databáze
-        if (!$this->class->addGroup($groupName))
+        $newGroup = $this->class->addGroup($groupName);
+        if ($newGroup === false)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_UNEXPECTED, null, null);
         }
-        
+
+        //Vytvoření první části poznávačky
+        $part = new Part(true);
+        $part->initialize(self::DEFAULT_PART_NAME, Folder::generateUrl(self::DEFAULT_PART_NAME), $newGroup, array(), 0, 0);
+        $newGroup->replaceParts(array($part));
         return true;
     }
 }
