@@ -1125,6 +1125,14 @@ label.required:after {
   margin: 2rem 3rem 0 3rem;
 }
 
+#menu h2 span,
+#learn h2 span,
+#test h2 span,
+#addPictures h2 span,
+#accountSettings h2 span {
+  font-weight: bold;
+}
+
 #menu .folders * {
   margin: auto;
 }

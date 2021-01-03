@@ -35,9 +35,12 @@
 	<h2>
 		<nav>
 		<?php for ($i = 0; $i < count($navigationBar); $i++) : ?>
-			<a class="btn inline black" href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
 			<?php if ($i < count($navigationBar) - 1) : ?>
+				<a class="btn inline black" href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
 				<span>>></span>
+			<?php endif ?>
+			<?php if ($i == count($navigationBar) - 1) : ?>
+				<span><?= $navigationBar[$i]['text'] ?></span>
 			<?php endif ?>
 		<?php endfor ?>
 		</nav>
