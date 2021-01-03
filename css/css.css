@@ -2318,7 +2318,9 @@ body#index #index-login-section {
   display: -ms-grid;
   display: grid;
   position: fixed;
-  overflow: hidden;
+  overflow: auto;
+  scrollbar-color: #444 white;
+  scrollbar-width: auto;
   color: black;
   border: 1.2rem solid white;
   border-radius: 1rem;
@@ -2327,7 +2329,8 @@ body#index #index-login-section {
   -webkit-transform: translate(-50%, calc(-50% + 5px));
           transform: translate(-50%, calc(-50% + 5px));
   width: 90vw;
-  height: 90vh;
+  height: auto;
+  max-height: 90vh;
   max-width: 520px;
   z-index: 5;
   background: white;
@@ -2337,6 +2340,19 @@ body#index #index-login-section {
   transition: opacity 0.32s ease-out, -webkit-transform 0.32s ease-out;
   transition: transform 0.32s ease-out, opacity 0.32s ease-out;
   transition: transform 0.32s ease-out, opacity 0.32s ease-out, -webkit-transform 0.32s ease-out;
+}
+
+body#index #index-login-section::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body#index #index-login-section::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+body#index #index-login-section::-webkit-scrollbar-track {
+  background: white;
 }
 
 @media screen and (min-width: 576px) {
@@ -2355,10 +2371,8 @@ body#index #index-login-section.show {
 body#index #index-login-section > #register,
 body#index #index-login-section > #login,
 body#index #index-login-section > #password-recovery {
-  overflow: auto;
   scrollbar-color: #444 #eee;
   scrollbar-width: auto;
-  height: 100%;
 }
 
 body#index #index-login-section > #register::-webkit-scrollbar,
@@ -2380,12 +2394,22 @@ body#index #index-login-section > #password-recovery::-webkit-scrollbar-track {
   background: #eee;
 }
 
+body#index #index-login-section .button-wrapper {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 6;
+  background: white;
+  height: 2.4rem;
+}
+
 body#index #index-login-section .cross {
-  -ms-grid-column-align: right;
-      justify-self: right;
-  margin-bottom: 0.8rem;
-  height: 2rem;
-  width: 2rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1.6rem;
+  width: 1.6rem;
 }
 
 body#index #index-login-section h2 {

@@ -20,7 +20,7 @@ $greenLight: #79cf40;
 $purpleLight: #bd4ac2;
 $purpleDark: #6a106e;
 
-@mixin scrollbar($size, $foreground-color, $background-color: $foreground-color) {
+@mixin scrollbar($size, $foreground-color, $background-color) {
 	scrollbar-color: $foreground-color $background-color;
 	scrollbar-width: auto;
 	&::-webkit-scrollbar {
