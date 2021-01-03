@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu\Study\Learn;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\Statics\UserManager;
 
 /** 
@@ -34,7 +35,18 @@ class LearnController extends Controller
         {
             $this->redirect('error403');
         }
-        
+
+        //Kontrola přítomnosti přírodnin
+        if (
+            $allParts && count($group->getNaturals()) === 0 ||
+            !$allParts && count($part->getNaturalsCount() === 0)
+        )
+        {
+            //Žádné přírodniny
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, "V této části nebo poznávačce nejsou zatím přidané žádné přírodniny");
+            $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
+        }
+
         $this->pageHeader['title'] = 'Učit se';
         $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
         $this->pageHeader['keywords'] = '';

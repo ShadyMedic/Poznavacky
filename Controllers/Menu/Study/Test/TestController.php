@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\Statics\UserManager;
 
 /** 
@@ -23,7 +24,29 @@ class TestController extends Controller
         {
             $this->redirect('error403');
         }
-        
+
+        $group = $_SESSION['selection']['group'];
+        if (isset($_SESSION['selection']['part']))
+        {
+            $part = $_SESSION['selection']['part'];
+            $allParts = false;
+        }
+        else
+        {
+            $allParts = true;
+        }
+
+        //Kontrola přítomnosti přírodnin
+        if (
+            $allParts && count($group->getNaturals()) === 0 ||
+            !$allParts && $part->getNaturalsCount() === 0
+        )
+        {
+            //Žádné přírodniny
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, "V této části nebo poznávačce nejsou zatím přidané žádné přírodniny");
+            $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
+        }
+
         $this->pageHeader['title'] = 'Vyzkoušet se';
         $this->pageHeader['description'] = 'Vyzkoušejte si, jak dobře znáte přírodniny v poznávačce pomocí náhodného testování';
         $this->pageHeader['keywords'] = '';
@@ -31,7 +54,7 @@ class TestController extends Controller
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/test.js','js/reportForm.js','js/menu.js');
         $this->pageHeader['bodyId'] = 'test';
 
-        if (isset($_SESSION['selection']['part']))
+        if (!$allParts)
         {
             $this->data['navigationBar'] = array(
                 0 => array(

@@ -20,24 +20,18 @@ class TestPicturesController extends Controller
     public function process(array $parameters): void
     {
         $group = $_SESSION['selection']['group'];
+
+        //Kontrola přístupu už proběhla v TestController.php
+
+        //Získání objektů obrázků
         if (isset($_SESSION['selection']['part']))
         {
             $part = $_SESSION['selection']['part'];
-            $allParts = false;
+            $pictures = $part->getRandomPictures(self::PICTURES_SENT_PER_REQUEST);
         }
         else
-        {
-            $allParts = true;
-        }
-        
-        //Získání objektů obrázků
-        if ($allParts)
         {
             $pictures = $group->getRandomPictures(self::PICTURES_SENT_PER_REQUEST);
-        }
-        else
-        {
-            $pictures = $part->getRandomPictures(self::PICTURES_SENT_PER_REQUEST);
         }
         
         //Vymazání předchozích odpovědí
