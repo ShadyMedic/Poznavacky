@@ -221,9 +221,9 @@ class ClassObject extends Folder
     /**
      * Metoda přidávající do databáze i do instance třídy novou poznávačku
      * @param string $groupName Ošetřený název nové poznávačky
-     * @return boolean TRUE, pokud je poznávačka vytvořena a přidána úspěšně, FALSE, pokud ne
+     * @return Group|boolean Objekt vytvořené poznávačky, pokud je poznávačka vytvořena a přidána úspěšně, FALSE, pokud ne
      */
-    public function addGroup(string $groupName): bool
+    public function addGroup(string $groupName)
     {
         if (!$this->isDefined($this->groups))
         {
@@ -238,7 +238,7 @@ class ClassObject extends Folder
             if ($result)
             {
                 $this->groups[] = $group;
-                return true;
+                return $group;
             }
         }
         catch (BadMethodCallException $e) { }
