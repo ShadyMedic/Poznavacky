@@ -498,23 +498,6 @@ class ClassObject extends Folder
     }
     
     /**
-     * Metoda kontrolující, zda v této třídě existuje specifikovaná poznávačka
-     * @param string $groupName Jméno poznávačky
-     * @return boolean TRUE, pokud byla poznávačka nalezene, FALSE, pokud ne
-     */
-    public function groupExists(string $groupName): bool
-    {
-        $this->loadIfNotLoaded($this->id);
-        $url = $this->generateUrl($groupName);
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ?', array($url, $this->id), false);
-        if ($cnt['cnt'] > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
      * Metoda ukládající do databáze nový požadavek na změnu názvu této třídy vyvolaný správcem této třídy, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
      * Data jsou předem ověřena
      * @param string $newName Požadovaný nový název

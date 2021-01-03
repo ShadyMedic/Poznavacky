@@ -47,9 +47,15 @@ class GroupAdder
     public function checkData(string $groupName): bool
     {
         //Kontrola, zda již poznávačka s tímto názvem ve třídě neexistuje
-        if ($this->class->groupExists($groupName))
+        $validator = new DataValidator();
+        $url = Folder::generateUrl($groupName);
+        try
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME);
+            $validator->checkUniqueness($url, DataValidator::TYPE_GROUP_URL, $this->class);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME, null, $e);
         }
         
         $validator = new DataValidator();
