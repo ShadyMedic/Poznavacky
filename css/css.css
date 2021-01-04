@@ -455,6 +455,62 @@ label.required:after {
   color: #a00;
 }
 
+.custom-checkbox-wrapper {
+  display: block;
+  position: relative;
+  padding-left: 2rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  /* When the checkbox is checked, add a blue background */
+}
+
+.custom-checkbox-wrapper input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox-wrapper .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 0.2em;
+  background-color: #eee;
+}
+
+.custom-checkbox-wrapper .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 0.6rem;
+  top: 0.3rem;
+  width: 0.3rem;
+  height: 0.6rem;
+  border: solid white;
+  border-width: 0 0.15rem 0.15rem 0;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.custom-checkbox-wrapper:hover input ~ .checkmark {
+  background-color: #d8d8d8;
+}
+
+.custom-checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark {
+  background-color: #366e11;
+}
+
+.custom-checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark:after {
+  display: block;
+}
+
 .custom-select-wrapper {
   position: relative;
   -webkit-user-select: none;
@@ -2441,7 +2497,6 @@ body#index #index-login-section .user-data {
 body#index #index-login-section .user-data label,
 body#index #index-login-section .user-data input.text-field {
   margin: 0.2rem 0;
-  font-size: 0.96rem;
 }
 
 body#index #index-login-section .user-data label:not(:nth-of-type(1)),

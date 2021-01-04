@@ -267,7 +267,6 @@ body#index {
 			label, 
 			input.text-field {
 				margin: 0.2rem 0;
-				font-size: 0.96rem;
 			}
 			label:not(:nth-of-type(1)), //kromě prvního labelu
 			.checkbox { 
@@ -280,6 +279,7 @@ body#index {
 				background: #eee;
 				padding: 0.6em 0.72em;
 			}
+
 		}
 		.message {
 			font-size: 0.72rem;
