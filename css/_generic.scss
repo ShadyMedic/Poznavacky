@@ -24,8 +24,15 @@ body {
 		border: 0;
 	}
 	&.tab {
-		:focus {
-			box-shadow: 0 0 5px 5px rgba(gray, 0.5);
+		.btn.border-btn:focus {
+			border: 2px solid rgba($greenMid, 0.5);
+		}
+		.btn.inline:focus {
+			font-weight: bold;
+			color: $greenMid;
+		} 
+		.text-field:focus {
+			box-shadow: inset 0 0 0 2px rgba($greenMid, 0.5);
 		}
 	}
 }
@@ -264,7 +271,7 @@ h5 {
 	}
 	&.icon {
 		img {
-			filter: drop-shadow(0 0 6px rgba(black, 0.32));
+			//filter: drop-shadow(0 0 6px rgba(black, 0.32));
 			transition: transform 0.2s ease-out;
 		}
 		&:active {
@@ -301,13 +308,6 @@ textarea {
 			pointer-events: none;
 			cursor: auto;
 		}
-		/*&:focus {
-			box-shadow: 0 2px 0 0 $greenMid;
-			outline: none;
-		}
-		&:invalid {
-			box-shadow: 0 2px 0 0 $red1;
-		}*/
 	}
 }
 
@@ -326,6 +326,8 @@ label {
 		}
 	}
 }
+
+
 
 
 .custom-select-wrapper {
