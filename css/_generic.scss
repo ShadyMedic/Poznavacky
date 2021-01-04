@@ -290,6 +290,7 @@ select,
 textarea {
 	font-family: inherit;
 	border: none;
+	outline: none;
 	&.text-field {
 		font-size: 100%;
 		padding: 0.48em 0.8em;
@@ -311,8 +312,8 @@ textarea {
 }
 
 label {
-	line-height: 1.32em;
-	padding: 0.48em 0;
+	line-height: 1.6em;
+	//padding: 0.48em 0;
 	display: inline-block;
 	&.disabled {
 		pointer-events: none;

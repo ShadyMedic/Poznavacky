@@ -19,8 +19,68 @@ $(function() {
 
 	//event listener scrollování
 	$(window).scroll(function(e) {showScrollButton(e)})
+
+	//event listenery inputů
+	$("#register-name").on("input", function() {checkRegisterName()})
+	$("#register-pass").on("input", function() {checkRegisterPassword()})
+	$("#register-repass").on("input", function() {checkRegisterRePassword()})
+	$("#register-email").on("input", function() {checkRegisterEmail()})
 })
 
+
+function checkRegisterName() {
+	var nameAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ";
+	var registerNameMessage;
+	if ($("#register-name").val().length == 0)
+		registerNameMessage = "Jméno musí být vyplněno."
+	else if ($("#register-name").val().length < 4)
+		registerNameMessage = "Jméno musí být alespoň 4 znaky dlouhé."
+	else if ($("#register-name").val().length > 15)
+		registerNameMessage = "Jméno může být nejvíce 15 znaků dlouhé."
+	else registerNameMessage = "";
+	for (let i = 0; i < $("#register-name").val().length; i++ ) {
+		if (!nameAllowedChars.includes($("#register-name").val()[i]))
+			registerNameMessage = "Jméno obsahuje nepovolené znaky."
+	}
+	$("#register-name-message").text(registerNameMessage);
+}
+
+function checkRegisterPassword() {
+	var passwordAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\''";
+	var registerPasswordMessage;
+	if ($("#register-pass").val().length == 0)
+		registerPasswordMessage = "Heslo musí být vyplněno."
+	else if ($("#register-pass").val().length < 6)
+		registerPasswordMessage = "Heslo musí být alespoň 6 znaků dlouhé."
+	else if ($("#register-pass").val().length > 31)
+		registerPasswordMessage = "Heslo může být nejvíce 31 znaků dlouhé."
+	else registerPasswordMessage = "";
+	for (let i = 0; i < $("#register-pass").val().length; i++ ) {
+		if (!passwordAllowedChars.includes($("#register-pass").val()[i]))
+			registerPasswordMessage = "Heslo obsahuje nepovolené znaky."
+	}
+	$("#register-pass-message").text(registerPasswordMessage);
+	checkRegisterRePassword();
+}
+
+function checkRegisterRePassword() {
+	var registerRePasswordMessage;
+	if ($("#register-repass").val().length == 0)
+		registerRePasswordMessage = "Heslo znovu musí být vyplněno."
+	else if ($("#register-repass").val() != $("#register-pass").val())
+		registerRePasswordMessage = "Zadaná hesla se neshodují."
+	else registerRePasswordMessage = "";
+	$("#register-repass-message").text(registerRePasswordMessage);
+}
+
+function checkRegisterEmail() {
+	var registerEmailMessage;
+  	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	if ($("#register-email").val() != "" && !regex.test($("#register-email").val()))
+		registerEmailMessage = "Zadaný email má nesprávný tvar."
+	else registerEmailMessage= "";
+	$("#register-email-message").text(registerEmailMessage);
+}
 
 //zasunutí cookies alertu
 function hideCookiesAlert(){
@@ -68,7 +128,7 @@ function hideLoginSection() {
 	$("#index-login-section").removeClass("show");
 	$(".overlay").removeClass("show");
 	$("body").css("overflowY", "auto");
-	emptyForms(".user-data input.text-field");
+	emptyForms(".user-data input.text-field, .message");
 }
 
 //vymaže obsah textových polí ve formuláři
@@ -76,6 +136,7 @@ function emptyForms(fields) {
 	var formTextFields = [];
 	formTextFields = $(fields);
 	formTextFields.val('');
+	formTextFields.text('');
 }
 
 //detekce kliknutí mimo login sekci

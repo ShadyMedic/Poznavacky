@@ -413,6 +413,7 @@ select,
 textarea {
   font-family: inherit;
   border: none;
+  outline: none;
 }
 
 input.text-field,
@@ -440,8 +441,7 @@ textarea.text-field.disabled {
 }
 
 label {
-  line-height: 1.32em;
-  padding: 0.48em 0;
+  line-height: 1.6em;
   display: inline-block;
 }
 
@@ -2322,7 +2322,10 @@ body#index #index-login-section {
   scrollbar-color: #444 white;
   scrollbar-width: auto;
   color: black;
-  border: 1.2rem solid white;
+  padding: 0 0.4rem;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+  border: 0.8rem solid white;
   border-radius: 1rem;
   top: 50vh;
   left: 50vw;
@@ -2357,7 +2360,7 @@ body#index #index-login-section::-webkit-scrollbar-track {
 
 @media screen and (min-width: 576px) {
   body#index #index-login-section {
-    border-width: 2rem;
+    border-width: 1.6rem;
   }
 }
 
@@ -2413,6 +2416,7 @@ body#index #index-login-section .cross {
 }
 
 body#index #index-login-section h2 {
+  font-size: 1.6rem;
   margin: 0 0 0.8rem 0;
 }
 
@@ -2441,7 +2445,7 @@ body#index #index-login-section .user-data input.text-field {
 
 body#index #index-login-section .user-data label:not(:nth-of-type(1)),
 body#index #index-login-section .user-data .checkbox {
-  margin-top: 1rem;
+  margin-top: 0.54rem;
 }
 
 body#index #index-login-section .user-data input.text-field {
@@ -2449,6 +2453,13 @@ body#index #index-login-section .user-data input.text-field {
   font-family: 'Roboto', sans-serif;
   background: #eee;
   padding: 0.6em 0.72em;
+}
+
+body#index #index-login-section .message {
+  font-size: 0.72rem;
+  line-height: 0.96rem;
+  min-height: 0.96rem;
+  color: #a00;
 }
 
 body#index #index-login-section .btn.inline,
@@ -2464,6 +2475,7 @@ body#index #index-login-section p {
 body#index #index-login-section .border-btn {
   margin: 0.8rem auto;
   font-size: 1.2rem;
+  width: 100%;
 }
 
 body#index footer {

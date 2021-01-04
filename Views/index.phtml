@@ -33,8 +33,10 @@
 					<input id='login-hidden' type='hidden' name='type' value='l'>
 					<label for='login-name'>Jméno</label>
 					<input id='login-name' class="text-field" type='text' name='loginName' maxlength=15>
+					<div id="login-name-message" class="message"></div>
 					<label for='login-pass'>Heslo</label>
 					<input id='login-pass' class="text-field" type='password' name='loginPass' maxlength=31>
+					<div id="login-pass-message" class="message"></div>
 					<div class="checkbox">
 						<label for="login-persist">Zůstat přihlášen</label>
 						<input id="login-persist" type="checkbox" name='stay_logged'/>
@@ -51,13 +53,17 @@
 				<div class="user-data">
 					<input id='register-hidden' type='hidden' name='type' value='r'>
 					<label for="register-name" class="required">Jméno</label>
-					<input id='register-name' class="text-field" type='text' name='registerName' maxlength=15 required=true>
+					<input id='register-name' class="text-field" type='text' name='registerName' maxlength=15>
+					<div id="register-name-message" class="message"></div>
 					<label for="register-pass" class="required">Heslo</label>
-					<input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31 required=true>	
+					<input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31>	
+					<div id="register-pass-message" class="message"></div>
 					<label for="register-repass" class="required">Heslo znovu</label>
-					<input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31 required=true>
+					<input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31>
+					<div id="register-repass-message" class="message"></div>
 					<label for="register-email">E-mail</label>
-					<input id='register-email' class="text-field" type='email' name='registerEmail' maxlength=255>
+					<input id='register-email' class="text-field" type='text' name='registerEmail' maxlength=255>
+					<div id="register-email-message" class="message"></div>
 				</div>
 				<p id='span-terms'>Registrací souhlasíte s <a target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</p>
 				<input id='register-submit' class="btn border-btn center rounded non-transparent black" type="submit" value="Vytvořit účet" />
@@ -70,6 +76,7 @@
 				<div class="user-data">
 					<input id='password-recovery-hidden' type='hidden' name='type' value='p'>
 					<input id='password-recovery-email' class="text-field" type='email' name="passRecoveryEmail" maxlength=255 required=true />
+					<div id="password-recovery-email-message" class="message"></div>
 				</div>
 				<input id='password-recovery-submit' class="btn border-btn center rounded non-transparent black" type="submit" value= "Odeslat" />
 			</form>

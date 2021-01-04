@@ -205,9 +205,11 @@ body#index {
 		overflow: auto;
 		@include scrollbar(8px, $gray3, white);
 		color: black;
-		border: 1.2rem solid white;
+		padding: 0 0.4rem;
+		box-shadow: 0px 0px 4px 2px rgba(black,0.2);
+		border: 0.8rem solid white;
 		@media screen and (min-width: $mobile) {
-			border-width: 2rem;
+			border-width: 1.6rem;
 		}
 		border-radius: 1rem;
 		//font-size: 1.2rem;
@@ -250,6 +252,7 @@ body#index {
 			width: 1.6rem;
 		}
 		h2 {
+			font-size: 1.6rem;
 			margin: 0 0 0.8rem 0;
 			> img {
 				height: 1em;
@@ -267,7 +270,7 @@ body#index {
 			}
 			label:not(:nth-of-type(1)), //kromě prvního labelu
 			.checkbox { 
-				margin-top: 1rem;
+				margin-top: 0.54rem;
 			}
 			input.text-field {
 				color: $gray1;
@@ -276,6 +279,12 @@ body#index {
 				background: #eee;
 				padding: 0.6em 0.72em;
 			}
+		}
+		.message {
+			font-size: 0.72rem;
+			line-height: 0.96rem;
+			min-height: 0.96rem; 
+			color: $red1;
 		}
 		.btn.inline,
 		p {
@@ -288,6 +297,7 @@ body#index {
 		.border-btn {
 			margin: 0.8rem auto;
 			font-size: 1.2rem;
+			width: 100%; 
 		}
 	}
 
