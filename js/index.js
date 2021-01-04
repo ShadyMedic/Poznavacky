@@ -21,13 +21,34 @@ $(function() {
 	$(window).scroll(function(e) {showScrollButton(e)})
 
 	//event listenery inputů
+	$("#login-name").on("input", function() {checkLoginName()})
+	$("#login-pass").on("input", function() {checkLoginPassword()})
 	$("#register-name").on("input", function() {checkRegisterName()})
 	$("#register-pass").on("input", function() {checkRegisterPassword()})
 	$("#register-repass").on("input", function() {checkRegisterRePassword()})
 	$("#register-email").on("input", function() {checkRegisterEmail()})
+	$("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
 })
 
+//funkce kontrolující správně zadané jméno při přihlašování
+function checkLoginName() {
+	var loginNameMessage;
+	if($("#login-name").val().length == 0)
+		loginNameMessage = "Jméno musí být vyplněno.";
+	else loginNameMessage = "";
+	$("#login-name-message").text(loginNameMessage);
+}
 
+//funkce kontrolující správně zadané heslo při přihlašování
+function checkLoginPassword() {
+	var loginPasswordMessage;
+	if($("#login-pass").val().length == 0)
+		loginPasswordMessage = "Heslo musí být vyplněno.";
+	else loginPasswordMessage = "";
+	$("#login-pass-message").text(loginPasswordMessage);
+}
+
+//funkce kontrolující správně zadané jméno při registraci
 function checkRegisterName() {
 	var nameAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ";
 	var registerNameMessage;
@@ -45,6 +66,7 @@ function checkRegisterName() {
 	$("#register-name-message").text(registerNameMessage);
 }
 
+//funkce kontrolující správně zadané heslo při registraci
 function checkRegisterPassword() {
 	var passwordAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\''";
 	var registerPasswordMessage;
@@ -63,6 +85,7 @@ function checkRegisterPassword() {
 	checkRegisterRePassword();
 }
 
+//funkce kontrolující správně zadané heslo znovu při registraci
 function checkRegisterRePassword() {
 	var registerRePasswordMessage;
 	if ($("#register-repass").val().length == 0)
@@ -73,6 +96,7 @@ function checkRegisterRePassword() {
 	$("#register-repass-message").text(registerRePasswordMessage);
 }
 
+//funkce kontrolující správně zadaný email při registraci
 function checkRegisterEmail() {
 	var registerEmailMessage;
   	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -80,6 +104,18 @@ function checkRegisterEmail() {
 		registerEmailMessage = "Zadaný email má nesprávný tvar."
 	else registerEmailMessage= "";
 	$("#register-email-message").text(registerEmailMessage);
+}
+
+//funkce kontrolující správně zadaný email při obnově hesla
+function checkRecoveryEmail() {
+	var recoveryEmailMessage;
+  	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	if ($("#password-recovery-email").val().length == 0)
+		recoveryEmailMessage = "Email musí být vyplněn."
+	else if ($("#password-recovery-email").val() != "" && !regex.test($("#password-recovery-email").val()))
+		recoveryEmailMessage = "Zadaný email má nesprávný tvar."
+	else recoveryEmailMessage= "";
+	$("#password-recovery-email-message").text(recoveryEmailMessage);
 }
 
 //zasunutí cookies alertu
@@ -121,6 +157,7 @@ function showLoginDiv(divId) {
 	$("#login").hide();
 	$("#password-recovery").hide();
 	$("#" + divId).show();
+	emptyForms(".user-data input.text-field, .message");
 }
 
 //skrytí login sekce
