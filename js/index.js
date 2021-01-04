@@ -28,6 +28,8 @@ $(function() {
 	$("#register-repass").on("input", function() {checkRegisterRePassword()})
 	$("#register-email").on("input", function() {checkRegisterEmail()})
 	$("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
+
+	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
 
 //funkce kontrolující správně zadané jméno při přihlašování
