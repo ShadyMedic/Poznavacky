@@ -32,7 +32,7 @@ class RegisterUser
         $repass = $POSTdata['repass'];
         $email = $POSTdata['email'];
         
-        if (mb_strlen($email) === 0){$email = null;}
+        if (mb_strlen($email) === 0) { $email = null; }
         
         //Ověření dat
         if (self::validateData($name, $pass, $repass, $email))  //Pokud nejsou data v pořádku, je vyhozena výjimka
@@ -55,51 +55,39 @@ class RegisterUser
      */
     private function validateData($name, $pass, $repass, $email): bool
     {
+        $errors = array();
         $validator = new DataValidator();
         
         //Kontrola existence vyplněných dat
-        if (mb_strlen($name) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_NAME, null, null); }
-        if (mb_strlen($pass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_PASSWORD, null, null); }
-        if (mb_strlen($repass) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD, null, null); }
-        
-        //Kontrola délky jména, hesla a e-mailu
-        try
+        if (mb_strlen($name) === 0) { $errors[] = AccessDeniedException::REASON_REGISTER_NO_NAME; }
+        if (mb_strlen($pass) === 0) { $errors[] = AccessDeniedException::REASON_REGISTER_NO_PASSWORD; }
+        if (mb_strlen($repass) === 0) { $errors[] = AccessDeniedException::REASON_REGISTER_NO_REPEATED_PASSWORD; }
+
+        //Pokud není něco vyplněné, nemá smysl pokračovat
+        if (!empty($errors))
         {
-            $validator->checkLength($name, DataValidator::USER_NAME_MIN_LENGTH, DataValidator::USER_NAME_MAX_LENGTH, DataValidator::TYPE_USER_NAME);
-            $validator->checkLength($pass, DataValidator::USER_PASSWORD_MIN_LENGTH, DataValidator::USER_PASSWORD_MAX_LENGTH, DataValidator::TYPE_USER_PASSWORD);
-            if (!empty($email))    //Pouze, pokud je e-mail vyplněn
-            {
-                $validator->checkLength($email, DataValidator::USER_EMAIL_MIN_LENGTH, DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAIL);
-            }
+            throw new AccessDeniedException(implode('|', $errors));
         }
-        catch(RangeException $e)
+
+        //Kontrola délky jména, hesla a e-mailu
+        try { $validator->checkLength($name, DataValidator::USER_NAME_MIN_LENGTH, DataValidator::USER_NAME_MAX_LENGTH, DataValidator::TYPE_USER_NAME); }
+        catch (RangeException $e)
         {
-            if ($e->getMessage() === 'long')
+            if ($e->getMessage() === 'long') { $errors[] = AccessDeniedException::REASON_REGISTER_NAME_TOO_LONG; }
+            else if ($e->getMessage() === 'short') { $errors[] = AccessDeniedException::REASON_REGISTER_NAME_TOO_SHORT; }
+        }
+        try { $validator->checkLength($pass, DataValidator::USER_PASSWORD_MIN_LENGTH, DataValidator::USER_PASSWORD_MAX_LENGTH, DataValidator::TYPE_USER_PASSWORD); }
+        catch (RangeException $e)
+        {
+            if ($e->getMessage() === 'long') { $errors[] = AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG; }
+            else if ($e->getMessage() === 'short') { $errors[] = AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_SHORT; }
+        }
+        if (!empty($email))    //Pouze, pokud je e-mail vyplněn
+        {
+            try { $validator->checkLength($email, DataValidator::USER_EMAIL_MIN_LENGTH, DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAIL); }
+            catch (RangeException $e)
             {
-                switch ($e->getCode())
-                {
-                    case 0:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_TOO_LONG, null, $e);
-                        break;
-                    case 1:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG, null, $e);
-                        break;
-                    case 2:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_EMAIL_TOO_LONG, null, $e);
-                        break;
-                }
-            }
-            else if ($e->getMessage() === 'short')
-            {
-                switch ($e->getCode())
-                {
-                    case 0:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_TOO_SHORT, null, $e);
-                        break;
-                    case 1:
-                        throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_SHORT, null, $e);
-                        break;
-                }
+                if ($e->getMessage() === 'long') { $errors[] = AccessDeniedException::REASON_REGISTER_EMAIL_TOO_LONG; }
             }
         }
         
@@ -114,14 +102,20 @@ class RegisterUser
             switch ($e->getCode())
             {
                 case 0:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_NAME_INVALID_CHARACTERS, null, $e);
+                    $errors[] = AccessDeniedException::REASON_REGISTER_NAME_INVALID_CHARACTERS;
                     break;
                 case 1:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS, null, $e);
+                    $errors[] = AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS;
                     break;
             }
         }
-        
+
+        //Pokud neprošla kontrola na znaky a délku, nemá smysl kontrolovat unikátnost
+        if (!empty($errors))
+        {
+            throw new AccessDeniedException(implode('|', $errors));
+        }
+
         //Kontrola unikátnosti jména a e-mailu
         try
         {
@@ -133,10 +127,10 @@ class RegisterUser
             switch ($e->getCode())
             {
                 case 0:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DUPLICATE_NAME, null, $e);
+                    $errors[] = AccessDeniedException::REASON_REGISTER_DUPLICATE_NAME;
                     break;
                 case 2:
-                    throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DUPLICATE_EMAIL, null, $e);
+                    $errors[] = AccessDeniedException::REASON_REGISTER_DUPLICATE_EMAIL;
                     break;
             }
         }
@@ -144,15 +138,21 @@ class RegisterUser
         //Kontrola platnosti e-mailu
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL, null, null);
+            $errors[] = AccessDeniedException::REASON_REGISTER_INVALID_EMAIL;
         }
         
         //Kontrola shodnosti hesel
         if ($pass !== $repass)
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS, null, null);
+            $errors[] = AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS;
         }
-        
+
+        //Poslední kontrola na chyby
+        if (!empty($errors))
+        {
+            throw new AccessDeniedException(implode('|', $errors));
+        }
+
         return true;
     }
     

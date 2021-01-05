@@ -172,7 +172,10 @@ function serverResponse(messageType, message, data)
 	//var messageType == //success / info / warning / error
 	//var message == //Chybová hláška
 	//var form == //Formulář z něhož byla odeslána data - login / register / passRecovery
-	
+
+	var errors = message.split("|"); //V případě, že bylo nalezeno více chyb, jsou odděleny svislítkem
+	console.log(errors);
+
 	//TODO - zobrazení chybové nebo úspěchové hlášky
 }
 

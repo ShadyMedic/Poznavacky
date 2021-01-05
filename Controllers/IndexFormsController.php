@@ -18,6 +18,7 @@ class IndexFormsController extends Controller
     /**
      * Metoda přijímající data z formulářů skrz $_POST a volající model, který je zpracuje.
      * Podle výsledku zpracování dat odesílá instrukce k přesměrování na menu stránku nebo odesílá chybovou hlášku.
+     * V případě, že se během zpracovávání dat narazilo na větší množství chyb, jsou v odpovědi odděleny svislítkem ("|")
      * @see Controller::process()
      */
     public function process(array $paremeters): void
