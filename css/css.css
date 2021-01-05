@@ -1205,6 +1205,27 @@ label.required:after {
           box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
 }
 
+#menu .folders#menu-classes-table ul.rows li {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 6rem 5rem;
+      grid-template-columns: 1fr 6rem 5rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-classes-table ul.rows li {
+    -ms-grid-columns: 1fr 8rem 6rem;
+        grid-template-columns: 1fr 8rem 6rem;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #menu .folders#menu-classes-table ul.rows li {
+    -ms-grid-columns: 1fr 8rem 8rem;
+        grid-template-columns: 1fr 8rem 8rem;
+  }
+}
+
 #menu .folders#menu-groups-table .table-title.rows {
   -ms-grid-columns: 1fr 5rem;
       grid-template-columns: 1fr 5rem;
@@ -1240,6 +1261,135 @@ label.required:after {
   #menu .folders#menu-groups-table ul.rows li {
     -ms-grid-columns: 1fr 8rem;
         grid-template-columns: 1fr 8rem;
+  }
+}
+
+#menu .folders#menu-parts-table ul.rows li {
+  -ms-grid-columns: auto 1fr 6rem 5rem;
+      grid-template-columns: auto 1fr 6rem 5rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-parts-table ul.rows li {
+    -ms-grid-columns: auto 1fr 8rem 6rem;
+        grid-template-columns: auto 1fr 8rem 6rem;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #menu .folders#menu-parts-table ul.rows li {
+    -ms-grid-columns: auto 1fr 8rem 8rem;
+        grid-template-columns: auto 1fr 8rem 8rem;
+  }
+}
+
+#menu .folders#menu-parts-table ul.rows li.show {
+  cursor: default;
+}
+
+#menu .folders#menu-parts-table ul.rows li.show .col1 {
+  display: none;
+}
+
+@media screen and (min-width: 820px) {
+  #menu .folders#menu-parts-table ul.rows li.show .col1 {
+    display: block;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1/2;
+    font-size: 0.9rem;
+    margin-left: 0.6rem;
+    text-align: left;
+  }
+}
+
+#menu .folders#menu-parts-table ul.rows li .col1 {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1/3;
+  font-size: 1rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-parts-table ul.rows li .col1 {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  #menu .folders#menu-parts-table ul.rows li .col1 {
+    font-size: 1.4rem;
+  }
+}
+
+#menu .folders#menu-parts-table ul.rows li .col2 {
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 1;
+  grid-column: 3/4;
+}
+
+#menu .folders#menu-parts-table ul.rows li .col3 {
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 1;
+  grid-column: 4/5;
+}
+
+#menu .folders#menu-parts-table ul.rows li .buttons {
+  display: none;
+}
+
+#menu .folders#menu-parts-table ul.rows li .buttons > * {
+  margin: 0.2rem 0.2rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-parts-table ul.rows li .buttons > * {
+    margin: 0 0.4rem;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  #menu .folders#menu-parts-table ul.rows li .buttons > * {
+    margin: 0 0.8rem;
+  }
+}
+
+#menu .folders#menu-parts-table ul.rows li .buttons.show {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 4;
+  grid-column: 1/5;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-parts-table ul.rows li .buttons.show {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2/5;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  #menu .folders#menu-parts-table ul.rows li .buttons.show {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2/5;
+    -webkit-box-pack: right;
+        -ms-flex-pack: right;
+            justify-content: right;
   }
 }
 
@@ -1290,30 +1440,15 @@ label.required:after {
   margin: 0.4rem 0;
 }
 
-#menu .folders ul.rows button li {
+#menu .folders ul.rows li {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 6rem 5rem;
-      grid-template-columns: 1fr 6rem 5rem;
-}
-
-@media screen and (min-width: 360px) {
-  #menu .folders ul.rows button li {
-    -ms-grid-columns: 1fr 8rem 6rem;
-        grid-template-columns: 1fr 8rem 6rem;
-  }
-}
-
-@media screen and (min-width: 576px) {
-  #menu .folders ul.rows button li {
-    -ms-grid-columns: 1fr 8rem 8rem;
-        grid-template-columns: 1fr 8rem 8rem;
-  }
-}
-
-#menu .folders ul.rows li {
   width: 100%;
   padding: 0.4rem;
+}
+
+#menu .folders ul.rows span.tiles {
+  display: none;
 }
 
 #menu .folders ul.rows #enter-code-wrapper,

@@ -6,20 +6,20 @@
 	</div>
 	<ul class="tiles">
 	<?php foreach ($table as $tableRow) : ?>
-		<button class="btn" onclick="displayButtons()"><li>
+		<button class="btn display-buttons-button"><li>
     		<h4 class="col1"><?= $tableRow[0] ?></h4>
 			<span class="col2">
-				<span>přírodnin: </span>
+				<span class="tiles">přírodnin: </span>
 				<span><?= $tableRow[1] ?></span>
 			</span>
 			<span class="col3">
-				<span>obrázků: </span>
+				<span class="tiles">obrázků: </span>
 				<span><?= $tableRow[2] ?></span>
 			</span>
-    		<div>
-    			<a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn rounded transparent black border-btn">Přidat obrázky</a>
-    			<a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn rounded transparent black border-btn">Učit se</a>
-    			<a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn rounded transparent black border-btn">Vyzkoušet se</a>
+    		<div class="buttons">
+    			<a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn transparent black border-btn">Přidat obrázky</a>
+    			<a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent black border-btn">Učit se</a>
+    			<a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent black border-btn">Vyzkoušet se</a>
 			</div>
 		</li></button>
 	<?php endforeach; ?>
