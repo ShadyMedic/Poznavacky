@@ -1,13 +1,15 @@
 <?php
 namespace Poznavacky\Controllers;
 
-use Poznavacky\Models\AjaxResponse;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\LoginUser;
 use Poznavacky\Models\Processors\RecoverPassword;
 use Poznavacky\Models\Processors\RegisterUser;
+use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\AjaxResponse;
+use InvalidArgumentException;
 
-/** 
+/**
  * Kontroler zpracovávající data z formulářů na index stránce
  * (přihlášení, registrace, obnova hesla)
  * Kontroler je volán pomocí AJAX požadavku z index.js
@@ -29,6 +31,23 @@ class IndexFormsController extends Controller
             $type = $_POST['type'];
             switch($type)
             {
+                //Kontrola unikátnosti přihlašovacího jména nebo e-mailové adresy
+                case 'u':
+                case 'e':
+                    $string = $_POST['text'];
+                    $stringType = ($_POST['type'] === 'u') ? DataValidator::TYPE_USER_NAME : DataValidator::TYPE_USER_EMAIL;
+                    $validator = new DataValidator();
+                    try
+                    {
+                        $validator->checkUniqueness($string, $stringType);
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('unique' => true));
+                    }
+                    catch (InvalidArgumentException $e)
+                    {
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('unique' => false));
+                    }
+                    echo $response->getResponseString();
+                    break;
                 //Přihlašování
                 case 'l':
                     $form = 'login';
@@ -66,7 +85,7 @@ class IndexFormsController extends Controller
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $form));
             echo $response->getResponseString();
         }
-        
+
         //Zastav zpracování PHP, aby se nevypsala šablona
         exit();
     }

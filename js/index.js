@@ -61,6 +61,17 @@ $(function() {
 		}
 	})
 
+	//Odeslání AJAX požadavku pro kontrolu existence uživatele při přihlašování
+	$("#login-name").blur(function(){ isStringUnique($("#login-name").val(), true, $("#login-name").get(), false); });
+
+	//Odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
+	$("#register-name").blur(function(){ isStringUnique($("#register-name").val(), true, $("#register-name").get(), true); });
+
+	//Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
+	$("#register-email").blur(function(){ isStringUnique($("#register-email").val(), false, $("#register-email").get(), true); });
+
+	//Odeslání AJAX poýadavku pro kontrolu existence e-mailu při obnově hesla
+	$("#password-recovery-email").blur(function(){ isStringUnique($("#password-recovery-email").val(), false, $("#password-recovery-email").get(), false); });
 });
 
 //skrytí login sekce
@@ -118,6 +129,41 @@ function checkLoginSize() {
 }
 /*--------------------------------------------------------------------------*/
 /* Odesílání dat z formulářů na server */
+
+function isStringUnique(string, isName, inputElement, shouldBeUnique)
+{
+	//Odeslání dat
+	let type = (isName) ? 'u' : 'e';
+	$.post("index-forms",
+		{
+			type: type,
+			text: string
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function(messageType, message, data)
+				{
+					if (messageType === "success")
+					{
+						if ((data.unique ^ shouldBeUnique))
+						{
+							//TODO - nějak upravit inputElement tak, aby se ukázala chyba
+							$(inputElement).css("backgroundColor", "red");
+						}
+						else
+						{
+							//TODO - nějak upravit inputElement tak, aby se ukázalo potvrzení
+							$(inputElement).css("backgroundColor", "green");
+						}
+					}
+				}
+			);
+		},
+		"json"
+	);
+}
+
 function formSubmitted(event)
 {
 	event.preventDefault();
