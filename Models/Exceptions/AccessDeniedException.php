@@ -98,13 +98,13 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER = 'Tento uživatel je již členem této třídy';
     const REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS = 'Z této třídy nelze odebrat žádného člena';
     const REASON_MANAGEMENT_KICK_USER_NOT_A_MEMBER = 'Tento uživatel není členem této třídy';
-    const REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME = 'Poznávačka s tímto názvem již v této třídě existuje';
+    const REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME = 'Poznávačka s tímto nebo velmi podobným názvem již ve vaší třídě existuje';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG = 'Název poznávačky nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT = 'Název poznávačky musí být alespoň 3 znaky dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS = 'Název poznávačky může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
     const REASON_MANAGEMENT_REPORTS_EDIT_PICTURE_ANOTHER_GROUP = 'Obrázek nelze přesunout k přírodnině, která není součástí té samé poznávačky';
     const REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL = 'Hlášení se vztahuje k obrázku, který není nahrán k žádné přírodnině ve vaší třídě';
-    const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_GROUP = 'Poznávačka s tímto nebo velmi podobným názvem již ve vaší třídě existuje';
+    const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_GROUP = self::REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME;
     const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_PART = 'Jedna nebo více částí se stejným nebo velmi podobným názvem je definována vícekrát'; //Zní to hloupě, ale k dosažení této hlášky je nutné modifikovat JavaScript
     const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_NATURAL = 'V jedné nebo více částech se některá přírodnina vyskytuje vícekrát'; //Zní to hloupě, ale k dosažení této hlášky je nutné modifikovat JavaScript
     const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_LONG = self::REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG;

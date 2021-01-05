@@ -38,6 +38,17 @@ class AddPicturesController extends Controller
             $this->redirect('error403');
         }
         
+        //Kontrola přítomnosti přírodnin
+        if (
+            $allParts && count($group->getNaturals()) === 0 ||
+            !$allParts && count($part->getNaturalsCount() === 0)
+        )
+        {
+            //Žádné přírodniny
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, "V této části nebo poznávačce nejsou zatím přidané žádné přírodniny");
+            $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
+        }
+        
         $this->pageHeader['title'] = 'Přidat obrázky';
         $this->pageHeader['description'] = 'Přidávejte obrázky do své poznávačky, aby se z nich mohli učit všichni členové třídy';
         $this->pageHeader['keywords'] = '';
