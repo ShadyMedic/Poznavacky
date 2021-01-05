@@ -3,8 +3,11 @@ $(function() {
 	//skrytí řádkového zobrazení (v budoucnu bude řešeno v návaznosti na to, co má uživatel trvale nastaveno)
 	$(".rows").hide();
 
-	//event listener tlačítka na změnu zobrazení složek
+	//event listenery tlačítek
 	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
+	$(".display-buttons-button").click(function(){displayButtons(this)})
+
+	$(document).mouseup(function(e){hideButtons(e)});
 
 	changeFoldersLayout();
 
@@ -17,6 +20,26 @@ $(window).resize(function(){
 	//případná implementace
 	/*checkTilesLayout();*/
 })
+
+function displayButtons(button) {
+	if (!$(button).hasClass("show")) {
+		$(button).find(".col2, .col3").hide();
+		$(button).find(".buttons").addClass("show");
+		$(button).find("li").addClass("show");
+	}
+}
+
+function hideButtons(e) {
+	$(".display-buttons-button").each(function(){
+		if (!$(this).is(e.target) && $(this).has(e.target).length === 0) {
+			if ($(this).find("li").hasClass("show")) {
+				$(this).find(".col2, .col3").show();
+				$(this).find(".buttons").removeClass("show");
+				$(this).find("li").removeClass("show");
+			}
+		}
+	})
+}
 
 //funkce přepínající zobrazení složek
 function changeFoldersLayout() {

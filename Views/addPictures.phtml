@@ -1,36 +1,53 @@
-<form method="POST">
-	<fieldset id="field1">
-		<div class="prikaz">Vyberte přírodninu, kterou chcete nahrát. V závorce je uvedeno množství obrázků dané přírodniny. Nahrávejte prosím především obrázky přírodnin s menším číslem.</div>
-		<select onchange="naturalSelected()" id="dropList" class="text">
-			<?php if (empty($previousNatural)) : ?>
-			<option value="" selected disabled hidden></option>
+<div id="add-pictures-form-wrapper">
+	<!--<select onchange="naturalSelected()">
+		<option value="" selected disabled hidden></option>
+		<?php foreach ($naturals as $natural) : ?>
+			<?php if ($previousNatural === $natural->getName()) : ?>
+				<option selected>
 			<?php endif ?>
-			<?php foreach ($naturals as $natural) : ?>
-				<?php if ($previousNatural === $natural->getName()) : ?>
-					<option selected>
-				<?php endif ?>
-				<?php if ($previousNatural !== $natural->getName()) : ?>
-					<option>
-				<?php endif ?>
-					<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
-				</option>
-			<?php endforeach ?>
-		</select>
-		<input type="hidden" name="naturalName" id="hiddenInput" value="<?= $previousNatural ?>" />
+			<?php if ($previousNatural !== $natural->getName()) : ?>
+				<option>
+			<?php endif ?>
+				<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
+			</option>
+		<?php endforeach ?>
+	</select>-->
+	<label for="add-natural-select">Zvolte přírodninu, jejíž obrázek chcete přidat:</label>
+	<div class="custom-select-wrapper" id="add-natural-select">
+		<div class="custom-select">
+			<div class="custom-select-main">
+				<span></span>
+				<img class="arrow" src="../images/arrowBlack.svg">
+			</div>
+			<ul class="custom-options">
+				<?php foreach ($naturals as $natural) :?>
+                    <li class="custom-option">
+						<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<input type="hidden" name="naturalName" id="natural-name-hidden" value="" />
+	<fieldset class="url-fieldset" class="disabled">
+		<label for="url-input">Zadejte URL adresu obrázku:</label>
+		<input type=url name="url" id="url-input" class="text-field" value=""/>
+		<button id="url-confirm-button" class="btn border-btn black non-transparent">OK</button>
 	</fieldset>
-	<fieldset id="field2" <?php if (empty($previousNatural)) : ?> style="display:none;" <?php endif ?>>
-		<div id="duckLink_div">
-			<a id="duckLink" target=_blank <?php if (!empty($previousNatural)) : ?>href="https://duckduckgo.com/?q=<?= $previousNatural ?>&iax=images&ia=images"<?php endif ?>>  
-				<div><span>Vyhledat na </span><img id="duckLogo" src="images/duckLogo.png"></div>       
-			</a>
-		</div>       
-		<input type=url name="url" placeholder="Vložte URL obrázku" id="urlInput" class="text" value="<?= $previousUrl ?>"/>
-		<button id="urlConfirm" onclick="pictureSelected(event)" class="button">OK</button>
-		<img id="previewImg" class="img" src="images/imagePreview.png">
-		<img id="previewImgHidden" style="display: none;" />
+	<fieldset class="preview-buttons-fieldset" class="disabled">
+		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank>
+			<span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duckLogo.png">       
+		</a>  
+		<a id="google-link" class="btn border-btn black non-transparent" target=_blank>
+			<span>Vyhledat na Google</span><img class="logo" src="images/googleLogo.png">       
+		</a>  
+		<button id="submit-button" class="btn border-btn black non-transparent">Přidat obrázek</button>
 	</fieldset>
-	<fieldset id="field3" <?php if (empty($previousUrl)) : ?> style="display:none;" <?php endif ?>>
-		<input type=submit value="Přidat" id="sendButton" class="button" />
+	<fieldset class="picture">
+		<img id="preview-img" class="img" src="images/imagePreview.png">
+		<img id="preview-img-hidden" style="display: none;" />
 	</fieldset>
-</form>
-<a href="<?= $returnUrl ?>"><button class="button">Zpět</button></a>
+	<!--<fieldset id="submit-fieldset" <?php if (empty($previousUrl)) : ?> style="display:none" <?php endif ?>>
+		<input type=submit value="Přidat" id="send-button" class="btn border-btn black non-transparent" />
+	</fieldset>-->
+</div>

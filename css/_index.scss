@@ -202,11 +202,14 @@ body#index {
 	#index-login-section {
 		display: grid;
 		position: fixed;
-		overflow: hidden;
+		overflow: auto;
+		@include scrollbar(8px, $gray3, white);
 		color: black;
-		border: 1.2rem solid white;
+		padding: 0 0.4rem;
+		box-shadow: 0px 0px 4px 2px rgba(black,0.2);
+		border: 0.8rem solid white;
 		@media screen and (min-width: $mobile) {
-			border-width: 2rem;
+			border-width: 1.6rem;
 		}
 		border-radius: 1rem;
 		//font-size: 1.2rem;
@@ -214,7 +217,8 @@ body#index {
 		left: 50vw;
 		transform: translate(-50%, calc(-50% + 5px));
 		width: 90vw;
-		height: 90vh;
+		height: auto;
+		max-height: 90vh;
 		max-width: 520px;
 		z-index: 5;
 		background: white;
@@ -230,17 +234,25 @@ body#index {
 		> #register,
 		> #login,
 		> #password-recovery {
-			overflow: auto;
 			@include scrollbar(12px, $gray3, $gray2);
-			height: 100%;
+		}
+		.button-wrapper {
+			position: sticky;
+			top: 0;
+			width: 100%;
+			z-index: 6;
+			background: white;
+			height: 2.4rem;
 		}
 		.cross {
-			justify-self: right;
-			margin-bottom: 0.8rem;
-			height: 2rem;
-			width: 2rem;
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 1.6rem;
+			width: 1.6rem;
 		}
 		h2 {
+			font-size: 1.6rem;
 			margin: 0 0 0.8rem 0;
 			> img {
 				height: 1em;
@@ -258,7 +270,7 @@ body#index {
 			}
 			label:not(:nth-of-type(1)), //kromě prvního labelu
 			.checkbox { 
-				margin-top: 1rem;
+				margin-top: 0.54rem;
 			}
 			input.text-field {
 				color: $gray1;
@@ -267,6 +279,13 @@ body#index {
 				background: #eee;
 				padding: 0.6em 0.72em;
 			}
+
+		}
+		.message {
+			font-size: 0.72rem;
+			line-height: 0.96rem;
+			min-height: 0.96rem; 
+			color: $red1;
 		}
 		.btn.inline,
 		p {
@@ -279,6 +298,14 @@ body#index {
 		.border-btn {
 			margin: 0.8rem auto;
 			font-size: 1.2rem;
+			width: 100%; 
+		}
+		#terms {
+			font-size: 0.8rem;
+			margin-top: 0.4rem;
+			.btn {
+				color: $greenDark;
+			}
 		}
 	}
 

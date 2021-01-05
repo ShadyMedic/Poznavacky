@@ -57,7 +57,7 @@ class MenuController extends Controller
         }
 
         $this->data['navigationBar'] = array();
-        $this->data['navigationBar'][] = array('text' => 'menu', 'link' => 'menu');
+        $this->data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
 
         //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu)
@@ -221,12 +221,12 @@ class MenuController extends Controller
                         //Část splňující daná kritéria neexistuje
                         $this->redirect('error404');
                     }
-
-                    $this->data['navigationBar'][] = array(
-                        'text' => $_SESSION['selection']['part']->getName(),
-                        'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl()
-                    );
                 }
+                
+                $this->data['navigationBar'][] = array(
+                    'text' => $_SESSION['selection']['part']->getName(),
+                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl()
+                );
             }
         }
         if ($argumentCount > 3 && !isset($this->controllerToCall))

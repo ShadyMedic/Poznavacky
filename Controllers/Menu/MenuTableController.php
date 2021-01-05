@@ -44,7 +44,7 @@ class MenuTableController extends Controller
             else if (!isset($_SESSION['selection']['group']))
             {
                 $this->data['returnButtonLink'] = 'menu';
-                $this->view = 'menuGroupsButton';
+                $this->view = 'inherit';
                 $groupsGetter = new TestGroupsFetcher();
                 $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
                 $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
@@ -52,7 +52,7 @@ class MenuTableController extends Controller
             else
             {
                 $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl();
-                $this->view = 'menuPartsButton';
+                $this->view = 'inherit';
                 $partsGetter = new TestGroupsFetcher();
                 $parts = $partsGetter->getParts($_SESSION['selection']['group']);
                 $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);

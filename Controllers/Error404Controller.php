@@ -19,7 +19,7 @@ class Error404Controller extends Controller
         $this->pageHeader['title'] = 'Chyba 404';
         $this->pageHeader['description'] = 'Jejda, sem jste se asi nechtěli dostat...';
         $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFiles'] = array('css/errors.css');
+        $this->pageHeader['cssFiles'] = array('css/error.css');
         $this->pageHeader['jsFiles'] = array();
         $this->pageHeader['bodyId'] = 'error404';
         

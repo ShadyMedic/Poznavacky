@@ -7,21 +7,23 @@ $(function() {
 	//$(".custom-select-wrapper").find(".custom-option").first().addClass("selected");
 
 	//event listener select boxů
-	for (const dropdown of $(".custom-select-wrapper")) {
-		$(dropdown).find(".custom-option").first().addClass("selected");
-		$(dropdown).click(function() {
+	$(".custom-select-wrapper").each(function() {
+		if (this.id != "add-natural-select") {
+			$(this).find(".custom-option").first().addClass("selected");
+		}
+		$(this).click(function() {
 			//$(this).find(".custom-option").first().addClass("selected");
 			manageSelectBox($(this));
 		})
-	}
+	})
 
 	//event listener kliknutí mimo select box
 	$(window).click(function(e) {
-		for (const select of $('.custom-select')) {
-			if (!select.contains(e.target)) {
-				$(select).removeClass('open');
+		$(".custom-select").each(function() {
+			if (!this.contains(e.target)) {
+				$(this).removeClass('open');
 			}
-		}
+		})
 	});
 
 	//event listener přidávající třídu podle toho, jestli uživatel používá myš nebo tabulátor
@@ -59,13 +61,13 @@ function getCookie(cname)
 //funkce upravující manipulaci s custom select boxy
 function manageSelectBox(thisObj){
 	thisObj.find(".custom-select").toggleClass("open");
-	for (const option of $(".custom-option")) {
-		$(option).click(function() {
+	$(".custom-option").each(function() {
+		$(this).click(function() {
 			if (!$(this).hasClass('selected')) {
 				$(this).siblings().removeClass('selected');
 				$(this).addClass('selected');
 				$(this).closest('.custom-select').find(".custom-select-main span").text($(this).text());
 			}
 		})
-	}
+	})
 }
