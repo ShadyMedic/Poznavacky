@@ -1206,8 +1206,6 @@ label.required:after {
 }
 
 #menu .folders#menu-classes-table ul.rows li {
-  display: -ms-grid;
-  display: grid;
   -ms-grid-columns: 1fr 6rem 5rem;
       grid-template-columns: 1fr 6rem 5rem;
 }
@@ -1224,6 +1222,29 @@ label.required:after {
     -ms-grid-columns: 1fr 8rem 8rem;
         grid-template-columns: 1fr 8rem 8rem;
   }
+}
+
+#menu .folders#menu-classes-table ul.rows li#enter-code-wrapper, #menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0.6rem 0;
+  text-align: center;
+}
+
+#menu .folders#menu-classes-table ul.rows li#enter-code-wrapper > *, #menu .folders#menu-classes-table ul.rows li#request-class-wrapper > * {
+  margin: 0.2rem 0;
+}
+
+#menu .folders#menu-classes-table ul.rows li#request-class-wrapper .btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0.2rem auto;
 }
 
 #menu .folders#menu-groups-table .table-title.rows {
@@ -1449,24 +1470,6 @@ label.required:after {
 
 #menu .folders ul.rows span.tiles {
   display: none;
-}
-
-#menu .folders ul.rows #enter-code-wrapper,
-#menu .folders ul.rows #request-class-wrapper {
-  margin: 0.6rem 0;
-  text-align: center;
-}
-
-#menu .folders ul.rows #enter-code-wrapper > *,
-#menu .folders ul.rows #request-class-wrapper > * {
-  margin: 0.2rem 0;
-}
-
-#menu .folders ul.rows #request-class-wrapper .btn {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 0.2rem auto;
 }
 
 #menu .folders ul.tiles {
