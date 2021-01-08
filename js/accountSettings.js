@@ -1,12 +1,51 @@
+//vše, co se děje po načtení stránky
+$(function()
+{
+	//event listenery tlačítek
+	$("#change-name-button").click(function() {changeName()})
+	$("#change-name-confirm-button").click(function() {confirmNameChange()})
+	$("#change-name-abort-button").click(function() {abortNameChange()})
+	$("#change-password-button").click(function() {changePassword()})
+	$("#change-password-confirm-button").click(function() {confirmPasswordChange()})
+	$("#change-password-abort-button").click(function() {abortPasswordChange()})
+	$("#change-email-button").click(function() {changeEmail()})
+	$("#change-email-confirm-button").click(function() {confirmEmailChange()})
+	$("#change-email-abort-button").click(function() {abortEmailChange()})
+})
+
+//vše, co se děje při změně velikosti okna
+$(window).resize(function() {
+	resizeMainImg();
+})
+
+function abortNameChange() {
+	$("#change-name-button").show()
+	$("#change-name").closest(".user-data-item").find(".user-property-value").show();
+	$("#change-name").hide();
+}
+
+function abortPasswordChange() {
+	$("#change-password-button").show()
+	$("#change-password").closest(".user-data-item").find(".user-property-value").show();
+	$("#change-password").hide();
+}
+
+function abortEmailChange() {
+	$("#change-email-button").show()
+	$("#change-email").closest(".user-data-item").find(".user-property-value").show();
+	$("#change-email").hide();
+}
+
 function changeName()
 {
 	$("#change-name-button").hide()
-	$("#change-name-input").show();
+	$("#change-name").closest(".user-data-item").find(".user-property-value").hide();
+	$("#change-name").show();
 }
 
 function confirmNameChange()
 {
-	var newName = $("#change-name-input-field").val();
+	var newName = $("#change-name-new").val();
 	newName = encodeURIComponent(newName);
 	
 	$.post("account-update",
@@ -22,8 +61,8 @@ function confirmNameChange()
 					if (messageType === "success")
 					{
 						//Reset HTML
-						$("#change-name-input-field").val("");
-						$("#change-name-input").hide();
+						$("#change-name-new").val("");
+						$("#change-name").hide();
 						$("#change-name-button").show();
 					}
 					
@@ -39,59 +78,16 @@ function confirmNameChange()
 
 function changePassword()
 {
-	$("#change-password-button").hide();
-	$("#change-password-input2").hide();
-	$("#change-password-input1").show();
-}
-
-function changePasswordVerify()
-{
-	var password = $("#change-password-input-field-old").val();
-	
-	$.post("account-update",
-		{
-			action: "verify password",
-			password: password
-		},
-		function (response, status) { ajaxCallback(response, status, changePasswordStage2); },
-		"json"
-	);
-}
-
-function changePasswordStage2(messageType, message, data)
-{
-	if (data.verified === true)
-	{
-		displayChangePasswordStage2();
-	}
-	else
-	{
-		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		console.log("["+messageType+" - " + data.origin + "] " + message);
-		alert("["+messageType+" - " + data.origin + "] " + message);
-		
-		$("#change-password-input-field-old").val("");
-	}
-}
-
-function displayChangePasswordStage2()
-{
-	$("#change-password-input1").hide();
-	$("#change-password-input3").hide();
-	$("#change-password-input2").show();
-}
-
-function changePasswordStage3()
-{
-	$("#change-password-input2").hide();
-	$("#change-password-input3").show();
+	$("#change-password-button").hide()
+	$("#change-password").closest(".user-data-item").find(".user-property-value").hide();
+	$("#change-password").show();
 }
 
 function confirmPasswordChange()
 {
-	var oldPass = $("#change-password-input-field-old").val();
-	var newPass = $("#change-password-input-field-new").val();
-	var rePass = $("#change-password-input-field-re-new").val();
+	var oldPass = $("#change-password-old").val();
+	var newPass = $("#change-password-new").val();
+	var rePass = $("#change-password-re-new").val();
 	
 	oldPass = encodeURIComponent(oldPass);
 	newPass = encodeURIComponent(newPass);
@@ -112,18 +108,17 @@ function confirmPasswordChange()
 					if (messageType === "success")
 					{
 						//Reset HTML
-						$("#change-password-input-field-old").val("");
-						$("#change-password-input-field-new").val("");
-						$("#change-password-input-field-re-new").val("");
-						$("#change-password-input3").hide();
+						$("#change-password-old").val("");
+						$("#change-password-new").val("");
+						$("#change-password-re-new").val("");
+						$("#change-password").hide();
 						$("#change-password-button").show();
 					}
 					else if (messageType === "error")
 					{
 						//Výmaz nového hesla a zobrazení pole pro nové heslo poprvé
-						$("#change-password-input-field-new").val("");
-						$("#change-password-input-field-re-new").val("");
-						displayChangePasswordStage2();
+						$("#change-password-new").val("");
+						$("#change-password-re-new").val("");
 					}
 					
 					evaluateResponse(messageType, message, data);
@@ -138,47 +133,15 @@ function confirmPasswordChange()
 
 function changeEmail()
 {
-	$("#change-email-button").hide();
-	$("#change-email-input2").hide();
-	$("#change-email-input1").show();
-}
-
-function changeEmailVerify()
-{
-	var password = $("#change-email-password-input-field").val();
-	
-	$.post("account-update",
-		{
-			action: "verify password",
-			password: password
-		},
-		function (response, status) { ajaxCallback(response, status, changeEmailStage2); },
-		"json"
-	);
-}
-
-function changeEmailStage2(messageType, message, data)
-{
-	if (data.verified === true)
-	{
-		$("#change-email-button").hide();
-		$("#change-email-input1").hide();
-		$("#change-email-input2").show();
-	}
-	else
-	{
-		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		console.log("["+messageType+" - " + data.origin + "] " + message);
-		alert("["+messageType+" - " + data.origin + "] " + message);
-		
-		$("#change-email-password-input-field").val("");
-	}
+	$("#change-email-button").hide()
+	$("#change-email").closest(".user-data-item").find(".user-property-value").hide();
+	$("#change-email").show();
 }
 
 function confirmEmailChange()
 {
-	var password = $("#change-email-password-input-field").val();
-	var newEmail = $("#change-email-input-field").val();
+	var password = $("#change-email-password").val();
+	var newEmail = $("#change-email-new").val();
 	
 	if (newEmail.length == 0)
 	{
@@ -187,7 +150,7 @@ function confirmEmailChange()
 	}
 	
 	newEmail = encodeURIComponent(newEmail);
-	var pass = $("#change-email-password-input-field").val();
+	var pass = $("#change-email-password").val();
 	
 	$.post("account-update",
 		{
@@ -204,8 +167,8 @@ function confirmEmailChange()
 						$("#email-address").text(decodeURIComponent(newEmail));
 						
 						//Reset HTML
-						$("#change-email-password-input-field").val("");
-						$("#change-email-input-field").val("");
+						$("#change-email-password").val("");
+						$("#change-email-new").val("");
 						$("#change-email-input1").hide();
 						$("#change-email-input2").hide();
 						$("#change-email-button").show();
