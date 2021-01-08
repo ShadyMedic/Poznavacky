@@ -40,7 +40,6 @@ $(function() {
 
 	//Odeslání AJAX poýadavku pro kontrolu existence e-mailu při obnově hesla
 	$("#password-recovery-email").blur(function(){ isStringUnique($("#password-recovery-email").val(), false, $("#password-recovery-email").get(), false); });
-});
 
 	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })

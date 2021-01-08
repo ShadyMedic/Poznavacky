@@ -44,6 +44,22 @@
 			<h5>Vytvořte novou třídu</h5>
 			<span>Vyplňte krátký formulář pro tvorbu třídy:</span>
 			<a id="request-new-class-button" href="menu/request-new-class" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</a> <!-- TEMPORARY -->
+			<form method="POST" id="new-class-form">
+				<h3>Žádost o založení nové třídy</h3>
+				<?php if (!$specifiedEmail) : ?>
+					<label for="new-class-form-email">Kontaktní e-mailová adresa</label>
+					<input class='text-field' id='new-class-form-email' name="email" length=255 value="<?= @$emailValue ?>" />
+				<?php endif ?>
+				<label for="new-class-form-name">Požadovaný název třídy</label>
+				<input id='new-class-form-name' class="text-field" name="className" type=text maxlength=31 value="<?= @$classNameValue ?>" />
+				<label for="new-class-form-code">Kód třídy</label>
+				<input id='new-class-form-code' class="text-field" name="classCode" min=0 max=9999 maxlength=4 value=<?= @$classCodeValue ?> />
+				<label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
+				<textarea class="text-field" id='new-class-form-info' name="text"><?= @$textValue ?></textarea>
+				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot opsáním následujícího čísla pomocí číslic: <?= $antispamCode ?></label>
+				<input id='new-class-form-antispam' class="text-field" name="antispam" type=number min=0 max=99 maxlength=2 />
+				<input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
+			</form>
 		</li>
 	</ul>
 </div>
