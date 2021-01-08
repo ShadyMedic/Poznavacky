@@ -53,7 +53,7 @@
 				<label for="new-class-form-name">Požadovaný název třídy</label>
 				<input id='new-class-form-name' class="text-field" name="className" type=text maxlength=31 value="<?= @$classNameValue ?>" />
 				<label for="new-class-form-code">Kód třídy</label>
-				<input id='new-class-form-code' class="text-field" name="classCode" min=0 max=9999 maxlength=4 value=<?= @$classCodeValue ?> />
+				<input id='new-class-form-code' class="text-field" name="classCode" min=0 max=9999 maxlength=4 value="<?= @$classCodeValue ?>" />
 				<label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
 				<textarea class="text-field" id='new-class-form-info' name="text"><?= @$textValue ?></textarea>
 				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot opsáním následujícího čísla pomocí číslic: <?= $antispamCode ?></label>
