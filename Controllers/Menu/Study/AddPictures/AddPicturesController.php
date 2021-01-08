@@ -40,8 +40,8 @@ class AddPicturesController extends Controller
         
         //Kontrola přítomnosti přírodnin
         if (
-            $allParts && count($group->getNaturals()) === 0 ||
-            !$allParts && count($part->getNaturalsCount() === 0)
+            ($allParts && count($group->getNaturals()) === 0) ||
+            (!$allParts && $part->getNaturalsCount() === 0)
         )
         {
             //Žádné přírodniny
