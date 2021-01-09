@@ -3,37 +3,46 @@ $(function()
 {
 	//event listenery tlačítek
 	$("#change-name-button").click(function() {changeName()})
-	$("#change-name-confirm-button").click(function() {confirmNameChange()})
-	$("#change-name-abort-button").click(function() {abortNameChange()})
+	$("#change-name-confirm-button").click(function() {changeNameConfirm()})
+	$("#change-name-abort-button").click(function() {changeNameCancel()})
 	$("#change-password-button").click(function() {changePassword()})
-	$("#change-password-confirm-button").click(function() {confirmPasswordChange()})
-	$("#change-password-abort-button").click(function() {abortPasswordChange()})
+	$("#change-password-confirm-button").click(function() {changePasswordConfirm()})
+	$("#change-password-abort-button").click(function() {changePasswordCancel()})
 	$("#change-email-button").click(function() {changeEmail()})
-	$("#change-email-confirm-button").click(function() {confirmEmailChange()})
-	$("#change-email-abort-button").click(function() {abortEmailChange()})
+	$("#change-email-confirm-button").click(function() {changeEmailConfirm()})
+	$("#change-email-abort-button").click(function() {changeEmailCancel()})
+	$("#delete-account-button").click(function() {deleteAccount()})
+	$("#delete-account-confirm-button").click(function() {deleteAccountVerify()})
+	$("#delete-account-final-confirm-button").click(function() {deleteAccountFinal()})
+	$("#delete-account-final-cancel-button").click(function() {deleteAccountCancel()})
 })
 
 //vše, co se děje při změně velikosti okna
 $(window).resize(function() {
-	resizeMainImg();
 })
 
-function abortNameChange() {
+function changeNameCancel() {
 	$("#change-name-button").show()
 	$("#change-name").closest(".user-data-item").find(".user-property-value").show();
 	$("#change-name").hide();
+	$("#change-name-new").val("");
 }
 
-function abortPasswordChange() {
+function changePasswordCancel() {
 	$("#change-password-button").show()
 	$("#change-password").closest(".user-data-item").find(".user-property-value").show();
 	$("#change-password").hide();
+	$("#change-password-old").val("");
+	$("#change-password-new").val("");
+	$("#change-password-re-new").val("");
 }
 
-function abortEmailChange() {
+function changeEmailCancel() {
 	$("#change-email-button").show()
 	$("#change-email").closest(".user-data-item").find(".user-property-value").show();
 	$("#change-email").hide();
+	$("#change-email-password").val("");
+	$("#chabge-email-new").val("");
 }
 
 function changeName()
@@ -41,9 +50,13 @@ function changeName()
 	$("#change-name-button").hide()
 	$("#change-name").closest(".user-data-item").find(".user-property-value").hide();
 	$("#change-name").show();
+	$("#change-name-new").focus();
+	changePasswordCancel();
+	changeEmailCancel();
+	deleteAccountCancel();
 }
 
-function confirmNameChange()
+function changeNameConfirm()
 {
 	var newName = $("#change-name-new").val();
 	newName = encodeURIComponent(newName);
@@ -81,9 +94,13 @@ function changePassword()
 	$("#change-password-button").hide()
 	$("#change-password").closest(".user-data-item").find(".user-property-value").hide();
 	$("#change-password").show();
+	$("#change-password-old").focus();
+	changeNameCancel();
+	changeEmailCancel();
+	deleteAccountCancel();
 }
 
-function confirmPasswordChange()
+function changePasswordConfirm()
 {
 	var oldPass = $("#change-password-old").val();
 	var newPass = $("#change-password-new").val();
@@ -108,11 +125,7 @@ function confirmPasswordChange()
 					if (messageType === "success")
 					{
 						//Reset HTML
-						$("#change-password-old").val("");
-						$("#change-password-new").val("");
-						$("#change-password-re-new").val("");
-						$("#change-password").hide();
-						$("#change-password-button").show();
+						changePasswordCancel();
 					}
 					else if (messageType === "error")
 					{
@@ -136,9 +149,13 @@ function changeEmail()
 	$("#change-email-button").hide()
 	$("#change-email").closest(".user-data-item").find(".user-property-value").hide();
 	$("#change-email").show();
+	$("#change-email-password").focus();
+	changeNameCancel();
+	changePasswordCancel();
+	deleteAccountCancel();
 }
 
-function confirmEmailChange()
+function changeEmailCOnfirm()
 {
 	var password = $("#change-email-password").val();
 	var newEmail = $("#change-email-new").val();
@@ -167,11 +184,7 @@ function confirmEmailChange()
 						$("#email-address").text(decodeURIComponent(newEmail));
 						
 						//Reset HTML
-						$("#change-email-password").val("");
-						$("#change-email-new").val("");
-						$("#change-email-input1").hide();
-						$("#change-email-input2").hide();
-						$("#change-email-button").show();
+						changeEmailCancel();
 					}
 					evaluateResponse(messageType, message, data);
 				}
@@ -191,12 +204,20 @@ function updateEmail(newEmail)
 function deleteAccount()
 {
 	$("#delete-account-button").hide();
-	$("#delete-account-input1").show();
+	$("#delete-account").show();
+	$("#delete-account1").show();
+	$("#delete-account-password").focus();
+	document.querySelector("#delete-account").scrollIntoView({ 
+		behavior: 'smooth' 
+	});
+	changeNameCancel();
+	changePasswordCancel();
+	changeEmailCancel();
 }
 
 function deleteAccountVerify()
 {
-	var password = $("#delete-account-input-field").val();
+	var password = $("#delete-account-password").val();
 	
 	$.post("account-update",
 		{
@@ -212,8 +233,8 @@ function deleteAccountConfirm(messageType, message, data)
 {
 	if (data.verified === true)
 	{
-		$("#delete-account-input2").show();
-		$("#delete-account-input1").hide();
+		$("#delete-account2").show();
+		$("#delete-account1").hide();
 	}
 	else
 	{
@@ -221,13 +242,13 @@ function deleteAccountConfirm(messageType, message, data)
 		console.log("["+messageType+" - " + data.origin + "] " + message);
 		alert("["+messageType+" - " + data.origin + "] " + message);
 		
-		$("#delete-account-input-field").val("");
+		$("#delete-account-password").val("");
 	}
 }
 
 function deleteAccountFinal()
 {
-	var password = $("#delete-account-input-field").val();
+	var password = $("#delete-account-password").val();
 	
 	$.post("account-update",
 		{
@@ -255,9 +276,10 @@ function deleteAccountFinal()
 
 function deleteAccountCancel()
 {
-	$("#delete-account-input-field").val("");
+	$("#delete-account-password").val("");
 	$("#delete-account-button").show();
-	$("#delete-account-input2").hide();
+	$("#delete-account").hide();
+	$("#delete-account2").hide();
 }
 
 /**

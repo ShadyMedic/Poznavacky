@@ -2131,6 +2131,12 @@ label.required:after {
   }
 }
 
+#accountSettings h3 {
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
 #accountSettings .user-image-section {
   padding: 0.6rem;
 }
@@ -2155,7 +2161,7 @@ label.required:after {
   transition: height 0.2s ease-out;
 }
 
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 768px) {
   #accountSettings .user-data-section .user-data-item {
     display: -ms-grid;
     display: grid;
@@ -2173,19 +2179,7 @@ label.required:after {
   padding: calc(0.4em + 4px) 0;
 }
 
-#accountSettings .user-data-section #change-name,
-#accountSettings .user-data-section #change-password,
-#accountSettings .user-data-section #change-email {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 768px) {
   #accountSettings .user-data-section #change-name,
   #accountSettings .user-data-section #change-password,
   #accountSettings .user-data-section #change-email {
@@ -2195,22 +2189,8 @@ label.required:after {
     -ms-grid-row: 1;
     -ms-grid-row-span: 2;
     grid-row: 1/3;
+    max-width: 400px;
   }
-}
-
-#accountSettings .user-data-section #change-name label,
-#accountSettings .user-data-section #change-name input.text-field,
-#accountSettings .user-data-section #change-password label,
-#accountSettings .user-data-section #change-password input.text-field,
-#accountSettings .user-data-section #change-email label,
-#accountSettings .user-data-section #change-email input.text-field {
-  margin: 0.2rem 0;
-}
-
-#accountSettings .user-data-section #change-name label:not(:nth-of-type(1)),
-#accountSettings .user-data-section #change-password label:not(:nth-of-type(1)),
-#accountSettings .user-data-section #change-email label:not(:nth-of-type(1)) {
-  margin-top: 0.54rem;
 }
 
 #accountSettings .user-data-section #change-name .border-btn,
@@ -2224,6 +2204,86 @@ label.required:after {
 #accountSettings .user-data-section #change-password .inline.btn,
 #accountSettings .user-data-section #change-email .inline.btn {
   margin-bottom: 0.2rem;
+}
+
+#accountSettings .delete-account-section {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+  margin: 0.6rem;
+}
+
+@media screen and (min-width: 768px) {
+  #accountSettings .delete-account-section #delete-account1 {
+    max-width: 400px;
+  }
+}
+
+#accountSettings .delete-account-section #delete-account1 .border-btn {
+  margin: 0.6rem auto;
+  width: 100%;
+}
+
+#accountSettings .delete-account-section #delete-account2 span {
+  color: #a00;
+}
+
+#accountSettings .delete-account-section #delete-account2 .border-btn {
+  margin: 0.6rem 0;
+}
+
+#accountSettings .delete-account-section #delete-account2 .border-btn:not(:last-child) {
+  margin-right: 0.6rem;
+}
+
+#accountSettings .delete-account-section .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
+#accountSettings .delete-account-section .buttons .btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+#accountSettings #change-name,
+#accountSettings #change-password,
+#accountSettings #change-email,
+#accountSettings #delete-account1,
+#accountSettings #delete-account2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#accountSettings #change-name label,
+#accountSettings #change-name input.text-field,
+#accountSettings #change-password label,
+#accountSettings #change-password input.text-field,
+#accountSettings #change-email label,
+#accountSettings #change-email input.text-field,
+#accountSettings #delete-account1 label,
+#accountSettings #delete-account1 input.text-field,
+#accountSettings #delete-account2 label,
+#accountSettings #delete-account2 input.text-field {
+  margin: 0.2rem 0;
+}
+
+#accountSettings #change-name label:not(:nth-of-type(1)),
+#accountSettings #change-password label:not(:nth-of-type(1)),
+#accountSettings #change-email label:not(:nth-of-type(1)),
+#accountSettings #delete-account1 label:not(:nth-of-type(1)),
+#accountSettings #delete-account2 label:not(:nth-of-type(1)) {
+  margin-top: 0.54rem;
 }
 
 body#index {
