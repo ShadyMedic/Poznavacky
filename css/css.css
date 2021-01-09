@@ -746,10 +746,7 @@ label.required:after {
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1/2;
-  /*@media screen and (min-width: $smallTablet) {
-			justify-content: space-between;
-		}*/
-  background: #479911;
+  background: #366e11;
 }
 
 #menu header .logo,
@@ -823,10 +820,7 @@ label.required:after {
 #test header > *,
 #addPictures header > *,
 #accountSettings header > * {
-  margin: 0.2rem 16px;
-  /*@media screen and (min-width: $smallTablet) {
-				margin: 0.2rem 0.6rem;
-			}*/
+  margin: 0.2rem 1rem;
 }
 
 @media screen and (min-width: 1200px) {
@@ -1024,12 +1018,6 @@ label.required:after {
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
-  /*
-		* {
-			@media screen and (max-width: $smallTablet) {
-				margin: auto;
-			}
-		}*/
 }
 
 @media screen and (min-width: 672px) {
@@ -1098,7 +1086,27 @@ label.required:after {
 #accountSettings h2 {
   font-size: 1.2rem;
   font-weight: normal;
-  margin: 2rem 3rem 0 3rem;
+  margin: 1.2rem 1rem 0.4rem 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  #menu h2,
+  #learn h2,
+  #test h2,
+  #addPictures h2,
+  #accountSettings h2 {
+    margin: 1.6rem 2rem 0 2rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #menu h2,
+  #learn h2,
+  #test h2,
+  #addPictures h2,
+  #accountSettings h2 {
+    margin: 2rem 3rem 0 3rem;
+  }
 }
 
 #menu h2 span,
