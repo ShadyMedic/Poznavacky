@@ -1,7 +1,5 @@
 //vše, co se děje po načtení stránky
 $(function() {
-	//skrytí řádkového zobrazení (v budoucnu bude řešeno v návaznosti na to, co má uživatel trvale nastaveno)
-	$(".rows").hide();
 
 	//event listenery tlačítek
 	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
@@ -9,27 +7,23 @@ $(function() {
 	$("#request-class-cancel-button").click(function() {hideNewClassForm()})
 	$(".display-buttons-button").click(function(){displayButtons(this)})
 
+	//event listener kliknutí myši
 	$(document).mouseup(function(e){hideButtons(e)});
 
-	changeFoldersLayout();
-
-	//případná implementace
-	/*checkTilesLayout();*/
 });
 
 //vše, co se děje při změně velikosti okna
 $(window).resize(function(){
-	//případná implementace
-	/*checkTilesLayout();*/
 })
 
+//zobrazí formulář na žádost o vytvoření nové třídy
 function showNewClassForm() {
 	$("#request-class-button").hide();
 	$("#request-class-wrapper > span").hide();
 	$("#request-class-form").show();
 	$("#new-class-form-name").focus();
 }
-
+//skryje formulář na žádost o vytvoření nové třídy
 function hideNewClassForm() {
 	$("#request-class-button").show();
 	$("#request-class-wrapper > span").show();
@@ -37,6 +31,7 @@ function hideNewClassForm() {
 	$("#request-class-form .text-field").val("");
 }
 
+//zobrazí tlačítka "Přidat obrázky", "Učit se" a "Vyzkoušet se"
 function displayButtons(button) {
 	if (!$(button).hasClass("show")) {
 		$(button).find(".col2, .col3").hide();
@@ -45,6 +40,7 @@ function displayButtons(button) {
 	}
 }
 
+//skryje tlačítka "Přidat obrázky", "Učit se" a "Vyzkoušet se"
 function hideButtons(e) {
 	$(".display-buttons-button").each(function(){
 		if (!$(this).is(e.target) && $(this).has(e.target).length === 0) {
@@ -58,6 +54,7 @@ function hideButtons(e) {
 }
 
 //funkce přepínající zobrazení složek
+//neimplementováno
 function changeFoldersLayout() {
 	if ($(".folders ul").hasClass("tiles")) {
 		$(".folders ul").removeClass("tiles");
@@ -71,20 +68,6 @@ function changeFoldersLayout() {
 		$(".tiles").show();
 		$(".rows").hide();
 	}
-}
-
-//funkce měnící uspořádání dlaždic, pokud jich je příliš málo (neimplentováno)
-//možná by stačilo jenom nemít margin dlaždic nastavený na auto
-function checkTilesLayout() {
-	let gapSize = ($(window).width() >= 576)? remToPixels(2) : remToPixels(1);
-	let numberOfTiles = [];
-	numberOfTiles = $(".folders > ul > button").length;
-	let allTilesWidth = numberOfTiles*remToPixels(16) + (numberOfTiles-1)*gapSize;
-	let containerWidth = $(".menu > .wrapper").width();
-	if (allTilesWidth < containerWidth)
-		$(".folders > ul").addClass("not-enough-tiles");
-	else
-		$(".folders > ul").removeClass("not-enough-tiles");
 }
 
 //funkce převádějící rem na pixely
