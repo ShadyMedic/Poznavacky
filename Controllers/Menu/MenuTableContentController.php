@@ -58,7 +58,6 @@ class MenuTableContentController extends Controller
             //Obnov data
             $this->data['emailValue'] = @$_POST['email'];
             $this->data['classNameValue'] = @$_POST['className'];
-            $this->data['classCodeValue'] = @$_POST['classCode'];
             $this->data['textValue'] = @$_POST['text'];
         }
         $antispamGenerator = new NumberAsWordCaptcha();

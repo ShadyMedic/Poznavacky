@@ -30,11 +30,10 @@ class NewClassRequester
     {
         $email = @$POSTdata['email'];
         $name = @$POSTdata['className'];
-        $code = @$POSTdata['classCode'];
         $text = @$POSTdata['text'];
         $antispam = @$POSTdata['antispam'];
         
-        if ($this->validate($email, $name, $code, $text, $antispam))
+        if ($this->validate($email, $name, $text, $antispam))
         {
             //Kontrola dat v pořádku (jinak by byla vyhozena podmínka)
             
@@ -43,7 +42,7 @@ class NewClassRequester
             
             //Odeslat e-mail
             $composer = new EmailComposer();
-            $composer->composeMail(EmailComposer::EMAIL_TYPE_NEW_CLASS_REQUEST, array('username' => UserManager::getName(), 'websiteAddress' => $_SERVER['SERVER_NAME'], 'name' => htmlspecialchars($name), 'code' => htmlspecialchars($code), 'message' => nl2br(htmlspecialchars($text)), 'email' => htmlspecialchars($email)));
+            $composer->composeMail(EmailComposer::EMAIL_TYPE_NEW_CLASS_REQUEST, array('username' => UserManager::getName(), 'websiteAddress' => $_SERVER['SERVER_NAME'], 'name' => htmlspecialchars($name), 'message' => nl2br(htmlspecialchars($text)), 'email' => htmlspecialchars($email)));
             
             $sender = new EmailSender();
             $result = $sender->sendMail(self::ADMIN_EMAIL, 'Žádost o založení nové třídy od '.UserManager::getName(), $composer->getMail());
@@ -57,18 +56,16 @@ class NewClassRequester
      * Metoda ověřující, zda odeslaná data splňují podmínky
      * @param mixed $email E-mail uživatele, pokud byl zadán
      * @param string $name Požadované jméno nové třídy
-     * @param mixed $code Požadovaný přístupový kód pro novou třídu
      * @param mixed $text Další informace poskytnuté žadatelem
      * @param mixed $antispam Odpověď na captchu
      * @throws AccessDeniedException Pokud jsou data vyplněna nesprávně
      * @return boolean TRUE, pokud jsou všechna data vyplněna správně
      */
-    private function validate($email, string $name, $code, $text, $antispam): bool
+    private function validate($email, string $name, $text, $antispam): bool
     {
         //Kontrola, zda jsou všechna povinná pole vyplněna
         if (mb_strlen($email) === 0 && empty(UserManager::getEmail())) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_EMAIL, null, null); }
         if (mb_strlen($name) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_NAME, null, null); }
-        if (mb_strlen($code) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_CODE, null, null); }
         if (mb_strlen($antispam) === 0) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_ANTISPAM, null, null); }
         
         //Kontrola formátu e-mailu
@@ -96,9 +93,6 @@ class NewClassRequester
             $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         }
         catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e); }
-        
-        //Kontrola platnosti kódu
-        if (!$validator->validateClassCode($code)) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_CODE, null, null); }
         
         //Kontrola antispamu
         $captchaChecker = new NumberAsWordCaptcha();
