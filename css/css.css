@@ -393,6 +393,10 @@ h5 {
           transform: scale(0.88);
 }
 
+.btn.icon {
+  display: block;
+}
+
 .btn.icon img {
   -webkit-transition: -webkit-transform 0.2s ease-out;
   transition: -webkit-transform 0.2s ease-out;
@@ -731,25 +735,65 @@ label.required:after {
   position: fixed;
   width: 100%;
   top: 0;
+  padding: 0.2rem 0.6rem;
   z-index: 5;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto 1fr;
+      grid-template-columns: auto auto 1fr;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1/2;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: start;
   /*@media screen and (min-width: $smallTablet) {
 			justify-content: space-between;
 		}*/
   background: #479911;
+}
+
+#menu header .logo,
+#learn header .logo,
+#test header .logo,
+#addPictures header .logo,
+#accountSettings header .logo {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  margin: 0.2rem 0.4rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu header .logo,
+  #learn header .logo,
+  #test header .logo,
+  #addPictures header .logo,
+  #accountSettings header .logo {
+    margin: 0.2 0.6rem;
+  }
+}
+
+@media screen and (min-width: 360px) {
+  #menu header,
+  #learn header,
+  #test header,
+  #addPictures header,
+  #accountSettings header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+  }
 }
 
 @media screen and (min-width: 672px) {
@@ -795,6 +839,52 @@ label.required:after {
   }
 }
 
+#menu header .btn.icon,
+#learn header .btn.icon,
+#test header .btn.icon,
+#addPictures header .btn.icon,
+#accountSettings header .btn.icon {
+  margin: 0.2rem 0.4rem;
+  height: 32px;
+  width: 32px;
+}
+
+@media screen and (min-width: 672px) {
+  #menu header .btn.icon,
+  #learn header .btn.icon,
+  #test header .btn.icon,
+  #addPictures header .btn.icon,
+  #accountSettings header .btn.icon {
+    display: none;
+  }
+}
+
+#menu header .btn.icon > img,
+#learn header .btn.icon > img,
+#test header .btn.icon > img,
+#addPictures header .btn.icon > img,
+#accountSettings header .btn.icon > img {
+  height: 100%;
+  width: 100%;
+}
+
+#menu header .btn.icon:last-child,
+#learn header .btn.icon:last-child,
+#test header .btn.icon:last-child,
+#addPictures header .btn.icon:last-child,
+#accountSettings header .btn.icon:last-child {
+  margin-left: auto;
+}
+
+#menu header .btn.icon:active,
+#learn header .btn.icon:active,
+#test header .btn.icon:active,
+#addPictures header .btn.icon:active,
+#accountSettings header .btn.icon:active {
+  -webkit-transform: scale(0.88);
+          transform: scale(0.88);
+}
+
 #menu header .logo,
 #learn header .logo,
 #test header .logo,
@@ -829,69 +919,21 @@ label.required:after {
   margin: 0;
 }
 
-#menu header .hamburger-btn,
-#learn header .hamburger-btn,
-#test header .hamburger-btn,
-#addPictures header .hamburger-btn,
-#accountSettings header .hamburger-btn {
-  position: relative;
-  height: 32px;
-  width: 32px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-#menu header .hamburger-btn img,
-#learn header .hamburger-btn img,
-#test header .hamburger-btn img,
-#addPictures header .hamburger-btn img,
-#accountSettings header .hamburger-btn img {
-  width: 100%;
-  height: 100%;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-}
-
-@media screen and (min-width: 672px) {
-  #menu header .hamburger-btn,
-  #learn header .hamburger-btn,
-  #test header .hamburger-btn,
-  #addPictures header .hamburger-btn,
-  #accountSettings header .hamburger-btn {
-    display: none;
-  }
-}
-
 #menu aside,
 #learn aside,
 #test aside,
 #addPictures aside,
 #accountSettings aside {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
+  width: 64px;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 2;
+  grid-row: 2/4;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1/2;
   color: white;
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  transition: -webkit-transform 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
-}
-
-@media screen and (max-width: 672px) {
-  #menu aside,
-  #learn aside,
-  #test aside,
-  #addPictures aside,
-  #accountSettings aside {
-    position: fixed;
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-  }
+  background: #444;
 }
 
 @media screen and (min-width: 672px) {
@@ -900,169 +942,50 @@ label.required:after {
   #test aside,
   #addPictures aside,
   #accountSettings aside {
-    -ms-grid-row: 2;
-    -ms-grid-row-span: 2;
-    grid-row: 2/4;
-    -ms-grid-column: 1;
-    -ms-grid-column-span: 1;
-    grid-column: 1/2;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
 
-#menu aside.show,
-#learn aside.show,
-#test aside.show,
-#addPictures aside.show,
-#accountSettings aside.show {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-}
-
-#menu aside.show #aside-additional-panel,
-#learn aside.show #aside-additional-panel,
-#test aside.show #aside-additional-panel,
-#addPictures aside.show #aside-additional-panel,
-#accountSettings aside.show #aside-additional-panel {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-}
-
-#menu aside #aside-main-panel,
-#learn aside #aside-main-panel,
-#test aside #aside-main-panel,
-#addPictures aside #aside-main-panel,
-#accountSettings aside #aside-main-panel {
-  z-index: 3;
-  width: 64px;
-  min-width: 64px;
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  background: #444;
-}
-
-#menu aside #aside-main-panel .btn,
-#learn aside #aside-main-panel .btn,
-#test aside #aside-main-panel .btn,
-#addPictures aside #aside-main-panel .btn,
-#accountSettings aside #aside-main-panel .btn {
+#menu aside .btn.icon,
+#learn aside .btn.icon,
+#test aside .btn.icon,
+#addPictures aside .btn.icon,
+#accountSettings aside .btn.icon {
   margin: 1rem auto;
   height: 32px;
   width: 32px;
 }
 
-#menu aside #aside-main-panel .btn > img,
-#learn aside #aside-main-panel .btn > img,
-#test aside #aside-main-panel .btn > img,
-#addPictures aside #aside-main-panel .btn > img,
-#accountSettings aside #aside-main-panel .btn > img {
+#menu aside .btn.icon > img,
+#learn aside .btn.icon > img,
+#test aside .btn.icon > img,
+#addPictures aside .btn.icon > img,
+#accountSettings aside .btn.icon > img {
   height: 100%;
   width: 100%;
 }
 
-#menu aside #aside-main-panel .btn:active,
-#learn aside #aside-main-panel .btn:active,
-#test aside #aside-main-panel .btn:active,
-#addPictures aside #aside-main-panel .btn:active,
-#accountSettings aside #aside-main-panel .btn:active {
+#menu aside .btn.icon:last-child,
+#learn aside .btn.icon:last-child,
+#test aside .btn.icon:last-child,
+#addPictures aside .btn.icon:last-child,
+#accountSettings aside .btn.icon:last-child {
+  margin-top: auto;
+}
+
+#menu aside .btn.icon:active,
+#learn aside .btn.icon:active,
+#test aside .btn.icon:active,
+#addPictures aside .btn.icon:active,
+#accountSettings aside .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
-}
-
-#menu aside #aside-main-panel .btn.cross,
-#learn aside #aside-main-panel .btn.cross,
-#test aside #aside-main-panel .btn.cross,
-#addPictures aside #aside-main-panel .btn.cross,
-#accountSettings aside #aside-main-panel .btn.cross {
-  margin-top: auto;
-  display: none;
-}
-
-#menu aside #aside-main-panel .btn.cross.show,
-#learn aside #aside-main-panel .btn.cross.show,
-#test aside #aside-main-panel .btn.cross.show,
-#addPictures aside #aside-main-panel .btn.cross.show,
-#accountSettings aside #aside-main-panel .btn.cross.show {
-  display: block;
-}
-
-#menu aside #aside-additional-panel,
-#learn aside #aside-additional-panel,
-#test aside #aside-additional-panel,
-#addPictures aside #aside-additional-panel,
-#accountSettings aside #aside-additional-panel {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  transition: -webkit-transform 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
-  border-left: 1px solid #555;
-  padding: 0 1rem;
-  border-bottom: 1rem solid transparent;
-  border-top: 1rem solid transparent;
-  position: relative;
-  overflow: auto;
-  scrollbar-color: #222 #444;
-  scrollbar-width: auto;
-  background: #444;
-}
-
-#menu aside #aside-additional-panel::-webkit-scrollbar,
-#learn aside #aside-additional-panel::-webkit-scrollbar,
-#test aside #aside-additional-panel::-webkit-scrollbar,
-#addPictures aside #aside-additional-panel::-webkit-scrollbar,
-#accountSettings aside #aside-additional-panel::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-#menu aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#learn aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#test aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#addPictures aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#accountSettings aside #aside-additional-panel::-webkit-scrollbar-thumb {
-  background: #222;
-}
-
-#menu aside #aside-additional-panel::-webkit-scrollbar-track,
-#learn aside #aside-additional-panel::-webkit-scrollbar-track,
-#test aside #aside-additional-panel::-webkit-scrollbar-track,
-#addPictures aside #aside-additional-panel::-webkit-scrollbar-track,
-#accountSettings aside #aside-additional-panel::-webkit-scrollbar-track {
-  background: #444;
-}
-
-@media screen and (min-width: 672px) {
-  #menu aside #aside-additional-panel,
-  #learn aside #aside-additional-panel,
-  #test aside #aside-additional-panel,
-  #addPictures aside #aside-additional-panel,
-  #accountSettings aside #aside-additional-panel {
-    width: 240px;
-  }
-}
-
-#menu aside #aside-additional-panel > *,
-#learn aside #aside-additional-panel > *,
-#test aside #aside-additional-panel > *,
-#addPictures aside #aside-additional-panel > *,
-#accountSettings aside #aside-additional-panel > * {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
 }
 
 #menu .wrapper,
@@ -1101,8 +1024,6 @@ label.required:after {
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
-  -webkit-transition: margin 0.2s ease-out;
-  transition: margin 0.2s ease-out;
   /*
 		* {
 			@media screen and (max-width: $smallTablet) {
@@ -1117,10 +1038,9 @@ label.required:after {
   #test main,
   #addPictures main,
   #accountSettings main {
-    -ms-grid-column: 1;
-    -ms-grid-column-span: 2;
-    grid-column: 1/3;
-    margin-left: 64px;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
     overflow-y: auto;
     scrollbar-color: #444 #eee;
     scrollbar-width: auto;
