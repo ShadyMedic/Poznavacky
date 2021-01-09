@@ -440,6 +440,10 @@ textarea.text-field.disabled {
   cursor: auto;
 }
 
+textarea {
+  resize: vertical;
+}
+
 label {
   line-height: 1.6em;
   display: inline-block;
@@ -1236,11 +1240,55 @@ label.required:after {
   margin: 0.2rem 0;
 }
 
+#menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
+  padding-bottom: 0.6rem;
+}
+
 #menu .folders#menu-classes-table ul.rows li#request-class-wrapper .btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   margin: 0.2rem auto;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form > * {
+  margin: 0;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form .border-btn {
+  width: 100%;
+  margin: 0.6rem auto;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form label,
+#menu .folders#menu-classes-table ul.rows li #request-class-form input.text-field {
+  margin: 0.2rem 0;
+  text-align: left;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form label:not(:nth-of-type(1)) {
+  margin-top: 0.54rem;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form label > span {
+  font-weight: bold;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form textarea {
+  max-height: 160px;
 }
 
 #menu .folders#menu-groups-table .table-title.rows {

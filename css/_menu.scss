@@ -237,9 +237,38 @@
 					}
 				}
 				&#request-class-wrapper {
+					padding-bottom: 0.6rem;
 					.btn {
 						width: fit-content;
 						margin: 0.2rem auto;
+					}
+				}
+				#request-class-form {
+					display: flex;
+					flex-direction: column;
+					width: 90%;
+					max-width: 400px;
+					margin: auto;
+					> * {
+						margin: 0;
+					}
+					.border-btn {
+						width: 100%;
+						margin: 0.6rem auto;
+					}
+					label, 
+					input.text-field {
+						margin: 0.2rem 0;
+						text-align: left;
+					}
+					label:not(:nth-of-type(1)) {
+						margin-top: 0.54rem;
+					}
+					label > span {
+						font-weight: bold;
+					}
+					textarea {
+						max-height: 160px;
 					}
 				}
 			}

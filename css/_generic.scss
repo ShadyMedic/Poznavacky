@@ -311,6 +311,10 @@ textarea {
 	}
 }
 
+textarea {
+	resize: vertical;
+}
+
 label {
 	line-height: 1.6em;
 	//padding: 0.48em 0;

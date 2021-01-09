@@ -5,6 +5,8 @@ $(function() {
 
 	//event listenery tlačítek
 	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
+	$("#request-class-button").click(function() {showNewClassForm()})
+	$("#request-class-cancel-button").click(function() {hideNewClassForm()})
 	$(".display-buttons-button").click(function(){displayButtons(this)})
 
 	$(document).mouseup(function(e){hideButtons(e)});
@@ -20,6 +22,20 @@ $(window).resize(function(){
 	//případná implementace
 	/*checkTilesLayout();*/
 })
+
+function showNewClassForm() {
+	$("#request-class-button").hide();
+	$("#request-class-wrapper > span").hide();
+	$("#request-class-form").show();
+	$("#new-class-form-name").focus();
+}
+
+function hideNewClassForm() {
+	$("#request-class-button").show();
+	$("#request-class-wrapper > span").show();
+	$("#request-class-form").hide();
+	$("#request-class-form .text-field").val("");
+}
 
 function displayButtons(button) {
 	if (!$(button).hasClass("show")) {
