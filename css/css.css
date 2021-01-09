@@ -656,7 +656,12 @@ label.required:after {
 #learn,
 #test,
 #addPictures,
-#accountSettings {
+#accountSettings,
+#manage,
+#members,
+#tests,
+#editGroup,
+#resolveReports {
   width: 100%;
   height: 100%;
   scrollbar-color: #444 #222;
@@ -670,7 +675,12 @@ label.required:after {
 #learn::-webkit-scrollbar,
 #test::-webkit-scrollbar,
 #addPictures::-webkit-scrollbar,
-#accountSettings::-webkit-scrollbar {
+#accountSettings::-webkit-scrollbar,
+#manage::-webkit-scrollbar,
+#members::-webkit-scrollbar,
+#tests::-webkit-scrollbar,
+#editGroup::-webkit-scrollbar,
+#resolveReports::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
@@ -679,7 +689,12 @@ label.required:after {
 #learn::-webkit-scrollbar-thumb,
 #test::-webkit-scrollbar-thumb,
 #addPictures::-webkit-scrollbar-thumb,
-#accountSettings::-webkit-scrollbar-thumb {
+#accountSettings::-webkit-scrollbar-thumb,
+#manage::-webkit-scrollbar-thumb,
+#members::-webkit-scrollbar-thumb,
+#tests::-webkit-scrollbar-thumb,
+#editGroup::-webkit-scrollbar-thumb,
+#resolveReports::-webkit-scrollbar-thumb {
   background: #444;
 }
 
@@ -687,7 +702,12 @@ label.required:after {
 #learn::-webkit-scrollbar-track,
 #test::-webkit-scrollbar-track,
 #addPictures::-webkit-scrollbar-track,
-#accountSettings::-webkit-scrollbar-track {
+#accountSettings::-webkit-scrollbar-track,
+#manage::-webkit-scrollbar-track,
+#members::-webkit-scrollbar-track,
+#tests::-webkit-scrollbar-track,
+#editGroup::-webkit-scrollbar-track,
+#resolveReports::-webkit-scrollbar-track {
   background: #222;
 }
 
@@ -696,7 +716,12 @@ label.required:after {
   #learn,
   #test,
   #addPictures,
-  #accountSettings {
+  #accountSettings,
+  #manage,
+  #members,
+  #tests,
+  #editGroup,
+  #resolveReports {
     height: 100vh;
     overflow: hidden;
   }
@@ -706,7 +731,12 @@ label.required:after {
 #learn .container,
 #test .container,
 #addPictures .container,
-#accountSettings .container {
+#accountSettings .container,
+#manage .container,
+#members .container,
+#tests .container,
+#editGroup .container,
+#resolveReports .container {
   position: relative;
   min-height: 100vh;
   height: 100%;
@@ -721,7 +751,12 @@ label.required:after {
   #learn .container,
   #test .container,
   #addPictures .container,
-  #accountSettings .container {
+  #accountSettings .container,
+  #manage .container,
+  #members .container,
+  #tests .container,
+  #editGroup .container,
+  #resolveReports .container {
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
   }
@@ -731,7 +766,12 @@ label.required:after {
 #learn header,
 #test header,
 #addPictures header,
-#accountSettings header {
+#accountSettings header,
+#manage header,
+#members header,
+#tests header,
+#editGroup header,
+#resolveReports header {
   position: fixed;
   width: 100%;
   top: 0;
@@ -753,7 +793,12 @@ label.required:after {
 #learn header .logo,
 #test header .logo,
 #addPictures header .logo,
-#accountSettings header .logo {
+#accountSettings header .logo,
+#manage header .logo,
+#members header .logo,
+#tests header .logo,
+#editGroup header .logo,
+#resolveReports header .logo {
   -ms-grid-row: 2;
   -ms-grid-row-span: 1;
   grid-row: 2/3;
@@ -768,7 +813,12 @@ label.required:after {
   #learn header .logo,
   #test header .logo,
   #addPictures header .logo,
-  #accountSettings header .logo {
+  #accountSettings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #editGroup header .logo,
+  #resolveReports header .logo {
     margin: 0.2 0.6rem;
   }
 }
@@ -778,7 +828,12 @@ label.required:after {
   #learn header,
   #test header,
   #addPictures header,
-  #accountSettings header {
+  #accountSettings header,
+  #manage header,
+  #members header,
+  #tests header,
+  #editGroup header,
+  #resolveReports header {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -798,7 +853,12 @@ label.required:after {
   #learn header,
   #test header,
   #addPictures header,
-  #accountSettings header {
+  #accountSettings header,
+  #manage header,
+  #members header,
+  #tests header,
+  #editGroup header,
+  #resolveReports header {
     position: relative;
   }
 }
@@ -808,7 +868,12 @@ label.required:after {
   #learn header,
   #test header,
   #addPictures header,
-  #accountSettings header {
+  #accountSettings header,
+  #manage header,
+  #members header,
+  #tests header,
+  #editGroup header,
+  #resolveReports header {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -819,7 +884,12 @@ label.required:after {
 #learn header > *,
 #test header > *,
 #addPictures header > *,
-#accountSettings header > * {
+#accountSettings header > *,
+#manage header > *,
+#members header > *,
+#tests header > *,
+#editGroup header > *,
+#resolveReports header > * {
   margin: 0.2rem 1rem;
 }
 
@@ -828,7 +898,12 @@ label.required:after {
   #learn header > *,
   #test header > *,
   #addPictures header > *,
-  #accountSettings header > * {
+  #accountSettings header > *,
+  #manage header > *,
+  #members header > *,
+  #tests header > *,
+  #editGroup header > *,
+  #resolveReports header > * {
     margin: 0.2rem 0.8rem;
   }
 }
@@ -837,7 +912,12 @@ label.required:after {
 #learn header .btn.icon,
 #test header .btn.icon,
 #addPictures header .btn.icon,
-#accountSettings header .btn.icon {
+#accountSettings header .btn.icon,
+#manage header .btn.icon,
+#members header .btn.icon,
+#tests header .btn.icon,
+#editGroup header .btn.icon,
+#resolveReports header .btn.icon {
   margin: 0.2rem 0.4rem;
   height: 32px;
   width: 32px;
@@ -848,7 +928,12 @@ label.required:after {
   #learn header .btn.icon,
   #test header .btn.icon,
   #addPictures header .btn.icon,
-  #accountSettings header .btn.icon {
+  #accountSettings header .btn.icon,
+  #manage header .btn.icon,
+  #members header .btn.icon,
+  #tests header .btn.icon,
+  #editGroup header .btn.icon,
+  #resolveReports header .btn.icon {
     display: none;
   }
 }
@@ -857,7 +942,12 @@ label.required:after {
 #learn header .btn.icon > img,
 #test header .btn.icon > img,
 #addPictures header .btn.icon > img,
-#accountSettings header .btn.icon > img {
+#accountSettings header .btn.icon > img,
+#manage header .btn.icon > img,
+#members header .btn.icon > img,
+#tests header .btn.icon > img,
+#editGroup header .btn.icon > img,
+#resolveReports header .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -866,7 +956,12 @@ label.required:after {
 #learn header .btn.icon:last-child,
 #test header .btn.icon:last-child,
 #addPictures header .btn.icon:last-child,
-#accountSettings header .btn.icon:last-child {
+#accountSettings header .btn.icon:last-child,
+#manage header .btn.icon:last-child,
+#members header .btn.icon:last-child,
+#tests header .btn.icon:last-child,
+#editGroup header .btn.icon:last-child,
+#resolveReports header .btn.icon:last-child {
   margin-left: auto;
 }
 
@@ -874,7 +969,12 @@ label.required:after {
 #learn header .btn.icon:active,
 #test header .btn.icon:active,
 #addPictures header .btn.icon:active,
-#accountSettings header .btn.icon:active {
+#accountSettings header .btn.icon:active,
+#manage header .btn.icon:active,
+#members header .btn.icon:active,
+#tests header .btn.icon:active,
+#editGroup header .btn.icon:active,
+#resolveReports header .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -883,7 +983,12 @@ label.required:after {
 #learn header .logo,
 #test header .logo,
 #addPictures header .logo,
-#accountSettings header .logo {
+#accountSettings header .logo,
+#manage header .logo,
+#members header .logo,
+#tests header .logo,
+#editGroup header .logo,
+#resolveReports header .logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -894,7 +999,12 @@ label.required:after {
   #learn header .logo,
   #test header .logo,
   #addPictures header .logo,
-  #accountSettings header .logo {
+  #accountSettings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #editGroup header .logo,
+  #resolveReports header .logo {
     margin: 0;
     padding: 0.2rem 0.8rem;
     width: 216px;
@@ -906,7 +1016,12 @@ label.required:after {
 #learn header .logo h1,
 #test header .logo h1,
 #addPictures header .logo h1,
-#accountSettings header .logo h1 {
+#accountSettings header .logo h1,
+#manage header .logo h1,
+#members header .logo h1,
+#tests header .logo h1,
+#editGroup header .logo h1,
+#resolveReports header .logo h1 {
   font-size: 2rem;
   letter-spacing: -0.08em;
   color: white;
@@ -917,7 +1032,12 @@ label.required:after {
 #learn aside,
 #test aside,
 #addPictures aside,
-#accountSettings aside {
+#accountSettings aside,
+#manage aside,
+#members aside,
+#tests aside,
+#editGroup aside,
+#resolveReports aside {
   display: none;
   width: 64px;
   -ms-grid-row: 2;
@@ -935,7 +1055,12 @@ label.required:after {
   #learn aside,
   #test aside,
   #addPictures aside,
-  #accountSettings aside {
+  #accountSettings aside,
+  #manage aside,
+  #members aside,
+  #tests aside,
+  #editGroup aside,
+  #resolveReports aside {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -950,7 +1075,12 @@ label.required:after {
 #learn aside .btn.icon,
 #test aside .btn.icon,
 #addPictures aside .btn.icon,
-#accountSettings aside .btn.icon {
+#accountSettings aside .btn.icon,
+#manage aside .btn.icon,
+#members aside .btn.icon,
+#tests aside .btn.icon,
+#editGroup aside .btn.icon,
+#resolveReports aside .btn.icon {
   margin: 1rem auto;
   height: 32px;
   width: 32px;
@@ -960,7 +1090,12 @@ label.required:after {
 #learn aside .btn.icon > img,
 #test aside .btn.icon > img,
 #addPictures aside .btn.icon > img,
-#accountSettings aside .btn.icon > img {
+#accountSettings aside .btn.icon > img,
+#manage aside .btn.icon > img,
+#members aside .btn.icon > img,
+#tests aside .btn.icon > img,
+#editGroup aside .btn.icon > img,
+#resolveReports aside .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -969,7 +1104,12 @@ label.required:after {
 #learn aside .btn.icon:last-child,
 #test aside .btn.icon:last-child,
 #addPictures aside .btn.icon:last-child,
-#accountSettings aside .btn.icon:last-child {
+#accountSettings aside .btn.icon:last-child,
+#manage aside .btn.icon:last-child,
+#members aside .btn.icon:last-child,
+#tests aside .btn.icon:last-child,
+#editGroup aside .btn.icon:last-child,
+#resolveReports aside .btn.icon:last-child {
   margin-top: auto;
 }
 
@@ -977,7 +1117,12 @@ label.required:after {
 #learn aside .btn.icon:active,
 #test aside .btn.icon:active,
 #addPictures aside .btn.icon:active,
-#accountSettings aside .btn.icon:active {
+#accountSettings aside .btn.icon:active,
+#manage aside .btn.icon:active,
+#members aside .btn.icon:active,
+#tests aside .btn.icon:active,
+#editGroup aside .btn.icon:active,
+#resolveReports aside .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -986,7 +1131,12 @@ label.required:after {
 #learn .wrapper,
 #test .wrapper,
 #addPictures .wrapper,
-#accountSettings .wrapper {
+#accountSettings .wrapper,
+#manage .wrapper,
+#members .wrapper,
+#tests .wrapper,
+#editGroup .wrapper,
+#resolveReports .wrapper {
   padding: 1rem 1rem;
 }
 
@@ -995,7 +1145,12 @@ label.required:after {
   #learn .wrapper,
   #test .wrapper,
   #addPictures .wrapper,
-  #accountSettings .wrapper {
+  #accountSettings .wrapper,
+  #manage .wrapper,
+  #members .wrapper,
+  #tests .wrapper,
+  #editGroup .wrapper,
+  #resolveReports .wrapper {
     padding: 1.6rem 2rem;
   }
 }
@@ -1005,7 +1160,12 @@ label.required:after {
   #learn .wrapper,
   #test .wrapper,
   #addPictures .wrapper,
-  #accountSettings .wrapper {
+  #accountSettings .wrapper,
+  #manage .wrapper,
+  #members .wrapper,
+  #tests .wrapper,
+  #editGroup .wrapper,
+  #resolveReports .wrapper {
     padding: 2.4rem 3rem;
   }
 }
@@ -1014,7 +1174,12 @@ label.required:after {
 #learn main,
 #test main,
 #addPictures main,
-#accountSettings main {
+#accountSettings main,
+#manage main,
+#members main,
+#tests main,
+#editGroup main,
+#resolveReports main {
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
@@ -1025,7 +1190,12 @@ label.required:after {
   #learn main,
   #test main,
   #addPictures main,
-  #accountSettings main {
+  #accountSettings main,
+  #manage main,
+  #members main,
+  #tests main,
+  #editGroup main,
+  #resolveReports main {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2/3;
@@ -1037,7 +1207,12 @@ label.required:after {
   #learn main::-webkit-scrollbar,
   #test main::-webkit-scrollbar,
   #addPictures main::-webkit-scrollbar,
-  #accountSettings main::-webkit-scrollbar {
+  #accountSettings main::-webkit-scrollbar,
+  #manage main::-webkit-scrollbar,
+  #members main::-webkit-scrollbar,
+  #tests main::-webkit-scrollbar,
+  #editGroup main::-webkit-scrollbar,
+  #resolveReports main::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
@@ -1045,14 +1220,24 @@ label.required:after {
   #learn main::-webkit-scrollbar-thumb,
   #test main::-webkit-scrollbar-thumb,
   #addPictures main::-webkit-scrollbar-thumb,
-  #accountSettings main::-webkit-scrollbar-thumb {
+  #accountSettings main::-webkit-scrollbar-thumb,
+  #manage main::-webkit-scrollbar-thumb,
+  #members main::-webkit-scrollbar-thumb,
+  #tests main::-webkit-scrollbar-thumb,
+  #editGroup main::-webkit-scrollbar-thumb,
+  #resolveReports main::-webkit-scrollbar-thumb {
     background: #444;
   }
   #menu main::-webkit-scrollbar-track,
   #learn main::-webkit-scrollbar-track,
   #test main::-webkit-scrollbar-track,
   #addPictures main::-webkit-scrollbar-track,
-  #accountSettings main::-webkit-scrollbar-track {
+  #accountSettings main::-webkit-scrollbar-track,
+  #manage main::-webkit-scrollbar-track,
+  #members main::-webkit-scrollbar-track,
+  #tests main::-webkit-scrollbar-track,
+  #editGroup main::-webkit-scrollbar-track,
+  #resolveReports main::-webkit-scrollbar-track {
     background: #eee;
   }
 }
@@ -1061,7 +1246,12 @@ label.required:after {
 #learn footer,
 #test footer,
 #addPictures footer,
-#accountSettings footer {
+#accountSettings footer,
+#manage footer,
+#members footer,
+#tests footer,
+#editGroup footer,
+#resolveReports footer {
   -ms-grid-row: 4;
   -ms-grid-row-span: 1;
   grid-row: 4/5;
@@ -1072,7 +1262,12 @@ label.required:after {
   #learn footer,
   #test footer,
   #addPictures footer,
-  #accountSettings footer {
+  #accountSettings footer,
+  #manage footer,
+  #members footer,
+  #tests footer,
+  #editGroup footer,
+  #resolveReports footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -1083,7 +1278,12 @@ label.required:after {
 #learn h2,
 #test h2,
 #addPictures h2,
-#accountSettings h2 {
+#accountSettings h2,
+#manage h2,
+#members h2,
+#tests h2,
+#editGroup h2,
+#resolveReports h2 {
   font-size: 1.2rem;
   font-weight: normal;
   margin: 1.2rem 1rem 0.4rem 1rem;
@@ -1094,7 +1294,12 @@ label.required:after {
   #learn h2,
   #test h2,
   #addPictures h2,
-  #accountSettings h2 {
+  #accountSettings h2,
+  #manage h2,
+  #members h2,
+  #tests h2,
+  #editGroup h2,
+  #resolveReports h2 {
     margin: 1.6rem 2rem 0 2rem;
   }
 }
@@ -1104,7 +1309,12 @@ label.required:after {
   #learn h2,
   #test h2,
   #addPictures h2,
-  #accountSettings h2 {
+  #accountSettings h2,
+  #manage h2,
+  #members h2,
+  #tests h2,
+  #editGroup h2,
+  #resolveReports h2 {
     margin: 2rem 3rem 0 3rem;
   }
 }
@@ -1113,7 +1323,12 @@ label.required:after {
 #learn h2 span,
 #test h2 span,
 #addPictures h2 span,
-#accountSettings h2 span {
+#accountSettings h2 span,
+#manage h2 span,
+#members h2 span,
+#tests h2 span,
+#editGroup h2 span,
+#resolveReports h2 span {
   font-weight: bold;
 }
 

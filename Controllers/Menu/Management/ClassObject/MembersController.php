@@ -20,7 +20,7 @@ class MembersController extends Controller
         $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu členů';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/members.js');
+        $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/members.js');
         $this->pageHeader['bodyId'] = 'members';
         $this->data['navigationBar'] = array(
             0 => array(

@@ -6,7 +6,12 @@
 #learn,
 #test,
 #addPictures,
-#accountSettings {
+#accountSettings,
+#manage,
+#members,
+#tests,
+#editGroup,
+#resolveReports {
 	width: 100%;
 	height: 100%;
 	@include scrollbar(12px, $gray3, $gray1);
