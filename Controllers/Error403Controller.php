@@ -21,7 +21,7 @@ class Error403Controller extends Controller
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/error.css');
         $this->pageHeader['jsFiles'] = array();
-        $this->pageHeader['bodyId'] = 'error403';
+        $this->pageHeader['bodyId'] = 'error-403';
         
         $this->view = 'error403';
     }

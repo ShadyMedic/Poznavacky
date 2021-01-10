@@ -24,7 +24,7 @@ class EditController extends Controller
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/edit.js');
-        $this->pageHeader['bodyId'] = 'editGroup';
+        $this->pageHeader['bodyId'] = 'edit-group';
         $this->data['navigationBar'] = array(
             0 => array(
                 'text' => $this->pageHeader['title'],
