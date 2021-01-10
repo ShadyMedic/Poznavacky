@@ -4,7 +4,7 @@ $(function() {
 	//event listenery tlačítek
 	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
 	$("#request-class-button").click(function() {showNewClassForm()})
-	$("#request-class-cancel-button").click(function() {hideNewClassForm()})
+	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
 	$(".display-buttons-button").click(function(){displayButtons(this)})
 
 	//event listener kliknutí myši
@@ -24,7 +24,8 @@ function showNewClassForm() {
 	$("#new-class-form-name").focus();
 }
 //skryje formulář na žádost o vytvoření nové třídy
-function hideNewClassForm() {
+function hideNewClassForm(event) {
+	event.preventDefault();
 	$("#request-class-button").show();
 	$("#request-class-wrapper > span").show();
 	$("#request-class-form").hide();
