@@ -414,6 +414,113 @@
 
 @import "_study.scss" ;
 
+#accountSettings,
+#manage {
+	.user-data-section,
+	.class-data-section {
+		.user-data-item,
+		.class-data-item {
+			margin: 0.6rem;
+			padding: 0.4rem 0.8rem;
+			border: 1px solid #ccc;
+			border-radius: 0.2rem;
+			transition: height 0.2s ease-out;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: auto auto;
+			@media screen and (min-width: $smallTablet) {
+				grid-template-columns: 10rem 13rem 1fr;
+				grid-template-rows: auto 1fr;
+				align-items: center;
+			}
+			> span {
+				padding: calc(0.4em + 4px) 0;
+			}
+			.user-property-action,
+			.class-property-action {
+				grid-column: 2/3;
+				@media screen and (min-width: $smallTablet) {
+					grid-column: 3/4;
+					text-align: right;
+				}
+			}
+		}
+	}
+	#change-name,
+	#change-password,
+	#change-email,
+	#change-class-name,
+	#change-class-status {
+		grid-column: 1/3;
+		@media screen and (min-width: $smallTablet) {
+			grid-column: 2/4;
+			grid-row: 1/3;
+			max-width: 400px;
+		}
+		p {
+			margin-bottom: 0.6rem;
+			text-align: justify;
+		}
+		.border-btn {
+			margin: 0.6rem auto;
+			width: 100%;
+		}
+		.inline.btn {
+			margin-bottom: 0.2rem;
+		}
+	}
+	#change-name,
+	#change-password,
+	#change-email,
+	#delete-account1,
+	#delete-account2,
+	#change-class-name,
+	#change-class-status,
+	#delete-class1,
+	#delete-class2 {
+		display: flex;
+		flex-direction: column;
+		label, 
+		input.text-field,
+		.custom-select-wrapper {
+			margin: 0.2rem 0;
+		}
+		label:not(:nth-of-type(1)) {
+			margin-top: 0.54rem;
+		}
+	}
+	h3 {
+		font-size: 1em;
+		font-weight: bold;
+		line-height: 1.2em;
+	}
+	#delete-account1,
+	#delete-class1 {
+		max-width: 400px;
+		.border-btn {
+			margin: 0.6rem auto;
+			width: 100%
+		}
+	}
+	#delete-account2,
+	#delete-class2 {
+		span {
+			color: $red1;
+		}
+		.buttons {
+			display: flex;
+			justify-content: left;
+			.border-btn {
+				width: fit-content;
+				margin: 0.6rem 0;
+				&:not(:last-child) {
+					margin-right: 0.6rem;
+				}
+			}
+		}
+	}
+}
+
 #accountSettings {
 	#account-settings-wrapper {
 		margin: auto;
@@ -425,11 +532,6 @@
 		}
 	}
 
-	h3 {
-		font-size: 1em;
-		font-weight: bold;
-		line-height: 1.2em;
-	}
 	.user-image-section {
 		padding: 0.6rem;
 		margin: 0 auto;
@@ -448,98 +550,40 @@
 			}
 		}
 	}
-	.user-data-section {
-		.user-data-item {
-			margin: 0.6rem;
-			padding: 0.4rem 0.8rem;
-			border: 1px solid #ccc;
-			border-radius: 0.2rem;
-			transition: height 0.2s ease-out;
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: auto auto;
-			@media screen and (min-width: $smallTablet) {
-				grid-template-columns: 10rem 13rem 1fr;
-				grid-template-rows: auto 1fr;
-				align-items: center;
-			}
-			span {
-				padding: calc(0.4em + 4px) 0;
-			}
-			.user-property-action {
-				grid-column: 2/3;
-				@media screen and (min-width: $smallTablet) {
-					grid-column: 3/4;
-					text-align: right;
-				}
-			}
-		}
-		#change-name,
-		#change-password,
-		#change-email {
-			grid-column: 1/3;
-			@media screen and (min-width: $smallTablet) {
-				grid-column: 2/4;
-				grid-row: 1/3;
-				max-width: 400px;
-			}
-			p {
-				margin-bottom: 0.6rem;
-				text-align: justify;
-			}
-			.border-btn {
-				margin: 0.6rem auto;
-				width: 100%;
-			}
-			.inline.btn {
-				margin-bottom: 0.2rem;
-			}
-		}
-	}
-
-	.delete-account-section {
+		.delete-account-section {
 		grid-column: 2/3;
 		margin: 0.6rem;
-		#delete-account1 {
-			max-width: 400px;
-			.border-btn {
-				margin: 0.6rem auto;
-				width: 100%
-			}
+	}
+}
+
+#manage {
+	#manage-wrapper {
+		margin: auto;
+		max-width: 800px;
+	}
+	.class-buttons-section {
+		padding: 0.6rem;
+		display: flex;
+		flex-direction: column;
+		@media screen and (min-width: 440px) {
+			display: block;
 		}
-		#delete-account2 {
-			span {
-				color: $red1;
-			}
+		.border-btn {
+			margin: 0.2rem 0;
+		}
+	}
+	#manage-buttons {
+		display: flex;
+		flex-direction: column;
+		margin: 0.4rem 0;
+		@media screen and (min-width: 440px) {
+			display: block;
 			.border-btn {
-				margin: 0.6rem 0;
+				margin: 0.3rem auto;
 				&:not(:last-child) {
 					margin-right: 0.6rem;
 				}
 			}
-		}
-		.buttons {
-			display: flex;
-			justify-content: left;
-			.btn {
-				width: fit-content;
-			}
-		}
-	}
-
-	#change-name,
-	#change-password,
-	#change-email,
-	#delete-account1,
-	#delete-account2 {
-		display: flex;
-		flex-direction: column;
-		label, 
-		input.text-field {
-			margin: 0.2rem 0;
-		}
-		label:not(:nth-of-type(1)) {
-			margin-top: 0.54rem;
 		}
 	}
 }
