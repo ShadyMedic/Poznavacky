@@ -5,13 +5,13 @@
 #menu,
 #learn,
 #test,
-#addPictures,
-#accountSettings,
+#add-pictures,
+#account-settings,
 #manage,
 #members,
 #tests,
-#editGroup,
-#resolveReports {
+#edit-group,
+#resolve-reports {
 	width: 100%;
 	height: 100%;
 	@include scrollbar(12px, $gray3, $gray1);
@@ -414,7 +414,7 @@
 
 @import "_study.scss" ;
 
-#accountSettings,
+#account-settings,
 #manage {
 	.user-data-section,
 	.class-data-section {
@@ -521,7 +521,7 @@
 	}
 }
 
-#accountSettings {
+#account-settings {
 	#account-settings-wrapper {
 		margin: auto;
 		@media screen and (min-width: $smallDesktop) {

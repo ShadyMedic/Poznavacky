@@ -655,13 +655,13 @@ label.required:after {
 #menu,
 #learn,
 #test,
-#addPictures,
-#accountSettings,
+#add-pictures,
+#account-settings,
 #manage,
 #members,
 #tests,
-#editGroup,
-#resolveReports {
+#edit-group,
+#resolve-reports {
   width: 100%;
   height: 100%;
   scrollbar-color: #444 #222;
@@ -674,13 +674,13 @@ label.required:after {
 #menu::-webkit-scrollbar,
 #learn::-webkit-scrollbar,
 #test::-webkit-scrollbar,
-#addPictures::-webkit-scrollbar,
-#accountSettings::-webkit-scrollbar,
+#add-pictures::-webkit-scrollbar,
+#account-settings::-webkit-scrollbar,
 #manage::-webkit-scrollbar,
 #members::-webkit-scrollbar,
 #tests::-webkit-scrollbar,
-#editGroup::-webkit-scrollbar,
-#resolveReports::-webkit-scrollbar {
+#edit-group::-webkit-scrollbar,
+#resolve-reports::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
@@ -688,26 +688,26 @@ label.required:after {
 #menu::-webkit-scrollbar-thumb,
 #learn::-webkit-scrollbar-thumb,
 #test::-webkit-scrollbar-thumb,
-#addPictures::-webkit-scrollbar-thumb,
-#accountSettings::-webkit-scrollbar-thumb,
+#add-pictures::-webkit-scrollbar-thumb,
+#account-settings::-webkit-scrollbar-thumb,
 #manage::-webkit-scrollbar-thumb,
 #members::-webkit-scrollbar-thumb,
 #tests::-webkit-scrollbar-thumb,
-#editGroup::-webkit-scrollbar-thumb,
-#resolveReports::-webkit-scrollbar-thumb {
+#edit-group::-webkit-scrollbar-thumb,
+#resolve-reports::-webkit-scrollbar-thumb {
   background: #444;
 }
 
 #menu::-webkit-scrollbar-track,
 #learn::-webkit-scrollbar-track,
 #test::-webkit-scrollbar-track,
-#addPictures::-webkit-scrollbar-track,
-#accountSettings::-webkit-scrollbar-track,
+#add-pictures::-webkit-scrollbar-track,
+#account-settings::-webkit-scrollbar-track,
 #manage::-webkit-scrollbar-track,
 #members::-webkit-scrollbar-track,
 #tests::-webkit-scrollbar-track,
-#editGroup::-webkit-scrollbar-track,
-#resolveReports::-webkit-scrollbar-track {
+#edit-group::-webkit-scrollbar-track,
+#resolve-reports::-webkit-scrollbar-track {
   background: #222;
 }
 
@@ -715,13 +715,13 @@ label.required:after {
   #menu,
   #learn,
   #test,
-  #addPictures,
-  #accountSettings,
+  #add-pictures,
+  #account-settings,
   #manage,
   #members,
   #tests,
-  #editGroup,
-  #resolveReports {
+  #edit-group,
+  #resolve-reports {
     height: 100vh;
     overflow: hidden;
   }
@@ -730,13 +730,13 @@ label.required:after {
 #menu .container,
 #learn .container,
 #test .container,
-#addPictures .container,
-#accountSettings .container,
+#add-pictures .container,
+#account-settings .container,
 #manage .container,
 #members .container,
 #tests .container,
-#editGroup .container,
-#resolveReports .container {
+#edit-group .container,
+#resolve-reports .container {
   position: relative;
   min-height: 100vh;
   height: 100%;
@@ -750,13 +750,13 @@ label.required:after {
   #menu .container,
   #learn .container,
   #test .container,
-  #addPictures .container,
-  #accountSettings .container,
+  #add-pictures .container,
+  #account-settings .container,
   #manage .container,
   #members .container,
   #tests .container,
-  #editGroup .container,
-  #resolveReports .container {
+  #edit-group .container,
+  #resolve-reports .container {
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
   }
@@ -765,13 +765,13 @@ label.required:after {
 #menu header,
 #learn header,
 #test header,
-#addPictures header,
-#accountSettings header,
+#add-pictures header,
+#account-settings header,
 #manage header,
 #members header,
 #tests header,
-#editGroup header,
-#resolveReports header {
+#edit-group header,
+#resolve-reports header {
   position: fixed;
   width: 100%;
   top: 0;
@@ -792,13 +792,13 @@ label.required:after {
 #menu header .logo,
 #learn header .logo,
 #test header .logo,
-#addPictures header .logo,
-#accountSettings header .logo,
+#add-pictures header .logo,
+#account-settings header .logo,
 #manage header .logo,
 #members header .logo,
 #tests header .logo,
-#editGroup header .logo,
-#resolveReports header .logo {
+#edit-group header .logo,
+#resolve-reports header .logo {
   -ms-grid-row: 2;
   -ms-grid-row-span: 1;
   grid-row: 2/3;
@@ -812,13 +812,13 @@ label.required:after {
   #menu header .logo,
   #learn header .logo,
   #test header .logo,
-  #addPictures header .logo,
-  #accountSettings header .logo,
+  #add-pictures header .logo,
+  #account-settings header .logo,
   #manage header .logo,
   #members header .logo,
   #tests header .logo,
-  #editGroup header .logo,
-  #resolveReports header .logo {
+  #edit-group header .logo,
+  #resolve-reports header .logo {
     margin: 0.2 0.6rem;
   }
 }
@@ -827,13 +827,13 @@ label.required:after {
   #menu header,
   #learn header,
   #test header,
-  #addPictures header,
-  #accountSettings header,
+  #add-pictures header,
+  #account-settings header,
   #manage header,
   #members header,
   #tests header,
-  #editGroup header,
-  #resolveReports header {
+  #edit-group header,
+  #resolve-reports header {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -852,13 +852,13 @@ label.required:after {
   #menu header,
   #learn header,
   #test header,
-  #addPictures header,
-  #accountSettings header,
+  #add-pictures header,
+  #account-settings header,
   #manage header,
   #members header,
   #tests header,
-  #editGroup header,
-  #resolveReports header {
+  #edit-group header,
+  #resolve-reports header {
     position: relative;
   }
 }
@@ -867,13 +867,13 @@ label.required:after {
   #menu header,
   #learn header,
   #test header,
-  #addPictures header,
-  #accountSettings header,
+  #add-pictures header,
+  #account-settings header,
   #manage header,
   #members header,
   #tests header,
-  #editGroup header,
-  #resolveReports header {
+  #edit-group header,
+  #resolve-reports header {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -883,13 +883,13 @@ label.required:after {
 #menu header > *,
 #learn header > *,
 #test header > *,
-#addPictures header > *,
-#accountSettings header > *,
+#add-pictures header > *,
+#account-settings header > *,
 #manage header > *,
 #members header > *,
 #tests header > *,
-#editGroup header > *,
-#resolveReports header > * {
+#edit-group header > *,
+#resolve-reports header > * {
   margin: 0.2rem 1rem;
 }
 
@@ -897,13 +897,13 @@ label.required:after {
   #menu header > *,
   #learn header > *,
   #test header > *,
-  #addPictures header > *,
-  #accountSettings header > *,
+  #add-pictures header > *,
+  #account-settings header > *,
   #manage header > *,
   #members header > *,
   #tests header > *,
-  #editGroup header > *,
-  #resolveReports header > * {
+  #edit-group header > *,
+  #resolve-reports header > * {
     margin: 0.2rem 0.8rem;
   }
 }
@@ -911,13 +911,13 @@ label.required:after {
 #menu header .btn.icon,
 #learn header .btn.icon,
 #test header .btn.icon,
-#addPictures header .btn.icon,
-#accountSettings header .btn.icon,
+#add-pictures header .btn.icon,
+#account-settings header .btn.icon,
 #manage header .btn.icon,
 #members header .btn.icon,
 #tests header .btn.icon,
-#editGroup header .btn.icon,
-#resolveReports header .btn.icon {
+#edit-group header .btn.icon,
+#resolve-reports header .btn.icon {
   margin: 0.2rem 0.4rem;
   height: 32px;
   width: 32px;
@@ -927,13 +927,13 @@ label.required:after {
   #menu header .btn.icon,
   #learn header .btn.icon,
   #test header .btn.icon,
-  #addPictures header .btn.icon,
-  #accountSettings header .btn.icon,
+  #add-pictures header .btn.icon,
+  #account-settings header .btn.icon,
   #manage header .btn.icon,
   #members header .btn.icon,
   #tests header .btn.icon,
-  #editGroup header .btn.icon,
-  #resolveReports header .btn.icon {
+  #edit-group header .btn.icon,
+  #resolve-reports header .btn.icon {
     display: none;
   }
 }
@@ -941,13 +941,13 @@ label.required:after {
 #menu header .btn.icon > img,
 #learn header .btn.icon > img,
 #test header .btn.icon > img,
-#addPictures header .btn.icon > img,
-#accountSettings header .btn.icon > img,
+#add-pictures header .btn.icon > img,
+#account-settings header .btn.icon > img,
 #manage header .btn.icon > img,
 #members header .btn.icon > img,
 #tests header .btn.icon > img,
-#editGroup header .btn.icon > img,
-#resolveReports header .btn.icon > img {
+#edit-group header .btn.icon > img,
+#resolve-reports header .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -955,26 +955,26 @@ label.required:after {
 #menu header .btn.icon:last-child,
 #learn header .btn.icon:last-child,
 #test header .btn.icon:last-child,
-#addPictures header .btn.icon:last-child,
-#accountSettings header .btn.icon:last-child,
+#add-pictures header .btn.icon:last-child,
+#account-settings header .btn.icon:last-child,
 #manage header .btn.icon:last-child,
 #members header .btn.icon:last-child,
 #tests header .btn.icon:last-child,
-#editGroup header .btn.icon:last-child,
-#resolveReports header .btn.icon:last-child {
+#edit-group header .btn.icon:last-child,
+#resolve-reports header .btn.icon:last-child {
   margin-left: auto;
 }
 
 #menu header .btn.icon:active,
 #learn header .btn.icon:active,
 #test header .btn.icon:active,
-#addPictures header .btn.icon:active,
-#accountSettings header .btn.icon:active,
+#add-pictures header .btn.icon:active,
+#account-settings header .btn.icon:active,
 #manage header .btn.icon:active,
 #members header .btn.icon:active,
 #tests header .btn.icon:active,
-#editGroup header .btn.icon:active,
-#resolveReports header .btn.icon:active {
+#edit-group header .btn.icon:active,
+#resolve-reports header .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -982,13 +982,13 @@ label.required:after {
 #menu header .logo,
 #learn header .logo,
 #test header .logo,
-#addPictures header .logo,
-#accountSettings header .logo,
+#add-pictures header .logo,
+#account-settings header .logo,
 #manage header .logo,
 #members header .logo,
 #tests header .logo,
-#editGroup header .logo,
-#resolveReports header .logo {
+#edit-group header .logo,
+#resolve-reports header .logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -998,13 +998,13 @@ label.required:after {
   #menu header .logo,
   #learn header .logo,
   #test header .logo,
-  #addPictures header .logo,
-  #accountSettings header .logo,
+  #add-pictures header .logo,
+  #account-settings header .logo,
   #manage header .logo,
   #members header .logo,
   #tests header .logo,
-  #editGroup header .logo,
-  #resolveReports header .logo {
+  #edit-group header .logo,
+  #resolve-reports header .logo {
     margin: 0;
     padding: 0.2rem 0.8rem;
     width: 216px;
@@ -1015,13 +1015,13 @@ label.required:after {
 #menu header .logo h1,
 #learn header .logo h1,
 #test header .logo h1,
-#addPictures header .logo h1,
-#accountSettings header .logo h1,
+#add-pictures header .logo h1,
+#account-settings header .logo h1,
 #manage header .logo h1,
 #members header .logo h1,
 #tests header .logo h1,
-#editGroup header .logo h1,
-#resolveReports header .logo h1 {
+#edit-group header .logo h1,
+#resolve-reports header .logo h1 {
   font-size: 2rem;
   letter-spacing: -0.08em;
   color: white;
@@ -1031,13 +1031,13 @@ label.required:after {
 #menu aside,
 #learn aside,
 #test aside,
-#addPictures aside,
-#accountSettings aside,
+#add-pictures aside,
+#account-settings aside,
 #manage aside,
 #members aside,
 #tests aside,
-#editGroup aside,
-#resolveReports aside {
+#edit-group aside,
+#resolve-reports aside {
   display: none;
   width: 64px;
   -ms-grid-row: 2;
@@ -1054,13 +1054,13 @@ label.required:after {
   #menu aside,
   #learn aside,
   #test aside,
-  #addPictures aside,
-  #accountSettings aside,
+  #add-pictures aside,
+  #account-settings aside,
   #manage aside,
   #members aside,
   #tests aside,
-  #editGroup aside,
-  #resolveReports aside {
+  #edit-group aside,
+  #resolve-reports aside {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1074,13 +1074,13 @@ label.required:after {
 #menu aside .btn.icon,
 #learn aside .btn.icon,
 #test aside .btn.icon,
-#addPictures aside .btn.icon,
-#accountSettings aside .btn.icon,
+#add-pictures aside .btn.icon,
+#account-settings aside .btn.icon,
 #manage aside .btn.icon,
 #members aside .btn.icon,
 #tests aside .btn.icon,
-#editGroup aside .btn.icon,
-#resolveReports aside .btn.icon {
+#edit-group aside .btn.icon,
+#resolve-reports aside .btn.icon {
   margin: 1rem auto;
   height: 32px;
   width: 32px;
@@ -1089,13 +1089,13 @@ label.required:after {
 #menu aside .btn.icon > img,
 #learn aside .btn.icon > img,
 #test aside .btn.icon > img,
-#addPictures aside .btn.icon > img,
-#accountSettings aside .btn.icon > img,
+#add-pictures aside .btn.icon > img,
+#account-settings aside .btn.icon > img,
 #manage aside .btn.icon > img,
 #members aside .btn.icon > img,
 #tests aside .btn.icon > img,
-#editGroup aside .btn.icon > img,
-#resolveReports aside .btn.icon > img {
+#edit-group aside .btn.icon > img,
+#resolve-reports aside .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -1103,26 +1103,26 @@ label.required:after {
 #menu aside .btn.icon:last-child,
 #learn aside .btn.icon:last-child,
 #test aside .btn.icon:last-child,
-#addPictures aside .btn.icon:last-child,
-#accountSettings aside .btn.icon:last-child,
+#add-pictures aside .btn.icon:last-child,
+#account-settings aside .btn.icon:last-child,
 #manage aside .btn.icon:last-child,
 #members aside .btn.icon:last-child,
 #tests aside .btn.icon:last-child,
-#editGroup aside .btn.icon:last-child,
-#resolveReports aside .btn.icon:last-child {
+#edit-group aside .btn.icon:last-child,
+#resolve-reports aside .btn.icon:last-child {
   margin-top: auto;
 }
 
 #menu aside .btn.icon:active,
 #learn aside .btn.icon:active,
 #test aside .btn.icon:active,
-#addPictures aside .btn.icon:active,
-#accountSettings aside .btn.icon:active,
+#add-pictures aside .btn.icon:active,
+#account-settings aside .btn.icon:active,
 #manage aside .btn.icon:active,
 #members aside .btn.icon:active,
 #tests aside .btn.icon:active,
-#editGroup aside .btn.icon:active,
-#resolveReports aside .btn.icon:active {
+#edit-group aside .btn.icon:active,
+#resolve-reports aside .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -1130,13 +1130,13 @@ label.required:after {
 #menu .wrapper,
 #learn .wrapper,
 #test .wrapper,
-#addPictures .wrapper,
-#accountSettings .wrapper,
+#add-pictures .wrapper,
+#account-settings .wrapper,
 #manage .wrapper,
 #members .wrapper,
 #tests .wrapper,
-#editGroup .wrapper,
-#resolveReports .wrapper {
+#edit-group .wrapper,
+#resolve-reports .wrapper {
   padding: 1rem 1rem;
 }
 
@@ -1144,13 +1144,13 @@ label.required:after {
   #menu .wrapper,
   #learn .wrapper,
   #test .wrapper,
-  #addPictures .wrapper,
-  #accountSettings .wrapper,
+  #add-pictures .wrapper,
+  #account-settings .wrapper,
   #manage .wrapper,
   #members .wrapper,
   #tests .wrapper,
-  #editGroup .wrapper,
-  #resolveReports .wrapper {
+  #edit-group .wrapper,
+  #resolve-reports .wrapper {
     padding: 1.6rem 2rem;
   }
 }
@@ -1159,13 +1159,13 @@ label.required:after {
   #menu .wrapper,
   #learn .wrapper,
   #test .wrapper,
-  #addPictures .wrapper,
-  #accountSettings .wrapper,
+  #add-pictures .wrapper,
+  #account-settings .wrapper,
   #manage .wrapper,
   #members .wrapper,
   #tests .wrapper,
-  #editGroup .wrapper,
-  #resolveReports .wrapper {
+  #edit-group .wrapper,
+  #resolve-reports .wrapper {
     padding: 2.4rem 3rem;
   }
 }
@@ -1173,13 +1173,13 @@ label.required:after {
 #menu main,
 #learn main,
 #test main,
-#addPictures main,
-#accountSettings main,
+#add-pictures main,
+#account-settings main,
 #manage main,
 #members main,
 #tests main,
-#editGroup main,
-#resolveReports main {
+#edit-group main,
+#resolve-reports main {
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
@@ -1189,13 +1189,13 @@ label.required:after {
   #menu main,
   #learn main,
   #test main,
-  #addPictures main,
-  #accountSettings main,
+  #add-pictures main,
+  #account-settings main,
   #manage main,
   #members main,
   #tests main,
-  #editGroup main,
-  #resolveReports main {
+  #edit-group main,
+  #resolve-reports main {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2/3;
@@ -1206,38 +1206,38 @@ label.required:after {
   #menu main::-webkit-scrollbar,
   #learn main::-webkit-scrollbar,
   #test main::-webkit-scrollbar,
-  #addPictures main::-webkit-scrollbar,
-  #accountSettings main::-webkit-scrollbar,
+  #add-pictures main::-webkit-scrollbar,
+  #account-settings main::-webkit-scrollbar,
   #manage main::-webkit-scrollbar,
   #members main::-webkit-scrollbar,
   #tests main::-webkit-scrollbar,
-  #editGroup main::-webkit-scrollbar,
-  #resolveReports main::-webkit-scrollbar {
+  #edit-group main::-webkit-scrollbar,
+  #resolve-reports main::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
   #menu main::-webkit-scrollbar-thumb,
   #learn main::-webkit-scrollbar-thumb,
   #test main::-webkit-scrollbar-thumb,
-  #addPictures main::-webkit-scrollbar-thumb,
-  #accountSettings main::-webkit-scrollbar-thumb,
+  #add-pictures main::-webkit-scrollbar-thumb,
+  #account-settings main::-webkit-scrollbar-thumb,
   #manage main::-webkit-scrollbar-thumb,
   #members main::-webkit-scrollbar-thumb,
   #tests main::-webkit-scrollbar-thumb,
-  #editGroup main::-webkit-scrollbar-thumb,
-  #resolveReports main::-webkit-scrollbar-thumb {
+  #edit-group main::-webkit-scrollbar-thumb,
+  #resolve-reports main::-webkit-scrollbar-thumb {
     background: #444;
   }
   #menu main::-webkit-scrollbar-track,
   #learn main::-webkit-scrollbar-track,
   #test main::-webkit-scrollbar-track,
-  #addPictures main::-webkit-scrollbar-track,
-  #accountSettings main::-webkit-scrollbar-track,
+  #add-pictures main::-webkit-scrollbar-track,
+  #account-settings main::-webkit-scrollbar-track,
   #manage main::-webkit-scrollbar-track,
   #members main::-webkit-scrollbar-track,
   #tests main::-webkit-scrollbar-track,
-  #editGroup main::-webkit-scrollbar-track,
-  #resolveReports main::-webkit-scrollbar-track {
+  #edit-group main::-webkit-scrollbar-track,
+  #resolve-reports main::-webkit-scrollbar-track {
     background: #eee;
   }
 }
@@ -1245,13 +1245,13 @@ label.required:after {
 #menu footer,
 #learn footer,
 #test footer,
-#addPictures footer,
-#accountSettings footer,
+#add-pictures footer,
+#account-settings footer,
 #manage footer,
 #members footer,
 #tests footer,
-#editGroup footer,
-#resolveReports footer {
+#edit-group footer,
+#resolve-reports footer {
   -ms-grid-row: 4;
   -ms-grid-row-span: 1;
   grid-row: 4/5;
@@ -1261,13 +1261,13 @@ label.required:after {
   #menu footer,
   #learn footer,
   #test footer,
-  #addPictures footer,
-  #accountSettings footer,
+  #add-pictures footer,
+  #account-settings footer,
   #manage footer,
   #members footer,
   #tests footer,
-  #editGroup footer,
-  #resolveReports footer {
+  #edit-group footer,
+  #resolve-reports footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -1277,13 +1277,13 @@ label.required:after {
 #menu h2,
 #learn h2,
 #test h2,
-#addPictures h2,
-#accountSettings h2,
+#add-pictures h2,
+#account-settings h2,
 #manage h2,
 #members h2,
 #tests h2,
-#editGroup h2,
-#resolveReports h2 {
+#edit-group h2,
+#resolve-reports h2 {
   font-size: 1.2rem;
   font-weight: normal;
   margin: 1.2rem 1rem 0.4rem 1rem;
@@ -1293,13 +1293,13 @@ label.required:after {
   #menu h2,
   #learn h2,
   #test h2,
-  #addPictures h2,
-  #accountSettings h2,
+  #add-pictures h2,
+  #account-settings h2,
   #manage h2,
   #members h2,
   #tests h2,
-  #editGroup h2,
-  #resolveReports h2 {
+  #edit-group h2,
+  #resolve-reports h2 {
     margin: 1.6rem 2rem 0 2rem;
   }
 }
@@ -1308,13 +1308,13 @@ label.required:after {
   #menu h2,
   #learn h2,
   #test h2,
-  #addPictures h2,
-  #accountSettings h2,
+  #add-pictures h2,
+  #account-settings h2,
   #manage h2,
   #members h2,
   #tests h2,
-  #editGroup h2,
-  #resolveReports h2 {
+  #edit-group h2,
+  #resolve-reports h2 {
     margin: 2rem 3rem 0 3rem;
   }
 }
@@ -1322,13 +1322,13 @@ label.required:after {
 #menu h2 span,
 #learn h2 span,
 #test h2 span,
-#addPictures h2 span,
-#accountSettings h2 span,
+#add-pictures h2 span,
+#account-settings h2 span,
 #manage h2 span,
 #members h2 span,
 #tests h2 span,
-#editGroup h2 span,
-#resolveReports h2 span {
+#edit-group h2 span,
+#resolve-reports h2 span {
   font-weight: bold;
 }
 
@@ -1736,9 +1736,9 @@ label.required:after {
 #test #learn-wrapper,
 #test #test-wrapper,
 #test #add-pictures-form-wrapper,
-#addPictures #learn-wrapper,
-#addPictures #test-wrapper,
-#addPictures #add-pictures-form-wrapper {
+#add-pictures #learn-wrapper,
+#add-pictures #test-wrapper,
+#add-pictures #add-pictures-form-wrapper {
   margin: auto;
   width: 100%;
   max-width: 400px;
@@ -1751,9 +1751,9 @@ label.required:after {
   #test #learn-wrapper,
   #test #test-wrapper,
   #test #add-pictures-form-wrapper,
-  #addPictures #learn-wrapper,
-  #addPictures #test-wrapper,
-  #addPictures #add-pictures-form-wrapper {
+  #add-pictures #learn-wrapper,
+  #add-pictures #test-wrapper,
+  #add-pictures #add-pictures-form-wrapper {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: start;
@@ -1771,9 +1771,9 @@ label.required:after {
   #test #learn-wrapper,
   #test #test-wrapper,
   #test #add-pictures-form-wrapper,
-  #addPictures #learn-wrapper,
-  #addPictures #test-wrapper,
-  #addPictures #add-pictures-form-wrapper {
+  #add-pictures #learn-wrapper,
+  #add-pictures #test-wrapper,
+  #add-pictures #add-pictures-form-wrapper {
     max-width: 900px;
   }
 }
@@ -2109,7 +2109,7 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper {
+  #add-pictures #add-pictures-form-wrapper {
     -webkit-column-gap: 32px;
             column-gap: 32px;
     -ms-grid-columns: 1fr auto;
@@ -2120,14 +2120,14 @@ label.required:after {
 }
 
 @media screen and (min-width: 960px) {
-  #addPictures #add-pictures-form-wrapper {
+  #add-pictures #add-pictures-form-wrapper {
     -webkit-column-gap: 100px;
             column-gap: 100px;
   }
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper #add-natural-select {
+  #add-pictures #add-pictures-form-wrapper #add-natural-select {
     -ms-grid-column: 1;
     -ms-grid-column-span: 1;
     grid-column: 1/2;
@@ -2137,7 +2137,7 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset {
+#add-pictures #add-pictures-form-wrapper .url-fieldset {
   margin: 0.6rem 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2149,7 +2149,7 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset {
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: auto 1fr auto;
@@ -2167,12 +2167,12 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset label {
+#add-pictures #add-pictures-form-wrapper .url-fieldset label {
   width: 100%;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset label {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset label {
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
     grid-row: 1/2;
@@ -2182,12 +2182,12 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset .text-field {
+#add-pictures #add-pictures-form-wrapper .url-fieldset .text-field {
   width: 100%;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset .text-field {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset .text-field {
     -ms-grid-row: 2;
     -ms-grid-row-span: 1;
     grid-row: 2/3;
@@ -2197,18 +2197,18 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset .btn {
+#add-pictures #add-pictures-form-wrapper .url-fieldset .btn {
   width: 100%;
 }
 
 @media screen and (max-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset .btn {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset .btn {
     margin-top: 0.6rem;
   }
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset .btn {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset .btn {
     -ms-grid-row: 2;
     -ms-grid-row-span: 1;
     grid-row: 2/3;
@@ -2218,13 +2218,13 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset {
   margin: 8px 0;
   position: relative;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .preview-buttons-fieldset {
+  #add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset {
     -ms-grid-column: 1;
     -ms-grid-column-span: 1;
     grid-column: 1/2;
@@ -2241,23 +2241,23 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
   width: 100%;
   display: block;
   margin: 8px 0;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
+  #add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
     margin: 0;
   }
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn:not(:last-child) {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn:not(:last-child) {
   margin-bottom: 8px;
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn > .logo {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn > .logo {
   height: 1em;
   width: 1em;
   display: inline-block;
@@ -2267,13 +2267,13 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .preview-buttons-fieldset #submit-button {
+  #add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset #submit-button {
     margin-top: auto;
   }
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .picture {
+  #add-pictures #add-pictures-form-wrapper .picture {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2/3;
@@ -2283,7 +2283,7 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .picture #preview-img {
+#add-pictures #add-pictures-form-wrapper .picture #preview-img {
   background: #f8f8f8;
   -o-object-fit: contain;
      object-fit: contain;
@@ -2293,27 +2293,27 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .picture #preview-img {
+  #add-pictures #add-pictures-form-wrapper .picture #preview-img {
     width: 240px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #addPictures #add-pictures-form-wrapper .picture #preview-img {
+  #add-pictures #add-pictures-form-wrapper .picture #preview-img {
     width: 280px;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #addPictures #add-pictures-form-wrapper .picture #preview-img {
+  #add-pictures #add-pictures-form-wrapper .picture #preview-img {
     width: 320px;
   }
 }
 
-#accountSettings .user-data-section .user-data-item,
-#accountSettings .user-data-section .class-data-item,
-#accountSettings .class-data-section .user-data-item,
-#accountSettings .class-data-section .class-data-item,
+#account-settings .user-data-section .user-data-item,
+#account-settings .user-data-section .class-data-item,
+#account-settings .class-data-section .user-data-item,
+#account-settings .class-data-section .class-data-item,
 #manage .user-data-section .user-data-item,
 #manage .user-data-section .class-data-item,
 #manage .class-data-section .user-data-item,
@@ -2333,10 +2333,10 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #accountSettings .user-data-section .user-data-item,
-  #accountSettings .user-data-section .class-data-item,
-  #accountSettings .class-data-section .user-data-item,
-  #accountSettings .class-data-section .class-data-item,
+  #account-settings .user-data-section .user-data-item,
+  #account-settings .user-data-section .class-data-item,
+  #account-settings .class-data-section .user-data-item,
+  #account-settings .class-data-section .class-data-item,
   #manage .user-data-section .user-data-item,
   #manage .user-data-section .class-data-item,
   #manage .class-data-section .user-data-item,
@@ -2351,10 +2351,10 @@ label.required:after {
   }
 }
 
-#accountSettings .user-data-section .user-data-item > span,
-#accountSettings .user-data-section .class-data-item > span,
-#accountSettings .class-data-section .user-data-item > span,
-#accountSettings .class-data-section .class-data-item > span,
+#account-settings .user-data-section .user-data-item > span,
+#account-settings .user-data-section .class-data-item > span,
+#account-settings .class-data-section .user-data-item > span,
+#account-settings .class-data-section .class-data-item > span,
 #manage .user-data-section .user-data-item > span,
 #manage .user-data-section .class-data-item > span,
 #manage .class-data-section .user-data-item > span,
@@ -2362,14 +2362,14 @@ label.required:after {
   padding: calc(0.4em + 4px) 0;
 }
 
-#accountSettings .user-data-section .user-data-item .user-property-action,
-#accountSettings .user-data-section .user-data-item .class-property-action,
-#accountSettings .user-data-section .class-data-item .user-property-action,
-#accountSettings .user-data-section .class-data-item .class-property-action,
-#accountSettings .class-data-section .user-data-item .user-property-action,
-#accountSettings .class-data-section .user-data-item .class-property-action,
-#accountSettings .class-data-section .class-data-item .user-property-action,
-#accountSettings .class-data-section .class-data-item .class-property-action,
+#account-settings .user-data-section .user-data-item .user-property-action,
+#account-settings .user-data-section .user-data-item .class-property-action,
+#account-settings .user-data-section .class-data-item .user-property-action,
+#account-settings .user-data-section .class-data-item .class-property-action,
+#account-settings .class-data-section .user-data-item .user-property-action,
+#account-settings .class-data-section .user-data-item .class-property-action,
+#account-settings .class-data-section .class-data-item .user-property-action,
+#account-settings .class-data-section .class-data-item .class-property-action,
 #manage .user-data-section .user-data-item .user-property-action,
 #manage .user-data-section .user-data-item .class-property-action,
 #manage .user-data-section .class-data-item .user-property-action,
@@ -2384,14 +2384,14 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #accountSettings .user-data-section .user-data-item .user-property-action,
-  #accountSettings .user-data-section .user-data-item .class-property-action,
-  #accountSettings .user-data-section .class-data-item .user-property-action,
-  #accountSettings .user-data-section .class-data-item .class-property-action,
-  #accountSettings .class-data-section .user-data-item .user-property-action,
-  #accountSettings .class-data-section .user-data-item .class-property-action,
-  #accountSettings .class-data-section .class-data-item .user-property-action,
-  #accountSettings .class-data-section .class-data-item .class-property-action,
+  #account-settings .user-data-section .user-data-item .user-property-action,
+  #account-settings .user-data-section .user-data-item .class-property-action,
+  #account-settings .user-data-section .class-data-item .user-property-action,
+  #account-settings .user-data-section .class-data-item .class-property-action,
+  #account-settings .class-data-section .user-data-item .user-property-action,
+  #account-settings .class-data-section .user-data-item .class-property-action,
+  #account-settings .class-data-section .class-data-item .user-property-action,
+  #account-settings .class-data-section .class-data-item .class-property-action,
   #manage .user-data-section .user-data-item .user-property-action,
   #manage .user-data-section .user-data-item .class-property-action,
   #manage .user-data-section .class-data-item .user-property-action,
@@ -2407,11 +2407,11 @@ label.required:after {
   }
 }
 
-#accountSettings #change-name,
-#accountSettings #change-password,
-#accountSettings #change-email,
-#accountSettings #change-class-name,
-#accountSettings #change-class-status,
+#account-settings #change-name,
+#account-settings #change-password,
+#account-settings #change-email,
+#account-settings #change-class-name,
+#account-settings #change-class-status,
 #manage #change-name,
 #manage #change-password,
 #manage #change-email,
@@ -2423,11 +2423,11 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #accountSettings #change-name,
-  #accountSettings #change-password,
-  #accountSettings #change-email,
-  #accountSettings #change-class-name,
-  #accountSettings #change-class-status,
+  #account-settings #change-name,
+  #account-settings #change-password,
+  #account-settings #change-email,
+  #account-settings #change-class-name,
+  #account-settings #change-class-status,
   #manage #change-name,
   #manage #change-password,
   #manage #change-email,
@@ -2443,11 +2443,11 @@ label.required:after {
   }
 }
 
-#accountSettings #change-name p,
-#accountSettings #change-password p,
-#accountSettings #change-email p,
-#accountSettings #change-class-name p,
-#accountSettings #change-class-status p,
+#account-settings #change-name p,
+#account-settings #change-password p,
+#account-settings #change-email p,
+#account-settings #change-class-name p,
+#account-settings #change-class-status p,
 #manage #change-name p,
 #manage #change-password p,
 #manage #change-email p,
@@ -2457,11 +2457,11 @@ label.required:after {
   text-align: justify;
 }
 
-#accountSettings #change-name .border-btn,
-#accountSettings #change-password .border-btn,
-#accountSettings #change-email .border-btn,
-#accountSettings #change-class-name .border-btn,
-#accountSettings #change-class-status .border-btn,
+#account-settings #change-name .border-btn,
+#account-settings #change-password .border-btn,
+#account-settings #change-email .border-btn,
+#account-settings #change-class-name .border-btn,
+#account-settings #change-class-status .border-btn,
 #manage #change-name .border-btn,
 #manage #change-password .border-btn,
 #manage #change-email .border-btn,
@@ -2471,11 +2471,11 @@ label.required:after {
   width: 100%;
 }
 
-#accountSettings #change-name .inline.btn,
-#accountSettings #change-password .inline.btn,
-#accountSettings #change-email .inline.btn,
-#accountSettings #change-class-name .inline.btn,
-#accountSettings #change-class-status .inline.btn,
+#account-settings #change-name .inline.btn,
+#account-settings #change-password .inline.btn,
+#account-settings #change-email .inline.btn,
+#account-settings #change-class-name .inline.btn,
+#account-settings #change-class-status .inline.btn,
 #manage #change-name .inline.btn,
 #manage #change-password .inline.btn,
 #manage #change-email .inline.btn,
@@ -2484,15 +2484,15 @@ label.required:after {
   margin-bottom: 0.2rem;
 }
 
-#accountSettings #change-name,
-#accountSettings #change-password,
-#accountSettings #change-email,
-#accountSettings #delete-account1,
-#accountSettings #delete-account2,
-#accountSettings #change-class-name,
-#accountSettings #change-class-status,
-#accountSettings #delete-class1,
-#accountSettings #delete-class2,
+#account-settings #change-name,
+#account-settings #change-password,
+#account-settings #change-email,
+#account-settings #delete-account1,
+#account-settings #delete-account2,
+#account-settings #change-class-name,
+#account-settings #change-class-status,
+#account-settings #delete-class1,
+#account-settings #delete-class2,
 #manage #change-name,
 #manage #change-password,
 #manage #change-email,
@@ -2511,33 +2511,33 @@ label.required:after {
           flex-direction: column;
 }
 
-#accountSettings #change-name label,
-#accountSettings #change-name input.text-field,
-#accountSettings #change-name .custom-select-wrapper,
-#accountSettings #change-password label,
-#accountSettings #change-password input.text-field,
-#accountSettings #change-password .custom-select-wrapper,
-#accountSettings #change-email label,
-#accountSettings #change-email input.text-field,
-#accountSettings #change-email .custom-select-wrapper,
-#accountSettings #delete-account1 label,
-#accountSettings #delete-account1 input.text-field,
-#accountSettings #delete-account1 .custom-select-wrapper,
-#accountSettings #delete-account2 label,
-#accountSettings #delete-account2 input.text-field,
-#accountSettings #delete-account2 .custom-select-wrapper,
-#accountSettings #change-class-name label,
-#accountSettings #change-class-name input.text-field,
-#accountSettings #change-class-name .custom-select-wrapper,
-#accountSettings #change-class-status label,
-#accountSettings #change-class-status input.text-field,
-#accountSettings #change-class-status .custom-select-wrapper,
-#accountSettings #delete-class1 label,
-#accountSettings #delete-class1 input.text-field,
-#accountSettings #delete-class1 .custom-select-wrapper,
-#accountSettings #delete-class2 label,
-#accountSettings #delete-class2 input.text-field,
-#accountSettings #delete-class2 .custom-select-wrapper,
+#account-settings #change-name label,
+#account-settings #change-name input.text-field,
+#account-settings #change-name .custom-select-wrapper,
+#account-settings #change-password label,
+#account-settings #change-password input.text-field,
+#account-settings #change-password .custom-select-wrapper,
+#account-settings #change-email label,
+#account-settings #change-email input.text-field,
+#account-settings #change-email .custom-select-wrapper,
+#account-settings #delete-account1 label,
+#account-settings #delete-account1 input.text-field,
+#account-settings #delete-account1 .custom-select-wrapper,
+#account-settings #delete-account2 label,
+#account-settings #delete-account2 input.text-field,
+#account-settings #delete-account2 .custom-select-wrapper,
+#account-settings #change-class-name label,
+#account-settings #change-class-name input.text-field,
+#account-settings #change-class-name .custom-select-wrapper,
+#account-settings #change-class-status label,
+#account-settings #change-class-status input.text-field,
+#account-settings #change-class-status .custom-select-wrapper,
+#account-settings #delete-class1 label,
+#account-settings #delete-class1 input.text-field,
+#account-settings #delete-class1 .custom-select-wrapper,
+#account-settings #delete-class2 label,
+#account-settings #delete-class2 input.text-field,
+#account-settings #delete-class2 .custom-select-wrapper,
 #manage #change-name label,
 #manage #change-name input.text-field,
 #manage #change-name .custom-select-wrapper,
@@ -2568,15 +2568,15 @@ label.required:after {
   margin: 0.2rem 0;
 }
 
-#accountSettings #change-name label:not(:nth-of-type(1)),
-#accountSettings #change-password label:not(:nth-of-type(1)),
-#accountSettings #change-email label:not(:nth-of-type(1)),
-#accountSettings #delete-account1 label:not(:nth-of-type(1)),
-#accountSettings #delete-account2 label:not(:nth-of-type(1)),
-#accountSettings #change-class-name label:not(:nth-of-type(1)),
-#accountSettings #change-class-status label:not(:nth-of-type(1)),
-#accountSettings #delete-class1 label:not(:nth-of-type(1)),
-#accountSettings #delete-class2 label:not(:nth-of-type(1)),
+#account-settings #change-name label:not(:nth-of-type(1)),
+#account-settings #change-password label:not(:nth-of-type(1)),
+#account-settings #change-email label:not(:nth-of-type(1)),
+#account-settings #delete-account1 label:not(:nth-of-type(1)),
+#account-settings #delete-account2 label:not(:nth-of-type(1)),
+#account-settings #change-class-name label:not(:nth-of-type(1)),
+#account-settings #change-class-status label:not(:nth-of-type(1)),
+#account-settings #delete-class1 label:not(:nth-of-type(1)),
+#account-settings #delete-class2 label:not(:nth-of-type(1)),
 #manage #change-name label:not(:nth-of-type(1)),
 #manage #change-password label:not(:nth-of-type(1)),
 #manage #change-email label:not(:nth-of-type(1)),
@@ -2589,37 +2589,37 @@ label.required:after {
   margin-top: 0.54rem;
 }
 
-#accountSettings h3,
+#account-settings h3,
 #manage h3 {
   font-size: 1em;
   font-weight: bold;
   line-height: 1.2em;
 }
 
-#accountSettings #delete-account1,
-#accountSettings #delete-class1,
+#account-settings #delete-account1,
+#account-settings #delete-class1,
 #manage #delete-account1,
 #manage #delete-class1 {
   max-width: 400px;
 }
 
-#accountSettings #delete-account1 .border-btn,
-#accountSettings #delete-class1 .border-btn,
+#account-settings #delete-account1 .border-btn,
+#account-settings #delete-class1 .border-btn,
 #manage #delete-account1 .border-btn,
 #manage #delete-class1 .border-btn {
   margin: 0.6rem auto;
   width: 100%;
 }
 
-#accountSettings #delete-account2 span,
-#accountSettings #delete-class2 span,
+#account-settings #delete-account2 span,
+#account-settings #delete-class2 span,
 #manage #delete-account2 span,
 #manage #delete-class2 span {
   color: #a00;
 }
 
-#accountSettings #delete-account2 .buttons,
-#accountSettings #delete-class2 .buttons,
+#account-settings #delete-account2 .buttons,
+#account-settings #delete-class2 .buttons,
 #manage #delete-account2 .buttons,
 #manage #delete-class2 .buttons {
   display: -webkit-box;
@@ -2630,8 +2630,8 @@ label.required:after {
           justify-content: left;
 }
 
-#accountSettings #delete-account2 .buttons .border-btn,
-#accountSettings #delete-class2 .buttons .border-btn,
+#account-settings #delete-account2 .buttons .border-btn,
+#account-settings #delete-class2 .buttons .border-btn,
 #manage #delete-account2 .buttons .border-btn,
 #manage #delete-class2 .buttons .border-btn {
   width: -webkit-fit-content;
@@ -2640,19 +2640,19 @@ label.required:after {
   margin: 0.6rem 0;
 }
 
-#accountSettings #delete-account2 .buttons .border-btn:not(:last-child),
-#accountSettings #delete-class2 .buttons .border-btn:not(:last-child),
+#account-settings #delete-account2 .buttons .border-btn:not(:last-child),
+#account-settings #delete-class2 .buttons .border-btn:not(:last-child),
 #manage #delete-account2 .buttons .border-btn:not(:last-child),
 #manage #delete-class2 .buttons .border-btn:not(:last-child) {
   margin-right: 0.6rem;
 }
 
-#accountSettings #account-settings-wrapper {
+#account-settings #account-settings-wrapper {
   margin: auto;
 }
 
 @media screen and (min-width: 960px) {
-  #accountSettings #account-settings-wrapper {
+  #account-settings #account-settings-wrapper {
     max-width: 1100px;
     display: -ms-grid;
     display: grid;
@@ -2662,7 +2662,7 @@ label.required:after {
   }
 }
 
-#accountSettings .user-image-section {
+#account-settings .user-image-section {
   padding: 0.6rem;
   margin: 0 auto;
   width: 90%;
@@ -2670,23 +2670,23 @@ label.required:after {
 }
 
 @media screen and (min-width: 960px) {
-  #accountSettings .user-image-section {
+  #account-settings .user-image-section {
     width: 100%;
     max-width: auto;
   }
 }
 
-#accountSettings .user-image-section > div {
+#account-settings .user-image-section > div {
   text-align: center;
   margin: 0.6rem auto;
   font-size: 1.2rem;
 }
 
-#accountSettings .user-image-section > div > span {
+#account-settings .user-image-section > div > span {
   font-weight: bold;
 }
 
-#accountSettings .delete-account-section {
+#account-settings .delete-account-section {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
