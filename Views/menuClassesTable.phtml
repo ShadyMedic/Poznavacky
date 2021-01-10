@@ -42,9 +42,9 @@
 		</li>
 		<li id="request-class-wrapper">
 			<h5>Vytvořte novou třídu</h5>
-			<span>Vyplňte krátký formulář pro tvorbu třídy:</span>
-			<button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
-			<form method="POST" id="request-class-form" style="display: none">
+			<span <?php if ($displayNewClassForm) : ?>style="display: none"<?php endif ?>>Vyplňte krátký formulář pro tvorbu třídy:</span>
+			<button id="request-class-button" class='btn border-btn non-transparent black' <?php if ($displayNewClassForm) : ?>style="display: none"<?php endif ?>>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
+			<form method="POST" id="request-class-form" <?php if (!$displayNewClassForm) : ?>style="display: none"<?php endif ?>>
 				<label for="new-class-form-name">Požadovaný název třídy</label>
 				<input id='new-class-form-name' class="text-field" name="className" type=text maxlength=31 value="<?= @$classNameValue ?>" />
 				<?php if (!$specifiedEmail) : ?>

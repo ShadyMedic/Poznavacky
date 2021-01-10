@@ -59,7 +59,11 @@ class MenuTableContentController extends Controller
             $this->data['emailValue'] = @$_POST['email'];
             $this->data['classNameValue'] = @$_POST['className'];
             $this->data['textValue'] = @$_POST['text'];
+
+            $this->data['displayNewClassForm'] = true;
         }
+        else { $this->data['displayNewClassForm'] = false; }
+
         $antispamGenerator = new NumberAsWordCaptcha();
         $antispamGenerator->generate();
         $this->data['antispamCode'] = $antispamGenerator->question;
