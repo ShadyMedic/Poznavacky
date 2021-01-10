@@ -1730,32 +1730,18 @@ label.required:after {
   background: #eee;
 }
 
-@media screen and (min-width: 360px) {
-  #learn #learn-wrapper,
-  #learn #test-wrapper,
-  #learn #add-pictures-form-wrapper,
-  #test #learn-wrapper,
-  #test #test-wrapper,
-  #test #add-pictures-form-wrapper,
-  #addPictures #learn-wrapper,
-  #addPictures #test-wrapper,
-  #addPictures #add-pictures-form-wrapper {
-    width: 80%;
-  }
-}
-
-@media screen and (min-width: 576px) {
-  #learn #learn-wrapper,
-  #learn #test-wrapper,
-  #learn #add-pictures-form-wrapper,
-  #test #learn-wrapper,
-  #test #test-wrapper,
-  #test #add-pictures-form-wrapper,
-  #addPictures #learn-wrapper,
-  #addPictures #test-wrapper,
-  #addPictures #add-pictures-form-wrapper {
-    width: 64%;
-  }
+#learn #learn-wrapper,
+#learn #test-wrapper,
+#learn #add-pictures-form-wrapper,
+#test #learn-wrapper,
+#test #test-wrapper,
+#test #add-pictures-form-wrapper,
+#addPictures #learn-wrapper,
+#addPictures #test-wrapper,
+#addPictures #add-pictures-form-wrapper {
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
 }
 
 @media screen and (min-width: 672px) {
@@ -1768,7 +1754,6 @@ label.required:after {
   #addPictures #learn-wrapper,
   #addPictures #test-wrapper,
   #addPictures #add-pictures-form-wrapper {
-    width: 100%;
     display: -ms-grid;
     display: grid;
     -webkit-box-align: start;
