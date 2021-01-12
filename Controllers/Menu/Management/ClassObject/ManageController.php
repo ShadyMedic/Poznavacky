@@ -88,8 +88,6 @@ class ManageController extends Controller
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
             $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
             
-            $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
-            
             $this->view = 'inherit';
         }
         else
