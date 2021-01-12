@@ -90,7 +90,7 @@ class ManageController extends Controller
             
             $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
             
-            $this->view = 'manageAction';
+            $this->view = 'inherit';
         }
         else
         {
