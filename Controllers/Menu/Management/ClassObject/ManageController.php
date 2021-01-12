@@ -6,14 +6,14 @@ use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 
-/** 
+/**
  * Kontroler starající se o výpis stránky pro administraci třídy jejím správcům
  * @author Jan Štěch
  */
 class ManageController extends Controller
 {
     private $argumentsToPass = array();
-    
+
     /**
      * Metoda ověřující, zda má uživatel do správy třídy přístup (je její správce nebo administrátor systému) a nastavující hlavičku stránky a pohled
      * @see Controller::process()
@@ -31,10 +31,10 @@ class ManageController extends Controller
         {
             $this->redirect('error404');
         }
-        
+
         $class = $_SESSION['selection']['class'];
         $aChecker = new AccessChecker();
-        if (!($class->checkAdmin(UserManager::getId()) || $aChecker::checkSystemAdmin()))
+        if (!($class->checkAdmin(UserManager::getId()) || $aChecker->checkSystemAdmin()))
         {
             $this->redirect('error403');
         }
@@ -54,7 +54,7 @@ class ManageController extends Controller
             $manageArguments[] = $arg;
         }
         $argumentCount = count($manageArguments);
-        
+
         # if ($argumentCount === 0)
         # {
         #     //Vypisuje se obecná správa třídy
@@ -74,12 +74,12 @@ class ManageController extends Controller
                 $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/manage');
             }
         }
-        
+
         if (isset($this->controllerToCall))
         {
             //Kontroler je nastaven --> předat mu řízení
             $this->controllerToCall->process($this->argumentsToPass);
-            
+
             $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
             $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
             $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
@@ -87,9 +87,9 @@ class ManageController extends Controller
             $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
             $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
-            
+
             $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
-            
+
             $this->view = 'manageAction';
         }
         else
@@ -106,7 +106,7 @@ class ManageController extends Controller
             $this->data['className'] = $_SESSION['selection']['class']->getName();
             $this->data['classStatus'] = $_SESSION['selection']['class']->getStatus();
             $this->data['classCode'] = $_SESSION['selection']['class']->getCode();
-            
+
             $this->view = 'manage';
         }
     }
