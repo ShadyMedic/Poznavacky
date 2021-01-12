@@ -537,15 +537,18 @@ class ClassObject extends Folder
         }
         
         //Kontrola dostupnosti jména (konkrétně URL adresy)
+        $url = $this->generateUrl($newName);
         try
         {
-            $url = $this->generateUrl($newName);
             $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         }
-        catch (InvalidArgumentException $e)
+        catch (InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME, null, $e); }
+        //Kontrola, zda URL třídy není rezervované pro žádný kontroler
+        try
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME, null, $e);
+            $validator->checkForbiddenUrls($url, DataValidator::TYPE_CLASS_URL);
         }
+        catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_FORBIDDEN_URL, null, $e); }
         
         //Kontrola dat OK
         
