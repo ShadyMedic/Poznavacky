@@ -4,7 +4,7 @@
     	<div class="members-data-item">
             <span class='member-name'><?= $member['name'] ?></span>
             <div class="member-action">
-            	<button class='btn border-btn non-transparent black kick-user-button' onclick='kickUser(<?= $member["id"] ?>,"<?= $member["name"] ?>")'>Odebrat uživatele</button>
+            	<button class='btn border-btn non-transparent black kick-user-button' data-member-id="<?= $member["id"] ?>" data-member-name="<?= $member["name"] ?>">Odebrat uživatele</button>
             </div>
         </div>
         <?php endforeach ?>
