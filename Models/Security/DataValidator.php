@@ -53,8 +53,12 @@ class DataValidator
     public const GROUP_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';
     public const PART_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';  //Při změně je nutné změnit hodnoty i v souboru edit.js
     public const NATURAL_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-+/*%()\'\"';  //Při změně je nutné změnit hodnoty i v souboru edit.js
-    
+
     public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+    public const CLASS_RESERVED_URLS = array('account-settings', 'enter-class-code');
+    public const GROUP_RESERVED_URLS = array('leave', 'manage');
+    public const PART_RESERVED_URLS = array('reports', 'edit');
     
     /**
      * Metoda ověřující, zda se délka řetězce nachází mezi minimální a maximální hodnotou.
@@ -111,7 +115,7 @@ class DataValidator
      * @throws BadMethodCallException Pokud druhý argument neoznačuje položku, pro kterou je tato operace podporována nebo pokud není vyplněn poslední argument a je kontrolována unikátnost URL poznávačky nebo části
      * @return boolean TRUE, pokud se řetězec zatím v databázi nevyskytuje
      */
-    public function checkUniqueness($subject, int $stringType, object $parentFolder = null): bool
+    public function checkUniqueness(string $subject, int $stringType, object $parentFolder = null): bool
     {
         switch ($stringType)
         {
@@ -170,7 +174,34 @@ class DataValidator
         }
         return true;
     }
-    
+
+    /**
+     * Metoda ověřující, zda dané URL není shodné s URL používaným pro přístup k některému kontroleru
+     * @param string $subject URL třídy, poznávačky nebo části ke kontrole
+     * @param int $stringType Označení kontrolovaného řetězce (pro rozlišení výjimek a výber seznamu pravidel) - viz konstanty této třídy začínající na "TYPE_"
+     * @throws InvalidArgumentException Pokud je daná URL rezervovaná pro přístup k některému kontroleru
+     * @throws BadMethodCallException Pokud druhý argument neoznačuje položku, pro kterou je tato operace podporována
+     * @return bool TRUE, pokud je možné URL použít
+     */
+    public function checkForbiddenUrls(string $subject, int $stringType): bool
+    {
+        switch ($stringType)
+        {
+            case self::TYPE_CLASS_URL:
+                if (in_array($subject, self::CLASS_RESERVED_URLS)) { throw new InvalidArgumentException(null, $stringType); }
+                break;
+            case self::TYPE_GROUP_URL:
+                if (in_array($subject, self::GROUP_RESERVED_URLS)) { throw new InvalidArgumentException(null, $stringType); }
+                break;
+            case self::TYPE_PART_URL:
+                if (in_array($subject, self::PART_RESERVED_URLS)) { throw new InvalidArgumentException(null, $stringType); }
+                break;
+            default:
+                throw new BadMethodCallException('Invalid string type');
+        }
+        return true;
+    }
+
     /**
      * Metoda získávající ID uživatele přidruženého k e-mailové adrese
      * @param string $email E-mailová adresa, jejíhož vlastníka chceme najít
