@@ -65,7 +65,7 @@
     </div>
     <div id="parts-boxes-container">
         <?php foreach ($parts as $part) : ?>
-        <div class="part-box" style="border:1px solid black">
+        <div class="part-box">
             <button title="Odebrat část" class="remove-part actionButton">
                 <img src='images/cross.svg'/>
             </button>
@@ -82,8 +82,9 @@
                 </button>
             </div>
             <div class="part-name-url">V URL bude zobrazováno jako <?= $part->getUrl() ?></div>
-            <label>Přírodnina k přidání</label>
-            <input type="text" class="new-natural-name-input"/>
+            <label>Přírodnina k přidání
+				<input type="text" class="new-natural-name-input"/>
+			</label>
             <select class="new-natural-name-suggestions"></select><!-- TODO nahradit při stylování vhodnějším prvkem -->
             <button class="new-natural-button">↵</button>
             <ul class="naturals-in-part">
@@ -114,4 +115,55 @@
         <img src='images/plus.svg'/>
     </button>
     <button id="submit">Uložit</button>
+</div>
+
+
+<div id="part-box-template" style="display: none">
+	<div class="part-box">
+		<button title="Odebrat část" class="remove-part actionButton">
+			<img src='images/cross.svg'/>
+		</button>
+		<div class="part-name-box" style="display: none">
+			<b class="part-name"></b>
+			<button title="Přejmenovat část" class="rename-part actionButton">
+				<img src='images/pencil.svg'/>
+			</button>
+		</div>
+		<div class="part-name-input-box">
+			<input type="text" maxlength="31" class="part-name-input" value=""/>
+			<button class="rename-part-confirm actionButton">
+				<img src='images/tick.svg'/>
+			</button>
+		</div>
+		<!-- part-name-box a part-name-input-box zabalit?, editnout i nahoře + js -->
+		<div class="part-name-url">V URL bude zobrazováno jako </div>
+		<label>Přírodnina k přidání
+			<input type="text" class="new-natural-name-input"/>
+		</label>
+		<select class="new-natural-name-suggestions"></select><!-- TODO nahradit při stylování vhodnějším prvkem -->
+		<button class="new-natural-button">↵</button>
+		<ul class="naturals-in-part">
+		</ul>
+	</div>
+</div>
+
+
+<div id="natural-item-template">
+	<li>
+		<div class="natural-name-box">
+			<span class="natural-name"></span>
+			<button title="Přejmenovat" class="rename-natural actionButton" style="/*display:none;*/">
+				<img src='images/pencil.svg'/>
+			</button>
+			<button title="Odebrat" class="remove-natural actionButton">
+				<img src='images/cross.svg'/>
+			</button>
+		</div>
+		<div class="natural-name-input-box" style="display:none;">
+			<input type="text" maxlength="31" class="natural-name-input" value=""/>
+			<button class="rename-natural-confirm actionButton">
+				<img src='images/tick.svg'/>
+			</button>
+		</div>
+	</li>
 </div>
