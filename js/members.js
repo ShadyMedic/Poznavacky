@@ -1,5 +1,18 @@
 var deletedTableRow;    //Ukládá řádek tabulky členů, který je odstraňován
 
+//vše, co se děje po načtení stránky
+$(function() {
+
+	//event listenery tlačítek
+	$("#invite-user-button").click(function() {inviteFormShow()})
+	$("#invite-user-confirm-button").click(function() {inviteUser()})
+	$("#invite-user-cancel-button").click(function() {inviteFormHide()})
+})
+
+//vše, co se děje při změně velikosti okna
+$(window).resize(function() {
+})
+
 function kickUser(memberId, memberName)
 {
     if (!confirm("Opravdu chcete odebrat uživatele " + memberName + " ze třídy?"))
@@ -37,8 +50,8 @@ function kickUser(memberId, memberName)
 }
 function inviteFormShow()
 {
-    $("#inviteButton").hide();
-    $("#inviteForm").show();
+    $("#invite-user-button").hide();
+    $("#invite-user-form").show();
 }
 function inviteFormHide()
 {

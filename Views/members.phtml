@@ -1,21 +1,23 @@
-<h1>Členové třídy</h1>
-<div id='membersManagement'>
-	<table id='membersTable'>
+<div id='members-wrapper'>
+	<section class="members-data-section">
     	<?php foreach ($members as $member) : ?>
-    	<tr class='membersTableRow'>
-            <td class='membersTableCell'><?= $member['name'] ?></td>
-            <td class='membersTableCell'>
-            	<button class='actionButton' onclick='kickUser(<?= $member['id'] ?>,"<?= $member['name'] ?>")' title='Odstranit ze třídy'><img src='images/cross.svg'/></button>
-            </td>
-        </tr>
+    	<div class="members-data-item">
+            <span class='member-name'><?= $member['name'] ?></span>
+            <div class="member-action">
+            	<button class='btn border-btn non-transparent black kick-user-button' onclick='kickUser(<?= $member["id"] ?>,"<?= $member["name"] ?>")'>Odebrat uživatele</button>
+            </div>
+        </div>
         <?php endforeach ?>
-	</table>
-	
-    <button id='inviteButton' class='actionButton' onclick='inviteFormShow()' title='Pozvat nového člena'><img src='images/plus.svg'></button>
-    <div id='inviteForm' style="display:none;">
-        <div id='inviteUserInfo'>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</div>
-        <input id='inviteUserInput' placeholder='Jméno uživatele' type='text' maxlength=15>
-        <button onclick='inviteUser()' class='button'>Pozvat</button>
-        <button onclick='inviteFormHide()' class='button'>Zrušit</button>
-    </div>
+	</section>
+
+	<section class="invite-user-section">
+		<button id='invite-user-button' class="btn border-btn non-transparent black">Pozvat nového člena</button>
+		<div id='invite-user-form' style="display: none;">
+			<p>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</p>
+			<label for="invite-user-name">Jméno uživatele</label>
+			<input id='invite-user-name' type='text' maxlength=15>
+			<button class='btn border-btn non-transparent black' id="invite-user-confirm-button">Pozvat</button>
+			<button class='btn inline black' id="invite-user-cancel-button">Zrušit</button>
+		</div>
+	</section>
 </div>
