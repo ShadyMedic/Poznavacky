@@ -87,12 +87,22 @@ class NewClassRequester
         catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS, null, $e); }
         
         //Kontrola unikátnosti jména (konkrétně jeho URL reprezentace)
+        $url = Folder::generateUrl($name);
         try
         {
-            $url = Folder::generateUrl($name);
             $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         }
         catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e); }
+
+        //Kontrola, zda URL třídy není rezervované pro žádný kontroler
+        try
+        {
+            $validator->checkForbiddenUrls($url, DataValidator::TYPE_CLASS_URL);
+        }
+        catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL, null, $e); }
+
+        //Kontrola platnosti kódu
+        if (!$validator->validateClassCode($code)) { throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_CODE, null, null); }
         
         //Kontrola antispamu
         $captchaChecker = new NumberAsWordCaptcha();

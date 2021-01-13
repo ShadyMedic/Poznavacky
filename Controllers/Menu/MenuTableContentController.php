@@ -4,6 +4,7 @@ namespace Poznavacky\Controllers\Menu;
 use Poznavacky\Controllers\Controller;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\NewClassRequester;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\NumberAsWordCaptcha;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\MessageBox;
@@ -33,9 +34,19 @@ class MenuTableContentController extends Controller
         
         $this->data['table'] = $this->aquiredData;
 
+        $checker = new AccessChecker();
+        $this->data['demoVersion'] = $checker->checkDemoAccount();
+
         //Obsluha formuláře pro založení nové třídy
         if (!empty($_POST)) //Kontrola, zda právě nebyl formulář odeslán
         {
+            //Kontrola, zda se nejedná o demo účet
+            $aChecker = new AccessChecker();
+            if ($aChecker->checkDemoAccount())
+            {
+                $this->redirect('error403');
+            }
+            
             $requester = new NewClassRequester();
             try
             {

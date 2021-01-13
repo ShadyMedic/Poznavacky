@@ -56,6 +56,7 @@ class AccessDeniedException extends Exception
     const REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG = 'Název třídy nesmí být více než 31 znaků dlouhý';
     const REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS = 'Název třídy může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
     const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto nebo velmi podobným názvem již existuje';
+    const REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL = 'Tento název třídy nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
     const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód třídy nemá platný formát - musí to být čtyři číslice';
     const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';
     const REASON_NAME_CHANGE_NO_NAME = self::REASON_REGISTER_NO_NAME;
@@ -91,14 +92,17 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_NAME_CHANGE_NAME_TOO_SHORT = self::REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT;
     const REASON_MANAGEMENT_NAME_CHANGE_INVALID_CHARACTERS = self::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS;
     const REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME = self::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME;
+    const REASON_MANAGEMENT_NAME_CHANGE_FORBIDDEN_URL = self::REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL;
     const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_CODE = self::REASON_NEW_CLASS_REQUEST_INVALID_CODE;
     const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_STATUS = 'Zvolený status není platný';
     const REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER = 'Uživatel nebyl nalezen';
     const REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS = 'Pozvánky do veřejné třídy nelze vytvářet';
+    const REASON_MANAGEMENT_INVITE_USER_DEMO_ACCOUNT = 'Do své třídy nemůžete pozvat demo účet';
     const REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER = 'Tento uživatel je již členem této třídy';
     const REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS = 'Z této třídy nelze odebrat žádného člena';
     const REASON_MANAGEMENT_KICK_USER_NOT_A_MEMBER = 'Tento uživatel není členem této třídy';
     const REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME = 'Poznávačka s tímto nebo velmi podobným názvem již ve vaší třídě existuje';
+    const REASON_MANAGEMENT_NEW_GROUP_FORBIDDEN_URL = 'Tento název poznávačky nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG = 'Název poznávačky nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT = 'Název poznávačky musí být alespoň 3 znaky dlouhý';
     const REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS = 'Název poznávačky může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
@@ -110,9 +114,11 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_LONG = self::REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG;
     const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_SHORT = self::REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT;
     const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_INVALID_CHARACTERS = self::REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS;
+    const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_FORBIDDEN_URL = self::REASON_MANAGEMENT_NEW_GROUP_FORBIDDEN_URL;
     const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_SHORT = 'Název části musí být alespoň 1 znak dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_LONG = 'Název části nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_INVALID_CHARACTERS = 'Název části může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
+    const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_FORBIDDEN_URL = 'Název jedné z částí nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
     const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_SHORT = 'Název přírodniny musí být alespoň 1 znak dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_LONG = 'Název přírodniny nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_INVALID_CHARACTERS = 'Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky . _ - + / * % ( ) \' \"';

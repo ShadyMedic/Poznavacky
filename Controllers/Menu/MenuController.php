@@ -110,7 +110,7 @@ class MenuController extends Controller
                     }
                     
                     //Kontrola, zda má uživatel do třídy přístup
-                    if (!$_SESSION['selection']['class']->checkAccess(UserManager::getId()))
+                    if (!($_SESSION['selection']['class']->checkAccess(UserManager::getId()) || $aChecker->checkSystemAdmin()))
                     {
                         $this->unsetSelection(true, true, true);    //Vymaž právě nastavenou třídu ze $_SESSION
                         $this->redirect('error403');
@@ -270,6 +270,7 @@ class MenuController extends Controller
         
         $this->data['loggedUserName'] = UserManager::getName();
         $this->data['adminLogged'] = $aChecker->checkSystemAdmin();
+        $this->data['demoVersion'] = $aChecker->checkDemoAccount();
         
         $this->view = 'menu';
     }

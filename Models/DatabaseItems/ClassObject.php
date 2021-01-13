@@ -325,8 +325,9 @@ class ClassObject extends Folder
     /**
      * Metoda vytvářející pozvánku do této třídy pro určitého uživatele
      * Pokud byl již uživatel do této třídy pozván, je prodloužena životnost existující pozvánky
+     * Pokud pozvaný uživatel představuje demo účet, není jeho pozvání do třídy možné
      * @param int $userName Jméno uživatele, pro kterého je pozvánka určena
-     * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem neexistuje nebo je již členem této třídy
+     * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem představuje demo účet, neexistuje nebo je již členem této třídy
      * @return boolean TRUE, pokud je pozvánka úspěšně vytvořena
      */
     public function inviteUser(string $userName): bool
@@ -347,14 +348,20 @@ class ClassObject extends Folder
         }
         $user = new User(false, $result[User::COLUMN_DICTIONARY['id']]);
         $user->initialize($result[User::COLUMN_DICTIONARY['name']], $result[User::COLUMN_DICTIONARY['email']], new DateTime($result[User::COLUMN_DICTIONARY['lastLogin']]), $result[User::COLUMN_DICTIONARY['addedPictures']], $result[User::COLUMN_DICTIONARY['guessedPictures']], $result[User::COLUMN_DICTIONARY['karma']], $result[User::COLUMN_DICTIONARY['status']]);
-        
+
         //Zkontroluj, zda uživatel již není členem třídy
         for ($i = 0; $i < count($this->members) && $user->getId() !== $this->members[$i]->getId(); $i++){}
         if ($i !== count($this->members))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER);
         }
-        
+
+        //Zkontroluj, zda uživatel nepředstavuje demo účet
+        if ($user['status'] === User::STATUS_GUEST)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_DEMO_ACCOUNT);
+        }
+
         //Ověř, zda již taková pozvánka v databázi neexistuje
         $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($user->getId(), $this->id));
         if (empty($result))
@@ -467,6 +474,7 @@ class ClassObject extends Folder
 
     /**
      * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
+     * Pokud přihlášený uživatel využívá demo účet, je přístup povolen pouze v případě, že je tato třída uzamčená
      * @param int $userId ID ověřovaného uživatele
      * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
      * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
@@ -479,8 +487,18 @@ class ClassObject extends Folder
         }
         
         $this->loadIfNotLoaded($this->id);
-        
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "public" OR '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+
+        $checker = new AccessChecker();
+        if ($checker->checkDemoAccount())
+        {
+            //Pokud není tato třída uzamčená, neposkytni přístup
+            $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "locked" AND '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        }
+        else
+        {
+            $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "public" OR '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        }
+
         $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
         return ($result['cnt'] === 1) ? true : false;
     }
@@ -537,15 +555,18 @@ class ClassObject extends Folder
         }
         
         //Kontrola dostupnosti jména (konkrétně URL adresy)
+        $url = $this->generateUrl($newName);
         try
         {
-            $url = $this->generateUrl($newName);
             $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         }
-        catch (InvalidArgumentException $e)
+        catch (InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME, null, $e); }
+        //Kontrola, zda URL třídy není rezervované pro žádný kontroler
+        try
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME, null, $e);
+            $validator->checkForbiddenUrls($url, DataValidator::TYPE_CLASS_URL);
         }
+        catch(InvalidArgumentException $e) { throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_FORBIDDEN_URL, null, $e); }
         
         //Kontrola dat OK
         

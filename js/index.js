@@ -3,7 +3,7 @@
 /* Funkce upravující viditelný obsah stránky */
 
 //zpracování eventů
-$(function() { 
+$(function() {
 	//zobrazení cookies alertu
 	setTimeout(() => {
 		$("#cookies-alert").addClass("show");
@@ -13,7 +13,8 @@ $(function() {
 	$("#hide-login-section-button").click(function(){hideLoginSection()})
 	$("#hide-cookies-alert-button").click(function(){hideCookiesAlert()})
 	$(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event){showLoginSection(event)});
-	
+    $("#demo-button").click(function(){demoLogin()})
+
 	//event listener kliknutí myši
 	$(document).mouseup(function(e) {mouseUpChecker(e)})
 
@@ -155,7 +156,7 @@ function showLoginSection(e) {
 	if(!$("#index-login-section").hasClass("show")) {
 		$("#index-login-section").addClass("show");
 		$(".overlay").addClass("show");
-		$("body").css("overflowY", "hidden");	
+		$("body").css("overflowY", "hidden");
 	}
 	if ($(e.target).hasClass("show-login-section-login-button"))
 		showLoginDiv('login');
@@ -182,6 +183,14 @@ function hideLoginSection() {
 	emptyForms(".user-data input.text-field, .message");
 }
 
+//přihlášení pod demo účtem (kliknutí na tlačítko "Vyzkoušet demo")
+function demoLogin() {
+    $("#login-name").val("Demo");
+    $("#login-pass").val("6F{1NPL#/p[O-y25JkKeOp2N7MLN@p}"); 
+    $("#login-persist").prop("checked", false);
+    $("#login-form").submit();
+}
+
 //vymaže obsah textových polí ve formuláři
 function emptyForms(fields) {
 	var formTextFields = [];
@@ -195,7 +204,7 @@ function mouseUpChecker(e) {
 	var container = $("#index-login-section");
 	var cookiesAlert = $("#cookies-alert");
 
-	if (!container.is(e.target) && !cookiesAlert.is(e.target) && container.has(e.target).length === 0 && cookiesAlert.has(e.target).length === 0) 
+	if (!container.is(e.target) && !cookiesAlert.is(e.target) && container.has(e.target).length === 0 && cookiesAlert.has(e.target).length === 0)
 	{
 		hideLoginSection();
 	}
@@ -241,7 +250,7 @@ function isStringUnique(string, isName, inputElement, shouldBeUnique)
 function formSubmitted(event)
 {
 	event.preventDefault();
-	
+
 	var formId = event.target.id;
 	var type = $("#"+formId).find('*').filter(':input:first').val();	//Hodnota prvního <input> prvku (identifikátor formuláře)
 	var name = "";
@@ -271,7 +280,7 @@ function formSubmitted(event)
 		default:
 			return;
 	}
-	
+
 	//Odeslání dat
 	$.post("index-forms",
 		{

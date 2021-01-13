@@ -3,6 +3,7 @@ namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\Controller;
 use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\ClassManager;
 use Poznavacky\Models\Statics\UserManager;
@@ -20,6 +21,13 @@ class EnterClassCodeController extends Controller
      */
     public function process(array $parameters): void
     {
+        //Kontrola, zda se nejedná o demo účet
+        $aChecker = new AccessChecker();
+        if ($aChecker->checkDemoAccount())
+        {
+            $this->redirect('error403');
+        }
+
         if (!isset($_POST) || !isset($_POST['code']))
         {
             //Chybně vyplněný formulář

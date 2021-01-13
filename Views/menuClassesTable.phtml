@@ -20,18 +20,21 @@
 					</a>-->
 					<span><?= $tableRow[1] ?></span>
 				</span>
-				<?php if ($tableRow[2] === 'admin') : ?>
-				<a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" class="btn inline black col3">Správa třídy</a>
-				<?php endif ?>
-				<?php if ($tableRow[2] === 'leave') : ?>
-				<a href="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn inline black col3">Opustit třídu</a>
-				<?php endif ?>
-				<?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
-				<?= $tableRow[2] ?>
-				<?php endif ?>
+                <?php if (!$demoVersion): ?>
+                    <?php if ($tableRow[2] === 'admin') : ?>
+                    <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" class="btn inline black col3">Správa třídy</a>
+                    <?php endif ?>
+                    <?php if ($tableRow[2] === 'leave') : ?>
+                    <a href="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn inline black col3">Opustit třídu</a>
+                    <?php endif ?>
+                    <?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
+                    <?= $tableRow[2] ?>
+                    <?php endif ?>
+                <?php endif ?>
 			</li></button>
-			
-		<?php endforeach; ?>
+		<?php endforeach ?>
+
+        <?php if (!$demoVersion): ?>
 		<li id="enter-code-wrapper">
 			<h5>Připojte se pomocí kódu</h5>
 			<span>Zadejte kód soukromé třídy, do které chcete vstoupit:</span>
@@ -59,5 +62,6 @@
 				<button id="request-class-cancel-button" class="btn inline black">Zrušit</button>
 			</form>
 		</li>
+        <?php endif ?>
 	</ul>
 </div>
