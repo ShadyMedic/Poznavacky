@@ -37,13 +37,21 @@ class AccessChecker
     }
     
     /**
-     * 
      * Metoda kontrolující, zda je přihlášený uživatel systémovým správcem
      * @return boolean TRUE, pokud je daný uživatelem systémovým správcem, FALSE, pokud ne
      */
     public function checkSystemAdmin(): bool
     {
         return (UserManager::getOtherInformation()['status'] === User::STATUS_ADMIN) ? true : false;
+    }
+
+    /**
+     * Metoda kontrolující, zda používá přihlášený uživatel demo účet
+     * @return bool TRUE, pokud se jedná o demo účet, FALSE, pokud ne
+     */
+    public function checkDemoAccount(): bool
+    {
+        return (UserManager::getOtherInformation()['status'] === User::STATUS_GUEST) ? true : false;
     }
 }
 
