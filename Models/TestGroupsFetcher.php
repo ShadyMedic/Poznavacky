@@ -4,6 +4,7 @@ namespace Poznavacky\Models;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\Exceptions\NoDataException;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
 
@@ -24,7 +25,17 @@ class TestGroupsFetcher
     public function getClasses(): array
     {
         //Získej data
-        $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        $chekcer = new AccessChecker();
+        if ($chekcer->checkDemoAccount())
+        {
+            //Nezahrnuj jiné než uzamčené třídy
+            $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "locked" AND '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        }
+        else
+        {
+            $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+        }
+
         if (!$classes)
         {
             throw new NoDataException(NoDataException::NO_CLASSES, null, null);
