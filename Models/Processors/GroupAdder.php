@@ -18,7 +18,7 @@ class GroupAdder
     private const DEFAULT_PART_NAME = "Hlavní část";
 
     private $class;
-    
+
     /**
      * Konstruktor nastavující objekt třídy, do které bude objekt přidávat poznávačky
      * @param ClassObject $class Objekt třídy
@@ -27,7 +27,7 @@ class GroupAdder
     {
         $this->class = $class;
     }
-    
+
     /**
      * Metoda zpracovávající data odeslaná z formuláře na stránce se správou třídy
      * Data jsou ověřena a posléze i uložena do databáze, nebo je vyvolána výjimka s chybovou hláškou
@@ -37,11 +37,11 @@ class GroupAdder
     public function processFormData(array $POSTdata): bool
     {
         $groupName = $POSTdata['testName'];
-        
+
         $this->checkData($groupName);       //Kontrola dat
         return $this->addGroup($groupName); //Ovlivnění databáze
     }
-    
+
     /**
      * Metoda ověřující, zda jsou poskytnutá data v pořádku
      * @param string $groupName Název přidávané poznávačky
@@ -50,7 +50,7 @@ class GroupAdder
      */
     public function checkData(string $groupName): bool
     {
-        //Kontrola, zda již poznávačka s tímto názvem ve třídě neexistuje
+        //Kontrola, zda již poznávačka s tímto URL ve třídě neexistuje
         $validator = new DataValidator();
         $url = Folder::generateUrl($groupName);
         try
@@ -61,8 +61,17 @@ class GroupAdder
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME, null, $e);
         }
-        
-        $validator = new DataValidator();
+
+        //Kontrola, zda URL poznávačky není rezervované pro žádný kontroler
+        try
+        {
+            $validator->checkForbiddenUrls($url, DataValidator::TYPE_GROUP_URL);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NEW_GROUP_FORBIDDEN_URL, null, $e);
+        }
+
         //Kontrola, zda není název příliš krátký nebo dlouhý nebo neobsahuje nepovolené znaky
         try
         {
@@ -78,7 +87,7 @@ class GroupAdder
         
         return true;
     }
-    
+
     /**
      * Metoda vkládající poznávačku do databáze a přidávající do ní první, prázdnou část
      * @param string $groupName Název pro novou poznávačku (musí být ověřen metodou GroupAdder::checkData())
