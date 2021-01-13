@@ -4,6 +4,7 @@ namespace Poznavacky\Controllers\Menu\NewClass;
 use Poznavacky\Controllers\Controller;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\NewClassRequester;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\NumberAsWordCaptcha;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\MessageBox;
@@ -20,6 +21,13 @@ class RequestNewClassController extends Controller
      */
     public function process(array $parameters): void
     {
+        //Kontrola, zda se nejedná o demo účet
+        $aChecker = new AccessChecker();
+        if ($aChecker->checkDemoAccount())
+        {
+            $this->redirect('error403');
+        }
+
         //Kontrola, zda právě nebyl formulář odeslán
         if (!empty($_POST))
         {
