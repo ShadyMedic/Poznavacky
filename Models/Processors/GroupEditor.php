@@ -205,6 +205,16 @@ class GroupEditor
                 throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_PART);
             }
             $partUrls[] = $partUrl;
+
+            //Zkontroluj, zda URL části není rezervované pro žádný kontroler
+            try
+            {
+                $validator->checkForbiddenUrls($partUrl, DataValidator::TYPE_PART_URL);
+            }
+            catch (InvalidArgumentException $e)
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_FORBIDDEN_URL, null, $e);
+            }
             
             $part = new Part(true);
             $part->initialize($partName, Folder::generateUrl($partData->name), $this->group, $naturals, count($naturals));

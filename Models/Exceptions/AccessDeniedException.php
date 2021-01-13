@@ -117,6 +117,7 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_SHORT = 'Název části musí být alespoň 1 znak dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_LONG = 'Název části nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_INVALID_CHARACTERS = 'Název části může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
+    const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_FORBIDDEN_URL = 'Název jedné z částí nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
     const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_SHORT = 'Název přírodniny musí být alespoň 1 znak dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_LONG = 'Název přírodniny nesmí být více než 31 znaků dlouhý';
     const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_INVALID_CHARACTERS = 'Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky . _ - + / * % ( ) \' \"';
