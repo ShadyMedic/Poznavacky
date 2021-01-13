@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu\Management\Account;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
@@ -17,6 +18,13 @@ class AccountSettingsController extends Controller
     */
     public function process(array $parameters): void
     {
+        //Kontrola, zda se nejedná o demo účet
+        $aChecker = new AccessChecker();
+        if ($aChecker->checkDemoAccount())
+        {
+            $this->redirect('error403');
+        }
+
         $this->data['userId'] = UserManager::getId();
         $this->data['userName'] = UserManager::getName();
         $this->data['userEmail'] = UserManager::getEmail();
