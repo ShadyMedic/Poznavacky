@@ -1,39 +1,16 @@
 <header>
-	<button class="btn hamburger-btn" id="show-full-panel-button"><img src="../images/hamburger.svg"></button>
+	<a class="btn icon" href="menu/account-settings"><img src="../images/user.svg" alt=""></a> 
+	<a class="btn icon" href="administrate"><img src="../images/settings.svg" alt=""></a> 
 	<div class="logo">
 		<img src=""> <!-- LOGO -->
 		<h1>Poznávačky</h1>
 	</div>
+	<a class="btn icon" href='logout'><img src="../images/logout.svg" alt=""></a>
 </header>
 <aside>
-	<nav id="aside-main-panel">
-		<button class="btn" id="show-aside-login-info-button"><img src="../images/user.svg" alt=""></button> <!--zobrazí info o uživateli-->
-		<button class="btn" id="show-aside-nav-button"><img src="../images/navigation.svg" alt=""></button> <!--zobrazí navigaci-->
-		<button class="btn" id="show-aside-settings-button"><img src="../images/settings.svg" alt=""></button> <!--zobrazí nastavení-->
-		<button class="btn cross" id="close-panel-button"><img src="../images/cross2.svg" alt=""></button>
-	</nav>
-	<div id="aside-additional-panel">
-		<div id="aside-login-info">
-			<span>Přihlášen: <?= $loggedUserName ?></span>
-			<?php if (!$demoVersion) : ?>
-            <a href="menu/account-settings" class="btn inline black">Nastavení účtu</a>
-			<?php endif ?>
-            <a href='logout' class="btn inline black">Odhlásit se</a>
-			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam eius fugiat error! Debitis itaque excepturi ratione eaque labore? Explicabo commodi maxime excepturi in praesentium porro quia quisquam provident, voluptatem molestias numquam modi aut consequatur fugiat veritatis aspernatur aliquid quibusdam totam sint quidem atque. Distinctio autem minima ducimus fugit ullam totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aspernatur hic perferendis ipsa voluptas cum quo amet modi ex natus odit, dignissimos sit nam consequuntur numquam. Atque incidunt quos alias corrupti asperiores quia placeat nisi esse adipisci nam numquam explicabo recusandae repudiandae expedita ipsam, officiis autem! Iusto sunt sint saepe?</p>
-		</div>
-		<nav id="aside-nav">
-			<?php if ($adminLogged) : ?>
-				<a href="administrate">Správa systému</a>
-			<?php endif ?>
-            <?php if (!$demoVersion) : ?>
-			<a href="menu/account-settings">Nastavení účtu</a>
-            <?php endif ?>
-			<?php require 'Views/navigation.phtml';?> <!-- RYCHLÁ NAVIGACE -->
-		</nav>
-		<div id="aside-settings">
-			<button id="change-folders-layout-button" class="btn transparent white border-btn">Přepnout zobrazení menu</button>
-		</div>
-	</div>
+	<?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings"><img src="../images/user.svg" alt=""></a><?php endif ?>
+	<?php if ($adminLogged) : ?><a class="btn icon" href="administrate"><img src="../images/settings.svg" alt=""></a><?php endif ?>
+	<a class="btn icon" href='logout'><img src="../images/logout.svg" alt=""></a>
 </aside>
 <main class="menu">
 	<h2>

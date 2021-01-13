@@ -1,12 +1,64 @@
+//vše, co se děje po načtení stránky
+$(function()
+{
+	//event listenery tlačítek
+	$("#change-name-button").click(function() {changeName()})
+	$("#change-name-confirm-button").click(function() {changeNameConfirm()})
+	$("#change-name-cancel-button").click(function() {changeNameCancel()})
+	$("#change-password-button").click(function() {changePassword()})
+	$("#change-password-confirm-button").click(function() {changePasswordConfirm()})
+	$("#change-password-cancel-button").click(function() {changePasswordCancel()})
+	$("#change-email-button").click(function() {changeEmail()})
+	$("#change-email-confirm-button").click(function() {changeEmailConfirm()})
+	$("#change-email-cancel-button").click(function() {changeEmailCancel()})
+	$("#delete-account-button").click(function() {deleteAccount()})
+	$("#delete-account-confirm-button").click(function() {deleteAccountVerify()})
+	$("#delete-account-final-confirm-button").click(function() {deleteAccountFinal()})
+	$("#delete-account-cancel-button, #delete-account-final-cancel-button").click(function() {deleteAccountCancel()})
+})
+
+//vše, co se děje při změně velikosti okna
+$(window).resize(function() {
+})
+
+function changeNameCancel() {
+	$("#change-name-button").show()
+	$("#change-name").closest(".user-data-item").find(".user-property-value").show();
+	$("#change-name").hide();
+	$("#change-name-new").val("");
+}
+
+function changePasswordCancel() {
+	$("#change-password-button").show()
+	$("#change-password").closest(".user-data-item").find(".user-property-value").show();
+	$("#change-password").hide();
+	$("#change-password-old").val("");
+	$("#change-password-new").val("");
+	$("#change-password-re-new").val("");
+}
+
+function changeEmailCancel() {
+	$("#change-email-button").show()
+	$("#change-email").closest(".user-data-item").find(".user-property-value").show();
+	$("#change-email").hide();
+	$("#change-email-password").val("");
+	$("#chabge-email-new").val("");
+}
+
 function changeName()
 {
 	$("#change-name-button").hide()
-	$("#change-name-input").show();
+	$("#change-name").closest(".user-data-item").find(".user-property-value").hide();
+	$("#change-name").show();
+	$("#change-name-new").focus();
+	changePasswordCancel();
+	changeEmailCancel();
+	deleteAccountCancel();
 }
 
-function confirmNameChange()
+function changeNameConfirm()
 {
-	var newName = $("#change-name-input-field").val();
+	var newName = $("#change-name-new").val();
 	newName = encodeURIComponent(newName);
 	
 	$.post("account-update",
@@ -22,8 +74,8 @@ function confirmNameChange()
 					if (messageType === "success")
 					{
 						//Reset HTML
-						$("#change-name-input-field").val("");
-						$("#change-name-input").hide();
+						$("#change-name-new").val("");
+						$("#change-name").hide();
 						$("#change-name-button").show();
 					}
 					
@@ -39,59 +91,20 @@ function confirmNameChange()
 
 function changePassword()
 {
-	$("#change-password-button").hide();
-	$("#change-password-input2").hide();
-	$("#change-password-input1").show();
+	$("#change-password-button").hide()
+	$("#change-password").closest(".user-data-item").find(".user-property-value").hide();
+	$("#change-password").show();
+	$("#change-password-old").focus();
+	changeNameCancel();
+	changeEmailCancel();
+	deleteAccountCancel();
 }
 
-function changePasswordVerify()
+function changePasswordConfirm()
 {
-	var password = $("#change-password-input-field-old").val();
-	
-	$.post("account-update",
-		{
-			action: "verify password",
-			password: password
-		},
-		function (response, status) { ajaxCallback(response, status, changePasswordStage2); },
-		"json"
-	);
-}
-
-function changePasswordStage2(messageType, message, data)
-{
-	if (data.verified === true)
-	{
-		displayChangePasswordStage2();
-	}
-	else
-	{
-		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		console.log("["+messageType+" - " + data.origin + "] " + message);
-		alert("["+messageType+" - " + data.origin + "] " + message);
-		
-		$("#change-password-input-field-old").val("");
-	}
-}
-
-function displayChangePasswordStage2()
-{
-	$("#change-password-input1").hide();
-	$("#change-password-input3").hide();
-	$("#change-password-input2").show();
-}
-
-function changePasswordStage3()
-{
-	$("#change-password-input2").hide();
-	$("#change-password-input3").show();
-}
-
-function confirmPasswordChange()
-{
-	var oldPass = $("#change-password-input-field-old").val();
-	var newPass = $("#change-password-input-field-new").val();
-	var rePass = $("#change-password-input-field-re-new").val();
+	var oldPass = $("#change-password-old").val();
+	var newPass = $("#change-password-new").val();
+	var rePass = $("#change-password-re-new").val();
 	
 	oldPass = encodeURIComponent(oldPass);
 	newPass = encodeURIComponent(newPass);
@@ -112,18 +125,13 @@ function confirmPasswordChange()
 					if (messageType === "success")
 					{
 						//Reset HTML
-						$("#change-password-input-field-old").val("");
-						$("#change-password-input-field-new").val("");
-						$("#change-password-input-field-re-new").val("");
-						$("#change-password-input3").hide();
-						$("#change-password-button").show();
+						changePasswordCancel();
 					}
 					else if (messageType === "error")
 					{
 						//Výmaz nového hesla a zobrazení pole pro nové heslo poprvé
-						$("#change-password-input-field-new").val("");
-						$("#change-password-input-field-re-new").val("");
-						displayChangePasswordStage2();
+						$("#change-password-new").val("");
+						$("#change-password-re-new").val("");
 					}
 					
 					evaluateResponse(messageType, message, data);
@@ -138,47 +146,19 @@ function confirmPasswordChange()
 
 function changeEmail()
 {
-	$("#change-email-button").hide();
-	$("#change-email-input2").hide();
-	$("#change-email-input1").show();
+	$("#change-email-button").hide()
+	$("#change-email").closest(".user-data-item").find(".user-property-value").hide();
+	$("#change-email").show();
+	$("#change-email-password").focus();
+	changeNameCancel();
+	changePasswordCancel();
+	deleteAccountCancel();
 }
 
-function changeEmailVerify()
+function changeEmailCOnfirm()
 {
-	var password = $("#change-email-password-input-field").val();
-	
-	$.post("account-update",
-		{
-			action: "verify password",
-			password: password
-		},
-		function (response, status) { ajaxCallback(response, status, changeEmailStage2); },
-		"json"
-	);
-}
-
-function changeEmailStage2(messageType, message, data)
-{
-	if (data.verified === true)
-	{
-		$("#change-email-button").hide();
-		$("#change-email-input1").hide();
-		$("#change-email-input2").show();
-	}
-	else
-	{
-		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		console.log("["+messageType+" - " + data.origin + "] " + message);
-		alert("["+messageType+" - " + data.origin + "] " + message);
-		
-		$("#change-email-password-input-field").val("");
-	}
-}
-
-function confirmEmailChange()
-{
-	var password = $("#change-email-password-input-field").val();
-	var newEmail = $("#change-email-input-field").val();
+	var password = $("#change-email-password").val();
+	var newEmail = $("#change-email-new").val();
 	
 	if (newEmail.length == 0)
 	{
@@ -187,7 +167,7 @@ function confirmEmailChange()
 	}
 	
 	newEmail = encodeURIComponent(newEmail);
-	var pass = $("#change-email-password-input-field").val();
+	var pass = $("#change-email-password").val();
 	
 	$.post("account-update",
 		{
@@ -204,11 +184,7 @@ function confirmEmailChange()
 						$("#email-address").text(decodeURIComponent(newEmail));
 						
 						//Reset HTML
-						$("#change-email-password-input-field").val("");
-						$("#change-email-input-field").val("");
-						$("#change-email-input1").hide();
-						$("#change-email-input2").hide();
-						$("#change-email-button").show();
+						changeEmailCancel();
 					}
 					evaluateResponse(messageType, message, data);
 				}
@@ -228,12 +204,20 @@ function updateEmail(newEmail)
 function deleteAccount()
 {
 	$("#delete-account-button").hide();
-	$("#delete-account-input1").show();
+	$("#delete-account").show();
+	$("#delete-account1").show();
+	$("#delete-account-password").focus();
+	document.querySelector("#delete-account").scrollIntoView({ 
+		behavior: 'smooth' 
+	});
+	changeNameCancel();
+	changePasswordCancel();
+	changeEmailCancel();
 }
 
 function deleteAccountVerify()
 {
-	var password = $("#delete-account-input-field").val();
+	var password = $("#delete-account-password").val();
 	
 	$.post("account-update",
 		{
@@ -249,8 +233,8 @@ function deleteAccountConfirm(messageType, message, data)
 {
 	if (data.verified === true)
 	{
-		$("#delete-account-input2").show();
-		$("#delete-account-input1").hide();
+		$("#delete-account2").show();
+		$("#delete-account1").hide();
 	}
 	else
 	{
@@ -258,13 +242,13 @@ function deleteAccountConfirm(messageType, message, data)
 		console.log("["+messageType+" - " + data.origin + "] " + message);
 		alert("["+messageType+" - " + data.origin + "] " + message);
 		
-		$("#delete-account-input-field").val("");
+		$("#delete-account-password").val("");
 	}
 }
 
 function deleteAccountFinal()
 {
-	var password = $("#delete-account-input-field").val();
+	var password = $("#delete-account-password").val();
 	
 	$.post("account-update",
 		{
@@ -292,9 +276,10 @@ function deleteAccountFinal()
 
 function deleteAccountCancel()
 {
-	$("#delete-account-input-field").val("");
+	$("#delete-account-password").val("");
 	$("#delete-account-button").show();
-	$("#delete-account-input2").hide();
+	$("#delete-account").hide();
+	$("#delete-account2").hide();
 }
 
 /**

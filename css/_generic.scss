@@ -270,6 +270,7 @@ h5 {
 		}
 	}
 	&.icon {
+		display: block;
 		img {
 			//filter: drop-shadow(0 0 6px rgba(black, 0.32));
 			transition: transform 0.2s ease-out;
@@ -309,6 +310,10 @@ textarea {
 			cursor: auto;
 		}
 	}
+}
+
+textarea {
+	resize: vertical;
 }
 
 label {

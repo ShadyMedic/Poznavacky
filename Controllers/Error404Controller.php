@@ -21,7 +21,7 @@ class Error404Controller extends Controller
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/error.css');
         $this->pageHeader['jsFiles'] = array();
-        $this->pageHeader['bodyId'] = 'error404';
+        $this->pageHeader['bodyId'] = 'error-404';
         
         $this->view = 'error404';
     }

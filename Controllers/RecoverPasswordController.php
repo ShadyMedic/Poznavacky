@@ -24,7 +24,7 @@ class RecoverPasswordController extends Controller
         $this->pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
-        $this->pageHeader['bodyId'] = 'recoverPassword';
+        $this->pageHeader['bodyId'] = 'recover-password';
         
         try
         {

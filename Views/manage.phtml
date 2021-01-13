@@ -1,54 +1,82 @@
-<h1>Správa třídy</h1>
-<table id="static_info">
-    <tr>
-        <td class='table_left'>ID třídy</td>
-        <td class='table_right' id="id"><?= $classId ?></td>
-        <td class='table_action'></td>
-    </tr>
-    <tr>
-        <td class='table_left'>Název třídy</td>
-        <td class='table_right' id="name"><?= $className ?></td>
-        <td class='table_action'>
-            <button id="changeNameButton" class="button" onclick="requestNameChange()">Vyžádat změnu</button>
-            <div id="changeNameInput" style="display:none;">
-                <input class="text" id="changeNameInputField" type=text placeholder="Nový název" maxlength=31 />
-                <button class="button" id="changeNameConfirm" onclick="confirmNameChange()">Potvrdit</button>
-                <button class="button" id="changeNameCancel" onclick="cancelNameChange()">Zrušit</button>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class='table_left'>Stav třídy</td>
-        <td class='table_right' id="status">
-            <select id="statusInput" onchange="statusChange()" class="text dropList">
-				<option value='Veřejná' <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>selected<?php endif ?> title='Do veřejných tříd mají přístup všichni přihlášení uživatelé.'>Veřejná</option>
-                <option value='Soukromá' <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>selected<?php endif ?> title='Do soukromých tříd mohou vstoupit pouze uživatelé, kteří alespoň jednou zadali platný vstupní kód.'>Soukromá</option>
-                <option value='Uzamčená' <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>selected<?php endif ?> title='Do uzamčených tříd nemohou vstoupit žádní uživatelé, kteří nedostali pozvánku.'>Uzamčená</option>
-            </select>
-        </td>
-        <td class='table_action'>
-        	<div id='statusCodeInput'>
-        		<span>Vstupní kód:</span>
-            	<input id='statusCodeInputField' type=number min=0 max=9999 maxlength=4 value="<?= $classCode ?>" style='width: 3.2rem;' class="text" oninput="statusChange()"/>
-            </div>
-            <button id="statusSaveButton" class="button" onclick="confirmStatusChange()">Aktualizovat</button>
-            <button id="statusCancelButton" class="button" onclick="cancelStatusChange()">Zrušit</button>
-        </td>
-    </tr>
-</table>
-
-<button id="membersManagementButton" onclick='window.location.href=window.location.href+"/members";'>Spravovat členy třídy</button>
-<button onclick='window.location.href=window.location.href+"/tests";'>Spravovat poznávačky</button>
-
-<button class="button" id="deleteClassButton" onclick="deleteClass()">Zrušit třídu</button>
-<div id="deleteClassInput1" style="display:none;">
-	<input class="text" id="deleteClassInputField" type=password placeholder="Zadejte své heslo" maxlength=31 />
-	<button class="button" id="deleteClassConfirm" onclick="deleteClassVerify()">OK</button>
+<div id="manage-wrapper">
+	<section class="class-data-section">
+		<div class="class-data-item">
+			<span class='class-property-name'>ID třídy</span>
+			<span class='class-property-value' id="id"><?= $classId ?></span>
+		</div>
+		<div class="class-data-item">
+			<span class='class-property-name'>Název třídy</span>
+			<span class='class-property-value' id="name"><?= $className ?></span>
+			<div class='class-property-action'>
+				<button id="change-class-name-button" class="btn border-btn non-transparent black">Změnit</button>
+			</div>
+			<div id="change-class-name" style="display: none;">
+				<h3>Změna názvu třídy</h3>
+				<p>Nový název třídy musí být nejprve schválen administrátorem. Jeho změna v systému proto může chvíli trvat.</p>
+				<label for="change-class-name-new">Nový název třídy</label>
+				<input class="text-field" id="change-class-name-new" type=text maxlength=31 />
+				<button class="btn border-btn non-transparent black" id="change-class-name-confirm-button">Potvrdit</button>
+				<button class="btn inline black" id="change-class-name-cancel-button">Zrušit</button>
+			</div>
+		</div>
+		<div class="class-data-item">
+			<span class='class-property-name'>Stav třídy</span>
+			<span class='class-property-value' id="status">
+				<?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>Veřejná<?php endif ?>
+				<?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>Soukromá (kód třídy: <?= $classCode ?>)<?php endif ?> 
+				<?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>Uzamčená<?php endif ?>
+			</span>
+			<div class='class-property-action'>
+				<button id="change-class-status-button" class="btn border-btn non-transparent black">Změnit</button>
+			</div>
+			<div id="change-class-status" style="display: none">
+				<h3>Změna stavu třídy</h3>
+				<label for="class-status-select">Status třídy</label>
+				<div class="custom-select-wrapper" id="class-status-select">
+					<div class="custom-select">
+						<div class="custom-select-main">
+							<span>
+								<?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>Veřejná<?php endif ?>
+								<?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>Soukromá<?php endif ?> 
+								<?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>Uzamčená<?php endif ?>
+							</span>
+							<img class="arrow" src="../images/arrowBlack.svg">
+						</div>
+						<ul class="custom-options">
+							<li class="custom-option <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>selected<?php endif ?>" title='Do veřejných tříd mají přístup všichni přihlášení uživatelé.'>Veřejná</li>
+							<li class="custom-option <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>selected<?php endif ?>" title='Do soukromých tříd mohou vstoupit pouze uživatelé, kteří alespoň jednou zadali platný vstupní kód.'>Soukromá</li>
+							<li class="custom-option <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>selected<?php endif ?>" title='Do uzamčených tříd nemohou vstoupit žádní uživatelé, kteří nedostali pozvánku.'>Uzamčená</li>
+						</ul>
+					</div>
+				</div>
+				<label for="change-class-status-code">Vstupní kód</label>
+				<input id='change-class-status-code' maxlength=4 value="<?= $classCode ?>" class="text-field"/>
+				<button id="change-class-status-confirm-button" class="btn border-btn non-transparent black">Aktualizovat</button>
+				<button id="change-class-status-cancel-button" class="btn inline black">Zrušit</button>
+			</div>
+		</div>
+	</section>
+	<section class="class-buttons-section">
+		<div id="manage-buttons">
+			<button class="btn border-btn non-transparent black" id="members-management-button" onclick='window.location.href=window.location.href+"/members";'>Spravovat členy třídy</button>
+			<button class="btn border-btn non-transparent black" onclick='window.location.href=window.location.href+"/tests";'>Spravovat poznávačky</button>
+		</div>
+		<button class="btn border-btn non-transparent black" id="delete-class-button">Zrušit třídu</button>
+		<div id="delete-class" style="display: none;">
+			<h3>Zrušení účtu</h3>
+			<div id="delete-class1" style="display: none;">
+				<label for="delete-class-password">Heslo</label>
+				<input class="text-field" id="delete-class-password" type=password maxlength=31 />
+				<button class="btn border-btn non-transparent black" id="delete-class-confirm-button">OK</button>
+				<button class="btn inline black" id="delete-class-cancel-button">Zrušit</button>
+			</div>
+			<div id="delete-class2" style="display: none;">
+				<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit tuto třídu, včetně všech poznávaček, přířodnin a obrázků, které do ní patří?</span>
+				<div class="buttons">
+					<button class="btn border-btn non-transparent black" id="delete-class-final-confirm-button">Ano, zrušit třídu</button>
+					<button class="btn border-btn non-transparent black" id="delete-class-final-cancel-button">Ne, zachovat třídu</button>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>
-<div id="deleteClassInput2" style="display:none;">
-	<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit tuto třídu, včetně všech poznávaček, přířodnin a obrázků, které do ní patří?</span><br>
-	<button class="button" id="deleteClassFinalConfirm" onclick="deleteClassFinal()">Ano, zrušit třídu</button>
-	<button class="button" id="deleteClassFinalCancel" onclick="deleteClassCancel()">Ne, zachovat třídu</button>
-</div>
-
-<a href="menu"><button class="button">Zpět</button></a>

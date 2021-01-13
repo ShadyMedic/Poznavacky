@@ -89,8 +89,8 @@ class ManageController extends Controller
             $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
 
             $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
-
-            $this->view = 'manageAction';
+            
+            $this->view = 'inherit';
         }
         else
         {
@@ -99,7 +99,7 @@ class ManageController extends Controller
             $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu třídy';
             $this->pageHeader['keywords'] = '';
             $this->pageHeader['cssFiles'] = array('css/css.css');
-            $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/manage.js');
+            $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/manage.js');
             $this->pageHeader['bodyId'] = 'manage';
 
             $this->data['classId'] = $_SESSION['selection']['class']->getId();

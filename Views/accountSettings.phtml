@@ -1,87 +1,96 @@
-<table id="static-info">
-	<tr>
-		<td class='table-left'>ID</td>
-		<td class='table-right'><?= $userId ?></td>
-		<td class='table-action'></td>
-	</tr>	
-	<tr>
-		<td class='table-left'>Jméno</td>
-		<td class='table-right' id="username"><?= $userName ?></td>
-		<td class='table-action'>
-			<button class="button" id="change-name-button" onclick="changeName()">Vyžádat změnu</button>
-			<div id="change-name-input" style="display:none;">
-				<input class="text" id="change-name-input-field" type=text placeholder="Nové jméno" maxlength=15 />
-				<button class="button" id="change-name-confirm" onclick="confirmNameChange()">Potvrdit</button>
+<div id="account-settings-wrapper">
+	<section class="user-image-section"> 
+		<img src="../images/user.svg">
+		<div>Přihlášen: <span><?= $userName ?></span></div>
+	</section>
+	<section class="user-data-section">	
+		<div class="user-data-item">
+			<span class='user-property-name'>ID</span>
+			<span class='user-property-value'><?= $userId ?></span>
+		</div>	
+		<div class="user-data-item">
+			<span class='user-property-name'>Jméno</span>
+			<span class='user-property-value' id="username"><?= $userName ?></span>
+			<div class='user-property-action'>
+				<button class="btn border-btn non-transparent black" id="change-name-button">Změnit</button>
 			</div>
-		</td>
-	</tr>
-	<tr>
-		<td class='table-left'>Heslo</td>
-		<td class='table-right'>[Skryto]</td>
-		<td class='table-action'>
-			<button class="button" id="change-password-button" onclick="changePassword()">Změnit</button>
-			<div id="change-password-input1" style="display:none;">
-				<input class="text" id="change-password-input-field-old" type=password placeholder="Staré heslo" maxlength=31 />
-				<button class="button" id="change-password-next1" onclick="changePasswordVerify()">Dále</button>
+			<div id="change-name" style="display: none;">
+				<h3>Žádost o změnu jména</h3>
+				<p>Vaše nové jméno musí být nejprve schváleno administrátorem. Jeho změna v systému proto může chvíli trvat.</p>
+				<label for="change-name-new">Nové jméno</label>
+				<input class="text-field" id="change-name-new" type=text maxlength=15 />
+				<button class="btn border-btn non-transparent black" id="change-name-confirm-button">Potvrdit</button>
+				<button class="btn inline black" id="change-name-cancel-button">Zrušit</button>
 			</div>
-			<div id="change-password-input2" style="display:none;">
-				<input class="text" id="change-password-input-field-new" type=password placeholder="Nové heslo" maxlength=31 />
-				<button class="button" id="change-password-next2" onclick="changePasswordStage3()">Dále</button>
-				<button class="button" id="change-password-back2" onclick="changePassword()">Zpět</button>
+		</div>
+		<div class="user-data-item">
+			<span class='user-property-name'>Heslo</span>
+			<span class='user-property-value'>[Skryto]</span>
+			<div class='user-property-action'>
+				<button class="btn border-btn non-transparent black" id="change-password-button">Změnit</button>
 			</div>
-			<div id="change-password-input3" style="display:none;">
-				<input class="text" id="change-password-input-field-re-new" type=password placeholder="Nové heslo znovu" maxlength=31 />
-				<button class="button" id="change-password-confirm" onclick="confirmPasswordChange()">Potvrdit</button>
-				<button class="button" id="change-password-back3" onclick="displayChangePasswordStage2()">Zpět</button>
+			<div id="change-password" style="display: none;">
+				<h3>Změna hesla</h3>
+				<label for="change-password-old">Staré heslo</label>
+				<input class="text-field" id="change-password-old" type=password maxlength=31 />
+				<label for="change-password-new">Nové heslo</label>
+				<input class="text-field" id="change-password-new" type=password maxlength=31 />
+				<label for="change-password-re-new">Nové heslo znovu</label>
+				<input class="text-field" id="change-password-re-new" type=password maxlength=31 />
+				<button class="btn border-btn non-transparent black" id="change-password-confirm-button">Potvrdit</button>
+				<button class="btn inline black" id="change-password-cancel-button">Zrušit</button>
 			</div>
-		</td>
-	</tr>
-	<tr>
-		<td class='table-left'>E-mail</td>
-		<td class='table-right' id="email-address"><?= $userEmail ?></td>
-		<td class='table-action'>
-			<button class="button" id="change-email-button" onclick="changeEmail()">Změnit</button>
-			<div id="change-email-input1" style="display:none;">
-				<input class="text" id="change-email-password-input-field" type=password placeholder="Heslo pro ověření" maxlength=31 />
-				<button class="button" id="change-email-next" onclick="changeEmailVerify()">Dále</button>
+		</div>
+		<div class="user-data-item">
+			<span class='user-property-name'>E-mail</span>
+			<span class='user-property-value' id="email-address"><?= $userEmail ?></span>
+			<div class='user-property-action'>
+				<button class="btn border-btn non-transparent black" id="change-email-button">Změnit</button>
 			</div>
-			<div id="change-email-input2" style="display:none;">
-				<input class="text" id="change-email-input-field" type=text placeholder="Nový e-mail" maxlength=255 />
-				<button class="button" id="change-email-confirm" onclick="confirmEmailChange()">Potvrdit</button>
-				<button class="button" id="change-email-back" onclick="changeEmail()">Zpět</button>
+			<div id="change-email" style="display: none;">
+				<h3>Změna emailu</h3>
+				<label for="change-email-password">Heslo</label>
+				<input class="text-field" id="change-email-password" type=password maxlength=31 />
+				<label for="change-email-new">Nový email</label>
+				<input class="text-field" id="change-email-new" type=text maxlength=255 />
+				<button class="btn border-btn non-transparent black" id="change-email-confirm-button">Potvrdit</button>
+				<button class="btn inline black" id="change-email-cancel-button">Zrušit</button>
 			</div>
-		</td>
-	</tr>
-	<tr>
-		<td class='table-left' title="Pro zvýšení přidávejte obrázky">Přidané obrázky</td>
-		<td class='table-right'><?= $addedPictures ?></td>
-		<td class='table-action'></td>
-	</tr>
-	<tr>
-		<td class='table-left' title="Pro zvýšení se nechejte testovat">Uhodnuté obrázky</td>
-		<td class='table-right'><?= $guessedPictures ?></td>
-		<td class='table-action'></td>
-	</tr>
-	<tr>
-		<td class='table-left' title="Karmu získáte za činnost vedoucí ke zlepšení služby">Karma</td>
-		<td class='table-right'><?= $karma ?></td>
-		<td class='table-action'></td>
-	</tr>
-	<tr>
-		<td class='table-left'>Status</td>
-		<td class='table-right'><?= $status ?></td>
-		<td class='table-action'></td>
-	</tr>
-</table>
-
-<button class="button" id="delete-account-button" onclick="deleteAccount()">Odstranit účet</button>
-<div id="delete-account-input1" style="display:none;">
-	<input class="text" id="delete-account-input-field" type=password placeholder="Zadejte své heslo" maxlength=31 />
-	<button class="button" id="delete-account-confirm" onclick="deleteAccountVerify()">OK</button>
+		</div>
+		<div class="user-data-item">
+			<span class='user-property-name' title="Pro zvýšení přidávejte obrázky">Přidané obrázky</span>
+			<span class='user-property-value'><?= $addedPictures ?></span>
+		</div>
+		<div class="user-data-item">
+			<span class='user-property-name' title="Pro zvýšení se nechejte testovat">Uhodnuté obrázky</span>
+			<span class='user-property-value'><?= $guessedPictures ?></span>
+		</div>
+		<div class="user-data-item">
+			<span class='user-property-name' title="Karmu získáte za činnost vedoucí ke zlepšení služby">Karma</span>
+			<span class='user-property-value'><?= $karma ?></span>
+		</div>
+		<div class="user-data-item">
+			<span class='user-property-name'>Status</span>
+			<span class='user-property-value'><?= $status ?></span>
+		</div>
+	</section>
+	<section class="delete-account-section">
+		<button class="btn border-btn non-transparent black" id="delete-account-button">Odstranit účet</button>
+		<div id="delete-account" style="display: none;">
+			<h3>Zrušení účtu</h3>
+			<div id="delete-account1" style="display: none;">
+				<label for="delete-account-password">Heslo</label>
+				<input class="text-field" id="delete-account-password" type=password maxlength=31 />
+				<button class="btn border-btn non-transparent black" id="delete-account-confirm-button">OK</button>
+				<button class="btn inline black" id="delete-account-cancel-button">Zrušit</button>
+			</div>
+			<div id="delete-account2" style="display: none;">
+				<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span>
+				<div class="buttons">
+					<button class="btn border-btn non-transparent black" id="delete-account-final-confirm-button">Ano, odstranit účet</button>
+					<button class="btn border-btn non-transparent black" id="delete-account-final-cancel-button">Ne, zrušit odstranění účtu</button>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>
-<div id="delete-account-input2" style="display:none;">
-	<span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span><br>
-	<button class="button" id="delete-account-final-confirm" onclick="deleteAccountFinal()">Ano, odstranit účet</button>
-	<button class="button" id="delete-account-final-cancel" onclick="deleteAccountCancel()">Ne, zrušit odstranění účtu</button>
-</div>
-<a href="menu"><button class="button">Zpět</button></a>

@@ -38,8 +38,8 @@ class AccountSettingsController extends Controller
         $this->pageHeader['description'] = 'Přizpůsobte si poznávačky podle svého gusta a podívejte se na své statistiky';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/accountSettings.js');
-        $this->pageHeader['bodyId'] = 'accountSettings';
+        $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/accountSettings.js');
+        $this->pageHeader['bodyId'] = 'account-settings';
         $this->data['navigationBar'] = array(
             0 => array(
                 'text' => $this->pageHeader['title'],

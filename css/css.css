@@ -393,6 +393,10 @@ h5 {
           transform: scale(0.88);
 }
 
+.btn.icon {
+  display: block;
+}
+
 .btn.icon img {
   -webkit-transition: -webkit-transform 0.2s ease-out;
   transition: -webkit-transform 0.2s ease-out;
@@ -438,6 +442,10 @@ textarea.text-field.disabled {
   background: #ddd;
   pointer-events: none;
   cursor: auto;
+}
+
+textarea {
+  resize: vertical;
 }
 
 label {
@@ -647,8 +655,13 @@ label.required:after {
 #menu,
 #learn,
 #test,
-#addPictures,
-#accountSettings {
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports {
   width: 100%;
   height: 100%;
   scrollbar-color: #444 #222;
@@ -661,8 +674,13 @@ label.required:after {
 #menu::-webkit-scrollbar,
 #learn::-webkit-scrollbar,
 #test::-webkit-scrollbar,
-#addPictures::-webkit-scrollbar,
-#accountSettings::-webkit-scrollbar {
+#add-pictures::-webkit-scrollbar,
+#account-settings::-webkit-scrollbar,
+#manage::-webkit-scrollbar,
+#members::-webkit-scrollbar,
+#tests::-webkit-scrollbar,
+#edit-group::-webkit-scrollbar,
+#resolve-reports::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
@@ -670,16 +688,26 @@ label.required:after {
 #menu::-webkit-scrollbar-thumb,
 #learn::-webkit-scrollbar-thumb,
 #test::-webkit-scrollbar-thumb,
-#addPictures::-webkit-scrollbar-thumb,
-#accountSettings::-webkit-scrollbar-thumb {
+#add-pictures::-webkit-scrollbar-thumb,
+#account-settings::-webkit-scrollbar-thumb,
+#manage::-webkit-scrollbar-thumb,
+#members::-webkit-scrollbar-thumb,
+#tests::-webkit-scrollbar-thumb,
+#edit-group::-webkit-scrollbar-thumb,
+#resolve-reports::-webkit-scrollbar-thumb {
   background: #444;
 }
 
 #menu::-webkit-scrollbar-track,
 #learn::-webkit-scrollbar-track,
 #test::-webkit-scrollbar-track,
-#addPictures::-webkit-scrollbar-track,
-#accountSettings::-webkit-scrollbar-track {
+#add-pictures::-webkit-scrollbar-track,
+#account-settings::-webkit-scrollbar-track,
+#manage::-webkit-scrollbar-track,
+#members::-webkit-scrollbar-track,
+#tests::-webkit-scrollbar-track,
+#edit-group::-webkit-scrollbar-track,
+#resolve-reports::-webkit-scrollbar-track {
   background: #222;
 }
 
@@ -687,8 +715,13 @@ label.required:after {
   #menu,
   #learn,
   #test,
-  #addPictures,
-  #accountSettings {
+  #add-pictures,
+  #account-settings,
+  #manage,
+  #members,
+  #tests,
+  #edit-group,
+  #resolve-reports {
     height: 100vh;
     overflow: hidden;
   }
@@ -697,8 +730,13 @@ label.required:after {
 #menu .container,
 #learn .container,
 #test .container,
-#addPictures .container,
-#accountSettings .container {
+#add-pictures .container,
+#account-settings .container,
+#manage .container,
+#members .container,
+#tests .container,
+#edit-group .container,
+#resolve-reports .container {
   position: relative;
   min-height: 100vh;
   height: 100%;
@@ -712,8 +750,13 @@ label.required:after {
   #menu .container,
   #learn .container,
   #test .container,
-  #addPictures .container,
-  #accountSettings .container {
+  #add-pictures .container,
+  #account-settings .container,
+  #manage .container,
+  #members .container,
+  #tests .container,
+  #edit-group .container,
+  #resolve-reports .container {
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
   }
@@ -722,38 +765,100 @@ label.required:after {
 #menu header,
 #learn header,
 #test header,
-#addPictures header,
-#accountSettings header {
+#add-pictures header,
+#account-settings header,
+#manage header,
+#members header,
+#tests header,
+#edit-group header,
+#resolve-reports header {
   position: fixed;
   width: 100%;
   top: 0;
+  padding: 0.2rem 0.6rem;
   z-index: 5;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto 1fr;
+      grid-template-columns: auto auto 1fr;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1/2;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: start;
-  /*@media screen and (min-width: $smallTablet) {
-			justify-content: space-between;
-		}*/
-  background: #479911;
+  background: #366e11;
+}
+
+#menu header .logo,
+#learn header .logo,
+#test header .logo,
+#add-pictures header .logo,
+#account-settings header .logo,
+#manage header .logo,
+#members header .logo,
+#tests header .logo,
+#edit-group header .logo,
+#resolve-reports header .logo {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  margin: 0.2rem 0.4rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu header .logo,
+  #learn header .logo,
+  #test header .logo,
+  #add-pictures header .logo,
+  #account-settings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #edit-group header .logo,
+  #resolve-reports header .logo {
+    margin: 0.2 0.6rem;
+  }
+}
+
+@media screen and (min-width: 360px) {
+  #menu header,
+  #learn header,
+  #test header,
+  #add-pictures header,
+  #account-settings header,
+  #manage header,
+  #members header,
+  #tests header,
+  #edit-group header,
+  #resolve-reports header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+  }
 }
 
 @media screen and (min-width: 672px) {
   #menu header,
   #learn header,
   #test header,
-  #addPictures header,
-  #accountSettings header {
+  #add-pictures header,
+  #account-settings header,
+  #manage header,
+  #members header,
+  #tests header,
+  #edit-group header,
+  #resolve-reports header {
     position: relative;
   }
 }
@@ -762,8 +867,13 @@ label.required:after {
   #menu header,
   #learn header,
   #test header,
-  #addPictures header,
-  #accountSettings header {
+  #add-pictures header,
+  #account-settings header,
+  #manage header,
+  #members header,
+  #tests header,
+  #edit-group header,
+  #resolve-reports header {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -773,29 +883,112 @@ label.required:after {
 #menu header > *,
 #learn header > *,
 #test header > *,
-#addPictures header > *,
-#accountSettings header > * {
-  margin: 0.2rem 16px;
-  /*@media screen and (min-width: $smallTablet) {
-				margin: 0.2rem 0.6rem;
-			}*/
+#add-pictures header > *,
+#account-settings header > *,
+#manage header > *,
+#members header > *,
+#tests header > *,
+#edit-group header > *,
+#resolve-reports header > * {
+  margin: 0.2rem 1rem;
 }
 
 @media screen and (min-width: 1200px) {
   #menu header > *,
   #learn header > *,
   #test header > *,
-  #addPictures header > *,
-  #accountSettings header > * {
+  #add-pictures header > *,
+  #account-settings header > *,
+  #manage header > *,
+  #members header > *,
+  #tests header > *,
+  #edit-group header > *,
+  #resolve-reports header > * {
     margin: 0.2rem 0.8rem;
   }
+}
+
+#menu header .btn.icon,
+#learn header .btn.icon,
+#test header .btn.icon,
+#add-pictures header .btn.icon,
+#account-settings header .btn.icon,
+#manage header .btn.icon,
+#members header .btn.icon,
+#tests header .btn.icon,
+#edit-group header .btn.icon,
+#resolve-reports header .btn.icon {
+  margin: 0.2rem 0.4rem;
+  height: 32px;
+  width: 32px;
+}
+
+@media screen and (min-width: 672px) {
+  #menu header .btn.icon,
+  #learn header .btn.icon,
+  #test header .btn.icon,
+  #add-pictures header .btn.icon,
+  #account-settings header .btn.icon,
+  #manage header .btn.icon,
+  #members header .btn.icon,
+  #tests header .btn.icon,
+  #edit-group header .btn.icon,
+  #resolve-reports header .btn.icon {
+    display: none;
+  }
+}
+
+#menu header .btn.icon > img,
+#learn header .btn.icon > img,
+#test header .btn.icon > img,
+#add-pictures header .btn.icon > img,
+#account-settings header .btn.icon > img,
+#manage header .btn.icon > img,
+#members header .btn.icon > img,
+#tests header .btn.icon > img,
+#edit-group header .btn.icon > img,
+#resolve-reports header .btn.icon > img {
+  height: 100%;
+  width: 100%;
+}
+
+#menu header .btn.icon:last-child,
+#learn header .btn.icon:last-child,
+#test header .btn.icon:last-child,
+#add-pictures header .btn.icon:last-child,
+#account-settings header .btn.icon:last-child,
+#manage header .btn.icon:last-child,
+#members header .btn.icon:last-child,
+#tests header .btn.icon:last-child,
+#edit-group header .btn.icon:last-child,
+#resolve-reports header .btn.icon:last-child {
+  margin-left: auto;
+}
+
+#menu header .btn.icon:active,
+#learn header .btn.icon:active,
+#test header .btn.icon:active,
+#add-pictures header .btn.icon:active,
+#account-settings header .btn.icon:active,
+#manage header .btn.icon:active,
+#members header .btn.icon:active,
+#tests header .btn.icon:active,
+#edit-group header .btn.icon:active,
+#resolve-reports header .btn.icon:active {
+  -webkit-transform: scale(0.88);
+          transform: scale(0.88);
 }
 
 #menu header .logo,
 #learn header .logo,
 #test header .logo,
-#addPictures header .logo,
-#accountSettings header .logo {
+#add-pictures header .logo,
+#account-settings header .logo,
+#manage header .logo,
+#members header .logo,
+#tests header .logo,
+#edit-group header .logo,
+#resolve-reports header .logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -805,8 +998,13 @@ label.required:after {
   #menu header .logo,
   #learn header .logo,
   #test header .logo,
-  #addPictures header .logo,
-  #accountSettings header .logo {
+  #add-pictures header .logo,
+  #account-settings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #edit-group header .logo,
+  #resolve-reports header .logo {
     margin: 0;
     padding: 0.2rem 0.8rem;
     width: 216px;
@@ -817,255 +1015,128 @@ label.required:after {
 #menu header .logo h1,
 #learn header .logo h1,
 #test header .logo h1,
-#addPictures header .logo h1,
-#accountSettings header .logo h1 {
+#add-pictures header .logo h1,
+#account-settings header .logo h1,
+#manage header .logo h1,
+#members header .logo h1,
+#tests header .logo h1,
+#edit-group header .logo h1,
+#resolve-reports header .logo h1 {
   font-size: 2rem;
   letter-spacing: -0.08em;
   color: white;
   margin: 0;
 }
 
-#menu header .hamburger-btn,
-#learn header .hamburger-btn,
-#test header .hamburger-btn,
-#addPictures header .hamburger-btn,
-#accountSettings header .hamburger-btn {
-  position: relative;
-  height: 32px;
-  width: 32px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-#menu header .hamburger-btn img,
-#learn header .hamburger-btn img,
-#test header .hamburger-btn img,
-#addPictures header .hamburger-btn img,
-#accountSettings header .hamburger-btn img {
-  width: 100%;
-  height: 100%;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-}
-
-@media screen and (min-width: 672px) {
-  #menu header .hamburger-btn,
-  #learn header .hamburger-btn,
-  #test header .hamburger-btn,
-  #addPictures header .hamburger-btn,
-  #accountSettings header .hamburger-btn {
-    display: none;
-  }
-}
-
 #menu aside,
 #learn aside,
 #test aside,
-#addPictures aside,
-#accountSettings aside {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+#add-pictures aside,
+#account-settings aside,
+#manage aside,
+#members aside,
+#tests aside,
+#edit-group aside,
+#resolve-reports aside {
+  display: none;
+  width: 64px;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 2;
+  grid-row: 2/4;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1/2;
   color: white;
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  transition: -webkit-transform 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
-}
-
-@media screen and (max-width: 672px) {
-  #menu aside,
-  #learn aside,
-  #test aside,
-  #addPictures aside,
-  #accountSettings aside {
-    position: fixed;
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-  }
+  background: #444;
 }
 
 @media screen and (min-width: 672px) {
   #menu aside,
   #learn aside,
   #test aside,
-  #addPictures aside,
-  #accountSettings aside {
-    -ms-grid-row: 2;
-    -ms-grid-row-span: 2;
-    grid-row: 2/4;
-    -ms-grid-column: 1;
-    -ms-grid-column-span: 1;
-    grid-column: 1/2;
+  #add-pictures aside,
+  #account-settings aside,
+  #manage aside,
+  #members aside,
+  #tests aside,
+  #edit-group aside,
+  #resolve-reports aside {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
 
-#menu aside.show,
-#learn aside.show,
-#test aside.show,
-#addPictures aside.show,
-#accountSettings aside.show {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-}
-
-#menu aside.show #aside-additional-panel,
-#learn aside.show #aside-additional-panel,
-#test aside.show #aside-additional-panel,
-#addPictures aside.show #aside-additional-panel,
-#accountSettings aside.show #aside-additional-panel {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-}
-
-#menu aside #aside-main-panel,
-#learn aside #aside-main-panel,
-#test aside #aside-main-panel,
-#addPictures aside #aside-main-panel,
-#accountSettings aside #aside-main-panel {
-  z-index: 3;
-  width: 64px;
-  min-width: 64px;
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  background: #444;
-}
-
-#menu aside #aside-main-panel .btn,
-#learn aside #aside-main-panel .btn,
-#test aside #aside-main-panel .btn,
-#addPictures aside #aside-main-panel .btn,
-#accountSettings aside #aside-main-panel .btn {
+#menu aside .btn.icon,
+#learn aside .btn.icon,
+#test aside .btn.icon,
+#add-pictures aside .btn.icon,
+#account-settings aside .btn.icon,
+#manage aside .btn.icon,
+#members aside .btn.icon,
+#tests aside .btn.icon,
+#edit-group aside .btn.icon,
+#resolve-reports aside .btn.icon {
   margin: 1rem auto;
   height: 32px;
   width: 32px;
 }
 
-#menu aside #aside-main-panel .btn > img,
-#learn aside #aside-main-panel .btn > img,
-#test aside #aside-main-panel .btn > img,
-#addPictures aside #aside-main-panel .btn > img,
-#accountSettings aside #aside-main-panel .btn > img {
+#menu aside .btn.icon > img,
+#learn aside .btn.icon > img,
+#test aside .btn.icon > img,
+#add-pictures aside .btn.icon > img,
+#account-settings aside .btn.icon > img,
+#manage aside .btn.icon > img,
+#members aside .btn.icon > img,
+#tests aside .btn.icon > img,
+#edit-group aside .btn.icon > img,
+#resolve-reports aside .btn.icon > img {
   height: 100%;
   width: 100%;
 }
 
-#menu aside #aside-main-panel .btn:active,
-#learn aside #aside-main-panel .btn:active,
-#test aside #aside-main-panel .btn:active,
-#addPictures aside #aside-main-panel .btn:active,
-#accountSettings aside #aside-main-panel .btn:active {
+#menu aside .btn.icon:last-child,
+#learn aside .btn.icon:last-child,
+#test aside .btn.icon:last-child,
+#add-pictures aside .btn.icon:last-child,
+#account-settings aside .btn.icon:last-child,
+#manage aside .btn.icon:last-child,
+#members aside .btn.icon:last-child,
+#tests aside .btn.icon:last-child,
+#edit-group aside .btn.icon:last-child,
+#resolve-reports aside .btn.icon:last-child {
+  margin-top: auto;
+}
+
+#menu aside .btn.icon:active,
+#learn aside .btn.icon:active,
+#test aside .btn.icon:active,
+#add-pictures aside .btn.icon:active,
+#account-settings aside .btn.icon:active,
+#manage aside .btn.icon:active,
+#members aside .btn.icon:active,
+#tests aside .btn.icon:active,
+#edit-group aside .btn.icon:active,
+#resolve-reports aside .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
-}
-
-#menu aside #aside-main-panel .btn.cross,
-#learn aside #aside-main-panel .btn.cross,
-#test aside #aside-main-panel .btn.cross,
-#addPictures aside #aside-main-panel .btn.cross,
-#accountSettings aside #aside-main-panel .btn.cross {
-  margin-top: auto;
-  display: none;
-}
-
-#menu aside #aside-main-panel .btn.cross.show,
-#learn aside #aside-main-panel .btn.cross.show,
-#test aside #aside-main-panel .btn.cross.show,
-#addPictures aside #aside-main-panel .btn.cross.show,
-#accountSettings aside #aside-main-panel .btn.cross.show {
-  display: block;
-}
-
-#menu aside #aside-additional-panel,
-#learn aside #aside-additional-panel,
-#test aside #aside-additional-panel,
-#addPictures aside #aside-additional-panel,
-#accountSettings aside #aside-additional-panel {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  transition: -webkit-transform 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
-  border-left: 1px solid #555;
-  padding: 0 1rem;
-  border-bottom: 1rem solid transparent;
-  border-top: 1rem solid transparent;
-  position: relative;
-  overflow: auto;
-  scrollbar-color: #222 #444;
-  scrollbar-width: auto;
-  background: #444;
-}
-
-#menu aside #aside-additional-panel::-webkit-scrollbar,
-#learn aside #aside-additional-panel::-webkit-scrollbar,
-#test aside #aside-additional-panel::-webkit-scrollbar,
-#addPictures aside #aside-additional-panel::-webkit-scrollbar,
-#accountSettings aside #aside-additional-panel::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-#menu aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#learn aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#test aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#addPictures aside #aside-additional-panel::-webkit-scrollbar-thumb,
-#accountSettings aside #aside-additional-panel::-webkit-scrollbar-thumb {
-  background: #222;
-}
-
-#menu aside #aside-additional-panel::-webkit-scrollbar-track,
-#learn aside #aside-additional-panel::-webkit-scrollbar-track,
-#test aside #aside-additional-panel::-webkit-scrollbar-track,
-#addPictures aside #aside-additional-panel::-webkit-scrollbar-track,
-#accountSettings aside #aside-additional-panel::-webkit-scrollbar-track {
-  background: #444;
-}
-
-@media screen and (min-width: 672px) {
-  #menu aside #aside-additional-panel,
-  #learn aside #aside-additional-panel,
-  #test aside #aside-additional-panel,
-  #addPictures aside #aside-additional-panel,
-  #accountSettings aside #aside-additional-panel {
-    width: 240px;
-  }
-}
-
-#menu aside #aside-additional-panel > *,
-#learn aside #aside-additional-panel > *,
-#test aside #aside-additional-panel > *,
-#addPictures aside #aside-additional-panel > *,
-#accountSettings aside #aside-additional-panel > * {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
 }
 
 #menu .wrapper,
 #learn .wrapper,
 #test .wrapper,
-#addPictures .wrapper,
-#accountSettings .wrapper {
+#add-pictures .wrapper,
+#account-settings .wrapper,
+#manage .wrapper,
+#members .wrapper,
+#tests .wrapper,
+#edit-group .wrapper,
+#resolve-reports .wrapper {
   padding: 1rem 1rem;
 }
 
@@ -1073,8 +1144,13 @@ label.required:after {
   #menu .wrapper,
   #learn .wrapper,
   #test .wrapper,
-  #addPictures .wrapper,
-  #accountSettings .wrapper {
+  #add-pictures .wrapper,
+  #account-settings .wrapper,
+  #manage .wrapper,
+  #members .wrapper,
+  #tests .wrapper,
+  #edit-group .wrapper,
+  #resolve-reports .wrapper {
     padding: 1.6rem 2rem;
   }
 }
@@ -1083,8 +1159,13 @@ label.required:after {
   #menu .wrapper,
   #learn .wrapper,
   #test .wrapper,
-  #addPictures .wrapper,
-  #accountSettings .wrapper {
+  #add-pictures .wrapper,
+  #account-settings .wrapper,
+  #manage .wrapper,
+  #members .wrapper,
+  #tests .wrapper,
+  #edit-group .wrapper,
+  #resolve-reports .wrapper {
     padding: 2.4rem 3rem;
   }
 }
@@ -1092,25 +1173,32 @@ label.required:after {
 #menu main,
 #learn main,
 #test main,
-#addPictures main,
-#accountSettings main {
+#add-pictures main,
+#account-settings main,
+#manage main,
+#members main,
+#tests main,
+#edit-group main,
+#resolve-reports main {
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
-  -webkit-transition: margin 0.2s ease-out;
-  transition: margin 0.2s ease-out;
 }
 
 @media screen and (min-width: 672px) {
   #menu main,
   #learn main,
   #test main,
-  #addPictures main,
-  #accountSettings main {
-    -ms-grid-column: 1;
-    -ms-grid-column-span: 2;
-    grid-column: 1/3;
-    margin-left: 64px;
+  #add-pictures main,
+  #account-settings main,
+  #manage main,
+  #members main,
+  #tests main,
+  #edit-group main,
+  #resolve-reports main {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
     overflow-y: auto;
     scrollbar-color: #444 #eee;
     scrollbar-width: auto;
@@ -1118,42 +1206,52 @@ label.required:after {
   #menu main::-webkit-scrollbar,
   #learn main::-webkit-scrollbar,
   #test main::-webkit-scrollbar,
-  #addPictures main::-webkit-scrollbar,
-  #accountSettings main::-webkit-scrollbar {
+  #add-pictures main::-webkit-scrollbar,
+  #account-settings main::-webkit-scrollbar,
+  #manage main::-webkit-scrollbar,
+  #members main::-webkit-scrollbar,
+  #tests main::-webkit-scrollbar,
+  #edit-group main::-webkit-scrollbar,
+  #resolve-reports main::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
   #menu main::-webkit-scrollbar-thumb,
   #learn main::-webkit-scrollbar-thumb,
   #test main::-webkit-scrollbar-thumb,
-  #addPictures main::-webkit-scrollbar-thumb,
-  #accountSettings main::-webkit-scrollbar-thumb {
+  #add-pictures main::-webkit-scrollbar-thumb,
+  #account-settings main::-webkit-scrollbar-thumb,
+  #manage main::-webkit-scrollbar-thumb,
+  #members main::-webkit-scrollbar-thumb,
+  #tests main::-webkit-scrollbar-thumb,
+  #edit-group main::-webkit-scrollbar-thumb,
+  #resolve-reports main::-webkit-scrollbar-thumb {
     background: #444;
   }
   #menu main::-webkit-scrollbar-track,
   #learn main::-webkit-scrollbar-track,
   #test main::-webkit-scrollbar-track,
-  #addPictures main::-webkit-scrollbar-track,
-  #accountSettings main::-webkit-scrollbar-track {
+  #add-pictures main::-webkit-scrollbar-track,
+  #account-settings main::-webkit-scrollbar-track,
+  #manage main::-webkit-scrollbar-track,
+  #members main::-webkit-scrollbar-track,
+  #tests main::-webkit-scrollbar-track,
+  #edit-group main::-webkit-scrollbar-track,
+  #resolve-reports main::-webkit-scrollbar-track {
     background: #eee;
-  }
-}
-
-@media screen and (max-width: 672px) {
-  #menu main *,
-  #learn main *,
-  #test main *,
-  #addPictures main *,
-  #accountSettings main * {
-    margin: auto;
   }
 }
 
 #menu footer,
 #learn footer,
 #test footer,
-#addPictures footer,
-#accountSettings footer {
+#add-pictures footer,
+#account-settings footer,
+#manage footer,
+#members footer,
+#tests footer,
+#edit-group footer,
+#resolve-reports footer {
   -ms-grid-row: 4;
   -ms-grid-row-span: 1;
   grid-row: 4/5;
@@ -1163,8 +1261,13 @@ label.required:after {
   #menu footer,
   #learn footer,
   #test footer,
-  #addPictures footer,
-  #accountSettings footer {
+  #add-pictures footer,
+  #account-settings footer,
+  #manage footer,
+  #members footer,
+  #tests footer,
+  #edit-group footer,
+  #resolve-reports footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -1174,18 +1277,58 @@ label.required:after {
 #menu h2,
 #learn h2,
 #test h2,
-#addPictures h2,
-#accountSettings h2 {
+#add-pictures h2,
+#account-settings h2,
+#manage h2,
+#members h2,
+#tests h2,
+#edit-group h2,
+#resolve-reports h2 {
   font-size: 1.2rem;
   font-weight: normal;
-  margin: 2rem 3rem 0 3rem;
+  margin: 1.2rem 1rem 0.4rem 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  #menu h2,
+  #learn h2,
+  #test h2,
+  #add-pictures h2,
+  #account-settings h2,
+  #manage h2,
+  #members h2,
+  #tests h2,
+  #edit-group h2,
+  #resolve-reports h2 {
+    margin: 1.6rem 2rem 0 2rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #menu h2,
+  #learn h2,
+  #test h2,
+  #add-pictures h2,
+  #account-settings h2,
+  #manage h2,
+  #members h2,
+  #tests h2,
+  #edit-group h2,
+  #resolve-reports h2 {
+    margin: 2rem 3rem 0 3rem;
+  }
 }
 
 #menu h2 span,
 #learn h2 span,
 #test h2 span,
-#addPictures h2 span,
-#accountSettings h2 span {
+#add-pictures h2 span,
+#account-settings h2 span,
+#manage h2 span,
+#members h2 span,
+#tests h2 span,
+#edit-group h2 span,
+#resolve-reports h2 span {
   font-weight: bold;
 }
 
@@ -1206,8 +1349,6 @@ label.required:after {
 }
 
 #menu .folders#menu-classes-table ul.rows li {
-  display: -ms-grid;
-  display: grid;
   -ms-grid-columns: 1fr 6rem 5rem;
       grid-template-columns: 1fr 6rem 5rem;
 }
@@ -1224,6 +1365,73 @@ label.required:after {
     -ms-grid-columns: 1fr 8rem 8rem;
         grid-template-columns: 1fr 8rem 8rem;
   }
+}
+
+#menu .folders#menu-classes-table ul.rows li#enter-code-wrapper, #menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0.6rem 0;
+  text-align: center;
+}
+
+#menu .folders#menu-classes-table ul.rows li#enter-code-wrapper > *, #menu .folders#menu-classes-table ul.rows li#request-class-wrapper > * {
+  margin: 0.2rem 0;
+}
+
+#menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
+  padding-bottom: 0.6rem;
+}
+
+#menu .folders#menu-classes-table ul.rows li#request-class-wrapper .btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0.2rem auto;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form > * {
+  margin: 0;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form .border-btn {
+  width: 100%;
+  margin: 0.6rem auto;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form label,
+#menu .folders#menu-classes-table ul.rows li #request-class-form input.text-field {
+  margin: 0.2rem 0;
+  text-align: left;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form label:not(:nth-of-type(1)) {
+  margin-top: 0.54rem;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form label > span {
+  font-weight: bold;
+}
+
+#menu .folders#menu-classes-table ul.rows li #request-class-form textarea {
+  max-height: 160px;
 }
 
 #menu .folders#menu-groups-table .table-title.rows {
@@ -1307,19 +1515,6 @@ label.required:after {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
-  font-size: 1rem;
-}
-
-@media screen and (min-width: 360px) {
-  #menu .folders#menu-parts-table ul.rows li .col1 {
-    font-size: 1.2rem;
-  }
-}
-
-@media screen and (min-width: 820px) {
-  #menu .folders#menu-parts-table ul.rows li .col1 {
-    font-size: 1.4rem;
-  }
 }
 
 #menu .folders#menu-parts-table ul.rows li .col2 {
@@ -1447,26 +1642,24 @@ label.required:after {
   padding: 0.4rem;
 }
 
+#menu .folders ul.rows .col1 {
+  font-size: 1rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders ul.rows .col1 {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  #menu .folders ul.rows .col1 {
+    font-size: 1.4rem;
+  }
+}
+
 #menu .folders ul.rows span.tiles {
   display: none;
-}
-
-#menu .folders ul.rows #enter-code-wrapper,
-#menu .folders ul.rows #request-class-wrapper {
-  margin: 0.6rem 0;
-  text-align: center;
-}
-
-#menu .folders ul.rows #enter-code-wrapper > *,
-#menu .folders ul.rows #request-class-wrapper > * {
-  margin: 0.2rem 0;
-}
-
-#menu .folders ul.rows #request-class-wrapper .btn {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 0.2rem auto;
 }
 
 #menu .folders ul.tiles {
@@ -1537,42 +1730,32 @@ label.required:after {
   background: #eee;
 }
 
-#learn #learn-wrapper:focus,
-#learn #test-wrapper:focus,
-#test #learn-wrapper:focus,
-#test #test-wrapper:focus {
-  outline: none;
-}
-
-@media screen and (min-width: 360px) and (max-width: 576px) {
-  #learn #learn-wrapper,
-  #learn #test-wrapper,
-  #test #learn-wrapper,
-  #test #test-wrapper {
-    width: 80%;
-  }
-}
-
-@media screen and (min-width: 576px) and (max-width: 672px) {
-  #learn #learn-wrapper,
-  #learn #test-wrapper,
-  #test #learn-wrapper,
-  #test #test-wrapper {
-    width: 64%;
-  }
+#learn #learn-wrapper,
+#learn #test-wrapper,
+#learn #add-pictures-form-wrapper,
+#test #learn-wrapper,
+#test #test-wrapper,
+#test #add-pictures-form-wrapper,
+#add-pictures #learn-wrapper,
+#add-pictures #test-wrapper,
+#add-pictures #add-pictures-form-wrapper {
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
 }
 
 @media screen and (min-width: 672px) {
   #learn #learn-wrapper,
   #learn #test-wrapper,
+  #learn #add-pictures-form-wrapper,
   #test #learn-wrapper,
-  #test #test-wrapper {
+  #test #test-wrapper,
+  #test #add-pictures-form-wrapper,
+  #add-pictures #learn-wrapper,
+  #add-pictures #test-wrapper,
+  #add-pictures #add-pictures-form-wrapper {
     display: -ms-grid;
     display: grid;
-    -webkit-column-gap: 20px;
-            column-gap: 20px;
-    -ms-grid-columns: auto 1fr;
-        grid-template-columns: auto 1fr;
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: start;
@@ -1584,11 +1767,43 @@ label.required:after {
 @media screen and (min-width: 960px) {
   #learn #learn-wrapper,
   #learn #test-wrapper,
+  #learn #add-pictures-form-wrapper,
+  #test #learn-wrapper,
+  #test #test-wrapper,
+  #test #add-pictures-form-wrapper,
+  #add-pictures #learn-wrapper,
+  #add-pictures #test-wrapper,
+  #add-pictures #add-pictures-form-wrapper {
+    max-width: 900px;
+  }
+}
+
+#learn #learn-wrapper:focus,
+#learn #test-wrapper:focus,
+#test #learn-wrapper:focus,
+#test #test-wrapper:focus {
+  outline: none;
+}
+
+@media screen and (min-width: 672px) {
+  #learn #learn-wrapper,
+  #learn #test-wrapper,
+  #test #learn-wrapper,
+  #test #test-wrapper {
+    -webkit-column-gap: 20px;
+            column-gap: 20px;
+    -ms-grid-columns: auto 1fr;
+        grid-template-columns: auto 1fr;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #learn #learn-wrapper,
+  #learn #test-wrapper,
   #test #learn-wrapper,
   #test #test-wrapper {
     -webkit-column-gap: 40px;
             column-gap: 40px;
-    max-width: 900px;
   }
 }
 
@@ -1893,46 +2108,26 @@ label.required:after {
   color: #a00;
 }
 
-@media screen and (min-width: 360px) and (max-width: 576px) {
-  #addPictures #add-pictures-form-wrapper {
-    width: 80%;
-  }
-}
-
-@media screen and (min-width: 576px) and (max-width: 672px) {
-  #addPictures #add-pictures-form-wrapper {
-    width: 64%;
-  }
-}
-
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper {
-    display: -ms-grid;
-    display: grid;
+  #add-pictures #add-pictures-form-wrapper {
     -webkit-column-gap: 32px;
             column-gap: 32px;
     -ms-grid-columns: 1fr auto;
         grid-template-columns: 1fr auto;
     -ms-grid-rows: auto auto auto auto;
         grid-template-rows: auto auto auto auto;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: start;
-    max-width: 700px;
-    margin: 0 auto;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #addPictures #add-pictures-form-wrapper {
+  #add-pictures #add-pictures-form-wrapper {
     -webkit-column-gap: 100px;
             column-gap: 100px;
-    max-width: 900px;
   }
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper #add-natural-select {
+  #add-pictures #add-pictures-form-wrapper #add-natural-select {
     -ms-grid-column: 1;
     -ms-grid-column-span: 1;
     grid-column: 1/2;
@@ -1942,7 +2137,7 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset {
+#add-pictures #add-pictures-form-wrapper .url-fieldset {
   margin: 0.6rem 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1954,7 +2149,7 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset {
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: auto 1fr auto;
@@ -1972,12 +2167,12 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset label {
+#add-pictures #add-pictures-form-wrapper .url-fieldset label {
   width: 100%;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset label {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset label {
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
     grid-row: 1/2;
@@ -1987,12 +2182,12 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset .text-field {
+#add-pictures #add-pictures-form-wrapper .url-fieldset .text-field {
   width: 100%;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset .text-field {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset .text-field {
     -ms-grid-row: 2;
     -ms-grid-row-span: 1;
     grid-row: 2/3;
@@ -2002,18 +2197,18 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .url-fieldset .btn {
+#add-pictures #add-pictures-form-wrapper .url-fieldset .btn {
   width: 100%;
 }
 
 @media screen and (max-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset .btn {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset .btn {
     margin-top: 0.6rem;
   }
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .url-fieldset .btn {
+  #add-pictures #add-pictures-form-wrapper .url-fieldset .btn {
     -ms-grid-row: 2;
     -ms-grid-row-span: 1;
     grid-row: 2/3;
@@ -2023,13 +2218,13 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset {
   margin: 8px 0;
   position: relative;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .preview-buttons-fieldset {
+  #add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset {
     -ms-grid-column: 1;
     -ms-grid-column-span: 1;
     grid-column: 1/2;
@@ -2046,23 +2241,23 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
   width: 100%;
   display: block;
   margin: 8px 0;
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
+  #add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn {
     margin: 0;
   }
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn:not(:last-child) {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn:not(:last-child) {
   margin-bottom: 8px;
 }
 
-#addPictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn > .logo {
+#add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn > .logo {
   height: 1em;
   width: 1em;
   display: inline-block;
@@ -2072,13 +2267,13 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .preview-buttons-fieldset #submit-button {
+  #add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset #submit-button {
     margin-top: auto;
   }
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .picture {
+  #add-pictures #add-pictures-form-wrapper .picture {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2/3;
@@ -2088,7 +2283,7 @@ label.required:after {
   }
 }
 
-#addPictures #add-pictures-form-wrapper .picture #preview-img {
+#add-pictures #add-pictures-form-wrapper .picture #preview-img {
   background: #f8f8f8;
   -o-object-fit: contain;
      object-fit: contain;
@@ -2098,20 +2293,452 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #addPictures #add-pictures-form-wrapper .picture #preview-img {
+  #add-pictures #add-pictures-form-wrapper .picture #preview-img {
     width: 240px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #addPictures #add-pictures-form-wrapper .picture #preview-img {
+  #add-pictures #add-pictures-form-wrapper .picture #preview-img {
     width: 280px;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #addPictures #add-pictures-form-wrapper .picture #preview-img {
+  #add-pictures #add-pictures-form-wrapper .picture #preview-img {
     width: 320px;
+  }
+}
+
+#account-settings .user-data-section .user-data-item,
+#account-settings .user-data-section .class-data-item,
+#account-settings .class-data-section .user-data-item,
+#account-settings .class-data-section .class-data-item,
+#manage .user-data-section .user-data-item,
+#manage .user-data-section .class-data-item,
+#manage .class-data-section .user-data-item,
+#manage .class-data-section .class-data-item {
+  margin: 0.6rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  -webkit-transition: height 0.2s ease-out;
+  transition: height 0.2s ease-out;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+}
+
+@media screen and (min-width: 672px) {
+  #account-settings .user-data-section .user-data-item,
+  #account-settings .user-data-section .class-data-item,
+  #account-settings .class-data-section .user-data-item,
+  #account-settings .class-data-section .class-data-item,
+  #manage .user-data-section .user-data-item,
+  #manage .user-data-section .class-data-item,
+  #manage .class-data-section .user-data-item,
+  #manage .class-data-section .class-data-item {
+    -ms-grid-columns: 10rem 13rem 1fr;
+        grid-template-columns: 10rem 13rem 1fr;
+    -ms-grid-rows: auto 1fr;
+        grid-template-rows: auto 1fr;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+#account-settings .user-data-section .user-data-item > span,
+#account-settings .user-data-section .class-data-item > span,
+#account-settings .class-data-section .user-data-item > span,
+#account-settings .class-data-section .class-data-item > span,
+#manage .user-data-section .user-data-item > span,
+#manage .user-data-section .class-data-item > span,
+#manage .class-data-section .user-data-item > span,
+#manage .class-data-section .class-data-item > span {
+  padding: calc(0.4em + 4px) 0;
+}
+
+#account-settings .user-data-section .user-data-item .user-property-action,
+#account-settings .user-data-section .user-data-item .class-property-action,
+#account-settings .user-data-section .class-data-item .user-property-action,
+#account-settings .user-data-section .class-data-item .class-property-action,
+#account-settings .class-data-section .user-data-item .user-property-action,
+#account-settings .class-data-section .user-data-item .class-property-action,
+#account-settings .class-data-section .class-data-item .user-property-action,
+#account-settings .class-data-section .class-data-item .class-property-action,
+#manage .user-data-section .user-data-item .user-property-action,
+#manage .user-data-section .user-data-item .class-property-action,
+#manage .user-data-section .class-data-item .user-property-action,
+#manage .user-data-section .class-data-item .class-property-action,
+#manage .class-data-section .user-data-item .user-property-action,
+#manage .class-data-section .user-data-item .class-property-action,
+#manage .class-data-section .class-data-item .user-property-action,
+#manage .class-data-section .class-data-item .class-property-action {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+}
+
+@media screen and (min-width: 672px) {
+  #account-settings .user-data-section .user-data-item .user-property-action,
+  #account-settings .user-data-section .user-data-item .class-property-action,
+  #account-settings .user-data-section .class-data-item .user-property-action,
+  #account-settings .user-data-section .class-data-item .class-property-action,
+  #account-settings .class-data-section .user-data-item .user-property-action,
+  #account-settings .class-data-section .user-data-item .class-property-action,
+  #account-settings .class-data-section .class-data-item .user-property-action,
+  #account-settings .class-data-section .class-data-item .class-property-action,
+  #manage .user-data-section .user-data-item .user-property-action,
+  #manage .user-data-section .user-data-item .class-property-action,
+  #manage .user-data-section .class-data-item .user-property-action,
+  #manage .user-data-section .class-data-item .class-property-action,
+  #manage .class-data-section .user-data-item .user-property-action,
+  #manage .class-data-section .user-data-item .class-property-action,
+  #manage .class-data-section .class-data-item .user-property-action,
+  #manage .class-data-section .class-data-item .class-property-action {
+    -ms-grid-column: 3;
+    -ms-grid-column-span: 1;
+    grid-column: 3/4;
+    text-align: right;
+  }
+}
+
+#account-settings #change-name,
+#account-settings #change-password,
+#account-settings #change-email,
+#account-settings #change-class-name,
+#account-settings #change-class-status,
+#manage #change-name,
+#manage #change-password,
+#manage #change-email,
+#manage #change-class-name,
+#manage #change-class-status {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1/3;
+}
+
+@media screen and (min-width: 672px) {
+  #account-settings #change-name,
+  #account-settings #change-password,
+  #account-settings #change-email,
+  #account-settings #change-class-name,
+  #account-settings #change-class-status,
+  #manage #change-name,
+  #manage #change-password,
+  #manage #change-email,
+  #manage #change-class-name,
+  #manage #change-class-status {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 2;
+    grid-column: 2/4;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 2;
+    grid-row: 1/3;
+    max-width: 400px;
+  }
+}
+
+#account-settings #change-name p,
+#account-settings #change-password p,
+#account-settings #change-email p,
+#account-settings #change-class-name p,
+#account-settings #change-class-status p,
+#manage #change-name p,
+#manage #change-password p,
+#manage #change-email p,
+#manage #change-class-name p,
+#manage #change-class-status p {
+  margin-bottom: 0.6rem;
+  text-align: justify;
+}
+
+#account-settings #change-name .border-btn,
+#account-settings #change-password .border-btn,
+#account-settings #change-email .border-btn,
+#account-settings #change-class-name .border-btn,
+#account-settings #change-class-status .border-btn,
+#manage #change-name .border-btn,
+#manage #change-password .border-btn,
+#manage #change-email .border-btn,
+#manage #change-class-name .border-btn,
+#manage #change-class-status .border-btn {
+  margin: 0.6rem auto;
+  width: 100%;
+}
+
+#account-settings #change-name .inline.btn,
+#account-settings #change-password .inline.btn,
+#account-settings #change-email .inline.btn,
+#account-settings #change-class-name .inline.btn,
+#account-settings #change-class-status .inline.btn,
+#manage #change-name .inline.btn,
+#manage #change-password .inline.btn,
+#manage #change-email .inline.btn,
+#manage #change-class-name .inline.btn,
+#manage #change-class-status .inline.btn {
+  margin-bottom: 0.2rem;
+}
+
+#account-settings #change-name,
+#account-settings #change-password,
+#account-settings #change-email,
+#account-settings #delete-account1,
+#account-settings #delete-account2,
+#account-settings #change-class-name,
+#account-settings #change-class-status,
+#account-settings #delete-class1,
+#account-settings #delete-class2,
+#manage #change-name,
+#manage #change-password,
+#manage #change-email,
+#manage #delete-account1,
+#manage #delete-account2,
+#manage #change-class-name,
+#manage #change-class-status,
+#manage #delete-class1,
+#manage #delete-class2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#account-settings #change-name label,
+#account-settings #change-name input.text-field,
+#account-settings #change-name .custom-select-wrapper,
+#account-settings #change-password label,
+#account-settings #change-password input.text-field,
+#account-settings #change-password .custom-select-wrapper,
+#account-settings #change-email label,
+#account-settings #change-email input.text-field,
+#account-settings #change-email .custom-select-wrapper,
+#account-settings #delete-account1 label,
+#account-settings #delete-account1 input.text-field,
+#account-settings #delete-account1 .custom-select-wrapper,
+#account-settings #delete-account2 label,
+#account-settings #delete-account2 input.text-field,
+#account-settings #delete-account2 .custom-select-wrapper,
+#account-settings #change-class-name label,
+#account-settings #change-class-name input.text-field,
+#account-settings #change-class-name .custom-select-wrapper,
+#account-settings #change-class-status label,
+#account-settings #change-class-status input.text-field,
+#account-settings #change-class-status .custom-select-wrapper,
+#account-settings #delete-class1 label,
+#account-settings #delete-class1 input.text-field,
+#account-settings #delete-class1 .custom-select-wrapper,
+#account-settings #delete-class2 label,
+#account-settings #delete-class2 input.text-field,
+#account-settings #delete-class2 .custom-select-wrapper,
+#manage #change-name label,
+#manage #change-name input.text-field,
+#manage #change-name .custom-select-wrapper,
+#manage #change-password label,
+#manage #change-password input.text-field,
+#manage #change-password .custom-select-wrapper,
+#manage #change-email label,
+#manage #change-email input.text-field,
+#manage #change-email .custom-select-wrapper,
+#manage #delete-account1 label,
+#manage #delete-account1 input.text-field,
+#manage #delete-account1 .custom-select-wrapper,
+#manage #delete-account2 label,
+#manage #delete-account2 input.text-field,
+#manage #delete-account2 .custom-select-wrapper,
+#manage #change-class-name label,
+#manage #change-class-name input.text-field,
+#manage #change-class-name .custom-select-wrapper,
+#manage #change-class-status label,
+#manage #change-class-status input.text-field,
+#manage #change-class-status .custom-select-wrapper,
+#manage #delete-class1 label,
+#manage #delete-class1 input.text-field,
+#manage #delete-class1 .custom-select-wrapper,
+#manage #delete-class2 label,
+#manage #delete-class2 input.text-field,
+#manage #delete-class2 .custom-select-wrapper {
+  margin: 0.2rem 0;
+}
+
+#account-settings #change-name label:not(:nth-of-type(1)),
+#account-settings #change-password label:not(:nth-of-type(1)),
+#account-settings #change-email label:not(:nth-of-type(1)),
+#account-settings #delete-account1 label:not(:nth-of-type(1)),
+#account-settings #delete-account2 label:not(:nth-of-type(1)),
+#account-settings #change-class-name label:not(:nth-of-type(1)),
+#account-settings #change-class-status label:not(:nth-of-type(1)),
+#account-settings #delete-class1 label:not(:nth-of-type(1)),
+#account-settings #delete-class2 label:not(:nth-of-type(1)),
+#manage #change-name label:not(:nth-of-type(1)),
+#manage #change-password label:not(:nth-of-type(1)),
+#manage #change-email label:not(:nth-of-type(1)),
+#manage #delete-account1 label:not(:nth-of-type(1)),
+#manage #delete-account2 label:not(:nth-of-type(1)),
+#manage #change-class-name label:not(:nth-of-type(1)),
+#manage #change-class-status label:not(:nth-of-type(1)),
+#manage #delete-class1 label:not(:nth-of-type(1)),
+#manage #delete-class2 label:not(:nth-of-type(1)) {
+  margin-top: 0.54rem;
+}
+
+#account-settings h3,
+#manage h3 {
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+#account-settings #delete-account1,
+#account-settings #delete-class1,
+#manage #delete-account1,
+#manage #delete-class1 {
+  max-width: 400px;
+}
+
+#account-settings #delete-account1 .border-btn,
+#account-settings #delete-class1 .border-btn,
+#manage #delete-account1 .border-btn,
+#manage #delete-class1 .border-btn {
+  margin: 0.6rem auto;
+  width: 100%;
+}
+
+#account-settings #delete-account2 span,
+#account-settings #delete-class2 span,
+#manage #delete-account2 span,
+#manage #delete-class2 span {
+  color: #a00;
+}
+
+#account-settings #delete-account2 .buttons,
+#account-settings #delete-class2 .buttons,
+#manage #delete-account2 .buttons,
+#manage #delete-class2 .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
+#account-settings #delete-account2 .buttons .border-btn,
+#account-settings #delete-class2 .buttons .border-btn,
+#manage #delete-account2 .buttons .border-btn,
+#manage #delete-class2 .buttons .border-btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0.6rem 0;
+}
+
+#account-settings #delete-account2 .buttons .border-btn:not(:last-child),
+#account-settings #delete-class2 .buttons .border-btn:not(:last-child),
+#manage #delete-account2 .buttons .border-btn:not(:last-child),
+#manage #delete-class2 .buttons .border-btn:not(:last-child) {
+  margin-right: 0.6rem;
+}
+
+#account-settings #account-settings-wrapper {
+  margin: auto;
+}
+
+@media screen and (min-width: 960px) {
+  #account-settings #account-settings-wrapper {
+    max-width: 1100px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 3fr;
+        grid-template-columns: 1fr 3fr;
+    grid-column-gap: 2rem;
+  }
+}
+
+#account-settings .user-image-section {
+  padding: 0.6rem;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 260px;
+}
+
+@media screen and (min-width: 960px) {
+  #account-settings .user-image-section {
+    width: 100%;
+    max-width: auto;
+  }
+}
+
+#account-settings .user-image-section > div {
+  text-align: center;
+  margin: 0.6rem auto;
+  font-size: 1.2rem;
+}
+
+#account-settings .user-image-section > div > span {
+  font-weight: bold;
+}
+
+#account-settings .delete-account-section {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+  margin: 0.6rem;
+}
+
+#manage #manage-wrapper {
+  margin: auto;
+  max-width: 800px;
+}
+
+#manage .class-buttons-section {
+  padding: 0.6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 440px) {
+  #manage .class-buttons-section {
+    display: block;
+  }
+}
+
+#manage .class-buttons-section .border-btn {
+  margin: 0.2rem 0;
+}
+
+#manage #manage-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0.4rem 0;
+}
+
+@media screen and (min-width: 440px) {
+  #manage #manage-buttons {
+    display: block;
+  }
+  #manage #manage-buttons .border-btn {
+    margin: 0.3rem auto;
+  }
+  #manage #manage-buttons .border-btn:not(:last-child) {
+    margin-right: 0.6rem;
   }
 }
 

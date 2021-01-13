@@ -1,12 +1,29 @@
 var deletedTableRow;    //Ukládá řádek tabulky členů, který je odstraňován
 
-function kickUser(memberId, memberName)
+//vše, co se děje po načtení stránky
+$(function() {
+
+	//event listenery tlačítek
+	$(".kick-user-button").click(function() {kickUser(event)})
+	$("#invite-user-button").click(function() {inviteFormShow()})
+	$("#invite-user-confirm-button").click(function() {inviteUser()})
+	$("#invite-user-cancel-button").click(function() {inviteFormHide()})
+})
+
+//vše, co se děje při změně velikosti okna
+$(window).resize(function() {
+})
+
+function kickUser(event)
 {
+	let memberId = $(event.target).attr("data-member-id");
+	let memberName = $(event.target).attr("data-member-name");
+
     if (!confirm("Opravdu chcete odebrat uživatele " + memberName + " ze třídy?"))
     {
         return;
     }
-    deletedTableRow = event.target.parentNode.parentNode.parentNode;
+    deletedTableRow = $(event.target).parent().parent().remove();
     $.post("class-update",
 		{
     		action: 'kick member',
@@ -37,8 +54,8 @@ function kickUser(memberId, memberName)
 }
 function inviteFormShow()
 {
-    $("#inviteButton").hide();
-    $("#inviteForm").show();
+    $("#invite-user-button").hide();
+    $("#invite-user-form").show();
 }
 function inviteFormHide()
 {

@@ -40,8 +40,8 @@ class AddPicturesController extends Controller
         
         //Kontrola přítomnosti přírodnin
         if (
-            $allParts && count($group->getNaturals()) === 0 ||
-            !$allParts && count($part->getNaturalsCount() === 0)
+            ($allParts && count($group->getNaturals()) === 0) ||
+            (!$allParts && $part->getNaturalsCount() === 0)
         )
         {
             //Žádné přírodniny
@@ -54,7 +54,7 @@ class AddPicturesController extends Controller
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
         $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/addPictures.js', 'js/menu.js');
-        $this->pageHeader['bodyId'] = 'addPictures';
+        $this->pageHeader['bodyId'] = 'add-pictures';
         
         if ($allParts)
         {

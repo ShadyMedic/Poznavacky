@@ -20,7 +20,7 @@ class AdministrateController extends Controller
     public function process(array $paremeters): void
     {
         $aChecker = new AccessChecker();
-        if (!$aChecker::checkSystemAdmin())
+        if (!$aChecker->checkSystemAdmin())
         {
             $this->redirect('error403');
         }
