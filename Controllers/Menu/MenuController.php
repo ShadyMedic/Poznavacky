@@ -270,6 +270,7 @@ class MenuController extends Controller
         
         $this->data['loggedUserName'] = UserManager::getName();
         $this->data['adminLogged'] = $aChecker->checkSystemAdmin();
+        $this->data['demoVersion'] = $aChecker->checkDemoAccount();
         
         $this->view = 'menu';
     }
