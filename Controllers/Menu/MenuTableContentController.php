@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Security\AccessChecker;
 
 /** 
  * Kontroler starající se o výpis tabulky a jejího obsahu do menu stránky
@@ -27,6 +28,9 @@ class MenuTableContentController extends Controller
         }
         
         $this->data['table'] = $this->aquiredData;
+
+        $checker = new AccessChecker();
+        $this->data['demoVersion'] = $checker->checkDemoAccount();
     }
 }
 
