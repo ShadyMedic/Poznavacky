@@ -348,7 +348,7 @@ class ClassObject extends Folder
         }
         $user = new User(false, $result[User::COLUMN_DICTIONARY['id']]);
         $user->initialize($result[User::COLUMN_DICTIONARY['name']], $result[User::COLUMN_DICTIONARY['email']], new DateTime($result[User::COLUMN_DICTIONARY['lastLogin']]), $result[User::COLUMN_DICTIONARY['addedPictures']], $result[User::COLUMN_DICTIONARY['guessedPictures']], $result[User::COLUMN_DICTIONARY['karma']], $result[User::COLUMN_DICTIONARY['status']]);
-        
+
         //Zkontroluj, zda uživatel již není členem třídy
         for ($i = 0; $i < count($this->members) && $user->getId() !== $this->members[$i]->getId(); $i++){}
         if ($i !== count($this->members))
@@ -474,6 +474,7 @@ class ClassObject extends Folder
 
     /**
      * Metoda kontrolující, zda má určitý uživatel přístup do této třídy
+     * Pokud přihlášený uživatel využívá demo účet, je přístup povolen pouze v případě, že je tato třída uzamčená
      * @param int $userId ID ověřovaného uživatele
      * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
      * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
@@ -486,8 +487,18 @@ class ClassObject extends Folder
         }
         
         $this->loadIfNotLoaded($this->id);
-        
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "public" OR '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+
+        $checker = new AccessChecker();
+        if ($checker->checkDemoAccount())
+        {
+            //Pokud není tato třída uzamčená, neposkytni přístup
+            $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "locked" AND '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        }
+        else
+        {
+            $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "public" OR '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
+        }
+
         $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
         return ($result['cnt'] === 1) ? true : false;
     }
