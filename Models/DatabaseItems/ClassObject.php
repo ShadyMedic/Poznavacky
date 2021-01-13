@@ -325,8 +325,9 @@ class ClassObject extends Folder
     /**
      * Metoda vytvářející pozvánku do této třídy pro určitého uživatele
      * Pokud byl již uživatel do této třídy pozván, je prodloužena životnost existující pozvánky
+     * Pokud pozvaný uživatel představuje demo účet, není jeho pozvání do třídy možné
      * @param int $userName Jméno uživatele, pro kterého je pozvánka určena
-     * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem neexistuje nebo je již členem této třídy
+     * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem představuje demo účet, neexistuje nebo je již členem této třídy
      * @return boolean TRUE, pokud je pozvánka úspěšně vytvořena
      */
     public function inviteUser(string $userName): bool
@@ -354,7 +355,13 @@ class ClassObject extends Folder
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER);
         }
-        
+
+        //Zkontroluj, zda uživatel nepředstavuje demo účet
+        if ($user['status'] === User::STATUS_GUEST)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_DEMO_ACCOUNT);
+        }
+
         //Ověř, zda již taková pozvánka v databázi neexistuje
         $result = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND '.Invitation::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($user->getId(), $this->id));
         if (empty($result))
