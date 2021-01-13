@@ -74,7 +74,17 @@ class GroupEditor
             //Nalezena poznávačka se stejným URL a rozdílným ID - přejmenování na název příliš podobný jiné poznávačce
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_GROUP);
         }
-        
+
+        //Kontrola, zda URL poznávačky není rezervované pro žádný kontroler
+        try
+        {
+            $validator->checkForbiddenUrls(Folder::generateUrl($newName), DataValidator::TYPE_GROUP_URL);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_FORBIDDEN_URL, null, $e);
+        }
+
         $this->group->rename($newName);
     }
     
