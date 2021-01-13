@@ -120,7 +120,7 @@ class RegisterUser
         try
         {
             $validator->checkUniqueness($name, DataValidator::TYPE_USER_NAME);
-            $validator->checkUniqueness($email, DataValidator::TYPE_USER_EMAIL);
+            if (!empty($email)) { $validator->checkUniqueness($email, DataValidator::TYPE_USER_EMAIL); }
         }
         catch (InvalidArgumentException $e)
         {
