@@ -4,7 +4,9 @@ var deletedTableRow;    //Ukládá řádek tabulky členů, který je odstraňov
 $(function() {
 
 	//event listenery tlačítek
-	$(".kick-user-button").click(function() {kickUser(event)})
+	$(".kick-user-button").click(function(event) {kickUser(event)})
+	$(".kick-user-confirm-button").click(function(event) {kickUserConfirm(event)})
+	$(".kick-user-cancel-button").click(function(event) {kickUserCancel(event)})
 	$("#invite-user-button").click(function() {inviteFormShow()})
 	$("#invite-user-confirm-button").click(function() {inviteUser()})
 	$("#invite-user-cancel-button").click(function() {inviteFormHide()})
@@ -14,15 +16,21 @@ $(function() {
 $(window).resize(function() {
 })
 
-function kickUser(event)
-{
-	let memberId = $(event.target).attr("data-member-id");
-	let memberName = $(event.target).attr("data-member-name");
 
-    if (!confirm("Opravdu chcete odebrat uživatele " + memberName + " ze třídy?"))
-    {
-        return;
-    }
+function kickUser(event) {
+	$(event.target).closest(".members-data-item").find(".kick-user-button").hide();
+	$(event.target).closest(".members-data-item").find(".kick-user").show();
+} 
+
+function kickUserCancel(event) {
+	$(event.target).closest(".members-data-item").find(".kick-user-button").show();
+	$(event.target).closest(".members-data-item").find(".kick-user").hide();
+} 
+
+function kickUserConfirm(event)
+{
+	let memberId = $(event.target).closest(".members-data-item").attr("data-member-id");
+
     deletedTableRow = $(event.target).parent().parent().remove();
     $.post("class-update",
 		{
@@ -59,13 +67,13 @@ function inviteFormShow()
 }
 function inviteFormHide()
 {
-	$("#inviteUserInput").val("");
-    $("#inviteForm").hide();
-    $("#inviteButton").show();
+	$("#invite-user-name").val("");
+    $("#invite-user-button").show();
+    $("#invite-user-form").hide();
 }
 function inviteUser()
 {
-    var userName = $("#inviteUserInput").val();
+    var userName = $("#invite-user-name").val();
     $.post("class-update",
 		{
     		action: 'invite user',

@@ -415,7 +415,8 @@
 @import "_study.scss" ;
 
 #account-settings,
-#manage {
+#manage,
+#members {
 	.user-data-section,
 	.class-data-section {
 		.user-data-item,
@@ -424,7 +425,6 @@
 			padding: 0.4rem 0.8rem;
 			border: 1px solid #ccc;
 			border-radius: 0.2rem;
-			transition: height 0.2s ease-out;
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			grid-template-rows: auto auto;
@@ -457,10 +457,6 @@
 			grid-row: 1/3;
 			max-width: 400px;
 		}
-		p {
-			margin-bottom: 0.6rem;
-			text-align: justify;
-		}
 		.border-btn {
 			margin: 0.6rem auto;
 			width: 100%;
@@ -477,7 +473,8 @@
 	#change-class-name,
 	#change-class-status,
 	#delete-class1,
-	#delete-class2 {
+	#delete-class2,
+	#invite-user-form {
 		display: flex;
 		flex-direction: column;
 		label, 
@@ -488,6 +485,10 @@
 		label:not(:nth-of-type(1)) {
 			margin-top: 0.54rem;
 		}
+		p {
+			margin-bottom: 0.6rem;
+			text-align: justify;
+		}
 	}
 	h3 {
 		font-size: 1em;
@@ -495,7 +496,8 @@
 		line-height: 1.2em;
 	}
 	#delete-account1,
-	#delete-class1 {
+	#delete-class1,
+	#invite-user-form {
 		max-width: 400px;
 		.border-btn {
 			margin: 0.6rem auto;
@@ -503,7 +505,8 @@
 		}
 	}
 	#delete-account2,
-	#delete-class2 {
+	#delete-class2,
+	.kick-user {
 		span {
 			color: $red1;
 		}
@@ -512,7 +515,7 @@
 			justify-content: left;
 			.border-btn {
 				width: fit-content;
-				margin: 0.6rem 0;
+				margin: 0.6rem 0 0 0;
 				&:not(:last-child) {
 					margin-right: 0.6rem;
 				}
@@ -585,5 +588,47 @@
 				}
 			}
 		}
+	}
+}
+
+#members {
+	#members-wrapper {
+		margin: auto;
+		max-width: 800px;
+	}
+	.members-data-section {
+		.members-data-item {
+			margin: 0.4rem;
+			padding: 0.2rem 0.8rem;
+			border: 1px solid #ccc;
+			border-radius: 0.2rem;
+			display: grid;
+			grid-template-columns: 10rem 1fr;
+			grid-template-rows: auto auto;
+			@media screen and (min-width: $smallTablet) {
+				grid-template-rows: auto 1fr;
+				align-items: center;
+			}
+			> span {
+				padding: calc(0.2em + 4px) 0;
+			}
+			.member-action {
+				text-align: right;
+				display: grid;
+				align-items: center;
+				justify-items: right;
+			}
+			.kick-user {
+				grid-row: 1/3;
+				grid-column: 2/3;
+				padding: calc(0.2em + 4px) 0;
+				span {
+					margin-bottom: 0.4rem;
+				}
+			}
+		}
+	}
+	.invite-user-section {
+		padding: 0.4rem;
 	}
 }

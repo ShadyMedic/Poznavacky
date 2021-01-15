@@ -2317,13 +2317,15 @@ label.required:after {
 #manage .user-data-section .user-data-item,
 #manage .user-data-section .class-data-item,
 #manage .class-data-section .user-data-item,
-#manage .class-data-section .class-data-item {
+#manage .class-data-section .class-data-item,
+#members .user-data-section .user-data-item,
+#members .user-data-section .class-data-item,
+#members .class-data-section .user-data-item,
+#members .class-data-section .class-data-item {
   margin: 0.6rem;
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
   border-radius: 0.2rem;
-  -webkit-transition: height 0.2s ease-out;
-  transition: height 0.2s ease-out;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
@@ -2340,7 +2342,11 @@ label.required:after {
   #manage .user-data-section .user-data-item,
   #manage .user-data-section .class-data-item,
   #manage .class-data-section .user-data-item,
-  #manage .class-data-section .class-data-item {
+  #manage .class-data-section .class-data-item,
+  #members .user-data-section .user-data-item,
+  #members .user-data-section .class-data-item,
+  #members .class-data-section .user-data-item,
+  #members .class-data-section .class-data-item {
     -ms-grid-columns: 10rem 13rem 1fr;
         grid-template-columns: 10rem 13rem 1fr;
     -ms-grid-rows: auto 1fr;
@@ -2358,7 +2364,11 @@ label.required:after {
 #manage .user-data-section .user-data-item > span,
 #manage .user-data-section .class-data-item > span,
 #manage .class-data-section .user-data-item > span,
-#manage .class-data-section .class-data-item > span {
+#manage .class-data-section .class-data-item > span,
+#members .user-data-section .user-data-item > span,
+#members .user-data-section .class-data-item > span,
+#members .class-data-section .user-data-item > span,
+#members .class-data-section .class-data-item > span {
   padding: calc(0.4em + 4px) 0;
 }
 
@@ -2377,7 +2387,15 @@ label.required:after {
 #manage .class-data-section .user-data-item .user-property-action,
 #manage .class-data-section .user-data-item .class-property-action,
 #manage .class-data-section .class-data-item .user-property-action,
-#manage .class-data-section .class-data-item .class-property-action {
+#manage .class-data-section .class-data-item .class-property-action,
+#members .user-data-section .user-data-item .user-property-action,
+#members .user-data-section .user-data-item .class-property-action,
+#members .user-data-section .class-data-item .user-property-action,
+#members .user-data-section .class-data-item .class-property-action,
+#members .class-data-section .user-data-item .user-property-action,
+#members .class-data-section .user-data-item .class-property-action,
+#members .class-data-section .class-data-item .user-property-action,
+#members .class-data-section .class-data-item .class-property-action {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
@@ -2399,7 +2417,15 @@ label.required:after {
   #manage .class-data-section .user-data-item .user-property-action,
   #manage .class-data-section .user-data-item .class-property-action,
   #manage .class-data-section .class-data-item .user-property-action,
-  #manage .class-data-section .class-data-item .class-property-action {
+  #manage .class-data-section .class-data-item .class-property-action,
+  #members .user-data-section .user-data-item .user-property-action,
+  #members .user-data-section .user-data-item .class-property-action,
+  #members .user-data-section .class-data-item .user-property-action,
+  #members .user-data-section .class-data-item .class-property-action,
+  #members .class-data-section .user-data-item .user-property-action,
+  #members .class-data-section .user-data-item .class-property-action,
+  #members .class-data-section .class-data-item .user-property-action,
+  #members .class-data-section .class-data-item .class-property-action {
     -ms-grid-column: 3;
     -ms-grid-column-span: 1;
     grid-column: 3/4;
@@ -2416,7 +2442,12 @@ label.required:after {
 #manage #change-password,
 #manage #change-email,
 #manage #change-class-name,
-#manage #change-class-status {
+#manage #change-class-status,
+#members #change-name,
+#members #change-password,
+#members #change-email,
+#members #change-class-name,
+#members #change-class-status {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
@@ -2432,7 +2463,12 @@ label.required:after {
   #manage #change-password,
   #manage #change-email,
   #manage #change-class-name,
-  #manage #change-class-status {
+  #manage #change-class-status,
+  #members #change-name,
+  #members #change-password,
+  #members #change-email,
+  #members #change-class-name,
+  #members #change-class-status {
     -ms-grid-column: 2;
     -ms-grid-column-span: 2;
     grid-column: 2/4;
@@ -2441,20 +2477,6 @@ label.required:after {
     grid-row: 1/3;
     max-width: 400px;
   }
-}
-
-#account-settings #change-name p,
-#account-settings #change-password p,
-#account-settings #change-email p,
-#account-settings #change-class-name p,
-#account-settings #change-class-status p,
-#manage #change-name p,
-#manage #change-password p,
-#manage #change-email p,
-#manage #change-class-name p,
-#manage #change-class-status p {
-  margin-bottom: 0.6rem;
-  text-align: justify;
 }
 
 #account-settings #change-name .border-btn,
@@ -2466,7 +2488,12 @@ label.required:after {
 #manage #change-password .border-btn,
 #manage #change-email .border-btn,
 #manage #change-class-name .border-btn,
-#manage #change-class-status .border-btn {
+#manage #change-class-status .border-btn,
+#members #change-name .border-btn,
+#members #change-password .border-btn,
+#members #change-email .border-btn,
+#members #change-class-name .border-btn,
+#members #change-class-status .border-btn {
   margin: 0.6rem auto;
   width: 100%;
 }
@@ -2480,7 +2507,12 @@ label.required:after {
 #manage #change-password .inline.btn,
 #manage #change-email .inline.btn,
 #manage #change-class-name .inline.btn,
-#manage #change-class-status .inline.btn {
+#manage #change-class-status .inline.btn,
+#members #change-name .inline.btn,
+#members #change-password .inline.btn,
+#members #change-email .inline.btn,
+#members #change-class-name .inline.btn,
+#members #change-class-status .inline.btn {
   margin-bottom: 0.2rem;
 }
 
@@ -2493,6 +2525,7 @@ label.required:after {
 #account-settings #change-class-status,
 #account-settings #delete-class1,
 #account-settings #delete-class2,
+#account-settings #invite-user-form,
 #manage #change-name,
 #manage #change-password,
 #manage #change-email,
@@ -2501,7 +2534,18 @@ label.required:after {
 #manage #change-class-name,
 #manage #change-class-status,
 #manage #delete-class1,
-#manage #delete-class2 {
+#manage #delete-class2,
+#manage #invite-user-form,
+#members #change-name,
+#members #change-password,
+#members #change-email,
+#members #delete-account1,
+#members #delete-account2,
+#members #change-class-name,
+#members #change-class-status,
+#members #delete-class1,
+#members #delete-class2,
+#members #invite-user-form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2538,6 +2582,9 @@ label.required:after {
 #account-settings #delete-class2 label,
 #account-settings #delete-class2 input.text-field,
 #account-settings #delete-class2 .custom-select-wrapper,
+#account-settings #invite-user-form label,
+#account-settings #invite-user-form input.text-field,
+#account-settings #invite-user-form .custom-select-wrapper,
 #manage #change-name label,
 #manage #change-name input.text-field,
 #manage #change-name .custom-select-wrapper,
@@ -2564,7 +2611,40 @@ label.required:after {
 #manage #delete-class1 .custom-select-wrapper,
 #manage #delete-class2 label,
 #manage #delete-class2 input.text-field,
-#manage #delete-class2 .custom-select-wrapper {
+#manage #delete-class2 .custom-select-wrapper,
+#manage #invite-user-form label,
+#manage #invite-user-form input.text-field,
+#manage #invite-user-form .custom-select-wrapper,
+#members #change-name label,
+#members #change-name input.text-field,
+#members #change-name .custom-select-wrapper,
+#members #change-password label,
+#members #change-password input.text-field,
+#members #change-password .custom-select-wrapper,
+#members #change-email label,
+#members #change-email input.text-field,
+#members #change-email .custom-select-wrapper,
+#members #delete-account1 label,
+#members #delete-account1 input.text-field,
+#members #delete-account1 .custom-select-wrapper,
+#members #delete-account2 label,
+#members #delete-account2 input.text-field,
+#members #delete-account2 .custom-select-wrapper,
+#members #change-class-name label,
+#members #change-class-name input.text-field,
+#members #change-class-name .custom-select-wrapper,
+#members #change-class-status label,
+#members #change-class-status input.text-field,
+#members #change-class-status .custom-select-wrapper,
+#members #delete-class1 label,
+#members #delete-class1 input.text-field,
+#members #delete-class1 .custom-select-wrapper,
+#members #delete-class2 label,
+#members #delete-class2 input.text-field,
+#members #delete-class2 .custom-select-wrapper,
+#members #invite-user-form label,
+#members #invite-user-form input.text-field,
+#members #invite-user-form .custom-select-wrapper {
   margin: 0.2rem 0;
 }
 
@@ -2577,6 +2657,7 @@ label.required:after {
 #account-settings #change-class-status label:not(:nth-of-type(1)),
 #account-settings #delete-class1 label:not(:nth-of-type(1)),
 #account-settings #delete-class2 label:not(:nth-of-type(1)),
+#account-settings #invite-user-form label:not(:nth-of-type(1)),
 #manage #change-name label:not(:nth-of-type(1)),
 #manage #change-password label:not(:nth-of-type(1)),
 #manage #change-email label:not(:nth-of-type(1)),
@@ -2585,12 +2666,58 @@ label.required:after {
 #manage #change-class-name label:not(:nth-of-type(1)),
 #manage #change-class-status label:not(:nth-of-type(1)),
 #manage #delete-class1 label:not(:nth-of-type(1)),
-#manage #delete-class2 label:not(:nth-of-type(1)) {
+#manage #delete-class2 label:not(:nth-of-type(1)),
+#manage #invite-user-form label:not(:nth-of-type(1)),
+#members #change-name label:not(:nth-of-type(1)),
+#members #change-password label:not(:nth-of-type(1)),
+#members #change-email label:not(:nth-of-type(1)),
+#members #delete-account1 label:not(:nth-of-type(1)),
+#members #delete-account2 label:not(:nth-of-type(1)),
+#members #change-class-name label:not(:nth-of-type(1)),
+#members #change-class-status label:not(:nth-of-type(1)),
+#members #delete-class1 label:not(:nth-of-type(1)),
+#members #delete-class2 label:not(:nth-of-type(1)),
+#members #invite-user-form label:not(:nth-of-type(1)) {
   margin-top: 0.54rem;
 }
 
+#account-settings #change-name p,
+#account-settings #change-password p,
+#account-settings #change-email p,
+#account-settings #delete-account1 p,
+#account-settings #delete-account2 p,
+#account-settings #change-class-name p,
+#account-settings #change-class-status p,
+#account-settings #delete-class1 p,
+#account-settings #delete-class2 p,
+#account-settings #invite-user-form p,
+#manage #change-name p,
+#manage #change-password p,
+#manage #change-email p,
+#manage #delete-account1 p,
+#manage #delete-account2 p,
+#manage #change-class-name p,
+#manage #change-class-status p,
+#manage #delete-class1 p,
+#manage #delete-class2 p,
+#manage #invite-user-form p,
+#members #change-name p,
+#members #change-password p,
+#members #change-email p,
+#members #delete-account1 p,
+#members #delete-account2 p,
+#members #change-class-name p,
+#members #change-class-status p,
+#members #delete-class1 p,
+#members #delete-class2 p,
+#members #invite-user-form p {
+  margin-bottom: 0.6rem;
+  text-align: justify;
+}
+
 #account-settings h3,
-#manage h3 {
+#manage h3,
+#members h3 {
   font-size: 1em;
   font-weight: bold;
   line-height: 1.2em;
@@ -2598,30 +2725,50 @@ label.required:after {
 
 #account-settings #delete-account1,
 #account-settings #delete-class1,
+#account-settings #invite-user-form,
 #manage #delete-account1,
-#manage #delete-class1 {
+#manage #delete-class1,
+#manage #invite-user-form,
+#members #delete-account1,
+#members #delete-class1,
+#members #invite-user-form {
   max-width: 400px;
 }
 
 #account-settings #delete-account1 .border-btn,
 #account-settings #delete-class1 .border-btn,
+#account-settings #invite-user-form .border-btn,
 #manage #delete-account1 .border-btn,
-#manage #delete-class1 .border-btn {
+#manage #delete-class1 .border-btn,
+#manage #invite-user-form .border-btn,
+#members #delete-account1 .border-btn,
+#members #delete-class1 .border-btn,
+#members #invite-user-form .border-btn {
   margin: 0.6rem auto;
   width: 100%;
 }
 
 #account-settings #delete-account2 span,
 #account-settings #delete-class2 span,
+#account-settings .kick-user span,
 #manage #delete-account2 span,
-#manage #delete-class2 span {
+#manage #delete-class2 span,
+#manage .kick-user span,
+#members #delete-account2 span,
+#members #delete-class2 span,
+#members .kick-user span {
   color: #a00;
 }
 
 #account-settings #delete-account2 .buttons,
 #account-settings #delete-class2 .buttons,
+#account-settings .kick-user .buttons,
 #manage #delete-account2 .buttons,
-#manage #delete-class2 .buttons {
+#manage #delete-class2 .buttons,
+#manage .kick-user .buttons,
+#members #delete-account2 .buttons,
+#members #delete-class2 .buttons,
+#members .kick-user .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2632,18 +2779,28 @@ label.required:after {
 
 #account-settings #delete-account2 .buttons .border-btn,
 #account-settings #delete-class2 .buttons .border-btn,
+#account-settings .kick-user .buttons .border-btn,
 #manage #delete-account2 .buttons .border-btn,
-#manage #delete-class2 .buttons .border-btn {
+#manage #delete-class2 .buttons .border-btn,
+#manage .kick-user .buttons .border-btn,
+#members #delete-account2 .buttons .border-btn,
+#members #delete-class2 .buttons .border-btn,
+#members .kick-user .buttons .border-btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  margin: 0.6rem 0;
+  margin: 0.6rem 0 0 0;
 }
 
 #account-settings #delete-account2 .buttons .border-btn:not(:last-child),
 #account-settings #delete-class2 .buttons .border-btn:not(:last-child),
+#account-settings .kick-user .buttons .border-btn:not(:last-child),
 #manage #delete-account2 .buttons .border-btn:not(:last-child),
-#manage #delete-class2 .buttons .border-btn:not(:last-child) {
+#manage #delete-class2 .buttons .border-btn:not(:last-child),
+#manage .kick-user .buttons .border-btn:not(:last-child),
+#members #delete-account2 .buttons .border-btn:not(:last-child),
+#members #delete-class2 .buttons .border-btn:not(:last-child),
+#members .kick-user .buttons .border-btn:not(:last-child) {
   margin-right: 0.6rem;
 }
 
@@ -2740,6 +2897,66 @@ label.required:after {
   #manage #manage-buttons .border-btn:not(:last-child) {
     margin-right: 0.6rem;
   }
+}
+
+#members #members-wrapper {
+  margin: auto;
+  max-width: 800px;
+}
+
+#members .members-data-section .members-data-item {
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 10rem 1fr;
+      grid-template-columns: 10rem 1fr;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+}
+
+@media screen and (min-width: 672px) {
+  #members .members-data-section .members-data-item {
+    -ms-grid-rows: auto 1fr;
+        grid-template-rows: auto 1fr;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+#members .members-data-section .members-data-item > span {
+  padding: calc(0.2em + 4px) 0;
+}
+
+#members .members-data-section .members-data-item .member-action {
+  text-align: right;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: right;
+}
+
+#members .members-data-section .members-data-item .kick-user {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  grid-row: 1/3;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+  padding: calc(0.2em + 4px) 0;
+}
+
+#members .members-data-section .members-data-item .kick-user span {
+  margin-bottom: 0.4rem;
+}
+
+#members .invite-user-section {
+  padding: 0.4rem;
 }
 
 body#index {
