@@ -58,7 +58,7 @@
 			</button>
 		</div>
 		<div class="group-name-input-box" style="display:none;">
-			<input type="text" maxlength="31" class="text-field group-name-input" value="<?= $groupName ?>"/>
+			<input type="text" maxlength="31" size="1" class="text-field group-name-input" value="<?= $groupName ?>"/>
 			<button class="rename-group-confirm btn icon">
 				<img src='images/tick.svg'/>
 			</button>
@@ -82,7 +82,7 @@
 					</button>
 				</div>
 				<div class="part-name-input-box" style="display:none;">
-					<input type="text" maxlength="31" class="text-field part-name-input" value="<?= $part->getName() ?>"/>
+					<input type="text" maxlength="31" size="1" class="text-field part-name-input" value="<?= $part->getName() ?>"/>
 					<button class="rename-part-confirm btn icon">
 						<img src='images/tick.svg'/>
 					</button>
@@ -127,7 +127,7 @@
 	</div>
 	<button id="add-part-button" class="btn border-btn non-transparent black">Přidat novou část</button>
 	<div id="submit-wrapper">
-		<button id="submit" class="btn border-btn non-transparent black">Uložit změny</button>
+		<button id="submit-button" class="btn border-btn non-transparent black">Uložit změny</button>
 	</div>
 </div>
 
@@ -145,7 +145,7 @@
 				</button>
 			</div>
 			<div class="part-name-input-box">
-				<input type="text" maxlength="31" class="text-field part-name-input" value=""/>
+				<input type="text" maxlength="31" size="1" class="text-field part-name-input" value=""/>
 				<button class="rename-part-confirm btn icon">
 					<img src='images/tick.svg'/>
 				</button>

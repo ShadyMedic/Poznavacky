@@ -79,6 +79,10 @@ function partData(partName)
 function addPart()
 {
 	$("#parts-boxes-container").append($("#part-box-template").html());
+	$(".part-box:last-child")[0].scrollIntoView({
+		behavior: "smooth",
+		block: "start"
+	});
 	$(".part-box:last-child .part-name-input").focus(); //Uživatel by měl rovnou zadat jméno části
 }
 
@@ -89,13 +93,12 @@ function addPart()
  */
 function renameSomething(event, type)
 {
-	//let className = (type === "group") ? "group" : (type === "part") ? "part" : "natural";
-	let className = type; //V případě přejmenování tříd nebo změny argumentů odkomentovat předchozí řádku a tuto zakomentovat
 	let $nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
+	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
 
 	$(event.target).closest($nameBox).hide();
-	$(event.target).closest($nameBox).siblings().filter("." + className + "-name-input-box").show();
-	$(event.target).closest($nameBox).siblings().filter("." + className + "-name-input-box").find("input").focus().select();
+	$(event.target).closest($nameBox).siblings().filter($nameInputBox).show();
+	$(event.target).closest($nameBox).siblings().filter($nameInputBox).find(".text-field").focus().select();
 }
 
 function renameCancel(event) {

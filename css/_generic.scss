@@ -1,6 +1,7 @@
 //scss partial soubor, který má na starost styly vyskytující se všude
 
 @import url(//fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Ubuntu);
 @import "_variables.scss";
 
 * {
@@ -12,7 +13,7 @@ html {
 	scroll-behavior: smooth;
 }
 body {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Ubuntu', sans-serif;
 	line-height: 1.25em;
 	font-size: 100%;
 	min-width: 100%;
@@ -100,7 +101,7 @@ h5 {
 }
 
 .btn {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Ubuntu', sans-serif;
 	background: none;
 	border: none;
 	text-decoration: none;
@@ -304,7 +305,7 @@ textarea {
 	border: none;
 	outline: none;
 	&.text-field {
-		font-size: 1em;
+		font-size: 100%;
 		padding: 0.48em 0.8em;
 		border-radius: 0.2em;
 		line-height: 1.32em;
