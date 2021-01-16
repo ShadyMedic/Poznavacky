@@ -395,6 +395,8 @@ h5 {
 
 .btn.icon {
   display: block;
+  height: 1em;
+  width: 1em;
 }
 
 .btn.icon img {
@@ -402,6 +404,8 @@ h5 {
   transition: -webkit-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+  height: 100%;
+  width: 100%;
 }
 
 .btn.icon:active img {
@@ -430,7 +434,7 @@ textarea {
 input.text-field,
 select.text-field,
 textarea.text-field {
-  font-size: 100%;
+  font-size: 1em;
   padding: 0.48em 0.8em;
   border-radius: 0.2em;
   line-height: 1.32em;
@@ -1286,7 +1290,9 @@ label.required:after {
 #resolve-reports h2 {
   font-size: 1.2rem;
   font-weight: normal;
-  margin: 1.2rem 1rem 0.4rem 1rem;
+  padding: 1.2rem 1rem 0.4rem 1rem;
+  display: block;
+  margin: 0;
 }
 
 @media screen and (min-width: 576px) {
@@ -1300,7 +1306,7 @@ label.required:after {
   #tests h2,
   #edit-group h2,
   #resolve-reports h2 {
-    margin: 1.6rem 2rem 0 2rem;
+    padding: 1.6rem 2rem 0 2rem;
   }
 }
 
@@ -1315,7 +1321,7 @@ label.required:after {
   #tests h2,
   #edit-group h2,
   #resolve-reports h2 {
-    margin: 2rem 3rem 0 3rem;
+    padding: 2rem 3rem 0 3rem;
   }
 }
 
@@ -2957,6 +2963,261 @@ label.required:after {
 
 #members .invite-user-section {
   padding: 0.4rem;
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #edit-group-wrapper {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-rows: auto auto auto;
+        grid-template-rows: auto auto auto;
+    -ms-grid-columns: 1fr auto;
+        grid-template-columns: 1fr auto;
+  }
+}
+
+#edit-group .group-name-url,
+#edit-group .part-name-url {
+  font-size: 0.8rem;
+}
+
+#edit-group .text-field {
+  min-width: 6rem;
+}
+
+#edit-group #group-name-container {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #group-name-container {
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1/2;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1/2;
+  }
+}
+
+#edit-group #parts-boxes-container {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  #edit-group #parts-boxes-container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (minmax(340px, 1fr))[auto-fill];
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-gap: 1rem;
+    grid-auto-rows: auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #parts-boxes-container {
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
+    grid-row: 2/3;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-column: 1/3;
+  }
+}
+
+#edit-group .part-box {
+  overflow-y: hidden;
+  height: 480px;
+  min-width: 16rem;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  padding: 1rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr;
+      grid-template-rows: auto 1fr;
+}
+
+#edit-group .part-box .naturals-in-part {
+  overflow-y: auto;
+}
+
+#edit-group .part-info {
+  padding-bottom: 0.6rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+#edit-group .part-info .remove-part {
+  margin-left: auto;
+  display: block;
+}
+
+#edit-group .part-info label {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  -ms-grid-columns: 1fr auto;
+      grid-template-columns: 1fr auto;
+  -webkit-column-gap: 0.4rem;
+          column-gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+#edit-group .part-info label span {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1/3;
+}
+
+#edit-group .part-info label .text-field {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1/2;
+}
+
+#edit-group .part-info label .btn {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+}
+
+#edit-group #add-part-button,
+#edit-group #submit-button {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #add-part-button,
+  #edit-group #submit-button {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #add-part-button {
+    -ms-grid-row: 3;
+    -ms-grid-row-span: 1;
+    grid-row: 3/4;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-column: 1/3;
+  }
+}
+
+#edit-group #submit-wrapper {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #submit-wrapper {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1/2;
+  }
+}
+
+#edit-group .group-name-box,
+#edit-group .group-name-input-box,
+#edit-group .part-name-box,
+#edit-group .part-name-input-box,
+#edit-group .natural-name-box,
+#edit-group .natural-name-input-box {
+  line-height: 1.6em;
+}
+
+#edit-group .group-name-box .text-field,
+#edit-group .group-name-input-box .text-field,
+#edit-group .part-name-box .text-field,
+#edit-group .part-name-input-box .text-field,
+#edit-group .natural-name-box .text-field,
+#edit-group .natural-name-input-box .text-field {
+  height: 1.6em;
+  padding: 0.48em 0.4em;
+  background: #f8f8f8;
+}
+
+#edit-group .group-name-box,
+#edit-group .group-name-input-box,
+#edit-group .part-name-box,
+#edit-group .part-name-input-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#edit-group .group-name-box .btn,
+#edit-group .group-name-input-box .btn,
+#edit-group .part-name-box .btn,
+#edit-group .part-name-input-box .btn {
+  margin: 0 0.4rem;
+}
+
+#edit-group .group-name-box,
+#edit-group .group-name-input-box {
+  font-size: 1.36rem;
+  font-weight: bold;
+}
+
+#edit-group .part-name-box,
+#edit-group .part-name-input-box {
+  font-size: 1.18rem;
+}
+
+#edit-group .natural-name-box,
+#edit-group .natural-name-input-box {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 10rem 1rem 1rem;
+      grid-template-columns: 10rem 1rem 1rem;
+  grid-gap: 0.8rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0.16em 0;
+}
+
+@media screen and (min-width: 360px) {
+  #edit-group .natural-name-box,
+  #edit-group .natural-name-input-box {
+    -ms-grid-columns: 12rem 1rem 1rem;
+        grid-template-columns: 12rem 1rem 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group .natural-name-box,
+  #edit-group .natural-name-input-box {
+    -ms-grid-columns: 14rem 1rem 1rem;
+        grid-template-columns: 14rem 1rem 1rem;
+  }
 }
 
 body#index {

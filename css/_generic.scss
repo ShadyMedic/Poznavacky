@@ -258,6 +258,7 @@ h5 {
 			*/
 		}
 	}
+	// TODO zrušit tuto třídu -> vše .icon
 	&.cross {
 		height: 1em;
 		width: 1em;
@@ -271,9 +272,12 @@ h5 {
 	}
 	&.icon {
 		display: block;
+		height: 1em;
+		width: 1em;
 		img {
-			//filter: drop-shadow(0 0 6px rgba(black, 0.32));
 			transition: transform 0.2s ease-out;
+			height: 100%;
+			width: 100%;
 		}
 		&:active {
 			img {
@@ -300,7 +304,7 @@ textarea {
 	border: none;
 	outline: none;
 	&.text-field {
-		font-size: 100%;
+		font-size: 1em;
 		padding: 0.48em 0.8em;
 		border-radius: 0.2em;
 		line-height: 1.32em;

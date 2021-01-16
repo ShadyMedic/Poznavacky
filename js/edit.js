@@ -7,23 +7,29 @@ $(function()
 	naturalNames = JSON.parse($("#natural-names-json").text());
 	$("#temp-data").remove();
 	
-	//Nastavení event handlerů
+	//event listenery tlačítek
 	$("#help-button").click(function() { $("#help-text").toggle(); })
 	$(".rename-group").click(function(event) { renameSomething(event, "group"); })
 	$(".rename-group-confirm").click(function(event) { renameSomethingConfirm(event, "group"); })
-	$(".group-name-input").keyup(function(event) { nameTyped(event, "group"); });
-	$("#edit-interface").on("click", ".remove-part", function(event) { removePart(event); })
-	$("#edit-interface").on("click", ".rename-part", function(event) { renameSomething(event, "part"); })
-	$("#edit-interface").on("keyup", ".part-name-input", function(event) { nameTyped(event, "part"); })
-	$("#edit-interface").on("click", ".rename-part-confirm", function(event) { renameSomethingConfirm(event, "part"); })
-	$("#edit-interface").on("keyup", ".natural-name-input", function(event) { nameTyped(event, "natural") })
-	$("#edit-interface").on("keyup", ".new-natural-name-input", function(event) { nameTyped(event, "natural", true) })
-	$("#edit-interface").on("click", ".new-natural-button", function(event) { addNatural(event) })
-	$("#edit-interface").on("click", ".rename-natural", function(event) { renameSomething(event, "natural"); })
-	$("#edit-interface").on("click", ".rename-natural-confirm", function(event) { renameSomethingConfirm(event, "natural"); })
-	$("#edit-interface").on("click", ".remove-natural", function(event) { removeNatural(event); })
+	$("#edit-group-wrapper").on("click", ".remove-part", function(event) { removePart(event); })
+	$("#edit-group-wrapper").on("click", ".rename-part", function(event) { renameSomething(event, "part"); })
+	$("#edit-group-wrapper").on("keyup", ".part-name-input", function(event) { nameTyped(event, "part"); })
+	$("#edit-group-wrapper").on("click", ".rename-part-confirm", function(event) { renameSomethingConfirm(event, "part"); })
+	$("#edit-group-wrapper").on("keyup", ".natural-name-input", function(event) { nameTyped(event, "natural") })
+	$("#edit-group-wrapper").on("keyup", ".new-natural-name-input", function(event) { nameTyped(event, "natural", true) })
+	$("#edit-group-wrapper").on("click", ".new-natural-button", function(event) { addNatural(event) })
+	$("#edit-group-wrapper").on("click", ".rename-natural", function(event) { renameSomething(event, "natural"); })
+	$("#edit-group-wrapper").on("click", ".rename-natural-confirm", function(event) { renameSomethingConfirm(event, "natural"); })
+	$("#edit-group-wrapper").on("click", ".remove-natural", function(event) { removeNatural(event); })
+	$("#edit-group-wrapper").on("click", ".rename-natural-cancel", function(event) { renameCancel(event); })
+	$("#edit-group-wrapper").on("click", ".rename-part-cancel", function(event) { renameCancel(event); })
+	$("#edit-group-wrapper").on("click", ".rename-group-cancel", function(event) { renameCancel(event); })
 	$("#add-part-button").click(addPart);
 	$("#submit").click(save);
+
+	//event listener stisknutí klávesy
+	$(".group-name-input").keyup(function(event) { nameTyped(event, "group"); });
+
 })
 
 /* -------------------------------------------------------------------------------------------- */
@@ -92,6 +98,14 @@ function renameSomething(event, type)
 	$(event.target).closest($nameBox).siblings().filter("." + className + "-name-input-box").find("input").focus().select();
 }
 
+function renameCancel(event) {
+	let $nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
+	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
+
+	$(event.target).closest($nameInputBox).hide();
+	$(event.target).closest($nameInputBox).siblings().filter($nameBox).show();
+	$(event.target).siblings().filter(".text-field").val("");
+}
 /**
  * Funkce ukládající změnu jména poznávačky nebo části
  * @param event
@@ -117,7 +131,7 @@ function renameSomethingConfirm(event, type)
 	{
 		//Potvrzení tlačítkem (kliknuto na obrázek, který jej vyplňuje)
 		newName = $(event.target).closest($nameInputBox).find("input").val();
-		oldName = $(event.target).closest($nameInputBox).siblings().find("b").text();
+		oldName = $(event.target).closest($nameInputBox).siblings().find("span").text();
 	}
 	else
 	{
@@ -293,7 +307,7 @@ function addNatural(event)
 	if ($(event.target).prop("tagName") === "BUTTON")
 	{
 		//Potvrzení tlačítekm
-		$naturalInput = $(event.target).siblings().find(".new-natural-name-input");
+		$naturalInput = $(event.target).siblings().filter(".new-natural-name-input");
 	}
 	else
 	{
@@ -333,12 +347,12 @@ function addNatural(event)
 	if ($(event.target).prop("tagName") === "BUTTON")
 	{
 		//Potvrzení tlačítekm
-		$naturalList = $(event.target).siblings().filter(".naturals-in-part");
+		$naturalList = $(event.target).closest(".part-box").find(".naturals-in-part");
 	}
 	else
 	{
 		//Potvrzení enterem
-		$naturalList = $(event.target).closest("label").siblings().filter(".naturals-in-part");
+		$naturalList = $(event.target).closest(".part-box").find(".naturals-in-part");
 	}
 
 
