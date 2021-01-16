@@ -399,7 +399,7 @@ function save()
 	data = new groupData(newGroupName);
 
 	//Krok 2: Získej pole všech částí
-	let partsArray = $(".part-box").get();
+	let partsArray = $("#edit-group-wrapper .part-box").get();
 
 	//Krok 3: Z každé části získej její název
 	for (let i = 0; i < partsArray.length; i++)
