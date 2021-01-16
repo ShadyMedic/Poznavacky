@@ -166,7 +166,7 @@
 		@media screen and (min-width: $smallDesktop) {
 			padding:  2rem 3rem 0 3rem;
 		}
-		span {
+		span:last-child {
 			font-weight: bold;
 		}
 	}

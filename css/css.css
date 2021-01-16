@@ -1326,16 +1326,16 @@ label.required:after {
   }
 }
 
-#menu h2 span,
-#learn h2 span,
-#test h2 span,
-#add-pictures h2 span,
-#account-settings h2 span,
-#manage h2 span,
-#members h2 span,
-#tests h2 span,
-#edit-group h2 span,
-#resolve-reports h2 span {
+#menu h2 span:last-child,
+#learn h2 span:last-child,
+#test h2 span:last-child,
+#add-pictures h2 span:last-child,
+#account-settings h2 span:last-child,
+#manage h2 span:last-child,
+#members h2 span:last-child,
+#tests h2 span:last-child,
+#edit-group h2 span:last-child,
+#resolve-reports h2 span:last-child {
   font-weight: bold;
 }
 
