@@ -66,12 +66,16 @@ class UserManager
     }
     
     /**
-     * Metoda získávající pole obsahující další informace, konkrétně počet přidaných a uhodnutých obrázků, karmu a status
-     * @return array Pole s hodnotami s indexy "addedPictures", "guessedPictures", "karma" a "status"
+     * Metoda získávající pole obsahující další informace, konkrétně počet přidaných a uhodnutých obrázků, URL adresu poslední zobrazené menu tabulky, karmu, a status
+     * @return array Pole s hodnotami s indexy "addedPictures", "guessedPictures", "lastMenuTableUrl", "karma" a "status"
      */
     public static function getOtherInformation(): array
     {
-        return array('addedPictures' => self::getData('addedPictures'), 'guessedPictures' => self::getData('guessedPictures'), 'karma' => self::getData('karma'), 'status' => self::getData('status'));
+        return array('addedPictures' => self::getData('addedPictures'),
+            'guessedPictures' => self::getData('guessedPictures'),
+            'lastMenuTableUrl' => self::getData('lastMenuTableUrl'),
+            'karma' => self::getData('karma'),
+            'status' => self::getData('status'));
     }
     
     /**
