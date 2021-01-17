@@ -4,6 +4,7 @@ var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstr
 $(function() {
 
 	//eventy listenery tlačítek
+	$(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
 	$("#new-test-button").click(function() {newTest()})
 	$("#new-test-confirm-button").click(function() {newTestConfirm()})
 	$("#new-test-cancel-button").click(function() {newTestCancel()})
@@ -56,13 +57,16 @@ function newTestConfirm()
 	);
 }
 /*-------------------------------------------------------*/
-function deleteTest(testId, name)
+function deleteTest(event)
 {
+	let testId = $(event.target).attr('data-group-id');
+	let name = $(event.target).attr('data-group-name');
+
     if (!confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny, ale zůstanou nepřiřazeny, dokud je nepřidáte do jiné poznávačky. Tato akce je nevratná!"))
     {
     	return;
 	}
-	deletedTableRow = event.target.parentNode.parentNode.parentNode;
+	deletedTableRow = $(event.target).closest(".tests-data-item");
 	$.post("class-update",
 		{
     		action: 'delete test',

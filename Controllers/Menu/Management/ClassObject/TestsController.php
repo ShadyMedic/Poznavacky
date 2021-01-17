@@ -110,6 +110,7 @@ class TestsController extends Controller
             $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu', 'js/ajaxMediator.js','js/tests.js');
             $this->pageHeader['bodyId'] = 'tests';
             
+            $this->data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
             $this->data['groups'] = $_SESSION['selection']['class']->getGroups();
             $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
             

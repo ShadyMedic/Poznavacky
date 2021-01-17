@@ -10,9 +10,9 @@
 			<span class='test-name'><?= $group->getName() ?></span>
 			<span class='test-parts'><?= $group->getPartsCount() ?></span>
 			<div class='test-action'>
-				<a class='btn inline black' onclick='window.location.href=window.location.href+"/<?= $group->getUrl() ?>/reports";'>Správa hlášení</a>
-				<a class='btn inline black' onclick='window.location.href=window.location.href+"/<?= $group->getUrl() ?>/edit";'>Upravit</a>
-				<button class='btn inline black' onclick='deleteTest(<?= $group->getId() ?>,"<?= $group->getName(); ?>")'>Odstranit</button>
+				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports'>Správa hlášení</a>
+				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit'>Upravit</a>
+				<a class='btn inline black delete-group-button' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>Odstranit</a>
 			</div>
 		</div>
 		<?php endforeach ?>
