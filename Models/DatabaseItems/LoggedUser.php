@@ -26,7 +26,6 @@ class LoggedUser extends User
         'lastChangelog' => 'posledni_changelog',
         'lastLevel' => 'posledni_uroven',
         'lastFolder' => 'posledni_slozka',
-        'theme' => 'vzhled',
         'addedPictures' => 'pridane_obrazky',
         'guessedPictures' => 'uhodnute_obrazky',
         'karma' => 'karma',
@@ -42,7 +41,6 @@ class LoggedUser extends User
         'lastChangelog' => 0,
         'lastLevel' => 0,
         'lastFolder' => null,
-        'theme' => 0,
         'addedPictures' => 0,
         'guessedPictures' => 0,
         'karma' => 0,
@@ -56,7 +54,6 @@ class LoggedUser extends User
     protected $lastChangelog;
     protected $lastLevel;
     protected $lastFolder;
-    protected $theme;
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -73,11 +70,10 @@ class LoggedUser extends User
      * @param float|undefined|null $lastChangelog Poslední zobrazený changelog
      * @param int|undefined|null $lastLevel Poslední navštívěná úroveň složek na menu stránce
      * @param int|undefined|null $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
-     * @param int|undefined|null $theme Zvolený vzhled stránek
      * {@inheritDoc}
      * @see User::initialize()
      */
-    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null, $theme = null): void
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null): void
     {
         //Nastav vlastnosti zděděné z mateřské třídy
         parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
@@ -87,13 +83,11 @@ class LoggedUser extends User
         if ($lastChangelog === null){ $lastChangelog = $this->lastChangelog; }
         if ($lastLevel === null){ $lastLevel = $this->lastLevel; }
         if ($lastFolder === null){ $lastFolder = $this->lastFolder; }
-        if ($theme === null){ $theme = $this->theme; }
         
         $this->hash = $hash;
         $this->lastChangelog = $lastChangelog;
         $this->lastLevel = $lastLevel;
         $this->lastFolder = $lastFolder;
-        $this->theme = $theme;
     }
     
     /**

@@ -169,7 +169,7 @@ class RegisterUser
         $password = password_hash($password, PASSWORD_DEFAULT);
         
         $user = new LoggedUser(true);
-        $user->initialize($name, $email, new DateTime(), null, null, self::DEFAULT_KARMA, self::DEFAULT_STATUS, $password, null, null, null, self::DEFAULT_THEME);
+        $user->initialize($name, $email, new DateTime(), null, null, self::DEFAULT_KARMA, self::DEFAULT_STATUS, $password, null, null, null);
         $user->save();
         
         //Přihlášení
