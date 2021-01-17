@@ -71,8 +71,8 @@ function editPictureConfirm(event)
 	let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
 
 	//uložení nových hodnot
-	currentName = $report.find(".report-name-edit #report-natural-select .selected").text();
-	currentUrl = $report.find(".report-url-edit .text-field").text();
+	currentName = $report.find(".report-name-edit #report-natural-select .selected").text().trim();
+	currentUrl = $report.find(".report-url-edit .text-field").val().trim();
 	
 	//Odeslat data na server
 	$.post("report-action",
