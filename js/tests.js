@@ -1,19 +1,34 @@
 var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstraňován
 
-function createTest()
+//vše, co se děje po načtení stránky
+$(function() {
+
+	//eventy listenery tlačítek
+	$("#new-test-button").click(function() {newTest()})
+	$("#new-test-confirm-button").click(function() {newTestConfirm()})
+	$("#new-test-cancel-button").click(function() {newTestCancel()})
+
+})
+
+function newTest()
 {
-	$("#createButton").hide();
-	$("#createForm").show();
+	$("#new-test-button").hide();
+	$("#new-test").show();
+	$("#new-test")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
+	});
+	$("#new-test-name").focus();
 }
-function createTestHide()
+function newTestCancel()
 {
-	$("#createInput").val("");
-	$("#createForm").hide();
-	$("#createButton").show();
+	$("#new-test-name").val("");
+	$("#new-test").hide();
+	$("#new-test-button").show();
 }
-function createTestSubmit()
+function newTestConfirm()
 {
-	var testName = $("#createInput").val();
+	var testName = $("#new-test-name").val();
 	$.post("class-update",
 		{
     		action: 'create test',

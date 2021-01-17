@@ -418,7 +418,8 @@
 
 #account-settings,
 #manage,
-#members {
+#members,
+#tests {
 	.user-data-section,
 	.class-data-section {
 		.user-data-item,
@@ -476,7 +477,8 @@
 	#change-class-status,
 	#delete-class1,
 	#delete-class2,
-	#invite-user-form {
+	#invite-user-form,
+	#new-test {
 		display: flex;
 		flex-direction: column;
 		label, 
@@ -499,7 +501,8 @@
 	}
 	#delete-account1,
 	#delete-class1,
-	#invite-user-form {
+	#invite-user-form,
+	#new-test {
 		max-width: 400px;
 		.border-btn {
 			margin: 0.6rem auto;
@@ -631,6 +634,70 @@
 		}
 	}
 	.invite-user-section {
+		padding: 0.4rem;
+	}
+}
+
+#tests {
+	#tests-wrapper {
+		margin: auto;
+		max-width: 800px;
+	}
+	.tests-data-section {
+		width: 100%;
+		.tests-data-properties,
+		.tests-data-item {
+			display: grid;
+			grid-template-columns: 6rem 3rem 1fr;
+			@media screen and (min-width: $smallMobile) {
+				grid-template-columns: 9.6rem 4rem 1fr;
+			}
+			@media screen and (min-width: $mobile) {
+				grid-template-columns: 15rem 4rem 1fr;
+			}
+			@media screen and (min-width: $smallTablet) {
+				grid-template-columns: 13rem 3rem 1fr;
+			}
+			@media screen and (min-width: $tablet) {
+				grid-template-columns: 16rem 4rem 1fr;
+			}
+			align-items: center;
+			justify-items: center;
+			margin: 0.4rem;
+			padding: 0.2rem 0.8rem;
+			> * {
+				margin: auto;
+			}
+		}
+		.tests-data-item {
+			border: 1px solid #ccc;
+			border-radius: 0.2rem;
+			> span {
+				padding: calc(0.2em + 4px) 0;
+			}
+			.test-name {
+				font-weight: bold;
+				text-align: center;
+				overflow-wrap: break-word;
+			}
+			.test-action {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				@media screen and (min-width: $smallTablet) {
+					flex-direction: row;
+					justify-content: space-evenly;
+				}
+				.btn {
+					margin: 0.2rem 0.4rem;
+					@media screen and (min-width: $smallTablet) {
+						margin: auto 0.4rem;
+					}
+				}
+			}
+		}
+	}
+	.tests-new-section {
 		padding: 0.4rem;
 	}
 }

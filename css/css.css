@@ -2328,7 +2328,11 @@ label.required:after {
 #members .user-data-section .user-data-item,
 #members .user-data-section .class-data-item,
 #members .class-data-section .user-data-item,
-#members .class-data-section .class-data-item {
+#members .class-data-section .class-data-item,
+#tests .user-data-section .user-data-item,
+#tests .user-data-section .class-data-item,
+#tests .class-data-section .user-data-item,
+#tests .class-data-section .class-data-item {
   margin: 0.6rem;
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
@@ -2353,7 +2357,11 @@ label.required:after {
   #members .user-data-section .user-data-item,
   #members .user-data-section .class-data-item,
   #members .class-data-section .user-data-item,
-  #members .class-data-section .class-data-item {
+  #members .class-data-section .class-data-item,
+  #tests .user-data-section .user-data-item,
+  #tests .user-data-section .class-data-item,
+  #tests .class-data-section .user-data-item,
+  #tests .class-data-section .class-data-item {
     -ms-grid-columns: 10rem 13rem 1fr;
         grid-template-columns: 10rem 13rem 1fr;
     -ms-grid-rows: auto 1fr;
@@ -2375,7 +2383,11 @@ label.required:after {
 #members .user-data-section .user-data-item > span,
 #members .user-data-section .class-data-item > span,
 #members .class-data-section .user-data-item > span,
-#members .class-data-section .class-data-item > span {
+#members .class-data-section .class-data-item > span,
+#tests .user-data-section .user-data-item > span,
+#tests .user-data-section .class-data-item > span,
+#tests .class-data-section .user-data-item > span,
+#tests .class-data-section .class-data-item > span {
   padding: calc(0.4em + 4px) 0;
 }
 
@@ -2402,7 +2414,15 @@ label.required:after {
 #members .class-data-section .user-data-item .user-property-action,
 #members .class-data-section .user-data-item .class-property-action,
 #members .class-data-section .class-data-item .user-property-action,
-#members .class-data-section .class-data-item .class-property-action {
+#members .class-data-section .class-data-item .class-property-action,
+#tests .user-data-section .user-data-item .user-property-action,
+#tests .user-data-section .user-data-item .class-property-action,
+#tests .user-data-section .class-data-item .user-property-action,
+#tests .user-data-section .class-data-item .class-property-action,
+#tests .class-data-section .user-data-item .user-property-action,
+#tests .class-data-section .user-data-item .class-property-action,
+#tests .class-data-section .class-data-item .user-property-action,
+#tests .class-data-section .class-data-item .class-property-action {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
@@ -2432,7 +2452,15 @@ label.required:after {
   #members .class-data-section .user-data-item .user-property-action,
   #members .class-data-section .user-data-item .class-property-action,
   #members .class-data-section .class-data-item .user-property-action,
-  #members .class-data-section .class-data-item .class-property-action {
+  #members .class-data-section .class-data-item .class-property-action,
+  #tests .user-data-section .user-data-item .user-property-action,
+  #tests .user-data-section .user-data-item .class-property-action,
+  #tests .user-data-section .class-data-item .user-property-action,
+  #tests .user-data-section .class-data-item .class-property-action,
+  #tests .class-data-section .user-data-item .user-property-action,
+  #tests .class-data-section .user-data-item .class-property-action,
+  #tests .class-data-section .class-data-item .user-property-action,
+  #tests .class-data-section .class-data-item .class-property-action {
     -ms-grid-column: 3;
     -ms-grid-column-span: 1;
     grid-column: 3/4;
@@ -2454,7 +2482,12 @@ label.required:after {
 #members #change-password,
 #members #change-email,
 #members #change-class-name,
-#members #change-class-status {
+#members #change-class-status,
+#tests #change-name,
+#tests #change-password,
+#tests #change-email,
+#tests #change-class-name,
+#tests #change-class-status {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
@@ -2475,7 +2508,12 @@ label.required:after {
   #members #change-password,
   #members #change-email,
   #members #change-class-name,
-  #members #change-class-status {
+  #members #change-class-status,
+  #tests #change-name,
+  #tests #change-password,
+  #tests #change-email,
+  #tests #change-class-name,
+  #tests #change-class-status {
     -ms-grid-column: 2;
     -ms-grid-column-span: 2;
     grid-column: 2/4;
@@ -2500,7 +2538,12 @@ label.required:after {
 #members #change-password .border-btn,
 #members #change-email .border-btn,
 #members #change-class-name .border-btn,
-#members #change-class-status .border-btn {
+#members #change-class-status .border-btn,
+#tests #change-name .border-btn,
+#tests #change-password .border-btn,
+#tests #change-email .border-btn,
+#tests #change-class-name .border-btn,
+#tests #change-class-status .border-btn {
   margin: 0.6rem auto;
   width: 100%;
 }
@@ -2519,7 +2562,12 @@ label.required:after {
 #members #change-password .inline.btn,
 #members #change-email .inline.btn,
 #members #change-class-name .inline.btn,
-#members #change-class-status .inline.btn {
+#members #change-class-status .inline.btn,
+#tests #change-name .inline.btn,
+#tests #change-password .inline.btn,
+#tests #change-email .inline.btn,
+#tests #change-class-name .inline.btn,
+#tests #change-class-status .inline.btn {
   margin-bottom: 0.2rem;
 }
 
@@ -2533,6 +2581,7 @@ label.required:after {
 #account-settings #delete-class1,
 #account-settings #delete-class2,
 #account-settings #invite-user-form,
+#account-settings #new-test,
 #manage #change-name,
 #manage #change-password,
 #manage #change-email,
@@ -2543,6 +2592,7 @@ label.required:after {
 #manage #delete-class1,
 #manage #delete-class2,
 #manage #invite-user-form,
+#manage #new-test,
 #members #change-name,
 #members #change-password,
 #members #change-email,
@@ -2552,7 +2602,19 @@ label.required:after {
 #members #change-class-status,
 #members #delete-class1,
 #members #delete-class2,
-#members #invite-user-form {
+#members #invite-user-form,
+#members #new-test,
+#tests #change-name,
+#tests #change-password,
+#tests #change-email,
+#tests #delete-account1,
+#tests #delete-account2,
+#tests #change-class-name,
+#tests #change-class-status,
+#tests #delete-class1,
+#tests #delete-class2,
+#tests #invite-user-form,
+#tests #new-test {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2592,6 +2654,9 @@ label.required:after {
 #account-settings #invite-user-form label,
 #account-settings #invite-user-form input.text-field,
 #account-settings #invite-user-form .custom-select-wrapper,
+#account-settings #new-test label,
+#account-settings #new-test input.text-field,
+#account-settings #new-test .custom-select-wrapper,
 #manage #change-name label,
 #manage #change-name input.text-field,
 #manage #change-name .custom-select-wrapper,
@@ -2622,6 +2687,9 @@ label.required:after {
 #manage #invite-user-form label,
 #manage #invite-user-form input.text-field,
 #manage #invite-user-form .custom-select-wrapper,
+#manage #new-test label,
+#manage #new-test input.text-field,
+#manage #new-test .custom-select-wrapper,
 #members #change-name label,
 #members #change-name input.text-field,
 #members #change-name .custom-select-wrapper,
@@ -2651,7 +2719,43 @@ label.required:after {
 #members #delete-class2 .custom-select-wrapper,
 #members #invite-user-form label,
 #members #invite-user-form input.text-field,
-#members #invite-user-form .custom-select-wrapper {
+#members #invite-user-form .custom-select-wrapper,
+#members #new-test label,
+#members #new-test input.text-field,
+#members #new-test .custom-select-wrapper,
+#tests #change-name label,
+#tests #change-name input.text-field,
+#tests #change-name .custom-select-wrapper,
+#tests #change-password label,
+#tests #change-password input.text-field,
+#tests #change-password .custom-select-wrapper,
+#tests #change-email label,
+#tests #change-email input.text-field,
+#tests #change-email .custom-select-wrapper,
+#tests #delete-account1 label,
+#tests #delete-account1 input.text-field,
+#tests #delete-account1 .custom-select-wrapper,
+#tests #delete-account2 label,
+#tests #delete-account2 input.text-field,
+#tests #delete-account2 .custom-select-wrapper,
+#tests #change-class-name label,
+#tests #change-class-name input.text-field,
+#tests #change-class-name .custom-select-wrapper,
+#tests #change-class-status label,
+#tests #change-class-status input.text-field,
+#tests #change-class-status .custom-select-wrapper,
+#tests #delete-class1 label,
+#tests #delete-class1 input.text-field,
+#tests #delete-class1 .custom-select-wrapper,
+#tests #delete-class2 label,
+#tests #delete-class2 input.text-field,
+#tests #delete-class2 .custom-select-wrapper,
+#tests #invite-user-form label,
+#tests #invite-user-form input.text-field,
+#tests #invite-user-form .custom-select-wrapper,
+#tests #new-test label,
+#tests #new-test input.text-field,
+#tests #new-test .custom-select-wrapper {
   margin: 0.2rem 0;
 }
 
@@ -2665,6 +2769,7 @@ label.required:after {
 #account-settings #delete-class1 label:not(:nth-of-type(1)),
 #account-settings #delete-class2 label:not(:nth-of-type(1)),
 #account-settings #invite-user-form label:not(:nth-of-type(1)),
+#account-settings #new-test label:not(:nth-of-type(1)),
 #manage #change-name label:not(:nth-of-type(1)),
 #manage #change-password label:not(:nth-of-type(1)),
 #manage #change-email label:not(:nth-of-type(1)),
@@ -2675,6 +2780,7 @@ label.required:after {
 #manage #delete-class1 label:not(:nth-of-type(1)),
 #manage #delete-class2 label:not(:nth-of-type(1)),
 #manage #invite-user-form label:not(:nth-of-type(1)),
+#manage #new-test label:not(:nth-of-type(1)),
 #members #change-name label:not(:nth-of-type(1)),
 #members #change-password label:not(:nth-of-type(1)),
 #members #change-email label:not(:nth-of-type(1)),
@@ -2684,7 +2790,19 @@ label.required:after {
 #members #change-class-status label:not(:nth-of-type(1)),
 #members #delete-class1 label:not(:nth-of-type(1)),
 #members #delete-class2 label:not(:nth-of-type(1)),
-#members #invite-user-form label:not(:nth-of-type(1)) {
+#members #invite-user-form label:not(:nth-of-type(1)),
+#members #new-test label:not(:nth-of-type(1)),
+#tests #change-name label:not(:nth-of-type(1)),
+#tests #change-password label:not(:nth-of-type(1)),
+#tests #change-email label:not(:nth-of-type(1)),
+#tests #delete-account1 label:not(:nth-of-type(1)),
+#tests #delete-account2 label:not(:nth-of-type(1)),
+#tests #change-class-name label:not(:nth-of-type(1)),
+#tests #change-class-status label:not(:nth-of-type(1)),
+#tests #delete-class1 label:not(:nth-of-type(1)),
+#tests #delete-class2 label:not(:nth-of-type(1)),
+#tests #invite-user-form label:not(:nth-of-type(1)),
+#tests #new-test label:not(:nth-of-type(1)) {
   margin-top: 0.54rem;
 }
 
@@ -2698,6 +2816,7 @@ label.required:after {
 #account-settings #delete-class1 p,
 #account-settings #delete-class2 p,
 #account-settings #invite-user-form p,
+#account-settings #new-test p,
 #manage #change-name p,
 #manage #change-password p,
 #manage #change-email p,
@@ -2708,6 +2827,7 @@ label.required:after {
 #manage #delete-class1 p,
 #manage #delete-class2 p,
 #manage #invite-user-form p,
+#manage #new-test p,
 #members #change-name p,
 #members #change-password p,
 #members #change-email p,
@@ -2717,14 +2837,27 @@ label.required:after {
 #members #change-class-status p,
 #members #delete-class1 p,
 #members #delete-class2 p,
-#members #invite-user-form p {
+#members #invite-user-form p,
+#members #new-test p,
+#tests #change-name p,
+#tests #change-password p,
+#tests #change-email p,
+#tests #delete-account1 p,
+#tests #delete-account2 p,
+#tests #change-class-name p,
+#tests #change-class-status p,
+#tests #delete-class1 p,
+#tests #delete-class2 p,
+#tests #invite-user-form p,
+#tests #new-test p {
   margin-bottom: 0.6rem;
   text-align: justify;
 }
 
 #account-settings h3,
 #manage h3,
-#members h3 {
+#members h3,
+#tests h3 {
   font-size: 1em;
   font-weight: bold;
   line-height: 1.2em;
@@ -2733,24 +2866,38 @@ label.required:after {
 #account-settings #delete-account1,
 #account-settings #delete-class1,
 #account-settings #invite-user-form,
+#account-settings #new-test,
 #manage #delete-account1,
 #manage #delete-class1,
 #manage #invite-user-form,
+#manage #new-test,
 #members #delete-account1,
 #members #delete-class1,
-#members #invite-user-form {
+#members #invite-user-form,
+#members #new-test,
+#tests #delete-account1,
+#tests #delete-class1,
+#tests #invite-user-form,
+#tests #new-test {
   max-width: 400px;
 }
 
 #account-settings #delete-account1 .border-btn,
 #account-settings #delete-class1 .border-btn,
 #account-settings #invite-user-form .border-btn,
+#account-settings #new-test .border-btn,
 #manage #delete-account1 .border-btn,
 #manage #delete-class1 .border-btn,
 #manage #invite-user-form .border-btn,
+#manage #new-test .border-btn,
 #members #delete-account1 .border-btn,
 #members #delete-class1 .border-btn,
-#members #invite-user-form .border-btn {
+#members #invite-user-form .border-btn,
+#members #new-test .border-btn,
+#tests #delete-account1 .border-btn,
+#tests #delete-class1 .border-btn,
+#tests #invite-user-form .border-btn,
+#tests #new-test .border-btn {
   margin: 0.6rem auto;
   width: 100%;
 }
@@ -2763,7 +2910,10 @@ label.required:after {
 #manage .kick-user span,
 #members #delete-account2 span,
 #members #delete-class2 span,
-#members .kick-user span {
+#members .kick-user span,
+#tests #delete-account2 span,
+#tests #delete-class2 span,
+#tests .kick-user span {
   color: #a00;
 }
 
@@ -2775,7 +2925,10 @@ label.required:after {
 #manage .kick-user .buttons,
 #members #delete-account2 .buttons,
 #members #delete-class2 .buttons,
-#members .kick-user .buttons {
+#members .kick-user .buttons,
+#tests #delete-account2 .buttons,
+#tests #delete-class2 .buttons,
+#tests .kick-user .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2792,7 +2945,10 @@ label.required:after {
 #manage .kick-user .buttons .border-btn,
 #members #delete-account2 .buttons .border-btn,
 #members #delete-class2 .buttons .border-btn,
-#members .kick-user .buttons .border-btn {
+#members .kick-user .buttons .border-btn,
+#tests #delete-account2 .buttons .border-btn,
+#tests #delete-class2 .buttons .border-btn,
+#tests .kick-user .buttons .border-btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -2807,7 +2963,10 @@ label.required:after {
 #manage .kick-user .buttons .border-btn:not(:last-child),
 #members #delete-account2 .buttons .border-btn:not(:last-child),
 #members #delete-class2 .buttons .border-btn:not(:last-child),
-#members .kick-user .buttons .border-btn:not(:last-child) {
+#members .kick-user .buttons .border-btn:not(:last-child),
+#tests #delete-account2 .buttons .border-btn:not(:last-child),
+#tests #delete-class2 .buttons .border-btn:not(:last-child),
+#tests .kick-user .buttons .border-btn:not(:last-child) {
   margin-right: 0.6rem;
 }
 
@@ -2963,6 +3122,118 @@ label.required:after {
 }
 
 #members .invite-user-section {
+  padding: 0.4rem;
+}
+
+#tests #tests-wrapper {
+  margin: auto;
+  max-width: 800px;
+}
+
+#tests .tests-data-section {
+  width: 100%;
+}
+
+#tests .tests-data-section .tests-data-properties,
+#tests .tests-data-section .tests-data-item {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 6rem 3rem 1fr;
+      grid-template-columns: 6rem 3rem 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+}
+
+@media screen and (min-width: 360px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 9.6rem 4rem 1fr;
+        grid-template-columns: 9.6rem 4rem 1fr;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 15rem 4rem 1fr;
+        grid-template-columns: 15rem 4rem 1fr;
+  }
+}
+
+@media screen and (min-width: 672px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 13rem 3rem 1fr;
+        grid-template-columns: 13rem 3rem 1fr;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 16rem 4rem 1fr;
+        grid-template-columns: 16rem 4rem 1fr;
+  }
+}
+
+#tests .tests-data-section .tests-data-properties > *,
+#tests .tests-data-section .tests-data-item > * {
+  margin: auto;
+}
+
+#tests .tests-data-section .tests-data-item {
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+}
+
+#tests .tests-data-section .tests-data-item > span {
+  padding: calc(0.2em + 4px) 0;
+}
+
+#tests .tests-data-section .tests-data-item .test-name {
+  font-weight: bold;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+#tests .tests-data-section .tests-data-item .test-action {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 672px) {
+  #tests .tests-data-section .tests-data-item .test-action {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+}
+
+#tests .tests-data-section .tests-data-item .test-action .btn {
+  margin: 0.2rem 0.4rem;
+}
+
+@media screen and (min-width: 672px) {
+  #tests .tests-data-section .tests-data-item .test-action .btn {
+    margin: auto 0.4rem;
+  }
+}
+
+#tests .tests-new-section {
   padding: 0.4rem;
 }
 
