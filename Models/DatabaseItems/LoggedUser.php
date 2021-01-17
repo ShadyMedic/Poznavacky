@@ -272,13 +272,28 @@ class LoggedUser extends User
         $this->email = $newEmail;
         return true;
     }
-    
+
+    /**
+     * Metoda aktualizující uživateli jak v $_SESSION tak v databázi URL adresu poslední zobrazení tabulky na menu stránce
+     * @param string $url Nová URL adresa k uložení
+     * @return bool TRUE, pokud vše proběhne hladce
+     */
+    public function updateLastMenuTableUrl(string $url): bool
+    {
+        $this->loadIfNotLoaded($this->id);
+
+        $this->lastMenuTableUrl = $url;
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['lastMenuTableUrl'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($url, $this->id));
+    }
+
     /**
      * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli přidaných obrázků
      * @return boolean TRUE, pokud vše proběhne hladce
      */
     public function incrementAddedPictures(): bool
     {
+        $this->loadIfNotLoaded($this->id);
+
         $this->addedPictures++;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
