@@ -62,6 +62,9 @@ function getCookie(cname)
 //funkce upravující manipulaci s custom select boxy
 function manageSelectBox(thisObj){
 	thisObj.find(".custom-select").toggleClass("open");
+	thisObj.find(".custom-options .selected")[0].scrollIntoView({ 
+		block: "start" 
+	});
 	$(".custom-option").each(function() {
 		$(this).click(function() {
 			if (!$(this).hasClass('selected')) {
