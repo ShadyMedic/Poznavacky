@@ -409,6 +409,16 @@ h5 {
   width: 100%;
 }
 
+.btn.icon.disabled {
+  pointer-events: none;
+  cursor: auto;
+}
+
+.btn.icon.disabled > img {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+
 .btn.icon:active img {
   -webkit-transform: scale(0.96);
           transform: scale(0.96);
@@ -1142,6 +1152,9 @@ label.required:after {
 #tests .wrapper,
 #edit-group .wrapper,
 #resolve-reports .wrapper {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
   padding: 1rem 1rem;
 }
 
@@ -3235,6 +3248,155 @@ label.required:after {
 
 #tests .tests-new-section {
   padding: 0.4rem;
+}
+
+#resolve-reports {
+  width: 100%;
+}
+
+#resolve-reports .reports-data-properties,
+#resolve-reports .reports-data-item {
+  width: 100%;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 12rem minmax(10rem, 1fr) 17.6rem 12rem 8rem 8rem;
+      grid-template-columns: 12rem minmax(10rem, 1fr) 17.6rem 12rem 8rem 8rem;
+  -webkit-column-gap: 0.4rem;
+          column-gap: 0.4rem;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+}
+
+#resolve-reports .reports-data-item {
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+}
+
+#resolve-reports .reports-data-item .report-name,
+#resolve-reports .reports-data-item .report-name-edit {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1/2;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-name-edit {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+#resolve-reports .reports-data-item .report-url,
+#resolve-reports .reports-data-item .report-url-edit {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+  font-size: 0.8rem;
+}
+
+#resolve-reports .reports-data-item .report-url {
+  text-align: center;
+}
+
+#resolve-reports .reports-data-item .report-url-edit {
+  width: 100%;
+}
+
+#resolve-reports .reports-data-item .report-reason {
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 1;
+  grid-column: 3/4;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-additional-info {
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 1;
+  grid-column: 4/5;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-number {
+  -ms-grid-column: 5;
+  -ms-grid-column-span: 1;
+  grid-column: 5/6;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-action {
+  -ms-grid-column: 6;
+  -ms-grid-column-span: 1;
+  grid-column: 6/7;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-action,
+#resolve-reports .reports-data-item .report-edit-buttons {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+#resolve-reports .reports-data-item .report-image {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 6;
+  grid-column: 1/7;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  height: 300px;
+  padding: 0.4rem;
+}
+
+#resolve-reports .reports-data-item .report-image > img {
+  height: 100%;
+}
+
+#resolve-reports .reports-data-item .text-field {
+  max-width: 100%;
+  width: 100%;
+  resize: none;
+  max-height: 2.8rem;
+  padding: 0.32em 0.4em;
+}
+
+#resolve-reports .reports-data-item .custom-select-wrapper .custom-select-main {
+  height: 1.96em;
+  padding: 0.32em 0.4em;
+}
+
+#resolve-reports .reports-data-item .custom-select-wrapper .custom-options {
+  max-height: 200px;
+  padding: 0.3em 0.32em;
 }
 
 @media screen and (min-width: 672px) {

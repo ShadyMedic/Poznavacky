@@ -8,7 +8,8 @@ $(function() {
 
 	//event listener select boxů
 	$(".custom-select-wrapper").each(function() {
-		if (this.id != "add-natural-select" && this.id != "class-status-select") {
+		if (this.id != "add-natural-select" && this.id != "class-status-select" && this.id != "report-natural-select") 
+		{
 			$(this).find(".custom-option").first().addClass("selected");
 		}
 		$(this).click(function() {
