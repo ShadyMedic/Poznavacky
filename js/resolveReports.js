@@ -1,7 +1,6 @@
 //vše, co se děje po načtení stránky
 $(function() {
 
-	$(".custom-select-wrapper")
 	//event listenery tlačítek
 	$(".show-picture-button").click(function(event) {showPicture(event)})
 	$(".edit-picture-button").click(function(event) {editPicture(event)})
@@ -47,11 +46,13 @@ function editPictureCancel(event)
 	let $report = $(event.target).closest(".reports-data-item");
 
 	//reset custom select boxu
-	$report.find(".report-name-edit #report-natural-select .custom-option").removeClass("selected");
-	$report.find(".report-name-edit #report-natural-select .custom-select-main span").text(currentName);
-	$report.find(".report-name-edit #report-natural-select .custom-option:contains(" + currentName + ")").addClass("selected");
+	
+	$report.find(".report-name-edit .report-natural-select .custom-option").removeClass("selected");
+	$report.find(".report-name-edit .report-natural-select .custom-select-main span").text(currentName);
+	$report.find(".report-name-edit .report-natural-select .custom-option:contains(" + currentName + ")").addClass("selected");
 	//reset url pole
 	$report.find(".report-url-edit .text-field").val(currentUrl);
+
 
 	//zobrazení příslušných tlačítek, skrytí polí
 	$report.find(".report-action > .btn").show();
@@ -71,7 +72,7 @@ function editPictureConfirm(event)
 	let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
 
 	//uložení nových hodnot
-	currentName = $report.find(".report-name-edit #report-natural-select .selected").text().trim();
+	currentName = $report.find(".report-name-edit .report-natural-select .selected").text().trim();
 	currentUrl = $report.find(".report-url-edit .text-field").val().trim();
 	
 	//Odeslat data na server
@@ -89,8 +90,12 @@ function editPictureConfirm(event)
 				{
 					if (messageType === "success")
 					{
-						//Reset DOM
-						editPictureCancel();
+						//Reset DOM (simulace kliknutí na tlačítko cancel kvůli eventu jako parametru funkce)
+						$report.find(".edit-picture-cancel-button").trigger("click");
+
+						console.log(currentName);
+						$report.find(".report-name").text(currentName);
+						$report.find(".report-url").text(currentUrl);
 						//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
 						alert(message);
 					}
@@ -101,21 +106,22 @@ function editPictureConfirm(event)
 					}
 					else
 					{
-						//Aktualizuj údaje u hlášení stejného obrázku v DOM
-						let reportsToUpdateCount = $(".reports-data-item[data-picture-id='picture-id" + pictureId + "']").length;
+						//aktualizuj údaje u hlášení stejného obrázku v DOM
+						let $reportsToUpdate = $(".reports-data-item[data-picture-id='" + pictureId + "']");
+						let reportsToUpdateCount = $reportsToUpdate.length;
 						for (let i = 0; i < reportsToUpdateCount; i++)
 						{
-							$(".reports-data-item[data-picture-id='" + pictureId + "']").each(function() {
-								$(this).find(".report-name-edit #report-natural-select .custom-option").removeClass("selected");
-								$(this).find(".report-name-edit #report-natural-select .custom-select-main span").text(currentName);
-								$(this).find(".report-name-edit #report-natural-select .custom-option:contains(" + currentName + ")").addClass("selected");
+							$reportsToUpdate.each(function() {
+								//aktualizace spanů
+								$(this).find(".report-name").text(currentName);
+								$(this).find(".report-url").text(currentUrl);
+								//aktualizace custom select boxu
+								$(this).find(".report-name-edit .report-natural-select .custom-option").removeClass("selected");
+								$(this).find(".report-name-edit .report-natural-select .custom-select-main span").text(currentName);
+								$(this).find(".report-name-edit .report-natural-select .custom-option:contains(" + currentName + ")").addClass("selected");
+								//aktualizace url textarey
 								$(this).find(".report-url-edit .text-field").val(currentUrl);
 							})
-							/*
-							for (let j = 0; j <= 1; j++)
-							{
-								$("#reports-table .picture-id" + picId + ":eq(" + i + ") .report-field:eq("+ j +")").val(currentReportValues[j]);
-							}*/
 						}
 					}
 				}
