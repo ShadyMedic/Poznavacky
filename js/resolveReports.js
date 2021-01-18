@@ -6,6 +6,7 @@ $(function() {
 	$(".edit-picture-button").click(function(event) {editPicture(event)})
 	$(".edit-picture-confirm-button").click(function(event) {editPictureConfirm(event)})
 	$(".edit-picture-cancel-button").click(function(event) {editPictureCancel(event)})
+	$(".delete-picture-button").click(function(event) {deletePicture(event)})
 })
 
 //funkce zobrazující náhled nahlášeného obrázku
@@ -130,44 +131,17 @@ function editPictureConfirm(event)
 		"json"
 	);
 }
-function disablePicture(event, picId, asAdmin = false)
+
+
+function deletePicture(event, asAdmin = false)
 {
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
-	
-	$.post(ajaxUrl,
-		{
-			action: 'disable picture',
-			pictureId: picId
-		},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (messageType === "error")
-					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
-					}
-					else
-					{
-						//Odebrání všechna hlášení daného obrázku z DOM
-						$("#reports-table .picture-id" + picId).remove();
-					}
-				}
-			);
-		},
-		"json"
-	);
-}
-function deletePicture(event, picId, asAdmin = false)
-{
+	let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
 	$.post(ajaxUrl,
 			{
 				action: 'delete picture',
-				pictureId: picId
+				pictureId: pictureId
 			},
 			function (response, status)
 			{
@@ -181,8 +155,8 @@ function deletePicture(event, picId, asAdmin = false)
 						}
 						else
 						{
-							//Odebrání všechna hlášení daného obrázku z DOM
-							$("#reports-table .picture-id" + picId).remove();
+							//odebrání všech hlášení daného obrázku z DOM
+							$(".reports-data-item[data-picture-id='" + pictureId + "']").remove();
 						}
 					}
 				);
@@ -190,6 +164,8 @@ function deletePicture(event, picId, asAdmin = false)
 			"json"
 		);
 }
+
+
 function deleteReport(event, reportId, asAdmin = false)
 {
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";

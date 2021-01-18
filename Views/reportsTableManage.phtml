@@ -11,7 +11,10 @@
     <p>Žádná hlášení k vyřízení</p>
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
-        <div class="reports-data-item" data-picture-id="<?= $report->getPictureId() ?>" data-report-url=<?= $report->getUrl() ?>>
+        <div class="reports-data-item"
+			data-picture-id="<?= $report->getPictureId() ?>"
+			data-report-id="<?= $report->getId() ?>"
+			data-report-url="<?= $report->getUrl() ?>">
 			<span class="report-name"><?= $report->getNaturalName() ?></span>
             <div class="report-name-edit" style="display: none">
 				<div class="custom-select-wrapper report-natural-select">
@@ -43,10 +46,7 @@
                 <button class="btn icon edit-picture-button" title='Upravit údaje obrázku'>
                     <img src='images/pencil.svg'/>
                 </button>
-                <button class='btn icon' onclick='disablePicture(event, <?= $report->getPictureId() ?>, false)' title='Skrýt obrázek'>
-                    <img src='images/dot.svg'/>
-                </button>
-                <button class='btn icon' onclick='deletePicture(event, <?= $report->getPictureId() ?>, false)' title='Odstranit obrázek'>
+                <button class='btn icon delete-picture-button' title='Odstranit obrázek'>
                     <img src='images/cross.svg'/>
                 </button>
 				<div class="report-edit-buttons" style="display: none;">
@@ -57,6 +57,9 @@
                     	<img src='images/cross.svg'/>
                     </button>
                 </div>
+				<button class='btn icon' onclick='deleteReport(event, <?= $report->getId() ?>, false)' title='Odstranit hlášení'>
+                    <img src='images/minus.svg'/>
+                </button>
             </div>
 			<div class="report-image" style="display: none">
 				<img src="">
