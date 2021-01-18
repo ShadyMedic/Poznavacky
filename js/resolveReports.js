@@ -7,6 +7,7 @@ $(function() {
 	$(".edit-picture-confirm-button").click(function(event) {editPictureConfirm(event)})
 	$(".edit-picture-cancel-button").click(function(event) {editPictureCancel(event)})
 	$(".delete-picture-button").click(function(event) {deletePicture(event)})
+	$(".delete-report-button").click(function(event) {deleteReport(event)})
 })
 
 //funkce zobrazující náhled nahlášeného obrázku
@@ -132,7 +133,6 @@ function editPictureConfirm(event)
 	);
 }
 
-
 function deletePicture(event, asAdmin = false)
 {
 	let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
@@ -165,9 +165,9 @@ function deletePicture(event, asAdmin = false)
 		);
 }
 
-
-function deleteReport(event, reportId, asAdmin = false)
+function deleteReport(event, asAdmin = false)
 {
+	let reportId = $(event.target).closest(".reports-data-item").attr("data-report-id");
 	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
 	
 	$.post(ajaxUrl,
@@ -187,8 +187,8 @@ function deleteReport(event, reportId, asAdmin = false)
 					}
 					else
 					{
-						//Odebrání hlášení z DOM
-						event.target.parentNode.parentNode.parentNode.remove();
+						//odebrání hlášení z DOM
+						$(event.target).closest(".reports-data-item").remove();
 					}
 				}
 			);
