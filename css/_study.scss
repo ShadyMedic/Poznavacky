@@ -28,7 +28,7 @@
 		margin: auto;
 		@media screen and (min-width: $smallTablet) {
 			column-gap: 20px;
-			grid-template-columns: auto minmax(15rem, 1fr);
+			grid-template-columns: auto minmax(10rem, 1fr);
 		}
 		@media screen and (min-width: $smallDesktop) {
 			column-gap: 40px;
@@ -52,7 +52,13 @@
 			@media screen and (min-width: $smallTablet) {
 				grid-column: 1/2;
 				grid-row: 1/2;
-				max-width: 450px;
+				width: 300px;
+			}
+			@media screen and (min-width: $tablet) {
+				width: 400px;
+			}
+			@media screen and (min-width: $smallDesktop) {
+				width: 500px;
 			}
 			margin: 8px 0;
 			@media screen and (min-width: $smallTablet) {
@@ -92,18 +98,35 @@
 		}
 		font-size: 0.9rem;
 		position: absolute;
+		display: flex;
+		flex-direction: column;
 		bottom: 0;
 		height: 100%;
 		background: white;
 		width: 100%;
-		transform: translateY(100%);
+		transform: translateY(105%);
 		transition: transform 0.4s ease-out;
 		&.show {
 			transform: translateY(0);
 			box-shadow: 0px -4px 6px 0px rgba(black, 0.4);
 		}
-		.custom-select {
-			margin: 4px 0 8px 0;
+		h3 {
+			font-size: 1.2rem;
+			font-weight: bold;
+			line-height: 1.2em;
+			margin-top: 0;
+			margin-bottom: 0.4rem;
+		}
+		#report-img-preview {
+			padding: 0.4rem 0;
+			position: relative;
+			height: 30%;
+			> img {
+				height: 100%;
+			}
+		}
+		.custom-select-wrapper {
+			margin: 0.2rem 0;
 			.custom-select-main {
 				background: $gray2;
 			}
@@ -130,8 +153,8 @@
 				textarea {
 					width: 100%;
 					resize: vertical;
-					height: 100px;
-					max-height: 120px;
+					height: 60px;
+					max-height: 100px;
 					@media screen and (min-width: $smallMobile) {
 						max-height: 160px;
 					}
@@ -143,12 +166,17 @@
 		}
 		.text-field {
 			background: $gray2;
+			margin: 0.2rem 0;
 		}
-		.cross {
+		#submit-report-button {
+			margin-top: auto;
+			margin-bottom: 2rem;
+		}
+		#cancel-report-button {
 			position: absolute;
 			right: 0;
 			bottom: 0;
-			margin: 8px;
+			margin: 1rem;
 			height: 16px;
 			width: 16px;
 		}

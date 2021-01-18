@@ -1819,8 +1819,8 @@ label.required:after {
   #test #test-wrapper {
     -webkit-column-gap: 20px;
             column-gap: 20px;
-    -ms-grid-columns: auto minmax(15rem, 1fr);
-        grid-template-columns: auto minmax(15rem, 1fr);
+    -ms-grid-columns: auto minmax(10rem, 1fr);
+        grid-template-columns: auto minmax(10rem, 1fr);
   }
 }
 
@@ -1899,7 +1899,25 @@ label.required:after {
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
     grid-row: 1/2;
-    max-width: 450px;
+    width: 300px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #learn #learn-wrapper .picture,
+  #learn #test-wrapper .picture,
+  #test #learn-wrapper .picture,
+  #test #test-wrapper .picture {
+    width: 400px;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #learn #learn-wrapper .picture,
+  #learn #test-wrapper .picture,
+  #test #learn-wrapper .picture,
+  #test #test-wrapper .picture {
+    width: 500px;
   }
 }
 
@@ -1949,12 +1967,19 @@ label.required:after {
   padding: 0.6rem;
   font-size: 0.9rem;
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   bottom: 0;
   height: 100%;
   background: white;
   width: 100%;
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  -webkit-transform: translateY(105%);
+          transform: translateY(105%);
   -webkit-transition: -webkit-transform 0.4s ease-out;
   transition: -webkit-transform 0.4s ease-out;
   transition: transform 0.4s ease-out;
@@ -1976,23 +2001,44 @@ label.required:after {
           box-shadow: 0px -4px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
-#learn .report-box .custom-select,
-#test .report-box .custom-select {
-  margin: 4px 0 8px 0;
+#learn .report-box h3,
+#test .report-box h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.2em;
+  margin-top: 0;
+  margin-bottom: 0.4rem;
 }
 
-#learn .report-box .custom-select .custom-select-main,
-#test .report-box .custom-select .custom-select-main {
+#learn .report-box #report-img-preview,
+#test .report-box #report-img-preview {
+  padding: 0.4rem 0;
+  position: relative;
+  height: 30%;
+}
+
+#learn .report-box #report-img-preview > img,
+#test .report-box #report-img-preview > img {
+  height: 100%;
+}
+
+#learn .report-box .custom-select-wrapper,
+#test .report-box .custom-select-wrapper {
+  margin: 0.2rem 0;
+}
+
+#learn .report-box .custom-select-wrapper .custom-select-main,
+#test .report-box .custom-select-wrapper .custom-select-main {
   background: #eee;
 }
 
-#learn .report-box .custom-select .custom-option,
-#test .report-box .custom-select .custom-option {
+#learn .report-box .custom-select-wrapper .custom-option,
+#test .report-box .custom-select-wrapper .custom-option {
   border-top: 1px solid white;
 }
 
-#learn .report-box .custom-select .custom-option:not(.selected),
-#test .report-box .custom-select .custom-option:not(.selected) {
+#learn .report-box .custom-select-wrapper .custom-option:not(.selected),
+#test .report-box .custom-select-wrapper .custom-option:not(.selected) {
   background: #eee;
 }
 
@@ -2024,8 +2070,8 @@ label.required:after {
 #test .report-box .additional-report-info > * textarea {
   width: 100%;
   resize: vertical;
-  height: 100px;
-  max-height: 120px;
+  height: 60px;
+  max-height: 100px;
 }
 
 @media screen and (min-width: 360px) {
@@ -2043,14 +2089,21 @@ label.required:after {
 #learn .report-box .text-field,
 #test .report-box .text-field {
   background: #eee;
+  margin: 0.2rem 0;
 }
 
-#learn .report-box .cross,
-#test .report-box .cross {
+#learn .report-box #submit-report-button,
+#test .report-box #submit-report-button {
+  margin-top: auto;
+  margin-bottom: 2rem;
+}
+
+#learn .report-box #cancel-report-button,
+#test .report-box #cancel-report-button {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin: 8px;
+  margin: 1rem;
   height: 16px;
   width: 16px;
 }

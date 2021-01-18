@@ -15,7 +15,9 @@ $(function() {
 	//event listener změny select boxu přírodnin
 	$("#natural-select span").on('DOMSubtreeModified',function(){sel()});
 
-	resizeMainImg();
+	//resizeMainImg();
+	console.log($("#learn-wrapper .picture").width());
+	$("#learn-wrapper .picture").css("height", $("#learn-wrapper .picture").outerWidth());
 })
 
 //vše, co se děje při změně velikosti okna
@@ -165,6 +167,8 @@ function keyPressed(event)
  */
 function updatePicture(offset)
 {
+	if ($(".report-box").hasClass("show"))
+		cancelReport();
 	selectedNatural.getPicture(offset);
 }
 
