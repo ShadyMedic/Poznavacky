@@ -25,6 +25,7 @@
 		&:focus {
 			outline: none;
 		}
+		margin: auto;
 		@media screen and (min-width: $smallTablet) {
 			column-gap: 20px;
 			grid-template-columns: auto minmax(15rem, 1fr);

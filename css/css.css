@@ -1798,6 +1798,13 @@ label.required:after {
   }
 }
 
+#learn #learn-wrapper,
+#learn #test-wrapper,
+#test #learn-wrapper,
+#test #test-wrapper {
+  margin: auto;
+}
+
 #learn #learn-wrapper:focus,
 #learn #test-wrapper:focus,
 #test #learn-wrapper:focus,
