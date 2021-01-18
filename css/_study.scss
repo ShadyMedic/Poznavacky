@@ -27,7 +27,7 @@
 		}
 		@media screen and (min-width: $smallTablet) {
 			column-gap: 20px;
-			grid-template-columns: auto 1fr;
+			grid-template-columns: auto minmax(15rem, 1fr);
 		}
 		@media screen and (min-width: $smallDesktop) {
 			column-gap: 40px;
@@ -47,18 +47,12 @@
 			}
 		}
 		.picture {
+			width: 100%;
 			@media screen and (min-width: $smallTablet) {
 				grid-column: 1/2;
 				grid-row: 1/2;
-				width: 320px;
+				max-width: 450px;
 			}
-			@media screen and (min-width: $tablet) {
-				width: 400px;
-			}
-			@media screen and (min-width: $smallDesktop) {
-				width: 500px;
-			}
-			width: 100%;
 			margin: 8px 0;
 			@media screen and (min-width: $smallTablet) {
 				margin: 6px 0;

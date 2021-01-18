@@ -1812,8 +1812,8 @@ label.required:after {
   #test #test-wrapper {
     -webkit-column-gap: 20px;
             column-gap: 20px;
-    -ms-grid-columns: auto 1fr;
-        grid-template-columns: auto 1fr;
+    -ms-grid-columns: auto minmax(15rem, 1fr);
+        grid-template-columns: auto minmax(15rem, 1fr);
   }
 }
 
@@ -1892,25 +1892,7 @@ label.required:after {
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
     grid-row: 1/2;
-    width: 320px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  #learn #learn-wrapper .picture,
-  #learn #test-wrapper .picture,
-  #test #learn-wrapper .picture,
-  #test #test-wrapper .picture {
-    width: 400px;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  #learn #learn-wrapper .picture,
-  #learn #test-wrapper .picture,
-  #test #learn-wrapper .picture,
-  #test #test-wrapper .picture {
-    width: 500px;
+    max-width: 450px;
   }
 }
 
