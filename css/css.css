@@ -3262,11 +3262,11 @@ label.required:after {
   min-width: fit-content;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 12rem minmax(10rem, 1fr) 17.6rem 12rem 8rem 8rem;
-      grid-template-columns: 12rem minmax(10rem, 1fr) 17.6rem 12rem 8rem 8rem;
+  -ms-grid-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
+      grid-template-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
   -webkit-column-gap: 0.4rem;
           column-gap: 0.4rem;
-  justify-items: center;
+  justify-items: stretch;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -3308,7 +3308,8 @@ label.required:after {
 }
 
 #resolve-reports .reports-data-item .report-url {
-  text-align: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 #resolve-reports .reports-data-item .report-url-edit {
@@ -3375,6 +3376,7 @@ label.required:after {
   grid-row: 2/3;
   height: 300px;
   padding: 0.4rem;
+  margin: 0.6rem auto 0 auto;
 }
 
 #resolve-reports .reports-data-item .report-image > img {
@@ -3385,7 +3387,9 @@ label.required:after {
   max-width: 100%;
   width: 100%;
   resize: none;
-  max-height: 2.8rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   padding: 0.32em 0.4em;
 }
 
@@ -3397,6 +3401,15 @@ label.required:after {
 #resolve-reports .reports-data-item .custom-select-wrapper .custom-options {
   max-height: 200px;
   padding: 0.3em 0.32em;
+}
+
+#resolve-reports .report-name,
+#resolve-reports .report-url,
+#resolve-reports .report-reason,
+#resolve-reports .report-additional-info,
+#resolve-reports .report-number,
+#resolve-reports .report-action {
+  text-align: center;
 }
 
 @media screen and (min-width: 672px) {

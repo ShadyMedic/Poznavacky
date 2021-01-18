@@ -709,9 +709,9 @@
 		width: 100%;
 		min-width: fit-content;
 		display: grid;
-		grid-template-columns: 12rem minmax(10rem, 1fr) 17.6rem 12rem 8rem 8rem;
+		grid-template-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
 		column-gap: 0.4rem;
-		justify-items: center;
+		justify-items: stretch;
 		align-items: center;
 		margin: 0.4rem;
 		padding: 0.2rem 0.8rem;
@@ -736,7 +736,8 @@
 			font-size: 0.8rem;
 		}
 		.report-url {
-			text-align: center;
+			overflow-wrap: break-word;
+			word-wrap: break-word;
 		}
 		.report-url-edit {
 			width: 100%;
@@ -769,6 +770,7 @@
 			grid-row: 2/3;
 			height: 300px;
 			padding: 0.4rem;
+			margin: 0.6rem auto 0 auto;
 			> img {
 				height: 100%;
 			}
@@ -777,7 +779,7 @@
 			max-width: 100%;
 			width: 100%;
 			resize: none;
-			max-height: 2.8rem;
+			height: fit-content;
 			padding: 0.32em 0.4em;
 		}
 		.custom-select-wrapper {
@@ -790,6 +792,14 @@
 				padding: 0.3em 0.32em;
 			}
 		}
+	}
+	.report-name,
+	.report-url,
+	.report-reason,
+	.report-additional-info,
+	.report-number,
+	.report-action {
+		text-align: center;
 	}
 }
 #edit-group {
