@@ -175,6 +175,7 @@
 			.picture-control {
 				background: none;
 				width: 12%;
+				height: 100%;
 				opacity: 0.8;
 				position: absolute;
 				padding: 10px;
@@ -187,6 +188,9 @@
 					top: 0;
 					bottom: 0;
 					right: 0;	
+				}
+				> img {
+					filter: drop-shadow(0 0 0.2rem rgba(black, 0.6));
 				}
 			}
 		}

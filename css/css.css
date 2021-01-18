@@ -2079,6 +2079,7 @@ label.required:after {
 #learn #learn-wrapper .picture .picture-control {
   background: none;
   width: 12%;
+  height: 100%;
   opacity: 0.8;
   position: absolute;
   padding: 10px;
@@ -2094,6 +2095,11 @@ label.required:after {
   top: 0;
   bottom: 0;
   right: 0;
+}
+
+#learn #learn-wrapper .picture .picture-control > img {
+  -webkit-filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
+          filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
 }
 
 #test #test-wrapper .controllers * {
@@ -3375,8 +3381,20 @@ label.required:after {
   -ms-grid-row-span: 1;
   grid-row: 2/3;
   height: 300px;
-  padding: 0.4rem;
-  margin: 0.6rem auto 0 auto;
+  margin: 1rem auto 0.4rem auto;
+  position: relative;
+}
+
+#resolve-reports .reports-data-item .report-image .btn {
+  margin: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#resolve-reports .reports-data-item .report-image .btn > img {
+  -webkit-filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
+          filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
 }
 
 #resolve-reports .reports-data-item .report-image > img {

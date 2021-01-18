@@ -3,6 +3,7 @@ $(function() {
 
 	//event listenery tlačítek
 	$(".show-picture-button").click(function(event) {showPicture(event)})
+	$(".hide-picture-button").click(function(event) {hidePicture(event)})
 	$(".edit-picture-button").click(function(event) {editPicture(event)})
 	$(".edit-picture-confirm-button").click(function(event) {editPictureConfirm(event)})
 	$(".edit-picture-cancel-button").click(function(event) {editPictureCancel(event)})
@@ -18,6 +19,14 @@ function showPicture(event)
 
 	$report.find(".report-image > img").attr("src", url);
 	$report.find(".report-image").show();
+}
+
+//funkce skrývající náhled nahlášeného obrázku
+function hidePicture(event)
+{
+	let $report = $(event.target).closest(".reports-data-item");
+
+	$report.find(".report-image").hide();
 }
 
 var currentName;

@@ -769,8 +769,17 @@
 			grid-column: 1/7;
 			grid-row: 2/3;
 			height: 300px;
-			padding: 0.4rem;
-			margin: 0.6rem auto 0 auto;
+			margin: 1rem auto 0.4rem auto;
+			position: relative;
+			.btn {
+				margin: 1rem;
+				position: absolute;
+				top: 0;
+				right: 0;
+				> img {
+					filter: drop-shadow(0 0 0.16rem rgba(black, 0.6));
+				}
+			}
 			> img {
 				height: 100%;
 			}
