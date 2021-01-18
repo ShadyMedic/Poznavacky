@@ -8,9 +8,10 @@
 	<a class="btn icon" href='logout'><img src="../images/logout.svg" alt=""></a>
 </header>
 <aside>
-	<?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings"><img src="../images/user.svg" alt=""></a><?php endif ?>
-	<?php if ($adminLogged) : ?><a class="btn icon" href="administrate"><img src="../images/settings.svg" alt=""></a><?php endif ?>
-	<a class="btn icon" href='logout'><img src="../images/logout.svg" alt=""></a>
+	<a class="btn icon" href="menu"><img src="../images/home.svg" alt="Hlavní stránka"></a>
+	<?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings"><img src="../images/user.svg" alt="Správa účtu"></a><?php endif ?>
+	<?php if ($adminLogged) : ?><a class="btn icon" href="administrate"><img src="../images/settings.svg" alt="Správa služby"></a><?php endif ?>
+	<a class="btn icon" href='logout'><img src="../images/logout.svg" alt="Odhlásit se"></a>
 </aside>
 <main class="menu">
 	<h2 id="level-nav">
