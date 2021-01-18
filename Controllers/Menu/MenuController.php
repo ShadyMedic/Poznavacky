@@ -63,7 +63,8 @@ class MenuController extends Controller
         //Minimálně 0 (v případě domena.cz/menu)
         //Maximálně 5 (v případě domena.cz/menu/nazev-tridy/nazev-poznavacky/nazev-casti/akce/ajax-kontroller)
         $menuArguments = array();
-        for ($i = 0; $i < 5 && $arg = array_shift($parameters); $i++)
+        $parametersCopy = $parameters;
+        for ($i = 0; $i < 5 && $arg = array_shift($parametersCopy); $i++)
         {
             $menuArguments[] = $arg;
         }
@@ -260,6 +261,9 @@ class MenuController extends Controller
             $controllerName = __NAMESPACE__.'\\MenuTable'.self::CONTROLLER_EXTENSION;
             $this->controllerToCall = new $controllerName();
             $this->controllerToCall->process(array());
+
+            //Aktualizovat poslední navštívenou tabulku na menu stránce
+            UserManager::getUser()->updateLastMenuTableUrl(implode('/', $parameters));
         }
         
         $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];

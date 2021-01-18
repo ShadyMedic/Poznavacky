@@ -155,7 +155,7 @@ function changeEmail()
 	deleteAccountCancel();
 }
 
-function changeEmailCOnfirm()
+function changeEmailConfirm()
 {
 	var password = $("#change-email-password").val();
 	var newEmail = $("#change-email-new").val();

@@ -6,6 +6,7 @@ use Poznavacky\Models\Processors\LoginUser;
 use Poznavacky\Models\Processors\RecoverPassword;
 use Poznavacky\Models\Processors\RegisterUser;
 use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 use InvalidArgumentException;
 
@@ -53,7 +54,7 @@ class IndexFormsController extends Controller
                     $form = 'login';
                     $userLogger = new LoginUser();
                     $userLogger->processLogin($_POST);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu/'.UserManager::getUser()['lastMenuTableUrl']);
                     echo $response->getResponseString();
                     break;
                 //Registrace

@@ -24,9 +24,7 @@ class LoggedUser extends User
         'email' => 'email',
         'lastLogin' => 'posledni_prihlaseni',
         'lastChangelog' => 'posledni_changelog',
-        'lastLevel' => 'posledni_uroven',
-        'lastFolder' => 'posledni_slozka',
-        'theme' => 'vzhled',
+        'lastMenuTableUrl' => 'adresa_posledni_slozky',
         'addedPictures' => 'pridane_obrazky',
         'guessedPictures' => 'uhodnute_obrazky',
         'karma' => 'karma',
@@ -40,9 +38,7 @@ class LoggedUser extends User
     protected const DEFAULT_VALUES = array(
         'email' => null,
         'lastChangelog' => 0,
-        'lastLevel' => 0,
-        'lastFolder' => null,
-        'theme' => 0,
+        'lastMenuTableUrl' => null,
         'addedPictures' => 0,
         'guessedPictures' => 0,
         'karma' => 0,
@@ -54,9 +50,7 @@ class LoggedUser extends User
     
     protected $hash;
     protected $lastChangelog;
-    protected $lastLevel;
-    protected $lastFolder;
-    protected $theme;
+    protected $lastMenuTableUrl;
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -71,13 +65,11 @@ class LoggedUser extends User
      * @param string|undefined|null $status Uživatelův status
      * @param string|undefined|null $hash Heš uživatelova hesla z databáze
      * @param float|undefined|null $lastChangelog Poslední zobrazený changelog
-     * @param int|undefined|null $lastLevel Poslední navštívěná úroveň složek na menu stránce
-     * @param int|undefined|null $lastFolder Poslední navštívená složka na menu stránce v určité úrovni
-     * @param int|undefined|null $theme Zvolený vzhled stránek
+     * @param int|undefined|null $lastMenuTableUrl URL poslední navštívené složky na menu stránce
      * {@inheritDoc}
      * @see User::initialize()
      */
-    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastLevel = null, $lastFolder = null, $theme = null): void
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null, $hash = null, $lastChangelog = null, $lastMenuTableUrl = null): void
     {
         //Nastav vlastnosti zděděné z mateřské třídy
         parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
@@ -85,15 +77,11 @@ class LoggedUser extends User
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
         if ($hash === null){ $hash = $this->hash; }
         if ($lastChangelog === null){ $lastChangelog = $this->lastChangelog; }
-        if ($lastLevel === null){ $lastLevel = $this->lastLevel; }
-        if ($lastFolder === null){ $lastFolder = $this->lastFolder; }
-        if ($theme === null){ $theme = $this->theme; }
+        if ($lastMenuTableUrl === null){ $lastMenuTableUrl = $this->lastMenuTableUrl; }
         
         $this->hash = $hash;
         $this->lastChangelog = $lastChangelog;
-        $this->lastLevel = $lastLevel;
-        $this->lastFolder = $lastFolder;
-        $this->theme = $theme;
+        $this->lastMenuTableUrl = $lastMenuTableUrl;
     }
     
     /**
@@ -284,13 +272,28 @@ class LoggedUser extends User
         $this->email = $newEmail;
         return true;
     }
-    
+
+    /**
+     * Metoda aktualizující uživateli jak v $_SESSION tak v databázi URL adresu poslední zobrazení tabulky na menu stránce
+     * @param string $url Nová URL adresa k uložení
+     * @return bool TRUE, pokud vše proběhne hladce
+     */
+    public function updateLastMenuTableUrl(string $url): bool
+    {
+        $this->loadIfNotLoaded($this->id);
+
+        $this->lastMenuTableUrl = $url;
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['lastMenuTableUrl'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($url, $this->id));
+    }
+
     /**
      * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli přidaných obrázků
      * @return boolean TRUE, pokud vše proběhne hladce
      */
     public function incrementAddedPictures(): bool
     {
+        $this->loadIfNotLoaded($this->id);
+
         $this->addedPictures++;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
