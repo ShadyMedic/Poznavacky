@@ -710,11 +710,14 @@
 		min-width: fit-content;
 		display: grid;
 		grid-template-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
-		column-gap: 0.4rem;
+		column-gap: 0.6rem;
 		justify-items: stretch;
 		align-items: center;
 		margin: 0.4rem;
 		padding: 0.2rem 0.8rem;
+		> span {
+			padding: calc(0.2em + 4px) 0;
+		}
 	}
 	.reports-data-item {
 		grid-template-rows: auto auto;

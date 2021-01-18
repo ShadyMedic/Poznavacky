@@ -40,7 +40,7 @@
             <span class="report-additional-info"><?= $report->getAdditionalInformation() ?></span>
             <span class="report-number"><?= $report->getReportersCount() ?></span>
             <div class="report-action">
-                <button class='btn icon show-picture-button' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
+                <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
                     <img src='images/eye.svg'/>
                 </button>
                 <button class="btn icon edit-picture-button" title='Upravit údaje obrázku'>
@@ -50,6 +50,9 @@
                     <img src='images/cross.svg'/>
                 </button>
 				<div class="report-edit-buttons" style="display: none;">
+					<button class='btn icon show-picture-button' title='Zobrazit obrázek'>
+						<img src='images/eye.svg'/>
+					</button>
                     <button class='btn icon edit-picture-confirm-button' title='Uložit'>
                     	<img src='images/tick.svg'/>
                     </button>

@@ -16,9 +16,14 @@ function showPicture(event)
 {
 	let $report = $(event.target).closest(".reports-data-item");
 	let url = $report.attr("data-report-url");
+	
+	//skrytí ostatních zobrazených obrázků
+	$(".report-image").not($report.find(".report-image")).hide();
 
+	//doplnění url a zobrazení obrázku
 	$report.find(".report-image > img").attr("src", url);
 	$report.find(".report-image").show();
+
 }
 
 //funkce skrývající náhled nahlášeného obrázku
@@ -35,6 +40,9 @@ function editPicture(event)
 {
 	//report, který je upravován
 	let $report = $(event.target).closest(".reports-data-item");
+
+	//skrytí ostatních zobrazených obrázků
+	$(".report-image").not($report.find(".report-image")).hide();
 
 	//dočasné znemožnění ostatních akcí u všech hlášení
 	$(".report-action > .btn").addClass("disabled");

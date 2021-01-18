@@ -3270,14 +3270,19 @@ label.required:after {
   display: grid;
   -ms-grid-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
       grid-template-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
-  -webkit-column-gap: 0.4rem;
-          column-gap: 0.4rem;
+  -webkit-column-gap: 0.6rem;
+          column-gap: 0.6rem;
   justify-items: stretch;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   margin: 0.4rem;
   padding: 0.2rem 0.8rem;
+}
+
+#resolve-reports .reports-data-properties > span,
+#resolve-reports .reports-data-item > span {
+  padding: calc(0.2em + 4px) 0;
 }
 
 #resolve-reports .reports-data-item {
