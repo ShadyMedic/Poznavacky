@@ -41,9 +41,9 @@ class ClassUpdateController extends Controller
         }
         $class = $_SESSION['selection']['class'];
         
-        //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy
+        //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy nebo systémový administrátor
         $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser() || !$class->checkAdmin(UserManager::getId()))
+        if (!$aChecker->checkUser() || !($class->checkAdmin(UserManager::getId()) || $aChecker->checkSystemAdmin()))
         {
             header('HTTP/1.0 403 Forbidden');
             exit();

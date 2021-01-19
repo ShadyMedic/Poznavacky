@@ -1,6 +1,11 @@
 var initialStatus;      //Ukládá status třídy uložený v databázi
 var initialCode;        //Ukládá vstupní kód třídy uložený v databázi
 
+//Nastavení URL pro AJAX požadavky
+let ajaxUrl = window.location.href;
+if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+ajaxUrl = ajaxUrl.replace('/manage', '/class-update'); //Nahraď neAJAX akci AJAX akcí
+
 //vše, co se děje po načtení stránky
 $(function() {
 
@@ -49,8 +54,8 @@ function changeClassName()
 function changeClassNameConfirm()
 {
     var newName = $("#change-class-name-new").val();
-    
-    $.post("class-update",
+
+    $.post(ajaxUrl,
 		{
     		action: 'request name change',
 			newName: newName
@@ -175,7 +180,7 @@ function changeClassStatusConfirm()
     
     if (!confirmation){return;}
     
-    $.post("class-update",
+    $.post(ajaxUrl,
 		{
     		action: 'update access',
 			newStatus: newStatus,
@@ -262,7 +267,7 @@ function deleteClass()
 function deleteClassVerify()
 {
 	var password = $("#delete-class-password").val();
-	$.post("class-update",
+	$.post(ajaxUrl,
 		{
     		action: 'verify password',
 			password: password
@@ -289,7 +294,7 @@ function deleteClassFinal()
 {
 	var password = $("#delete-class-password").val();
 
-	$.post("class-update",
+	$.post(ajaxUrl,
 		{
     		action: 'delete class',
 			password: password
