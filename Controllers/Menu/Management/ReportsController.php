@@ -21,7 +21,7 @@ class ReportsController extends Controller
         $this->data['naturalsInGroup'] = $group->getNaturals();
         $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
         
-        $this->pageHeader['title'] = 'Řešit hlášení';
+        $this->pageHeader['title'] = 'Správa hlášení';
         $this->pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
         $this->pageHeader['keywords'] = '';
         $this->pageHeader['cssFiles'] = array('css/css.css');
@@ -34,7 +34,7 @@ class ReportsController extends Controller
             )
         );
         
-        $this->view = 'reports';
+        $this->view = 'reportsTableManage';
     }
 }
 

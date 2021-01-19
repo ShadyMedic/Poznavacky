@@ -3,6 +3,7 @@
    License: none (public domain)
 */
 @import url(//fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Ubuntu);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -61,7 +62,7 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   line-height: 1.25em;
   font-size: 100%;
   min-width: 100%;
@@ -175,7 +176,7 @@ h5 {
 }
 
 .btn {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   background: none;
   border: none;
   text-decoration: none;
@@ -395,6 +396,8 @@ h5 {
 
 .btn.icon {
   display: block;
+  height: 1em;
+  width: 1em;
 }
 
 .btn.icon img {
@@ -402,6 +405,18 @@ h5 {
   transition: -webkit-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+  height: 100%;
+  width: 100%;
+}
+
+.btn.icon.disabled {
+  pointer-events: none;
+  cursor: auto;
+}
+
+.btn.icon.disabled > img {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
 }
 
 .btn.icon:active img {
@@ -1137,6 +1152,9 @@ label.required:after {
 #tests .wrapper,
 #edit-group .wrapper,
 #resolve-reports .wrapper {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
   padding: 1rem 1rem;
 }
 
@@ -1286,7 +1304,9 @@ label.required:after {
 #resolve-reports h2 {
   font-size: 1.2rem;
   font-weight: normal;
-  margin: 1.2rem 1rem 0.4rem 1rem;
+  padding: 1.2rem 1rem 0.4rem 1rem;
+  display: block;
+  margin: 0;
 }
 
 @media screen and (min-width: 576px) {
@@ -1300,7 +1320,7 @@ label.required:after {
   #tests h2,
   #edit-group h2,
   #resolve-reports h2 {
-    margin: 1.6rem 2rem 0 2rem;
+    padding: 1.6rem 2rem 0 2rem;
   }
 }
 
@@ -1315,20 +1335,20 @@ label.required:after {
   #tests h2,
   #edit-group h2,
   #resolve-reports h2 {
-    margin: 2rem 3rem 0 3rem;
+    padding: 2rem 3rem 0 3rem;
   }
 }
 
-#menu h2 span,
-#learn h2 span,
-#test h2 span,
-#add-pictures h2 span,
-#account-settings h2 span,
-#manage h2 span,
-#members h2 span,
-#tests h2 span,
-#edit-group h2 span,
-#resolve-reports h2 span {
+#menu h2 span:last-child,
+#learn h2 span:last-child,
+#test h2 span:last-child,
+#add-pictures h2 span:last-child,
+#account-settings h2 span:last-child,
+#manage h2 span:last-child,
+#members h2 span:last-child,
+#tests h2 span:last-child,
+#edit-group h2 span:last-child,
+#resolve-reports h2 span:last-child {
   font-weight: bold;
 }
 
@@ -1778,6 +1798,13 @@ label.required:after {
   }
 }
 
+#learn #learn-wrapper,
+#learn #test-wrapper,
+#test #learn-wrapper,
+#test #test-wrapper {
+  margin: auto;
+}
+
 #learn #learn-wrapper:focus,
 #learn #test-wrapper:focus,
 #test #learn-wrapper:focus,
@@ -1792,8 +1819,8 @@ label.required:after {
   #test #test-wrapper {
     -webkit-column-gap: 20px;
             column-gap: 20px;
-    -ms-grid-columns: auto 1fr;
-        grid-template-columns: auto 1fr;
+    -ms-grid-columns: auto minmax(10rem, 1fr);
+        grid-template-columns: auto minmax(10rem, 1fr);
   }
 }
 
@@ -1872,7 +1899,7 @@ label.required:after {
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
     grid-row: 1/2;
-    width: 320px;
+    width: 300px;
   }
 }
 
@@ -1940,12 +1967,19 @@ label.required:after {
   padding: 0.6rem;
   font-size: 0.9rem;
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   bottom: 0;
   height: 100%;
   background: white;
   width: 100%;
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  -webkit-transform: translateY(105%);
+          transform: translateY(105%);
   -webkit-transition: -webkit-transform 0.4s ease-out;
   transition: -webkit-transform 0.4s ease-out;
   transition: transform 0.4s ease-out;
@@ -1967,23 +2001,44 @@ label.required:after {
           box-shadow: 0px -4px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
-#learn .report-box .custom-select,
-#test .report-box .custom-select {
-  margin: 4px 0 8px 0;
+#learn .report-box h3,
+#test .report-box h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.2em;
+  margin-top: 0;
+  margin-bottom: 0.4rem;
 }
 
-#learn .report-box .custom-select .custom-select-main,
-#test .report-box .custom-select .custom-select-main {
+#learn .report-box #report-img-preview,
+#test .report-box #report-img-preview {
+  padding: 0.4rem 0;
+  position: relative;
+  height: 30%;
+}
+
+#learn .report-box #report-img-preview > img,
+#test .report-box #report-img-preview > img {
+  height: 100%;
+}
+
+#learn .report-box .custom-select-wrapper,
+#test .report-box .custom-select-wrapper {
+  margin: 0.2rem 0;
+}
+
+#learn .report-box .custom-select-wrapper .custom-select-main,
+#test .report-box .custom-select-wrapper .custom-select-main {
   background: #eee;
 }
 
-#learn .report-box .custom-select .custom-option,
-#test .report-box .custom-select .custom-option {
+#learn .report-box .custom-select-wrapper .custom-option,
+#test .report-box .custom-select-wrapper .custom-option {
   border-top: 1px solid white;
 }
 
-#learn .report-box .custom-select .custom-option:not(.selected),
-#test .report-box .custom-select .custom-option:not(.selected) {
+#learn .report-box .custom-select-wrapper .custom-option:not(.selected),
+#test .report-box .custom-select-wrapper .custom-option:not(.selected) {
   background: #eee;
 }
 
@@ -2015,8 +2070,8 @@ label.required:after {
 #test .report-box .additional-report-info > * textarea {
   width: 100%;
   resize: vertical;
-  height: 100px;
-  max-height: 120px;
+  height: 60px;
+  max-height: 100px;
 }
 
 @media screen and (min-width: 360px) {
@@ -2034,14 +2089,21 @@ label.required:after {
 #learn .report-box .text-field,
 #test .report-box .text-field {
   background: #eee;
+  margin: 0.2rem 0;
 }
 
-#learn .report-box .cross,
-#test .report-box .cross {
+#learn .report-box #submit-report-button,
+#test .report-box #submit-report-button {
+  margin-top: auto;
+  margin-bottom: 2rem;
+}
+
+#learn .report-box #cancel-report-button,
+#test .report-box #cancel-report-button {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin: 8px;
+  margin: 1rem;
   height: 16px;
   width: 16px;
 }
@@ -2059,6 +2121,7 @@ label.required:after {
 #learn #learn-wrapper .picture .picture-control {
   background: none;
   width: 12%;
+  height: 100%;
   opacity: 0.8;
   position: absolute;
   padding: 10px;
@@ -2074,6 +2137,11 @@ label.required:after {
   top: 0;
   bottom: 0;
   right: 0;
+}
+
+#learn #learn-wrapper .picture .picture-control > img {
+  -webkit-filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
+          filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
 }
 
 #test #test-wrapper .controllers * {
@@ -2317,13 +2385,19 @@ label.required:after {
 #manage .user-data-section .user-data-item,
 #manage .user-data-section .class-data-item,
 #manage .class-data-section .user-data-item,
-#manage .class-data-section .class-data-item {
+#manage .class-data-section .class-data-item,
+#members .user-data-section .user-data-item,
+#members .user-data-section .class-data-item,
+#members .class-data-section .user-data-item,
+#members .class-data-section .class-data-item,
+#tests .user-data-section .user-data-item,
+#tests .user-data-section .class-data-item,
+#tests .class-data-section .user-data-item,
+#tests .class-data-section .class-data-item {
   margin: 0.6rem;
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
   border-radius: 0.2rem;
-  -webkit-transition: height 0.2s ease-out;
-  transition: height 0.2s ease-out;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
@@ -2340,7 +2414,15 @@ label.required:after {
   #manage .user-data-section .user-data-item,
   #manage .user-data-section .class-data-item,
   #manage .class-data-section .user-data-item,
-  #manage .class-data-section .class-data-item {
+  #manage .class-data-section .class-data-item,
+  #members .user-data-section .user-data-item,
+  #members .user-data-section .class-data-item,
+  #members .class-data-section .user-data-item,
+  #members .class-data-section .class-data-item,
+  #tests .user-data-section .user-data-item,
+  #tests .user-data-section .class-data-item,
+  #tests .class-data-section .user-data-item,
+  #tests .class-data-section .class-data-item {
     -ms-grid-columns: 10rem 13rem 1fr;
         grid-template-columns: 10rem 13rem 1fr;
     -ms-grid-rows: auto 1fr;
@@ -2358,7 +2440,15 @@ label.required:after {
 #manage .user-data-section .user-data-item > span,
 #manage .user-data-section .class-data-item > span,
 #manage .class-data-section .user-data-item > span,
-#manage .class-data-section .class-data-item > span {
+#manage .class-data-section .class-data-item > span,
+#members .user-data-section .user-data-item > span,
+#members .user-data-section .class-data-item > span,
+#members .class-data-section .user-data-item > span,
+#members .class-data-section .class-data-item > span,
+#tests .user-data-section .user-data-item > span,
+#tests .user-data-section .class-data-item > span,
+#tests .class-data-section .user-data-item > span,
+#tests .class-data-section .class-data-item > span {
   padding: calc(0.4em + 4px) 0;
 }
 
@@ -2377,7 +2467,23 @@ label.required:after {
 #manage .class-data-section .user-data-item .user-property-action,
 #manage .class-data-section .user-data-item .class-property-action,
 #manage .class-data-section .class-data-item .user-property-action,
-#manage .class-data-section .class-data-item .class-property-action {
+#manage .class-data-section .class-data-item .class-property-action,
+#members .user-data-section .user-data-item .user-property-action,
+#members .user-data-section .user-data-item .class-property-action,
+#members .user-data-section .class-data-item .user-property-action,
+#members .user-data-section .class-data-item .class-property-action,
+#members .class-data-section .user-data-item .user-property-action,
+#members .class-data-section .user-data-item .class-property-action,
+#members .class-data-section .class-data-item .user-property-action,
+#members .class-data-section .class-data-item .class-property-action,
+#tests .user-data-section .user-data-item .user-property-action,
+#tests .user-data-section .user-data-item .class-property-action,
+#tests .user-data-section .class-data-item .user-property-action,
+#tests .user-data-section .class-data-item .class-property-action,
+#tests .class-data-section .user-data-item .user-property-action,
+#tests .class-data-section .user-data-item .class-property-action,
+#tests .class-data-section .class-data-item .user-property-action,
+#tests .class-data-section .class-data-item .class-property-action {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
@@ -2399,7 +2505,23 @@ label.required:after {
   #manage .class-data-section .user-data-item .user-property-action,
   #manage .class-data-section .user-data-item .class-property-action,
   #manage .class-data-section .class-data-item .user-property-action,
-  #manage .class-data-section .class-data-item .class-property-action {
+  #manage .class-data-section .class-data-item .class-property-action,
+  #members .user-data-section .user-data-item .user-property-action,
+  #members .user-data-section .user-data-item .class-property-action,
+  #members .user-data-section .class-data-item .user-property-action,
+  #members .user-data-section .class-data-item .class-property-action,
+  #members .class-data-section .user-data-item .user-property-action,
+  #members .class-data-section .user-data-item .class-property-action,
+  #members .class-data-section .class-data-item .user-property-action,
+  #members .class-data-section .class-data-item .class-property-action,
+  #tests .user-data-section .user-data-item .user-property-action,
+  #tests .user-data-section .user-data-item .class-property-action,
+  #tests .user-data-section .class-data-item .user-property-action,
+  #tests .user-data-section .class-data-item .class-property-action,
+  #tests .class-data-section .user-data-item .user-property-action,
+  #tests .class-data-section .user-data-item .class-property-action,
+  #tests .class-data-section .class-data-item .user-property-action,
+  #tests .class-data-section .class-data-item .class-property-action {
     -ms-grid-column: 3;
     -ms-grid-column-span: 1;
     grid-column: 3/4;
@@ -2416,7 +2538,17 @@ label.required:after {
 #manage #change-password,
 #manage #change-email,
 #manage #change-class-name,
-#manage #change-class-status {
+#manage #change-class-status,
+#members #change-name,
+#members #change-password,
+#members #change-email,
+#members #change-class-name,
+#members #change-class-status,
+#tests #change-name,
+#tests #change-password,
+#tests #change-email,
+#tests #change-class-name,
+#tests #change-class-status {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
@@ -2432,7 +2564,17 @@ label.required:after {
   #manage #change-password,
   #manage #change-email,
   #manage #change-class-name,
-  #manage #change-class-status {
+  #manage #change-class-status,
+  #members #change-name,
+  #members #change-password,
+  #members #change-email,
+  #members #change-class-name,
+  #members #change-class-status,
+  #tests #change-name,
+  #tests #change-password,
+  #tests #change-email,
+  #tests #change-class-name,
+  #tests #change-class-status {
     -ms-grid-column: 2;
     -ms-grid-column-span: 2;
     grid-column: 2/4;
@@ -2441,20 +2583,6 @@ label.required:after {
     grid-row: 1/3;
     max-width: 400px;
   }
-}
-
-#account-settings #change-name p,
-#account-settings #change-password p,
-#account-settings #change-email p,
-#account-settings #change-class-name p,
-#account-settings #change-class-status p,
-#manage #change-name p,
-#manage #change-password p,
-#manage #change-email p,
-#manage #change-class-name p,
-#manage #change-class-status p {
-  margin-bottom: 0.6rem;
-  text-align: justify;
 }
 
 #account-settings #change-name .border-btn,
@@ -2466,7 +2594,17 @@ label.required:after {
 #manage #change-password .border-btn,
 #manage #change-email .border-btn,
 #manage #change-class-name .border-btn,
-#manage #change-class-status .border-btn {
+#manage #change-class-status .border-btn,
+#members #change-name .border-btn,
+#members #change-password .border-btn,
+#members #change-email .border-btn,
+#members #change-class-name .border-btn,
+#members #change-class-status .border-btn,
+#tests #change-name .border-btn,
+#tests #change-password .border-btn,
+#tests #change-email .border-btn,
+#tests #change-class-name .border-btn,
+#tests #change-class-status .border-btn {
   margin: 0.6rem auto;
   width: 100%;
 }
@@ -2480,7 +2618,17 @@ label.required:after {
 #manage #change-password .inline.btn,
 #manage #change-email .inline.btn,
 #manage #change-class-name .inline.btn,
-#manage #change-class-status .inline.btn {
+#manage #change-class-status .inline.btn,
+#members #change-name .inline.btn,
+#members #change-password .inline.btn,
+#members #change-email .inline.btn,
+#members #change-class-name .inline.btn,
+#members #change-class-status .inline.btn,
+#tests #change-name .inline.btn,
+#tests #change-password .inline.btn,
+#tests #change-email .inline.btn,
+#tests #change-class-name .inline.btn,
+#tests #change-class-status .inline.btn {
   margin-bottom: 0.2rem;
 }
 
@@ -2493,6 +2641,8 @@ label.required:after {
 #account-settings #change-class-status,
 #account-settings #delete-class1,
 #account-settings #delete-class2,
+#account-settings #invite-user-form,
+#account-settings #new-test,
 #manage #change-name,
 #manage #change-password,
 #manage #change-email,
@@ -2501,7 +2651,31 @@ label.required:after {
 #manage #change-class-name,
 #manage #change-class-status,
 #manage #delete-class1,
-#manage #delete-class2 {
+#manage #delete-class2,
+#manage #invite-user-form,
+#manage #new-test,
+#members #change-name,
+#members #change-password,
+#members #change-email,
+#members #delete-account1,
+#members #delete-account2,
+#members #change-class-name,
+#members #change-class-status,
+#members #delete-class1,
+#members #delete-class2,
+#members #invite-user-form,
+#members #new-test,
+#tests #change-name,
+#tests #change-password,
+#tests #change-email,
+#tests #delete-account1,
+#tests #delete-account2,
+#tests #change-class-name,
+#tests #change-class-status,
+#tests #delete-class1,
+#tests #delete-class2,
+#tests #invite-user-form,
+#tests #new-test {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2538,6 +2712,12 @@ label.required:after {
 #account-settings #delete-class2 label,
 #account-settings #delete-class2 input.text-field,
 #account-settings #delete-class2 .custom-select-wrapper,
+#account-settings #invite-user-form label,
+#account-settings #invite-user-form input.text-field,
+#account-settings #invite-user-form .custom-select-wrapper,
+#account-settings #new-test label,
+#account-settings #new-test input.text-field,
+#account-settings #new-test .custom-select-wrapper,
 #manage #change-name label,
 #manage #change-name input.text-field,
 #manage #change-name .custom-select-wrapper,
@@ -2564,7 +2744,79 @@ label.required:after {
 #manage #delete-class1 .custom-select-wrapper,
 #manage #delete-class2 label,
 #manage #delete-class2 input.text-field,
-#manage #delete-class2 .custom-select-wrapper {
+#manage #delete-class2 .custom-select-wrapper,
+#manage #invite-user-form label,
+#manage #invite-user-form input.text-field,
+#manage #invite-user-form .custom-select-wrapper,
+#manage #new-test label,
+#manage #new-test input.text-field,
+#manage #new-test .custom-select-wrapper,
+#members #change-name label,
+#members #change-name input.text-field,
+#members #change-name .custom-select-wrapper,
+#members #change-password label,
+#members #change-password input.text-field,
+#members #change-password .custom-select-wrapper,
+#members #change-email label,
+#members #change-email input.text-field,
+#members #change-email .custom-select-wrapper,
+#members #delete-account1 label,
+#members #delete-account1 input.text-field,
+#members #delete-account1 .custom-select-wrapper,
+#members #delete-account2 label,
+#members #delete-account2 input.text-field,
+#members #delete-account2 .custom-select-wrapper,
+#members #change-class-name label,
+#members #change-class-name input.text-field,
+#members #change-class-name .custom-select-wrapper,
+#members #change-class-status label,
+#members #change-class-status input.text-field,
+#members #change-class-status .custom-select-wrapper,
+#members #delete-class1 label,
+#members #delete-class1 input.text-field,
+#members #delete-class1 .custom-select-wrapper,
+#members #delete-class2 label,
+#members #delete-class2 input.text-field,
+#members #delete-class2 .custom-select-wrapper,
+#members #invite-user-form label,
+#members #invite-user-form input.text-field,
+#members #invite-user-form .custom-select-wrapper,
+#members #new-test label,
+#members #new-test input.text-field,
+#members #new-test .custom-select-wrapper,
+#tests #change-name label,
+#tests #change-name input.text-field,
+#tests #change-name .custom-select-wrapper,
+#tests #change-password label,
+#tests #change-password input.text-field,
+#tests #change-password .custom-select-wrapper,
+#tests #change-email label,
+#tests #change-email input.text-field,
+#tests #change-email .custom-select-wrapper,
+#tests #delete-account1 label,
+#tests #delete-account1 input.text-field,
+#tests #delete-account1 .custom-select-wrapper,
+#tests #delete-account2 label,
+#tests #delete-account2 input.text-field,
+#tests #delete-account2 .custom-select-wrapper,
+#tests #change-class-name label,
+#tests #change-class-name input.text-field,
+#tests #change-class-name .custom-select-wrapper,
+#tests #change-class-status label,
+#tests #change-class-status input.text-field,
+#tests #change-class-status .custom-select-wrapper,
+#tests #delete-class1 label,
+#tests #delete-class1 input.text-field,
+#tests #delete-class1 .custom-select-wrapper,
+#tests #delete-class2 label,
+#tests #delete-class2 input.text-field,
+#tests #delete-class2 .custom-select-wrapper,
+#tests #invite-user-form label,
+#tests #invite-user-form input.text-field,
+#tests #invite-user-form .custom-select-wrapper,
+#tests #new-test label,
+#tests #new-test input.text-field,
+#tests #new-test .custom-select-wrapper {
   margin: 0.2rem 0;
 }
 
@@ -2577,6 +2829,8 @@ label.required:after {
 #account-settings #change-class-status label:not(:nth-of-type(1)),
 #account-settings #delete-class1 label:not(:nth-of-type(1)),
 #account-settings #delete-class2 label:not(:nth-of-type(1)),
+#account-settings #invite-user-form label:not(:nth-of-type(1)),
+#account-settings #new-test label:not(:nth-of-type(1)),
 #manage #change-name label:not(:nth-of-type(1)),
 #manage #change-password label:not(:nth-of-type(1)),
 #manage #change-email label:not(:nth-of-type(1)),
@@ -2585,12 +2839,86 @@ label.required:after {
 #manage #change-class-name label:not(:nth-of-type(1)),
 #manage #change-class-status label:not(:nth-of-type(1)),
 #manage #delete-class1 label:not(:nth-of-type(1)),
-#manage #delete-class2 label:not(:nth-of-type(1)) {
+#manage #delete-class2 label:not(:nth-of-type(1)),
+#manage #invite-user-form label:not(:nth-of-type(1)),
+#manage #new-test label:not(:nth-of-type(1)),
+#members #change-name label:not(:nth-of-type(1)),
+#members #change-password label:not(:nth-of-type(1)),
+#members #change-email label:not(:nth-of-type(1)),
+#members #delete-account1 label:not(:nth-of-type(1)),
+#members #delete-account2 label:not(:nth-of-type(1)),
+#members #change-class-name label:not(:nth-of-type(1)),
+#members #change-class-status label:not(:nth-of-type(1)),
+#members #delete-class1 label:not(:nth-of-type(1)),
+#members #delete-class2 label:not(:nth-of-type(1)),
+#members #invite-user-form label:not(:nth-of-type(1)),
+#members #new-test label:not(:nth-of-type(1)),
+#tests #change-name label:not(:nth-of-type(1)),
+#tests #change-password label:not(:nth-of-type(1)),
+#tests #change-email label:not(:nth-of-type(1)),
+#tests #delete-account1 label:not(:nth-of-type(1)),
+#tests #delete-account2 label:not(:nth-of-type(1)),
+#tests #change-class-name label:not(:nth-of-type(1)),
+#tests #change-class-status label:not(:nth-of-type(1)),
+#tests #delete-class1 label:not(:nth-of-type(1)),
+#tests #delete-class2 label:not(:nth-of-type(1)),
+#tests #invite-user-form label:not(:nth-of-type(1)),
+#tests #new-test label:not(:nth-of-type(1)) {
   margin-top: 0.54rem;
 }
 
+#account-settings #change-name p,
+#account-settings #change-password p,
+#account-settings #change-email p,
+#account-settings #delete-account1 p,
+#account-settings #delete-account2 p,
+#account-settings #change-class-name p,
+#account-settings #change-class-status p,
+#account-settings #delete-class1 p,
+#account-settings #delete-class2 p,
+#account-settings #invite-user-form p,
+#account-settings #new-test p,
+#manage #change-name p,
+#manage #change-password p,
+#manage #change-email p,
+#manage #delete-account1 p,
+#manage #delete-account2 p,
+#manage #change-class-name p,
+#manage #change-class-status p,
+#manage #delete-class1 p,
+#manage #delete-class2 p,
+#manage #invite-user-form p,
+#manage #new-test p,
+#members #change-name p,
+#members #change-password p,
+#members #change-email p,
+#members #delete-account1 p,
+#members #delete-account2 p,
+#members #change-class-name p,
+#members #change-class-status p,
+#members #delete-class1 p,
+#members #delete-class2 p,
+#members #invite-user-form p,
+#members #new-test p,
+#tests #change-name p,
+#tests #change-password p,
+#tests #change-email p,
+#tests #delete-account1 p,
+#tests #delete-account2 p,
+#tests #change-class-name p,
+#tests #change-class-status p,
+#tests #delete-class1 p,
+#tests #delete-class2 p,
+#tests #invite-user-form p,
+#tests #new-test p {
+  margin-bottom: 0.6rem;
+  text-align: justify;
+}
+
 #account-settings h3,
-#manage h3 {
+#manage h3,
+#members h3,
+#tests h3 {
   font-size: 1em;
   font-weight: bold;
   line-height: 1.2em;
@@ -2598,30 +2926,70 @@ label.required:after {
 
 #account-settings #delete-account1,
 #account-settings #delete-class1,
+#account-settings #invite-user-form,
+#account-settings #new-test,
 #manage #delete-account1,
-#manage #delete-class1 {
+#manage #delete-class1,
+#manage #invite-user-form,
+#manage #new-test,
+#members #delete-account1,
+#members #delete-class1,
+#members #invite-user-form,
+#members #new-test,
+#tests #delete-account1,
+#tests #delete-class1,
+#tests #invite-user-form,
+#tests #new-test {
   max-width: 400px;
 }
 
 #account-settings #delete-account1 .border-btn,
 #account-settings #delete-class1 .border-btn,
+#account-settings #invite-user-form .border-btn,
+#account-settings #new-test .border-btn,
 #manage #delete-account1 .border-btn,
-#manage #delete-class1 .border-btn {
+#manage #delete-class1 .border-btn,
+#manage #invite-user-form .border-btn,
+#manage #new-test .border-btn,
+#members #delete-account1 .border-btn,
+#members #delete-class1 .border-btn,
+#members #invite-user-form .border-btn,
+#members #new-test .border-btn,
+#tests #delete-account1 .border-btn,
+#tests #delete-class1 .border-btn,
+#tests #invite-user-form .border-btn,
+#tests #new-test .border-btn {
   margin: 0.6rem auto;
   width: 100%;
 }
 
 #account-settings #delete-account2 span,
 #account-settings #delete-class2 span,
+#account-settings .kick-user span,
 #manage #delete-account2 span,
-#manage #delete-class2 span {
+#manage #delete-class2 span,
+#manage .kick-user span,
+#members #delete-account2 span,
+#members #delete-class2 span,
+#members .kick-user span,
+#tests #delete-account2 span,
+#tests #delete-class2 span,
+#tests .kick-user span {
   color: #a00;
 }
 
 #account-settings #delete-account2 .buttons,
 #account-settings #delete-class2 .buttons,
+#account-settings .kick-user .buttons,
 #manage #delete-account2 .buttons,
-#manage #delete-class2 .buttons {
+#manage #delete-class2 .buttons,
+#manage .kick-user .buttons,
+#members #delete-account2 .buttons,
+#members #delete-class2 .buttons,
+#members .kick-user .buttons,
+#tests #delete-account2 .buttons,
+#tests #delete-class2 .buttons,
+#tests .kick-user .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2632,18 +3000,34 @@ label.required:after {
 
 #account-settings #delete-account2 .buttons .border-btn,
 #account-settings #delete-class2 .buttons .border-btn,
+#account-settings .kick-user .buttons .border-btn,
 #manage #delete-account2 .buttons .border-btn,
-#manage #delete-class2 .buttons .border-btn {
+#manage #delete-class2 .buttons .border-btn,
+#manage .kick-user .buttons .border-btn,
+#members #delete-account2 .buttons .border-btn,
+#members #delete-class2 .buttons .border-btn,
+#members .kick-user .buttons .border-btn,
+#tests #delete-account2 .buttons .border-btn,
+#tests #delete-class2 .buttons .border-btn,
+#tests .kick-user .buttons .border-btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  margin: 0.6rem 0;
+  margin: 0.6rem 0 0 0;
 }
 
 #account-settings #delete-account2 .buttons .border-btn:not(:last-child),
 #account-settings #delete-class2 .buttons .border-btn:not(:last-child),
+#account-settings .kick-user .buttons .border-btn:not(:last-child),
 #manage #delete-account2 .buttons .border-btn:not(:last-child),
-#manage #delete-class2 .buttons .border-btn:not(:last-child) {
+#manage #delete-class2 .buttons .border-btn:not(:last-child),
+#manage .kick-user .buttons .border-btn:not(:last-child),
+#members #delete-account2 .buttons .border-btn:not(:last-child),
+#members #delete-class2 .buttons .border-btn:not(:last-child),
+#members .kick-user .buttons .border-btn:not(:last-child),
+#tests #delete-account2 .buttons .border-btn:not(:last-child),
+#tests #delete-class2 .buttons .border-btn:not(:last-child),
+#tests .kick-user .buttons .border-btn:not(:last-child) {
   margin-right: 0.6rem;
 }
 
@@ -2739,6 +3123,629 @@ label.required:after {
   }
   #manage #manage-buttons .border-btn:not(:last-child) {
     margin-right: 0.6rem;
+  }
+}
+
+#members #members-wrapper {
+  margin: auto;
+  max-width: 800px;
+}
+
+#members .members-data-section .members-data-item {
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 10rem 1fr;
+      grid-template-columns: 10rem 1fr;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+}
+
+@media screen and (min-width: 672px) {
+  #members .members-data-section .members-data-item {
+    -ms-grid-rows: auto 1fr;
+        grid-template-rows: auto 1fr;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+#members .members-data-section .members-data-item > span {
+  padding: calc(0.2em + 4px) 0;
+}
+
+#members .members-data-section .members-data-item .member-action {
+  text-align: right;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: right;
+}
+
+#members .members-data-section .members-data-item .kick-user {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  grid-row: 1/3;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+  padding: calc(0.2em + 4px) 0;
+}
+
+#members .members-data-section .members-data-item .kick-user span {
+  margin-bottom: 0.4rem;
+}
+
+#members .invite-user-section {
+  padding: 0.4rem;
+}
+
+#tests #tests-wrapper {
+  margin: auto;
+  max-width: 800px;
+}
+
+#tests .tests-data-section {
+  width: 100%;
+}
+
+#tests .tests-data-section .tests-data-properties,
+#tests .tests-data-section .tests-data-item {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 6rem 3rem 1fr;
+      grid-template-columns: 6rem 3rem 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+}
+
+@media screen and (min-width: 360px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 9.6rem 4rem 1fr;
+        grid-template-columns: 9.6rem 4rem 1fr;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 15rem 4rem 1fr;
+        grid-template-columns: 15rem 4rem 1fr;
+  }
+}
+
+@media screen and (min-width: 672px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 13rem 3rem 1fr;
+        grid-template-columns: 13rem 3rem 1fr;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #tests .tests-data-section .tests-data-properties,
+  #tests .tests-data-section .tests-data-item {
+    -ms-grid-columns: 16rem 4rem 1fr;
+        grid-template-columns: 16rem 4rem 1fr;
+  }
+}
+
+#tests .tests-data-section .tests-data-properties > *,
+#tests .tests-data-section .tests-data-item > * {
+  margin: auto;
+}
+
+#tests .tests-data-section .tests-data-item {
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+}
+
+#tests .tests-data-section .tests-data-item > span {
+  padding: calc(0.2em + 4px) 0;
+}
+
+#tests .tests-data-section .tests-data-item .test-name {
+  font-weight: bold;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+#tests .tests-data-section .tests-data-item .test-action {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 672px) {
+  #tests .tests-data-section .tests-data-item .test-action {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+}
+
+#tests .tests-data-section .tests-data-item .test-action .btn {
+  margin: 0.2rem 0.4rem;
+}
+
+@media screen and (min-width: 672px) {
+  #tests .tests-data-section .tests-data-item .test-action .btn {
+    margin: auto 0.4rem;
+  }
+}
+
+#tests .tests-new-section {
+  padding: 0.4rem;
+}
+
+#resolve-reports {
+  width: 100%;
+}
+
+#resolve-reports .reports-data-properties,
+#resolve-reports .reports-data-item {
+  width: 100%;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
+      grid-template-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
+  -webkit-column-gap: 0.6rem;
+          column-gap: 0.6rem;
+  justify-items: stretch;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+}
+
+#resolve-reports .reports-data-properties > span,
+#resolve-reports .reports-data-item > span {
+  padding: calc(0.2em + 4px) 0;
+}
+
+#resolve-reports .reports-data-item {
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+}
+
+#resolve-reports .reports-data-item .report-name,
+#resolve-reports .reports-data-item .report-name-edit {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1/2;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-name-edit {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+#resolve-reports .reports-data-item .report-url,
+#resolve-reports .reports-data-item .report-url-edit {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+  font-size: 0.8rem;
+}
+
+#resolve-reports .reports-data-item .report-url {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+#resolve-reports .reports-data-item .report-url-edit {
+  width: 100%;
+}
+
+#resolve-reports .reports-data-item .report-reason {
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 1;
+  grid-column: 3/4;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-additional-info {
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 1;
+  grid-column: 4/5;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-number {
+  -ms-grid-column: 5;
+  -ms-grid-column-span: 1;
+  grid-column: 5/6;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-action {
+  -ms-grid-column: 6;
+  -ms-grid-column-span: 1;
+  grid-column: 6/7;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+}
+
+#resolve-reports .reports-data-item .report-action,
+#resolve-reports .reports-data-item .report-edit-buttons {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+#resolve-reports .reports-data-item .report-image {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 6;
+  grid-column: 1/7;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  height: 300px;
+  margin: 1rem auto 0.4rem auto;
+  position: relative;
+}
+
+#resolve-reports .reports-data-item .report-image .btn {
+  margin: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#resolve-reports .reports-data-item .report-image .btn > img {
+  -webkit-filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
+          filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
+}
+
+#resolve-reports .reports-data-item .report-image > img {
+  height: 100%;
+}
+
+#resolve-reports .reports-data-item .text-field {
+  max-width: 100%;
+  width: 100%;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0.32em 0.4em;
+}
+
+#resolve-reports .reports-data-item .custom-select-wrapper .custom-select-main {
+  height: 1.96em;
+  padding: 0.32em 0.4em;
+}
+
+#resolve-reports .reports-data-item .custom-select-wrapper .custom-options {
+  max-height: 200px;
+  padding: 0.3em 0.32em;
+}
+
+#resolve-reports .report-name,
+#resolve-reports .report-url,
+#resolve-reports .report-reason,
+#resolve-reports .report-additional-info,
+#resolve-reports .report-number,
+#resolve-reports .report-action {
+  text-align: center;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #edit-group-wrapper {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-rows: auto auto auto;
+        grid-template-rows: auto auto auto;
+    -ms-grid-columns: 1fr auto;
+        grid-template-columns: 1fr auto;
+  }
+}
+
+#edit-group .group-name-url,
+#edit-group .part-name-url {
+  font-size: 0.8rem;
+}
+
+#edit-group #group-name-container {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #group-name-container {
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1/2;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1/2;
+  }
+}
+
+#edit-group #parts-boxes-container {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #parts-boxes-container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (minmax(340px, 1fr))[auto-fill];
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-gap: 1rem;
+    grid-auto-rows: auto;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
+    grid-row: 2/3;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-column: 1/3;
+  }
+}
+
+#edit-group .part-box {
+  overflow-y: hidden;
+  height: 480px;
+  min-width: 256px;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  padding: 1rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr;
+      grid-template-rows: auto 1fr;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group .part-box {
+    width: auto;
+  }
+}
+
+#edit-group .part-box .naturals-in-part {
+  overflow-y: auto;
+}
+
+#edit-group .part-info {
+  padding-bottom: 0.6rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+}
+
+#edit-group .part-info .remove-part {
+  margin-left: auto;
+  display: block;
+}
+
+#edit-group .part-info label {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  -ms-grid-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) auto;
+  -webkit-column-gap: 0.4rem;
+          column-gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+#edit-group .part-info label span {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1/3;
+}
+
+#edit-group .part-info label .text-field {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1/2;
+  width: 100%;
+}
+
+#edit-group .part-info label .btn {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2/3;
+}
+
+#edit-group #add-part-button,
+#edit-group #submit-button {
+  width: 100%;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #add-part-button,
+  #edit-group #submit-button {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+
+#edit-group #add-part-button {
+  margin-bottom: 0.8rem;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #add-part-button {
+    -ms-grid-row: 3;
+    -ms-grid-row-span: 1;
+    grid-row: 3/4;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-column: 1/3;
+    margin-bottom: 0;
+  }
+}
+
+#edit-group #submit-wrapper {
+  width: 100%;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #submit-wrapper {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1/2;
+  }
+}
+
+#edit-group .group-name-box,
+#edit-group .group-name-input-box,
+#edit-group .part-name-box,
+#edit-group .part-name-input-box,
+#edit-group .natural-name-box,
+#edit-group .natural-name-input-box {
+  line-height: 1.6em;
+}
+
+#edit-group .group-name-box .text-field,
+#edit-group .group-name-input-box .text-field,
+#edit-group .part-name-box .text-field,
+#edit-group .part-name-input-box .text-field,
+#edit-group .natural-name-box .text-field,
+#edit-group .natural-name-input-box .text-field {
+  height: 1.6em;
+  padding: 0.48em 0.4em;
+  background: #f8f8f8;
+}
+
+#edit-group .part-name-input-box .text-field {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  width: 100%;
+  max-width: 320px;
+}
+
+#edit-group .group-name-input-box .text-field {
+  width: 100%;
+  max-width: 320px;
+}
+
+#edit-group .group-name-box,
+#edit-group .group-name-input-box,
+#edit-group .part-name-box,
+#edit-group .part-name-input-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#edit-group .group-name-box .btn,
+#edit-group .group-name-input-box .btn,
+#edit-group .part-name-box .btn,
+#edit-group .part-name-input-box .btn {
+  margin: 0 0.4rem;
+}
+
+#edit-group .group-name-box,
+#edit-group .group-name-input-box {
+  font-size: 1.36rem;
+  font-weight: bold;
+}
+
+#edit-group .part-name-box,
+#edit-group .part-name-input-box {
+  font-size: 1.18rem;
+}
+
+#edit-group .natural-name-box,
+#edit-group .natural-name-input-box {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 10rem 1rem 1rem;
+      grid-template-columns: 10rem 1rem 1rem;
+  grid-gap: 0.8rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0.16em 0;
+}
+
+@media screen and (min-width: 360px) {
+  #edit-group .natural-name-box,
+  #edit-group .natural-name-input-box {
+    -ms-grid-columns: 12rem 1rem 1rem;
+        grid-template-columns: 12rem 1rem 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group .natural-name-box,
+  #edit-group .natural-name-input-box {
+    -ms-grid-columns: 14rem 1rem 1rem;
+        grid-template-columns: 14rem 1rem 1rem;
   }
 }
 

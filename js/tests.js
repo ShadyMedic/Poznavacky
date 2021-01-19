@@ -1,24 +1,40 @@
 var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstraňován
 
-//Nastavení URL pro AJAX požadavky
-let ajaxUrl = window.location.href;
-if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
-ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //Nahraď neAJAX akci AJAX akcí
+//vše, co se děje po načtení stránky
+$(function() {
+  
+  //Nastavení URL pro AJAX požadavky
+  let ajaxUrl = window.location.href;
+  if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+  ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //Nahraď neAJAX akci AJAX akcí
+  
+	//eventy listenery tlačítek
+	$(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
+	$("#new-test-button").click(function() {newTest()})
+	$("#new-test-confirm-button").click(function() {newTestConfirm()})
+	$("#new-test-cancel-button").click(function() {newTestCancel()})
+  
+})
 
-function createTest()
+function newTest()
 {
-	$("#createButton").hide();
-	$("#createForm").show();
+	$("#new-test-button").hide();
+	$("#new-test").show();
+	$("#new-test")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
+	});
+	$("#new-test-name").focus();
 }
-function createTestHide()
+function newTestCancel()
 {
-	$("#createInput").val("");
-	$("#createForm").hide();
-	$("#createButton").show();
+	$("#new-test-name").val("");
+	$("#new-test").hide();
+	$("#new-test-button").show();
 }
-function createTestSubmit()
+function newTestConfirm()
 {
-	var testName = $("#createInput").val();
+	var testName = $("#new-test-name").val();
 	$.post(ajaxUrl,
 		{
     		action: 'create test',
@@ -46,13 +62,17 @@ function createTestSubmit()
 	);
 }
 /*-------------------------------------------------------*/
-function deleteTest(testId, name)
+function deleteTest(event)
 {
+	let testId = $(event.target).attr('data-group-id');
+	let name = $(event.target).attr('data-group-name');
+
     if (!confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny, ale zůstanou nepřiřazeny, dokud je nepřidáte do jiné poznávačky. Tato akce je nevratná!"))
     {
     	return;
 	}
-	deletedTableRow = event.target.parentNode.parentNode.parentNode;
+  
+	deletedTableRow = $(event.target).closest(".tests-data-item");
 	$.post(ajaxUrl,
 		{
     		action: 'delete test',

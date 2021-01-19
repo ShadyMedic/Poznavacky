@@ -1,65 +1,73 @@
-<style>
-/*
-Dočasné styly, přesuň si je poté jinam.
-Toto zajišťuje jenom věci důležité pro správnou funkci JavaScriptu.
-Například aby se klikalo na obrázek na tlačítku a ne na samotné tlačítko
-*/
-button img {
-    height: 16px;
-    width: 16px;
-}
-</style>
-<table id="reports-table">
-    <tr>
-        <th>Přírodnina</th>
-        <th>Zdroj</th>
-        <th>Důvod</th>
-        <th>Další informace</th>
-        <th>Počet nahlášení</th>
-        <th>Akce</th>
-    </tr>
+<div id="resolve-reports-wrapper">
+	<div class="reports-data-properties" <?php if (count($reports) === 0) : ?>style="display: none"<?php endif ?>>
+        <span class="report-name">Přírodnina</span>
+        <span class="report-url">Zdroj</span>
+        <span class="report-reason">Důvod</span>
+        <span class="report-additional-info">Další informace</span>
+        <span class="report-number">Počet nahlášení</span>
+        <span class="report-action">Akce</span>
+    </div>
     <?php if (count($reports) === 0) : ?>
-    <tr><td colspan=6>Žádná hlášení k vyřízení</td></tr>
+    <p>Žádná hlášení k vyřízení</p>
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
-        <tr class="picture-id<?= $report->getPictureId() ?>">
-            <td>
-            	<select disabled class='report-field'>
-            	<option selected hidden><?= $report->getNaturalName() ?></option>
-            	<?php foreach($naturalsInGroup as $natural) : ?>
-            		<option><?= $natural->getName() ?></option>
-            	<?php endforeach ?>
-        		</select>
-        	</td>
-            <td><input type=url readonly value="<?= $report->getUrl() ?>" class='report-field'/></td>
-            <td><?= $report->getReason() ?></td>
-            <td><?= $report->getAdditionalInformation() ?>
-            <td><?= $report->getReportersCount() ?></td>
-            <td>
-                <button class='report-action active-btn' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
-                    <img src='images/eye.svg'/>
-                </button>
-                <button class='report-action active-btn' onclick='editPicture(event)' title='Upravit údaje obrázku'>
-                    <img src='images/pencil.svg'/>
-                </button>
-                <div class="report-edit-buttons" style="display:none;">
-                    <button class='report-edit-action active-btn' onclick='confirmPictureEdit(<?= $report->getPictureId() ?>)' title='Uložit'>
-                    	<img src='images/tick.svg'/>
-                    </button>
-                    <button class='report-edit-action active-btn' onclick='cancelPictureEdit()' title='Zrušit'>
-                    	<img src='images/cross.svg'/>
-                    </button>
-                </div>
-                <button class='report-action active-btn' onclick='disablePicture(event, <?= $report->getPictureId() ?>)' title='Skrýt obrázek'>
-                    <img src='images/dot.svg'/>
-                </button>
-                <button class='report-action active-btn' onclick='deletePicture(event, <?= $report->getPictureId() ?>)' title='Odstranit obrázek'>
-                    <img src='images/cross.svg'/>
-                </button>
-                <button class='report-action active-btn' onclick='deleteReport(event, <?= $report->getId() ?>)' title='Odstranit hlášení'>
-                    <img src='images/minus.svg'/>
-                </button>
-            </td>
-        </tr>
+    <div class="reports-data-item"
+			data-picture-id="<?= $report->getPictureId() ?>"
+			data-report-id="<?= $report->getId() ?>"
+			data-report-url="<?= $report->getUrl() ?>">
+			<span class="report-name"><?= $report->getNaturalName() ?></span>
+      <div class="report-name-edit" style="display: none">
+				<div class="custom-select-wrapper report-natural-select">
+					<div class="custom-select">
+						<div class="custom-select-main">
+							<span><?= $report->getNaturalName() ?></span>
+							<img class="arrow" src="../images/arrowBlack.svg">
+						</div>
+						<ul class="custom-options">
+							<?php foreach ($naturalsInGroup as $natural) :?>
+								<li class="custom-option <?php if ($natural->getName() == $report->getNaturalName()) : ?>selected<?php endif ?>">
+								<?= $natural->getName() ?></li>
+							<?php endforeach; ?>
+						</ul>
+				  </div>
+				</div>
+      </div>
+      <div class="report-url"><?= $report->getUrl() ?></div>
+			<div class="report-url-edit" style="display: none">
+				<textarea type=url size="1" class="text-field"><?= $report->getUrl() ?></textarea>
+			</div>
+      <span class="report-reason"><?= $report->getReason() ?></span>
+      <span class="report-additional-info"><?= $report->getAdditionalInformation() ?></span>
+      <span class="report-number"><?= $report->getReportersCount() ?></span>
+      <div class="report-action">
+          <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
+              <img src='images/eye.svg'/>
+          </button>
+          <button class="btn icon edit-picture-button" title='Upravit údaje obrázku'>
+              <img src='images/pencil.svg'/>
+          </button>
+          <button class='btn icon delete-picture-button' title='Odstranit obrázek'>
+              <img src='images/cross.svg'/>
+          </button>
+          <div class="report-edit-buttons" style="display: none;">
+              <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
+                <img src='images/eye.svg'/>
+              </button>
+              <button class='btn icon edit-picture-confirm-button' title='Uložit'>
+                <img src='images/tick.svg'/>
+              </button>
+              <button class='btn icon edit-picture-cancel-button'title='Zrušit'>
+                <img src='images/cross.svg'/>
+              </button>
+          </div>
+          <button class='btn icon delete-report-button' title='Odstranit hlášení'>
+              <img src='images/minus.svg'/>
+          </button>
+      </div>
+      <div class="report-image" style="display: none">
+        <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img src="../images/crossButtonWhite.svg"></button>
+        <img src="">
+			</div>
+    </div>
     <?php endforeach ?>
-</table>
+</div>

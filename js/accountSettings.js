@@ -207,8 +207,9 @@ function deleteAccount()
 	$("#delete-account").show();
 	$("#delete-account1").show();
 	$("#delete-account-password").focus();
-	document.querySelector("#delete-account").scrollIntoView({ 
-		behavior: 'smooth' 
+	$("#delete-account")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
 	});
 	changeNameCancel();
 	changePasswordCancel();

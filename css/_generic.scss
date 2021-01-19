@@ -1,6 +1,7 @@
 //scss partial soubor, který má na starost styly vyskytující se všude
 
 @import url(//fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Ubuntu);
 @import "_variables.scss";
 
 * {
@@ -12,7 +13,7 @@ html {
 	scroll-behavior: smooth;
 }
 body {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Ubuntu', sans-serif;
 	line-height: 1.25em;
 	font-size: 100%;
 	min-width: 100%;
@@ -100,7 +101,7 @@ h5 {
 }
 
 .btn {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Ubuntu', sans-serif;
 	background: none;
 	border: none;
 	text-decoration: none;
@@ -258,6 +259,7 @@ h5 {
 			*/
 		}
 	}
+	// TODO zrušit tuto třídu -> vše .icon
 	&.cross {
 		height: 1em;
 		width: 1em;
@@ -271,9 +273,19 @@ h5 {
 	}
 	&.icon {
 		display: block;
+		height: 1em;
+		width: 1em;
 		img {
-			//filter: drop-shadow(0 0 6px rgba(black, 0.32));
 			transition: transform 0.2s ease-out;
+			height: 100%;
+			width: 100%;
+		}
+		&.disabled {
+			pointer-events: none;
+			cursor: auto;
+			> img {
+				filter: grayscale(100%);
+			}
 		}
 		&:active {
 			img {

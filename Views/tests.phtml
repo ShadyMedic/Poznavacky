@@ -1,29 +1,31 @@
-<h1>Poznávačky ve třídě</h1>
-<div id='testsManagement'>
-    <table id='testsTable'>
-        <tr>
-            <th>Název</th>
-            <th>Části</th>
-            <th>Akce</th>
-        </tr>
-        <?php foreach ($groups as $group) : ?>
-        <tr class='testsTableRow'>
-            <td class='testsTableCell'><?= $group->getName() ?></td>
-            <td class='testsTableCell'><?= $group->getPartsCount() ?></td>
-            <td class='testsTableCell'>
-                <button class='actionButton' onclick='window.location.href=window.location.href+"/<?= $group->getUrl() ?>/reports";' title='Spravovat hlášení'><img src='images/management.svg'></button>
-                <button class='actionButton' onclick='window.location.href=window.location.href+"/<?= $group->getUrl() ?>/edit";' title='Upravit poznávačku'><img src='images/pencil.svg'></button>
-                <button class='actionButton' onclick='deleteTest(<?= $group->getId() ?>,"<?= $group->getName(); ?>")' title='Odstranit poznávačku'><img src='images/cross.svg'/></button>
-            </td>
-        </tr>
-        <?php endforeach ?>
-    </table>
-    
-    <button id='createButton' class='actionButton' onclick='createTest()' title='Vytvořit novou poznávačku'><img src='images/plus.svg'></button>
-    <div id='createForm' style="display:none;">
-        <div id='createInfo'>Zadejte název nové poznávačky. Do poznávačky budete moci přidat části a přírodniny později.</div>
-        <input id='createInput' placeholder='Název poznávačky' type='text' class='text' maxlength=31>
-        <button onclick='createTestSubmit()' class='button'>Vytvořit</button>
-        <button onclick='createTestHide()' class='button'>Zrušit</button>
-    </div>
+<div id="tests-wrapper">
+	<section class="tests-data-section">
+		<div class="tests-data-properties">
+			<span class='test-name'>Název</span>
+			<span class='test-parts'>Části</span>
+			<span class='test-action'>Akce</span>
+		</div>
+		<?php foreach ($groups as $group) : ?>
+		<div class='tests-data-item'>
+			<span class='test-name'><?= $group->getName() ?></span>
+			<span class='test-parts'><?= $group->getPartsCount() ?></span>
+			<div class='test-action'>
+				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports'>Správa hlášení</a>
+				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit'>Upravit</a>
+				<a class='btn inline black delete-group-button' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>Odstranit</a>
+			</div>
+		</div>
+		<?php endforeach ?>
+	</section>
+	<section class="tests-new-section">
+		<button id='new-test-button' class="btn border-btn non-transparent black">Vytvořit novou poznávačku</button>
+		<div id='new-test' style="display: none;">
+			<h3>Nová poznávačka</h3>
+			<p>Zadejte název nové poznávačky. Do poznávačky budete moci přidat části a přírodniny později.</p>
+			<label for="new-test-name">Název poznávačky</label>
+			<input id='new-test-name' type='text' class='text-field' maxlength=31>
+			<button id="new-test-confirm-button" class='btn border-btn non-transparent black'>Vytvořit</button>
+			<button id="new-test-cancel-button" class='btn inline black'>Zrušit</button>
+		</div>
+	</section>
 </div>

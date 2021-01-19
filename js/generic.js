@@ -8,7 +8,8 @@ $(function() {
 
 	//event listener select boxů
 	$(".custom-select-wrapper").each(function() {
-		if (this.id != "add-natural-select" && this.id != "class-status-select") {
+		if (this.id != "add-natural-select" && this.id != "class-status-select" && !$(this).hasClass("report-natural-select")) 
+		{
 			$(this).find(".custom-option").first().addClass("selected");
 		}
 		$(this).click(function() {
@@ -61,6 +62,9 @@ function getCookie(cname)
 //funkce upravující manipulaci s custom select boxy
 function manageSelectBox(thisObj){
 	thisObj.find(".custom-select").toggleClass("open");
+	thisObj.find(".custom-options .selected")[0].scrollIntoView({ 
+		block: "start" 
+	});
 	$(".custom-option").each(function() {
 		$(this).click(function() {
 			if (!$(this).hasClass('selected')) {

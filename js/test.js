@@ -221,6 +221,9 @@ function softCheck(answer, correct)
  */
 function next()
 {
+	if ($(".report-box").hasClass("show"))
+		cancelReport();
+		
 	//Nastavení načítání
 	$("#main-img").attr("src","images/loading.gif");
 	

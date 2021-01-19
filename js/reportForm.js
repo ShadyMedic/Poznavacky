@@ -28,13 +28,33 @@ $(function() {
 	$("#report-reason .custom-options").click(function(){updateReport()});
 	$("#submit-report-button").click(function(e){submitReport(e)})
 	$("#cancel-report-button").click(function(e){cancelReport(e)})
+
+	displayImgPreview();
 });
+
+//vše, co se děje při změně velikosti okna
+$(window).resize(function() {
+	displayImgPreview();
+})
+
+//funkce zobrazující náhled nahlašovaného obrázku
+//zobrazení závisí na velikosti okna - aby se náhled vešel
+function displayImgPreview() 
+{
+	if ($("#main-img").height() < 400)
+		$("#report-img-preview").hide();
+	else $("#report-img-preview").show();
+}
 
 // funkce na nahlášení obrázku
 function reportImg()
 {
 	$(".report-button").hide();
 	$(".report-box").addClass("show");
+
+	//nastavení url náhledu nahlašovaného obrázku
+	url = $("#main-img").attr("src");
+	$("#report-img-preview > img").attr("src", url);
 }
 
 // funkce na zrušení hlášení
