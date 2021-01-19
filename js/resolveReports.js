@@ -3,7 +3,7 @@ if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň traili
 if (ajaxUrl.endsWith("/administrate"))
 {
 	//Správa hlášení administrátorem
-	ajaxUrl = ajaxUrl.replace("administrate", "administrate-action");
+	ajaxUrl = ajaxUrl + "/report-action";
 }
 else
 {

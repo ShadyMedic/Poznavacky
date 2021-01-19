@@ -291,37 +291,6 @@ class Administration
     }
     
     /**
-     * Metoda skrývající obrázek s daným ID z databáze i se všemi jeho hlášeními
-     * @param int $pictureId ID obrázku k odstranění
-     */
-    public function disablePicture(int $pictureId): void
-    {
-        $picture = new Picture(false, $pictureId);
-        $picture->disable();
-        $picture->deleteReports();
-    }
-    
-    /**
-     * Metoda odstraňující obrázek s daným ID z databáze i se všemi jeho hlášeními
-     * @param int $pictureId ID obrázku k odstranění
-     */
-    public function deletePicture(int $pictureId): void
-    {
-        $picture = new Picture(false, $pictureId);
-        $picture->delete();
-    }
-    
-    /**
-     * Metoda odstraňující hlášení s daným ID z databáze
-     * @param int $reportId ID hlášení k odstranění
-     */
-    public function deleteReport(int $reportId): void
-    {
-        $report = new Report(false, $reportId);
-        $report->delete();
-    }
-    
-    /**
      * Metoda řešící vyřízení žádosti o změnu jména uživatele nebo třídy
      * V případě schválení je jméno uživatele nebo třídy změněno
      * V obou případech je žádost odstraněna z databáze

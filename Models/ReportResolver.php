@@ -5,6 +5,7 @@ use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\DatabaseItems\Picture;
 use Poznavacky\Models\DatabaseItems\Report;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
@@ -15,7 +16,8 @@ class ReportResolver
 {
     private $class;
     private $group;
-    
+    private $adminIsLogged = false;
+
     /**
      * Konstruktor zajišťující, že instanci této třídy lze vytvořit pouze pokud je přihlášen správce zvolené třídy
      * Také je nastavena poznávačka, ve které je možné vytvořenou instancí řešit hlášení a třída, do které musí spadat přírodniny, k jejímž obrázkům se všechna hlášení vztahují
@@ -23,24 +25,29 @@ class ReportResolver
      */
     public function __construct()
     {
-        if (!isset($_SESSION['selection']['class']))
+        $checker = new AccessChecker();
+        if ($checker->checkSystemAdmin()) { $this->adminIsLogged = true; } //Kontroler je zavolán z administrate stránky
+        else
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN);
+            if (!isset($_SESSION['selection']['class']))
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN);
+            }
+            $class = $_SESSION['selection']['class'];
+            if (!$class->checkAdmin(UserManager::getId()))
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+            }
+
+            //Kontrola dat OK
+
+            if (!isset($_SESSION['selection']['group']))
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
+            }
+            $this->class = $class;
+            $this->group = $_SESSION['selection']['group'];
         }
-        $class = $_SESSION['selection']['class'];
-        if (!$class->checkAdmin(UserManager::getId()))
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
-        }
-        
-        //Kontrola dat OK
-        
-        if (!isset($_SESSION['selection']['group']))
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
-        }
-        $this->class = $class;
-        $this->group = $_SESSION['selection']['group'];
     }
     
     /**
@@ -54,9 +61,9 @@ class ReportResolver
     public function editPicture(int $pictureId, string $newNaturalName, string $newUrl): void
     {
         $picture = new Picture(false, $pictureId);
-        
-        //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy
-        if (!$this->checkPictureBelongsToClass($picture))
+
+        //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
+        if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($picture)))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
@@ -92,8 +99,8 @@ class ReportResolver
     public function disablePicture(int $pictureId): void
     {
         $picture = new Picture(false, $pictureId);
-        //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy
-        if (!$this->checkPictureBelongsToClass($picture))
+        //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
+        if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($picture)))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
@@ -108,8 +115,8 @@ class ReportResolver
     public function deletePicture(int $pictureId): void
     {
         $picture = new Picture(false, $pictureId);
-        //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy
-        if (!$this->checkPictureBelongsToClass($picture))
+        //Kontrola, zda je odstraňovaný obrázek součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
+        if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($picture)))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
@@ -123,8 +130,8 @@ class ReportResolver
     public function deleteReport(int $reportId): void
     {
         $report = new Report(false, $reportId);
-        //Kontrola, zda se odstraňované hlášení vztahuje k obrázku, který je součástí nějaké přírodniny patřící do spravované třídy
-        if (!$this->checkPictureBelongsToClass($report->getPicture()))
+        //Kontrola, zda se odstraňované hlášení vztahuje k obrázku, který je součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
+        if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($report->getPicture())))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
