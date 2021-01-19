@@ -1,5 +1,10 @@
 var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstraňován
 
+//Nastavení URL pro AJAX požadavky
+let ajaxUrl = window.location.href;
+if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //Nahraď neAJAX akci AJAX akcí
+
 function createTest()
 {
 	$("#createButton").hide();
@@ -14,7 +19,7 @@ function createTestHide()
 function createTestSubmit()
 {
 	var testName = $("#createInput").val();
-	$.post("class-update",
+	$.post(ajaxUrl,
 		{
     		action: 'create test',
 			testName: testName
@@ -48,7 +53,7 @@ function deleteTest(testId, name)
     	return;
 	}
 	deletedTableRow = event.target.parentNode.parentNode.parentNode;
-	$.post("class-update",
+	$.post(ajaxUrl,
 		{
     		action: 'delete test',
 			testId: testId
