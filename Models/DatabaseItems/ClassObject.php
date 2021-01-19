@@ -291,8 +291,8 @@ class ClassObject extends Folder
         if (!$includeLogged && count($result) > 0)
         {
             //Odeber z kopie pole členů přihlášeného uživatele
-            for ($i = 0; $result[$i]->getId() !== UserManager::getId(); $i++) {}
-            array_splice($result, $i, 1);
+            for ($i = 0; $i < count($result) && $result[$i]->getId() !== UserManager::getId(); $i++) {}
+            if ($i < count($result)) { array_splice($result, $i, 1); } //Pro případ, že by přihlášený uživatel nebyl členem třídy - pokud je právě třída spravována systémovým administrátorem
         }
         return $result;
     }
