@@ -34,7 +34,7 @@ class ReportsController extends Controller
             )
         );
         
-        $this->view = 'reports';
+        $this->view = 'reportsTableManage';
     }
 }
 

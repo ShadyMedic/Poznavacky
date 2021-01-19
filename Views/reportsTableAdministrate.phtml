@@ -18,7 +18,7 @@
         		<li><?= $path ?></li>
         	<?php endforeach ?>
             </td>
-            <td><?= $report->getUrl() ?></td>
+            <td><?= $report->getPicture()->getNatural()->getName() ?></td>
             <td><?= $report->getUrl() ?></td>
             <td><?= $report->getReason() ?></td>
             <td><?= $report->getAdditionalInformation() ?>
@@ -40,3 +40,7 @@
         </tr>
     <?php endforeach ?>
 </table>
+<div id="image-preview" style="display:none;">
+	<img alt="Chyba při načítání obrázku" src="" />
+	<button onclick="$('#image-preview').hide(); $('.overlay').hide();" class="border-btn">Zavřít</button>
+</div>
