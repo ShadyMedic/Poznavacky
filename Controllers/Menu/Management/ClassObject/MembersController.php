@@ -2,6 +2,8 @@
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\MessageBox;
 
 /** 
  * Kontroler starající se o výpis stránky pro správu členů třídy jejím správcům
@@ -16,6 +18,13 @@ class MembersController extends Controller
      */
     public function process(array $parameters): void
     {
+        //Kontrola, zda třída není veřejná
+        if ($_SESSION['selection']['class']->getStatus() === ClassObject::CLASS_STATUS_PUBLIC)
+        {
+            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, "Správa členů není u veřejných tříd dostupná");
+            $this->redirect("menu/".$_SESSION['selection']['class']->getUrl().'/manage');
+        }
+
         $this->pageHeader['title'] = 'Správa členů';
         $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu členů';
         $this->pageHeader['keywords'] = '';
