@@ -291,8 +291,8 @@ class ClassObject extends Folder
         if (!$includeLogged && count($result) > 0)
         {
             //Odeber z kopie pole členů přihlášeného uživatele
-            for ($i = 0; $result[$i]->getId() !== UserManager::getId(); $i++) {}
-            array_splice($result, $i, 1);
+            for ($i = 0; $i < count($result) && $result[$i]->getId() !== UserManager::getId(); $i++) {}
+            if ($i < count($result)) { array_splice($result, $i, 1); } //Pro případ, že by přihlášený uživatel nebyl členem třídy - pokud je právě třída spravována systémovým administrátorem
         }
         return $result;
     }
@@ -514,7 +514,7 @@ class ClassObject extends Folder
         $this->loadIfNotLoaded($this->admin);
         return ($this->admin->getId() === $userId) ? true : false;
     }
-    
+
     /**
      * Metoda ukládající do databáze nový požadavek na změnu názvu této třídy vyvolaný správcem této třídy, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
      * Data jsou předem ověřena
@@ -578,14 +578,14 @@ class ClassObject extends Folder
         {
             //Přepsání existující žádosti
             $request = new ClassNameChangeRequest(false, $applications[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
-            $request->initialize($this, $newName, new DateTime(time()), $this->generateUrl($newName));
+            $request->initialize($this, $newName, new DateTime('@'.time()), $this->generateUrl($newName));
             $request->save();
         }
         else
         {
             //Uložení nové žádosti
             $request = new ClassNameChangeRequest(true);
-            $request->initialize($this, $newName, new DateTime(time()), $this->generateUrl($newName));
+            $request->initialize($this, $newName, new DateTime('@'.time()), $this->generateUrl($newName));
             $request->save();
         }
         return true;

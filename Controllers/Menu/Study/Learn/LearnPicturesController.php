@@ -3,6 +3,7 @@ namespace Poznavacky\Controllers\Menu\Study\Learn;
 
 use Poznavacky\Controllers\Controller;
 use Poznavacky\Models\DatabaseItems\Natural;
+use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 
 /** 
@@ -19,7 +20,36 @@ class LearnPicturesController extends Controller
      */
     public function process(array $parameters): void
     {
+        //Kontrola přístupu
         $class = $_SESSION['selection']['class'];
+        if (!$class->checkAccess(UserManager::getId()))
+        {
+            header('HTTP/1.0 403 Forbidden');
+            exit();
+        }
+
+        $group = $_SESSION['selection']['group'];
+        if (isset($_SESSION['selection']['part']))
+        {
+            $part = $_SESSION['selection']['part'];
+            $allParts = false;
+        }
+        else
+        {
+            $allParts = true;
+        }
+
+        //Kontrola přítomnosti přírodnin
+        if (
+            ($allParts && count($group->getNaturals()) === 0) ||
+            (!$allParts && $part->getNaturalsCount() === 0)
+        )
+        {
+            //Žádné přírodniny
+            header('HTTP/1.0 400 Bad Request');
+            exit();
+        }
+
         $naturalName = urldecode($_GET['natural']);
         
         $natural = new Natural(false);

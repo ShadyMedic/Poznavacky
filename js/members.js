@@ -1,5 +1,10 @@
 var deletedTableRow;    //Ukládá řádek tabulky členů, který je odstraňován
 
+//Nastavení URL pro AJAX požadavky
+let ajaxUrl = window.location.href;
+if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+ajaxUrl = ajaxUrl.replace('/manage/members', '/class-update'); //Nahraď neAJAX akci AJAX akcí
+
 //vše, co se děje po načtení stránky
 $(function() {
 
@@ -32,7 +37,7 @@ function kickUserConfirm(event)
 	let memberId = $(event.target).closest(".members-data-item").attr("data-member-id");
 
     deletedTableRow = $(event.target).parent().parent().remove();
-    $.post("class-update",
+    $.post(ajaxUrl,
 		{
     		action: 'kick member',
 			memberId: memberId
@@ -67,17 +72,17 @@ function inviteFormShow()
 }
 function inviteFormHide()
 {
-	$("#invite-user-name").val("");
+    $("#invite-user-name").val("");
     $("#invite-user-button").show();
     $("#invite-user-form").hide();
 }
 function inviteUser()
 {
     var userName = $("#invite-user-name").val();
-    $.post("class-update",
+    $.post(ajaxUrl,
 		{
-    		action: 'invite user',
-			userName: userName
+      action: 'invite user',
+		  userName: userName
 		},
 		function (response, status)
 		{

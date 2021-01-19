@@ -146,7 +146,10 @@ function submitReport()
                 return;
             }
     }
-    $.post('new-report',
+    let url = window.location.href;
+    if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+    url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/learn nebo /test)
+    $.post(url + '/new-report',
         {
             picUrl:picUrl,
             reason:$reason.text(),

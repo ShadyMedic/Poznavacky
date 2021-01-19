@@ -2,13 +2,18 @@ var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstr
 
 //vše, co se děje po načtení stránky
 $(function() {
-
+  
+  //Nastavení URL pro AJAX požadavky
+  let ajaxUrl = window.location.href;
+  if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+  ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //Nahraď neAJAX akci AJAX akcí
+  
 	//eventy listenery tlačítek
 	$(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
 	$("#new-test-button").click(function() {newTest()})
 	$("#new-test-confirm-button").click(function() {newTestConfirm()})
 	$("#new-test-cancel-button").click(function() {newTestCancel()})
-
+  
 })
 
 function newTest()
@@ -30,7 +35,7 @@ function newTestCancel()
 function newTestConfirm()
 {
 	var testName = $("#new-test-name").val();
-	$.post("class-update",
+	$.post(ajaxUrl,
 		{
     		action: 'create test',
 			testName: testName
@@ -66,8 +71,9 @@ function deleteTest(event)
     {
     	return;
 	}
+  
 	deletedTableRow = $(event.target).closest(".tests-data-item");
-	$.post("class-update",
+	$.post(ajaxUrl,
 		{
     		action: 'delete test',
 			testId: testId

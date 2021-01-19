@@ -52,7 +52,11 @@ function pictureList()
 		{
 			this.callNext = false;
 		}
-		$.get(document.location.href+"/test-pictures",
+
+		let url = window.location.href;
+		if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+		url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/test)
+		$.get(url + "/test-pictures",
 			function (response, status)
 			{
 				ajaxCallback(response, status,
@@ -128,9 +132,12 @@ function answer(event)
 	let num = $("#answer-hidden").val();
 	
 	$("#answerForm").hide();
-	
+
+	let url = window.location.href;
+	if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+	url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/test)
 	$.post(
-			"check-test-answer",
+			url + "/check-test-answer",
 			{
 				qNum: num,
 				ans: ans

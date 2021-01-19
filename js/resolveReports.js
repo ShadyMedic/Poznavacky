@@ -1,6 +1,19 @@
 //vše, co se děje po načtení stránky
 $(function() {
 
+  var ajaxUrl = window.location.href;
+  if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+  if (ajaxUrl.endsWith("/administrate"))
+  {
+    //Správa hlášení administrátorem
+    ajaxUrl = ajaxUrl + "/report-action";
+  }
+  else
+  {
+    //Správa hlášení správcem třídy
+    ajaxUrl = ajaxUrl.replace("reports", "report-action");
+  }
+  
 	//event listenery tlačítek
 	$(".show-picture-button").click(function(event) {showPicture(event)})
 	$(".hide-picture-button").click(function(event) {hidePicture(event)})
@@ -9,6 +22,7 @@ $(function() {
 	$(".edit-picture-cancel-button").click(function(event) {editPictureCancel(event)})
 	$(".delete-picture-button").click(function(event) {deletePicture(event)})
 	$(".delete-report-button").click(function(event) {deleteReport(event)})
+  
 })
 
 //funkce zobrazující náhled nahlášeného obrázku
@@ -95,7 +109,7 @@ function editPictureConfirm(event)
 	currentUrl = $report.find(".report-url-edit .text-field").val().trim();
 	
 	//Odeslat data na server
-	$.post("report-action",
+	$.post(ajaxUrl,
 		{
 			action: 'update picture',
 			pictureId: pictureId,
@@ -150,11 +164,9 @@ function editPictureConfirm(event)
 	);
 }
 
-function deletePicture(event, asAdmin = false)
+function deletePicture(event)
 {
-	let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
-	
+  let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
 	$.post(ajaxUrl,
 			{
 				action: 'delete picture',
@@ -182,11 +194,9 @@ function deletePicture(event, asAdmin = false)
 		);
 }
 
-function deleteReport(event, asAdmin = false)
+function deleteReport(event)
 {
-	let reportId = $(event.target).closest(".reports-data-item").attr("data-report-id");
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
-	
+  let reportId = $(event.target).closest(".reports-data-item").attr("data-report-id");
 	$.post(ajaxUrl,
 		{
 			action: 'delete report',

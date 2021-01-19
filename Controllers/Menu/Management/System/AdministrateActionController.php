@@ -98,32 +98,6 @@ class AdministrateActionController extends Controller
                     $administration->deleteClass($classId);
                     echo json_encode(array('messageType' => 'success', 'message' => 'Třída úspěšně odstraněna'));
                     break;
-                case 'update picture':
-                    $pictureId = $_POST['pictureId'];
-                    $newNatural = $_POST['natural'];
-                    $newUrl = $_POST['url'];
-                    $administration->editPicture($pictureId, $newNatural, $newUrl);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny');
-                    echo $response->getResponseString();
-                    break;
-                case 'disable picture':
-                    $pictureId = $_POST['pictureId'];
-                    $administration->disablePicture($pictureId)
-                    ;$response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně skryt');
-                    echo $response->getResponseString();
-                    break;
-                case 'delete picture':
-                    $pictureId = $_POST['pictureId'];
-                    $administration->deletePicture($pictureId);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn');
-                    echo $response->getResponseString();
-                    break;
-                case 'delete report':
-                    $reportId = $_POST['reportId'];
-                    $administration->deleteReport($reportId);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Hlášení úspěšně odstraněno');
-                    echo $response->getResponseString();
-                    break;
                 case 'accept user name change':
                 case 'accept class name change':
                 case 'decline user name change':

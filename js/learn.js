@@ -79,7 +79,10 @@ function natural(name)
 	{
 		//Odeslání AJAX požadavku
 		selectedNatural.status = "loading";
-		$.get(document.location.href + "/learn-pictures?natural=" + encodeURIComponent(this.name),
+		let url = window.location.href;
+		if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+		url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/learn)
+		$.get(url + "/learn-pictures?natural=" + encodeURIComponent(this.name),
 			function (response, status)
 			{
 				ajaxCallback(response, status, function (messageType, message, data)

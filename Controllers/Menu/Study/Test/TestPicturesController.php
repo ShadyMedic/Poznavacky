@@ -2,7 +2,9 @@
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\MessageBox;
 
 /** 
  * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro testovací stránku
@@ -19,9 +21,36 @@ class TestPicturesController extends Controller
      */
     public function process(array $parameters): void
     {
-        $group = $_SESSION['selection']['group'];
+        $class = $_SESSION['selection']['class'];
 
-        //Kontrola přístupu už proběhla v TestController.php
+        //Kontrola přístupu
+        if (!$class->checkAccess(UserManager::getId()))
+        {
+            header('HTTP/1.0 403 Forbidden');
+            exit();
+        }
+
+        $group = $_SESSION['selection']['group'];
+        if (isset($_SESSION['selection']['part']))
+        {
+            $part = $_SESSION['selection']['part'];
+            $allParts = false;
+        }
+        else
+        {
+            $allParts = true;
+        }
+
+        //Kontrola přítomnosti přírodnin
+        if (
+            ($allParts && count($group->getNaturals()) === 0) ||
+            (!$allParts && $part->getNaturalsCount() === 0)
+        )
+        {
+            //Žádné přírodniny
+            header('HTTP/1.0 400 Bad Request');
+            exit();
+        }
 
         //Získání objektů obrázků
         if (isset($_SESSION['selection']['part']))
