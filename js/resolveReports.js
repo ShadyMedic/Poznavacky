@@ -1,3 +1,16 @@
+var ajaxUrl = window.location.href;
+if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+if (ajaxUrl.endsWith("/administrate"))
+{
+	//Správa hlášení administrátorem
+	ajaxUrl = ajaxUrl.replace("administrate", "administrate-action");
+}
+else
+{
+	//Správa hlášení správcem třídy
+	ajaxUrl = ajaxUrl.replace("reports", "report-action");
+}
+
 function showPicture(url)
 {
 	$("#image-preview img").attr("src", url);
@@ -64,7 +77,7 @@ function confirmPictureEdit(picId)
 	}
 	
 	//Odeslat data na server
-	$.post("report-action",
+	$.post(ajaxUrl,
 		{
 			action: 'update picture',
 			pictureId: picId,
@@ -106,10 +119,8 @@ function confirmPictureEdit(picId)
 		"json"
 	);
 }
-function disablePicture(event, picId, asAdmin = false)
+function disablePicture(event, picId)
 {
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
-	
 	$.post(ajaxUrl,
 		{
 			action: 'disable picture',
@@ -136,10 +147,8 @@ function disablePicture(event, picId, asAdmin = false)
 		"json"
 	);
 }
-function deletePicture(event, picId, asAdmin = false)
+function deletePicture(event, picId)
 {
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
-	
 	$.post(ajaxUrl,
 			{
 				action: 'delete picture',
@@ -166,10 +175,8 @@ function deletePicture(event, picId, asAdmin = false)
 			"json"
 		);
 }
-function deleteReport(event, reportId, asAdmin = false)
+function deleteReport(event, reportId)
 {
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
-	
 	$.post(ajaxUrl,
 		{
 			action: 'delete report',
