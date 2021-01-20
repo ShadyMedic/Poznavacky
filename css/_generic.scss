@@ -39,6 +39,31 @@ body {
 	}
 }
 
+#messages {
+	.message-item {
+		padding: 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: white;
+		.btn {
+			margin-left: 1rem;
+		}
+	}
+	.succes-message {
+		background: $greenMid;
+	}
+	.info-message {
+		background: #888;
+	}
+	.warning-message {
+		background: #960;
+	}
+	.error-message {
+		background: $red1;
+	}
+}
+
 footer {
 	color: white;
 	padding: 0.2rem 1rem;

@@ -3,8 +3,7 @@ var tablet = 768;
 
 //vše, co se děje po načtení stránky
 $(function() {
-	//první možnosti v každém select-boxu je přiřazena třída "selected"
-	//$(".custom-select-wrapper").find(".custom-option").first().addClass("selected");
+	$(".close-message-button").click(function() {closeMessage(this)})
 
 	//event listener select boxů
 	$(".custom-select-wrapper").each(function() {
@@ -36,6 +35,10 @@ $(function() {
 		$("body").removeClass("tab");	
 	})
 })
+
+function closeMessage($button) {
+	$button.closest(".message-item").remove();
+}
 
 //Funkce pro získání hodnoty cookie
 //Zkopírována z https://www.w3schools.com/js/js_cookies.asp

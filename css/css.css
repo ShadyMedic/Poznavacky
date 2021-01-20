@@ -92,6 +92,40 @@ body.tab .text-field:focus {
           box-shadow: inset 0 0 0 2px rgba(71, 153, 17, 0.5);
 }
 
+#messages .message-item {
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+}
+
+#messages .message-item .btn {
+  margin-left: 1rem;
+}
+
+#messages .succes-message {
+  background: #479911;
+}
+
+#messages .info-message {
+  background: #888;
+}
+
+#messages .warning-message {
+  background: #960;
+}
+
+#messages .error-message {
+  background: #a00;
+}
+
 footer {
   color: white;
   padding: 0.2rem 1rem;
@@ -652,7 +686,7 @@ label.required:after {
 #tests,
 #edit-group,
 #resolve-reports {
-  width: 100%;
+  min-width: 100%;
   height: 100%;
   scrollbar-color: #444 #222;
   scrollbar-width: auto;
@@ -749,6 +783,8 @@ label.required:after {
   #resolve-reports .container {
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
+    -ms-grid-rows: auto auto 1fr auto auto;
+        grid-template-rows: auto auto 1fr auto auto;
   }
 }
 
@@ -1031,8 +1067,8 @@ label.required:after {
   display: none;
   width: 64px;
   -ms-grid-row: 2;
-  -ms-grid-row-span: 2;
-  grid-row: 2/4;
+  -ms-grid-row-span: 3;
+  grid-row: 2/5;
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1/2;
@@ -1235,6 +1271,44 @@ label.required:after {
   }
 }
 
+#menu #messages,
+#learn #messages,
+#test #messages,
+#add-pictures #messages,
+#account-settings #messages,
+#manage #messages,
+#members #messages,
+#tests #messages,
+#edit-group #messages,
+#resolve-reports #messages {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+}
+
+@media screen and (min-width: 672px) {
+  #menu #messages,
+  #learn #messages,
+  #test #messages,
+  #add-pictures #messages,
+  #account-settings #messages,
+  #manage #messages,
+  #members #messages,
+  #tests #messages,
+  #edit-group #messages,
+  #resolve-reports #messages {
+    position: relative;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
+    -ms-grid-row: 4;
+    -ms-grid-row-span: 1;
+    grid-row: 4/5;
+  }
+}
+
 #menu footer,
 #learn footer,
 #test footer,
@@ -1264,6 +1338,9 @@ label.required:after {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
+    -ms-grid-row: 5;
+    -ms-grid-row-span: 1;
+    grid-row: 5/6;
   }
 }
 

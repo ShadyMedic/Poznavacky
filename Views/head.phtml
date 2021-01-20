@@ -30,14 +30,15 @@
     <body id="<?= $bodyId ?>">
 		<div class="overlay"></div>
 		<div class="container">
-			<!--
-			<div id="messages">
-			<?php foreach ($messages as $messageBox) : ?>
-				<div class="<?= $messageBox['messageClass'] ?>"><?= $messageBox['message'] ?></div>
-			<?php endforeach ?>
-			</div>
-			-->
 			<?php $this->controllerToCall->displayView(); ?>
+			<div id="messages">
+				<?php foreach ($messages as $messageBox) : ?>
+					<div class="message-item <?= $messageBox['messageClass'] ?>">
+						<span><?= $messageBox['message'] ?></span>
+						<button class="btn icon close-message-button"><img src="../images/crossButtonWhite.svg"></button>
+					</div>
+				<?php endforeach ?>
+			</div>
 			<footer>
 				<div class="content">
 					<a id="help" class="btn inline white" target='_blank' href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a>

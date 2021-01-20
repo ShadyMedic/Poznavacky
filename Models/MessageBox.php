@@ -11,7 +11,7 @@ class MessageBox
     public const MESSAGE_TYPE_INFO = 1;
     public const MESSAGE_TYPE_WARNING = 2;
     public const MESSAGE_TYPE_ERROR = 3;
-    private const CSS_CLASSES = array(0 => 'successMessage', 1 => 'infoMessage', 2 => 'warningMessage', 3 => 'errorMessage');
+    private const CSS_CLASSES = array(0 => 'success-message', 1 => 'info-message', 2 => 'warning-message', 3 => 'error-message');
     
     private $message;
     private $cssClass;
