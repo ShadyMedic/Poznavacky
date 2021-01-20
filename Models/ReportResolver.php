@@ -32,7 +32,7 @@ class ReportResolver
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN);
         }
-        $class = $_SESSION['selection']['class'];
+        $class = @$_SESSION['selection']['class'];
         if (!($this->adminIsLogged || $class->checkAdmin(UserManager::getId())))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
@@ -41,10 +41,19 @@ class ReportResolver
         //Kontrola dat OK
         if (!isset($_SESSION['selection']['group']))
         {
-            throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
+            if (!$this->adminIsLogged)
+            {
+                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
+            }
         }
-        $this->class = $class;
-        $this->group = $_SESSION['selection']['group'];
+        else
+        {
+            //Tyto dvě vlastnosti jsou potřeba při správě hlášení na stránce reports, ne na administrate
+            //Vlastnosti jsou potřeba při úpravách dat obrázku (což není na administrate stránce možné)
+            //a dále při kontrole, zda obrázek patří do spravované třídy (což u systémových administrátorů není třeba řešit)
+            $this->class = $class;
+            $this->group = $_SESSION['selection']['group'];
+        }
     }
     
     /**
