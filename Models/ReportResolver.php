@@ -27,27 +27,24 @@ class ReportResolver
     {
         $checker = new AccessChecker();
         if ($checker->checkSystemAdmin()) { $this->adminIsLogged = true; } //Kontroler je zavolán z administrate stránky
-        else
+
+        if (!($this->adminIsLogged || isset($_SESSION['selection']['class'])))
         {
-            if (!isset($_SESSION['selection']['class']))
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN);
-            }
-            $class = $_SESSION['selection']['class'];
-            if (!$class->checkAdmin(UserManager::getId()))
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
-            }
-
-            //Kontrola dat OK
-
-            if (!isset($_SESSION['selection']['group']))
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
-            }
-            $this->class = $class;
-            $this->group = $_SESSION['selection']['group'];
+            throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN);
         }
+        $class = $_SESSION['selection']['class'];
+        if (!($this->adminIsLogged || $class->checkAdmin(UserManager::getId())))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
+
+        //Kontrola dat OK
+        if (!isset($_SESSION['selection']['group']))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
+        }
+        $this->class = $class;
+        $this->group = $_SESSION['selection']['group'];
     }
     
     /**
