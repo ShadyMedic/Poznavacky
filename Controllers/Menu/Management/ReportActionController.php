@@ -44,7 +44,7 @@ class ReportActionController extends Controller
             header('HTTP/1.0 403 Forbidden');
             exit();
         }
-        
+
         try
         {
             $resolver = new ReportResolver();
@@ -57,12 +57,6 @@ class ReportActionController extends Controller
                     $newUrl = $_POST['url'];
                     $resolver->editPicture($pictureId, $newNatural, $newUrl);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny');
-                    echo $response->getResponseString();
-                    break;
-                case 'disable picture':
-                    $pictureId = $_POST['pictureId'];
-                    $resolver->disablePicture($pictureId);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně skryt');
                     echo $response->getResponseString();
                     break;
                 case 'delete picture':

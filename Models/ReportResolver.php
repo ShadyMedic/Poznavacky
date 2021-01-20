@@ -99,22 +99,6 @@ class ReportResolver
     }
     
     /**
-     * Metoda skrývající obrázek s daným ID z databáze i se všemi jeho hlášeními
-     * @param int $pictureId ID obrázku k odstranění
-     */
-    public function disablePicture(int $pictureId): void
-    {
-        $picture = new Picture(false, $pictureId);
-        //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
-        if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($picture)))
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
-        }
-        $picture->disable();
-        $picture->deleteReports();
-    }
-    
-    /**
      * Metoda odstraňující obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
      */

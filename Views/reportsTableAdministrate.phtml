@@ -27,9 +27,6 @@
                 <button class='report-action active-btn' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
                     <img src='images/eye.svg'/>
                 </button>
-                <button class='report-action active-btn' onclick='disablePicture(event, <?= $report->getPictureId() ?>)' title='Skrýt obrázek'>
-                    <img src='images/dot.svg'/>
-                </button>
                 <button class='report-action active-btn' onclick='deletePicture(event, <?= $report->getPictureId() ?>)' title='Odstranit obrázek'>
                     <img src='images/cross.svg'/>
                 </button>

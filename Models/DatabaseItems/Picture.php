@@ -118,18 +118,6 @@ class Picture extends DatabaseItem
     }
     
     /**
-     * Metoda odstraňující z databáze všechna hlášení vztahující se k tomuto obrázku
-     * Vlastnost pole uchovávající hlášení tohoto obrázku, které je uložené jako vlastnost je nahrazeno prázdným polem
-     * @return boolean TRUE, pokud jsou hlášení úspěšně odstraněna
-     */
-    public function deleteReports(): bool
-    {
-        Db::executeQuery('DELETE FROM '.Report::TABLE_NAME.' WHERE '.Report::COLUMN_DICTIONARY['picture'].' = ?', array($this->id));
-        $this->reports = array();
-        return true;
-    }
-    
-    /**
      * Metoda navracející pole hlášení tohoto obrázku
      * Pokud hlášení zatím nebyla načtena z databáze, budou před navrácením načtena
      * @return Report[] Pole hlášení tohoto obrázku jako objekty
@@ -161,22 +149,6 @@ class Picture extends DatabaseItem
             $report->initialize($this, $reportInfo[Report::COLUMN_DICTIONARY['reason']], $reportInfo[Report::COLUMN_DICTIONARY['additionalInformation']], $reportInfo[Report::COLUMN_DICTIONARY['reportersCount']]);
             $this->reports[] = $report;
         }
-    }
-    
-    /**
-     * Metoda skrývající tento obrázek v databázi
-     * @return boolean TRUE, pokud je obrázek úspěšně skryt v databázi
-     */
-    public function disable(): bool
-    {
-        $this->loadIfNotLoaded($this->id);
-        
-        //Vypnout obrázek v databázi
-        Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['enabled'].' = 0 WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;', array($this->id));
-        
-        //Přenastavit vlastnost této instance
-        $this->enabled = false;
-        return true;
     }
 }
 
