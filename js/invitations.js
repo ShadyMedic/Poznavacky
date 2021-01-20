@@ -1,25 +1,21 @@
-function showInvitations()
+$(function()
 {
-	$("#invitationsButton").hide();
-	$("#invitations").show();
-}
-function hideInvitations()
-{
-	$("#invitations").hide();
-	$("#invitationsButton").show();
-}
-/*-------------------------------------------------------*/
+	//event listenery tlačítek
+	$("#accept-invitation-button").click(function(event) {acceptInvitation(event)})
+	$("#reject-invitation-button").click(function(event) {rejectInvitation(event)})
+})
+
 function acceptInvitation(event)
 {
 	event.preventDefault();
-	$(event.target.parentNode.parentNode).attr("id", "activeInvitationForm");
-	$("#activeInvitationForm > input[name='invitationAnswer']").val("accept");
-	$("#activeInvitationForm").submit();
+	let $activeInvitationForm = $(event.target).closest(".invitation").find("form");
+	$activeInvitationForm.find("input[name='invitationAnswer']").val("accept");
+	$activeInvitationForm.submit();
 }
 function rejectInvitation(event)
 {
 	event.preventDefault();
-	$(event.target.parentNode.parentNode).attr("id", "activeInvitationForm");
-	$("#activeInvitationForm > input[name='invitationAnswer']").val("reject");
-	$("#activeInvitationForm").submit();
+	let $activeInvitationForm = $(event.target).closest(".invitation").find("form");
+	$activeInvitationForm.find("input[name='invitationAnswer']").val("reject");
+	$activeInvitationForm.submit();
 }

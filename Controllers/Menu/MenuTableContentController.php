@@ -33,7 +33,8 @@ class MenuTableContentController extends Controller
         }
         
         $this->data['table'] = $this->aquiredData;
-
+		$this->data['invitations'] = UserManager::getUser()->getActiveInvitations();
+		$this->data['invitationsCount'] = count($this->data['invitations']);
         $checker = new AccessChecker();
         $this->data['demoVersion'] = $checker->checkDemoAccount();
 

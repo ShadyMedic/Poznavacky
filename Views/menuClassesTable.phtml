@@ -34,6 +34,22 @@
 			</li></button>
 		<?php endforeach ?>
 
+		<?php foreach ($invitations as $invitation) : ?>
+		<li class="invitation">
+			<span class="invitation-info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
+			<h4 class="col1"><?= $invitation->getClass()->getName(); ?></h4>
+			<span class="col2"><?= $invitation->getClass()->getGroupsCount() ?></span>
+			<div class="invitation-accept">
+				<form action="menu/answer-invitation" method="POST">
+					<input type='hidden' name='invitationId' value=<?= $invitation->getId() ?> />
+					<input type='hidden' name='invitationAnswer' value='unselected' />
+					<button class='btn icon' id="accept-invitation-button" title='Přijmout pozvánku'><img src='images/tick.svg'/></button>
+					<button class='btn icon' id="reject-invitation-button" title='Odmítnout pozvánku'><img src='images/cross.svg'/></button>
+				</form>
+			</div>
+		</li>
+		<?php endforeach ?>
+
         <?php if (!$demoVersion): ?>
 		<li id="enter-code-wrapper">
 			<h5>Připojte se pomocí kódu</h5>

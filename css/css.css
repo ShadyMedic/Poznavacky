@@ -1387,6 +1387,42 @@ label.required:after {
   }
 }
 
+#menu .folders#menu-classes-table ul.rows li.invitation {
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  margin: 0.4rem 0 0.6rem 0;
+}
+
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-info {
+  font-size: 0.8rem;
+  width: 100%;
+  padding: 0 0.6rem;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  text-align: left;
+}
+
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept form .btn {
+  margin: 0 0.4rem;
+}
+
 #menu .folders#menu-classes-table ul.rows li#enter-code-wrapper, #menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
