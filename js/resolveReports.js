@@ -1,7 +1,9 @@
+var ajaxUrl;
+
 //vše, co se děje po načtení stránky
 $(function() {
 
-  var ajaxUrl = window.location.href;
+  ajaxUrl = window.location.href;
   if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
   if (ajaxUrl.endsWith("/administrate"))
   {

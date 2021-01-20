@@ -27,24 +27,30 @@ class ReportResolver
     {
         $checker = new AccessChecker();
         if ($checker->checkSystemAdmin()) { $this->adminIsLogged = true; } //Kontroler je zavolán z administrate stránky
-        else
+
+        if (!($this->adminIsLogged || isset($_SESSION['selection']['class'])))
         {
-            if (!isset($_SESSION['selection']['class']))
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN);
-            }
-            $class = $_SESSION['selection']['class'];
-            if (!$class->checkAdmin(UserManager::getId()))
-            {
-                throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
-            }
+            throw new AccessDeniedException(AccessDeniedException::REASON_CLASS_NOT_CHOSEN);
+        }
+        $class = @$_SESSION['selection']['class'];
+        if (!($this->adminIsLogged || $class->checkAdmin(UserManager::getId())))
+        {
+            throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
+        }
 
-            //Kontrola dat OK
-
-            if (!isset($_SESSION['selection']['group']))
+        //Kontrola dat OK
+        if (!isset($_SESSION['selection']['group']))
+        {
+            if (!$this->adminIsLogged)
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
             }
+        }
+        else
+        {
+            //Tyto dvě vlastnosti jsou potřeba při správě hlášení na stránce reports, ne na administrate
+            //Vlastnosti jsou potřeba při úpravách dat obrázku (což není na administrate stránce možné)
+            //a dále při kontrole, zda obrázek patří do spravované třídy (což u systémových administrátorů není třeba řešit)
             $this->class = $class;
             $this->group = $_SESSION['selection']['group'];
         }
@@ -90,22 +96,6 @@ class ReportResolver
         }
         
         $picture->save();
-    }
-    
-    /**
-     * Metoda skrývající obrázek s daným ID z databáze i se všemi jeho hlášeními
-     * @param int $pictureId ID obrázku k odstranění
-     */
-    public function disablePicture(int $pictureId): void
-    {
-        $picture = new Picture(false, $pictureId);
-        //Kontrola, zda je vypínaný obrázek součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
-        if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($picture)))
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
-        }
-        $picture->disable();
-        $picture->deleteReports();
     }
     
     /**
