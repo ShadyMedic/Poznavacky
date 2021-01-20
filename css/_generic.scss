@@ -18,6 +18,7 @@ body {
 	font-size: 100%;
 	min-width: 100%;
 	min-height: 100vh;
+	color: $black1;
 	.btn:focus {
 		outline: none;
 	}
@@ -120,7 +121,7 @@ h5 {
 		&.non-transparent {
 			&.white {
 				background: white;
-				color: black;
+				color: $black1;
 				border: 2px solid white;
 				&:after {
 					background: rgba(black, 0.06);
@@ -227,36 +228,11 @@ h5 {
 		&:hover {
 			text-decoration: underline;
 		}
-		/*
-		&:after {
-			content: "";
-			display: block;
-			width: 0%;
-			left: 50%;
-			height: 2px;
-			position: absolute;
-			bottom: -0.1rem;
-			transition: all 0.1s ease-in;
-		}
-		&:hover:after {
-			width: 100%;
-			left: 0;
-		}
-		*/
 		&.white {
 			color: white;
-			/*
-			&:after {
-				background: white;
-			}*/
 		}
 		&.black {
-			color: black;
-			/*
-			&:after {
-				background: black;
-			}
-			*/
+			color: $black1;
 		}
 	}
 	// TODO zrušit tuto třídu -> vše .icon

@@ -67,6 +67,7 @@ body {
   font-size: 100%;
   min-width: 100%;
   min-height: 100vh;
+  color: #101010;
 }
 
 body .btn:focus {
@@ -201,7 +202,7 @@ h5 {
 
 .btn.border-btn.non-transparent.white {
   background: white;
-  color: black;
+  color: #101010;
   border: 2px solid white;
 }
 
@@ -340,22 +341,6 @@ h5 {
   font-size: 1em;
   position: relative;
   text-decoration: none;
-  /*
-		&:after {
-			content: "";
-			display: block;
-			width: 0%;
-			left: 50%;
-			height: 2px;
-			position: absolute;
-			bottom: -0.1rem;
-			transition: all 0.1s ease-in;
-		}
-		&:hover:after {
-			width: 100%;
-			left: 0;
-		}
-		*/
 }
 
 .btn.inline:hover {
@@ -364,19 +349,10 @@ h5 {
 
 .btn.inline.white {
   color: white;
-  /*
-			&:after {
-				background: white;
-			}*/
 }
 
 .btn.inline.black {
-  color: black;
-  /*
-			&:after {
-				background: black;
-			}
-			*/
+  color: #101010;
 }
 
 .btn.cross {
@@ -1696,6 +1672,7 @@ label.required:after {
   display: grid;
   width: 100%;
   padding: 0.4rem;
+  color: #101010;
 }
 
 #menu .folders ul.rows .col1 {
@@ -4182,7 +4159,6 @@ body#index #index-login-section {
   overflow: auto;
   scrollbar-color: #444 white;
   scrollbar-width: auto;
-  color: black;
   padding: 0 0.4rem;
   -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);

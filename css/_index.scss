@@ -204,7 +204,7 @@ body#index {
 		position: fixed;
 		overflow: auto;
 		@include scrollbar(8px, $gray3, white);
-		color: black;
+		
 		padding: 0 0.4rem;
 		box-shadow: 0px 0px 4px 2px rgba(black,0.2);
 		border: 0.8rem solid white;
