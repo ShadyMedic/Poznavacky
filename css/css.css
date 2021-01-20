@@ -196,28 +196,27 @@ h5 {
   display: inline-block;
   text-align: center;
   position: relative;
-  padding: 0.4em 1em;
+  padding: 0.44em 1em;
   border-radius: 3.2px;
+  line-height: 1.32em;
 }
 
 .btn.border-btn.non-transparent.white {
   background: white;
   color: #101010;
-  border: 2px solid white;
 }
 
 .btn.border-btn.non-transparent.white:after {
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .btn.border-btn.non-transparent.black {
   background: #101010;
   color: white;
-  border: 2px solid #101010;
 }
 
 .btn.border-btn.non-transparent.black:after {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .btn.border-btn.non-transparent.black.disabled {
@@ -236,7 +235,6 @@ h5 {
 .btn.border-btn.non-transparent.dark-green {
   background: #366e11;
   color: white;
-  border: 2px solid #366e11;
 }
 
 .btn.border-btn.non-transparent.dark-green:after {
@@ -245,6 +243,7 @@ h5 {
 
 .btn.border-btn.transparent {
   background: transparent;
+  padding: calc(0.44em - 2px) calc(1em - 2px);
 }
 
 .btn.border-btn.transparent.white {
@@ -422,7 +421,7 @@ input.text-field,
 select.text-field,
 textarea.text-field {
   font-size: 100%;
-  padding: 0.48em 0.8em;
+  padding: 0.44em 0.8em;
   border-radius: 0.2em;
   line-height: 1.32em;
 }
