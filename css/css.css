@@ -1414,6 +1414,16 @@ label.required:after {
   margin: 0.2rem 0;
 }
 
+#menu .folders#menu-classes-table ul.rows li #class-code-form .btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+#menu .folders#menu-classes-table ul.rows li #class-code-form .text-field {
+  width: 8rem;
+}
+
 #menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
   padding-bottom: 0.6rem;
 }

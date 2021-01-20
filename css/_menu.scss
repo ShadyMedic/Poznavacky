@@ -228,6 +228,14 @@
 						margin: 0.2rem 0;
 					}
 				}
+				#class-code-form {
+					.btn {
+						width: fit-content;
+					}
+					.text-field {
+						width: 8rem;
+					}
+				}
 				&#request-class-wrapper {
 					padding-bottom: 0.6rem;
 					.btn {
