@@ -110,7 +110,7 @@ body.tab .text-field:focus {
   margin-left: 1rem;
 }
 
-#messages .succes-message {
+#messages .success-message {
   background: #479911;
 }
 
@@ -4033,6 +4033,14 @@ body#index main p {
   padding: 0.6rem 0;
   line-height: 1.3em;
   text-align: justify;
+}
+
+body#index #messages {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
 }
 
 body#index #index-text-section {

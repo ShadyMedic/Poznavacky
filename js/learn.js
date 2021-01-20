@@ -100,7 +100,7 @@ function natural(name)
 					    else
 					    {
 					    	//Nastala požadavek nebyl úspěšný
-					    	alert(message);
+					    	newMessage(message, "error");
 					    }
 				    }
 				);

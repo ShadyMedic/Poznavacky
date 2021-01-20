@@ -36,7 +36,7 @@ function kickUserConfirm(event)
 {
 	let memberId = $(event.target).closest(".members-data-item").attr("data-member-id");
 
-    deletedTableRow = $(event.target).parent().parent().remove();
+    deletedTableRow = $(event.target).closest(".members-data-item").remove();
     $.post(ajaxUrl,
 		{
     		action: 'kick member',
@@ -49,13 +49,13 @@ function kickUserConfirm(event)
 				{
 					if (messageType === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+						newMessage(message, "error");
 					}
 					else if (messageType === "success")
 					{
-						//TODO - nějak odstraň řádek s uživatelem z DOM
-						//Odebrání uživatele z DOM
+						//newMessage(message, "success")
+
+						//odebrání uživatele z DOM
 						deletedTableRow.remove();
 					}
 					deletedTableRow = undefined;
@@ -94,13 +94,12 @@ function inviteUser()
 						//Vynuluj a skryj formulář
 					    inviteFormHide();
 					    
-					    //TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+					    //TODO - ideálně zobrazit přímo ve formuláři
+						newMessage(message,"success");
 					}
 					if (messageType === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+						newMessage(message, "error");
 					}
 				}
 			);

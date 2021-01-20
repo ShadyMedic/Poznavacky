@@ -79,7 +79,7 @@ function pictureList()
 						else
 						{
 							//Požadavek nebyl úspěšný
-							alert(message);
+							newMessage(message, "error");
 						}
 					}
 				);

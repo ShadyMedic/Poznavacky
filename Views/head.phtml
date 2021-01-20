@@ -34,8 +34,8 @@
 			<div id="messages">
 				<?php foreach ($messages as $messageBox) : ?>
 					<div class="message-item <?= $messageBox['messageClass'] ?>">
-						<span><?= $messageBox['message'] ?></span>
-						<button class="btn icon close-message-button"><img src="../images/crossButtonWhite.svg"></button>
+						<span class="message"><?= $messageBox['message'] ?></span>
+						<button class="btn icon close-message-button"><img src="../images/crossButtonWhite.svg"></button>	
 					</div>
 				<?php endforeach ?>
 			</div>
@@ -53,6 +53,15 @@
 					}
 				</script>--> <!-- BUDE PŘEDĚLÁNO -->
 			</footer>
+		</div>
+		<div id="message-item-template" style="display: none">
+			<div class="message-item">
+				<div class="text">
+					<p class="message"></p>
+				    <p class="data"></p>
+				</div>
+				<button class="btn icon close-message-button"><img src="../images/crossButtonWhite.svg"></button>
+			</div>
 		</div>
 	</body>
 </html>

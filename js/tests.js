@@ -47,8 +47,7 @@ function newTestConfirm()
 				{
 					if (messageType === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+						newMessage(message, "error");
 					}
 					else if (messageType === "success")
 					{
@@ -85,8 +84,7 @@ function deleteTest(event)
 				{
 					if (response["messageType"] === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(response["message"]);
+						newMessage(response["message"], "error");
 					}
 					else if (response["messageType"] === "success")
 					{

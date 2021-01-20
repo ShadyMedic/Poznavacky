@@ -160,8 +160,7 @@ function submitReport()
 			ajaxCallback(response, status,
 				function (messageType, message, data)
 				{
-					//TODO - nějak šikovně zobrazit hlášku ze serveru
-					alert(message);
+					newMessage(message, messageType);
 					
                     //Skrýt formulář pro nahlašování
                     cancelReport();

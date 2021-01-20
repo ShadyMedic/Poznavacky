@@ -91,8 +91,7 @@ function submitPicture(event)
 				{
 					if (messageType === "success")
 					{
-						//TODO - zkusit tohle nedělat popupem
-						alert(message)
+						//newMessage(message, "success");
 
 						//Reset HTML
 						$("#url-input").val("");
@@ -100,8 +99,7 @@ function submitPicture(event)
 					}
 					else if (messageType === "error")
 					{
-						//TODO - zkusit tohle nedělat popupem
-						alert(message);
+						newMessage(message, "error");
 					}
 				}
 			);

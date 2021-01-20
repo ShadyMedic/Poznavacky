@@ -3,7 +3,7 @@ var tablet = 768;
 
 //vše, co se děje po načtení stránky
 $(function() {
-	$(".close-message-button").click(function() {closeMessage(this)})
+	$("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
 
 	//event listener select boxů
 	$(".custom-select-wrapper").each(function() {
@@ -77,4 +77,12 @@ function manageSelectBox(thisObj){
 			}
 		})
 	})
+}
+
+function newMessage(message, type, data) {
+	$("#messages").prepend($("#message-item-template").html());
+	$message = $("#messages .message-item:first-child");
+	$message.find(".message").text(message);
+	$message.find(".data").text(data);
+	$message.addClass(type + "-message");
 }
