@@ -4444,6 +4444,10 @@ body#index #index-login-section .message {
   color: #a00;
 }
 
+body#index #index-login-section .message.server {
+  margin-bottom: 0.6rem;
+}
+
 body#index #index-login-section .btn.inline,
 body#index #index-login-section p {
   font-size: inherit;
@@ -4455,7 +4459,7 @@ body#index #index-login-section p {
 }
 
 body#index #index-login-section .border-btn {
-  margin: 0.8rem auto;
+  margin: 0.8rem auto 0.2rem auto;
   font-size: 1.2rem;
   width: 100%;
 }

@@ -303,14 +303,17 @@ function serverResponse(messageType, message, data)
 	//var data.origin == //Formulář z něhož byla odeslána data - login / register / passRecovery
 
 	var errors = message.split("|"); //V případě, že bylo nalezeno více chyb, jsou odděleny svislítkem
+	errors = errors.toString().replaceAll(",", ". ");
+	if (!errors.endsWith(".")) {
+		errors = errors.concat(".");
+	}
 
 	switch(data.origin) {
 		case "login":
-			console.log("login");
 			$("#login-server-message").text(errors);
 			break;
 		case "register":
-			$("register-server-message").text(errors);
+			$("#register-server-message").text(errors);
 			break;
 		case "passRecovery":
 			$("#password-recovery-server-message").text(errors);
