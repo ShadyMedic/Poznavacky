@@ -3061,6 +3061,104 @@ label.required:after {
   text-align: justify;
 }
 
+#account-settings #change-name .message,
+#account-settings #change-password .message,
+#account-settings #change-email .message,
+#account-settings #delete-account1 .message,
+#account-settings #delete-account2 .message,
+#account-settings #change-class-name .message,
+#account-settings #change-class-status .message,
+#account-settings #delete-class1 .message,
+#account-settings #delete-class2 .message,
+#account-settings #invite-user-form .message,
+#account-settings #new-test .message,
+#manage #change-name .message,
+#manage #change-password .message,
+#manage #change-email .message,
+#manage #delete-account1 .message,
+#manage #delete-account2 .message,
+#manage #change-class-name .message,
+#manage #change-class-status .message,
+#manage #delete-class1 .message,
+#manage #delete-class2 .message,
+#manage #invite-user-form .message,
+#manage #new-test .message,
+#members #change-name .message,
+#members #change-password .message,
+#members #change-email .message,
+#members #delete-account1 .message,
+#members #delete-account2 .message,
+#members #change-class-name .message,
+#members #change-class-status .message,
+#members #delete-class1 .message,
+#members #delete-class2 .message,
+#members #invite-user-form .message,
+#members #new-test .message,
+#tests #change-name .message,
+#tests #change-password .message,
+#tests #change-email .message,
+#tests #delete-account1 .message,
+#tests #delete-account2 .message,
+#tests #change-class-name .message,
+#tests #change-class-status .message,
+#tests #delete-class1 .message,
+#tests #delete-class2 .message,
+#tests #invite-user-form .message,
+#tests #new-test .message {
+  font-size: 0.72rem;
+  line-height: 0.96rem;
+  min-height: 0.96rem;
+  color: #a00;
+}
+
+#account-settings #change-name .message.server,
+#account-settings #change-password .message.server,
+#account-settings #change-email .message.server,
+#account-settings #delete-account1 .message.server,
+#account-settings #delete-account2 .message.server,
+#account-settings #change-class-name .message.server,
+#account-settings #change-class-status .message.server,
+#account-settings #delete-class1 .message.server,
+#account-settings #delete-class2 .message.server,
+#account-settings #invite-user-form .message.server,
+#account-settings #new-test .message.server,
+#manage #change-name .message.server,
+#manage #change-password .message.server,
+#manage #change-email .message.server,
+#manage #delete-account1 .message.server,
+#manage #delete-account2 .message.server,
+#manage #change-class-name .message.server,
+#manage #change-class-status .message.server,
+#manage #delete-class1 .message.server,
+#manage #delete-class2 .message.server,
+#manage #invite-user-form .message.server,
+#manage #new-test .message.server,
+#members #change-name .message.server,
+#members #change-password .message.server,
+#members #change-email .message.server,
+#members #delete-account1 .message.server,
+#members #delete-account2 .message.server,
+#members #change-class-name .message.server,
+#members #change-class-status .message.server,
+#members #delete-class1 .message.server,
+#members #delete-class2 .message.server,
+#members #invite-user-form .message.server,
+#members #new-test .message.server,
+#tests #change-name .message.server,
+#tests #change-password .message.server,
+#tests #change-email .message.server,
+#tests #delete-account1 .message.server,
+#tests #delete-account2 .message.server,
+#tests #change-class-name .message.server,
+#tests #change-class-status .message.server,
+#tests #delete-class1 .message.server,
+#tests #delete-class2 .message.server,
+#tests #invite-user-form .message.server,
+#tests #new-test .message.server {
+  margin-bottom: 0.2rem;
+  min-height: 0;
+}
+
 #account-settings h3,
 #manage h3,
 #members h3,
@@ -3107,6 +3205,13 @@ label.required:after {
 #tests #new-test .border-btn {
   margin: 0.6rem auto;
   width: 100%;
+}
+
+#account-settings #delete-account1 .border-btn,
+#manage #delete-account1 .border-btn,
+#members #delete-account1 .border-btn,
+#tests #delete-account1 .border-btn {
+  margin-bottom: 0.2rem;
 }
 
 #account-settings #delete-account2 span,

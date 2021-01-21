@@ -239,9 +239,7 @@ function deleteAccountConfirm(messageType, message, data)
 	}
 	else
 	{
-		//console.log("["+messageType+" - " + data.origin + "] " + message);
-		//TODO - ideálně ne jako message, ale přímo ve formuláři
-		newMessage(message, messageType);
+		$("#delete-account-message").text(message);
 		
 		$("#delete-account-password").val("");
 	}
@@ -281,6 +279,7 @@ function deleteAccountCancel()
 	$("#delete-account-button").show();
 	$("#delete-account").hide();
 	$("#delete-account2").hide();
+	$("#delete-account-message").text("");
 }
 
 /**
