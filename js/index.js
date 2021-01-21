@@ -318,7 +318,5 @@ function serverResponse(messageType, message, data)
 			$("#password-recovery-server-message").text(errors);
 			break;
 	}
-
-	//TODO - zobrazení chybové nebo úspěchové hlášky
 }
 

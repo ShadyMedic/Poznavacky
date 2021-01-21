@@ -166,13 +166,11 @@ function displayResult(messageType, message, data)
 		if (softCheck($("#answer").val(), data.answer))
 		{
 			//Odpověď bez překlepů
-			//TODO - tohle asi budeš chtít nějak líp nastylovat
 			$("#result-text").append(correctAnswer);
 		}
 		else
 		{
 			//Odpověď s překlepy
-			//TODO - tohle asi budeš chtít nějak líp nastylovat
 			$("#result-text").append(correctTypoAnswer);
 			$("#result-text").append(correction);
 			correction.append("<span>" + data.answer + "</span>");
@@ -181,7 +179,6 @@ function displayResult(messageType, message, data)
 	else if (message === "wrong")
 	{
 		//Odpověď nebyla uznána
-		//TODO - tohle asi budeš chtít nějak líp nastylovat
 		$("#result-text").append(incorrectAnswer);
 		$("#result-text").append(correction);
 		correction.append("<span>" + data.answer + "</span>");
