@@ -81,14 +81,23 @@ class LoginUser
 
     /**
      * Metoda ověřující existenci uživatele a správnost hesla.
-     * @param string $username
-     * @param string $password
+     * @param string $username Přihlašovací jméno nebo e-mail uživatele
+     * @param string $password Přihlašovací heslo
      * @throws AccessDeniedException Pokud uživatel neexistuje nebo heslo nesouhlasí
      * @return array Pole s daty o uživateli z databáze v případě úspěchu
      */
     private function authenticate(string $username, string $password): array
     {
-        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($username), false);
+        if ($username.str_contains($username, '@'))
+        {
+            //Přihlašování pomocí e-mailu
+            $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($username), false);
+        }
+        else
+        {
+            //Přihlašování pomocí přihlašovacího jména
+            $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($username), false);
+        }
         if ($userData === FALSE){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NONEXISTANT_USER, null, null); }
         if (!password_verify($password, $userData[LoggedUser::COLUMN_DICTIONARY['hash']])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_WRONG_PASSWORD, null, null); }
         else { return $userData; }

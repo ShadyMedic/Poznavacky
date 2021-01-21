@@ -15,10 +15,10 @@ class AccessDeniedException extends Exception
     const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
     const REASON_NO_PASSWORD_GENERAL = 'Musíte zadat své heslo';
     const REASON_WRONG_PASSWORD_GENERAL = 'Špatné heslo';
-    const REASON_LOGIN_NO_NAME = 'Musíte zadat své přihlašovací jméno';
+    const REASON_LOGIN_NO_NAME = 'Musíte zadat své přihlašovací jméno nebo e-mail';
     const REASON_LOGIN_NO_PASSWORD = 'Musíte zadat své heslo';
     const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
-    const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem neexistuje';
+    const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem nebo e-mailem neexistuje';
     const REASON_LOGIN_INVALID_COOKIE_CODE = 'Kód pro trvalé přihlášení není platný';
     const REASON_REGISTER_NO_NAME = 'Musíte vyplnit své jméno';
     const REASON_REGISTER_NO_PASSWORD = 'Musíte vyplnit své heslo';
