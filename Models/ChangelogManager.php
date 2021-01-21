@@ -11,7 +11,7 @@ use Poznavacky\Models\Statics\UserManager;
  */
 class ChangelogManager
 {
-    private const LATEST_VERSION = '3.2';
+    public const LATEST_VERSION = '3.2';
     private const GITHUB_API_RELEASES_URL = 'https://api.github.com/repos/HonzaSTECH/Poznavacky/releases/';
     private const RELEASE_IDS = array(
         '3.2' => 22530404,

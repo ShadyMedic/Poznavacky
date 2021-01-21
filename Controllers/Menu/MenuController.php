@@ -19,7 +19,7 @@ use \BadMethodCallException;
 class MenuController extends Controller
 {
     private $argumentsToPass = array();
-    
+
     /**
      * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
      * Metoda nejprve zkontroluje, zda je uživatel přihlášen
@@ -47,7 +47,7 @@ class MenuController extends Controller
                     //Vymaž cookie s neplatným kódem
                     setcookie('instantLogin', null, -1, '/');
                     unset($_COOKIE['instantLogin']);
-                    
+
                     $this->redirect('');
                 }
             }
@@ -69,9 +69,9 @@ class MenuController extends Controller
         {
             $menuArguments[] = $arg;
         }
-        
+
         $argumentCount = count($menuArguments);
-      
+
         if ($argumentCount === 0)
         {
             //Vypisují se třídy
@@ -87,7 +87,7 @@ class MenuController extends Controller
             {
                 //AdministrateController nebo AccountSettingsController
                 $this->controllerToCall = new $pathToController();
-                
+
                 //Vymazání objektů skladujících vybranou složku ze $_SESSION
                 $this->unsetSelection(true, true, true);
                 $this->argumentsToPass = array_slice($menuArguments, 1);
@@ -110,7 +110,7 @@ class MenuController extends Controller
                         //Třída splňující daná kritéria neexistuje
                         $this->redirect('error404');
                     }
-                    
+
                     //Kontrola, zda má uživatel do třídy přístup
                     if (!($_SESSION['selection']['class']->checkAccess(UserManager::getId()) || $aChecker->checkSystemAdmin()))
                     {
@@ -125,7 +125,7 @@ class MenuController extends Controller
                     'text' => $_SESSION['selection']['class']->getName(),
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl()
                 );
-                
+
                 if ($argumentCount === 1)
                 {
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
@@ -142,7 +142,7 @@ class MenuController extends Controller
                 //ManageController / LeaveController
                 $this->controllerToCall = new $pathToController();
                 $this->argumentsToPass = array_slice($menuArguments, 2);
-                
+
                 if ($controllerName === 'LeaveController')
                 {
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
@@ -176,7 +176,7 @@ class MenuController extends Controller
                     'text' => $_SESSION['selection']['group']->getName(),
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl()
                 );
-                
+
                 if ($argumentCount === 2)
                 {
                     //Vymazání objektů skladujících vybranou část ze $_SESSION
@@ -194,7 +194,7 @@ class MenuController extends Controller
                 //Ano
                 $this->controllerToCall = new $pathToController();
                 $this->argumentsToPass = array_slice($menuArguments, 3);
-                
+
                 //Vymazání objektu skladujícího vybranou část ze $_SESSION
                 $this->unsetSelection(true);
             }
@@ -206,7 +206,7 @@ class MenuController extends Controller
                     //Je specifikována část, ale ne akce --> návrat na seznam částí
                     $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
                 }
-                
+
                 //Nastavení části (pouze, pokud nejsou vybrány všechny části najednou)
                 //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
                 if (!isset($_SESSION['selection']['part']) || $menuArguments[2] !== @$_SESSION['selection']['part']->getUrl())
@@ -224,7 +224,7 @@ class MenuController extends Controller
                         $this->redirect('error404');
                     }
                 }
-                
+
                 $this->data['navigationBar'][] = array(
                     'text' => $_SESSION['selection']['part']->getName(),
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl()
@@ -247,7 +247,7 @@ class MenuController extends Controller
                 $this->redirect('error404');
             }
         }
-        
+
         if (isset($this->controllerToCall))
         {
             //Kontroler je nastaven --> předat posbírané argumenty dál
@@ -266,13 +266,13 @@ class MenuController extends Controller
             //Aktualizovat poslední navštívenou tabulku na menu stránce
             UserManager::getUser()->updateLastMenuTableUrl(implode('/', $parameters));
         }
-        
+
         $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
         $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
         $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
         $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
         $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
-        
+
         $this->data['loggedUserName'] = UserManager::getName();
         $this->data['adminLogged'] = $aChecker->checkSystemAdmin();
         $this->data['demoVersion'] = $aChecker->checkDemoAccount();
@@ -280,6 +280,7 @@ class MenuController extends Controller
         $changelogManager = new ChangelogManager();
         if (!$changelogManager->checkLatestChangelogRead())
         {
+            UserManager::getUser()->updateLastSeenChangelog(ChangelogManager::LATEST_VERSION);
             $this->data['changelogTitle'] = $changelogManager->getTitle();
             $this->data['changelogContent'] = $changelogManager->getContent();
         }
