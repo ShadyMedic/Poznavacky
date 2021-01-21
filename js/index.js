@@ -300,10 +300,24 @@ function serverResponse(messageType, message, data)
 {
 	//var messageType == //success / info / warning / error
 	//var message == //Chybová hláška
-	//var form == //Formulář z něhož byla odeslána data - login / register / passRecovery
+	//var data.form == //Formulář z něhož byla odeslána data - login / register / passRecovery
 
 	var errors = message.split("|"); //V případě, že bylo nalezeno více chyb, jsou odděleny svislítkem
-	console.log(errors);
+	
+	/*
+	switch(data.form) {
+		case "login":
+			console.log("login");
+			$("#login-server-message").text(errors);
+			break;
+		case "register":
+			$("register-server-message").text(errors);
+			break;
+		case "passRecovery":
+			$("#password-recovery-server-message").text(errors);
+			break;
+	}
+	*/
 
 	//TODO - zobrazení chybové nebo úspěchové hlášky
 }

@@ -249,7 +249,7 @@ body#index {
 			width: 100%;
 			z-index: 6;
 			background: white;
-			height: 2.4rem;
+			height: 2rem;
 		}
 		.cross {
 			position: absolute;
@@ -271,9 +271,12 @@ body#index {
 		.user-data {
 			display: flex;
 			flex-direction: column;
+			label {
+				font-size: 0.9rem;
+			}
 			label, 
 			input.text-field {
-				margin: 0.2rem 0;
+				margin: 0.12rem 0;
 			}
 			label:not(:nth-of-type(1)), //kromě prvního labelu
 			.checkbox { 

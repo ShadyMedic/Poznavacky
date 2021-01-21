@@ -41,8 +41,9 @@
 						<input id="login-persist" type="checkbox" name='stay_logged'/>
 						<span class="checkmark"></span>
 					</label>
-					<button id='login-submit' class="btn border-btn center non-transparent black">Přihlásit se</button>
 				</div>
+				<button id='login-submit' class="btn border-btn center non-transparent black">Přihlásit se</button>
+				<div id="login-server-message" class="message"></div>
 			</form>
 			<p><button class="btn inline black show-login-section-password-recovery-button">Zapomněli jste heslo?</button></p>
 			<p>Ještě nemáte účet? <button class="btn inline black show-login-section-register-button">Zaregistrujte se</button>.</p>
@@ -67,6 +68,7 @@
 				</div>
 				<p id='terms'>Registrací souhlasíte s <a class="btn inline black" target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</p>
 				<button id='register-submit' class="btn border-btn center non-transparent black">Vytvořit účet</button>
+				<div id="register-server-message" class="message"></div>
 			</form>
 			<p>Již máte účet? <button class="btn inline black show-login-section-login-button" onclick="showLoginDiv('login')">Přihlašte se</button>.</p>
 		</div>
@@ -79,6 +81,7 @@
 					<div id="password-recovery-email-message" class="message"></div>
 				</div>
 				<button id='password-recovery-submit' class="btn border-btn center non-transparent black">Odeslat</button>
+				<div id="password-recovery-server-message" class="message"></div>
 			</form>
 			<p>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</p>
 			<button class="btn inline black show-login-section-login-button">Zpět</button>

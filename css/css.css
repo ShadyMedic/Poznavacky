@@ -1536,7 +1536,7 @@ label.required:after {
 
 #menu .folders#menu-classes-table ul.rows li #request-class-form label,
 #menu .folders#menu-classes-table ul.rows li #request-class-form input.text-field {
-  margin: 0.2rem 0;
+  margin: 0.12rem 0;
   text-align: left;
 }
 
@@ -2782,6 +2782,53 @@ label.required:after {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+#account-settings #change-name label,
+#account-settings #change-password label,
+#account-settings #change-email label,
+#account-settings #delete-account1 label,
+#account-settings #delete-account2 label,
+#account-settings #change-class-name label,
+#account-settings #change-class-status label,
+#account-settings #delete-class1 label,
+#account-settings #delete-class2 label,
+#account-settings #invite-user-form label,
+#account-settings #new-test label,
+#manage #change-name label,
+#manage #change-password label,
+#manage #change-email label,
+#manage #delete-account1 label,
+#manage #delete-account2 label,
+#manage #change-class-name label,
+#manage #change-class-status label,
+#manage #delete-class1 label,
+#manage #delete-class2 label,
+#manage #invite-user-form label,
+#manage #new-test label,
+#members #change-name label,
+#members #change-password label,
+#members #change-email label,
+#members #delete-account1 label,
+#members #delete-account2 label,
+#members #change-class-name label,
+#members #change-class-status label,
+#members #delete-class1 label,
+#members #delete-class2 label,
+#members #invite-user-form label,
+#members #new-test label,
+#tests #change-name label,
+#tests #change-password label,
+#tests #change-email label,
+#tests #delete-account1 label,
+#tests #delete-account2 label,
+#tests #change-class-name label,
+#tests #change-class-status label,
+#tests #delete-class1 label,
+#tests #delete-class2 label,
+#tests #invite-user-form label,
+#tests #new-test label {
+  font-size: 0.9rem;
 }
 
 #account-settings #change-name label,
@@ -4335,7 +4382,7 @@ body#index #index-login-section .button-wrapper {
   width: 100%;
   z-index: 6;
   background: white;
-  height: 2.4rem;
+  height: 2rem;
 }
 
 body#index #index-login-section .cross {
@@ -4369,9 +4416,13 @@ body#index #index-login-section .user-data {
           flex-direction: column;
 }
 
+body#index #index-login-section .user-data label {
+  font-size: 0.9rem;
+}
+
 body#index #index-login-section .user-data label,
 body#index #index-login-section .user-data input.text-field {
-  margin: 0.2rem 0;
+  margin: 0.12rem 0;
 }
 
 body#index #index-login-section .user-data label:not(:nth-of-type(1)),
