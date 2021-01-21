@@ -3203,15 +3203,8 @@ label.required:after {
 #tests #delete-class1 .border-btn,
 #tests #invite-user-form .border-btn,
 #tests #new-test .border-btn {
-  margin: 0.6rem auto;
+  margin: 0.6rem auto 0.2rem auto;
   width: 100%;
-}
-
-#account-settings #delete-account1 .border-btn,
-#manage #delete-account1 .border-btn,
-#members #delete-account1 .border-btn,
-#tests #delete-account1 .border-btn {
-  margin-bottom: 0.2rem;
 }
 
 #account-settings #delete-account2 span,

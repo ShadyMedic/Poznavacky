@@ -279,8 +279,8 @@ function deleteClassConfirm(messageType, message, data)
 	}
 	else
 	{
-		//TODO - ideálně zobrazit přímo ve formuláři
-		newMessage("Zadali jste špatné heslo", "error");
+		$("#delete-class-message").text(message);
+
 		$("#delete-class-password").val("");
 	}
 }
@@ -315,4 +315,5 @@ function deleteClassCancel()
 	$("#delete-class-button").show();
 	$("#delete-class").hide();
 	$("#delete-class2").hide();
+	$("#delete-class-message").text("");
 }

@@ -566,13 +566,8 @@
 	#new-test {
 		max-width: 400px;
 		.border-btn {
-			margin: 0.6rem auto;
+			margin: 0.6rem auto 0.2rem auto;
 			width: 100%
-		}
-	}
-	#delete-account1 {
-		.border-btn {
-			margin-bottom: 0.2rem;
 		}
 	}
 	#delete-account2,
