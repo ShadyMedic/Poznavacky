@@ -302,8 +302,7 @@ function serverResponse(messageType, message, data)
 	//var message == //Chybová hláška
 	//var data.origin == //Formulář z něhož byla odeslána data - login / register / passRecovery
 
-	var errors = message.split("|"); //V případě, že bylo nalezeno více chyb, jsou odděleny svislítkem
-	errors = errors.toString().replaceAll(",", ". ");
+	var errors = message.replaceAll("|", ". ");
 	if (!errors.endsWith(".")) {
 		errors = errors.concat(".");
 	}
