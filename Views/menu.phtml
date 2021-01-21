@@ -30,4 +30,9 @@
 	<div class="wrapper">
 		<?php $this->controllerToCall->displayView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
 	</div>
+    <?php if (isset($changelogTitle)) : ?>
+    <div id="changelog">
+        <?php require 'changelog.phtml' ?>
+    </div>
+    <?php endif ?>
 </main>

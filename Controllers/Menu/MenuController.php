@@ -9,6 +9,7 @@ use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\LoginUser;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\ChangelogManager;
 use \BadMethodCallException;
 
 /**
@@ -275,10 +276,17 @@ class MenuController extends Controller
         $this->data['loggedUserName'] = UserManager::getName();
         $this->data['adminLogged'] = $aChecker->checkSystemAdmin();
         $this->data['demoVersion'] = $aChecker->checkDemoAccount();
-        
+
+        $changelogManager = new ChangelogManager();
+        if (!$changelogManager->checkLatestChangelogRead())
+        {
+            $this->data['changelogTitle'] = $changelogManager->getTitle();
+            $this->data['changelogContent'] = $changelogManager->getContent();
+        }
+
         $this->view = 'menu';
     }
-    
+
     /**
      * Metoda odstraňující ze $_SESSION objekty ukládající vybranou třídu, poznávačku, nebo její část
      * @param bool $unsetPart TRUE, pokud se má odstranit část; defaultně FALSE
