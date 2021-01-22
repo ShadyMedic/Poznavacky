@@ -127,9 +127,6 @@ class LoginUser
         $_SESSION['user'] = $user;
 
         Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].' = NOW() WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array($userData[LoggedUser::COLUMN_DICTIONARY['id']]));
-
-        //Nastavení cookie pro zabránění přehrávání animace
-        self::setRecentLoginCookie();
     }
 
     /**
@@ -154,15 +151,6 @@ class LoginUser
         }
         setcookie('instantLogin', $code, time() + self::INSTALOGIN_COOKIE_LIFESPAN, '/');
         $_COOKIE['instantLogin'] = $code;
-    }
-
-    /**
-     * Metoda nastavující cookie indukující, že se z tohoto počítače nedávno přihlásil nějaký uživatel a zabraňuje tak přehrávání animace na index stránce
-     * Metoda je využívána i modelem Register.php a kontrolerem LogoutController.php
-     */
-    public function setRecentLoginCookie(): void
-    {
-        setcookie('recentLogin', true, time() + self::RECENTLOGIN_COOKIE_LIFESPAN, '/');
     }
 }
 

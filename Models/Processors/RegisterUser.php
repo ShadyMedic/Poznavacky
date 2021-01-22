@@ -175,10 +175,6 @@ class RegisterUser
         //Přihlášení
         $_SESSION['user'] = $user;
         
-        //Nastavení cookie pro zabránění přehrávání animace
-        $userLogger = new LoginUser();
-        $userLogger->setRecentLoginCookie();
-        
         return true;
     }
 }
