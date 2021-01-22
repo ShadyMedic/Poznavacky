@@ -470,6 +470,40 @@ textarea.text-field.disabled {
   cursor: auto;
 }
 
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper .checkmark {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  margin: auto 0.4rem;
+}
+
+.input-wrapper .text-field {
+  width: 100%;
+}
+
+.input-wrapper .text-field.checked {
+  padding-right: 2em;
+}
+
+.input-wrapper .text-field.checked + .checkmark {
+  display: block;
+  height: 1em;
+  width: 1em;
+}
+
+.input-wrapper .text-field.checked + .checkmark img {
+  width: 100%;
+  height: 100%;
+}
+
 textarea {
   resize: vertical;
 }
@@ -4567,7 +4601,8 @@ body#index #index-login-section .user-data input.text-field {
   color: #222;
   font-family: 'Roboto', sans-serif;
   background: #eee;
-  padding: 0.6em 0.72em;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
 }
 
 body#index #index-login-section .message {

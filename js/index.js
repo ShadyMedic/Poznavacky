@@ -30,17 +30,18 @@ $(function() {
 	$("#register-email").on("input", function() {checkRegisterEmail()})
 	$("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
 
-	//Odeslání AJAX požadavku pro kontrolu existence uživatele při přihlašování
-	$("#login-name").blur(function(){ isStringUnique($("#login-name").val(), true, $("#login-name").get(), false); });
-
 	//Odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
-	$("#register-name").blur(function(){ isStringUnique($("#register-name").val(), true, $("#register-name").get(), true); });
+	$("#register-name").blur(function(){
+		if (checkRegisterName() && $("#register-name").val() != "") {
+			isStringUnique($("#register-name").val(), true, $("#register-name").get(), true);
+		}
+	})
 
-	//Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
-	$("#register-email").blur(function(){ isStringUnique($("#register-email").val(), false, $("#register-email").get(), true); });
-
-	//Odeslání AJAX poýadavku pro kontrolu existence e-mailu při obnově hesla
-	$("#password-recovery-email").blur(function(){ isStringUnique($("#password-recovery-email").val(), false, $("#password-recovery-email").get(), false); });
+	//Odeslání AJAX požadavku pro kontrolu neexistence e-mailu při registraci
+	$("#register-email").blur(function(){ 
+		if (checkRegisterEmail() && $("#register-email").val() != "")
+			isStringUnique($("#register-email").val(), false, $("#register-email").get(), true);
+	})
 
 	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
@@ -79,6 +80,13 @@ function checkRegisterName() {
 			registerNameMessage = "Jméno obsahuje nepovolené znaky."
 	}
 	$("#register-name-message").text(registerNameMessage);
+
+	//používá jako podmínka zavolání funkce na kontrolu jedinečnosti jména
+	if (registerNameMessage == "") return true;
+	else {
+		$("#register-name").removeClass("checked");
+		return false;
+	}
 }
 
 //funkce kontrolující správně zadané heslo při registraci
@@ -97,6 +105,11 @@ function checkRegisterPassword() {
 			registerPasswordMessage = "Heslo obsahuje nepovolené znaky."
 	}
 	$("#register-pass-message").text(registerPasswordMessage);
+
+	if (registerPasswordMessage == "")
+		$("#register-pass").addClass("checked");
+	else $("#register-pass").removeClass("checked");
+
 	checkRegisterRePassword();
 }
 
@@ -108,6 +121,11 @@ function checkRegisterRePassword() {
 	else if ($("#register-repass").val() != $("#register-pass").val())
 		registerRePasswordMessage = "Zadaná hesla se neshodují."
 	else registerRePasswordMessage = "";
+
+	if (registerRePasswordMessage == "")
+		$("#register-repass").addClass("checked");
+	else $("#register-repass").removeClass("checked");
+
 	$("#register-repass-message").text(registerRePasswordMessage);
 }
 
@@ -119,6 +137,13 @@ function checkRegisterEmail() {
 		registerEmailMessage = "Zadaný email má nesprávný tvar."
 	else registerEmailMessage= "";
 	$("#register-email-message").text(registerEmailMessage);
+
+	//používá jako podmínka zavolání funkce na kontrolu jedinečnosti jména
+	if (registerEmailMessage == "") return true;
+	else {
+		$("#register-email").removeClass("checked");
+		return false;
+	}
 }
 
 //funkce kontrolující správně zadaný email při obnově hesla
@@ -231,13 +256,17 @@ function isStringUnique(string, isName, inputElement, shouldBeUnique)
 					{
 						if ((data.unique ^ shouldBeUnique))
 						{
-							//TODO - nějak upravit inputElement tak, aby se ukázala chyba
-							$(inputElement).css("backgroundColor", "red");
+							//zobrazení chybové hlášky
+							$(inputElement).removeClass("checked");
+							if (inputElement[0] === $("#register-name")[0])
+								$("#register-name-message").text("Toto jméno už používá jiný uživatel.")
+							else if (inputElement[0] === $("#register-email")[0])
+								$("#register-email-message").text("Tento email už používá jiný uživatel.")
 						}
 						else
 						{
-							//TODO - nějak upravit inputElement tak, aby se ukázalo potvrzení
-							$(inputElement).css("backgroundColor", "green");
+							//zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
+							$(inputElement).addClass("checked");
 						}
 					}
 				}
