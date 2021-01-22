@@ -74,8 +74,7 @@ function changeClassNameConfirm()
 					}
 					else if (messageType === "error")
 					{
-						//TODO - ideálně zobrazit přímo ve formuláři
-						newMessage(message, "error");
+						$("#change-class-name-message").text(message);
 					}
 				}
 			);
@@ -89,6 +88,7 @@ function changeClassNameCancel()
 	$("#change-class-name-button").show();
     $("#change-class-name").hide();
 	$("#change-class-name").closest(".class-data-item").find(".class-property-value").show();
+	$("#change-class-name-message").text("");
 }
 /*-------------------------------------------------------*/
 

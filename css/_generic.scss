@@ -48,6 +48,7 @@ body {
 		color: white;
 		.btn {
 			margin-left: 1rem;
+			flex-shrink: 0;
 		}
 	}
 	.success-message {

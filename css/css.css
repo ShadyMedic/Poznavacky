@@ -108,6 +108,8 @@ body.tab .text-field:focus {
 
 #messages .message-item .btn {
   margin-left: 1rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
 }
 
 #messages .success-message {
@@ -2704,7 +2706,7 @@ label.required:after {
 #tests #change-email .border-btn,
 #tests #change-class-name .border-btn,
 #tests #change-class-status .border-btn {
-  margin: 0.6rem auto;
+  margin: 0.6rem auto 0.2rem auto;
   width: 100%;
 }
 
@@ -2728,6 +2730,7 @@ label.required:after {
 #tests #change-email .inline.btn,
 #tests #change-class-name .inline.btn,
 #tests #change-class-status .inline.btn {
+  margin-top: 0.4rem;
   margin-bottom: 0.2rem;
 }
 
@@ -3205,6 +3208,25 @@ label.required:after {
 #tests #new-test .border-btn {
   margin: 0.6rem auto 0.2rem auto;
   width: 100%;
+}
+
+#account-settings #delete-account1 .inline.btn,
+#account-settings #delete-class1 .inline.btn,
+#account-settings #invite-user-form .inline.btn,
+#account-settings #new-test .inline.btn,
+#manage #delete-account1 .inline.btn,
+#manage #delete-class1 .inline.btn,
+#manage #invite-user-form .inline.btn,
+#manage #new-test .inline.btn,
+#members #delete-account1 .inline.btn,
+#members #delete-class1 .inline.btn,
+#members #invite-user-form .inline.btn,
+#members #new-test .inline.btn,
+#tests #delete-account1 .inline.btn,
+#tests #delete-class1 .inline.btn,
+#tests #invite-user-form .inline.btn,
+#tests #new-test .inline.btn {
+  margin-top: 0.4rem;
 }
 
 #account-settings #delete-account2 span,
