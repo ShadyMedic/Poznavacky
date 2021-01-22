@@ -1736,9 +1736,9 @@ label.required:after {
     -ms-grid-column: 2;
     -ms-grid-column-span: 3;
     grid-column: 2/5;
-    -webkit-box-pack: right;
-        -ms-flex-pack: right;
-            justify-content: right;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
   }
 }
 
