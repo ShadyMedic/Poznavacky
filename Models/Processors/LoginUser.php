@@ -88,7 +88,7 @@ class LoginUser
      */
     private function authenticate(string $username, string $password): array
     {
-        if ($username.str_contains($username, '@'))
+        if (str_contains($username, '@'))
         {
             //Přihlašování pomocí e-mailu
             $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($username), false);
