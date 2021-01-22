@@ -281,8 +281,8 @@ class MenuController extends Controller
         if (!$changelogManager->checkLatestChangelogRead())
         {
             UserManager::getUser()->updateLastSeenChangelog(ChangelogManager::LATEST_VERSION);
-            $this->data['changelogTitle'] = $changelogManager->getTitle();
-            $this->data['changelogContent'] = $changelogManager->getContent();
+            $this->data['staticTitle'] = $changelogManager->getTitle();
+            $this->data['staticContent'] = $changelogManager->getContent();
         }
 
         $this->view = 'menu';
