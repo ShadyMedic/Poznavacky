@@ -2170,21 +2170,34 @@ label.required:after {
 #learn .report-box .additional-report-info > * textarea,
 #test .report-box .additional-report-info > * textarea {
   width: 100%;
-  resize: vertical;
-  height: 60px;
-  max-height: 100px;
+  resize: none;
+  height: 54px;
 }
 
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 960px) {
   #learn .report-box .additional-report-info > * textarea,
   #test .report-box .additional-report-info > * textarea {
-    max-height: 160px;
+    height: 120px;
   }
 }
 
 #learn .report-box .additional-report-info > * label,
 #test .report-box .additional-report-info > * label {
   font-size: inherit;
+}
+
+#learn .report-box .message,
+#test .report-box .message {
+  font-size: 0.72rem;
+  line-height: 0.96rem;
+  min-height: 0.96rem;
+  color: #a00;
+}
+
+#learn .report-box .message.server,
+#test .report-box .message.server {
+  margin-bottom: 0.2rem;
+  min-height: 0;
 }
 
 #learn .report-box .text-field,
