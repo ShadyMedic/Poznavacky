@@ -2,7 +2,6 @@
 namespace Poznavacky\Models;
 
 use League\CommonMark\GithubFlavoredMarkdownConverter;
-use Poznavacky\Models\DebugLogger;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
