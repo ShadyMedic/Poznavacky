@@ -1,2 +1,2 @@
-<h1><?= $staticTitle ?></h1>
-<article><?= $_staticContent_ /*Neošetřená proměnná, aby se projevilo HTML stylování*/ ?></article>
+<h1><?= array_shift($staticTitle) ?></h1>
+<article><?= array_shift($_staticContent_) /*Neošetřená proměnná, aby se projevilo HTML stylování*/ ?></article>
