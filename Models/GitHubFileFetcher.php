@@ -76,7 +76,7 @@ class GitHubFileFetcher
     {
         if (!isset($this->privacyPolicyHtml))
         {
-            $this->termsOfServiceHtml = $this->fetchData(self::GITHUB_API_REPOSITORY_URL.self::PRIVACY_POLICY_PATH);
+            $this->privacyPolicyHtml = $this->fetchData(self::GITHUB_API_REPOSITORY_URL.self::PRIVACY_POLICY_PATH);
         }
 
         return $this->privacyPolicyHtml;
