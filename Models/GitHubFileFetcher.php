@@ -13,9 +13,11 @@ class GitHubFileFetcher
     private const GITHUB_API_REPOSITORY_URL = 'https://api.github.com/repos/HonzaSTECH/Poznavacky/contents/';
     private const TERMS_OF_SERVICE_PATH = 'documents/TERMS_OF_SERVICE.md';
     private const PRIVACY_POLICY_PATH = 'documents/PRIVACY_POLICY.md';
+    private const COOKIES_INFO_PATH = 'documents/COOKIES_INFO.md';
 
     private $termsOfServiceHtml;
     private $privacyPolicyHtml;
+    private $cookiesInfoHtml;
 
     /**
      * Metoda stahující JSON data o markdown souboru hostovaném na GitHub na specifikovaném URL
@@ -57,7 +59,8 @@ class GitHubFileFetcher
      */
     public function getTermsOfService(): string
     {
-        if (!isset($this->termsOfServiceHtml)) {
+        if (!isset($this->termsOfServiceHtml))
+        {
             $this->termsOfServiceHtml = $this->fetchData(self::GITHUB_API_REPOSITORY_URL.self::TERMS_OF_SERVICE_PATH);
         }
 
@@ -71,10 +74,26 @@ class GitHubFileFetcher
      */
     public function getPrivacyPolicy(): string
     {
-        if (!isset($this->privacyPolicyHtml)) {
+        if (!isset($this->privacyPolicyHtml))
+        {
             $this->termsOfServiceHtml = $this->fetchData(self::GITHUB_API_REPOSITORY_URL.self::PRIVACY_POLICY_PATH);
         }
 
         return $this->privacyPolicyHtml;
+    }
+
+    /**
+     * Metoda navracející HTML kód pro zobrazení podrobných informací o využívání souborů cookies
+     * Pokud tento soubor není načten, tato metoda jej stáhne
+     * @return string HTML dokument s informacemi o využívání souborů cookies
+     */
+    public function getCookiesInfo(): string
+    {
+        if (!isset($this->cookiesInfoHtml))
+        {
+            $this->cookiesInfoHtml = $this->fetchData(self::GITHUB_API_REPOSITORY_URL.self::COOKIES_INFO_PATH);
+        }
+
+        return $this->cookiesInfoHtml;
     }
 }
