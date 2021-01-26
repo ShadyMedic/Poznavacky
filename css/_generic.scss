@@ -39,6 +39,33 @@ body {
 	}
 }
 
+.container {
+	min-height: 100vh;
+	height: 100%;
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+}
+
+header {
+	grid-row: 1/2;
+	padding: 0.2rem 0.6rem;
+	min-height: 3.2rem;
+	background: $greenDark;
+	.logo {
+		@media screen and (min-width: $smallTablet) {
+			margin: 0;
+			height: 100%;
+		}
+		h1 {
+			font-size: 2rem;
+			line-height: 2.8rem;
+			letter-spacing: -0.08em;
+			color: white;
+			margin: 0;
+		}
+	}
+}
+
 #messages {
 	.message-item {
 		padding: 1rem;

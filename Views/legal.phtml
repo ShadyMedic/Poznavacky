@@ -1,18 +1,25 @@
-<nav>
-    <!-- TODO nastavit href atributy -->
-    <a href="#">Podmínky služby</a>
-    <a href="#">Zásady ochrany soukromí</a>
-    <a href="#">Využívání souborů cookies</a>
-</nav>
+<header>
+	<div class="logo">
+		<!-- <img src="">  LOGO -->
+		<h1>Poznávačky</h1>
+	</div>
+</header>
+<main>
+	<nav>
+		<button id="tos-button" class="btn border-btn transparent white">Podmínky služby</button>
+		<button id="pp-button" class="btn border-btn transparent white">Zásady ochrany soukromí</button>
+		<button id="cookies-button" class="btn border-btn transparent white">Využívání souborů cookies</button>
+	</nav>
 
-<div id="tos">
-    <?php require 'staticArticle.phtml' ?>
-</div>
-
-<div id="pp">
-    <?php require 'staticArticle.phtml' ?>
-</div>
-
-<div id="cookies">
-    <?php require 'staticArticle.phtml' ?>
-</div>
+	<div class="content">
+		<section id="tos">
+			<?php require 'staticArticle.phtml' ?>
+		</section>
+		<section id="pp">
+			<?php require 'staticArticle.phtml' ?>
+		</section>
+		<section id="cookies">
+			<?php require 'staticArticle.phtml' ?>
+		</section>
+	</div>
+</main>

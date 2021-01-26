@@ -24,10 +24,6 @@
 	background: #eee;
 	.container {
 		position: relative;
-		min-height: 100vh;
-		height: 100%;
-		display: grid;
-		grid-template-rows: auto auto 1fr auto;
 		@media screen and (min-width: $smallTablet) {
 			grid-template-columns: auto 1fr;
 			grid-template-rows: auto auto 1fr auto auto;
@@ -45,10 +41,6 @@
 		.logo {
 			grid-row: 2/3;
 			grid-column: 1/4;
-			margin: 0.2rem 0.4rem;
-			@media screen and (min-width: $smallMobile) {
-				margin: 0.2 0.6rem;
-			}
 		}
 		@media screen and (min-width: $smallMobile) {
 			display: flex;
@@ -59,22 +51,21 @@
 		@media screen and (min-width: $smallTablet) {
 			position: relative;
 		}
-		grid-row: 1/2;
 		@media screen and (min-width: $smallTablet) {
 			grid-column: 1/3;
 		}
-		background: $greenDark;
+		/*
 		> * {
 			margin: 0.2rem 1rem;
 			@media screen and (min-width: $desktop) {
 				margin: 0.2rem 0.8rem;
 			}
-		}
+		}*/
 		.btn.icon {
 			@media screen and (min-width: $smallTablet) {
 				display: none;
 			}
-			margin: 0.2rem 0.4rem;
+			margin: 0.2rem 1rem 0.2rem 0;
 			height: 32px;
 			width: 32px;
 			> img {
@@ -82,19 +73,19 @@
 				width: 100%;
 			}
 			&:last-child {
-				margin-left: auto;	
+				margin-left: auto;
+				margin-right: 0;	
 			}
 			&:active {
 				transform: scale(0.88);
 			}
 		}
+		/*
 		.logo {
 			display: flex;
 			@media screen and (min-width: $smallTablet) {
 				margin: 0;
 				padding: 0.2rem 0.8rem;
-				width: 216px;
-				//background: $greenDark;
 				height: 100%;
 			}
 			h1 {
@@ -103,7 +94,7 @@
 				color: white;
 				margin: 0;
 			}
-		}
+		}*/
 	}
 	aside {
 		display: none;

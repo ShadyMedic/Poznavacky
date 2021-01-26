@@ -9,36 +9,7 @@ body#index {
 	overflow-x: hidden;
 	overflow-y: auto;
 	@include scrollbar(12px, $gray3, $gray2);
-	.container {
-		min-height: 100%;
-		display: grid;
-		grid-template-rows: auto auto 1fr auto;
-	}
-	#background {
-		position: fixed;
-		background-image: url("../images/indexbg.jpg");
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		height: 100%;
-		width: 100%;
-		transform: scale(1.02);
-		z-index: -2;
-	}
-	#background-overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		height: 100vh;
-		width: 100vw;
-		background: #001000;
-		opacity: 0;
-		z-index: -1;
-	}
 	header {
-		background: $greenDark;
 		padding: 1rem 1rem;
 		@media screen and (min-width: $mobile) {
 			padding: 1rem 3rem;
@@ -49,7 +20,6 @@ body#index {
 		@media screen and (min-width: $smallDesktop) {
 			padding: 1rem 6rem;
 		}
-		grid-row: 1/2;
 		.content {
 			display: flex;
 			flex-wrap: wrap;
@@ -392,50 +362,4 @@ body#index {
 			bottom: 0.2rem;
 		}
 	}
-
-	/*
-	&.loaded {
-		#index-text-section .content {
-			opacity: 1;
-			transform: translateY(0);
-			pointer-events: auto;
-		}
-		#index-buttons-section .content {
-			opacity: 1;
-			transform: translateY(0);
-			pointer-events: auto;
-		}
-		footer .content {
-			opacity: 1;
-			transform: translateY(0);
-			pointer-events: auto;
-		}	
-	}
-	&.load {
-		#index-text-section .content {
-			pointer-events: none;
-			animation: display-content 1s ease-in-out 0.2s forwards;
-		}
-		#index-buttons-section .content {
-			pointer-events: none;
-			animation: display-content 1s ease-in-out 1.2s forwards;
-		}
-		footer .content {
-			pointer-events: none;
-			animation: display-content 1s ease-in-out 2.2s forwards;
-		}
-	}
-	@keyframes darken-blur {
-		100% {
-			opacity: 0.68;
-		}
-	}
-	@keyframes display-content {
-		100% {
-			opacity: 1;
-			//transform: translateY(0);
-			pointer-events: auto;
-		}
-	}
-	*/
 }
