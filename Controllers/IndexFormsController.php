@@ -36,7 +36,7 @@ class IndexFormsController extends Controller
                 case 'u':
                 case 'e':
                     $string = $_POST['text'];
-                    $stringType = ($_POST['type'] === 'u') ? DataValidator::TYPE_USER_NAME : DataValidator::TYPE_USER_EMAIL;
+                    $stringType = ($_POST['type'] === 'u' && !str_contains($string, '@')) ? DataValidator::TYPE_USER_NAME : DataValidator::TYPE_USER_EMAIL;
                     $validator = new DataValidator();
                     try
                     {

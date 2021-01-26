@@ -226,6 +226,9 @@ function renameConfirm(event, type)
 	$(event.target).closest($nameInputBox).siblings().find("." + className + "-name").text(newName);
 	$(event.target).closest($nameInputBox).hide();
 	$(event.target).closest($nameInputBox).siblings().filter("." + className + "-name-box").show();
+	
+	//byly provedeny změny --> zamkni stránku
+	lock();
 }
 
 /**
@@ -388,6 +391,9 @@ function addNatural(event)
 	
 	//Vymaž vstup
 	$naturalInput.val("").focus();
+	
+	//byly provedeny změny --> zamkni stárnku
+	lock();
 }
 
 /**
@@ -397,6 +403,9 @@ function addNatural(event)
 function removeNatural(event)
 {
 	$(event.target).closest("li").remove();
+	
+	//byly provedeny změny --> zamkni stárnku
+	lock();
 }
 
 /**
@@ -411,6 +420,9 @@ function removePart(event)
 	}
 	
 	$(event.target).closest(".part-box").remove();
+	
+	//byly provedeny změny --> zamkni stárnku
+	lock();
 }
 
 /**
@@ -458,7 +470,10 @@ function save()
 					{
 						//Zruš tlačítka pro rychlé prejmenování
 						$(".rename-natural").hide();
-
+						
+						//odemkni stránku
+						unlock();
+						
 						if (confirm("Změny byly úspěšně uloženy\nPřejete si aktualizovat stránku pro ověření změn?"))
 						{
 							location.reload();
@@ -481,4 +496,20 @@ function save()
 		},
 		"json"
 	);
+}
+
+/**
+ * Funkce zamykající stránku, tzn. při pokusu o její opuštění je zobrazen potvrzovací dialog pro zamezení ztráty neuložených změn v poznávačce
+ */
+function lock()
+{
+	$(window).on("beforeunload", function() { return ""; })
+}
+
+/**
+ * Funkce odemykající stránku, tzn. při pokusu o její opuštění se již nebude zobrazovat potvrzovací dialog
+ */
+function unlock()
+{
+	$(window).off("beforeunload")
 }

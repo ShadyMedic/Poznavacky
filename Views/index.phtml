@@ -31,8 +31,8 @@
 			<form id="login-form">
 				<div class="user-data">
 					<input id='login-hidden' type='hidden' name='type' value='l'>
-					<label for='login-name'>Jméno</label>
-					<input id='login-name' class="text-field" type='text' name='loginName' maxlength=15>
+					<label for='login-name'>Jméno nebo e-mail</label>
+					<input id='login-name' class="text-field" type='text' name='loginName' maxlength=255>
 					<div id="login-name-message" class="message"></div>
 					<label for='login-pass'>Heslo</label>
 					<input id='login-pass' class="text-field" type='password' name='loginPass' maxlength=31>
@@ -78,7 +78,7 @@
 					</div>
 					<div id="register-email-message" class="message"></div>
 				</div>
-				<p id='terms'>Registrací souhlasíte s <a class="btn inline black" target='_blank' href='https://github.com/HonzaSTECH/Poznavacky/blob/master/documents/TERMS_OF_SERVICE.md'>podmínkami služby</a>.</p>
+				<p id='terms'>Registrací souhlasíte s <a class="btn inline black" target='_blank' href='/legal#tos'>podmínkami služby</a>.</p>
 				<button id='register-submit' class="btn border-btn center non-transparent black">Vytvořit účet</button>
 				<div id="register-server-message" class="message server"></div>
 			</form>
@@ -105,6 +105,7 @@
 </main>
 <div id="cookies-alert">
 	<span>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíte s ukládáním souborů cookie na vašem zařízení.</span>
+    <a href="/legal#cookies">Další informace</a>
 	<button id="hide-cookies-alert-button" class="btn cross"><img src="..\images\crossButtonWhite.svg"></button>
 </div>
 <a id="back-to-top" class="btn border-btn rounded non-transparent white" href="#index"><img src="../images/arrowsUp.svg"></a>

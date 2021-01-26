@@ -29,19 +29,42 @@ $(function() {
 	$("#register-repass").on("input", function() {checkRegisterRePassword()})
 	$("#register-email").on("input", function() {checkRegisterEmail()})
 	$("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
-
+  
 	//Odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
-	$("#register-name").blur(function(){
-		if (checkRegisterName() && $("#register-name").val() != "") {
-			isStringUnique($("#register-name").val(), true, $("#register-name").get(), true);
-		}
-	})
+	$("#register-name").blur(function()
+  {
+    if (!($("#register-name").val() != "" && checkRegisterName())) { return; }
+    enqueueAjaxRequest
+    (
+      new ajaxRequest
+      (
+        'index-forms',
+        {
+          text: $("#register-name").val(),
+          type: 'u'
+        },
+        function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-name")); }
+      )
+    );
+  });
 
-	//Odeslání AJAX požadavku pro kontrolu neexistence e-mailu při registraci
-	$("#register-email").blur(function(){ 
-		if (checkRegisterEmail() && $("#register-email").val() != "")
-			isStringUnique($("#register-email").val(), false, $("#register-email").get(), true);
-	})
+	//Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
+	$("#register-email").blur(function()
+  {
+    if (!($("#register-email").val() != "" && checkRegisterEmail())) { return; }
+    enqueueAjaxRequest
+    (
+      new ajaxRequest
+      (
+        'index-forms',
+        {
+          text: $("#register-email").val(),
+          type: 'e'
+        },
+        function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-email")); }
+      )
+    );
+  });
 
 	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
@@ -238,44 +261,68 @@ function mouseUpChecker(e) {
 /*--------------------------------------------------------------------------*/
 /* Odesílání dat z formulářů na server */
 
-function isStringUnique(string, isName, inputElement, shouldBeUnique)
+var ajaxRequestsQueue = [];
+
+//Objekt obsahující data o AJAX požadavku k odeslání
+function ajaxRequest(url, data, callback)
 {
-	//Odeslání dat
-	let type = (isName) ? 'u' : 'e';
-	$.post("index-forms",
-		{
-			type: type,
-			text: string
-		},
+	this.url = url;
+	this.data = data;
+	this.callback = callback;
+}
+
+/**
+ * Funkce zařazující nový AJAX požadavek do fronty k odeslání / vyřízení
+ * Pokud zatím ve frontě není žádný požadavek, je tento zařazený okamžitě odeslán
+*/
+function enqueueAjaxRequest(request)
+{
+	ajaxRequestsQueue.push(request);
+	if (ajaxRequestsQueue.length === 1) //Ve frontě je pouze aktuální požadavek --> okamžitě jej odešli
+	{
+		sendAjaxRequest();
+	}
+}
+
+//Funkce odesílající první AJAX požadavek ve frontě, tato funkce by se neměla volat přímo
+function sendAjaxRequest()
+{
+	let request = ajaxRequestsQueue[0]; //Načti údaje o požadavku
+	$.post(
+		request.url,
+		request.data,
 		function (response, status)
 		{
-			ajaxCallback(response, status,
-				function(messageType, message, data)
-				{
-					if (messageType === "success")
-					{
-						if ((data.unique ^ shouldBeUnique))
-						{
-							//zobrazení chybové hlášky
-							$(inputElement).removeClass("checked");
-							if (inputElement[0] === $("#register-name")[0])
-								$("#register-name-message").text("Toto jméno už používá jiný uživatel.")
-							else if (inputElement[0] === $("#register-email")[0])
-								$("#register-email-message").text("Tento email už používá jiný uživatel.")
-						}
-						else
-						{
-							//zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
-							$(inputElement).addClass("checked");
-						}
-					}
-				}
-			);
-		},
-		"json"
+			ajaxCallback(response, status, request.callback);
+			ajaxRequestsQueue.shift(); //Odstraň vyřešený požadavek z fronty
+			if (ajaxRequestsQueue.length > 0) { sendAjaxRequest(); } //Mezitím byl zařazen další požadavek
+		}
 	);
 }
 
+//Funkce zpracovávající odpověď na AJAX požadavek pro zjištění, zda je dané jméno nebo e-mail unikátní
+function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inputElement)
+{
+	if (messageType === "success")
+	{
+		if (!data.unique)
+		{
+			//zobrazení chybové hlášky
+			$inputElement.removeClass("checked");
+			if ($inputElement[0] === $("#register-name")[0])
+				$("#register-name-message").text("Toto jméno už používá jiný uživatel.")
+			else if ($inputElement[0] === $("#register-email")[0])
+				$("#register-email-message").text("Tento email už používá jiný uživatel.")
+		}
+		else
+		{
+			//zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
+			$inputElement.addClass("checked");
+		}
+	}
+}
+
+//Funkce volaná při odeslání jakéhokoli formuláře, která z něj načte data a zařadí AJAX požadavek, který je odešle
 function formSubmitted(event)
 {
 	event.preventDefault();
@@ -310,27 +357,26 @@ function formSubmitted(event)
 			return;
 	}
 
-	//Odeslání dat
-	$.post("index-forms",
-		{
-			type: type,
-			name: name,
-			pass: pass,
-			repass: repass,
-			email: email,
-			stayLogged: stayLogged
-		},
-		function (response, status) { ajaxCallback(response, status, serverResponse); },
-		"json"
+	enqueueAjaxRequest(
+		new ajaxRequest
+		(
+			'index-forms',
+			{
+				type: type,
+				name: name,
+				pass: pass,
+				repass: repass,
+				email: email,
+				stayLogged: stayLogged
+			},
+			serverResponse
+		)
 	);
 }
 
+//Funkce zpracovávající odpověď na AJAX požadavek odesílající data z odeslaného formuláře
 function serverResponse(messageType, message, data)
 {
-	//var messageType == //success / info / warning / error
-	//var message == //Chybová hláška
-	//var data.origin == //Formulář z něhož byla odeslána data - login / register / passRecovery
-
 	var errors = message.replaceAll("|", ". ");
 	if (!errors.endsWith(".")) {
 		errors = errors.concat(".");

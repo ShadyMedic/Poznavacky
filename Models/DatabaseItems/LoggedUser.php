@@ -274,6 +274,19 @@ class LoggedUser extends User
     }
 
     /**
+     * Metoda aktualizující uživateli jak v $_SESSION tak v databázi číslo verze, jejíž poznámky k vydání uživatel naposledy viděl
+     * @param string $version Nová nejnovější verze, poznámky k jejímuž vydání byly zobrazeny (například "3.2")
+     * @return bool TRUE, pokud vše proběhne hladce
+     */
+    public function updateLastSeenChangelog(string $version): bool
+    {
+        $this->loadIfNotLoaded($this->id);
+
+        $this->lastChangelog = $version;
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['lastChangelog'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($version, $this->id));
+    }
+
+    /**
      * Metoda aktualizující uživateli jak v $_SESSION tak v databázi URL adresu poslední zobrazení tabulky na menu stránce
      * @param string $url Nová URL adresa k uložení
      * @return bool TRUE, pokud vše proběhne hladce

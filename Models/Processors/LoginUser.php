@@ -81,14 +81,23 @@ class LoginUser
 
     /**
      * Metoda ověřující existenci uživatele a správnost hesla.
-     * @param string $username
-     * @param string $password
+     * @param string $username Přihlašovací jméno nebo e-mail uživatele
+     * @param string $password Přihlašovací heslo
      * @throws AccessDeniedException Pokud uživatel neexistuje nebo heslo nesouhlasí
      * @return array Pole s daty o uživateli z databáze v případě úspěchu
      */
     private function authenticate(string $username, string $password): array
     {
-        $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($username), false);
+        if (str_contains($username, '@'))
+        {
+            //Přihlašování pomocí e-mailu
+            $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($username), false);
+        }
+        else
+        {
+            //Přihlašování pomocí přihlašovacího jména
+            $userData = Db::fetchQuery('SELECT * FROM '.User::TABLE_NAME.' WHERE '.LoggedUser::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($username), false);
+        }
         if ($userData === FALSE){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_NONEXISTANT_USER, null, null); }
         if (!password_verify($password, $userData[LoggedUser::COLUMN_DICTIONARY['hash']])){ throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_WRONG_PASSWORD, null, null); }
         else { return $userData; }
@@ -118,9 +127,6 @@ class LoginUser
         $_SESSION['user'] = $user;
 
         Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].' = NOW() WHERE '.LoggedUser::COLUMN_DICTIONARY['id'].' = ?', array($userData[LoggedUser::COLUMN_DICTIONARY['id']]));
-
-        //Nastavení cookie pro zabránění přehrávání animace
-        self::setRecentLoginCookie();
     }
 
     /**
@@ -145,15 +151,6 @@ class LoginUser
         }
         setcookie('instantLogin', $code, time() + self::INSTALOGIN_COOKIE_LIFESPAN, '/');
         $_COOKIE['instantLogin'] = $code;
-    }
-
-    /**
-     * Metoda nastavující cookie indukující, že se z tohoto počítače nedávno přihlásil nějaký uživatel a zabraňuje tak přehrávání animace na index stránce
-     * Metoda je využívána i modelem Register.php a kontrolerem LogoutController.php
-     */
-    public function setRecentLoginCookie(): void
-    {
-        setcookie('recentLogin', true, time() + self::RECENTLOGIN_COOKIE_LIFESPAN, '/');
     }
 }
 

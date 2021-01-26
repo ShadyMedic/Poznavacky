@@ -36,10 +36,6 @@ class LogoutController extends Controller
             unset($code);
         }
         
-        //Nastav cookie zabraňující přehrání animace na index stránce
-        $userLogger = new LoginUser();
-        $userLogger->setRecentLoginCookie();
-        
         $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Byli jste úspěšně odhlášeni');
         
         //Přesměrování na index
