@@ -25,9 +25,6 @@ class LegalController extends Controller
         $this->pageHeader['bodyId'] = 'legal';
 
         $githubFetcher = new GitHubFileFetcher();
-        $this->data['staticTitle'][0] = 'Podmínky služby';
-        $this->data['staticTitle'][1] = 'Zásady ochrany soukromí';
-        $this->data['staticTitle'][2] = 'Využívané soubory cookies';
         try { $this->data['staticContent'][0] = $githubFetcher->getTermsOfService(); }
         catch (UnexpectedValueException $e) { $this->data['staticContent'][0] = $e->getMessage(); }
         try { $this->data['staticContent'][1] = $githubFetcher->getPrivacyPolicy(); }
