@@ -20,6 +20,8 @@ function ajaxCallback(response, status, processingFunction)
 	{
 		window.location = response["message"];
 	}
-	
-	processingFunction(msgType, msg, data);
+	else
+	{
+		processingFunction(msgType, msg, data);
+	}
 }

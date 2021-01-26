@@ -305,20 +305,20 @@ function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inp
 {
 	if (messageType === "success")
 	{
-		if ((data.unique ^ shouldBeUnique))
-    {
-      //zobrazení chybové hlášky
-      $(inputElement).removeClass("checked");
-      if (inputElement[0] === $("#register-name")[0])
-        $("#register-name-message").text("Toto jméno už používá jiný uživatel.")
-      else if (inputElement[0] === $("#register-email")[0])
-        $("#register-email-message").text("Tento email už používá jiný uživatel.")
-    }
-    else
-    {
-      //zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
-      $(inputElement).addClass("checked");
-    }
+		if (!data.unique)
+		{
+			//zobrazení chybové hlášky
+			$inputElement.removeClass("checked");
+			if ($inputElement[0] === $("#register-name")[0])
+				$("#register-name-message").text("Toto jméno už používá jiný uživatel.")
+			else if ($inputElement[0] === $("#register-email")[0])
+				$("#register-email-message").text("Tento email už používá jiný uživatel.")
+		}
+		else
+		{
+			//zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
+			$inputElement.addClass("checked");
+		}
 	}
 }
 
