@@ -36,23 +36,18 @@ class MenuTableController extends Controller
             {
                 $this->data['invitations'] = UserManager::getUser()->getActiveInvitations();
                 $this->data['invitationsCount'] = count($this->data['invitations']);
-                $this->view = 'menuClassesForms';
                 $classesGetter = new TestGroupsFetcher();
                 $classes = $classesGetter->getClasses();
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
             else if (!isset($_SESSION['selection']['group']))
             {
-                $this->data['returnButtonLink'] = 'menu';
-                $this->view = 'inherit';
                 $groupsGetter = new TestGroupsFetcher();
                 $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
                 $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
             }
             else
             {
-                $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl();
-                $this->view = 'inherit';
                 $partsGetter = new TestGroupsFetcher();
                 $parts = $partsGetter->getParts($_SESSION['selection']['group']);
                 $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
@@ -83,6 +78,7 @@ class MenuTableController extends Controller
         
         //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
         $this->controllerToCall->process(array());
+        $this->view = 'inherit';
     }
 }
 
