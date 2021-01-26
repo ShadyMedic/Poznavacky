@@ -3,8 +3,7 @@ var tablet = 768;
 
 //vše, co se děje po načtení stránky
 $(function() {
-	//první možnosti v každém select-boxu je přiřazena třída "selected"
-	//$(".custom-select-wrapper").find(".custom-option").first().addClass("selected");
+	$("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
 
 	//event listener select boxů
 	$(".custom-select-wrapper").each(function() {
@@ -36,6 +35,10 @@ $(function() {
 		$("body").removeClass("tab");	
 	})
 })
+
+function closeMessage($button) {
+	$button.closest(".message-item").remove();
+}
 
 //Funkce pro získání hodnoty cookie
 //Zkopírována z https://www.w3schools.com/js/js_cookies.asp
@@ -74,4 +77,12 @@ function manageSelectBox(thisObj){
 			}
 		})
 	})
+}
+
+function newMessage(message, type, data) {
+	$("#messages").prepend($("#message-item-template").html());
+	$message = $("#messages .message-item:first-child");
+	$message.find(".message").text(message);
+	$message.find(".data").text(data);
+	$message.addClass(type + "-message");
 }

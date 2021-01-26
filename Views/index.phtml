@@ -41,8 +41,9 @@
 						<input id="login-persist" type="checkbox" name='stay_logged'/>
 						<span class="checkmark"></span>
 					</label>
-					<input id='login-submit' class="btn border-btn center non-transparent black" type="submit" value="Přihlásit se" />
 				</div>
+				<button id='login-submit' class="btn border-btn center non-transparent black">Přihlásit se</button>
+				<div id="login-server-message" class="message server"></div>
 			</form>
 			<p><button class="btn inline black show-login-section-password-recovery-button">Zapomněli jste heslo?</button></p>
 			<p>Ještě nemáte účet? <button class="btn inline black show-login-section-register-button">Zaregistrujte se</button>.</p>
@@ -53,20 +54,33 @@
 				<div class="user-data">
 					<input id='register-hidden' type='hidden' name='type' value='r'>
 					<label for="register-name" class="required">Jméno</label>
-					<input id='register-name' class="text-field" type='text' name='registerName' maxlength=15>
+					<div class="input-wrapper"> 
+						<input id='register-name' class="text-field" type='text' name='registerName' maxlength=15>
+						<div class="checkmark"><img src="../images/check.svg"></div>
+					</div>
 					<div id="register-name-message" class="message"></div>
 					<label for="register-pass" class="required">Heslo</label>
-					<input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31>	
+					<div class="input-wrapper"> 
+						<input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31>	
+						<div class="checkmark"><img src="../images/check.svg"></div>
+					</div>
 					<div id="register-pass-message" class="message"></div>
 					<label for="register-repass" class="required">Heslo znovu</label>
-					<input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31>
+					<div class="input-wrapper"> 
+						<input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31>
+						<div class="checkmark"><img src="../images/check.svg"></div>
+					</div>
 					<div id="register-repass-message" class="message"></div>
 					<label for="register-email">E-mail</label>
-					<input id='register-email' class="text-field" type='text' name='registerEmail' maxlength=255>
+					<div class="input-wrapper"> 
+						<input id='register-email' class="text-field" type='text' name='registerEmail' maxlength=255>
+						<div class="checkmark"><img src="../images/check.svg"></div>
+					</div>
 					<div id="register-email-message" class="message"></div>
 				</div>
 				<p id='terms'>Registrací souhlasíte s <a class="btn inline black" target='_blank' href='/legal#tos'>podmínkami služby</a>.</p>
-				<input id='register-submit' class="btn border-btn center non-transparent black" type="submit" value="Vytvořit účet" />
+				<button id='register-submit' class="btn border-btn center non-transparent black">Vytvořit účet</button>
+				<div id="register-server-message" class="message server"></div>
 			</form>
 			<p>Již máte účet? <button class="btn inline black show-login-section-login-button" onclick="showLoginDiv('login')">Přihlašte se</button>.</p>
 		</div>
@@ -78,7 +92,8 @@
 					<input id='password-recovery-email' class="text-field" name="passRecoveryEmail" maxlength=255 />
 					<div id="password-recovery-email-message" class="message"></div>
 				</div>
-				<input id='password-recovery-submit' class="btn border-btn center non-transparent black" type="submit" value= "Odeslat" />
+				<button id='password-recovery-submit' class="btn border-btn center non-transparent black">Odeslat</button>
+				<div id="password-recovery-server-message" class="message server"></div>
 			</form>
 			<p>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</p>
 			<button class="btn inline black show-login-section-login-button">Zpět</button>

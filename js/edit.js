@@ -482,12 +482,14 @@ function save()
 					else if (messageType === "error")
 					{
 						//Chyba vstupu
-						alert(message);
+						newMessage(message, "error");
+
 					}
 					else if (messageType = "warning")
 					{
 						//Chyba ukládání
 						alert(message + data["json"]);
+						newMessage(message, "warning", data["json"]);
 					}
 				}
 			);

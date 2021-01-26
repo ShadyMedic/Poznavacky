@@ -152,16 +152,25 @@
 				}
 				textarea {
 					width: 100%;
-					resize: vertical;
-					height: 60px;
-					max-height: 100px;
-					@media screen and (min-width: $smallMobile) {
-						max-height: 160px;
+					resize: none;
+					height: 54px;
+					@media screen and(min-width: $smallDesktop) {
+						height: 120px;
 					}
 				}	
 				label {
 					font-size: inherit;
 				}
+			}
+		}
+		.message {
+			font-size: 0.72rem;
+			line-height: 0.96rem;
+			min-height: 0.96rem; 
+			color: $red1;
+			&.server {
+				margin-bottom: 0.2rem;
+				min-height: 0;
 			}
 		}
 		.text-field {

@@ -79,7 +79,7 @@ function pictureList()
 						else
 						{
 							//Požadavek nebyl úspěšný
-							alert(message);
+							newMessage(message, "error");
 						}
 					}
 				);
@@ -166,13 +166,11 @@ function displayResult(messageType, message, data)
 		if (softCheck($("#answer").val(), data.answer))
 		{
 			//Odpověď bez překlepů
-			//TODO - tohle asi budeš chtít nějak líp nastylovat
 			$("#result-text").append(correctAnswer);
 		}
 		else
 		{
 			//Odpověď s překlepy
-			//TODO - tohle asi budeš chtít nějak líp nastylovat
 			$("#result-text").append(correctTypoAnswer);
 			$("#result-text").append(correction);
 			correction.append("<span>" + data.answer + "</span>");
@@ -181,7 +179,6 @@ function displayResult(messageType, message, data)
 	else if (message === "wrong")
 	{
 		//Odpověď nebyla uznána
-		//TODO - tohle asi budeš chtít nějak líp nastylovat
 		$("#result-text").append(incorrectAnswer);
 		$("#result-text").append(correction);
 		correction.append("<span>" + data.answer + "</span>");
@@ -190,9 +187,7 @@ function displayResult(messageType, message, data)
 	{
 		//Vyskytla se chyba - v response.result je "error" nebo něco úplně jiného
 		//V data.answer je chybová hláška
-		//TODO - tohle asi budeš chtít udělat jinak, nebo to přesunout úplně jinam
-		$("#result-text").append(error);
-		error.append("<span>" + data.answer + "</span>");
+		newMessage(data.answer, "error");
 	}
 	
 	$("#result").show();

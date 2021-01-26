@@ -67,6 +67,7 @@ body {
   font-size: 100%;
   min-width: 100%;
   min-height: 100vh;
+  color: #101010;
 }
 
 body .btn:focus {
@@ -89,6 +90,42 @@ body.tab .btn.inline:focus {
 body.tab .text-field:focus {
   -webkit-box-shadow: inset 0 0 0 2px rgba(71, 153, 17, 0.5);
           box-shadow: inset 0 0 0 2px rgba(71, 153, 17, 0.5);
+}
+
+#messages .message-item {
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+}
+
+#messages .message-item .btn {
+  margin-left: 1rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+#messages .success-message {
+  background: #479911;
+}
+
+#messages .info-message {
+  background: #888;
+}
+
+#messages .warning-message {
+  background: #960;
+}
+
+#messages .error-message {
+  background: #a00;
 }
 
 footer {
@@ -195,28 +232,27 @@ h5 {
   display: inline-block;
   text-align: center;
   position: relative;
-  padding: 0.4em 1em;
+  padding: 0.44em 1em;
   border-radius: 3.2px;
+  line-height: 1.32em;
 }
 
 .btn.border-btn.non-transparent.white {
   background: white;
-  color: black;
-  border: 2px solid white;
+  color: #101010;
 }
 
 .btn.border-btn.non-transparent.white:after {
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .btn.border-btn.non-transparent.black {
   background: #101010;
   color: white;
-  border: 2px solid #101010;
 }
 
 .btn.border-btn.non-transparent.black:after {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .btn.border-btn.non-transparent.black.disabled {
@@ -235,7 +271,6 @@ h5 {
 .btn.border-btn.non-transparent.dark-green {
   background: #366e11;
   color: white;
-  border: 2px solid #366e11;
 }
 
 .btn.border-btn.non-transparent.dark-green:after {
@@ -244,6 +279,7 @@ h5 {
 
 .btn.border-btn.transparent {
   background: transparent;
+  padding: calc(0.44em - 2px) calc(1em - 2px);
 }
 
 .btn.border-btn.transparent.white {
@@ -340,22 +376,6 @@ h5 {
   font-size: 1em;
   position: relative;
   text-decoration: none;
-  /*
-		&:after {
-			content: "";
-			display: block;
-			width: 0%;
-			left: 50%;
-			height: 2px;
-			position: absolute;
-			bottom: -0.1rem;
-			transition: all 0.1s ease-in;
-		}
-		&:hover:after {
-			width: 100%;
-			left: 0;
-		}
-		*/
 }
 
 .btn.inline:hover {
@@ -364,19 +384,10 @@ h5 {
 
 .btn.inline.white {
   color: white;
-  /*
-			&:after {
-				background: white;
-			}*/
 }
 
 .btn.inline.black {
-  color: black;
-  /*
-			&:after {
-				background: black;
-			}
-			*/
+  color: #101010;
 }
 
 .btn.cross {
@@ -446,7 +457,7 @@ input.text-field,
 select.text-field,
 textarea.text-field {
   font-size: 100%;
-  padding: 0.48em 0.8em;
+  padding: 0.44em 0.8em;
   border-radius: 0.2em;
   line-height: 1.32em;
 }
@@ -457,6 +468,40 @@ textarea.text-field.disabled {
   background: #ddd;
   pointer-events: none;
   cursor: auto;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper .checkmark {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  margin: auto 0.4rem;
+}
+
+.input-wrapper .text-field {
+  width: 100%;
+}
+
+.input-wrapper .text-field.checked {
+  padding-right: 2em;
+}
+
+.input-wrapper .text-field.checked + .checkmark {
+  display: block;
+  height: 1em;
+  width: 1em;
+}
+
+.input-wrapper .text-field.checked + .checkmark img {
+  width: 100%;
+  height: 100%;
 }
 
 textarea {
@@ -677,7 +722,7 @@ label.required:after {
 #tests,
 #edit-group,
 #resolve-reports {
-  width: 100%;
+  min-width: 100%;
   height: 100%;
   scrollbar-color: #444 #222;
   scrollbar-width: auto;
@@ -774,6 +819,8 @@ label.required:after {
   #resolve-reports .container {
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
+    -ms-grid-rows: auto auto 1fr auto auto;
+        grid-template-rows: auto auto 1fr auto auto;
   }
 }
 
@@ -1056,8 +1103,8 @@ label.required:after {
   display: none;
   width: 64px;
   -ms-grid-row: 2;
-  -ms-grid-row-span: 2;
-  grid-row: 2/4;
+  -ms-grid-row-span: 3;
+  grid-row: 2/5;
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1/2;
@@ -1260,6 +1307,44 @@ label.required:after {
   }
 }
 
+#menu #messages,
+#learn #messages,
+#test #messages,
+#add-pictures #messages,
+#account-settings #messages,
+#manage #messages,
+#members #messages,
+#tests #messages,
+#edit-group #messages,
+#resolve-reports #messages {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+}
+
+@media screen and (min-width: 672px) {
+  #menu #messages,
+  #learn #messages,
+  #test #messages,
+  #add-pictures #messages,
+  #account-settings #messages,
+  #manage #messages,
+  #members #messages,
+  #tests #messages,
+  #edit-group #messages,
+  #resolve-reports #messages {
+    position: relative;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
+    -ms-grid-row: 4;
+    -ms-grid-row-span: 1;
+    grid-row: 4/5;
+  }
+}
+
 #menu footer,
 #learn footer,
 #test footer,
@@ -1289,6 +1374,9 @@ label.required:after {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
+    -ms-grid-row: 5;
+    -ms-grid-row-span: 1;
+    grid-row: 5/6;
   }
 }
 
@@ -1387,6 +1475,42 @@ label.required:after {
   }
 }
 
+#menu .folders#menu-classes-table ul.rows li.invitation {
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  margin: 0.4rem 0 0.6rem 0;
+}
+
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-info {
+  font-size: 0.8rem;
+  width: 100%;
+  padding: 0 0.6rem;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  text-align: left;
+}
+
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept form .btn {
+  margin: 0 0.4rem;
+}
+
 #menu .folders#menu-classes-table ul.rows li#enter-code-wrapper, #menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1401,6 +1525,16 @@ label.required:after {
 
 #menu .folders#menu-classes-table ul.rows li#enter-code-wrapper > *, #menu .folders#menu-classes-table ul.rows li#request-class-wrapper > * {
   margin: 0.2rem 0;
+}
+
+#menu .folders#menu-classes-table ul.rows li #class-code-form .btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+#menu .folders#menu-classes-table ul.rows li #class-code-form .text-field {
+  width: 8rem;
 }
 
 #menu .folders#menu-classes-table ul.rows li#request-class-wrapper {
@@ -1438,7 +1572,7 @@ label.required:after {
 
 #menu .folders#menu-classes-table ul.rows li #request-class-form label,
 #menu .folders#menu-classes-table ul.rows li #request-class-form input.text-field {
-  margin: 0.2rem 0;
+  margin: 0.12rem 0;
   text-align: left;
 }
 
@@ -1602,9 +1736,9 @@ label.required:after {
     -ms-grid-column: 2;
     -ms-grid-column-span: 3;
     grid-column: 2/5;
-    -webkit-box-pack: right;
-        -ms-flex-pack: right;
-            justify-content: right;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
   }
 }
 
@@ -1660,6 +1794,7 @@ label.required:after {
   display: grid;
   width: 100%;
   padding: 0.4rem;
+  color: #101010;
 }
 
 #menu .folders ul.rows .col1 {
@@ -2069,21 +2204,34 @@ label.required:after {
 #learn .report-box .additional-report-info > * textarea,
 #test .report-box .additional-report-info > * textarea {
   width: 100%;
-  resize: vertical;
-  height: 60px;
-  max-height: 100px;
+  resize: none;
+  height: 54px;
 }
 
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 960px) {
   #learn .report-box .additional-report-info > * textarea,
   #test .report-box .additional-report-info > * textarea {
-    max-height: 160px;
+    height: 120px;
   }
 }
 
 #learn .report-box .additional-report-info > * label,
 #test .report-box .additional-report-info > * label {
   font-size: inherit;
+}
+
+#learn .report-box .message,
+#test .report-box .message {
+  font-size: 0.72rem;
+  line-height: 0.96rem;
+  min-height: 0.96rem;
+  color: #a00;
+}
+
+#learn .report-box .message.server,
+#test .report-box .message.server {
+  margin-bottom: 0.2rem;
+  min-height: 0;
 }
 
 #learn .report-box .text-field,
@@ -2605,7 +2753,7 @@ label.required:after {
 #tests #change-email .border-btn,
 #tests #change-class-name .border-btn,
 #tests #change-class-status .border-btn {
-  margin: 0.6rem auto;
+  margin: 0.6rem auto 0.2rem auto;
   width: 100%;
 }
 
@@ -2629,6 +2777,7 @@ label.required:after {
 #tests #change-email .inline.btn,
 #tests #change-class-name .inline.btn,
 #tests #change-class-status .inline.btn {
+  margin-top: 0.4rem;
   margin-bottom: 0.2rem;
 }
 
@@ -2683,6 +2832,53 @@ label.required:after {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+#account-settings #change-name label,
+#account-settings #change-password label,
+#account-settings #change-email label,
+#account-settings #delete-account1 label,
+#account-settings #delete-account2 label,
+#account-settings #change-class-name label,
+#account-settings #change-class-status label,
+#account-settings #delete-class1 label,
+#account-settings #delete-class2 label,
+#account-settings #invite-user-form label,
+#account-settings #new-test label,
+#manage #change-name label,
+#manage #change-password label,
+#manage #change-email label,
+#manage #delete-account1 label,
+#manage #delete-account2 label,
+#manage #change-class-name label,
+#manage #change-class-status label,
+#manage #delete-class1 label,
+#manage #delete-class2 label,
+#manage #invite-user-form label,
+#manage #new-test label,
+#members #change-name label,
+#members #change-password label,
+#members #change-email label,
+#members #delete-account1 label,
+#members #delete-account2 label,
+#members #change-class-name label,
+#members #change-class-status label,
+#members #delete-class1 label,
+#members #delete-class2 label,
+#members #invite-user-form label,
+#members #new-test label,
+#tests #change-name label,
+#tests #change-password label,
+#tests #change-email label,
+#tests #delete-account1 label,
+#tests #delete-account2 label,
+#tests #change-class-name label,
+#tests #change-class-status label,
+#tests #delete-class1 label,
+#tests #delete-class2 label,
+#tests #invite-user-form label,
+#tests #new-test label {
+  font-size: 0.9rem;
 }
 
 #account-settings #change-name label,
@@ -2915,6 +3111,104 @@ label.required:after {
   text-align: justify;
 }
 
+#account-settings #change-name .message,
+#account-settings #change-password .message,
+#account-settings #change-email .message,
+#account-settings #delete-account1 .message,
+#account-settings #delete-account2 .message,
+#account-settings #change-class-name .message,
+#account-settings #change-class-status .message,
+#account-settings #delete-class1 .message,
+#account-settings #delete-class2 .message,
+#account-settings #invite-user-form .message,
+#account-settings #new-test .message,
+#manage #change-name .message,
+#manage #change-password .message,
+#manage #change-email .message,
+#manage #delete-account1 .message,
+#manage #delete-account2 .message,
+#manage #change-class-name .message,
+#manage #change-class-status .message,
+#manage #delete-class1 .message,
+#manage #delete-class2 .message,
+#manage #invite-user-form .message,
+#manage #new-test .message,
+#members #change-name .message,
+#members #change-password .message,
+#members #change-email .message,
+#members #delete-account1 .message,
+#members #delete-account2 .message,
+#members #change-class-name .message,
+#members #change-class-status .message,
+#members #delete-class1 .message,
+#members #delete-class2 .message,
+#members #invite-user-form .message,
+#members #new-test .message,
+#tests #change-name .message,
+#tests #change-password .message,
+#tests #change-email .message,
+#tests #delete-account1 .message,
+#tests #delete-account2 .message,
+#tests #change-class-name .message,
+#tests #change-class-status .message,
+#tests #delete-class1 .message,
+#tests #delete-class2 .message,
+#tests #invite-user-form .message,
+#tests #new-test .message {
+  font-size: 0.72rem;
+  line-height: 0.96rem;
+  min-height: 0.96rem;
+  color: #a00;
+}
+
+#account-settings #change-name .message.server,
+#account-settings #change-password .message.server,
+#account-settings #change-email .message.server,
+#account-settings #delete-account1 .message.server,
+#account-settings #delete-account2 .message.server,
+#account-settings #change-class-name .message.server,
+#account-settings #change-class-status .message.server,
+#account-settings #delete-class1 .message.server,
+#account-settings #delete-class2 .message.server,
+#account-settings #invite-user-form .message.server,
+#account-settings #new-test .message.server,
+#manage #change-name .message.server,
+#manage #change-password .message.server,
+#manage #change-email .message.server,
+#manage #delete-account1 .message.server,
+#manage #delete-account2 .message.server,
+#manage #change-class-name .message.server,
+#manage #change-class-status .message.server,
+#manage #delete-class1 .message.server,
+#manage #delete-class2 .message.server,
+#manage #invite-user-form .message.server,
+#manage #new-test .message.server,
+#members #change-name .message.server,
+#members #change-password .message.server,
+#members #change-email .message.server,
+#members #delete-account1 .message.server,
+#members #delete-account2 .message.server,
+#members #change-class-name .message.server,
+#members #change-class-status .message.server,
+#members #delete-class1 .message.server,
+#members #delete-class2 .message.server,
+#members #invite-user-form .message.server,
+#members #new-test .message.server,
+#tests #change-name .message.server,
+#tests #change-password .message.server,
+#tests #change-email .message.server,
+#tests #delete-account1 .message.server,
+#tests #delete-account2 .message.server,
+#tests #change-class-name .message.server,
+#tests #change-class-status .message.server,
+#tests #delete-class1 .message.server,
+#tests #delete-class2 .message.server,
+#tests #invite-user-form .message.server,
+#tests #new-test .message.server {
+  margin-bottom: 0.2rem;
+  min-height: 0;
+}
+
 #account-settings h3,
 #manage h3,
 #members h3,
@@ -2959,8 +3253,27 @@ label.required:after {
 #tests #delete-class1 .border-btn,
 #tests #invite-user-form .border-btn,
 #tests #new-test .border-btn {
-  margin: 0.6rem auto;
+  margin: 0.6rem auto 0.2rem auto;
   width: 100%;
+}
+
+#account-settings #delete-account1 .inline.btn,
+#account-settings #delete-class1 .inline.btn,
+#account-settings #invite-user-form .inline.btn,
+#account-settings #new-test .inline.btn,
+#manage #delete-account1 .inline.btn,
+#manage #delete-class1 .inline.btn,
+#manage #invite-user-form .inline.btn,
+#manage #new-test .inline.btn,
+#members #delete-account1 .inline.btn,
+#members #delete-class1 .inline.btn,
+#members #invite-user-form .inline.btn,
+#members #new-test .inline.btn,
+#tests #delete-account1 .inline.btn,
+#tests #delete-class1 .inline.btn,
+#tests #invite-user-form .inline.btn,
+#tests #new-test .inline.btn {
+  margin-top: 0.4rem;
 }
 
 #account-settings #delete-account2 span,
@@ -3936,6 +4249,14 @@ body#index main p {
   text-align: justify;
 }
 
+body#index #messages {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+}
+
 body#index #index-text-section {
   background: white;
   display: block;
@@ -4146,7 +4467,6 @@ body#index #index-login-section {
   overflow: auto;
   scrollbar-color: #444 white;
   scrollbar-width: auto;
-  color: black;
   padding: 0 0.4rem;
   -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
@@ -4229,7 +4549,7 @@ body#index #index-login-section .button-wrapper {
   width: 100%;
   z-index: 6;
   background: white;
-  height: 2.4rem;
+  height: 2rem;
 }
 
 body#index #index-login-section .cross {
@@ -4263,9 +4583,13 @@ body#index #index-login-section .user-data {
           flex-direction: column;
 }
 
+body#index #index-login-section .user-data label {
+  font-size: 0.9rem;
+}
+
 body#index #index-login-section .user-data label,
 body#index #index-login-section .user-data input.text-field {
-  margin: 0.2rem 0;
+  margin: 0.12rem 0;
 }
 
 body#index #index-login-section .user-data label:not(:nth-of-type(1)),
@@ -4277,7 +4601,8 @@ body#index #index-login-section .user-data input.text-field {
   color: #222;
   font-family: 'Roboto', sans-serif;
   background: #eee;
-  padding: 0.6em 0.72em;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
 }
 
 body#index #index-login-section .message {
@@ -4285,6 +4610,10 @@ body#index #index-login-section .message {
   line-height: 0.96rem;
   min-height: 0.96rem;
   color: #a00;
+}
+
+body#index #index-login-section .message.server {
+  margin-bottom: 0.6rem;
 }
 
 body#index #index-login-section .btn.inline,
@@ -4298,7 +4627,7 @@ body#index #index-login-section p {
 }
 
 body#index #index-login-section .border-btn {
-  margin: 0.8rem auto;
+  margin: 0.8rem auto 0.2rem auto;
   font-size: 1.2rem;
   width: 100%;
 }

@@ -29,58 +29,42 @@ $(function() {
 	$("#register-repass").on("input", function() {checkRegisterRePassword()})
 	$("#register-email").on("input", function() {checkRegisterEmail()})
 	$("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
-
-	//Odeslání AJAX požadavku pro kontrolu existence uživatele při přihlašování
-	$("#login-name").blur(function() { enqueueAjaxRequest(
-		new ajaxRequest
-			(
-				'index-forms',
-				{
-					text: $("#login-name").val(),
-					type: 'u'
-				},
-				function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, false, $("#login-name")); }
-			)
-		); });
-
+  
 	//Odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
-	$("#register-name").blur(function() { enqueueAjaxRequest(
-		new ajaxRequest
-		(
-			'index-forms',
-			{
-				text: $("#register-name").val(),
-				type: 'u'
-			},
-			function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-name")); }
-		)
-	); });
+	$("#register-name").blur(function()
+  {
+    if (!($("#register-name").val() != "" && checkRegisterName())) { return; }
+    enqueueAjaxRequest
+    (
+      new ajaxRequest
+      (
+        'index-forms',
+        {
+          text: $("#register-name").val(),
+          type: 'u'
+        },
+        function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-name")); }
+      )
+    );
+  });
 
 	//Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
-	$("#register-email").blur(function() { enqueueAjaxRequest(
-		new ajaxRequest
-		(
-			'index-forms',
-			{
-				text: $("#register-email").val(),
-				type: 'e'
-			},
-			function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-email")); }
-		)
-	); });
-
-	//Odeslání AJAX poýadavku pro kontrolu existence e-mailu při obnově hesla
-	$("#password-recovery-email").blur(function() { enqueueAjaxRequest(
-		new ajaxRequest
-		(
-			'index-forms',
-			{
-				text: $("#password-recovery-email").val(),
-				type: 'e'
-			},
-			function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, false, $("#password-recovery-email")); }
-		)
-	); });
+	$("#register-email").blur(function()
+  {
+    if (!($("#register-email").val() != "" && checkRegisterEmail())) { return; }
+    enqueueAjaxRequest
+    (
+      new ajaxRequest
+      (
+        'index-forms',
+        {
+          text: $("#register-email").val(),
+          type: 'e'
+        },
+        function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-email")); }
+      )
+    );
+  });
 
 	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
@@ -119,6 +103,13 @@ function checkRegisterName() {
 			registerNameMessage = "Jméno obsahuje nepovolené znaky."
 	}
 	$("#register-name-message").text(registerNameMessage);
+
+	//používá jako podmínka zavolání funkce na kontrolu jedinečnosti jména
+	if (registerNameMessage == "") return true;
+	else {
+		$("#register-name").removeClass("checked");
+		return false;
+	}
 }
 
 //funkce kontrolující správně zadané heslo při registraci
@@ -137,6 +128,11 @@ function checkRegisterPassword() {
 			registerPasswordMessage = "Heslo obsahuje nepovolené znaky."
 	}
 	$("#register-pass-message").text(registerPasswordMessage);
+
+	if (registerPasswordMessage == "")
+		$("#register-pass").addClass("checked");
+	else $("#register-pass").removeClass("checked");
+
 	checkRegisterRePassword();
 }
 
@@ -148,6 +144,11 @@ function checkRegisterRePassword() {
 	else if ($("#register-repass").val() != $("#register-pass").val())
 		registerRePasswordMessage = "Zadaná hesla se neshodují."
 	else registerRePasswordMessage = "";
+
+	if (registerRePasswordMessage == "")
+		$("#register-repass").addClass("checked");
+	else $("#register-repass").removeClass("checked");
+
 	$("#register-repass-message").text(registerRePasswordMessage);
 }
 
@@ -159,6 +160,13 @@ function checkRegisterEmail() {
 		registerEmailMessage = "Zadaný email má nesprávný tvar."
 	else registerEmailMessage= "";
 	$("#register-email-message").text(registerEmailMessage);
+
+	//používá jako podmínka zavolání funkce na kontrolu jedinečnosti jména
+	if (registerEmailMessage == "") return true;
+	else {
+		$("#register-email").removeClass("checked");
+		return false;
+	}
 }
 
 //funkce kontrolující správně zadaný email při obnově hesla
@@ -270,7 +278,6 @@ function ajaxRequest(url, data, callback)
 function enqueueAjaxRequest(request)
 {
 	ajaxRequestsQueue.push(request);
-	console.log(ajaxRequestsQueue.length);
 	if (ajaxRequestsQueue.length === 1) //Ve frontě je pouze aktuální požadavek --> okamžitě jej odešli
 	{
 		sendAjaxRequest();
@@ -288,7 +295,7 @@ function sendAjaxRequest()
 		{
 			ajaxCallback(response, status, request.callback);
 			ajaxRequestsQueue.shift(); //Odstraň vyřešený požadavek z fronty
-			if (ajaxRequestsQueue.length > 0) { console.log('sending next'); sendAjaxRequest(); } //Mezitím byl zařazen další požadavek
+			if (ajaxRequestsQueue.length > 0) { sendAjaxRequest(); } //Mezitím byl zařazen další požadavek
 		}
 	);
 }
@@ -299,15 +306,19 @@ function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inp
 	if (messageType === "success")
 	{
 		if ((data.unique ^ shouldBeUnique))
-		{
-			//TODO - nějak upravit inputElement tak, aby se ukázala chyba
-			$inputElement.css("backgroundColor", "red");
-		}
-		else
-		{
-			//TODO - nějak upravit inputElement tak, aby se ukázalo potvrzení
-			$inputElement.css("backgroundColor", "green");
-		}
+    {
+      //zobrazení chybové hlášky
+      $(inputElement).removeClass("checked");
+      if (inputElement[0] === $("#register-name")[0])
+        $("#register-name-message").text("Toto jméno už používá jiný uživatel.")
+      else if (inputElement[0] === $("#register-email")[0])
+        $("#register-email-message").text("Tento email už používá jiný uživatel.")
+    }
+    else
+    {
+      //zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
+      $(inputElement).addClass("checked");
+    }
 	}
 }
 
@@ -366,13 +377,21 @@ function formSubmitted(event)
 //Funkce zpracovávající odpověď na AJAX požadavek odesílající data z odeslaného formuláře
 function serverResponse(messageType, message, data)
 {
-	//var messageType == //success / info / warning / error
-	//var message == //Chybová hláška
-	//var form == //Formulář z něhož byla odeslána data - login / register / passRecovery
+	var errors = message.replaceAll("|", ". ");
+	if (!errors.endsWith(".")) {
+		errors = errors.concat(".");
+	}
 
-	var errors = message.split("|"); //V případě, že bylo nalezeno více chyb, jsou odděleny svislítkem
-	console.log(errors);
-
-	//TODO - zobrazení chybové nebo úspěchové hlášky
+	switch(data.origin) {
+		case "login":
+			$("#login-server-message").text(errors);
+			break;
+		case "register":
+			$("#register-server-message").text(errors);
+			break;
+		case "passRecovery":
+			$("#password-recovery-server-message").text(errors);
+			break;
+	}
 }
 

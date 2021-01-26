@@ -34,8 +34,6 @@ class MenuTableController extends Controller
         {
             if (!isset($_SESSION['selection']['class']))
             {
-                $this->data['invitations'] = UserManager::getUser()->getActiveInvitations();
-                $this->data['invitationsCount'] = count($this->data['invitations']);
                 $classesGetter = new TestGroupsFetcher();
                 $classes = $classesGetter->getClasses();
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);

@@ -239,9 +239,7 @@ function deleteAccountConfirm(messageType, message, data)
 	}
 	else
 	{
-		//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-		console.log("["+messageType+" - " + data.origin + "] " + message);
-		alert("["+messageType+" - " + data.origin + "] " + message);
+		$("#delete-account-message").text(message);
 		
 		$("#delete-account-password").val("");
 	}
@@ -281,6 +279,7 @@ function deleteAccountCancel()
 	$("#delete-account-button").show();
 	$("#delete-account").hide();
 	$("#delete-account2").hide();
+	$("#delete-account-message").text("");
 }
 
 /**
@@ -293,7 +292,7 @@ function evaluateResponse(messageType, message, data)
 	//message Chybová nebo úspěchová hláška
 	//data = Další informace, pod data.origin je název akce, která vyvolala AJAX požadavek
 	
-	//TODO - zobrazení chybové nebo úspěchové hlášky
-	console.log("["+messageType+" - " + data.origin + "] " + message);
-	alert("["+messageType+" - " + data.origin + "] " + message);
+	//console.log("["+messageType+" - " + data.origin + "] " + message);
+
+	newMessage(message, messageType);
 }

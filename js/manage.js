@@ -70,16 +70,11 @@ function changeClassNameConfirm()
 						//Reset DOM
 						changeClassNameCancel();
 
-						//TODO - zobraz nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
-						
-					    //Reset HTML
-					    //cancelNameChange();
+						newMessage(message, "success");
 					}
 					else if (messageType === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+						$("#change-class-name-message").text(message);
 					}
 				}
 			);
@@ -93,6 +88,7 @@ function changeClassNameCancel()
 	$("#change-class-name-button").show();
     $("#change-class-name").hide();
 	$("#change-class-name").closest(".class-data-item").find(".class-property-value").show();
+	$("#change-class-name-message").text("");
 }
 /*-------------------------------------------------------*/
 
@@ -201,8 +197,7 @@ function changeClassStatusConfirm()
 						$("#class-status-select .custom-option").removeClass("selected");
 						$("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
 
-						//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-						//alert(message);
+						//newMessage(message, "success");
 						
 						//Skrytí nastavení členů, pokud byla třída změněna na veřejnou
 						if (newStatus === "Veřejná")
@@ -221,8 +216,7 @@ function changeClassStatusConfirm()
 					}
 					if (messageType === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+						newMessage(message, "error");
 					}
 				}
 			);
@@ -285,8 +279,8 @@ function deleteClassConfirm(messageType, message, data)
 	}
 	else
 	{
-		//TODO alert
-		//alert("Špatné heslo.");
+		$("#delete-class-message").text(message);
+
 		$("#delete-class-password").val("");
 	}
 }
@@ -306,8 +300,7 @@ function deleteClassFinal()
 				{
 					if (response["messageType"] === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(response["message"]);
+						newMessage(response["message"], "error");
 					}
 					//V případě úspěchu je přesměrování zařízeno v js/ajaxMediator.js
 				}
@@ -322,4 +315,5 @@ function deleteClassCancel()
 	$("#delete-class-button").show();
 	$("#delete-class").hide();
 	$("#delete-class2").hide();
+	$("#delete-class-message").text("");
 }

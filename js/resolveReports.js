@@ -131,13 +131,12 @@ function editPictureConfirm(event)
 						console.log(currentName);
 						$report.find(".report-name").text(currentName);
 						$report.find(".report-url").text(currentUrl);
-						//TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+
+						//newMessage(message, "success");
 					}
 					if (messageType === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+						newMessage(message, "error");
 					}
 					else
 					{
@@ -181,8 +180,7 @@ function deletePicture(event)
 					{
 						if (messageType === "error")
 						{
-							//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-							alert(message);
+							newMessage(message, "error");
 						}
 						else
 						{
@@ -211,8 +209,7 @@ function deleteReport(event)
 				{
 					if (messageType === "error")
 					{
-						//TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-						alert(message);
+						newMessage(message, "error");
 					}
 					else
 					{

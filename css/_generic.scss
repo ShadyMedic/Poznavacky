@@ -18,6 +18,7 @@ body {
 	font-size: 100%;
 	min-width: 100%;
 	min-height: 100vh;
+	color: $black1;
 	.btn:focus {
 		outline: none;
 	}
@@ -35,6 +36,32 @@ body {
 		.text-field:focus {
 			box-shadow: inset 0 0 0 2px rgba($greenMid, 0.5);
 		}
+	}
+}
+
+#messages {
+	.message-item {
+		padding: 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: white;
+		.btn {
+			margin-left: 1rem;
+			flex-shrink: 0;
+		}
+	}
+	.success-message {
+		background: $greenMid;
+	}
+	.info-message {
+		background: #888;
+	}
+	.warning-message {
+		background: #960;
+	}
+	.error-message {
+		background: $red1;
 	}
 }
 
@@ -115,23 +142,22 @@ h5 {
 		display: inline-block;
 		text-align: center;
 		position: relative;
-		padding: 0.4em 1em;
+		padding: 0.44em 1em;
 		border-radius: 3.2px;
+		line-height: 1.32em;
 		&.non-transparent {
 			&.white {
 				background: white;
-				color: black;
-				border: 2px solid white;
+				color: $black1;
 				&:after {
-					background: rgba(black, 0.06);
+					background: rgba(black, 0.04);
 				}
 			}
 			&.black {
 				background: $black1;
 				color: white;
-				border: 2px solid $black1;
 				&:after {
-					background: rgba(white, 0.06);
+					background: rgba(white, 0.08);
 				}
 				&.disabled {
 					background: #888;
@@ -147,7 +173,6 @@ h5 {
 			&.dark-green {
 				background: $greenDark;
 				color: white;
-				border: 2px solid $greenDark;
 				&:after {
 					background: rgba(white, 0.06);
 				}
@@ -155,6 +180,7 @@ h5 {
 		}
 		&.transparent {
 			background: transparent;
+			padding: calc(0.44em - 2px) calc(1em - 2px);
 			&.white {
 				color: white;
 				border: 2px solid white;
@@ -227,36 +253,11 @@ h5 {
 		&:hover {
 			text-decoration: underline;
 		}
-		/*
-		&:after {
-			content: "";
-			display: block;
-			width: 0%;
-			left: 50%;
-			height: 2px;
-			position: absolute;
-			bottom: -0.1rem;
-			transition: all 0.1s ease-in;
-		}
-		&:hover:after {
-			width: 100%;
-			left: 0;
-		}
-		*/
 		&.white {
 			color: white;
-			/*
-			&:after {
-				background: white;
-			}*/
 		}
 		&.black {
-			color: black;
-			/*
-			&:after {
-				background: black;
-			}
-			*/
+			color: $black1;
 		}
 	}
 	// TODO zrušit tuto třídu -> vše .icon
@@ -313,13 +314,41 @@ textarea {
 	outline: none;
 	&.text-field {
 		font-size: 100%;
-		padding: 0.48em 0.8em;
+		padding: 0.44em 0.8em;
 		border-radius: 0.2em;
 		line-height: 1.32em;
 		&.disabled {
 			background: #ddd;
 			pointer-events: none;
 			cursor: auto;
+		}
+	}
+}
+.input-wrapper {
+	position: relative;
+	width: 100%;
+	.checkmark {
+		display: none;
+		position: absolute;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		height: 100%;
+		margin: auto 0.4rem;
+		}
+	.text-field {
+		width: 100%;
+	}
+	.text-field.checked {
+		padding-right: 2em;
+	}
+	.text-field.checked + .checkmark {
+		display: block;
+		height: 1em;
+		width: 1em;
+		img {
+			width: 100%;
+			height: 100%;
 		}
 	}
 }

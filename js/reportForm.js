@@ -29,6 +29,7 @@ $(function() {
 	$("#submit-report-button").click(function(e){submitReport(e)})
 	$("#cancel-report-button").click(function(e){cancelReport(e)})
 
+	
 	displayImgPreview();
 });
 
@@ -68,7 +69,7 @@ function cancelReport()
     $("#report-reason .custom-option:first").addClass("selected");
     $("#report-reason .custom-select-main span").text($("#report-reason .selected").text());
     // obnovení dodatečných polí a select boxů
-    $(".additional-report-info > *").hide();
+    $(".additional-report-info > *:not(#report-message)").hide();
     $("#long-loading-info .selected").removeClass("selected");
     $("#long-loading-info .custom-option:first").addClass("selected");
     $("#long-loading-info .custom-select-main span").text($("#long-loading-info .selected").text());
@@ -79,7 +80,7 @@ function cancelReport()
 // funkce aktualizující obsah report boxu
 function updateReport()
 {
-	$(".additional-report-info > *").hide();
+	$(".additional-report-info > *:not(#report-message)").hide();
     if ($reasonLongLoading.hasClass("selected"))  //Obrázek se načítá příliš dlouho
 	{
         $("#long-loading-info").show();
@@ -125,8 +126,7 @@ function submitReport()
     //Kontrola vyplnění informací pro obecná hlášení
     if (($reason.get(0).isEqualNode($reasonOther.get(0)) || $reason.get(0).isEqualNode($reasonOtherAdmin.get(0))) && reasonInfo.length === 0)
 	{
-		//TODO - nějak šikovně zobrazit chybovou hlášku
-        alert("Musíte vyplnit důvod hlášení");
+		$("#report-message").text("Musíte vyplnit důvod hlášení");
         return;
     }
 
@@ -135,17 +135,19 @@ function submitReport()
 	{
 	case "images/noImage.png":
         case "images/imagePreview.png":
-            //TODO - nějak šikovně zobrazit chybovou hlášku
-            alert("Tento obrázek nemůžete nahlásit");
+			$("#report-message").text("Tento obrázek nemůžete nahlásit");
             return;
         case "images/loading.gif":
             if (!$reason.get(0).isEqualNode($reasonLongLoading.get(0)))
 		    {
-			    //TODO - nějak šikovně zobrazit chybovou hlášku
-			    alert("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
+				$("#report-message").text("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
                 return;
             }
     }
+
+	//nebyla zaznamenána žádná chyba
+	$("#report-message").text("");
+
     let url = window.location.href;
     if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
     url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/learn nebo /test)
@@ -160,8 +162,7 @@ function submitReport()
 			ajaxCallback(response, status,
 				function (messageType, message, data)
 				{
-					//TODO - nějak šikovně zobrazit hlášku ze serveru
-					alert(message);
+					newMessage(message, messageType);
 					
                     //Skrýt formulář pro nahlašování
                     cancelReport();
