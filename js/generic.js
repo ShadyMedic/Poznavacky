@@ -63,11 +63,15 @@ function getCookie(cname)
 }
 
 //funkce upravující manipulaci s custom select boxy
-function manageSelectBox(thisObj){
-	thisObj.find(".custom-select").toggleClass("open");
-	thisObj.find(".custom-options .selected")[0].scrollIntoView({ 
-		block: "start" 
-	});
+function manageSelectBox($selectBox)
+{
+	$selectBox.find(".custom-select").toggleClass("open");
+	//pokud je nějaký element zvolený, posune se dropdown tak, aby byl zvolený element vidět
+	if ($selectBox.find(".custom-options .selected").length != 0) {
+		$selectBox.find(".custom-options .selected")[0].scrollIntoView({ 
+			block: "start" 
+		});
+	}
 	$(".custom-option").each(function() {
 		$(this).click(function() {
 			if (!$(this).hasClass('selected')) {
