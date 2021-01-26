@@ -220,7 +220,7 @@ function showLoginDiv(divId) {
 	$("#login").hide();
 	$("#password-recovery").hide();
 	$("#" + divId).show();
-	emptyForms(".user-data input.text-field, .message");
+	emptyForms(".user-data input.text-field, .user-data .message");
 }
 
 //skrytí login sekce
@@ -228,7 +228,7 @@ function hideLoginSection() {
 	$("#index-login-section").removeClass("show");
 	$(".overlay").removeClass("show");
 	$("body").css("overflowY", "auto");
-	emptyForms(".user-data input.text-field, .message");
+	emptyForms(".user-data input.text-field, .user-data .message");
 }
 
 //přihlášení pod demo účtem (kliknutí na tlačítko "Vyzkoušet demo")
