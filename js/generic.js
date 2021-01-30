@@ -67,9 +67,11 @@ function manageSelectBox($selectBox)
 {
 	$selectBox.find(".custom-select").toggleClass("open");
 	//pokud je nějaký element zvolený, posune se dropdown tak, aby byl zvolený element vidět
-	if ($selectBox.find(".custom-options .selected").length != 0) {
+	//neplatí na select element v report boxu - způsobovalo to divné poskočení
+	if ($selectBox.find(".custom-options .selected").length != 0 && $selectBox[0] != $("#report-reason")[0]) {
 		$selectBox.find(".custom-options .selected")[0].scrollIntoView({ 
-			block: "start" 
+			block: 'start',
+			inline: 'start' 
 		});
 	}
 	$(".custom-option").each(function() {
