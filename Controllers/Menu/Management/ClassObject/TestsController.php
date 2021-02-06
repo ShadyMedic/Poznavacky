@@ -96,7 +96,6 @@ class TestsController extends Controller
             $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
             $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
             $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
-            $this->data['returnButtonLink'] = $this->controllerToCall->data['returnButtonLink'];
             
             $this->view = 'inherit';
         }

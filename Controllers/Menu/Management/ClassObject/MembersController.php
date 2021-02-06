@@ -38,8 +38,7 @@ class MembersController extends Controller
             )
         );
         $this->data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
-        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
-        
+
         $this->view = 'members';
     }
 }
