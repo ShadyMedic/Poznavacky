@@ -6,6 +6,7 @@
     jí odeberete i ze všech poznávaček a jejich částí</p>
     <p>Přejmenováním přírodniny dojde k aktualizaci názvu ve všech poznávačkách,
     ve kterých se přírodnina vyskytuje.</p>
+    <p>Nové přírodniny jsou přidávány automaticky při tvorbě nebo úpravě poznávaček.</p>
     <p>Přírodniny jsou seřazeny podle data přidání. Pro rychlé nalezení určité
     přírodniny můžete použít kombinaci kláves <kbd>Ctrl</kbd>+<kbd>F</kbd></p>
 
@@ -18,16 +19,33 @@
         </tr>
         <?php foreach ($naturals as $natural) : ?>
         <tr data-natural-id="<?= $natural->getId() ?>">
-            <td><?= $natural->getName() ?></td>
+            <td>
+                <div class="natural-name-box">
+                    <span class="natural-name"><?= $natural->getName() ?></span>
+                </div>
+                <div class="natural-name-input-box" style="display:none;">
+                    <input type="text" maxlength="31" class="text-field natural-name-input" value="<?= $natural->getName() ?>"/>
+                </div>
+            </td>
             <td><?= $natural->getUsesCount() ?></td>
             <td><?= $natural->getPicturesCount() ?></td>
             <td>
-                <button title="Přejmenovat" class="rename-natural btn icon">
-                    <img src='images/pencil.svg'/>
-                </button>
-                <button title="Odebrat" class="remove-natural btn icon">
-                    <img src='images/cross.svg'/>
-                </button>
+                <div class="normal-buttons">
+                    <button title="Přejmenovat" class="rename-natural btn icon">
+                        <img src='images/pencil.svg'/>
+                    </button>
+                    <button title="Odebrat" class="remove-natural btn icon">
+                        <img src='images/cross.svg'/>
+                    </button>
+                </div>
+                <div class="rename-buttons" style="display:none;">
+                    <button class="rename-confirm btn icon">
+                        <img src='images/tick.svg'/>
+                    </button>
+                    <button class="rename-cancel btn icon">
+                        <img src='images/crossRed.svg'/>
+                    </button>
+                </div>
             </td>
         </tr>
         <?php endforeach ?>
