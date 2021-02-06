@@ -100,6 +100,7 @@ class ManageController extends Controller
             $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/manage.js');
             $this->pageHeader['bodyId'] = 'manage';
 
+            $this->data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
             $this->data['classId'] = $_SESSION['selection']['class']->getId();
             $this->data['className'] = $_SESSION['selection']['class']->getName();
             $this->data['classStatus'] = $_SESSION['selection']['class']->getStatus();
