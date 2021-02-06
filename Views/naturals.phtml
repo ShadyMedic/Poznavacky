@@ -1,0 +1,35 @@
+<div id='naturals-wrapper'>
+    <p>Na této stránce můžete spravovat přírodniny, které ve vaší třídě existují.</p>
+    <p>Nahrané obrázky jsou pevně svázány s jednotlivými přírodninami. Odstraněním
+    přírodniny dojde i k odstranění všech obrázků, které k ní byly přidány</p>
+    <p>Odstraněním přírodniny, která je přiřazená do alespoň jedné poznávačky
+    jí odeberete i ze všech poznávaček a jejich částí</p>
+    <p>Přejmenováním přírodniny dojde k aktualizaci názvu ve všech poznávačkách,
+    ve kterých se přírodnina vyskytuje.</p>
+    <p>Přírodniny jsou seřazeny podle data přidání. Pro rychlé nalezení určité
+    přírodniny můžete použít kombinaci kláves <kbd>Ctrl</kbd>+<kbd>F</kbd></p>
+
+    <table>
+        <tr>
+            <th>Název přírodniny</th>
+            <th>Místa výskytu</th>
+            <th>Počet obrázků</th>
+            <th>Akce</th>
+        </tr>
+        <?php foreach ($naturals as $natural) : ?>
+        <tr data-natural-id="<?= $natural->getId() ?>">
+            <td><?= $natural->getName() ?></td>
+            <td><?= $natural->getUsesCount() ?></td>
+            <td><?= $natural->getPicturesCount() ?></td>
+            <td>
+                <button title="Přejmenovat" class="rename-natural btn icon">
+                    <img src='images/pencil.svg'/>
+                </button>
+                <button title="Odebrat" class="remove-natural btn icon">
+                    <img src='images/cross.svg'/>
+                </button>
+            </td>
+        </tr>
+        <?php endforeach ?>
+    </table>
+</div>
