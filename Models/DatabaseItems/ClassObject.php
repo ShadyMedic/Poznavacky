@@ -156,7 +156,7 @@ class ClassObject extends Folder
     public function getNaturals(): array
     {
         $this->loadIfNotLoaded($this->id);
-        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['class'].' = ?;', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].',(SELECT COUNT(*) FROM prirodniny_casti WHERE prirodniny_id = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].') AS "uses" FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['class'].' = ?;', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
             //Žádné poznávačky nenalezeny
@@ -169,7 +169,7 @@ class ClassObject extends Folder
             {
                 $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
                 //Místo posledního null by se mělo nastavit $this, avšak výsledné pole obsahuje příliš mnoho úrovní vnořených objektů a jeho ošetření proti XSS útoku trvá strašně dlouho
-                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null);
+                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, null, $naturalData['uses']);
                 $naturals[] = $natural;
             }
         }
