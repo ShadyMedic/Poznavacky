@@ -1,10 +1,11 @@
 var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstraňován
+var ajaxUrl;
 
 //vše, co se děje po načtení stránky
 $(function() {
   
   //Nastavení URL pro AJAX požadavky
-  let ajaxUrl = window.location.href;
+  ajaxUrl = window.location.href;
   if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
   ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //Nahraď neAJAX akci AJAX akcí
   
