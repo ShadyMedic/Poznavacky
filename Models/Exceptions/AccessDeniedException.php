@@ -110,7 +110,7 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL = 'Hlášení se vztahuje k obrázku, který není nahrán k žádné přírodnině ve vaší třídě';
     const REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_SHORT = 'Název přírodniny musí být alespoň 1 znak dlouhý';
     const REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_LONG = 'Název přírodniny nesmí být více než 31 znaků dlouhý';
-    const REASON_MANAGEMENT_NATURALS_RENAME_INVALID_CHARACTERS = 'Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky . _ - + / * % ( ) \' \"';
+    const REASON_MANAGEMENT_NATURALS_RENAME_INVALID_CHARACTERS = 'Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky . _ - + / * % ( ) \' "';
     const REASON_MANAGEMENT_NATURALS_RENAME_DUPLICATE_NAME = 'Tento název má již jiná přírodnina v této třídě';
     const REASON_MANAGEMENT_NATURALS_RENAME_FOREIGN_NATURAL = 'Tato přírodnina nepatří do spravované třídy';
     const REASON_MANAGEMENT_NATURALS_MERGE_FROM_FOREIGN_NATURAL = 'Přírodnina kterou se pokoušíte sloučit s jinou přírodninou nepatří do spravované třídy';
