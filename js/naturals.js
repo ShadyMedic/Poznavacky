@@ -1,4 +1,9 @@
-//vše, co se děje po načtení stránky
+//Nastavení URL pro AJAX požadavky
+let ajaxUrl = window.location.href;
+if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
+ajaxUrl = ajaxUrl.replace('/naturals', '/update-naturals'); //Nahraď neAJAX akci AJAX akcí
+
+// vše, co se děje po načtení stránky
 $(function() {
 
     //event listenery tlačítek
@@ -48,7 +53,34 @@ function renameCancel(event)
  */
 function remove(event)
 {
-    console.log("remove");
-    //TODO
+    if (!confirm('Skutečně chcete odstranit přírodninu "'+$(event.target).closest('tr').find('.natural-name').text()+'" a všechny obrázky k ní přidané?\nTato akce je nevratná!')){ return }
+
+    let deletedTableRow = $(event.target).closest('tr');
+    $.post(ajaxUrl,
+        {
+            action: 'delete',
+            naturalId: $(event.target).closest('tr').attr('data-natural-id')
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "error")
+                    {
+                        newMessage(message, "error");
+                    }
+                    else if (messageType === "success")
+                    {
+                        //newMessage(message, "success")
+
+                        //odebrání přírodniny z DOM
+                        deletedTableRow.remove();
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
