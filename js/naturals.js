@@ -19,7 +19,6 @@ $(function() {
  */
 function rename(event)
 {
-    console.log("rename");
     $(event.target).closest('tr[data-natural-id]').find('.normal-buttons').hide();
     $(event.target).closest('tr[data-natural-id]').find('.natural-name-box').hide();
     $(event.target).closest('tr[data-natural-id]').find('.rename-buttons').show();
@@ -79,7 +78,6 @@ function renameConfirm(event)
             {
                 let fromNaturalId = $(event.target).closest('tr[data-natural-id]').attr("data-natural-id");
                 let toNaturalId = $("#naturals-wrapper").find("tr[data-natural-id]:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
-                console.log(fromNaturalId + " → " + toNaturalId);
                 mergeNaturals(fromNaturalId, toNaturalId);
             }
             return;
