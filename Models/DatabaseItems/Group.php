@@ -153,6 +153,7 @@ class Group extends Folder
                 )
             );
         ', array($this->id), true);
+        if ($result === false) { $result = array(); /*Žádné přírodniny nenalezeny*/ }
         foreach ($result as $naturalData)
         {
             $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
