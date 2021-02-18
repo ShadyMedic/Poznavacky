@@ -163,8 +163,8 @@ function mergeNaturals(fromNaturalId, toNaturalId)
 
                         //odebrání sloučené přírodniny z DOM a přičtení jejích statistik k přírodnině, do které byla sloučena
                         $deletedTableRow.remove();
-                        $mergedTableRow.find('td:eq(1)').text($mergedTableRow.find('td:eq(1)').text() + data.newUsesCount);
-                        $mergedTableRow.find('td:eq(2)').text($mergedTableRow.find('td:eq(2)').text() + data.newPictureCount);
+                        $mergedTableRow.find('td:eq(1)').text(Number($mergedTableRow.find('td:eq(1)').text()) + data.newUsesCount);
+                        $mergedTableRow.find('td:eq(2)').text(Number($mergedTableRow.find('td:eq(2)').text()) + data.newPicturesCount);
                     }
                 }
             );
