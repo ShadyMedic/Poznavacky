@@ -295,7 +295,7 @@ class Group extends Folder
     /**
      * Metoda nastavující poznávačce nový název a podle něj aktualizuje i URL
      * Počítá se s tím, že jméno již bylo ošetřeno na délku, znaky a unikátnost
-     * Změna není uložena do databáze, aby bylo nové jméno trvale uloženo, musí být zavolána metoda Gruop::save()
+     * Změna není uložena do databáze, aby bylo nové jméno trvale uloženo, musí být zavolána metoda Group::save()
      * @param string $newName Nový název třídy
      */
     public function rename(string $newName): void

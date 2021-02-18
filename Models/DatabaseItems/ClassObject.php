@@ -159,7 +159,7 @@ class ClassObject extends Folder
         $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].',(SELECT COUNT(*) FROM prirodniny_casti WHERE prirodniny_id = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].') AS "uses" FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['class'].' = ?;', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
-            //Žádné poznávačky nenalezeny
+            //Žádné přírodniny nenalezeny
             return array();
         }
         else
