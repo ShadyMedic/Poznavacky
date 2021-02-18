@@ -140,7 +140,8 @@ function renameCancel(clickedButton)
  */
 function mergeNaturals(fromNaturalId, toNaturalId)
 {
-    let deletedTableRow = $("[data-natural-id=" + fromNaturalId + "]");
+    let $deletedTableRow = $("[data-natural-id=" + fromNaturalId + "]");
+    let $mergedTableRow = $("[data-natural-id=" + toNaturalId + "]");
     $.post(ajaxUrl,
         {
             action: 'merge',
@@ -160,8 +161,10 @@ function mergeNaturals(fromNaturalId, toNaturalId)
                     {
                         //newMessage(message, "success")
 
-                        //odebrání sloučené přírodniny z DOM
-                        deletedTableRow.remove();
+                        //odebrání sloučené přírodniny z DOM a přičtení jejích statistik k přírodnině, do které byla sloučena
+                        $deletedTableRow.remove();
+                        $mergedTableRow.find('td:eq(1)').text($mergedTableRow.find('td:eq(1)').text() + data.newUsesCount);
+                        $mergedTableRow.find('td:eq(2)').text($mergedTableRow.find('td:eq(2)').text() + data.newPictureCount);
                     }
                 }
             );

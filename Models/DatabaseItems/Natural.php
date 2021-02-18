@@ -3,6 +3,7 @@ namespace Poznavacky\Models\DatabaseItems;
 
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
+use \RuntimeException;
 
 /**
  * Třída reprezentující objekt přírodniny
@@ -173,17 +174,47 @@ class Natural extends DatabaseItem
      * Metoda převádějící všechny obrázky této přírodniny do jiné přírodniny a odstraňující tuto přírodninu z databáze
      * Není kontrolováno, zda přírodnina, ke které se mají obrázky převést patří do stejné třídy jako tato přírodnina
      * @param Natural $intoWhat Objekt přírodniny, ke které mají být převedeny všechny obrázky patřící do této přírodniny
-     * @return bool TRUE, pokud jsou obrázky úspěšně převedeny a přírodnina odstraněna z databáze
+     * @return array Asociativní pole obsahující klíče "mergedPictures" a "mergedUses" a počet sloučených obrázků a využití jako hodnoty
      */
-    public function merge(Natural $intoWhat): bool
+    public function merge(Natural $intoWhat): array
     {
+        //Převeď obrázky
+        $mergedPictures = 0;
         if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
         foreach ($this->pictures as $picture)
         {
-            $picture->transfer($intoWhat);
-            $picture->save();
+            try
+            {
+                $picture->transfer($intoWhat);
+                $picture->save();
+                $mergedPictures++;
+            }
+            catch (RuntimeException $e) { /*Obrázek již v nové přírodnině existuje - přeskoč jej*/ }
         }
-        return $this->delete();
+
+        //Převeď využití
+        $mergedUses = 0;
+        $uses = $this->getUses();
+        foreach ($uses as $use)
+        {
+            $naturals = $use->getNaturals();
+            $contained = false;
+            foreach ($naturals as $natural)
+            {
+                if ($natural->getId() === $intoWhat->getId()) { $contained = true; }
+            }
+            if ($contained) { /*V této části již nová přírodnina je - přeskoč ji*/ }
+            else
+            {
+                //Aktualizuj ID přírodniny ve spojení části a přírodniny
+                Db::executeQuery('UPDATE prirodniny_casti SET prirodniny_id = ? WHERE prirodniny_id = ? AND casti_id = ? LIMIT 1;', array($intoWhat->getId(), $this->getId(), $use->getId()), false);
+                $mergedUses++;
+            }
+        }
+
+        $this->delete();
+        $result = array('mergedPictures' => $mergedPictures, 'mergedUses' => $mergedUses);
+        return $result;
     }
 
     /**

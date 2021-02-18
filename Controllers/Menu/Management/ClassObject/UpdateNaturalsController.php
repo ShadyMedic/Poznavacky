@@ -64,8 +64,8 @@ class UpdateNaturalsController extends Controller
                     $toNaturalId = $_POST['toNaturalId'];
                     $fromNatural = new Natural(false, $fromNaturalId);
                     $toNatural = new Natural(false, $toNaturalId);
-                    $editor->merge($fromNatural, $toNatural);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodniny úspěšně sloučeny a obrázky převedeny');
+                    $mergeResult = $editor->merge($fromNatural, $toNatural);
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodniny úspěšně sloučeny a obrázky převedeny', array('newUsesCount' => $mergeResult['mergedUses'], 'newPicturesCount' => $mergeResult['mergedPictures']));
                     echo $response->getResponseString();
                     break;
                 case 'delete':

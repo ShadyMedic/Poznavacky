@@ -73,7 +73,7 @@ class NaturalEditor
         return $natural->save();
     }
 
-    public function merge(Natural $from, Natural $to): bool
+    public function merge(Natural $from, Natural $to): array
     {
         if (!in_array($from->getId(), $this->idsOfNaturalsInClass))
         {

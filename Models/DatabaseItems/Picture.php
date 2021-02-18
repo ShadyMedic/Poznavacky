@@ -5,6 +5,7 @@ use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\PictureAdder;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
+use \RuntimeException;
 
 /** 
  * Třída reprezentující objekt obrázku
@@ -120,11 +121,17 @@ class Picture extends DatabaseItem
     /**
      * Metoda převádějící tento obrázek k jiné přírodnině
      * Není kontrolováno, zda nová přírodnina patří do té samé třídy, jako ta stávající
+     * Je provedena kontrola, zda obrázek s danou URL již není přidán k nové přírodnině
      * Změny nejsou uloženy do databáze, aby se tak stalo, musí být zavolána metoda Picture::save()
      * @param Natural $newNatural Objekt přírodniny, ke které má být tento obrázek převeden
+     * @throws RuntimeException Pokud je tento obrázek již ke specifikované přírodnině přidán
      */
     public function transfer(Natural $newNatural): void
     {
+        if ($newNatural->pictureExists($this->getSrc()))
+        {
+            throw new RuntimeException('Picture with this URL is already added to the new natural.');
+        }
         $this->natural = $newNatural;
     }
 
