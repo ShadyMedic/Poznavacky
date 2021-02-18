@@ -146,7 +146,7 @@ function renameConfirm(event, type)
 	//let maxChars = (type === "group") ? 31 : (type === "part") ? 31 : 31;
 	let maxChars = 31; //V případě, že by horní limit všech typů stringů neměl být stejný, odkomentovat předchozí řádku a tuto zakomentovat
 	//Při změně povolených znaků nezapomenout aktualizovat i znaky nahrazované "-" ve funkci generateUrl()
-	let allowedChars = (type === "group") ? "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-" : (type === "part") ? "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-" : "\"0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci"
+	let allowedChars = (type === "group") ? "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-" : (type === "part") ? "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-" : "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci"
 	let allowedSpecialChars = (type === "group") ? ". _ -" : (type === "part") ? ". _ -" : "_ . - + / * % ( ) \' \"" //Pouze pro použití v chybových hláškách
 
 	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
