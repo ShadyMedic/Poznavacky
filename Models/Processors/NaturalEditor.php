@@ -6,6 +6,8 @@ use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\DataValidator;
+use \InvalidArgumentException;
+use \RangeException;
 
 /**
  * Model zpracovávající změny přírodnin odeslané ze stránky naturals
