@@ -116,7 +116,18 @@ class Picture extends DatabaseItem
         
         return true;
     }
-    
+
+    /**
+     * Metoda převádějící tento obrázek k jiné přírodnině
+     * Není kontrolováno, zda nová přírodnina patří do té samé třídy, jako ta stávající
+     * Změny nejsou uloženy do databáze, aby se tak stalo, musí být zavolána metoda Picture::save()
+     * @param Natural $newNatural Objekt přírodniny, ke které má být tento obrázek převeden
+     */
+    public function transfer(Natural $newNatural): void
+    {
+        $this->natural = $newNatural;
+    }
+
     /**
      * Metoda navracející pole hlášení tohoto obrázku
      * Pokud hlášení zatím nebyla načtena z databáze, budou před navrácením načtena
