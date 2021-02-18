@@ -16,14 +16,14 @@
 				<span class="tiles">obrázků: </span>
 				<span><?= $tableRow[2] ?></span>
 			</span>
-            <?php if ($tableRow[2] > 0) : ?>
+            <?php if ($tableRow[1] > 0) : ?>
             <div class="buttons">
                 <a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn transparent black border-btn">Přidat obrázky</a>
                 <a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent black border-btn">Učit se</a>
                 <a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent black border-btn">Vyzkoušet se</a>
             </div>
             <?php endif ?>
-            <?php if ($tableRow[2] === '0') : ?>
+            <?php if ($tableRow[1] === '0') : ?>
                 <div>
                     <span>Pro používání této části do ní musí být nejprve přidány přírodniny</span>
                 </div>
