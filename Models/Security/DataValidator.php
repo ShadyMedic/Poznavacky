@@ -38,9 +38,9 @@ class DataValidator
     public const USER_EMAIL_MAX_LENGTH = 255;
     public const CLASS_NAME_MIN_LENGTH = 5;
     public const CLASS_NAME_MAX_LENGTH = 31;
+    //Při změně následujících konstant je nutné změnit hodnoty i v souborech edit.js, edit.phtml a naturals.js
     public const GROUP_NAME_MIN_LENGTH = 3;
     public const GROUP_NAME_MAX_LENGTH = 31;
-    //Při změně následujících čtyř konstant je nutné změnit hodnoty i v souborech edit.js a edit.phtml
     public const PART_NAME_MIN_LENGTH = 1;
     public const PART_NAME_MAX_LENGTH = 31;
     public const NATURAL_NAME_MIN_LENGTH = 1;
@@ -54,7 +54,7 @@ class DataValidator
     public const PART_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';  //Při změně je nutné změnit hodnoty i v souboru edit.js
     public const NATURAL_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-+/*%()\'\"';  //Při změně je nutné změnit hodnoty i v souboru edit.js
 
-    public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
+    public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz'; //(plus znak -)
 
     public const CLASS_RESERVED_URLS = array('account-settings', 'enter-class-code');
     public const GROUP_RESERVED_URLS = array('leave', 'manage');
@@ -164,6 +164,18 @@ class DataValidator
                 }
                 
                 $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Part::TABLE_NAME.' WHERE '.Part::COLUMN_DICTIONARY['url'].' = ? AND '.Part::COLUMN_DICTIONARY['group'].' = ? LIMIT 1', array($subject, $parentFolder->getId()), false);
+                if ($result['cnt'] > 0)
+                {
+                    throw new InvalidArgumentException(null, $stringType);
+                }
+                break;
+            case self::TYPE_NATURAL_NAME:
+                if ($parentFolder === null)
+                {
+                    throw new BadMethodCallException('Parent object must be specified for this check');
+                }
+
+                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['name'].' = ? AND '.Natural::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($subject, $parentFolder->getId()), false);
                 if ($result['cnt'] > 0)
                 {
                     throw new InvalidArgumentException(null, $stringType);
