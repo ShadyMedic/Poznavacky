@@ -105,7 +105,7 @@ class Natural extends DatabaseItem
         $this->loadIfNotLoaded($this->picturesCount);
         return $this->picturesCount;
     }
-    
+
     /**
      * Metoda navracející pole všech obrázků této přírodniny jako objekty
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
@@ -128,7 +128,7 @@ class Natural extends DatabaseItem
         if ($this->picturesCount === 0) { return null; }
         return $this->pictures[rand(0, $this->picturesCount - 1)];
     }
-    
+
     /**
      * Metoda načítající z databáze obrázky přírodniny a ukládající je jako vlastnost objektu
      * Vlastnost $picturesCount je nastavena / upravena podle počtu načtených obrázků
@@ -136,7 +136,7 @@ class Natural extends DatabaseItem
     public function loadPictures(): void
     {
         $this->loadIfNotLoaded($this->id);
-        
+
         $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['id'].','.Picture::COLUMN_DICTIONARY['src'].','.Picture::COLUMN_DICTIONARY['enabled'].' FROM '.Picture::TABLE_NAME.' WHERE '.Picture::COLUMN_DICTIONARY['natural'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
@@ -146,7 +146,7 @@ class Natural extends DatabaseItem
         else
         {
             $this->pictures = array();
-            
+
             foreach ($result as $pictureData)
             {
                 $status = ($pictureData[Picture::COLUMN_DICTIONARY['enabled']] === 1) ? true : false;
@@ -157,14 +157,42 @@ class Natural extends DatabaseItem
         }
         $this->picturesCount = count($this->pictures);
     }
-    
+
+    /**
+     * Metoda nastavující přírodnině nový název
+     * Počítá se s tím, že jméno již bylo ošetřeno na délku, znaky a unikátnost
+     * Změna není uložena do databáze, aby bylo nové jméno trvale uloženo, musí být zavolána metoda Natural::save()
+     * @param string $newName Nový název pro tuto přírodninu
+     */
+    public function rename(string $newName): void
+    {
+        $this->name = $newName;
+    }
+
+    /**
+     * Metoda převádějící všechny obrázky této přírodniny do jiné přírodniny a odstraňující tuto přírodninu z databáze
+     * Není kontrolováno, zda přírodnina, ke které se mají obrázky převést patří do stejné třídy jako tato přírodnina
+     * @param Natural $intoWhat Objekt přírodniny, ke které mají být převedeny všechny obrázky patřící do této přírodniny
+     * @return bool TRUE, pokud jsou obrázky úspěšně převedeny a přírodnina odstraněna z databáze
+     */
+    public function merge(Natural $intoWhat): bool
+    {
+        if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
+        foreach ($this->pictures as $picture)
+        {
+            $picture->transfer($intoWhat);
+            $picture->save();
+        }
+        return $this->delete();
+    }
+
     /**
      * Metoda přidávající do databáze i do instance třídy nový obrázek této přírodniny
      * @param string $url Ošetřená adresa obrázku
      * @return boolean TRUE, pokud je obrázek přidán úspěšně, FALSE, pokud ne
      */
     public function addPicture(string $url): bool
-    {   
+    {
         $picture = new Picture(true);
         $picture->initialize($url, $this, null, null);
         $result = $picture->save();
@@ -175,7 +203,7 @@ class Natural extends DatabaseItem
         }
         return false;
     }
-    
+
     /**
      * Metoda kontrolující, zda je u této přírodniny již nahrán obrázek s danou adresou
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
@@ -185,7 +213,7 @@ class Natural extends DatabaseItem
     public function pictureExists(string $url): bool
     {
         if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
-        
+
         foreach ($this->pictures as $picture)
         {
             if ($picture->getSrc() === $url)
