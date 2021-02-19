@@ -4327,7 +4327,19 @@ body#index #index-info-section {
 }
 
 body#index #index-info-section p {
-  font-size: 1.32rem;
+  font-size: 1.24rem;
+}
+
+body#index #index-info-section #info-icons {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
+  margin: 1rem 0;
 }
 
 body#index #index-login-section {

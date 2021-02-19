@@ -173,7 +173,14 @@ body#index {
 			padding: 4rem 20vw;
 		}
 		p {
-			font-size: 1.32rem;
+			font-size: 1.24rem;
+		}
+		#info-icons {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			grid-template-rows: auto auto;
+			column-gap: 2rem;
+			margin: 1rem 0;
 		}
 	}	
 
