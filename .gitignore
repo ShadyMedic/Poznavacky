@@ -5,8 +5,5 @@ desktop.ini
 .idea/
 vendor/
 local/
-Models/DebugLogger.php
-debug.txt
-log.txt
-database.accdb
-database.laccdb
+debug.log
+poznavacky.log
