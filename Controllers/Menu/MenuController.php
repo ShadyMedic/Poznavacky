@@ -261,7 +261,7 @@ class MenuController extends Controller
             $this->pageHeader['bodyId'] = 'menu';
             $controllerName = __NAMESPACE__.'\\MenuTable'.self::CONTROLLER_EXTENSION;
             $this->controllerToCall = new $controllerName();
-            $this->controllerToCall->process(array());
+            $this->controllerToCall->process(array(true)); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
 
             //Aktualizovat poslední navštívenou tabulku na menu stránce
             UserManager::getUser()->updateLastMenuTableUrl(implode('/', $parameters));
