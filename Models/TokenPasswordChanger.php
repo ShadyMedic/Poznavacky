@@ -43,8 +43,7 @@ class TokenPasswordChanger
     public function verifyToken(): void
     {
         $codeVerificator = new PasswordRecoveryCodeVerificator();
-        $codeVerificator::deleteOutdatedCodes();
-        $this->userId = $codeVerificator::verifyCode($this->token);
+        $this->userId = $codeVerificator->verifyCode($this->token);
         if (empty($this->userId))
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_INVALID_TOKEN);
