@@ -360,7 +360,7 @@ abstract class DatabaseItem
      * V opačném případě jsou přepsána data položky se stejným ID
      * Neznámé vlastnosti (obsahující instanci undefined) nejsou ukládány
      * Tato metoda využívá metody DatabaseItem::create() a DatabaseItem::update(), přečtěte si i jejich phpDoc
-     * @return boolean TRUE, pokud je poznávačka úspěšně uložena do databáze
+     * @return boolean TRUE, pokud je položka úspěšně uložena do databáze
      * {@inheritDoc}
      * @see DatabaseItem::save()
      */
