@@ -67,6 +67,7 @@ class LoginUser
     /**
      * Metoda, která se stará o všechny kroky přihlášení pomocí kódu ze souboru cookie pro trvalé přihlášení
      * @param string $code Kód uložený v souboru cookie
+     * @throws AccessDeniedException Pokud není kód platný
      */
     public function processCookieLogin(string $code): void
     {
