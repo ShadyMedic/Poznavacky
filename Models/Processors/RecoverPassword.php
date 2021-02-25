@@ -26,14 +26,18 @@ class RecoverPassword
      */
     public function processRecovery(array $POSTdata): bool
     {
-        if (!isset($POSTdata['email']))
+        if (mb_strlen($POSTdata['email']) === 0)
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_EMAIL, null, null);
         }
         $email = $POSTdata['email'];
         
         $validator = new DataValidator();
-        $userId = $validator->getUserIdByEmail($email);
+        try { $userId = $validator->getUserIdByEmail($email); }
+        catch (AccessDeniedException $e)
+        {
+            throw $e;   //Výjimka je zachycena v kontroleru
+        }
         
         $code = self::generateCode();
         self::saveCode($code, $userId);
