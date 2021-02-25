@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use Poznavacky\Models\Logger;
+
 /**
  * Kontroler chybové stránky 403
  * @author Jan Štěch
@@ -14,6 +16,8 @@ class Error403Controller extends Controller
      */
     public function process(array $paremeters): void
     {
+        (new Logger(true))->notice('Přístup na chybovou stránku 403 z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
+
         header('HTTP/1.0 403 Forbidden');
         
         $this->pageHeader['title'] = 'Chyba 403';

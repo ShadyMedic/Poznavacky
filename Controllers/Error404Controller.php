@@ -1,6 +1,8 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use Poznavacky\Models\Logger;
+
 /**
  * Kontroler chybové stránky 404
  * @author Jan Štěch
@@ -14,6 +16,8 @@ class Error404Controller extends Controller
      */
     public function process(array $paremeters): void
     {
+        (new Logger(true))->notice('Přístup na chybovou stránku 404 z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
+
         header('HTTP/1.0 404 Not Found');
         
         $this->pageHeader['title'] = 'Chyba 404';
