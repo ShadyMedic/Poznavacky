@@ -14,7 +14,7 @@ class Error404Controller extends Controller
      * Metoda nastavující hlavičku požadavku, titulek stránky a zobrazovaný pohled chybové stránky
      * @see Controller::process()
      */
-    public function process(array $paremeters): void
+    public function process(array $parameters): void
     {
         (new Logger(true))->notice('Přístup na chybovou stránku 404 z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
 

@@ -17,7 +17,7 @@ class LogoutController extends Controller
      * Metoda odhlašující uživatele a přesměrovávající jej na index stránku
      * @see Controller::process()
      */
-    public function process(array $paremeters): void
+    public function process(array $parameters): void
     {
         //Vymaž současné odhlášení uživatele
         unset($_SESSION['user']);

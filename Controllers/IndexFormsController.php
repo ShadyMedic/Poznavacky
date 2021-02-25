@@ -24,7 +24,7 @@ class IndexFormsController extends Controller
      * V případě, že se během zpracovávání dat narazilo na větší množství chyb, jsou v odpovědi odděleny svislítkem ("|")
      * @see Controller::process()
      */
-    public function process(array $paremeters): void
+    public function process(array $parameters): void
     {
         header('Content-Type: application/json');
         try
