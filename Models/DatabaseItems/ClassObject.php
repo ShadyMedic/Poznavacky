@@ -1,12 +1,13 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
-use Poznavacky\Models\undefined;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\undefined;
 use \BadMethodCallException;
 use \DateTime;
 use \InvalidArgumentException;
@@ -381,12 +382,13 @@ class ClassObject extends Folder
         
         return true;
     }
-    
+
     /**
      * Metoda přidávající uživatele do třídy (přidává spojení uživatele a třídy do tabulky "clenstvi")
      * Pokud je tato třída veřejná nebo uzamčená, nic se nestane
      * @param int $userId ID uživatele získávajícího členství
      * @return boolean TRUE, pokud je členství ve třídě úspěšně přidáno, FALSE, pokud ne
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      */
     public function addMember(int $userId): bool
     {
@@ -408,14 +410,9 @@ class ClassObject extends Folder
         #     return false;
         # }
         
-        if (Db::executeQuery('INSERT INTO clenstvi (uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id)))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        Db::executeQuery('INSERT INTO clenstvi (uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id));
+        
+		return true;
     }
     
     /**
