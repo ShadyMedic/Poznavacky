@@ -12,15 +12,14 @@ use Poznavacky\Models\MessageBox;
 abstract class Controller
 {
     const CONTROLLER_EXTENSION = 'Controller';
-    const MODEL_EXTENSION = 'Model';
     const CONTROLLER_FOLDER = 'Controllers';
     const MODEL_FOLDER = 'Models';
     const VIEW_FOLDER = 'Views';
     
-    protected $controllerToCall;
-    protected $data = array();
-    protected $view = '';
-    protected $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
+    protected Controller $controllerToCall;
+    protected array $data = array();
+    protected string $view = '';
+    protected array $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
     
     /**
      * Metoda zpracovávající parametry z URL adresy
