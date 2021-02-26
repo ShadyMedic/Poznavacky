@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Logger;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\MessageBox;
 
@@ -19,13 +20,16 @@ class LeaveController extends Controller
     {
         $userId = UserManager::getId();
         $class = $_SESSION['selection']['class'];
+        $classId = $class->getId();
         if ($class->checkAdmin($userId))
         {
             //Správce třídy jí nemůže opustit
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak jelikož je její správce, nebylo mu toto umožněno', array('userId' => $userId, 'classId' => $classId, 'ip' => $_SERVER['REMOTE_ADDR']));
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, 'Jako správce třídy nemůžete třídu opustit');
             $this->redirect('menu');
         }
         $class->removeMember($userId);
+        (new Logger(true))->info('Uživatel s ID {userId} opustil třídu s ID {classId} z IP adresy {ip}', array('userId' => $userId, 'classId' => $classId, 'ip' => $_SERVER['REMOTE_ADDR']));
         $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Třída úspěšně opuštěna');
         $this->redirect('menu');
     }
