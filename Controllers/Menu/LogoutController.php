@@ -2,8 +2,9 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\Controller;
-use Poznavacky\Models\Processors\LoginUser;
 use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
 
 /**
@@ -20,6 +21,7 @@ class LogoutController extends Controller
     public function process(array $parameters): void
     {
         //Vymaž současné odhlášení uživatele
+        $userId = UserManager::getId();
         unset($_SESSION['user']);
         
         //Odstraň trvalé přihlášení
@@ -37,7 +39,8 @@ class LogoutController extends Controller
         }
         
         $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Byli jste úspěšně odhlášeni');
-        
+        (new Logger(true))->info('Uživatel s ID {userId} se z IP adresy {ip} odhlásil', array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR']));
+
         //Přesměrování na index
         $this->redirect('');
     }
