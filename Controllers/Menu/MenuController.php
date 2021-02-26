@@ -5,11 +5,10 @@ use Poznavacky\Controllers\Controller;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Part;
-use Poznavacky\Models\Exceptions\AccessDeniedException;
-use Poznavacky\Models\Processors\LoginUser;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\ChangelogManager;
+use Poznavacky\Models\Logger;
 use \BadMethodCallException;
 
 /**
@@ -18,7 +17,7 @@ use \BadMethodCallException;
  */
 class MenuController extends Controller
 {
-    private $argumentsToPass = array();
+    private array $argumentsToPass = array();
 
     /**
      * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
@@ -79,13 +78,16 @@ class MenuController extends Controller
                     catch (BadMethodCallException $e)
                     {
                         //Třída splňující daná kritéria neexistuje
+                        (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} se pokusil vstoupit do třídy, která nebyla v databázi nalezena (URL reprezentace {classUrl})', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classUrl' => $menuArguments[0]));
                         $this->redirect('error404');
                     }
 
                     //Kontrola, zda má uživatel do třídy přístup
                     if (!($_SESSION['selection']['class']->checkAccess(UserManager::getId()) || $aChecker->checkSystemAdmin()))
                     {
+                        $closedClassId = $_SESSION['selection']['class']->getId();
                         $this->unsetSelection(true, true, true);    //Vymaž právě nastavenou třídu ze $_SESSION
+                        (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy s ID {classId}, do které ale nemá přístup', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $closedClassId));
                         $this->redirect('error403');
                     }
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
@@ -137,6 +139,7 @@ class MenuController extends Controller
                     catch (BadMethodCallException $e)
                     {
                         //Poznávačka splňující daná kritéria neexistuje
+                        (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} se pokusil zobrazit obsah poznávačky, která nebyla v databázi nalezena (URL reprezentace {groupUrl})', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupUrl' => $menuArguments[1]));
                         $this->redirect('error404');
                     }
                     //Vymazání objektů skladujících vybranou část ze $_SESSION
@@ -175,6 +178,7 @@ class MenuController extends Controller
                 if ($argumentCount === 3)
                 {
                     //Je specifikována část, ale ne akce --> návrat na seznam částí
+                    (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} zvolil platnou třídu, poznávačku i část, avšak nespecifikoval žádnou akci', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                     $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
                 }
 
@@ -192,6 +196,7 @@ class MenuController extends Controller
                     catch (BadMethodCallException $e)
                     {
                         //Část splňující daná kritéria neexistuje
+                        (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} se pokusil vstoupit do části, která nebyla v databázi nalezena (URL reprezentace {partUrl})', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'partUrl' => $menuArguments[2]));
                         $this->redirect('error404');
                     }
                 }
@@ -215,6 +220,7 @@ class MenuController extends Controller
             else
             {
                 //Neplatný kontroler
+                (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} zvolil třídu, poznávačku i část, avšak kontroler pro specifikovanou akci ({action}) nebyl nalezen', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'action' => $menuArguments[3]));
                 $this->redirect('error404');
             }
         }
@@ -254,6 +260,7 @@ class MenuController extends Controller
             UserManager::getUser()->updateLastSeenChangelog(ChangelogManager::LATEST_VERSION);
             $this->data['staticTitle'] = array($changelogManager->getTitle());
             $this->data['staticContent'] = array($changelogManager->getContent());
+            (new Logger(true))->info('Uživateli s ID {userId} byl zobrazen nejnovější changelog pro verzi {version}', array('userId' => UserManager::getId(), 'version' => ChangelogManager::LATEST_VERSION));
         }
 
         $this->view = 'menu';
