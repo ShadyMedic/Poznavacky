@@ -27,6 +27,7 @@ class MenuTableController extends Controller
         if (empty($parameters))
         {
             //Uživatel se pokouší k tomuto kontroleru přistoupit přímo
+            (new Logger(true))->warning('Uživatel z IP adresy {ip} se pokusil manuálně přistoupit přímo ke kontroleru pro získání obsahu třídy nebo poznávačky', array('ip' => $_SERVER['REMOTE_ADDR']));
             $this->redirect('menu');
         }
 
@@ -44,18 +45,21 @@ class MenuTableController extends Controller
             {
                 $classesGetter = new TestGroupsFetcher();
                 $classes = $classesGetter->getClasses();
+                (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam dostupných tříd', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                 $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
             }
             else if (!isset($_SESSION['selection']['group']))
             {
                 $groupsGetter = new TestGroupsFetcher();
                 $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
+                (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam poznávaček ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $_SESSION['selection']['class']->getId()));
                 $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
             }
             else
             {
                 $partsGetter = new TestGroupsFetcher();
                 $parts = $partsGetter->getParts($_SESSION['selection']['group']);
+                (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam částí v poznávačce s ID {groupId} ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $_SESSION['selection']['group']->getId(), 'classId' => $_SESSION['selection']['class']->getId()));
                 $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
             }
         }
@@ -63,8 +67,10 @@ class MenuTableController extends Controller
         {
             if ($e->getMessage() === NoDataException::UNKNOWN_CLASS || $e->getMessage() === NoDataException::UNKNOWN_GROUP || $e->getMessage() === NoDataException::UNKNOWN_PART)
             {
+                (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která nemohla být nalezena v databázi', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                 $this->redirect('error404');
             }
+            (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $this->controllerToCall = new MenuTableContentController('menuTableMessage', $e->getMessage());
         }
         
