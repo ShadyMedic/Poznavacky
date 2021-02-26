@@ -30,7 +30,7 @@ mb_internal_encoding('UTF-8');
 
 //Zkontroluj a obnov CSRF token
 $antiCSRF = new AntiCsrfMiddleware();
-$antiCSRF->verifyRequest(); //V případě chyby je na tomto řádku skript zastaven
+$antiCSRF->verifyRequest(); //V případě chyby (včetně vypršení sezení) je na tomto řádku skript zastaven
 
 //Zpracuj URL adresu a zobraz vygenerovanou webovou stránku
 $rooter = new RooterController();

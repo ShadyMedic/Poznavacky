@@ -22,41 +22,11 @@ class MenuController extends Controller
 
     /**
      * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
-     * Metoda nejprve zkontroluje, zda je uživatel přihlášen
+     * @param array $parameters Parametry pro zpracování kontrolerem, zde seznam URL argumentů v postupném pořadí jako prvky pole
      * @see Controller::process()
      */
     public function process(array $parameters): void
     {
-        //Kontrola, zda je uživatel přihlášen
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser())
-        {
-            //Přihlášení uživatele vypršelo
-            //Kontrola instantcookie sezení
-            if (isset($_COOKIE['instantLogin']))
-            {
-                try
-                {
-                    $userLogger = new LoginUser();
-                    $userLogger->processCookieLogin($_COOKIE['instantLogin']);
-                    //Přihlášení obnoveno
-                }
-                catch(AccessDeniedException $e)
-                {
-                    //Chybný kód
-                    //Vymaž cookie s neplatným kódem
-                    setcookie('instantLogin', null, -1, '/');
-                    unset($_COOKIE['instantLogin']);
-
-                    $this->redirect('');
-                }
-            }
-            else
-            {
-                $this->redirect('');
-            }
-        }
-
         $this->data['navigationBar'] = array();
         $this->data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
 
@@ -71,6 +41,7 @@ class MenuController extends Controller
         }
 
         $argumentCount = count($menuArguments);
+        $aChecker = new AccessChecker();
 
         if ($argumentCount === 0)
         {
