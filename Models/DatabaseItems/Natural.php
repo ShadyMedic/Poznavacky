@@ -76,6 +76,8 @@ class Natural extends DatabaseItem
         $this->pictures = $pictures;
         $this->picturesCount = $picturesCount;
         $this->class = $class;
+        $this->uses = $uses;
+        $this->usesCount = $usesCount;
     }
 
     /**
@@ -112,6 +114,7 @@ class Natural extends DatabaseItem
      * Metoda navracející pole všech obrázků této přírodniny jako objekty
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
      * @return Picture[] Pole obrázků této přírodniny z databáze jako objekty
+     * @throws DatabaseException Pokud nastane chyba při práci s databází
      */
     public function getPictures(): array
     {
@@ -134,6 +137,7 @@ class Natural extends DatabaseItem
     /**
      * Metoda načítající z databáze obrázky přírodniny a ukládající je jako vlastnost objektu
      * Vlastnost $picturesCount je nastavena / upravena podle počtu načtených obrázků
+     * @throws DatabaseException Pokud nastane chyba při práci s databází
      */
     public function loadPictures(): void
     {
