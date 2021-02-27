@@ -27,7 +27,7 @@ class SubmitPictureController extends Controller
         //Kontrola přístupu je provedena již v MenuController.php
 
         //Kontrola, zda byl tento kontroler zavolán jako AJAX
-        if (empty($_POST))
+        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest' )
         {
             
             (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru submit-picture z IP adresy {ip} aniž by odeslal jakákoli POST data (zřejmě odeslal ne-AJAX požadavek)', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
