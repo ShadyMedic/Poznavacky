@@ -4,6 +4,7 @@ namespace Poznavacky\Models\Processors;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Logger;
 use Poznavacky\Models\Statics\UserManager;
 
 /** 
@@ -33,7 +34,7 @@ class PictureAdder
     {
         $this->group = $group;
     }
-    
+
     /**
      * Metoda zpracovávající data odeslaná z formuláře na stránce pro přidávání obrázků
      * Data jsou ověřena a posléze i uložena do databáze, nebo je vyvolána výjimka s chybovou hláškou
@@ -65,6 +66,7 @@ class PictureAdder
         //Přírodnina s tímto názvem ve zvolené poznávačce neexistuje
         if ($i === count($naturals))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'naturalName' => $naturalName));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL, null, null);
         }
         
@@ -72,7 +74,8 @@ class PictureAdder
         
         //Ověření, zda adresa vede na obrázek (kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/24936993)
         $typeCheck = false;
-        
+        $type = null;
+
         $url_headers = @get_headers($url, 1);
         if (isset($url_headers['Content-Type'])){
             $type = @strtolower($url_headers['Content-Type']);
@@ -84,12 +87,14 @@ class PictureAdder
         
         if ($typeCheck === false)
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek byl v neakceptovaném formátu ({imageFormat})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'imageFormat' => $type));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_FORMAT, null, null);
         }
         
         //Ověření, zda již obrázek u stejné přírodniny není nahrán
         if ($natural->pictureExists($url))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureUrl' => $url));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_DUPLICATE_PICTURE, null, null);
         }
         
@@ -108,12 +113,14 @@ class PictureAdder
         //Vložení obrázku do databáze
         if (!$natural->addPicture($url))
         {
+            (new Logger(true))->alert('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak neznámá chyba zabránila uložení obrázku; pokud toto nebyla ojedinělá chyba, může být vážně narušeno fungování systému', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureUrl' => $url));
             throw new AccessDeniedException(AccessDeniedException::REASON_UNEXPECTED, null, null);
         }
         
         //Zvýšení počtu přidaných obrázků u uživatele
         UserManager::getUser()->incrementAddedPictures();
-        
+
+        (new Logger(true))->info('Uživatel s ID {userId} přidal obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         return true;
     }
 }

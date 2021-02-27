@@ -1,25 +1,27 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\AddPictures;
 
+use Poznavacky\Controllers\Controller;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\PictureAdder;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Logger;
 
 /**
- * Kontroler starající se o příjem dat z formuláře pro přidání obrázku a o jejich zpracování
+ * AJAX kontroler starající se o příjem dat z formuláře pro přidání obrázku a o jejich zpracování
  * @author Jan Štěch
  */
-class SubmitPictureController extends \Poznavacky\Controllers\Controller
+class SubmitPictureController extends Controller
 {
 
     /**
      * Metoda ověřující, zda má uživatel do třídy přístup a volající model pro uložení nového obrázku
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @see Controller::process()
      */
     function process(array $parameters): void
     {
-        $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
 
         //Kontrola přístupu je provedena již v MenuController.php
@@ -28,11 +30,13 @@ class SubmitPictureController extends \Poznavacky\Controllers\Controller
         if (empty($_POST))
         {
             
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru submit-picture z IP adresy {ip} aniž by odeslal jakákoli POST data (zřejmě odeslal ne-AJAX požadavek)', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
             exit();
         }
 
         $adder = new PictureAdder($group);
+        $response = null;
         try
         {
             if ($adder->processFormData($_POST))
