@@ -22,10 +22,14 @@ class SubmitPictureController extends \Poznavacky\Controllers\Controller
         $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
 
-        //Kontrola přístupu
-        if (!$class->checkAccess(UserManager::getId()))
+        //Kontrola přístupu je provedena již v MenuController.php
+
+        //Kontrola, zda byl tento kontroler zavolán jako AJAX
+        if (empty($_POST))
         {
-            $this->redirect('error403');
+            
+            header('HTTP/1.0 400 Bad Request');
+            exit();
         }
 
         $adder = new PictureAdder($group);

@@ -21,14 +21,7 @@ class TestPicturesController extends Controller
      */
     public function process(array $parameters): void
     {
-        $class = $_SESSION['selection']['class'];
-
-        //Kontrola přístupu
-        if (!$class->checkAccess(UserManager::getId()))
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
+        //Kontrola přístupu již proběhla v MenuController.php
 
         $group = $_SESSION['selection']['group'];
         if (isset($_SESSION['selection']['part']))

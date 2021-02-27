@@ -5,6 +5,7 @@ use Poznavacky\Controllers\Controller;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Part;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\ChangelogManager;
@@ -82,16 +83,30 @@ class MenuController extends Controller
                         $this->redirect('error404');
                     }
 
-                    //Kontrola, zda má uživatel do třídy přístup
-                    if (!($_SESSION['selection']['class']->checkAccess(UserManager::getId()) || $aChecker->checkSystemAdmin()))
-                    {
-                        $closedClassId = $_SESSION['selection']['class']->getId();
-                        $this->unsetSelection(true, true, true);    //Vymaž právě nastavenou třídu ze $_SESSION
-                        (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy s ID {classId}, do které ale nemá přístup', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $closedClassId));
-                        $this->redirect('error403');
-                    }
                     //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
                     $this->unsetSelection(true, true);
+                }
+
+                //Kontrola, zda má uživatel do třídy přístup
+                if (!($_SESSION['selection']['class']->checkAccess(UserManager::getId(), true) || $aChecker->checkSystemAdmin()))
+                {
+                    $closedClassId = $_SESSION['selection']['class']->getId();
+                    $this->unsetSelection(true, true, true);    //Vymaž právě nastavenou třídu ze $_SESSION
+                    (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy s ID {classId}, do které ale nemá přístup', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $closedClassId));
+
+                    //Zkontroluj, zda je požadavek AJAX
+                    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' )
+                    {
+                        //Požadavek je AJAX --> Navrať jenom chybový kód
+                        header('HTTP/1.0 403 Forbidden');
+                        exit();
+                    }
+                    else
+                    {
+                        //Požadavek není AJAX --> přesměruj na chybovou stránku
+                        $this->redirect('error403');
+                    }
+
                 }
 
                 $this->data['navigationBar'][] = array(

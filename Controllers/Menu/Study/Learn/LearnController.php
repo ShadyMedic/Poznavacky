@@ -18,7 +18,6 @@ class LearnController extends Controller
      */
     public function process(array $parameters): void
     {
-        $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
         if (isset($_SESSION['selection']['part']))
         {
@@ -30,11 +29,7 @@ class LearnController extends Controller
             $allParts = true;
         }
         
-        //Kontrola přístupu
-        if (!$class->checkAccess(UserManager::getId()))
-        {
-            $this->redirect('error403');
-        }
+        //Kontrola přístupu již proběhla v MenuCotnroller.php
 
         //Kontrola přítomnosti přírodnin
         if (

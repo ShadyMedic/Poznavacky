@@ -20,13 +20,7 @@ class LearnPicturesController extends Controller
      */
     public function process(array $parameters): void
     {
-        //Kontrola přístupu
-        $class = $_SESSION['selection']['class'];
-        if (!$class->checkAccess(UserManager::getId()))
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
+        //Kontrola přístupu již proběhla v MenuController.php
 
         $group = $_SESSION['selection']['group'];
         if (isset($_SESSION['selection']['part']))
@@ -53,6 +47,7 @@ class LearnPicturesController extends Controller
         $naturalName = urldecode($_GET['natural']);
         
         $natural = new Natural(false);
+        $class = $_SESSION['selection']['class'];
         $natural->initialize($naturalName, null, null, $class);
         $pictures = $natural->getPictures();
         

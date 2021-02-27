@@ -31,13 +31,9 @@ class AddPicturesController extends Controller
         {
             $allParts = true;
         }
-        
-        //Kontrola přístupu
-        if (!$class->checkAccess(UserManager::getId()))
-        {
-            $this->redirect('error403');
-        }
-        
+
+        //Kontrola přístupu proběhla již v MenuController.php
+
         //Kontrola přítomnosti přírodnin
         if (
             ($allParts && count($group->getNaturals()) === 0) ||
