@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 use \RuntimeException;
@@ -226,7 +227,8 @@ class Natural extends DatabaseItem
     {
         $picture = new Picture(true);
         $picture->initialize($url, $this, null, null);
-        $result = $picture->save();
+        try { $result = $picture->save(); }
+        catch (DatabaseException $e) { return false; }
         if ($result)
         {
             $this->pictures[] = $picture;

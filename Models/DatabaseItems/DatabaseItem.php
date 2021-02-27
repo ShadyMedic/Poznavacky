@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AntiXssSanitizer;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
@@ -353,7 +354,7 @@ abstract class DatabaseItem
         }
         return true;
     }
-    
+
     /**
      * Metoda ukládající známá data této položky do databáze
      * Pokud se jedná o novou položku (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
@@ -361,7 +362,7 @@ abstract class DatabaseItem
      * Neznámé vlastnosti (obsahující instanci undefined) nejsou ukládány
      * Tato metoda využívá metody DatabaseItem::create() a DatabaseItem::update(), přečtěte si i jejich phpDoc
      * @return boolean TRUE, pokud je položka úspěšně uložena do databáze
-     * {@inheritDoc}
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
      * @see DatabaseItem::save()
      */
     public function save(): bool
@@ -378,12 +379,13 @@ abstract class DatabaseItem
         }
         return $result;
     }
-    
+
     /**
      * Metoda vytvářející v databázové tabulce nový záznam s daty dané položky
      * I pokud je vyplněno ID nebo je vlastnost $savedInDb nastavena na TRUE, bude položka uložena jako nový záznam a vlastnost ID objektu bude přepsána
-     * @throws BadMethodCallException Pokud některá z vlastností ukládaných do databáze není známa
      * @return boolean TRUE, pokud je úspěšně vytvořen v databázi nový záznam a ID položky nastaveno / aktualizováno, FALSE, pokud ne
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
+     * @throws BadMethodCallException Pokud některá z vlastností ukládaných do databáze není známa
      */
     protected function create(): bool
     {
@@ -425,13 +427,14 @@ abstract class DatabaseItem
         }
         return false;
     }
-    
+
     /**
      * Metoda ukládající data této databázové položky do databáze
      * Tato metoda NEVYTVÁŘÍ nový záznam v databázy, pouze aktualizuje již existující
      * ID položky musí být známo a data záznamu se stejným ID jsou v databázi přepsána
-     * @throws BadMethodCallException Pokud není známo ID záznamu
      * @return boolean TRUE, pokud je položka úspěšně v databázi aktualizována, FALSE, pokud nejsou známy žádné vlastnosti nebo pokud selže SQL dotaz
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
+     * @throws BadMethodCallException Pokud není známo ID záznamu
      */
     protected function update(): bool
     {

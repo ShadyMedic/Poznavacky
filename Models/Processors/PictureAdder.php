@@ -23,7 +23,7 @@ class PictureAdder
         'image/svg'
     );
     
-    private $group;
+    private Group $group;
     
     /**
      * Konstruktor třídy nastavující objekt poznávačky, do které bude tato třída přidávat obrázky
@@ -39,6 +39,7 @@ class PictureAdder
      * Data jsou ověřena a posléze i uložena do databáze, nebo je vyvolána výjimka s chybovou hláškou
      * @param array $POSTdata Pole dat odeslaných z formuláře
      * @return boolean TRUE, pokud vše proběhne tak, jak má
+     * @throws AccessDeniedException Pokud nejsou poskytnutá data v pořádku nebo se vyskytne jiná chyba
      */
     public function processFormData(array $POSTdata): bool
     {
