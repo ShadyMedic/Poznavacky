@@ -18,6 +18,7 @@ class EnterClassCodeController extends Controller
 {
     /**
      * Metoda zpracovávající data odeslaná formulářem
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      * @see Controller::process()
      */
     public function process(array $parameters): void
@@ -64,8 +65,11 @@ class EnterClassCodeController extends Controller
         $accessedClassesIds = array();
         foreach($classes as $class)
         {
+            if ($class->addMember($userId))
+            {
                 $accessedClasses[] = $class->getName();
                 $accessedClassesIds[] = $class->getId();
+            }
         }
         
 		//Vypsat do zprávy pro uživatele jména tříd do kterých získal přístup uložená v $accessedClasses
