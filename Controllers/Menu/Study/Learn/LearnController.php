@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu\Study\Learn;
 
 use Poznavacky\Controllers\Controller;
+use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\Statics\UserManager;
 
@@ -14,11 +15,14 @@ class LearnController extends Controller
 
     /**
      * Metoda ověřující, zda má uživatel do třídy přístup a nastavující hlavičku stránky a pohled
+     * @param array $parameters Parametry pro zpracování kontrolerem, může být prázdné, nebo obsahovat URL název kontroleru, který má být zavolán tímto kontrolerem
      * @see Controller::process()
      */
     public function process(array $parameters): void
     {
+        $class = $_SESSION['selection']['group'];
         $group = $_SESSION['selection']['group'];
+        $part = null;
         if (isset($_SESSION['selection']['part']))
         {
             $part = $_SESSION['selection']['part'];
@@ -38,6 +42,7 @@ class LearnController extends Controller
         )
         {
             //Žádné přírodniny
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit na stránku pro učení části/í poznávačky s ID {groupId} patřící do třídy s ID {classId} z IP adresy {ip}, ačkoliv tato poznávačka/část neobsahuje žádné přírodniny', array('userId' => UserManager::getId(), 'groupId' => $group->getId(), 'classId' => $class->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, "V této části nebo poznávačce nejsou zatím přidané žádné přírodniny");
             $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
         }
@@ -59,6 +64,7 @@ class LearnController extends Controller
             );
 
             $this->data['naturals'] = $group->getNaturals();
+            (new Logger(true))->info('Přístup na stránku pro učení všech částí poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
         else
         {
@@ -70,6 +76,7 @@ class LearnController extends Controller
             );
 
             $this->data['naturals'] = $part->getNaturals();
+            (new Logger(true))->info('Přístup na stránku pro učení části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('partId' => $part->getId(), 'groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
 
         $controllerName = "nonexistant-controller";
