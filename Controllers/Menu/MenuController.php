@@ -193,7 +193,7 @@ class MenuController extends Controller
                 if ($argumentCount === 3)
                 {
                     //Je specifikována část, ale ne akce --> návrat na seznam částí
-                    (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} zvolil platnou třídu, poznávačku i část, avšak nespecifikoval žádnou akci', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+                    (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} zvolil platnou třídu, poznávačku i část, avšak nespecifikoval žádnou akci (buďto zadával adresu přímo do adresního řádku, nebo kliknul na název části v navigačním řádku)', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                     $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
                 }
 
