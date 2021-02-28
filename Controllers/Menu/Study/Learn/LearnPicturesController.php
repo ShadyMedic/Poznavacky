@@ -29,7 +29,7 @@ class LearnPicturesController extends Controller
         //Kontrola, zda byl tento kontroler zavolán jako AJAX
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest' )
         {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru learn-pictures z IP adresy {ip} aniž by odeslal jakákoli POST data (zřejmě odeslal ne-AJAX požadavek)', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru learn-pictures z IP adresy {ip} jinak než pomocí AJAX požadavku', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
             exit();
         }
@@ -66,7 +66,7 @@ class LearnPicturesController extends Controller
         try { $pictures = $natural->getPictures(); }
         catch (DatabaseException $e)
         {
-            (new Logger(true))->alert('Uživatel s ID {userId} zažádal o obrázky přírodniny s ID {naturalId} pro učební stránku poznávačky s ID {groupId}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu');
+            (new Logger(true))->alert('Uživatel s ID {userId} zažádal o obrázky přírodniny s ID {naturalId} pro učební stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}', array('userId' => UserManager::getId(), 'naturalId' => $natural->getId(), 'groupId' => $group->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED);
             echo $response->getResponseString();
             exit();

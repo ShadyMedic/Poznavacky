@@ -30,7 +30,7 @@ class SubmitPictureController extends Controller
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest' )
         {
             
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru submit-picture z IP adresy {ip} aniž by odeslal jakákoli POST data (zřejmě odeslal ne-AJAX požadavek)', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru submit-picture z IP adresy {ip} jinak než pomocí AJAX požadavku', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
             exit();
         }
