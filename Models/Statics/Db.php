@@ -2,6 +2,7 @@
 namespace Poznavacky\Models\Statics;
 
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Logger;
 use \PDO;
 use \PDOException;
 
@@ -17,7 +18,7 @@ class Db
     private const DEFAULT_DATABASE = 'poznavacky';
     
     private static $connection;
-    private static $settings = array(
+    private static array $settings = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
         PDO::ATTR_EMULATE_PREPARES => false
@@ -30,11 +31,19 @@ class Db
      * @param string $username Přihlašovací jméno pro databázi
      * @param string $password Heslo k databázi
      * @param string $database Jméno databáze
-     * @return PDO Připojení k databázi
+     * @return PDO|null Připojení k databázi nebo NULL, pokud se nepodařilo navázat připojení
      */
-    public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME, string $password = self::DEFAULT_PASSWORD, string $database = self::DEFAULT_DATABASE): PDO
+    public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME, string $password = self::DEFAULT_PASSWORD, string $database = self::DEFAULT_DATABASE): ?PDO
     {
-        self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password, self::$settings);
+        try
+        {
+            self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password, self::$settings);
+        }
+        catch (PDOException $e)
+        {
+            (new Logger(true))->emergency('K databázi se nebylo možné připojit: {exception}', array('exception' => $e));
+            return null;
+        }
         return self::$connection;
     }
     
@@ -43,7 +52,7 @@ class Db
      */
     public static function disconnect(): void
     {
-        unset(self::$connection);
+        self::$connection->null;
     }
     
     /**
