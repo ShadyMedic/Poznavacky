@@ -6,6 +6,7 @@ use Psr\Log\InvalidArgumentException as LoggerInvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use \DateTime;
+use \Exception;
 
 /**
  * Třída sloužící k zaznamenání všech příchozích akcí při přijetí HTTP požadavku
