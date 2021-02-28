@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99f2185e436ea1da234d07a6404590dc",
+    "content-hash": "035c61960d3bd0b6fc55f526b8446dd5",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -449,7 +449,8 @@
     "prefer-lowest": false,
     "platform": {
         "ext-mbstring": "^7.4",
-        "ext-json": "^7.4"
+        "ext-json": "^7.4",
+        "ext-intl": "^7.4"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
