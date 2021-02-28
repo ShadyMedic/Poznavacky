@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 
@@ -89,7 +90,7 @@ class Group extends Folder
         $this->loadIfNotLoaded($this->partsCount);
         return $this->partsCount;
     }
-    
+
     /**
      * Metoda navracející pole náhodně zvolených obrázků z nějaké části této poznávačky jako objekty
      * Šance na výběr části je přímo úměrná počtu přírodnin, které obsahuje
@@ -97,6 +98,7 @@ class Group extends Folder
      * Počet obrázků u jednotlivých přírodniny nemá na výběr vliv
      * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
      * @return Picture[] Polé náhodně vybraných obrázků obsahující specifikovaný počet prvků
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
      */
     public function getRandomPictures(int $count): array
     {

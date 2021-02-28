@@ -126,8 +126,9 @@ class Natural extends DatabaseItem
      * Metoda navracející náhodný obrázek této příodniny jako objekt
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
      * @return Picture|null Náhodný obrázek této přírodniny nebo NULL, pokud k této přírodnině zatím nebyly přidány žádné obrázky
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
      */
-    public function getRandomPicture()
+    public function getRandomPicture(): ?Picture
     {
         if (!$this->isDefined($this->pictures)){ $this->loadPictures(); }
         if ($this->picturesCount === 0) { return null; }

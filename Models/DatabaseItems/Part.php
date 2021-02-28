@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 
@@ -102,6 +103,7 @@ class Part extends Folder
      * Pokud nejsou při volání této funkce načteny přírodniny této části, budou načteny
      * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
      * @return array Pole náhodně vybraných obrázků z této části jako objekty
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
      */
     public function getRandomPictures(int $count): array
     {
