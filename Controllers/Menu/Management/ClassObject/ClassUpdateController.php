@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
@@ -82,9 +82,13 @@ class ClassUpdateController extends AjaxController
                     break;
                 case 'create test':
                     $adder = new GroupAdder($class);
-                    $adder->processFormData($_POST);
-                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena');
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS);
+                    $group = $adder->processFormData($_POST);
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena', array('newGroupData' => array(
+                        'id' => $group->getId(),
+                        'name' => $group->getName(),
+                        'url' => $group->getUrl(),
+                        'parts' => $group->getPartsCount()
+                        )));
                     echo $response->getResponseString();
                     break;
                 case 'delete test':
@@ -97,8 +101,7 @@ class ClassUpdateController extends AjaxController
                 case 'delete class':
                     $adminPassword = $_POST['password'];
                     $class->deleteAsClassAdmin($adminPassword);
-                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
                     echo $response->getResponseString();
                     break;
                 case 'verify password':
