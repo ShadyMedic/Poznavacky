@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\ControllerInterface;
 use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\Security\AntiXssSanitizer;
 
@@ -9,7 +9,7 @@ use Poznavacky\Models\Security\AntiXssSanitizer;
  * Obecný kontroler pro nastavování hlaviček zobrazitelných stránek a zpracování informací na ně odeslaných
  * Mateřská třída všech kontrolerů nastavujících pohled
  */
-abstract class SynchronousController extends Controller
+abstract class SynchronousController implements ControllerInterface
 {
     const CONTROLLER_EXTENSION = 'Controller';
     const CONTROLLER_FOLDER = 'Controllers';
@@ -17,7 +17,7 @@ abstract class SynchronousController extends Controller
     const VIEW_FOLDER = 'Views';
 
 
-    protected Controller $controllerToCall;
+    protected ControllerInterface $controllerToCall;
     protected array $data = array();
     protected string $view = '';
     protected array $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());

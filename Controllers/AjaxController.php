@@ -1,13 +1,13 @@
 <?php
 namespace Poznavacky\Controllers;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\ControllerInterface;
 
 /**
  * Obecný kontroler pro zpracovávání AJAX požadavků
  * Mateřská třída všech AJAX kotntrolerů
  */
-abstract class AjaxController extends Controller
+abstract class AjaxController implements ControllerInterface
 {
 
     /**
