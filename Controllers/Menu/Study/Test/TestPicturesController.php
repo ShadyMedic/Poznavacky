@@ -25,14 +25,6 @@ class TestPicturesController extends AjaxController
     {
         //Kontrola přístupu již proběhla v MenuController.php
 
-        //Kontrola, zda byl tento kontroler zavolán jako AJAX
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest' )
-        {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru test-pictures z IP adresy {ip} jinak než pomocí AJAX požadavku', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-            header('HTTP/1.0 400 Bad Request');
-            exit();
-        }
-
         $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
         $part = null;

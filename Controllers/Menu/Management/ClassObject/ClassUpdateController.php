@@ -10,7 +10,6 @@ use Poznavacky\Models\Processors\GroupAdder;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
-use Poznavacky\Models\MessageBox;
 use \BadMethodCallException;
 
 /**
@@ -26,7 +25,7 @@ class ClassUpdateController extends AjaxController
      */
     public function process(array $parameters): void
     {
-        if (empty($_POST))
+        if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
             exit();

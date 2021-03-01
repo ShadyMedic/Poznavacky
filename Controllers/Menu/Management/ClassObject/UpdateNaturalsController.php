@@ -22,7 +22,7 @@ class UpdateNaturalsController extends AjaxController
      */
     public function process(array $parameters): void
     {
-        if (empty($_POST))
+        if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
             exit();

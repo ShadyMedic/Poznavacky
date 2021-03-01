@@ -22,7 +22,7 @@ class ConfirmGroupEditController extends AjaxController
      */
     public function process(array $parameters): void
     {
-        if (empty($_POST))
+        if (!isset($_POST['data']))
         {
             header('HTTP/1.0 400 Bad Request');
             exit();
