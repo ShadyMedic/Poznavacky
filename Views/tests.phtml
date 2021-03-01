@@ -29,3 +29,15 @@
 		</div>
 	</section>
 </div>
+
+<div id="test-data-item-template" style="display: none">
+    <div class='tests-data-item'>
+        <span class='test-name'>{name}</span>
+        <span class='test-parts'>{parts}</span>
+        <div class='test-action'>
+            <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/reports'>Správa hlášení</a>
+            <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/edit'>Upravit</a>
+            <a class='btn inline black delete-group-button' data-group-id='{id}' data-group-name='{name}'>Odstranit</a>
+        </div>
+    </div>
+</div>
