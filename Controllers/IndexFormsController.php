@@ -18,14 +18,14 @@ use InvalidArgumentException;
  * Kontroler je volán pomocí AJAX požadavku z index.js
  * @author Jan Štěch
  */
-class IndexFormsController extends Controller
+class IndexFormsController extends AjaxController
 {
     /**
      * Metoda přijímající data z formulářů skrz $_POST a volající model, který je zpracuje.
      * Podle výsledku zpracování dat odesílá instrukce k přesměrování na menu stránku nebo odesílá chybovou hlášku.
      * V případě, že se během zpracovávání dat narazilo na větší množství chyb, jsou v odpovědi odděleny svislítkem ("|")
      * @param array $parameters Parametry pro kontroler (nevyužíváno)
-     * @see Controller::process()
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

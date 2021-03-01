@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
@@ -10,13 +10,14 @@ use Poznavacky\Models\Statics\UserManager;
  * Kontroler starající se o výpis stránky pro administraci třídy jejím správcům
  * @author Jan Štěch
  */
-class ManageController extends Controller
+class ManageController extends SynchronousController
 {
-    private $argumentsToPass = array();
+    private array $argumentsToPass = array();
 
     /**
      * Metoda ověřující, zda má uživatel do správy třídy přístup (je její správce nebo administrátor systému) a nastavující hlavičku stránky a pohled
-     * @see Controller::process()
+     * @param array $parameters Pole parametrů pro zpracování kontrolerem, zde může být prvním prvkem URL název kontroleru, kterému se má předat řízení
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

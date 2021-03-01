@@ -1,7 +1,8 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
@@ -11,12 +12,14 @@ use Poznavacky\Models\MessageBox;
  * Kontroler starající se o odhlášení uživatele a jeho přesměrování na index stránku.
  * @author Jan Štěch
  */
-class LogoutController extends Controller
+class LogoutController extends SynchronousController
 {
 
     /**
      * Metoda odhlašující uživatele a přesměrovávající jej na index stránku
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException Pokud se nepodaří odstranit kód pro trvalé přihlhášení  (za předpokladu, že je přítomen)
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

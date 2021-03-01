@@ -1,8 +1,8 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
-use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\ClassManager;
@@ -14,12 +14,13 @@ use Poznavacky\Models\MessageBox;
  * Kontroler zpracovávající data z formuláře pro zadání kódu od soukromé třídy na menu stránce
  * @author Jan Štěch
  */
-class EnterClassCodeController extends Controller
+class EnterClassCodeController extends SynchronousController
 {
     /**
      * Metoda zpracovávající data odeslaná formulářem
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

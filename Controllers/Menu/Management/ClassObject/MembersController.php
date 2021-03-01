@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\MessageBox;
 
@@ -9,12 +9,13 @@ use Poznavacky\Models\MessageBox;
  * Kontroler starající se o výpis stránky pro správu členů třídy jejím správcům
  * @author Jan Štěch
  */
-class MembersController extends Controller
+class MembersController extends SynchronousController
 {
 
     /**
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

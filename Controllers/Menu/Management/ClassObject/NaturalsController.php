@@ -1,18 +1,19 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 
 /**
  * Kontroler starající se o výpis stránky pro správu přírodnin třídy jejím správcům
  * @author Jan Štěch
  */
-class NaturalsController extends Controller
+class NaturalsController extends SynchronousController
 {
 
     /**
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see SynchronousController::process()
      */
     function process(array $parameters): void
     {

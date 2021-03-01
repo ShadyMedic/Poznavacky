@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\NaturalEditor;
@@ -13,11 +13,12 @@ use Poznavacky\Models\AjaxResponse;
  * Kontroler zpracovávající data odeslaná ze stránky manage
  * @author Jan Štěch
  */
-class UpdateNaturalsController extends Controller
+class UpdateNaturalsController extends AjaxController
 {
     /**
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

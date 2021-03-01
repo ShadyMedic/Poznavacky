@@ -1,18 +1,19 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 
 /**
  * Kontroler starající se o stránku se správou hlášení pro administrátory tříd
  * @author Jan Štěch
  */
-class ReportsController extends Controller
+class ReportsController extends SynchronousController
 {
 
     /**
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

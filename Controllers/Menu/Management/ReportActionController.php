@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
@@ -12,11 +12,12 @@ use Poznavacky\Models\ReportResolver;
  * Kontroler zpracovávající data odeslaná ze stránky reports (správa hlášení v jedné poznávačce)
  * @author Jan Štěch
  */
-class ReportActionController extends Controller
+class ReportActionController extends AjaxController
 {
     /**
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
@@ -36,6 +37,7 @@ class ReportActionController extends Controller
             exit();
         }
 
+        $class = null;
         if (!$aChecker->checkSystemAdmin()) { $class = $_SESSION['selection']['class']; }
         
         //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy

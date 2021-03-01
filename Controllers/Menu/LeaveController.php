@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\MessageBox;
@@ -10,11 +10,12 @@ use Poznavacky\Models\MessageBox;
  * Kontroler starající se o opuštění třídy
  * @author Jan Štěch
  */
-class LeaveController extends Controller
+class LeaveController extends SynchronousController
 {
     /**
      * Metoda odstraňujícího přihlášeného uživatele ze zvolené třídy (ruší jeho členství)
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

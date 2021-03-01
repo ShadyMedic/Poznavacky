@@ -1,11 +1,10 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Part;
-use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\ChangelogManager;
@@ -16,14 +15,14 @@ use \BadMethodCallException;
  * Kontroler starající se o zobrazení layoutu pro všechny stránky kromě indexu
  * @author Jan Štěch
  */
-class MenuController extends Controller
+class MenuController extends SynchronousController
 {
     private array $argumentsToPass = array();
 
     /**
      * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
      * @param array $parameters Parametry pro zpracování kontrolerem, zde seznam URL argumentů v postupném pořadí jako prvky pole
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

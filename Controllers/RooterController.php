@@ -5,7 +5,7 @@ namespace Poznavacky\Controllers;
  * Třída směrovače přesměrovávající uživatele z index.php na správný kontroler
  * @author Jan Štěch       
  */
-class RooterController extends Controller
+class RooterController extends SynchronousController
 {    
     /**
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
@@ -87,8 +87,7 @@ class RooterController extends Controller
         $parsedURL = parse_url($url)['path'];   # Z http(s)://domena.net/abc/def/ghi získá /abc/def/ghi
         $parsedURL = ltrim($parsedURL, '/');    # Odstranění prvního lomítka
         $parsedURL = trim($parsedURL);          # Odstranění mezer na začátku a na konci
-        $urlArray = explode('/', $parsedURL);   # Rozbití řetězce do pole podle lomítek
-        return $urlArray;
+        return explode('/', $parsedURL);   # Rozbití řetězce do pole podle lomítek
     }
 }
 

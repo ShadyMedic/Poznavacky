@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\Statics\UserManager;
@@ -11,7 +11,7 @@ use Poznavacky\Models\AjaxResponse;
  * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro testovací stránku
  * @author Jan Štěch
  */
-class TestPicturesController extends Controller
+class TestPicturesController extends AjaxController
 {
     private const PICTURES_SENT_PER_REQUEST = 20;
 
@@ -19,7 +19,7 @@ class TestPicturesController extends Controller
      * Metoda odesílající daný počet náhodně zvolených obrázků ze zvolené části/přírodniny
      * Adresy jsou odeslány jako pole v JSON formátu
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
-     * @see Controller::process()
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

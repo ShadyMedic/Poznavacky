@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Processors\NewClassRequester;
 use Poznavacky\Models\Security\AccessChecker;
@@ -15,7 +15,7 @@ use Poznavacky\Models\MessageBox;
  * K tomuto kontroleru nelze přistupovat přímo (z URL adresy)
  * @author Jan Štěch
  */
-class MenuTableContentController extends Controller
+class MenuTableContentController extends SynchronousController
 {
     private $aquiredData;
 
@@ -35,7 +35,7 @@ class MenuTableContentController extends Controller
     /**
      * Metoda skládající získaná data o zobrazované složce do tabulky a předávající je pohledu
      * @param array $parameters Pole parametrů, pokud je prázdné, je přístup ke kontroleru zamítnut
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
@@ -12,12 +12,12 @@ use Poznavacky\Models\Logger;
  * Kontroler volaný pomocí AJAX, který ověřuje odpověď zadanou uživatelem na testovací stránce
  * @author Jan Štěch
  */
-class CheckTestAnswerController extends Controller
+class CheckTestAnswerController extends AjaxController
 {
     /**
      * Metoda načítající odpověď z $_POST a ověřuje jí proti správné odpovědi uložené v $_SESSION
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
-     * @see Controller::process()
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

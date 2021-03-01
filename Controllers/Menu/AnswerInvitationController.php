@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\DatabaseItems\Invitation;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\Exceptions\DatabaseException;
@@ -15,13 +15,13 @@ use \DateTime;
  * Kontroler zpracovávající data odeslaná z formuláře na přijetí nebo odmítnutí pozvánky do nějaké třídy na menu stránce
  * @author Jan Štěch
  */
-class AnswerInvitationController extends Controller
+class AnswerInvitationController extends SynchronousController
 {
     /**
      * Metoda zpracovávající odpověď na pozvánku
      * @param array $parameters Parametry ke zpracování (nepoužíváno)
      * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

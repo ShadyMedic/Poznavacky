@@ -17,11 +17,12 @@ use \BadMethodCallException;
  * Kontroler zpracovávající data odeslaná ze stránky manage
  * @author Jan Štěch
  */
-class ClassUpdateController extends Controller
+class ClassUpdateController extends AjaxController
 {
     /**
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

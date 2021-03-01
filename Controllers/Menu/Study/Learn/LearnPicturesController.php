@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Learn;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
@@ -13,14 +13,14 @@ use Poznavacky\Models\Logger;
  * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro učební stránku
  * @author Jan Štěch
  */
-class LearnPicturesController extends Controller
+class LearnPicturesController extends AjaxController
 {
 
     /**
      * Metoda přijímající název přírodniny skrz $_POST a získávající zdroje všech jejích obrázků z databáze
      * Adresy jsou odeslány jako pole v JSON formátu
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
-     * @see Controller::process()
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\Account;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 
@@ -9,13 +9,14 @@ use Poznavacky\Models\Statics\UserManager;
  * Kontroler starající se o výpis stránky s nastavením účtu
  * @author Jan Štěch
  */
-class AccountSettingsController extends Controller
+class AccountSettingsController extends SynchronousController
 {
 
     /**
-    * Metoda nastavující hlavičku stránky a pohled
-    * @see Controller::process()
-    */
+     * Metoda nastavující hlavičku stránky a pohled
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see SynchronousController::process()
+     */
     public function process(array $parameters): void
     {
         //Kontrola, zda se nejedná o demo účet

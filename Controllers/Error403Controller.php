@@ -7,12 +7,13 @@ use Poznavacky\Models\Logger;
  * Kontroler chybové stránky 403
  * @author Jan Štěch
  */
-class Error403Controller extends Controller
+class Error403Controller extends SynchronousController
 {
 
     /**
      * Metoda nastavující hlavičku požadavku, titulek stránky a zobrazovaný pohled chybové stránky
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\TestGroupsFetcher;
@@ -14,13 +14,13 @@ use Poznavacky\Models\Logger;
  * K tomuto kontroleru nelze přistupovat přímo (z URL adresy)
  * @author Jan Štěch
  */
-class MenuTableController extends Controller
+class MenuTableController extends SynchronousController
 {
 
     /**
      * Metoda nastavující informace pro hlavičku stránky a získávající data do tabulky
      * @param array $parameters Pole parametrů, pokud je prázdné, je přístup ke kontroleru zamítnut
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

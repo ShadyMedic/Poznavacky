@@ -1,20 +1,21 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\DatabaseItems\Group;
 
 /** 
  * Kontroler starající se o výpis stránky pro správu poznávaček správcům třídy, do které patří
  * @author Jan Štěch
  */
-class TestsController extends Controller
+class TestsController extends SynchronousController
 {
-    private $argumentsToPass = array();
-    
+    private array $argumentsToPass = array();
+
     /**
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled
-     * @see Controller::process()
+     * @param array $parameters Pole parametrů pro zpracování kontrolerem, zde může být na první pozici URL název kotnroleru, kterému se má předat řízení
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\Account;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
@@ -11,11 +11,12 @@ use Poznavacky\Models\AjaxResponse;
  * Kontroler zpracovávající data odeslaná ze stránky account-settings
  * @author Jan Štěch
  */
-class AccountUpdateController extends Controller
+class AccountUpdateController extends AjaxController
 {
     /**
      * Metoda odlišující, jaká data si přeje uživatel změnit a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
@@ -70,7 +71,6 @@ class AccountUpdateController extends Controller
                     //Naposled přesměruj uživatele ven ze systému
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, '');
                     echo $response->getResponseString();
-                    exit();
                     break;
                 case 'verify password':
                     $password = urldecode($_POST['password']);

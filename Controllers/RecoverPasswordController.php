@@ -13,12 +13,12 @@ use Poznavacky\Models\Statics\Db;
  * Kontroler starající se o výpis stránky pro obnovu hesla
  * @author Jan Štěch
  */
-class RecoverPasswordController extends Controller
+class RecoverPasswordController extends SynchronousController
 {
     /**
      * Metoda ověřující, zda je zadán platný kód pro obnovu hesla, nastavující hlavičku stránky a pohled
      * @param array $parameters Parametry pro kontroler; první element by měl obsahovat kód pro obnovu hesla
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

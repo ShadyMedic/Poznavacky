@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\ReportAdder;
@@ -13,12 +13,12 @@ use Poznavacky\Models\Logger;
  * Kontroler volaný pomocí AJAX, který zajišťuje uložení nového hlášení do databáze
  * @author Jan Štěch
  */
-class NewReportController extends Controller
+class NewReportController extends AjaxController
 {
     /**
      * Metoda přijímající URL nahlašovaného obrázku, důvod a přídavné informace skrz $_POST a po ověření ukládající data do databáze
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
-     * @see Controller::process()
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

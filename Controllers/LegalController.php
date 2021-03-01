@@ -9,12 +9,13 @@ use \UnexpectedValueException;
  * Kontroler stránky s právními informacemi
  * @author Jan Štěch
  */
-class LegalController extends Controller
+class LegalController extends SynchronousController
 {
 
     /**
      * Metoda nastavující hlavičku požadavku, titulek stránky a zobrazovaný pohled stránky
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see SynchronousController::process()
      */
     function process(array $parameters): void
     {

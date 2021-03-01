@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\System;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Administration;
@@ -11,11 +11,12 @@ use Poznavacky\Models\AjaxResponse;
  * Kontroler zpracovávající data odeslaná ze stránky administrate AJAX požadavkem
  * @author Jan Štěch
  */
-class AdministrateActionController extends Controller
+class AdministrateActionController extends AjaxController
 {
     /**
      * Metoda odlišující, jaká akce má být vykonána a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

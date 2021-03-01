@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers;
 
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\TokenPasswordChanger;
 
@@ -9,13 +10,15 @@ use Poznavacky\Models\TokenPasswordChanger;
  * Kontroler starající se o zpracování dat odeslaných z formuláře pro obnovení hesla
  * @author Jan Štěch
  */
-class TokenPasswordChangeController extends Controller
+class TokenPasswordChangeController extends SynchronousController
 {
 
     /**
      * Kontroler přijímající data odeslaná formulářem a volající modely, které je zpracují.
      * Také nastavuje úspěchovou nebo chybové hlášky a přesměrovává zpět nebo nastavuje pohled pro zobrazení zprávy.
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

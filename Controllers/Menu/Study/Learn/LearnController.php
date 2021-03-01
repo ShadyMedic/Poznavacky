@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Learn;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\Statics\UserManager;
@@ -10,13 +10,13 @@ use Poznavacky\Models\Statics\UserManager;
  * Kontroler starající se o výpis stránky pro učení se
  * @author Jan Štěch
  */
-class LearnController extends Controller
+class LearnController extends SynchronousController
 {
 
     /**
      * Metoda ověřující, zda má uživatel do třídy přístup a nastavující hlavičku stránky a pohled
      * @param array $parameters Parametry pro zpracování kontrolerem, může být prázdné, nebo obsahovat URL název kontroleru, který má být zavolán tímto kontrolerem
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

@@ -13,13 +13,13 @@ use Poznavacky\Models\MessageBox;
  * Kontroler starající se o vypsání úvodní stránky webu
  * @author Jan Štěch
  */
-class IndexController extends Controller
+class IndexController extends SynchronousController
 {
 
     /**
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @param array $parameters Parametry pro kontroler (nevyužíváno)
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
