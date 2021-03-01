@@ -81,6 +81,7 @@ class MenuTableController extends SynchronousController
             (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $this->controllerToCall = new MenuTableContentController();
             $dataForController = $e->getMessage();
+            $viewForTable = 'menuTableMessage';
         }
         
         //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
