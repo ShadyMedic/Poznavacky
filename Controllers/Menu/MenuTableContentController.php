@@ -17,24 +17,10 @@ use Poznavacky\Models\MessageBox;
  */
 class MenuTableContentController extends SynchronousController
 {
-    private $aquiredData;
-
-    /**
-     * Konstruktor třídy nastavující pohled a data, která do něj mají být doplněna
-     * Oba parametry jsou sice dobrovolné, avšak pro správnou funkci MUSÍ být oba vyplněny
-     * Možnost ponechat je nevyplněné je zachována pro případ, že se uživatel pokusí k tomuto kontroleru přistoupit přímo (a zpracování je pak zastaveno)
-     * @param string $viewWithTable Název pohledu obsahujícího požadovanou tabulku
-     * @param string|array $data Dvourozměrné pole obsahující data pro zobrazení v tabulce nebo řetězec, pokud zvolený pohled slouží pouze pro zobrazení jednoduché hlášky
-     */
-    public function __construct(string $viewWithTable = '', $data = array())
-    {
-        $this->view = $viewWithTable;
-        $this->aquiredData = $data;
-    }
 
     /**
      * Metoda skládající získaná data o zobrazované složce do tabulky a předávající je pohledu
-     * @param array $parameters Pole parametrů, pokud je prázdné, je přístup ke kontroleru zamítnut
+     * @param array $parameters Pole parametrů pro zpracování: prvním prvkem musí být název pohledu ke zobrazení druhým prvkem musí být dvourozměrné pole obsahující data pro zobrazení v tabulce nebo řetězec, pokud pokud má být zobrazena pouze jednoduchá hláška; pokud parametr prázdný, je přístup ke kontroleru zamítnut
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void
@@ -46,14 +32,17 @@ class MenuTableContentController extends SynchronousController
             $this->redirect('menu');
         }
 
-        if (gettype($this->aquiredData) === 'string')
+        $this->view = $parameters[0];
+        $aquiredData = $parameters[1];
+
+        if (gettype($aquiredData) === 'string')
         {
             //Vypisujeme prostou textovou hlášku
-            $this->data['message'] = $this->aquiredData;
+            $this->data['message'] = $aquiredData;
             return;
         }
         
-        $this->data['table'] = $this->aquiredData;
+        $this->data['table'] = $aquiredData;
 		$this->data['invitations'] = UserManager::getUser()->getActiveInvitations();
 		$this->data['invitationsCount'] = count($this->data['invitations']);
         $checker = new AccessChecker();

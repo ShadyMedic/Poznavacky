@@ -39,6 +39,8 @@ class MenuTableController extends SynchronousController
         $this->pageHeader['bodyId'] = 'menu';
         
         //Získání dat
+        $dataForTable = null;
+        $viewForTable = null;
         try
         {
             if (!isset($_SESSION['selection']['class']))
@@ -46,21 +48,27 @@ class MenuTableController extends SynchronousController
                 $classesGetter = new TestGroupsFetcher();
                 $classes = $classesGetter->getClasses();
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam dostupných tříd', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-                $this->controllerToCall = new MenuTableContentController('menuClassesTable', $classes);
+                $this->controllerToCall = new MenuTableContentController();
+                $dataForController = $classes;
+                $viewForTable = 'menuClassesTable';
             }
             else if (!isset($_SESSION['selection']['group']))
             {
                 $groupsGetter = new TestGroupsFetcher();
                 $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam poznávaček ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $_SESSION['selection']['class']->getId()));
-                $this->controllerToCall = new MenuTableContentController('menuGroupsTable', $groups);
+                $this->controllerToCall = new MenuTableContentController();
+                $dataForController = $groups;
+                $viewForTable = 'menuGroupsTable';
             }
             else
             {
                 $partsGetter = new TestGroupsFetcher();
                 $parts = $partsGetter->getParts($_SESSION['selection']['group']);
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam částí v poznávačce s ID {groupId} ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $_SESSION['selection']['group']->getId(), 'classId' => $_SESSION['selection']['class']->getId()));
-                $this->controllerToCall = new MenuTableContentController('menuPartsTable', $parts);
+                $this->controllerToCall = new MenuTableContentController();
+                $dataForController = $parts;
+                $viewForTable = 'menuPartsTable';
             }
         }
         catch (NoDataException $e)
@@ -71,11 +79,12 @@ class MenuTableController extends SynchronousController
                 $this->redirect('error404');
             }
             (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-            $this->controllerToCall = new MenuTableContentController('menuTableMessage', $e->getMessage());
+            $this->controllerToCall = new MenuTableContentController();
+            $dataForController = $e->getMessage();
         }
         
         //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
-        $this->controllerToCall->process(array(true)); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
+        $this->controllerToCall->process(array($viewForTable, $dataForController)); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
         $this->view = 'inherit';
     }
 }
