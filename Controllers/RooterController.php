@@ -1,56 +1,231 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use BadMethodCallException;
+use ErrorException;
+use Poznavacky\Models\Logger;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Security\AntiXssSanitizer;
+use Poznavacky\Models\Statics\UserManager;
+
 /**
  * Třída směrovače přesměrovávající uživatele z index.php na správný kontroler
- * @author Jan Štěch       
+ * @author Jan Štěch
  */
 class RooterController extends SynchronousController
-{    
+{
+
+    private const ROUTES_INI_FILE = 'routes.ini';
+    private const INI_ARRAY_SEPARATOR = ',';
+    //Význam následujících dvou konstant je blíže popsán v souboru routes.ini
+    private const SKIP_SELECTION_VALUE = 'ignore';
+    private const NON_SELECTION_VALUE = 'skip';
+
+    private array $views = array();
+
     /**
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
      * @param array $parameters Pole parametrů, na indexu 0 musí být nezpracovaná URL adresa
      */
     public function process(array $parameters): void
     {
-        $urlArguments = $this->parseURL($parameters[0]);
+        $url = $parameters[0];
+        $parsedURL = parse_url($url)['path'];               // Z http(s)://domena.net/abc/def/ghi získá /abc/def/ghi
+        $parsedURL = trim($parsedURL, '/');        // Odstranění prvního (a existuje i posledního) lomítka
+        $parsedURL = trim($parsedURL);                      // Odstranění mezer na začátku a na konci
+        $urlArguments = explode('/', $parsedURL);  // Rozbití řetězce do pole podle lomítek
+
+        if ($urlArguments[0] === '') { $urlArguments = array(); }
+
         $controllerName = null;
-        
-        //Úvodní stránka
-        if (empty($urlArguments[0])){$controllerName = 'Index'.self::CONTROLLER_EXTENSION;}
-        //Jiná kontroler je specifikován
-        else {$controllerName = $this->kebabToCamelCase(array_shift($urlArguments)).self::CONTROLLER_EXTENSION;}
-        //Zjištění, zda kontroler existuje
+
+        $iniRoutes = parse_ini_file(self::ROUTES_INI_FILE, true);
+
+        //Rozlišení proměnných a neproměnných URL parametrů
+        $controllersUrls = array_keys($iniRoutes['Controllers']);
+        $urlVariablesArr = array_diff($urlArguments, $controllersUrls); //Získá pole jednotlivých proměnných URL parametrů
+        $urlVariablesPositions = array_keys($urlVariablesArr);
+        $urlVariablesValues = array_values($urlVariablesArr);
+        for ($i = 0, $j = 0; $i < count($urlArguments); $i++)
+        {
+            if (in_array($i, $urlVariablesPositions))
+            {
+                $urlArguments[$i] = '{'.$j.'}';
+                $j++; //Číslo proměnné
+            }
+        }
+
+        //$urlArgumenty nyní obsahuje pole URL parametrů, kde jsou proměnné parametry nahrazeny značkami <x>
+
+        //Nalezení kontroleru k použití
+        $path = '/'.implode('/',$urlArguments);
+        $controllerName = @$iniRoutes['Routes'][$path];
+        if (empty($controllerName))
+        {
+            //Cesta nenalezena
+            header('HTTP/1.0 404 Not Found');
+            exit();
+        }
         $pathToController = $this->controllerExists($controllerName);
-        if ($pathToController)
+        $this->controllerToCall = new $pathToController;
+
+        //Získání seznamu nastavní složek
+        $selections = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Selections'][$path]);
+        if (empty($selections[0])) { $selections = array(); }
+
+        //Získání seznamu kontrol, které musí být provedeny
+        $shortPath = ''; //Cesta začínající posledním neproměnným kontrolerem
+        for ($i = count($urlArguments) - 1; $i >= 0 && !in_array($urlArguments[$i], $controllersUrls); $i--)
         {
-            $this->controllerToCall = new $pathToController();
+            $shortPath = '/'.$urlArguments[$i].$shortPath;
         }
-        else
+        if ($i >= 0) { $shortPath = '/'.$urlArguments[$i].$shortPath; }
+        else { $shortPath = $path; }
+
+        $checks = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Checks'][$shortPath]);
+        if (empty($checks[0])) { $checks = array(); }
+
+        //Získání seznamu pohledu pro použití
+        $this->views = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Views'][$shortPath]);
+        if (empty($this->views[0])) { $this->views = array(); }
+
+        /* Všechny potřebné informace z routes.ini získány */
+
+        //Nastavení složek
+        if (!$this->setFolders($selections, $urlVariablesValues))
         {
-            //Neexistující kontroler --> error 404
-            $this->redirect('error404');
+            header('HTTP/1.0 404 Not Found');
+            exit();
         }
-        
-        $this->controllerToCall->process($urlArguments);
-        
-        $this->data['title'] = $this->controllerToCall->pageHeader['title'];
-        $this->data['description'] = $this->controllerToCall->pageHeader['description'];
-        $this->data['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-        $this->data['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
-        $this->data['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
-        $this->data['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
-        $this->data['messages'] = $this->getMessages();
-        $this->data['currentYear'] = date('Y');
-        
-        $this->view = 'head';
+
+        //Provedení kontrol
+        if (!$this->runChecks($checks))
+        {
+            header('HTTP/1.0 403 Forbidden');
+            exit();
+        }
+
+        //Získání dat pro zobrazení v pohledu
+        $this->controllerToCall->process($urlVariablesValues);
+
+        if ($this->controllerToCall instanceof SynchronousController)
+        {
+            //Synchroní kontroler - nastav hlavičky stránky a základní pohled
+            self::$data['title'] = $this->controllerToCall::$pageHeader['title'];
+            self::$data['description'] = $this->controllerToCall::$pageHeader['description'];
+            self::$data['keywords'] = $this->controllerToCall::$pageHeader['keywords'];
+            self::$data['cssFiles'] = $this->controllerToCall::$pageHeader['cssFiles'];
+            self::$data['jsFiles'] = $this->controllerToCall::$pageHeader['jsFiles'];
+            self::$data['bodyId'] = $this->controllerToCall::$pageHeader['bodyId'];
+
+            self::$data['messages'] = $this->getMessages();
+            self::$data['currentYear'] = date('Y');
+        }
+      # else { /*AJAX kontroler - nezobrazuj žádný pohled*/ }
     }
-    
+
+    /**
+     * Metoda pro nastavení objektu třídy, poznávačky nebo části do $_SESSON['selection']
+     * Při přenastavení nějaké složky jsou z pole $_SESSON['selection'] vymazány všechny podčásti té stávající
+     * @param array $selections Pole řetězců popisující význam a pořadí argumentů ve druhém argumentu, povolené hodnoty řetězců jsou 'class', 'group', 'part' a hodnoty konstant této třídy obsahující v názvu slovo 'SELECTOR'
+     * @param array $urlVariablesValues Pole argumentů získaných z URL pro zpracování, pořadí prvků musí odpovídat hodnotám v prvním argumentu
+     * @return bool TRUE, pokud se povedlo všechny složky nastavit, FALSE, pokud některá ze složek nebyla podle URL v databázi nalezena
+     */
+    private function setFolders(array $selections, array $urlVariablesValues): bool
+    {
+        $aChecker = new AccessChecker();
+        for ($i = 0; $i < count($selections); $i++)
+        {
+            $selection = $selections[$i];
+            $currentUrl = null;
+            if ($selection === self::NON_SELECTION_VALUE) { continue; }
+            else if ($selection === self::SKIP_SELECTION_VALUE)
+            {
+                $currentUrl = array_shift($urlVariablesValues);
+                $i--;
+            }
+
+            $folderClass = null;
+            $alreadySet = false;
+            switch ($selection)
+            {
+                case 'class':
+                    $folderClass = 'ClassObject';
+                    $alreadySet = ($aChecker->checkClass() && $_SESSION['selection']['class']->getUrl() === $currentUrl);
+                    break;
+                case 'group':
+                    $folderClass = 'Group';
+                    $alreadySet = ($aChecker->checkGroup() && $_SESSION['selection']['group']->getUrl() === $currentUrl);
+                    break;
+                case 'part':
+                    $folderClass = 'Part';
+                    $alreadySet = ($aChecker->checkPart() && $_SESSION['selection']['part']->getUrl() === $currentUrl);
+                    break;
+            }
+
+            //Kontrola, zda není složka se stejným URL již náhodou zvolena
+            if ($alreadySet) { continue; }
+            //Uložení objektu třídy/poznávačky/části do $_SESSION
+            $folder = new $folderClass(false, 0);
+            $folder->initialize(null, $currentUrl);
+            try { $folder->load(); }
+            catch (BadMethodCallException $e)
+            {
+                (new Logger(true))->debug($currentUrl);
+                //Třída/poznávačka/část splňující daná kritéria neexistuje
+                return false;
+            }
+            $_SESSION['selection'][$selection] = $folder;
+        }
+        return true;
+    }
+
+    /**
+     * Metoda provádějící všechny bezpečnostní kontroly, například zda je přihlášený uživatel správcem zvolené třídy
+     * @param array $checks Pole řetězců popisujících kontroly, které se musejí provést, jejich význam je blíže popsán v souboru routes.ini
+     */
+    private function runChecks(array $checks): bool
+    {
+        $aChecker = new AccessChecker();
+        foreach ($checks as $check)
+        {
+            switch ($check)
+            {
+                case 'user':
+                    if (!$aChecker->checkUser()) { return false; }
+                    break;
+                case 'systemAdmin':
+                    if (!$aChecker->checkSystemAdmin()) { return false; }
+                    break;
+                case 'class':
+                    if (!$aChecker->checkClass()) { return false; }
+                    break;
+                case 'classAdmin':
+                    if (!$_SESSION['selection']['class']->checkAdmin(UserManager::getId())) { return false; }
+                    break;
+                case 'group':
+                    if (!$aChecker->checkGroup()) { return false; }
+                    break;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Metoda navracející cestu k dalšímu (vnitřenějšímu) nepoužitému pohledu
+     * Tato metoda je volána z pohledů v místech, kde má být dynamicky vložen vnitřnější pohled
+     * @return string Cesta k pohledu, která může být okamžitě použita v příkazu include nebo require
+     */
+    private function getNextView(): string
+    {
+        return self::VIEW_FOLDER.'/'.array_shift($this->views).'.phtml';
+    }
+
     /**
      * Metoda načítající hlášky pro uživatele uložené v $_SESSION a přidávající jejich obsah do dat, které jsou později předány pohledu
      * Hlášky jsou poté ze sezení vymazány
      */
-    protected function getMessages(): array
+    private function getMessages(): array
     {
         if (isset($_SESSION['messages']))
         {
@@ -68,26 +243,54 @@ class RooterController extends SynchronousController
             return array();
         }
     }
-    
+
     /**
      * Metoda odstraňující všechny hlášky pro uživatele uloženy v $_SESSION
      */
-    protected function clearMessages(): void
+    private function clearMessages(): void
     {
         unset($_SESSION['messages']);
     }
-    
+
     /**
-     * Meoda získávající z nezpracované URL adresy parametry jako pole
-     * @param string $url Nezpracovaná URL adresa
-     * @return array Pole argumentů následujících po doméně
+     * Metoda zahrnující pohled a vypysující do něj proměnné z vlastnosti $data
+     * Pokud je vlastnost SynchronousController::$view prázdná, není vypsáno nic
+     * @throws ErrorException Pokud selže ošetření dat proti XSS útoku
      */
-    private function parseURL(string $url): array
+    public function displayView(): void
     {
-        $parsedURL = parse_url($url)['path'];   # Z http(s)://domena.net/abc/def/ghi získá /abc/def/ghi
-        $parsedURL = ltrim($parsedURL, '/');    # Odstranění prvního lomítka
-        $parsedURL = trim($parsedURL);          # Odstranění mezer na začátku a na konci
-        return explode('/', $parsedURL);   # Rozbití řetězce do pole podle lomítek
+        if (!empty($this->views))
+        {
+            //Vytvoř pole ošetřených hodnot
+            $sanitized = $this->sanitizeData(self::$data);
+
+            //Přejmenuj klíče v originálním poli neošetřených hodnot
+            foreach (self::$data as $key => $value)
+            {
+                self::$data['_'.$key.'_'] = $value;
+                unset(self::$data[$key]);
+            }
+
+            extract(self::$data);
+            extract($sanitized);
+            require self::VIEW_FOLDER.'/'.array_shift($this->views).'.phtml';
+        }
+    }
+
+    /**
+     * Metoda ošetřující všechny hodnoty určené k využití pohledem proti XSS útoku
+     * @param array $data Pole proměnných k ošetření
+     * @return mixed Pole s ošetřenými hodnotami
+     * @throws ErrorException Pokud se pokouším ošetřit nepodporovaný datový typ
+     */
+    private function sanitizeData(array $data): array
+    {
+        $sanitizer = new AntiXssSanitizer();
+        foreach ($data as $key => $value)
+        {
+            $data[$key] = $sanitizer->sanitize($value);
+        }
+        return $data;
     }
 }
 

@@ -16,49 +16,10 @@ abstract class SynchronousController implements ControllerInterface
     const MODEL_FOLDER = 'Models';
     const VIEW_FOLDER = 'Views';
 
-
     protected ControllerInterface $controllerToCall;
-    protected array $data = array();
-    protected string $view = '';
-    protected array $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
-
-    /**
-     * Metoda zahrnující pohled a vypysující do něj proměnné z vlastnosti $data
-     */
-    public function displayView(): void
-    {
-        if ($this->view)
-        {
-            //Vytvoř pole ošetřených hodnot
-            $sanitized = $this->sanitizeData($this->data);
-
-            //Přejmenuj klíče v originálním poli neošetřených hodnot
-            foreach ($this->data as $key => $value)
-            {
-                $this->data['_'.$key.'_'] = $value;
-                unset($this->data[$key]);
-            }
-
-            extract($this->data);
-            extract($sanitized);
-            require self::VIEW_FOLDER.'/'.$this->view.'.phtml';
-        }
-    }
-
-    /**
-     * Metoda ošetřující všechny hodnoty určené k využití pohledem proti XSS útoku
-     * @param array $data Pole proměnných k ošetření
-     * @return mixed Pole s ošetřenými hodnotami
-     */
-    private function sanitizeData(array $data): array
-    {
-        $sanitizer = new AntiXssSanitizer();
-        foreach ($data as $key => $value)
-        {
-            $data[$key] = $sanitizer->sanitize($value);
-        }
-        return $data;
-    }
+    //Informace pro zobrazení v pohledech - statické, protože každý požadavek vede k zobrazení maximálně jedné stránky
+    protected static array $data = array();
+    protected static array $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
 
     /**
      * Metoda přesměrovávající uživatele na jinou adresu a ukončující běh skriptu
