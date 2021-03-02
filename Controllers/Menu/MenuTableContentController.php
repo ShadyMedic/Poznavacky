@@ -38,15 +38,15 @@ class MenuTableContentController extends SynchronousController
         if (gettype($aquiredData) === 'string')
         {
             //Vypisujeme prostou textovou hlášku
-            $this->data['message'] = $aquiredData;
+            self::$data['message'] = $aquiredData;
             return;
         }
         
-        $this->data['table'] = $aquiredData;
-		$this->data['invitations'] = UserManager::getUser()->getActiveInvitations();
-		$this->data['invitationsCount'] = count($this->data['invitations']);
+        self::$data['table'] = $aquiredData;
+		self::$data['invitations'] = UserManager::getUser()->getActiveInvitations();
+		self::$data['invitationsCount'] = count(self::$data['invitations']);
         $checker = new AccessChecker();
-        $this->data['demoVersion'] = $checker->checkDemoAccount();
+        self::$data['demoVersion'] = $checker->checkDemoAccount();
 
         //Obsluha formuláře pro založení nové třídy
         if (!empty($_POST)) //Kontrola, zda právě nebyl formulář odeslán
@@ -81,18 +81,18 @@ class MenuTableContentController extends SynchronousController
             }
 
             //Obnov data
-            $this->data['emailValue'] = @$_POST['email'];
-            $this->data['classNameValue'] = @$_POST['className'];
-            $this->data['textValue'] = @$_POST['text'];
+            self::$data['emailValue'] = @$_POST['email'];
+            self::$data['classNameValue'] = @$_POST['className'];
+            self::$data['textValue'] = @$_POST['text'];
 
-            $this->data['displayNewClassForm'] = true;
+            self::$data['displayNewClassForm'] = true;
         }
-        else { $this->data['displayNewClassForm'] = false; }
+        else { self::$data['displayNewClassForm'] = false; }
 
         $antispamGenerator = new NumberAsWordCaptcha();
         $antispamGenerator->generate();
-        $this->data['antispamCode'] = $antispamGenerator->question;
-        $this->data['specifiedEmail'] = (empty(UserManager::getEmail())) ? false : true;
+        self::$data['antispamCode'] = $antispamGenerator->question;
+        self::$data['specifiedEmail'] = (empty(UserManager::getEmail())) ? false : true;
     }
 }
 

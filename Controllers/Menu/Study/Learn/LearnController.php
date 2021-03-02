@@ -47,35 +47,35 @@ class LearnController extends SynchronousController
             $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
         }
 
-        $this->pageHeader['title'] = 'Učit se';
-        $this->pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
-        $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/learn.js','js/reportForm.js', 'js/menu.js');
-        $this->pageHeader['bodyId'] = 'learn';
+        self::$pageHeader['title'] = 'Učit se';
+        self::$pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/learn.js','js/reportForm.js', 'js/menu.js');
+        self::$pageHeader['bodyId'] = 'learn';
 
         if ($allParts)
         {
-            $this->data['navigationBar'] = array(
+            self::$data['navigationBar'] = array(
                 0 => array(
-                    'text' => $this->pageHeader['title'],
+                    'text' => self::$pageHeader['title'],
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/learn'
                 )
             );
 
-            $this->data['naturals'] = $group->getNaturals();
+            self::$data['naturals'] = $group->getNaturals();
             (new Logger(true))->info('Přístup na stránku pro učení všech částí poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
         else
         {
-            $this->data['navigationBar'] = array(
+            self::$data['navigationBar'] = array(
                 0 => array(
-                    'text' => $this->pageHeader['title'],
+                    'text' => self::$pageHeader['title'],
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl().'/learn'
                 )
             );
 
-            $this->data['naturals'] = $part->getNaturals();
+            self::$data['naturals'] = $part->getNaturals();
             (new Logger(true))->info('Přístup na stránku pro učení části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('partId' => $part->getId(), 'groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
 
@@ -87,14 +87,7 @@ class LearnController extends SynchronousController
             //URL obsajuje požadavek na další kontroler používaný na learn stránce
             $this->controllerToCall = new $pathToController();
             $this->controllerToCall->process($parameters);
-            
-            $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
-            $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
-            $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-            $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
-            $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
-            $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
-            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
+            self::$data['navigationBar'] = array_merge(self::$data['navigationBar'], $this->controllerToCall::data['navigationBar']);
         }
         
         $this->view = 'learn';

@@ -40,7 +40,7 @@ class ManageController extends SynchronousController
             $this->redirect('error403');
         }
 
-        $this->data['navigationBar'][] = array(
+        self::$data['navigationBar'][] = array(
             'text' => 'Správa třídy',
             'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage'
         );
@@ -80,32 +80,25 @@ class ManageController extends SynchronousController
         {
             //Kontroler je nastaven --> předat mu řízení
             $this->controllerToCall->process($this->argumentsToPass);
-
-            $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
-            $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
-            $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-            $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
-            $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
-            $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
-            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
+            self::$data['navigationBar'] = array_merge(self::$data['navigationBar'], $this->controllerToCall::data['navigationBar']);
 
             $this->view = 'inherit';
         }
         else
         {
             //Kontroler není nastaven --> obecná správa třídy
-            $this->pageHeader['title'] = 'Správa třídy';
-            $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu třídy';
-            $this->pageHeader['keywords'] = '';
-            $this->pageHeader['cssFiles'] = array('css/css.css');
-            $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/manage.js');
-            $this->pageHeader['bodyId'] = 'manage';
+            self::$pageHeader['title'] = 'Správa třídy';
+            self::$pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu třídy';
+            self::$pageHeader['keywords'] = '';
+            self::$pageHeader['cssFiles'] = array('css/css.css');
+            self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/manage.js');
+            self::$pageHeader['bodyId'] = 'manage';
 
-            $this->data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
-            $this->data['classId'] = $_SESSION['selection']['class']->getId();
-            $this->data['className'] = $_SESSION['selection']['class']->getName();
-            $this->data['classStatus'] = $_SESSION['selection']['class']->getStatus();
-            $this->data['classCode'] = $_SESSION['selection']['class']->getCode();
+            self::$data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
+            self::$data['classId'] = $_SESSION['selection']['class']->getId();
+            self::$data['className'] = $_SESSION['selection']['class']->getName();
+            self::$data['classStatus'] = $_SESSION['selection']['class']->getStatus();
+            self::$data['classCode'] = $_SESSION['selection']['class']->getCode();
 
             $this->view = 'manage';
         }

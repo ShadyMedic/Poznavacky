@@ -21,12 +21,12 @@ class Error403Controller extends SynchronousController
 
         header('HTTP/1.0 403 Forbidden');
         
-        $this->pageHeader['title'] = 'Chyba 403';
-        $this->pageHeader['description'] = 'Jejda, sem jste se asi nechtěli dostat...';
-        $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFiles'] = array('css/error.css');
-        $this->pageHeader['jsFiles'] = array();
-        $this->pageHeader['bodyId'] = 'error-403';
+        self::$pageHeader['title'] = 'Chyba 403';
+        self::$pageHeader['description'] = 'Jejda, sem jste se asi nechtěli dostat...';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/error.css');
+        self::$pageHeader['jsFiles'] = array();
+        self::$pageHeader['bodyId'] = 'error-403';
         
         $this->view = 'error403';
     }

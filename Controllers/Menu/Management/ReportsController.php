@@ -18,19 +18,19 @@ class ReportsController extends SynchronousController
     public function process(array $parameters): void
     {
         $group = $_SESSION['selection']['group'];
-        $this->data['reports'] = $group->getReports();
-        $this->data['naturalsInGroup'] = $group->getNaturals();
-        $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
+        self::$data['reports'] = $group->getReports();
+        self::$data['naturalsInGroup'] = $group->getNaturals();
+        self::$data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
         
-        $this->pageHeader['title'] = 'Správa hlášení';
-        $this->pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
-        $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/resolveReports.js');
-        $this->pageHeader['bodyId'] = 'resolve-reports';
-        $this->data['navigationBar'] = array(
+        self::$pageHeader['title'] = 'Správa hlášení';
+        self::$pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/resolveReports.js');
+        self::$pageHeader['bodyId'] = 'resolve-reports';
+        self::$data['navigationBar'] = array(
             0 => array(
-                'text' => $this->pageHeader['title'],
+                'text' => self::$pageHeader['title'],
                 'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests/'.$_SESSION['selection']['group']->getUrl().'/reports'
             )
         );

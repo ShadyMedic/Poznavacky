@@ -46,20 +46,20 @@ class AdministrateController extends SynchronousController
         {
             $administration = new Administration();
 
-            $this->data['loggedAdminName'] = UserManager::getName();
+            self::$data['loggedAdminName'] = UserManager::getName();
 
-            $this->data['users'] = $administration->getAllUsers(false);
-            $this->data['classes'] = $administration->getAllClasses();
-            $this->data['reports'] = $administration->getAdminReports();
-            $this->data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
-            $this->data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
+            self::$data['users'] = $administration->getAllUsers(false);
+            self::$data['classes'] = $administration->getAllClasses();
+            self::$data['reports'] = $administration->getAdminReports();
+            self::$data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
+            self::$data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
 
-            $this->pageHeader['title'] = 'Správa služby';
-            $this->pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
-            $this->pageHeader['keywords'] = '';
-            $this->pageHeader['cssFiles'] = array('css/private.css');
-            $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/administrate.js');
-            $this->pageHeader['bodyId'] = 'administrate';
+            self::$pageHeader['title'] = 'Správa služby';
+            self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
+            self::$pageHeader['keywords'] = '';
+            self::$pageHeader['cssFiles'] = array('css/private.css');
+            self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/administrate.js');
+            self::$pageHeader['bodyId'] = 'administrate';
 
             $this->view = 'administrate';
         }

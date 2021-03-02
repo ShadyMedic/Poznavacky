@@ -63,12 +63,12 @@ class IndexController extends SynchronousController
 
         (new Logger(true))->info('Přístup na stránku index z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
 
-        $this->pageHeader['title'] = 'Poznávačky';
-        $this->pageHeader['description'] = 'Čeká vás poznávačka z biologie? Není lepší způsob, jak se na ni naučit, než použitím této webové aplikace. Vytvořte si vlastní poznávačku, společně do ní přidávejte obrázky, učte se z nich a nechte si generovat náhodné testy.';
-        $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda, poznávačka, přírodopis, přírodověda, test, výuka, naučit, učit, testy, učení';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/index.js');
-        $this->pageHeader['bodyId'] = 'index';
+        self::$pageHeader['title'] = 'Poznávačky';
+        self::$pageHeader['description'] = 'Čeká vás poznávačka z biologie? Není lepší způsob, jak se na ni naučit, než použitím této webové aplikace. Vytvořte si vlastní poznávačku, společně do ní přidávejte obrázky, učte se z nich a nechte si generovat náhodné testy.';
+        self::$pageHeader['keywords'] = 'poznávačky, biologie, příroda, poznávačka, přírodopis, přírodověda, test, výuka, naučit, učit, testy, učení';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/index.js');
+        self::$pageHeader['bodyId'] = 'index';
         
         $this->view = 'index';
     }

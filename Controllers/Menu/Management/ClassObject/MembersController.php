@@ -26,19 +26,19 @@ class MembersController extends SynchronousController
             $this->redirect("menu/".$_SESSION['selection']['class']->getUrl().'/manage');
         }
 
-        $this->pageHeader['title'] = 'Správa členů';
-        $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu členů';
-        $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/members.js');
-        $this->pageHeader['bodyId'] = 'members';
-        $this->data['navigationBar'] = array(
+        self::$pageHeader['title'] = 'Správa členů';
+        self::$pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu členů';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/members.js');
+        self::$pageHeader['bodyId'] = 'members';
+        self::$data['navigationBar'] = array(
             0 => array(
-                'text' => $this->pageHeader['title'],
+                'text' => self::$pageHeader['title'],
                 'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/members'
             )
         );
-        $this->data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
+        self::$data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
 
         $this->view = 'members';
     }

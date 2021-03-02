@@ -26,24 +26,24 @@ class AccountSettingsController extends SynchronousController
             $this->redirect('error403');
         }
 
-        $this->data['userId'] = UserManager::getId();
-        $this->data['userName'] = UserManager::getName();
-        $this->data['userEmail'] = UserManager::getEmail();
+        self::$data['userId'] = UserManager::getId();
+        self::$data['userName'] = UserManager::getName();
+        self::$data['userEmail'] = UserManager::getEmail();
         $otherData = UserManager::getOtherInformation();
-        $this->data['addedPictures'] = $otherData['addedPictures'];
-        $this->data['guessedPictures'] = $otherData['guessedPictures'];
-        $this->data['karma'] = $otherData['karma'];
-        $this->data['status'] = $otherData['status'];
+        self::$data['addedPictures'] = $otherData['addedPictures'];
+        self::$data['guessedPictures'] = $otherData['guessedPictures'];
+        self::$data['karma'] = $otherData['karma'];
+        self::$data['status'] = $otherData['status'];
         
-        $this->pageHeader['title'] = 'Nastavení účtu';
-        $this->pageHeader['description'] = 'Přizpůsobte si poznávačky podle svého gusta a podívejte se na své statistiky';
-        $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/accountSettings.js');
-        $this->pageHeader['bodyId'] = 'account-settings';
-        $this->data['navigationBar'] = array(
+        self::$pageHeader['title'] = 'Nastavení účtu';
+        self::$pageHeader['description'] = 'Přizpůsobte si poznávačky podle svého gusta a podívejte se na své statistiky';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/accountSettings.js');
+        self::$pageHeader['bodyId'] = 'account-settings';
+        self::$data['navigationBar'] = array(
             0 => array(
-                'text' => $this->pageHeader['title'],
+                'text' => self::$pageHeader['title'],
                 'link' => 'menu/account-settings'
             )
         );

@@ -26,8 +26,8 @@ class MenuController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        $this->data['navigationBar'] = array();
-        $this->data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
+        self::$data['navigationBar'] = array();
+        self::$data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
 
         //Načtení argumentů vztahujících se k této stránce
         //Minimálně 0 (v případě domena.cz/menu)
@@ -108,7 +108,7 @@ class MenuController extends SynchronousController
 
                 }
 
-                $this->data['navigationBar'][] = array(
+                self::$data['navigationBar'][] = array(
                     'text' => $_SESSION['selection']['class']->getName(),
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl()
                 );
@@ -160,7 +160,7 @@ class MenuController extends SynchronousController
                     $this->unsetSelection(true);
                 }
 
-                $this->data['navigationBar'][] = array(
+                self::$data['navigationBar'][] = array(
                     'text' => $_SESSION['selection']['group']->getName(),
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl()
                 );
@@ -215,7 +215,7 @@ class MenuController extends SynchronousController
                     }
                 }
 
-                $this->data['navigationBar'][] = array(
+                self::$data['navigationBar'][] = array(
                     'text' => $_SESSION['selection']['part']->getName(),
                     'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl()
                 );
@@ -243,13 +243,13 @@ class MenuController extends SynchronousController
         {
             //Kontroler je nastaven --> předat posbírané argumenty dál
             $this->controllerToCall->process($this->argumentsToPass);
-            $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
-            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
+            self::$pageHeader['bodyId'] = $this->controllerToCall::$pageHeader['bodyId'];
+            self::$data['navigationBar'] = array_merge(self::$data['navigationBar'], $this->controllerToCall::data['navigationBar']);
         }
         else
         {
             //Kontroler není nastaven --> vypsat tabulku na menu stránce
-            $this->pageHeader['bodyId'] = 'menu';
+            self::$pageHeader['bodyId'] = 'menu';
             $controllerName = __NAMESPACE__.'\\MenuTable'.self::CONTROLLER_EXTENSION;
             $this->controllerToCall = new $controllerName();
             $this->controllerToCall->process(array(true)); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
@@ -258,22 +258,22 @@ class MenuController extends SynchronousController
             UserManager::getUser()->updateLastMenuTableUrl(implode('/', $parameters));
         }
 
-        $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
-        $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
-        $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-        $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
-        $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
+        self::$pageHeader['title'] = $this->controllerToCall::$pageHeader['title'];
+        self::$pageHeader['description'] = $this->controllerToCall::$pageHeader['description'];
+        self::$pageHeader['keywords'] = $this->controllerToCall::$pageHeader['keywords'];
+        self::$pageHeader['cssFiles'] = $this->controllerToCall::$pageHeader['cssFiles'];
+        self::$pageHeader['jsFiles'] = $this->controllerToCall::$pageHeader['jsFiles'];
 
-        $this->data['loggedUserName'] = UserManager::getName();
-        $this->data['adminLogged'] = $aChecker->checkSystemAdmin();
-        $this->data['demoVersion'] = $aChecker->checkDemoAccount();
+        self::$data['loggedUserName'] = UserManager::getName();
+        self::$data['adminLogged'] = $aChecker->checkSystemAdmin();
+        self::$data['demoVersion'] = $aChecker->checkDemoAccount();
 
         $changelogManager = new ChangelogManager();
         if (!$changelogManager->checkLatestChangelogRead())
         {
             UserManager::getUser()->updateLastSeenChangelog(ChangelogManager::LATEST_VERSION);
-            $this->data['staticTitle'] = array($changelogManager->getTitle());
-            $this->data['staticContent'] = array($changelogManager->getContent());
+            self::$data['staticTitle'] = array($changelogManager->getTitle());
+            self::$data['staticContent'] = array($changelogManager->getContent());
             (new Logger(true))->info('Uživateli s ID {userId} byl zobrazen nejnovější changelog pro verzi {version}', array('userId' => UserManager::getId(), 'version' => ChangelogManager::LATEST_VERSION));
         }
 

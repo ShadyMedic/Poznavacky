@@ -31,12 +31,12 @@ class MenuTableController extends SynchronousController
             $this->redirect('menu');
         }
 
-        $this->pageHeader['title'] = 'Volba poznávačky';
-        $this->pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
-        $this->pageHeader['keywords'] = 'poznávačky, biologie, příroda';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/menu.js', 'js/folders.js', 'js/invitations.js');
-        $this->pageHeader['bodyId'] = 'menu';
+        self::$pageHeader['title'] = 'Volba poznávačky';
+        self::$pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
+        self::$pageHeader['keywords'] = 'poznávačky, biologie, příroda';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/menu.js', 'js/folders.js', 'js/invitations.js');
+        self::$pageHeader['bodyId'] = 'menu';
         
         //Získání dat
         $dataForTable = null;

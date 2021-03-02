@@ -19,9 +19,9 @@ class TestsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        $this->data['navigationBar'] = array(
+        self::$data['navigationBar'] = array(
             0 => array(
-                'text' => $this->pageHeader['title'],
+                'text' => self::$pageHeader['title'],
                 'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests'
             )
         );
@@ -64,7 +64,7 @@ class TestsController extends SynchronousController
                 $_SESSION['selection']['group']->initialize(null, $testsArguments[0], $_SESSION['selection']['class'], null, null);
             }
 
-            $this->data['navigationBar'][] = array(
+            self::$data['navigationBar'][] = array(
                 'text' => $_SESSION['selection']['group']->getName(),
                 'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests/'.$_SESSION['selection']['group']->getUrl()
             );
@@ -89,30 +89,23 @@ class TestsController extends SynchronousController
         {
             //Kontroler je nastaven --> předat mu řízení
             $this->controllerToCall->process($this->argumentsToPass);
-            
-            $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
-            $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
-            $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-            $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
-            $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
-            $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
-            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
+            self::$data['navigationBar'] = array_merge(self::$data['navigationBar'], $this->controllerToCall::data['navigationBar']);
             
             $this->view = 'inherit';
         }
         else
         {
             //Kontroler není nastaven --> seznam poznávaček ve třídě
-            $this->pageHeader['title'] = 'Správa poznávaček';
-            $this->pageHeader['description'] = 'Nástroj pro správce tříd umožnňující snadnou správu poznávaček';
-            $this->pageHeader['keywords'] = '';
-            $this->pageHeader['cssFiles'] = array('css/css.css');
-            $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js','js/tests.js');
-            $this->pageHeader['bodyId'] = 'tests';
+            self::$pageHeader['title'] = 'Správa poznávaček';
+            self::$pageHeader['description'] = 'Nástroj pro správce tříd umožnňující snadnou správu poznávaček';
+            self::$pageHeader['keywords'] = '';
+            self::$pageHeader['cssFiles'] = array('css/css.css');
+            self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js','js/tests.js');
+            self::$pageHeader['bodyId'] = 'tests';
 
-            $this->data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
-            $this->data['groups'] = $_SESSION['selection']['class']->getGroups();
-            $this->data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
+            self::$data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
+            self::$data['groups'] = $_SESSION['selection']['class']->getGroups();
+            self::$data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage';
             
             $this->view = 'tests';
         }

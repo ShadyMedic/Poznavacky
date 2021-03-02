@@ -17,19 +17,19 @@ class NaturalsController extends SynchronousController
      */
     function process(array $parameters): void
     {
-        $this->pageHeader['title'] = 'Správa přírodnin';
-        $this->pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu přírodnin';
-        $this->pageHeader['keywords'] = '';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/naturals.js');
-        $this->pageHeader['bodyId'] = 'naturals';
-        $this->data['navigationBar'] = array(
+        self::$pageHeader['title'] = 'Správa přírodnin';
+        self::$pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu přírodnin';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/naturals.js');
+        self::$pageHeader['bodyId'] = 'naturals';
+        self::$data['navigationBar'] = array(
             0 => array(
-                'text' => $this->pageHeader['title'],
+                'text' => self::$pageHeader['title'],
                 'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/naturals'
             )
         );
-        $this->data['naturals'] = $_SESSION['selection']['class']->getNaturals();
+        self::$data['naturals'] = $_SESSION['selection']['class']->getNaturals();
 
         $this->view = 'naturals';
     }

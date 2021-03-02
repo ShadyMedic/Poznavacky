@@ -22,12 +22,12 @@ class RecoverPasswordController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        $this->pageHeader['title'] = 'Obnovit heslo';
-        $this->pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
-        $this->pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
-        $this->pageHeader['bodyId'] = 'recover-password';
+        self::$pageHeader['title'] = 'Obnovit heslo';
+        self::$pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
+        self::$pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
+        self::$pageHeader['bodyId'] = 'recover-password';
 
         $code = null;
         try
@@ -39,7 +39,7 @@ class RecoverPasswordController extends SynchronousController
                 throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_NO_TOKEN, null, null);
             }
             $code = $parameters[0];
-            $this->data['token'] = $code;
+            self::$data['token'] = $code;
             
             $codeVerificator = new PasswordRecoveryCodeVerificator();
             $userId = $codeVerificator->verifyCode($code);
@@ -53,7 +53,7 @@ class RecoverPasswordController extends SynchronousController
             //Získat jméno uživatele pro zobrazení na stránce
             $username = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['name'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['id'].' = ?', array($userId), false)[User::COLUMN_DICTIONARY['name']];
             
-            $this->data['username'] = $username;
+            self::$data['username'] = $username;
         }
         catch (AccessDeniedException $e)
         {
@@ -67,7 +67,7 @@ class RecoverPasswordController extends SynchronousController
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED);
         }
 
-        if (isset($this->data['username']))
+        if (isset(self::$data['username']))
         {
             //Kód nalezen a uživatel identifikován
             $this->view = 'recoverPassword';
