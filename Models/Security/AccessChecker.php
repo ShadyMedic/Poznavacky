@@ -5,7 +5,7 @@ use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\Statics\UserManager;
 
 /** 
- * Třída kontrolující, zda má nějaký uživatel přístup do nějaké třídy nebo její součásti
+ * Třída kontrolující, status přihlášeného uživatele, ověřující jeho heslo nebo kontrolující, zda je zvolena třída, poznávačka nebo část
  * @author Jan Štěch
  */
 class AccessChecker
@@ -26,14 +26,8 @@ class AccessChecker
      */
     public function recheckPassword(string $password): bool
     {
-        if (password_verify($password, UserManager::getHash()))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        if (password_verify($password, UserManager::getHash())) { return true; }
+        else { return false; }
     }
     
     /**
@@ -42,7 +36,7 @@ class AccessChecker
      */
     public function checkSystemAdmin(): bool
     {
-        return (UserManager::getOtherInformation()['status'] === User::STATUS_ADMIN) ? true : false;
+        return UserManager::getOtherInformation()['status'] === User::STATUS_ADMIN;
     }
 
     /**
@@ -51,7 +45,34 @@ class AccessChecker
      */
     public function checkDemoAccount(): bool
     {
-        return (UserManager::getOtherInformation()['status'] === User::STATUS_GUEST) ? true : false;
+        return UserManager::getOtherInformation()['status'] === User::STATUS_GUEST;
+    }
+
+    /**
+     * Metoda kontrolující, zda je zvolena nějaká třída
+     * @return bool TRUE, pokud je nějaká platná třída zvolena, FALSE, pokud ne
+     */
+    public function checkClass(): bool
+    {
+        return (isset($_SESSION['selection']['class']));
+    }
+
+    /**
+     * Metoda kontrolující, zda je zvolena nějaká poznávačka
+     * @return bool TRUE, pokud je nějaká platná poznávačka zvolena, FALSE, pokud ne
+     */
+    public function checkGroup(): bool
+    {
+        return (isset($_SESSION['selection']['group']));
+    }
+
+    /**
+     * Metoda kontrolující, zda je zvolena nějaká část
+     * @return bool TRUE, pokud je nějaká platná část zvolena, FALSE, pokud ne
+     */
+    public function checkPart(): bool
+    {
+        return (isset($_SESSION['selection']['part']));
     }
 }
 
