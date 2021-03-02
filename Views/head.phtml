@@ -30,7 +30,7 @@
     <body id="<?= $bodyId ?>">
 		<div class="overlay"></div>
 		<div class="container">
-			<?php $this->controllerToCall->displayView(); ?>
+			<?php require $this->getNextView(); ?>
 			<div id="messages">
 				<?php foreach ($messages as $messageBox) : ?>
 					<div class="message-item <?= $messageBox['messageClass'] ?>">
