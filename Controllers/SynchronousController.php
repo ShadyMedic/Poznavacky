@@ -2,8 +2,8 @@
 namespace Poznavacky\Controllers;
 
 use Poznavacky\Controllers\ControllerInterface;
-use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\Security\AntiXssSanitizer;
+use Poznavacky\Models\MessageBox;
 
 /**
  * Obecný kontroler pro nastavování hlaviček zobrazitelných stránek a zpracování informací na ně odeslaných
@@ -66,35 +66,36 @@ abstract class SynchronousController implements ControllerInterface
     }
 
     /**
-     * Metoda kontrolující, zda ve složce ukládající kontrolery existuje daný soubor a v případě že ano, vrací jeho celé jméno (obsahující jeho jmenný prostor)
+     * Metoda kontrolující, zda ve složce ukládající kontrolery nebo získávače dat existuje daný soubor a v případě že ano, vrací jeho celé jméno (obsahující jeho jmenný prostor)
      * Kód této metody byl z části inspirován touto odpovědi na StackOverflow https://stackoverflow.com/a/44315881/14011077
-     * @param string $controllerName Jméno kontroleru, který hledáme
-     * @param string $directory Složka, ve které má probíhat hledání, základně kořenová složka kontrolerů
+     * @param string $className Jméno kontroleru nebo získávače dat, který hledáme
+     * @param string $directory Složka, ve které má probíhat hledání
      * @return string Plné jméno třídy kontroleru
      */
-    protected function controllerExists(string $controllerName, string $directory = self::CONTROLLER_FOLDER): string
+    protected function classExists(string $className, string $directory): string
     {
-        $fileName = $controllerName.'.php';
+        $fileName = $className.'.php';
         $files = scandir($directory, SCANDIR_SORT_NONE);
         foreach($files as $value)
         {
+            if ($value === '.' || $value === '..') { continue; }
             $path = realpath($directory.DIRECTORY_SEPARATOR.$value);
-            $pathWithoutExtensionIfThereIsAny = mb_substr($path, 0, ((mb_strpos($path, '.') === false) ? mb_strlen($path) : mb_strpos($path, '.'))); //Předem se omlouvám
 
             if (!is_dir($path) && $fileName == $value) //Soubor
             {
                 //Ořízni cestu vedoucí ke složce obsahující kontrolery
-                $path = mb_substr($path, mb_strpos($path, __NAMESPACE__));
-                //Nahraď běžná lomítka (v adresářové struktuře) zpětnými lomítky (navigace jmenými prostor)
+                $rootNamespace = explode('\\', __NAMESPACE__)[0];
+                $path = mb_substr($path, mb_strpos($path, $rootNamespace));
+                //Nahraď běžná lomítka (v adresářové struktuře) zpětnými lomítky (navigace jmenými prostory)
                 $path = str_replace('/', '\\', $path);
                 //Ořízni příponu zdrojového souboru
                 $path = mb_substr($path, 0, mb_strpos($path, '.')); //Odstřihnutí přípony
                 return $path;
             }
-            else if (is_dir($path) && !($value === '.' || $value === '..' || empty($pathWithoutExtensionIfThereIsAny))) //Složka
+            else if (is_dir($path)) //Složka
             {
                 //Nalezena složka --> proveď na ní rekurzivní vyhledávání stejnou metodou
-                $resultFromSubdirectory = $this->controllerExists($controllerName, $pathWithoutExtensionIfThereIsAny);
+                $resultFromSubdirectory = $this->classExists($className, $path);
                 //Pokud byl soubor nalezen, navrať cestu k němu, jinak pokračuj v prohledávání souborů v současném adresáři
                 if ($resultFromSubdirectory) { return $resultFromSubdirectory; }
             }

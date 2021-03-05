@@ -63,7 +63,7 @@ class ManageController extends SynchronousController
         if ($argumentCount > 0)
         {
             $controllerName = $this->kebabToCamelCase($manageArguments[0]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
+            $pathToController = $this->classExists($controllerName);
             if ($pathToController)
             {
                 $this->controllerToCall = new $pathToController();

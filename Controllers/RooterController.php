@@ -66,7 +66,7 @@ class RooterController extends SynchronousController
             header('HTTP/1.0 404 Not Found');
             exit();
         }
-        $pathToController = $this->controllerExists($controllerName);
+        $pathToController = $this->classExists($controllerName.self::CONTROLLER_EXTENSION, self::CONTROLLER_FOLDER);
         $this->controllerToCall = new $pathToController;
 
         //Získání seznamu nastavní složek

@@ -31,7 +31,7 @@ class AdministrateController extends SynchronousController
         {
             //ReportActionController
             $controllerName = $this->kebabToCamelCase($parameters[0]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
+            $pathToController = $this->classExists($controllerName);
             if ($pathToController)
             {
                 $this->controllerToCall = new $pathToController();

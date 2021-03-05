@@ -78,7 +78,7 @@ class TestController extends SynchronousController
 
         $controllerName = "nonexistant-controller";
         if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::CONTROLLER_EXTENSION; }
-        $pathToController = $this->controllerExists($controllerName);
+        $pathToController = $this->classExists($controllerName);
         if ($pathToController)
         {
             //URL obsajuje požadavek na další kontroler používaný na test stránce

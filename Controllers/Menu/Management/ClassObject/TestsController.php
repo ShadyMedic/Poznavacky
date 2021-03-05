@@ -72,7 +72,7 @@ class TestsController extends SynchronousController
         if ($argumentCount > 1)
         {
             $controllerName = $this->kebabToCamelCase($testsArguments[1]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
+            $pathToController = $this->classExists($controllerName);
             if ($pathToController)
             {
                 $this->controllerToCall = new $pathToController();
