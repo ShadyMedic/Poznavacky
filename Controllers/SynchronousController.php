@@ -22,6 +22,7 @@ abstract class SynchronousController implements ControllerInterface
     //Informace pro zobrazení v pohledech - statické, protože každý požadavek vede k zobrazení maximálně jedné stránky
     protected static array $data = array();
     protected static array $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
+    protected static array $views = array();
 
     /**
      * Metoda přesměrovávající uživatele na jinou adresu a ukončující běh skriptu

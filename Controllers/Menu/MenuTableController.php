@@ -7,8 +7,9 @@ use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\TestGroupsFetcher;
 use Poznavacky\Models\Logger;
+use Poznavacky\Models\MessageBox;
 
-/** 
+/**
  * Kontroler starající se o rozhodnutí, jaká tabulka se bude zobrazovat na menu stránce
  * Tato třída nastavuje pohled obsahující poze tlačítko pro návrat a/nebo chybovou hlášku
  * Pohled obsahující samotnou tabulku a její obsah je nastavován kontrolerem MenuTableContentController
@@ -38,7 +39,7 @@ class MenuTableController extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/css.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js','js/menu.js', 'js/folders.js', 'js/invitations.js');
         self::$pageHeader['bodyId'] = 'menu';
-        
+
         //Získání dat
         $dataForTable = null;
         $viewForTable = null;
@@ -74,9 +75,21 @@ class MenuTableController extends SynchronousController
         {
             (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $this->controllerToCall = new MenuTableContentController();
+
+            //Nahraď pohled s tabulkou pohledem pro obyčejnou hlášku
+            for ($i = 0; $i < count(self::$views); $i++)
+            {
+                $view = self::$views[$i];
+                if (
+                    $view === 'menuClassesTable' ||
+                    $view === 'menuGroupsTable' ||
+                    $view === 'menuPartsTable'
+                ) { self::$views[$i] = 'menuTableMessage'; }
+            }
+
             $dataForController = $e->getMessage();
         }
-        
+
         //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
         $this->controllerToCall->process($dataForController); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
     }

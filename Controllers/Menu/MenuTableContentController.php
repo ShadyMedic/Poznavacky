@@ -20,10 +20,10 @@ class MenuTableContentController extends SynchronousController
 
     /**
      * Metoda skládající získaná data o zobrazované složce do tabulky a předávající je pohledu
-     * @param array $parameters Pole parametrů pro zpracování: prvním prvkem musí být název pohledu ke zobrazení druhým prvkem musí být dvourozměrné pole obsahující data pro zobrazení v tabulce nebo řetězec, pokud pokud má být zobrazena pouze jednoduchá hláška; pokud parametr prázdný, je přístup ke kontroleru zamítnut
+     * @param string|array $parameters Pole parametrů pro zpracování: prvním prvkem musí být název pohledu ke zobrazení druhým prvkem musí být dvourozměrné pole obsahující data pro zobrazení v tabulce nebo řetězec, pokud pokud má být zobrazena pouze jednoduchá hláška; pokud parametr prázdný, je přístup ke kontroleru zamítnut
      * @see SynchronousController::process()
      */
-    public function process(array $parameters): void
+    public function process($parameters): void
     {
         if (empty($parameters))
         {

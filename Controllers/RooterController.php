@@ -21,8 +21,6 @@ class RooterController extends SynchronousController
     private const SKIP_SELECTION_VALUE = 'ignore';
     private const NON_SELECTION_VALUE = 'skip';
 
-    private array $views = array();
-
     /**
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
      * @param array $parameters Pole parametrů, na indexu 0 musí být nezpracovaná URL adresa
@@ -86,12 +84,12 @@ class RooterController extends SynchronousController
         if (empty($checks[0])) { $checks = array(); }
 
         //Získání seznamu pohledu pro použití
-        $this->views = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Views'][$shortPath]);
-        if (empty($this->views[0])) { $this->views = array(); }
+        self::$views = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Views'][$shortPath]);
+        if (empty(self::$views[0])) { self::$views = array(); }
 
         //Získání seznamu získávačů dat pro pohledy
         $dataGetters = array();
-        foreach ($this->views as $view)
+        foreach (self::$views as $view)
         {
             $dataGetterName = @$iniRoutes['DataGetters'][$view];
             if (empty($dataGetterName)) { continue; }
@@ -247,7 +245,7 @@ class RooterController extends SynchronousController
      */
     private function getNextView(): string
     {
-        return self::VIEW_FOLDER.'/'.array_shift($this->views).'.phtml';
+        return self::VIEW_FOLDER.'/'.array_shift(self::$views).'.phtml';
     }
 
     /**
@@ -257,7 +255,7 @@ class RooterController extends SynchronousController
      */
     public function displayView(): void
     {
-        if (!empty($this->views))
+        if (!empty(self::$views))
         {
             //Vytvoř pole ošetřených hodnot
             $sanitized = $this->sanitizeData(self::$data);
@@ -271,7 +269,7 @@ class RooterController extends SynchronousController
 
             extract(self::$data);
             extract($sanitized);
-            require self::VIEW_FOLDER.'/'.array_shift($this->views).'.phtml';
+            require self::VIEW_FOLDER.'/'.array_shift(self::$views).'.phtml';
         }
     }
 
