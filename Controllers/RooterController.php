@@ -17,8 +17,9 @@ class RooterController extends SynchronousController
 
     private const ROUTES_INI_FILE = 'routes.ini';
     private const INI_ARRAY_SEPARATOR = ',';
-    //Význam následujících dvou konstant je blíže popsán v souboru routes.ini
-    private const SKIP_SELECTION_VALUE = 'ignore';
+    //Význam následujících tří konstant je blíže popsán v souboru routes.ini
+    private const CLEAR_SELECTION_PREFIX = '$';
+    private const IGNORE_SELECTION_VALUE = 'ignore';
     private const NON_SELECTION_VALUE = 'skip';
 
     /**
@@ -149,8 +150,13 @@ class RooterController extends SynchronousController
         for ($i = 0; $i < count($selections); $i++)
         {
             $selection = $selections[$i];
-            if ($selection === self::NON_SELECTION_VALUE) { continue; }
-            else if ($selection === self::SKIP_SELECTION_VALUE)
+            if ($selection[0] === self::CLEAR_SELECTION_PREFIX)
+            {
+                unset($_SESSION['selection'][substr($selection, 1)]);
+                continue;
+            }
+            else if ($selection === self::NON_SELECTION_VALUE) { continue; }
+            else if ($selection === self::IGNORE_SELECTION_VALUE)
             {
                 array_shift($urlVariablesValues);
                 continue;
