@@ -47,7 +47,7 @@ class IndexController extends SynchronousController
             catch (AccessDeniedException $e)
             {
                 //Kód nebyl platný
-                (new Logger(true))->warning('Okamžité přihlášení uživatele s ID {userId} selhalo, protože poskytnutý kód pro okamžité přihlášení nebyl platný (IP: {ip})', array('ip' => $_SERVER['REMOTE_ADDR']));
+                (new Logger(true))->warning('Okamžité přihlášení uživatele z IP adresy {ip} selhalo, protože poskytnutý kód pro okamžité přihlášení nebyl platný', array('ip' => $_SERVER['REMOTE_ADDR']));
                 $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
                 
                 //Vymaž cookie s neplatným kódem

@@ -34,7 +34,7 @@ class LogoutController extends SynchronousController
             
             //Odstraň cookie pro trvalé přihlášení
             unset($_COOKIE['instantLogin']);
-            setcookie('instantLogin', null, -1);
+            setcookie('instantLogin', null, -1, '/');
             
             //Vymaž kód pro trvalé přihlášení z databáze
             Db::executeQuery('DELETE FROM sezeni WHERE kod_cookie = ? LIMIT 1', array(md5($code)));
