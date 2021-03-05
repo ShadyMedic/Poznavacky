@@ -32,8 +32,7 @@ class MenuTableContentController extends SynchronousController
             $this->redirect('menu');
         }
 
-        $this->view = $parameters[0];
-        $aquiredData = $parameters[1];
+        $aquiredData = $parameters;
 
         if (gettype($aquiredData) === 'string')
         {

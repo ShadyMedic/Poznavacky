@@ -3,6 +3,7 @@ namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\NoDataException;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\TestGroupsFetcher;
 use Poznavacky\Models\Logger;
@@ -41,25 +42,24 @@ class MenuTableController extends SynchronousController
         //Získání dat
         $dataForTable = null;
         $viewForTable = null;
+        $aChecker = new AccessChecker();
         try
         {
-            if (!isset($_SESSION['selection']['class']))
+            if (!$aChecker->checkClass())
             {
                 $classesGetter = new TestGroupsFetcher();
                 $classes = $classesGetter->getClasses();
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam dostupných tříd', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                 $this->controllerToCall = new MenuTableContentController();
                 $dataForController = $classes;
-                $viewForTable = 'menuClassesTable';
             }
-            else if (!isset($_SESSION['selection']['group']))
+            else if (!$aChecker->checkGroup())
             {
                 $groupsGetter = new TestGroupsFetcher();
                 $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam poznávaček ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $_SESSION['selection']['class']->getId()));
                 $this->controllerToCall = new MenuTableContentController();
                 $dataForController = $groups;
-                $viewForTable = 'menuGroupsTable';
             }
             else
             {
@@ -68,25 +68,17 @@ class MenuTableController extends SynchronousController
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam částí v poznávačce s ID {groupId} ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $_SESSION['selection']['group']->getId(), 'classId' => $_SESSION['selection']['class']->getId()));
                 $this->controllerToCall = new MenuTableContentController();
                 $dataForController = $parts;
-                $viewForTable = 'menuPartsTable';
             }
         }
         catch (NoDataException $e)
         {
-            if ($e->getMessage() === NoDataException::UNKNOWN_CLASS || $e->getMessage() === NoDataException::UNKNOWN_GROUP || $e->getMessage() === NoDataException::UNKNOWN_PART)
-            {
-                (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která nemohla být nalezena v databázi', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-                $this->redirect('error404');
-            }
             (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $this->controllerToCall = new MenuTableContentController();
             $dataForController = $e->getMessage();
-            $viewForTable = 'menuTableMessage';
         }
         
         //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
-        $this->controllerToCall->process(array($viewForTable, $dataForController)); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
-        $this->view = 'inherit';
+        $this->controllerToCall->process($dataForController); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
     }
 }
 
