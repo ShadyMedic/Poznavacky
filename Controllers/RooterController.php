@@ -50,7 +50,7 @@ class RooterController extends SynchronousController
         {
             if (in_array($i, $urlVariablesPositions))
             {
-                $urlArguments[$i] = '{'.$j.'}';
+                $urlArguments[$i] = '<'.$j.'>';
                 $j++; //Číslo proměnné
             }
         }
@@ -111,12 +111,12 @@ class RooterController extends SynchronousController
         if ($this->controllerToCall instanceof SynchronousController)
         {
             //Synchroní kontroler - nastav hlavičky stránky a základní pohled
-            self::$data['title'] = $this->controllerToCall::$pageHeader['title'];
-            self::$data['description'] = $this->controllerToCall::$pageHeader['description'];
-            self::$data['keywords'] = $this->controllerToCall::$pageHeader['keywords'];
-            self::$data['cssFiles'] = $this->controllerToCall::$pageHeader['cssFiles'];
-            self::$data['jsFiles'] = $this->controllerToCall::$pageHeader['jsFiles'];
-            self::$data['bodyId'] = $this->controllerToCall::$pageHeader['bodyId'];
+            self::$data['title'] = SynchronousController::$pageHeader['title'];
+            self::$data['description'] = SynchronousController::$pageHeader['description'];
+            self::$data['keywords'] = SynchronousController::$pageHeader['keywords'];
+            self::$data['cssFiles'] = SynchronousController::$pageHeader['cssFiles'];
+            self::$data['jsFiles'] = SynchronousController::$pageHeader['jsFiles'];
+            self::$data['bodyId'] = SynchronousController::$pageHeader['bodyId'];
 
             self::$data['messages'] = $this->getMessages();
             self::$data['currentYear'] = date('Y');
@@ -137,28 +137,28 @@ class RooterController extends SynchronousController
         for ($i = 0; $i < count($selections); $i++)
         {
             $selection = $selections[$i];
-            $currentUrl = null;
             if ($selection === self::NON_SELECTION_VALUE) { continue; }
             else if ($selection === self::SKIP_SELECTION_VALUE)
             {
-                $currentUrl = array_shift($urlVariablesValues);
-                $i--;
+                array_shift($urlVariablesValues);
+                continue;
             }
+            $currentUrl = array_shift($urlVariablesValues);
 
             $folderClass = null;
             $alreadySet = false;
             switch ($selection)
             {
                 case 'class':
-                    $folderClass = 'ClassObject';
+                    $folderClass = 'Poznavacky\\Models\\DatabaseItems\\ClassObject';
                     $alreadySet = ($aChecker->checkClass() && $_SESSION['selection']['class']->getUrl() === $currentUrl);
                     break;
                 case 'group':
-                    $folderClass = 'Group';
+                    $folderClass = 'Poznavacky\\Models\\DatabaseItems\\Group';
                     $alreadySet = ($aChecker->checkGroup() && $_SESSION['selection']['group']->getUrl() === $currentUrl);
                     break;
                 case 'part':
-                    $folderClass = 'Part';
+                    $folderClass = 'Poznavacky\\Models\\DatabaseItems\\Part';
                     $alreadySet = ($aChecker->checkPart() && $_SESSION['selection']['part']->getUrl() === $currentUrl);
                     break;
             }
@@ -171,7 +171,6 @@ class RooterController extends SynchronousController
             try { $folder->load(); }
             catch (BadMethodCallException $e)
             {
-                (new Logger(true))->debug($currentUrl);
                 //Třída/poznávačka/část splňující daná kritéria neexistuje
                 return false;
             }
@@ -199,6 +198,13 @@ class RooterController extends SynchronousController
                     break;
                 case 'class':
                     if (!$aChecker->checkClass()) { return false; }
+                    break;
+                case 'classAccess':
+                    if (!$_SESSION['selection']['class']->checkAccess(UserManager::getId(), true))
+                    {
+                        unset($_SESSION['selection']);
+                        return false;
+                    }
                     break;
                 case 'classAdmin':
                     if (!$_SESSION['selection']['class']->checkAdmin(UserManager::getId())) { return false; }

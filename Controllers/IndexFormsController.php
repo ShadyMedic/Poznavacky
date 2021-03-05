@@ -60,7 +60,9 @@ class IndexFormsController extends AjaxController
                     $form = 'login';
                     $userLogger = new LoginUser();
                     $userLogger->processLogin($_POST);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu/'.UserManager::getUser()['lastMenuTableUrl']);
+                    $menuUrl = 'menu';
+                    if (!empty(UserManager::getUser()['lastMenuTableUrl'])) { $menuUrl .= '/'.UserManager::getUser()['lastMenuTableUrl']; }
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, $menuUrl);
                     echo $response->getResponseString();
                     break;
                 //Registrace
