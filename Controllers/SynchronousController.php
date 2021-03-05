@@ -13,6 +13,8 @@ abstract class SynchronousController implements ControllerInterface
 {
     const CONTROLLER_EXTENSION = 'Controller';
     const CONTROLLER_FOLDER = 'Controllers';
+    const DATA_GETTER_EXTENSION = 'DataGetter';
+    const DATA_GETTER_FOLDER = 'DataGetters';
     const MODEL_FOLDER = 'Models';
     const VIEW_FOLDER = 'Views';
 

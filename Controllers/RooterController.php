@@ -89,6 +89,17 @@ class RooterController extends SynchronousController
         $this->views = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Views'][$shortPath]);
         if (empty($this->views[0])) { $this->views = array(); }
 
+        //Získání seznamu získávačů dat pro pohledy
+        $dataGetters = array();
+        foreach ($this->views as $view)
+        {
+            $dataGetterName = @$iniRoutes['DataGetters'][$view];
+            if (empty($dataGetterName)) { continue; }
+            $pathToDataGetter = $this->classExists($dataGetterName.self::DATA_GETTER_EXTENSION, self::DATA_GETTER_FOLDER);
+            $dataGetter = new $pathToDataGetter;
+            $dataGetters[] = $dataGetter;
+        }
+
         /* Všechny potřebné informace z routes.ini získány */
 
         //Nastavení složek
@@ -105,7 +116,13 @@ class RooterController extends SynchronousController
             exit();
         }
 
-        //Získání dat pro zobrazení v pohledu
+        //Získání dat pro zobrazení v obalových pohledech
+        foreach ($dataGetters as $dataGetter)
+        {
+            self::$data = array_merge(self::$data, $returnedData = $dataGetter->get());
+        }
+
+        //Získání dat pro zobrazení v hlavním pohledu
         $this->controllerToCall->process($urlVariablesValues);
 
         if ($this->controllerToCall instanceof SynchronousController)
@@ -117,9 +134,6 @@ class RooterController extends SynchronousController
             self::$data['cssFiles'] = SynchronousController::$pageHeader['cssFiles'];
             self::$data['jsFiles'] = SynchronousController::$pageHeader['jsFiles'];
             self::$data['bodyId'] = SynchronousController::$pageHeader['bodyId'];
-
-            self::$data['messages'] = $this->getMessages();
-            self::$data['currentYear'] = date('Y');
         }
       # else { /*AJAX kontroler - nezobrazuj žádný pohled*/ }
     }
@@ -190,6 +204,7 @@ class RooterController extends SynchronousController
     /**
      * Metoda provádějící všechny bezpečnostní kontroly, například zda je přihlášený uživatel správcem zvolené třídy
      * @param array $checks Pole řetězců popisujících kontroly, které se musejí provést, jejich význam je blíže popsán v souboru routes.ini
+     * @return bool TRUE, pokud všechny kontroly proběhnou v pořádku, FALSE, pokud ne
      */
     private function runChecks(array $checks): bool
     {
@@ -233,37 +248,6 @@ class RooterController extends SynchronousController
     private function getNextView(): string
     {
         return self::VIEW_FOLDER.'/'.array_shift($this->views).'.phtml';
-    }
-
-    /**
-     * Metoda načítající hlášky pro uživatele uložené v $_SESSION a přidávající jejich obsah do dat, které jsou později předány pohledu
-     * Hlášky jsou poté ze sezení vymazány
-     */
-    private function getMessages(): array
-    {
-        if (isset($_SESSION['messages']))
-        {
-            $messages = $_SESSION['messages'];
-            $messagesData = array();
-            foreach ($messages as $messageBox)
-            {
-                $messagesData[] = $messageBox->getData();
-            }
-            $this->clearMessages();
-            return $messagesData;
-        }
-        else
-        {
-            return array();
-        }
-    }
-
-    /**
-     * Metoda odstraňující všechny hlášky pro uživatele uloženy v $_SESSION
-     */
-    private function clearMessages(): void
-    {
-        unset($_SESSION['messages']);
     }
 
     /**
