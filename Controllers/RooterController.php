@@ -92,7 +92,7 @@ class RooterController extends SynchronousController
         /* Všechny potřebné informace z routes.ini získány */
 
         //Nastavení složek
-        if (!$this->setFolders($selections, $urlVariablesValues))
+        if (!$this->setFolders($selections, $urlVariablesValues)) //Předávání podle reference zajistí, že se spotřebované parametry odeberou
         {
             header('HTTP/1.0 404 Not Found');
             exit();
@@ -131,7 +131,7 @@ class RooterController extends SynchronousController
      * @param array $urlVariablesValues Pole argumentů získaných z URL pro zpracování, pořadí prvků musí odpovídat hodnotám v prvním argumentu
      * @return bool TRUE, pokud se povedlo všechny složky nastavit, FALSE, pokud některá ze složek nebyla podle URL v databázi nalezena
      */
-    private function setFolders(array $selections, array $urlVariablesValues): bool
+    private function setFolders(array $selections, array &$urlVariablesValues): bool
     {
         $aChecker = new AccessChecker();
         for ($i = 0; $i < count($selections); $i++)
@@ -175,6 +175,14 @@ class RooterController extends SynchronousController
                 return false;
             }
             $_SESSION['selection'][$selection] = $folder;
+
+            //Vymaž podsložky přepsané složky
+            if ($selection === 'class')
+            {
+                unset($_SESSION['selection']['group']);
+                unset($_SESSION['selection']['part']);
+            }
+            if ($selection === 'group'){ unset($_SESSION['selection']['part']); }
         }
         return true;
     }
