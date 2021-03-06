@@ -25,7 +25,7 @@ class ConfirmGroupEditController extends AjaxController
         if (!isset($_POST['data']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
         
         $group = $_SESSION['selection']['group'];
@@ -62,9 +62,6 @@ class ConfirmGroupEditController extends AjaxController
         }
         
         echo $response->getResponseString();
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

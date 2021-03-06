@@ -20,8 +20,7 @@ class ReportsController extends SynchronousController
         $group = $_SESSION['selection']['group'];
         self::$data['reports'] = $group->getReports();
         self::$data['naturalsInGroup'] = $group->getNaturals();
-        self::$data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
-        
+
         self::$pageHeader['title'] = 'Správa hlášení';
         self::$pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
         self::$pageHeader['keywords'] = '';
@@ -34,8 +33,6 @@ class ReportsController extends SynchronousController
                 'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests/'.$_SESSION['selection']['group']->getUrl().'/reports'
             )
         );
-        
-        $this->view = 'reportsTableManage';
     }
 }
 

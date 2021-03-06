@@ -39,8 +39,6 @@ class SubmitPictureController extends AjaxController
         }
 
         echo $response->getResponseString();
-
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
+

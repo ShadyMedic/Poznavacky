@@ -100,9 +100,6 @@ class IndexFormsController extends AjaxController
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED, array('origin' => $form));
             echo $response->getResponseString();
         }
-
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

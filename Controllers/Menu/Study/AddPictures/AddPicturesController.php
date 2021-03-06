@@ -78,9 +78,6 @@ class AddPicturesController extends SynchronousController
             self::$data['naturals'] = $part->getNaturals();
             (new Logger(true))->info('Přístup na stránku pro přidávání obrázků do části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('partId' => $part->getId(), 'groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
-        
-        self::$data['returnUrl'] = 'menu/'.$class->getUrl().'/'.$group->getUrl();
-        
-        $this->view = 'addPictures';
     }
 }
+

@@ -91,7 +91,7 @@ class MenuTableController extends SynchronousController
         }
 
         //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
-        $this->controllerToCall->process($dataForController); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
+        $this->controllerToCall->process(array($dataForController)); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo
     }
 }
 

@@ -28,26 +28,12 @@ class ClassUpdateController extends AjaxController
         if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
         
         header('Content-Type: application/json');
         //Kontrola, zda je zvolena nějaká třída
-        if (!isset($_SESSION['selection']['class']))
-        {
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_CLASS_NOT_CHOSEN, array('origin' => $_POST['action']));
-            echo $response->getResponseString();
-            exit();
-        }
         $class = $_SESSION['selection']['class'];
-        
-        //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy nebo systémový administrátor
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser() || !($class->checkAdmin(UserManager::getId()) || $aChecker->checkSystemAdmin()))
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
         
         try
         {
@@ -109,6 +95,7 @@ class ClassUpdateController extends AjaxController
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
+                    $aChecker = new AccessChecker();
                     if (!$aChecker->recheckPassword($password))
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
@@ -118,7 +105,7 @@ class ClassUpdateController extends AjaxController
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
-                    exit();
+                    return;
             }
         }
         catch (AccessDeniedException | NoDataException $e)
@@ -126,9 +113,6 @@ class ClassUpdateController extends AjaxController
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

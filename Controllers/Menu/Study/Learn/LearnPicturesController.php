@@ -47,7 +47,7 @@ class LearnPicturesController extends AjaxController
             //Žádné přírodniny
             (new Logger(true))->warning('Uživatel s ID {userId} se pokusil získat obrázek pro učební stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak zvolená poznávačka/část neobsahuje žádné přírodniny', array('userId' => UserManager::getId(), 'groupId' => $group->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
 
         $naturalName = urldecode($_GET['natural']);
@@ -61,7 +61,7 @@ class LearnPicturesController extends AjaxController
             (new Logger(true))->alert('Uživatel s ID {userId} zažádal o obrázky přírodniny s ID {naturalId} pro učební stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}', array('userId' => UserManager::getId(), 'naturalId' => $natural->getId(), 'groupId' => $group->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED);
             echo $response->getResponseString();
-            exit();
+            return;
         }
         
         $picturesArr = array();
@@ -74,9 +74,6 @@ class LearnPicturesController extends AjaxController
         header('Content-Type: application/json');
         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('pictures' => $picturesArr));
         echo $response->getResponseString();
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

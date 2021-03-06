@@ -32,7 +32,6 @@ class EditController extends SynchronousController
                 'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/members/tests/'.$_SESSION['selection']['class']->getUrl().'/edit'
             )
         );
-        self::$data['returnButtonLink'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
 
         //Metoda získání URL poznávaček a jmen přírodnin napsaná podle jednoho komentáře pod touto odpovědí na StackOverflow: https://stackoverflow.com/a/1119029/14011077
         self::$data['groupList'] = array_map(function (Group $group): string { return $group->getUrl(); }, $_SESSION['selection']['class']->getGroups());
@@ -53,8 +52,6 @@ class EditController extends SynchronousController
             $strippedPart->initialize($part->getName(), $part->getUrl(), null, $strippedNaturals);   //Potřebujeme jenom název a URL části a seznam přírodnin
             return $strippedPart;
         }, $_SESSION['selection']['group']->getParts());
-
-        $this->view = 'edit';
     }
 }
 

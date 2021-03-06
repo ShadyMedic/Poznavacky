@@ -69,8 +69,6 @@ class IndexController extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/css.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/index.js');
         self::$pageHeader['bodyId'] = 'index';
-        
-        $this->view = 'index';
     }
 }
 

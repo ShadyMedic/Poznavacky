@@ -78,19 +78,6 @@ class LearnController extends SynchronousController
             self::$data['naturals'] = $part->getNaturals();
             (new Logger(true))->info('Přístup na stránku pro učení části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('partId' => $part->getId(), 'groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
-
-        $controllerName = "nonexistant-controller";
-        if (isset($parameters[0])){ $controllerName = $this->kebabToCamelCase($parameters[0]).self::CONTROLLER_EXTENSION; }
-        $pathToController = $this->classExists($controllerName);
-        if ($pathToController)
-        {
-            //URL obsajuje požadavek na další kontroler používaný na learn stránce
-            $this->controllerToCall = new $pathToController();
-            $this->controllerToCall->process($parameters);
-            self::$data['navigationBar'] = array_merge(self::$data['navigationBar'], $this->controllerToCall::data['navigationBar']);
-        }
-        
-        $this->view = 'learn';
     }
 }
 

@@ -23,23 +23,9 @@ class AdministrateActionController extends AjaxController
         if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
-        
-        //Kontrola, zda je nějaký uživatel přihlášen
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser())
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
-        //Kontrola, zda je přihlášený uživatel administrátorem
-        if (!$aChecker->checkSystemAdmin())
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
-        
+
         header('Content-Type: application/json');
         $administration = new Administration();
         try
@@ -136,7 +122,7 @@ class AdministrateActionController extends AjaxController
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
-                    exit();
+                    return;
             }
         }
         catch (AccessDeniedException $e)
@@ -144,9 +130,6 @@ class AdministrateActionController extends AjaxController
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

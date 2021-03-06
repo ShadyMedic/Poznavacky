@@ -35,8 +35,6 @@ class LegalController extends SynchronousController
         catch (UnexpectedValueException $e) { self::$data['staticContent'][1] = $e->getMessage(); }
         try { self::$data['staticContent'][2] = $githubFetcher->getCookiesInfo(); }
         catch (UnexpectedValueException $e) { self::$data['staticContent'][2] = $e->getMessage(); }
-
-        $this->view = 'legal';
     }
 }
 

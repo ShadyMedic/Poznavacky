@@ -47,7 +47,7 @@ class TestPicturesController extends AjaxController
             //Žádné přírodniny
             (new Logger(true))->warning('Uživatel s ID {userId} se pokusil získat náhodné obrázky pro zkoušecí stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak zvolená poznávačka/část neobsahuje žádné přírodniny', array('userId' => UserManager::getId(), 'groupId' => $group->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
 
         //Získání objektů obrázků
@@ -85,9 +85,6 @@ class TestPicturesController extends AjaxController
         header('Content-Type: application/json');
         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('pictures' => $picturesArr));
         echo $response->getResponseString();
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

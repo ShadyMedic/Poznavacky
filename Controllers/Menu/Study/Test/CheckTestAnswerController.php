@@ -36,7 +36,7 @@ class CheckTestAnswerController extends AjaxController
             (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal svou odpověď na obrázek číslo {questionNum} na zkoušecí stránce části/í poznávačky s ID {groupId}, avšak správná odpověď nebyla v úložišti sezení nalezena', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'questionNum' => $questionNum, 'groupId' => $_SESSION['selection']['group']->getId()));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage());
             echo $response->getResponseString();
-            exit();
+            return;
         }
         
         if ($result)
@@ -56,9 +56,6 @@ class CheckTestAnswerController extends AjaxController
         //Vymaž využitou odpověď ze $_SESSION['testAnswers']
         //Tak nebude možné odpověď odeslat znovu a farmit tak uhodnuté obrázky
         unset($_SESSION['testAnswers'][$questionNum]);
-        
-        //Zastav zpracování skriptu, aby se nevypsaly pohledy
-        exit();
     }
 }
 

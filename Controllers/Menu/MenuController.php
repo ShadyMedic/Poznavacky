@@ -29,18 +29,9 @@ class MenuController extends SynchronousController
         self::$data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
 
         $aChecker = new AccessChecker();
-        if (!$aChecker->checkClass())
-        {
-            //Vypisují se třídy
-        }
-        else if (!$aChecker->checkGroup())
-        {
-            //Vypisují se poznávačky
-        }
-        else if (!$aChecker->checkPart())
-        {
-            //Vypisují se části
-        }
+        # if (!$aChecker->checkClass()) { /*Vypisují se třídy*/ }
+        # else if (!$aChecker->checkGroup()) { /*Vypisují se poznávačky*/ }
+        # else if (!$aChecker->checkPart()) { /*Vypisují se části*/ }
 
         //Vypsání tabulky na menu stránce
         self::$pageHeader['bodyId'] = 'menu';

@@ -19,13 +19,6 @@ class AccountSettingsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        //Kontrola, zda se nejedná o demo účet
-        $aChecker = new AccessChecker();
-        if ($aChecker->checkDemoAccount())
-        {
-            $this->redirect('error403');
-        }
-
         self::$data['userId'] = UserManager::getId();
         self::$data['userName'] = UserManager::getName();
         self::$data['userEmail'] = UserManager::getEmail();
@@ -47,8 +40,6 @@ class AccountSettingsController extends SynchronousController
                 'link' => 'menu/account-settings'
             )
         );
-
-        $this->view = 'accountSettings';
     }
 }
 

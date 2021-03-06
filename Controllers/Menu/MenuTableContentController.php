@@ -20,10 +20,10 @@ class MenuTableContentController extends SynchronousController
 
     /**
      * Metoda skládající získaná data o zobrazované složce do tabulky a předávající je pohledu
-     * @param string|array $parameters Pole parametrů pro zpracování: prvním prvkem musí být název pohledu ke zobrazení druhým prvkem musí být dvourozměrné pole obsahující data pro zobrazení v tabulce nebo řetězec, pokud pokud má být zobrazena pouze jednoduchá hláška; pokud parametr prázdný, je přístup ke kontroleru zamítnut
+     * @param array $parameters Pole s jedním parametrem pro zpracování - jediným prvkem musí být dvourozměrné pole obsahující data pro zobrazení v tabulce nebo řetězec, pokud pokud má být zobrazena pouze jednoduchá hláška; pokud parametr prázdný, je přístup ke kontroleru zamítnut
      * @see SynchronousController::process()
      */
-    public function process($parameters): void
+    public function process(array $parameters): void
     {
         if (empty($parameters))
         {
@@ -32,7 +32,7 @@ class MenuTableContentController extends SynchronousController
             $this->redirect('menu');
         }
 
-        $aquiredData = $parameters;
+        $aquiredData = $parameters[0];
 
         if (gettype($aquiredData) === 'string')
         {
@@ -43,9 +43,6 @@ class MenuTableContentController extends SynchronousController
         
         self::$data['table'] = $aquiredData;
 		self::$data['invitations'] = UserManager::getUser()->getActiveInvitations();
-		self::$data['invitationsCount'] = count(self::$data['invitations']);
-        $checker = new AccessChecker();
-        self::$data['demoVersion'] = $checker->checkDemoAccount();
 
         //Obsluha formuláře pro založení nové třídy
         if (!empty($_POST)) //Kontrola, zda právě nebyl formulář odeslán

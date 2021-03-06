@@ -27,8 +27,6 @@ class Error403Controller extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/error.css');
         self::$pageHeader['jsFiles'] = array();
         self::$pageHeader['bodyId'] = 'error-403';
-        
-        $this->view = 'error403';
     }
 }
 

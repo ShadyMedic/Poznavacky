@@ -20,49 +20,22 @@ class AdministrateController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkSystemAdmin())
-        {
-            $this->redirect('error403');
-        }
+        $administration = new Administration();
 
-        //Zkontroluj, zda není specifikován další kontroler
-        if (!empty($parameters))
-        {
-            //ReportActionController
-            $controllerName = $this->kebabToCamelCase($parameters[0]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->classExists($controllerName);
-            if ($pathToController)
-            {
-                $this->controllerToCall = new $pathToController();
-            }
-        }
+        self::$data['loggedAdminName'] = UserManager::getName();
 
-        if (!empty($this->controllerToCall))
-        {
-            $this->controllerToCall->process(array_slice($parameters, 1));
-        }
-        else
-        {
-            $administration = new Administration();
+        self::$data['users'] = $administration->getAllUsers(false);
+        self::$data['classes'] = $administration->getAllClasses();
+        self::$data['reports'] = $administration->getAdminReports();
+        self::$data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
+        self::$data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
 
-            self::$data['loggedAdminName'] = UserManager::getName();
-
-            self::$data['users'] = $administration->getAllUsers(false);
-            self::$data['classes'] = $administration->getAllClasses();
-            self::$data['reports'] = $administration->getAdminReports();
-            self::$data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
-            self::$data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
-
-            self::$pageHeader['title'] = 'Správa služby';
-            self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
-            self::$pageHeader['keywords'] = '';
-            self::$pageHeader['cssFiles'] = array('css/private.css');
-            self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/administrate.js');
-            self::$pageHeader['bodyId'] = 'administrate';
-
-            $this->view = 'administrate';
-        }
+        self::$pageHeader['title'] = 'Správa služby';
+        self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/administrate.js');
+        self::$pageHeader['bodyId'] = 'administrate';
     }
 }
 

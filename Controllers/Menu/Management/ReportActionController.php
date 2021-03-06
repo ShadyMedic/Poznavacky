@@ -24,7 +24,7 @@ class ReportActionController extends AjaxController
         if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
         
         header('Content-Type: application/json');
@@ -34,18 +34,11 @@ class ReportActionController extends AjaxController
         {
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_CLASS_NOT_CHOSEN, array('origin' => $_POST['action']));
             echo $response->getResponseString();
-            exit();
+            return;
         }
 
         $class = null;
         if (!$aChecker->checkSystemAdmin()) { $class = $_SESSION['selection']['class']; }
-        
-        //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy
-        if (!$aChecker->checkUser() || !($aChecker->checkSystemAdmin() || $class->checkAdmin(UserManager::getId())))
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
 
         try
         {
@@ -75,7 +68,7 @@ class ReportActionController extends AjaxController
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
-                    exit();
+                    return;
             }
         }
         catch (AccessDeniedException $e)
@@ -83,9 +76,6 @@ class ReportActionController extends AjaxController
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

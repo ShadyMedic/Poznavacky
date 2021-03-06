@@ -27,8 +27,6 @@ class Error404Controller extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/error.css');
         self::$pageHeader['jsFiles'] = array();
         self::$pageHeader['bodyId'] = 'error-404';
-        
-        $this->view = 'error404';
     }
 }
 

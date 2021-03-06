@@ -22,13 +22,6 @@ class RecoverPasswordController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        self::$pageHeader['title'] = 'Obnovit heslo';
-        self::$pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
-        self::$pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
-        self::$pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
-        self::$pageHeader['bodyId'] = 'recover-password';
-
         $code = null;
         try
         {
@@ -58,6 +51,7 @@ class RecoverPasswordController extends SynchronousController
         catch (AccessDeniedException $e)
         {
             //Chybný kód
+            (new Logger(true))->alert('Uživatel přistupující do systému z IP adresy {ip} odeslal kód pro obnovu hesla (hash {hash}), který však zřejmě nebyl platný', array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => md5($code)));
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
             $this->redirect('');
         }
@@ -65,13 +59,18 @@ class RecoverPasswordController extends SynchronousController
         {
             (new Logger(true))->alert('Uživatel přistupující do systému z IP adresy {ip} odeslal kód pro obnovu hesla (hash {hash}), který se však nepodařilo ověřit kvůli chybě databáze; je možné, že se k databázi nelze připojit', array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => md5($code)));
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED);
+            $this->redirect('');
         }
 
-        if (isset(self::$data['username']))
-        {
-            //Kód nalezen a uživatel identifikován
-            $this->view = 'recoverPassword';
-        }
+        //Kontrola kódu v pořádku
+
+        self::$pageHeader['title'] = 'Obnovit heslo';
+        self::$pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
+        self::$pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
+        self::$pageHeader['bodyId'] = 'recover-password';
+
     }
 }
 
