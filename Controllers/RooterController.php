@@ -17,10 +17,11 @@ class RooterController extends SynchronousController
 
     private const ROUTES_INI_FILE = 'routes.ini';
     private const INI_ARRAY_SEPARATOR = ',';
-    //Význam následujících tří konstant je blíže popsán v souboru routes.ini
-    private const CLEAR_SELECTION_PREFIX = '$';
+    //Význam následujících čtyř konstant je blíže popsán v souboru routes.ini
+    private const CLEAR_SELECTION_PREFIX = '-';
     private const IGNORE_SELECTION_VALUE = 'ignore';
     private const NON_SELECTION_VALUE = 'skip';
+    private const OR_CHECK_OPERATOR = '?';
 
     /**
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
@@ -215,31 +216,42 @@ class RooterController extends SynchronousController
         $aChecker = new AccessChecker();
         foreach ($checks as $check)
         {
-            switch ($check)
+            $subChecks = explode(self::OR_CHECK_OPERATOR, $check);
+            $subCheckSuccessfulResults = 0;
+            foreach ($subChecks as $subCheck)
             {
-                case 'user':
-                    if (!$aChecker->checkUser()) { return false; }
-                    break;
-                case 'systemAdmin':
-                    if (!$aChecker->checkSystemAdmin()) { return false; }
-                    break;
-                case 'class':
-                    if (!$aChecker->checkClass()) { return false; }
-                    break;
-                case 'classAccess':
-                    if (!$_SESSION['selection']['class']->checkAccess(UserManager::getId(), true))
-                    {
-                        unset($_SESSION['selection']);
-                        return false;
-                    }
-                    break;
-                case 'classAdmin':
-                    if (!$_SESSION['selection']['class']->checkAdmin(UserManager::getId())) { return false; }
-                    break;
-                case 'group':
-                    if (!$aChecker->checkGroup()) { return false; }
-                    break;
+                $subCheckResult = true;
+                switch ($subCheck)
+                {
+                    case 'user':
+                        if (!$aChecker->checkUser()) { $subCheckResult = false; }
+                        break;
+                    case 'member':
+                        if ($aChecker->checkDemoAccount()) { $subCheckResult = false; }
+                        break;
+                    case 'systemAdmin':
+                        if (!$aChecker->checkSystemAdmin()) { $subCheckResult = false; }
+                        break;
+                    case 'class':
+                        if (!$aChecker->checkClass()) { $subCheckResult = false; }
+                        break;
+                    case 'classAccess':
+                        if (!$_SESSION['selection']['class']->checkAccess(UserManager::getId(), true))
+                        {
+                            unset($_SESSION['selection']);
+                            $subCheckResult = false;
+                        }
+                        break;
+                    case 'classAdmin':
+                        if (!$_SESSION['selection']['class']->checkAdmin(UserManager::getId())) { return false; }
+                        break;
+                    case 'group':
+                        if (!$aChecker->checkGroup()) { $subCheckResult = false; }
+                        break;
+                }
+                if ($subCheckResult === true) { $subCheckSuccessfulResults++; }
             }
+            if ($subCheckSuccessfulResults === 0) { return false; }
         }
         return true;
     }
