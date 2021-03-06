@@ -516,7 +516,7 @@ function confirmPictureEdit(picId)
 	}
 	
 	//Odeslat data na server
-	$.post("report-action",
+	$.post("administrate/report-action",
 		{
 			action: 'update picture',
 			pictureId: picId,
@@ -560,7 +560,7 @@ function confirmPictureEdit(picId)
 }
 function deletePicture(event, picId, asAdmin = false)
 {
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
+	var ajaxUrl = "administrate/report-action";
 	
 	$.post(ajaxUrl,
 			{
@@ -590,7 +590,7 @@ function deletePicture(event, picId, asAdmin = false)
 }
 function deleteReport(event, reportId, asAdmin = false)
 {
-	var ajaxUrl = (asAdmin) ? "administrate-action" : "report-action";
+	var ajaxUrl = "administrate/report-action";
 	
 	$.post(ajaxUrl,
 		{
