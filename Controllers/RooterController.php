@@ -165,19 +165,23 @@ class RooterController extends SynchronousController
             $currentUrl = array_shift($urlVariablesValues);
 
             $folderClass = null;
+            $parentFolder = null;
             $alreadySet = false;
             switch ($selection)
             {
                 case 'class':
                     $folderClass = 'Poznavacky\\Models\\DatabaseItems\\ClassObject';
+                    $parentFolder = null;
                     $alreadySet = ($aChecker->checkClass() && $_SESSION['selection']['class']->getUrl() === $currentUrl);
                     break;
                 case 'group':
                     $folderClass = 'Poznavacky\\Models\\DatabaseItems\\Group';
+                    $parentFolder = $_SESSION['selection']['class'];
                     $alreadySet = ($aChecker->checkGroup() && $_SESSION['selection']['group']->getUrl() === $currentUrl);
                     break;
                 case 'part':
                     $folderClass = 'Poznavacky\\Models\\DatabaseItems\\Part';
+                    $parentFolder = $_SESSION['selection']['group'];
                     $alreadySet = ($aChecker->checkPart() && $_SESSION['selection']['part']->getUrl() === $currentUrl);
                     break;
             }
@@ -186,7 +190,7 @@ class RooterController extends SynchronousController
             if ($alreadySet) { continue; }
             //Uložení objektu třídy/poznávačky/části do $_SESSION
             $folder = new $folderClass(false, 0);
-            $folder->initialize(null, $currentUrl);
+            $folder->initialize(null, $currentUrl, $parentFolder); //U ClassObject je třetí argument $status, ale zde to bude prostě NULL
             try { $folder->load(); }
             catch (BadMethodCallException $e)
             {
