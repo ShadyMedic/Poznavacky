@@ -172,6 +172,7 @@ class Report extends DatabaseItem
     public function getAdditionalInformation(): string
     {
         $this->loadIfNotLoaded($this->additionalInformation);
+        if (gettype($this->additionalInformation) === 'NULL') { return ''; }
         return $this->additionalInformation;
     }
     
