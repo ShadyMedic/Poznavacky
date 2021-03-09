@@ -2,8 +2,9 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\SynchronousController;
-use Poznavacky\Models\Logger;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
 
 /**
@@ -15,6 +16,7 @@ class LeaveController extends SynchronousController
     /**
      * Metoda odstraňujícího přihlášeného uživatele ze zvolené třídy (ruší jeho členství)
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlhášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void

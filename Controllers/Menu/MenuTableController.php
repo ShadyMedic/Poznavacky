@@ -1,13 +1,15 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\TestGroupsFetcher;
 use Poznavacky\Models\Logger;
-use Poznavacky\Models\MessageBox;
 
 /**
  * Kontroler starající se o rozhodnutí, jaká tabulka se bude zobrazovat na menu stránce
@@ -22,6 +24,9 @@ class MenuTableController extends SynchronousController
     /**
      * Metoda nastavující informace pro hlavičku stránky a získávající data do tabulky
      * @param array $parameters Pole parametrů, pokud je prázdné, je přístup ke kontroleru zamítnut
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
+     * @throws Exception Pokud uživatel odeslal žádost o založení nové třídy, ale e-mail webmasterovi se nepodařilo odeslat
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void
@@ -51,7 +56,6 @@ class MenuTableController extends SynchronousController
                 $classesGetter = new TestGroupsFetcher();
                 $classes = $classesGetter->getClasses();
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam dostupných tříd', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-                $this->controllerToCall = new MenuTableContentController();
                 $dataForController = $classes;
             }
             else if (!$aChecker->checkGroup())
@@ -59,7 +63,6 @@ class MenuTableController extends SynchronousController
                 $groupsGetter = new TestGroupsFetcher();
                 $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam poznávaček ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $_SESSION['selection']['class']->getId()));
-                $this->controllerToCall = new MenuTableContentController();
                 $dataForController = $groups;
             }
             else
@@ -67,14 +70,12 @@ class MenuTableController extends SynchronousController
                 $partsGetter = new TestGroupsFetcher();
                 $parts = $partsGetter->getParts($_SESSION['selection']['group']);
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam částí v poznávačce s ID {groupId} ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $_SESSION['selection']['group']->getId(), 'classId' => $_SESSION['selection']['class']->getId()));
-                $this->controllerToCall = new MenuTableContentController();
                 $dataForController = $parts;
             }
         }
         catch (NoDataException $e)
         {
             (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-            $this->controllerToCall = new MenuTableContentController();
 
             //Nahraď pohled s tabulkou pohledem pro obyčejnou hlášku
             for ($i = 0; $i < count(self::$views); $i++)
@@ -89,6 +90,8 @@ class MenuTableController extends SynchronousController
 
             $dataForController = $e->getMessage();
         }
+
+        $this->controllerToCall = new MenuTableContentController();
 
         //Obsah pro tabulku a potřebný pohled je v potomkovém kontroleru nastaven --> vypsat data
         $this->controllerToCall->process(array($dataForController)); //Pole nesmí být prázdné, aby si systém nemyslel, že uživatel přistupuje ke kontroleru přímo

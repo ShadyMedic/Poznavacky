@@ -3,6 +3,7 @@ namespace Poznavacky\Controllers\Menu\Study\Test;
 
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 use Poznavacky\Models\AnswerChecker;
@@ -17,6 +18,8 @@ class CheckTestAnswerController extends AjaxController
     /**
      * Metoda načítající odpověď z $_POST a ověřuje jí proti správné odpovědi uložené v $_SESSION
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

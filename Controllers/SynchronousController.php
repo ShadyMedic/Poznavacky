@@ -1,8 +1,6 @@
 <?php
 namespace Poznavacky\Controllers;
 
-use Poznavacky\Controllers\ControllerInterface;
-use Poznavacky\Models\Security\AntiXssSanitizer;
 use Poznavacky\Models\MessageBox;
 
 /**
@@ -33,21 +31,6 @@ abstract class SynchronousController implements ControllerInterface
         header('Location: /'.$url);
         header('Connection: close');
         exit();
-    }
-
-    /**
-     * Metoda konvertující řetězec v kebab-case do CamelCase
-     * @param string $str Řetězec ke konverzi
-     * @param bool $capitalizeFirst Má být první písmeno velké (default TRUE)
-     * @return string Řetězec konvertovaný do CamelCase
-     */
-    protected function kebabToCamelCase(string $str, bool $capitalizeFirst = true): string
-    {
-        $camel = str_replace('-', ' ', $str);
-        $camel = ucwords($camel);
-        $camel = str_replace(' ', '', $camel);
-        if (!$capitalizeFirst){ $camel = lcfirst($camel); }
-        return $camel;
     }
 
     /**

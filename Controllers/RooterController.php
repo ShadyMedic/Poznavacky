@@ -3,7 +3,8 @@ namespace Poznavacky\Controllers;
 
 use BadMethodCallException;
 use ErrorException;
-use Poznavacky\Models\Logger;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\AntiXssSanitizer;
 use Poznavacky\Models\Statics\UserManager;
@@ -26,6 +27,8 @@ class RooterController extends SynchronousController
     /**
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler
      * @param array $parameters Pole parametrů, na indexu 0 musí být nezpracovaná URL adresa
+     * @throws AccessDeniedException Při pokusu zkontrolovat nějaký údaj o přihlášeném uživateli, pokud žádný uživatel přihlášen není
+     * @throws DatabaseException Pokud se nepodaří nastavit některou ze složek
      */
     public function process(array $parameters): void
     {
@@ -144,6 +147,7 @@ class RooterController extends SynchronousController
      * @param array $selections Pole řetězců popisující význam a pořadí argumentů ve druhém argumentu, povolené hodnoty řetězců jsou 'class', 'group', 'part' a hodnoty konstant této třídy obsahující v názvu slovo 'SELECTOR'
      * @param array $urlVariablesValues Pole argumentů získaných z URL pro zpracování, pořadí prvků musí odpovídat hodnotám v prvním argumentu
      * @return bool TRUE, pokud se povedlo všechny složky nastavit, FALSE, pokud některá ze složek nebyla podle URL v databázi nalezena
+     * @throws DatabaseException Pokud se vyskytne chyba při načítání údajů o složce z databáze
      */
     private function setFolders(array $selections, array &$urlVariablesValues): bool
     {
@@ -214,6 +218,7 @@ class RooterController extends SynchronousController
      * Metoda provádějící všechny bezpečnostní kontroly, například zda je přihlášený uživatel správcem zvolené třídy
      * @param array $checks Pole řetězců popisujících kontroly, které se musejí provést, jejich význam je blíže popsán v souboru routes.ini
      * @return bool TRUE, pokud všechny kontroly proběhnou v pořádku, FALSE, pokud ne
+     * @throws AccessDeniedException Pokud je kontrolováno cokoliv o přihlášeném uživateli, pokud žádný uživatel přihlášen není (toto se nemůže stát, pokud jsou kontroly správně seřazey - od nejmírnější po nejpřísnější)
      */
     private function runChecks(array $checks): bool
     {

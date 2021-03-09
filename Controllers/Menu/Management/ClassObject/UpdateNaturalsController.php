@@ -4,9 +4,8 @@ namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\NaturalEditor;
-use Poznavacky\Models\Security\AccessChecker;
-use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 
 /**
@@ -18,6 +17,7 @@ class UpdateNaturalsController extends AjaxController
     /**
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

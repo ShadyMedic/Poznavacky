@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
@@ -19,6 +20,7 @@ class EnterClassCodeController extends SynchronousController
     /**
      * Metoda zpracovávající data odeslaná formulářem
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      * @see SynchronousController::process()
      */

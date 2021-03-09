@@ -2,14 +2,11 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\SynchronousController;
-use Poznavacky\Models\DatabaseItems\ClassObject;
-use Poznavacky\Models\DatabaseItems\Group;
-use Poznavacky\Models\DatabaseItems\Part;
-use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\ChangelogManager;
 use Poznavacky\Models\Logger;
-use \BadMethodCallException;
 
 /**
  * Kontroler starající se o zobrazení layoutu pro všechny stránky kromě indexu
@@ -21,17 +18,14 @@ class MenuController extends SynchronousController
     /**
      * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
      * @param array $parameters Parametry pro zpracování kontrolerem, zde seznam URL argumentů v postupném pořadí jako prvky pole
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
         self::$data['navigationBar'] = array();
         self::$data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
-
-        $aChecker = new AccessChecker();
-        # if (!$aChecker->checkClass()) { /*Vypisují se třídy*/ }
-        # else if (!$aChecker->checkGroup()) { /*Vypisují se poznávačky*/ }
-        # else if (!$aChecker->checkPart()) { /*Vypisují se části*/ }
 
         //Vypsání tabulky na menu stránce
         self::$pageHeader['bodyId'] = 'menu';

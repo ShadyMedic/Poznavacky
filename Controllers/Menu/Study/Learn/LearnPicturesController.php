@@ -20,6 +20,8 @@ class LearnPicturesController extends AjaxController
      * Metoda přijímající název přírodniny skrz $_POST a získávající zdroje všech jejích obrázků z databáze
      * Adresy jsou odeslány jako pole v JSON formátu
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

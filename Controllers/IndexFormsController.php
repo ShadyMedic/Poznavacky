@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\LoginUser;
@@ -10,7 +11,7 @@ use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 use Poznavacky\Models\Logger;
-use InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * Kontroler zpracovávající data z formulářů na index stránce
@@ -77,11 +78,12 @@ class IndexFormsController extends AjaxController
                 case 'p':
                     $form = 'passRecovery';
                     $passwordRecoverer = new RecoverPassword();
-                    if ($passwordRecoverer->processRecovery($_POST))
+                    try
                     {
+                        $passwordRecoverer->processRecovery($_POST);
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', array('origin' => $form));
                     }
-                    else
+                    catch (Exception $e)
                     {
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.', array('origin' => $form));
                     }

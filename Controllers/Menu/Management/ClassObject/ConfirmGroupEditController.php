@@ -18,6 +18,7 @@ class ConfirmGroupEditController extends AjaxController
     /**
      * Metoda dekódující odeslaný JSON string a volající příslušný model
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

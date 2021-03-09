@@ -5,6 +5,7 @@ use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\DatabaseItems\Part;
+use Poznavacky\Models\Exceptions\DatabaseException;
 
 /**
  * Kontroler starající se o stránku umožňující úpravu poznávaček pro administrátory tříd
@@ -16,6 +17,7 @@ class EditController extends SynchronousController
     /**
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void

@@ -5,10 +5,10 @@ use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Processors\GroupAdder;
 use Poznavacky\Models\Security\AccessChecker;
-use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 use \BadMethodCallException;
 
@@ -21,6 +21,7 @@ class ClassUpdateController extends AjaxController
     /**
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

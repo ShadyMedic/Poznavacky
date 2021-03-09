@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
@@ -19,6 +20,7 @@ class LogoutController extends SynchronousController
      * Metoda odhlašující uživatele a přesměrovávající jej na index stránku
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws DatabaseException Pokud se nepodaří odstranit kód pro trvalé přihlhášení  (za předpokladu, že je přítomen)
+     * @throws AccessDeniedException Pokud není přilhášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void

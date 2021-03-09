@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu\Study\Learn;
 
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\Statics\UserManager;
@@ -16,6 +17,7 @@ class LearnController extends SynchronousController
     /**
      * Metoda ověřující, zda má uživatel do třídy přístup a nastavující hlavičku stránky a pohled
      * @param array $parameters Parametry pro zpracování kontrolerem, může být prázdné, nebo obsahovat URL název kontroleru, který má být zavolán tímto kontrolerem
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void

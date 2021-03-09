@@ -3,6 +3,7 @@ namespace Poznavacky\Controllers\Menu\Management\Account;
 
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
@@ -16,6 +17,7 @@ class AccountUpdateController extends AjaxController
     /**
      * Metoda odlišující, jaká data si přeje uživatel změnit a volající příslušný model
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

@@ -1,7 +1,6 @@
 <?php
 namespace Poznavacky\Controllers;
 
-use Poznavacky\Controllers\ControllerInterface;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;

@@ -1,8 +1,10 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\NewClassRequester;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\NumberAsWordCaptcha;
@@ -21,6 +23,9 @@ class MenuTableContentController extends SynchronousController
     /**
      * Metoda skládající získaná data o zobrazované složce do tabulky a předávající je pohledu
      * @param array $parameters Pole s jedním parametrem pro zpracování - jediným prvkem musí být dvourozměrné pole obsahující data pro zobrazení v tabulce nebo řetězec, pokud pokud má být zobrazena pouze jednoduchá hláška; pokud parametr prázdný, je přístup ke kontroleru zamítnut
+     * @throws AccessDeniedException Pokud není žádný uživatel přihlášen
+     * @throws DatabaseException
+     * @throws Exception Pokud se uživatel pokusil odeslat žádost o založení nové třídy, ale e-mail webmasterovi se nepodařilo odeslat
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void

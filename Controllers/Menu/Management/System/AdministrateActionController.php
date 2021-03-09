@@ -1,9 +1,10 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\System;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
-use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Administration;
 use Poznavacky\Models\AjaxResponse;
 
@@ -16,6 +17,8 @@ class AdministrateActionController extends AjaxController
     /**
      * Metoda odlišující, jaká akce má být vykonána a volající příslušný model
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
+     * @throws Exception Pokud akcí bylo odeslání e-mailu a ten se nepodařilo odeslat
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

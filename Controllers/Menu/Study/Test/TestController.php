@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
@@ -15,6 +16,7 @@ class TestController extends SynchronousController
     /**
      * Metoda ověřující, zda má uživatel do třídy přístup a nastavující hlavičku stránky a pohled
      * @param array $parameters Pole parametrů pro zpracování kontrolerem, zde může jako první prvek obsahovat URL název dalšího kontroleru, kterému má tento kontroler předat řízení
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void

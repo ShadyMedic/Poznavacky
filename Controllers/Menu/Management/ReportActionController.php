@@ -3,8 +3,8 @@ namespace Poznavacky\Controllers\Menu\Management;
 
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
-use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 use Poznavacky\Models\ReportResolver;
 
@@ -17,6 +17,8 @@ class ReportActionController extends AjaxController
     /**
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
      * @see AjaxController::process()
      */
     public function process(array $parameters): void
@@ -36,9 +38,6 @@ class ReportActionController extends AjaxController
             echo $response->getResponseString();
             return;
         }
-
-        $class = null;
-        if (!$aChecker->checkSystemAdmin()) { $class = $_SESSION['selection']['class']; }
 
         try
         {

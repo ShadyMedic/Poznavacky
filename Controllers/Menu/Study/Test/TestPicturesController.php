@@ -2,10 +2,11 @@
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
 use Poznavacky\Controllers\AjaxController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
-use Poznavacky\Models\Logger;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Logger;
 
 /** 
  * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro testovací stránku
@@ -19,6 +20,7 @@ class TestPicturesController extends AjaxController
      * Metoda odesílající daný počet náhodně zvolených obrázků ze zvolené části/přírodniny
      * Adresy jsou odeslány jako pole v JSON formátu
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see AjaxController::process()
      */
     public function process(array $parameters): void

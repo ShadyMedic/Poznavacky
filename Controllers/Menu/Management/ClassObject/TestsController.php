@@ -2,7 +2,6 @@
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
 use Poznavacky\Controllers\SynchronousController;
-use Poznavacky\Models\DatabaseItems\Group;
 
 /** 
  * Kontroler starající se o výpis stránky pro správu poznávaček správcům třídy, do které patří
@@ -10,7 +9,6 @@ use Poznavacky\Models\DatabaseItems\Group;
  */
 class TestsController extends SynchronousController
 {
-    private array $argumentsToPass = array();
 
     /**
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled

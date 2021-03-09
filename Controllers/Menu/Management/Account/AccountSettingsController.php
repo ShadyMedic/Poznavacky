@@ -2,7 +2,7 @@
 namespace Poznavacky\Controllers\Menu\Management\Account;
 
 use Poznavacky\Controllers\SynchronousController;
-use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
@@ -15,6 +15,7 @@ class AccountSettingsController extends SynchronousController
     /**
      * Metoda nastavující hlavičku stránky a pohled
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void
