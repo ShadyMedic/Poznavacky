@@ -1,7 +1,6 @@
 <?php
 namespace Poznavacky\DataGetters;
 
-use Poznavacky\DataGetters\DataGetter;
 use Poznavacky\Models\Security\AccessChecker;
 
 class MenuDataGetter implements DataGetter

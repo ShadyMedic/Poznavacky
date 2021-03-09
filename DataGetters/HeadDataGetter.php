@@ -1,8 +1,6 @@
 <?php
 namespace Poznavacky\DataGetters;
 
-use Poznavacky\DataGetters\DataGetter;
-
 class HeadDataGetter implements DataGetter
 {
 
