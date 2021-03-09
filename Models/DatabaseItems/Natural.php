@@ -83,6 +83,7 @@ class Natural extends DatabaseItem
     /**
      * Metoda navracející jméno této přírodniny
      * @return string Jméno přírodniny
+     * @throws DatabaseException
      */
     public function getName(): string
     {
@@ -93,6 +94,7 @@ class Natural extends DatabaseItem
     /**
      * Metoda navracející objekt třídy, do které tato přírodnina patří
      * @return ClassObject Třída, se kterou je tato přírodnina svázána
+     * @throws DatabaseException
      */
     public function getClass(): ClassObject
     {
@@ -103,6 +105,7 @@ class Natural extends DatabaseItem
     /**
      * Metoda navracející počet obrázků této přírodniny
      * @return int Počet obrázků této přírodniny uložené v databázi
+     * @throws DatabaseException
      */
     public function getPicturesCount(): int
     {
@@ -156,9 +159,9 @@ class Natural extends DatabaseItem
 
             foreach ($result as $pictureData)
             {
-                $status = ($pictureData[Picture::COLUMN_DICTIONARY['enabled']] === 1) ? true : false;
+                $status = $pictureData[Picture::COLUMN_DICTIONARY['enabled']] === 1;
                 $picture = new Picture(false, $pictureData[Picture::COLUMN_DICTIONARY['id']]);
-                $picture->initialize($pictureData[Picture::COLUMN_DICTIONARY['src']], $this, $status, null);
+                $picture->initialize($pictureData[Picture::COLUMN_DICTIONARY['src']], $this, $status);
                 $this->pictures[] = $picture;
             }
         }
@@ -181,6 +184,7 @@ class Natural extends DatabaseItem
      * Není kontrolováno, zda přírodnina, ke které se mají obrázky převést patří do stejné třídy jako tato přírodnina
      * @param Natural $intoWhat Objekt přírodniny, ke které mají být převedeny všechny obrázky patřící do této přírodniny
      * @return array Asociativní pole obsahující klíče "mergedPictures" a "mergedUses" a počet sloučených obrázků a využití jako hodnoty
+     * @throws DatabaseException
      */
     public function merge(Natural $intoWhat): array
     {
@@ -209,8 +213,8 @@ class Natural extends DatabaseItem
             {
                 if ($natural->getId() === $intoWhat->getId()) { $contained = true; }
             }
-            if ($contained) { /*V této části již nová přírodnina je - přeskoč ji*/ }
-            else
+            # if ($contained) { /*V této části již nová přírodnina je - přeskoč ji*/ }
+            if (!$contained)
             {
                 //Aktualizuj ID přírodniny ve spojení části a přírodniny
                 Db::executeQuery('UPDATE prirodniny_casti SET prirodniny_id = ? WHERE prirodniny_id = ? AND casti_id = ? LIMIT 1;', array($intoWhat->getId(), $this->getId(), $use->getId()), false);
@@ -219,21 +223,20 @@ class Natural extends DatabaseItem
         }
 
         $this->delete();
-        $result = array('mergedPictures' => $mergedPictures, 'mergedUses' => $mergedUses);
-        return $result;
+        return array('mergedPictures' => $mergedPictures, 'mergedUses' => $mergedUses);
     }
 
     /**
      * Metoda přidávající do databáze i do instance třídy nový obrázek této přírodniny
      * @param string $url Ošetřená adresa obrázku
      * @return boolean TRUE, pokud je obrázek přidán úspěšně, FALSE, pokud ne
+     * @throws DatabaseException Pokud se obrázek nepodaří uložit
      */
     public function addPicture(string $url): bool
     {
         $picture = new Picture(true);
-        $picture->initialize($url, $this, null, null);
-        try { $result = $picture->save(); }
-        catch (DatabaseException $e) { return false; }
+        $picture->initialize($url, $this);
+        $result = $picture->save();
         if ($result)
         {
             $this->pictures[] = $picture;
@@ -247,6 +250,7 @@ class Natural extends DatabaseItem
      * Pokud zatím nebyly adresy načteny z databáze, budou načteny.
      * @param string $url Adresa obrázku, kterou hledáme
      * @return boolean TRUE, pokud tato přírodnina již má tento obrázek přidaný, FALSE, pokud ne
+     * @throws DatabaseException
      */
     public function pictureExists(string $url): bool
     {
@@ -265,6 +269,7 @@ class Natural extends DatabaseItem
     /**
      * Metoda navracející počet částí, ve kterých je tato přírodnina používána
      * @return int Počet částí, které obsahují tuto přírodninu
+     * @throws DatabaseException
      */
     public function getUsesCount(): int
     {
@@ -276,6 +281,7 @@ class Natural extends DatabaseItem
      * Metoda navracející pole všech částí, ve kterých je tato přírodnina používána
      * Pokud zatím nebyl seznam částí načten z databáze, bude načten.
      * @return Part[] Pole částí, ve kterých je tato přírodnina využívána, jako objekty
+     * @throws DatabaseException
      */
     public function getUses(): array
     {
@@ -286,6 +292,7 @@ class Natural extends DatabaseItem
     /**
      * Metoda načítající z databáze části, ve kterých je přírodnina použita a ukládající je jako vlastnost objektu
      * Vlastnost $usesCount je nastavena / upravena podle počtu načtených obrázků
+     * @throws DatabaseException
      */
     public function loadUses(): void
     {

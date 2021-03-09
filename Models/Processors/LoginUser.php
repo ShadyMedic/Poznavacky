@@ -41,6 +41,7 @@ class LoginUser
         }
 
         //Pokusit se přihlásit
+        $userData = null;
         try
         {
             $userData = self::authenticate($POSTdata['name'], $POSTdata['pass']);

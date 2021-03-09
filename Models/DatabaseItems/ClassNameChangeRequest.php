@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\undefined;
@@ -28,8 +29,7 @@ class ClassNameChangeRequest extends NameChangeRequest
     
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
-    
-    protected const SUBJECT_CLASS_NAME = 'ClassObject';
+
     protected const SUBJECT_TABLE_NAME = ClassObject::TABLE_NAME;
     protected const SUBJECT_NAME_DB_NAME = ClassObject::COLUMN_DICTIONARY['name'];
     
@@ -76,11 +76,12 @@ class ClassNameChangeRequest extends NameChangeRequest
     {
         return $this->subject->getAdmin()[User::COLUMN_DICTIONARY['email']];
     }
-    
+
     /**
      * Metoda odesílající správci třídy, které se tato žádost týká, e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
      * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
+     * @throws Exception Pokud se nepodaří e-mail odeslat
      * @see NameChangeRequest::sendApprovedEmail()
      */
     public function sendApprovedEmail(): bool
@@ -95,12 +96,13 @@ class ClassNameChangeRequest extends NameChangeRequest
         
         return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
-    
+
     /**
      * Metoda odesílající správci třídy, které se tato žádost týká, e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména zadaný správcem
      * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
+     * @throws Exception Pokud se nepodaří e-mail odeslat
      * @see NameChangeRequest::sendDeclinedEmail()
      */
     public function sendDeclinedEmail(string $reason): bool

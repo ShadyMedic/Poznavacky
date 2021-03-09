@@ -3,6 +3,8 @@ namespace Poznavacky\Models;
 
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
@@ -22,6 +24,8 @@ class TestGroupsFetcher
      * Metoda pro získání seznamu všech tříd a vytvoření tabulky pro předání pohledu
      * @return array Dvourozměrné pole obsahující seznam tříd a další informace potřebné pro pohled
      * @throws NoDataException Pokud nebyly nalezeny žádné třídy, do kterých by měl uživatel přístup
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      */
     public function getClasses(): array
     {
@@ -77,6 +81,7 @@ class TestGroupsFetcher
      * @param ClassObject $class Objekt třídy ze které je potřeba získat seznam poznávaček
      * @return array Dvourozměrné pole obsahující seznam poznávaček a další informace potřebné pro pohled
      * @throws NoDataException Pokud ve zvolené poznávačce nejsou žádné části
+     * @throws DatabaseException
      */
     public function getGroups(ClassObject $class): array
     {
@@ -108,6 +113,7 @@ class TestGroupsFetcher
      * @param Group $group Objekt poznávačky, ze které je potřeba získat seznam částí
      * @return array Dvourozměrné pole obsahující seznam částí a další informace potřebné pro pohled
      * @throws NoDataException Pokud ve zvolené poznávačce nejsou žádné části
+     * @throws DatabaseException
      */
     public function getParts(Group $group): array
     {

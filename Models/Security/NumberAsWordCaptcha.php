@@ -21,7 +21,8 @@ class NumberAsWordCaptcha extends Captcha
         $tens = explode(',', 'nula,deset,dvacet,třicet,čtyřicet,padesát,šedesát,sedmdesát,osmdesát,devadesát');
         
         $number = rand(0,99);
-        
+        $word = '';
+
         if ($number <= 9){$word = $digits[$number];}
         else if ($number % 10 === 0){$word = $tens[$number / 10];}
         else if ($number <= 19)

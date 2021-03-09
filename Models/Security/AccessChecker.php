@@ -2,6 +2,7 @@
 namespace Poznavacky\Models\Security;
 
 use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Statics\UserManager;
 
 /** 
@@ -18,21 +19,23 @@ class AccessChecker
     {
         return (isset($_SESSION['user']));
     }
-    
+
     /**
      * Metoda ověřující, zda je řetězec heslem aktuálně přihlášeného uživatele
      * @param string $password Heslo k ověření
      * @return boolean TRUE, pokud je specifikované heslo správné, FALSE, pokud ne
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      */
     public function recheckPassword(string $password): bool
     {
         if (password_verify($password, UserManager::getHash())) { return true; }
         else { return false; }
     }
-    
+
     /**
      * Metoda kontrolující, zda je přihlášený uživatel systémovým správcem
      * @return boolean TRUE, pokud je daný uživatelem systémovým správcem, FALSE, pokud ne
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      */
     public function checkSystemAdmin(): bool
     {
@@ -42,6 +45,7 @@ class AccessChecker
     /**
      * Metoda kontrolující, zda používá přihlášený uživatel demo účet
      * @return bool TRUE, pokud se jedná o demo účet, FALSE, pokud ne
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      */
     public function checkDemoAccount(): bool
     {

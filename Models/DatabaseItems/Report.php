@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
@@ -77,40 +78,45 @@ class Report extends DatabaseItem
         $this->additionalInformation = $additionalInformation;
         $this->reportersCount = $reportersCount;
     }
-        
+
     /**
      * Metoda navracející objekt nahlášeného obrázku
      * @return Picture Nahlášený obrázek
+     * @throws DatabaseException
      */
     public function getPicture(): Picture
     {
         $this->loadIfNotLoaded($this->picture);
         return $this->picture;
     }
-    
+
     /**
      * Metoda navracející ID nahlášeného obrázku
      * @return int ID obrázku
+     * @throws DatabaseException
      */
     public function getPictureId(): int
     {
         $this->loadIfNotLoaded($this->picture);
         return $this->picture->getId();
     }
-    
+
     /**
      * Metoda navracející URL nahlášeného obrázku
      * @return string Zdroj obrázku
+     * @throws DatabaseException
      */
     public function getUrl(): string
     {
         $this->loadIfNotLoaded($this->picture);
         return $this->picture->getSrc();
     }
-    
+
     /**
      * Metoda navracející řetězec se zařazením obrázku ve formátu <Název třídy> / <Název poznávačky> / <Název části> / <Název přírodniny>
      * @return string[] Pole řetězeců obsahujících cesty k obrázku
+     * @throws NoDataException Pokud není přírodnina, se kterou je nahlášený obrázek spojen nalezena v databázi nebo není přiřazena k žádné části
+     * @throws DatabaseException
      */
     public function getPicturePaths(): array
     {   
@@ -121,11 +127,12 @@ class Report extends DatabaseItem
         }
         return $allPaths;
     }
-    
+
     /**
      * Metoda navracející pole objektů částí, do kterých patří přírodnina, které patří nahlášený obrázek
-     * @throws NoDataException Pokud není přírodnina, se kterou je obrázek spojen nalezena v databázi nebo není přiřazena k žádné části
      * @return Part[] Pole objektů částí, pouze s vyplněným ID, ve kterých se obrázek může zobrazit
+     * @throws DatabaseException
+     * @throws NoDataException Pokud není přírodnina, se kterou je obrázek spojen nalezena v databázi nebo není přiřazena k žádné části
      */
     public function getPartsWithPicture(): array
     {
@@ -143,10 +150,11 @@ class Report extends DatabaseItem
         }
         return $allParts;
     }
-    
+
     /**
      * Metoda navracející název přírodniny, ke které byl nahlášený obrázek nahrán
      * @return string Název přírodniny na obrázku
+     * @throws DatabaseException
      */
     public function getNaturalName(): string
     {
@@ -154,20 +162,22 @@ class Report extends DatabaseItem
         $natural = $this->picture->getNatural();
         return $natural->getName();
     }
-    
+
     /**
      * Metoda navracející důvod hlášení
      * @return string Důvod hlášení (měl by být jednou z konstant této třídy)
+     * @throws DatabaseException
      */
     public function getReason(): string
     {
         $this->loadIfNotLoaded($this->reason);
         return $this->reason;
     }
-    
+
     /**
      * Metoda navracející další informace o hlášení
      * @return string Další informace o hlášení (pokud žádné nebyly poskytnuty, tak prázdný řetězec)
+     * @throws DatabaseException
      */
     public function getAdditionalInformation(): string
     {
@@ -175,19 +185,21 @@ class Report extends DatabaseItem
         if (gettype($this->additionalInformation) === 'NULL') { return ''; }
         return $this->additionalInformation;
     }
-    
+
     /**
      * Metoda navracející počet hlášení stejného typu
      * @return int Počet hlášení
+     * @throws DatabaseException
      */
     public function getReportersCount(): int
     {
         $this->loadIfNotLoaded($this->reportersCount);
         return $this->reportersCount;
     }
-    
+
     /**
      * Metoda zvyšující počet hlášení tohoto typu o 1
+     * @throws DatabaseException
      */
     public function increaseReportersCount(): void
     {

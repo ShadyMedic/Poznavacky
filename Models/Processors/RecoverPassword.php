@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use PHPMailer\PHPMailer\Exception as MailException;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
@@ -8,7 +9,7 @@ use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Logger;
-use Exception;
+use \Exception;
 
 /** 
  * Třída generující kód pro obnovu hesla a odesílající jej na uživatelův e-mail
@@ -27,6 +28,7 @@ class RecoverPassword
      * @return boolean TRUE, Pokud se všechny kroky podařily, FALSE, pokud se nepodařilo odeslat e-mail
      * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      * @throws AccessDeniedException Pokud nebyl vyplněn platný e-mail
+     * @throws MailException Pokud se nepodaří odeslat na e-mailovou adresu uživatele e-mail s kódem pro obnovu hesla
      */
     public function processRecovery(array $POSTdata): bool
     {
@@ -95,12 +97,13 @@ class RecoverPassword
         //Uložit kód do databáze
         Db::executeQuery('INSERT INTO obnoveni_hesel (kod, uzivatele_id, expirace) VALUES (?,?,?)', array(md5($code), $userId, time() + self::CODE_EXPIRATION));
     }
-    
+
     /**
      * Metoda odesílající uživateli e-mail s odkazem obsahujícím kód k obnovení hesla
      * @param string $code Kód pro obnovení hesla k odeslání
      * @param string $email E-mailová adresa pro odeslání e-mailu
-     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
+     * @return bool TRUE, pokud se e-mail podařilo odeslat
+     * @throws MailException Pokud se nepodaří e-mail odeslat
      */
     private function sendCode(string $code, string $email): bool
     {

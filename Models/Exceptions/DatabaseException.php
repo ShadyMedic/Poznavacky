@@ -2,6 +2,7 @@
 namespace Poznavacky\Models\Exceptions;
 
 use \Exception;
+use \Throwable;
 
 /**
  * Výjimka sloužící pro databázové chyby
@@ -9,20 +10,20 @@ use \Exception;
  */
 class DatabaseException extends Exception
 {
-    private $query;
-    private $dbErrorCode;
-    private $dbErrorMessage;
-    
+    private string $query;
+    private int $dbErrorCode;
+    private string $dbErrorMessage;
+
     /**
      * Konstruktor databázové podmínky
      * @param string $message Obecná zpráva, která může být zobrazena běžnému uživateli
      * @param int $code Číslo chyby, které může být zobrazeno běžnému uživateli
-     * @param Exception $previous Předcházející podmínka (pro účely propagace podmínek)
+     * @param Throwable $previous Předcházející podmínka (pro účely propagace podmínek)
      * @param string $query SQL dotaz, který selhal (nesmí být zobrazován běžnému uživateli)
      * @param int $dbErrorCode Číslo dazabázové chyby (nesmí být zobrazené běžnému uživateli)
      * @param string $dbErrorMessage Text databázové chyby (nesmí být zobrazené běžnému uživateli)
      */
-    public function __construct(string $message, $code = -1, $previous = null, string $query, string $dbErrorCode, string $dbErrorMessage)
+    public function __construct(string $message = "", $code = 0, $previous = null, string $query = "", int $dbErrorCode = 0, string $dbErrorMessage = "")
     {
         parent::__construct($message, $code, $previous);
         $this->query = $query;

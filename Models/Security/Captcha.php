@@ -7,8 +7,8 @@ namespace Poznavacky\Models\Security;
  */
 abstract class Captcha
 {
-    public $question;
-    protected $answer;
+    public string $question;
+    protected string $answer;
     
     /**
      * Metoda generující otázku i odpověď Turingova testu a nastavuje je jako vlastnosti objektu
@@ -28,7 +28,7 @@ abstract class Captcha
      * Metoda odstraňující správnou odpoveď ze $_SESSION
      * @param string $index Klíč, pod kterým se v $_SESSION nachází správná odpoveď
      */
-    protected function unsetAnswer($index): void
+    protected function unsetAnswer(string $index): void
     {
         unset($_SESSION[$index]);
     }
@@ -40,7 +40,7 @@ abstract class Captcha
      * @param string $index Klíč, pod kterým se v $_SESSION nachází správná odpoveď
      * @return boolean TRUE, pokud se odpoveď shoduje s dříve uloženou správnou odpovědí (i typem), FALSE, pokud ne
      */
-    public function checkAnswer($answer, $index): bool
+    public function checkAnswer($answer, string $index): bool
     {
         $result = $_SESSION[$index] === (int)$answer;
         

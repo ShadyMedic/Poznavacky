@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 use \DateTime;
@@ -40,10 +41,11 @@ abstract class NameChangeRequest extends DatabaseItem
         $this->newName = $newName;
         $this->requestedAt = $requestedAt;
     }
-    
+
     /**
      * Metoda navracejícící požadované jméno
      * @return string Požadované nové jméno
+     * @throws DatabaseException
      */
     public function getNewName(): string
     {
@@ -65,19 +67,22 @@ abstract class NameChangeRequest extends DatabaseItem
     
     /**
      * Metoda odesílající autorovi této žádosti e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
+     * @return bool TRUE, pokud se e-mail podaří odeslat, FALSE, pokud ne
      */
     public abstract function sendApprovedEmail(): bool;
-    
+
     /**
      * Metoda odesílající autorovi této žádosti e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména uživatele nebo názvu třídy zadaný správcem
+     * @return bool TRUE, pokud se e-mail podaří odeslat, FALSE, pokud ne
      */
     public abstract function sendDeclinedEmail(string $reason): bool;
-    
+
     /**
      * Metoda schvalující tuto žádost
      * Jméno uživatele nebo třídy je změněno a žadatel obdrží e-mail (pokud jej zadal)
      * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
+     * @throws DatabaseException
      */
     public function approve(): bool
     {
@@ -90,12 +95,13 @@ abstract class NameChangeRequest extends DatabaseItem
         //Odeslat e-mail
         return $this->sendApprovedEmail();
     }
-    
+
     /**
      * Metoda zamítající tuto žádost
      * Pokud žadatel zadal svůj e-mail, obdrží zprávu s důvodem zamítnutí
      * @param string $reason Důvod zamítnutí žádosti
      * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
+     * @throws DatabaseException
      */
     public function decline(string $reason): bool
     {

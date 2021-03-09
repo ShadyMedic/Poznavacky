@@ -2,6 +2,7 @@
 namespace Poznavacky\Models;
 
 use League\CommonMark\GithubFlavoredMarkdownConverter;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
@@ -27,6 +28,7 @@ class ChangelogManager
     /**
      * Metoda kontrolující, zda si přihlášený uživatel přečetl nejnovější poznámky k vydání
      * @return bool TRUE, pokud byly přihlášenému uživateli zobrazeny nejnovější poznámky k vydání, FALSE, pokud ne
+     * @throws AccessDeniedException Pokud není žádný uživatel přihlášen
      */
     public function checkLatestChangelogRead(): bool
     {

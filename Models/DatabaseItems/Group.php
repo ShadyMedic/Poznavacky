@@ -70,20 +70,22 @@ class Group extends Folder
         $this->parts = $parts;
         $this->partsCount = $partsCount;
     }
-    
+
     /**
      * Metoda navracející ID třídy, do které tato poznávačka patří
      * @return ClassObject objekt třídy
+     * @throws DatabaseException
      */
     public function getClass(): ClassObject
     {
         $this->loadIfNotLoaded($this->class);
         return $this->class;
     }
-    
+
     /**
      * Metoda navracející počet částí v této poznávačce
      * @return int Počet částí poznávačky
+     * @throws DatabaseException
      */
     public function getPartsCount(): int
     {
@@ -120,11 +122,12 @@ class Group extends Folder
         
         return $result;
     }
-    
+
     /**
      * Metoda navracející objekty přírodnin ze všech částí této poznávačky
      * Pokud zatím nebyly načteny části této poznávačky, budou načteny z databáze
      * @return Natural[] Pole přírodnin patřících do této poznávačky jako objekty
+     * @throws DatabaseException
      */
     public function getNaturals(): array
     {
@@ -134,9 +137,10 @@ class Group extends Folder
         }
         return $this->naturals;
     }
-    
+
     /**
      * Metoda načítající seznam přírodnin patřících do této poznávačky a ukládající jejich instance do vlastnosti $naturals jako pole
+     * @throws DatabaseException
      */
     private function loadNaturals(): void
     {
@@ -164,24 +168,11 @@ class Group extends Folder
         }
         $this->naturals = $allNaturals;
     }
-    
-    /**
-     * Metoda zjišťující, zda se přírodnina s daným ID vyskytuje v této poznávačce
-     * @param Natural $natural Objekt přírodniny pro ověření (mělo by být vyplněné její ID)
-     * @return boolean TRUE, pokud se poskytnutá přírodnina nachází v této poznávačce, FALSE, pokud ne
-     */
-    public function containsNatural(Natural $natural): bool
-    {
-        foreach ($this->getNaturals() as $presentNatural)
-        {
-            if ($presentNatural->getId() === $natural->getId()) { return true; }
-        }
-        return false;
-    }
-    
+
     /**
      * Metoda navracející část patřící do této poznávačky jako pole objektů
      * @return array Pole částí jako objekty
+     * @throws DatabaseException
      */
     public function getParts(): array
     {
@@ -197,9 +188,10 @@ class Group extends Folder
         }
         return $this->parts;
     }
-    
+
     /**
      * Metoda načítající části patřící do této poznávačky a ukládající je jako vlastnost
+     * @throws DatabaseException
      */
     private function loadParts(): void
     {
@@ -222,27 +214,11 @@ class Group extends Folder
             }
         }
     }
-    
-    /**
-     * Metoda navracející objekt části této poznávačky, která má specifické ID
-     * @param int $id Požadované ID části
-     * @return Part Objekt reprezentující část se zadaným ID
-     */
-    private function getPartById(int $id): Part
-    {
-        if (!$this->isDefined($this->parts)){ $this->loadParts(); }
-        foreach ($this->parts as $part)
-        {
-            if ($part->getId() === $id)
-            {
-                return $part;
-            }
-        }
-    }
-    
+
     /**
      * Metoda získávající hlášení všech obrázků patřících k přírodninám, které jsou součástí této poznávačky
      * @return Report[] Pole objektů hlášení
+     * @throws DatabaseException
      */
     public function getReports(): array
     {
@@ -284,9 +260,9 @@ class Group extends Folder
         foreach ($result as $reportInfo)
         {
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
-            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky']);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
-            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno'], null);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
             $report = new Report(false, $reportInfo['hlaseni_id']);
             $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;
@@ -306,13 +282,14 @@ class Group extends Folder
         $this->name = $newName;
         $this->url = $this->generateUrl($newName);
     }
-    
+
     /**
      * Metoda nahrazující všechny staré poznávačky patřící do této poznávačky novými
      * Změny jsou provedeny na úrovni databáze - staré poznávačky jsou smazány a jsou nahrazeny novými
      * I počet částí v této poznávačce je touto metodou aktualizován
      * Vlastnosti $parts a $partsCount tohoto objektu jsou aktualizovány
      * @param array $newParts Pole nových částí jako objekty
+     * @throws DatabaseException
      */
     public function replaceParts(array $newParts): void
     {

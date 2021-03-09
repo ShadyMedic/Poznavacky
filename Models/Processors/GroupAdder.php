@@ -6,6 +6,7 @@ use Poznavacky\Models\DatabaseItems\Folder;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Part;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use \InvalidArgumentException;
 use \RangeException;
@@ -18,7 +19,7 @@ class GroupAdder
 {
     private const DEFAULT_PART_NAME = "Hlavní část";
 
-    private $class;
+    private ClassObject $class;
 
     /**
      * Konstruktor nastavující objekt třídy, do které bude objekt přidávat poznávačky
@@ -34,6 +35,8 @@ class GroupAdder
      * Data jsou ověřena a posléze i uložena do databáze, nebo je vyvolána výjimka s chybovou hláškou
      * @param array $POSTdata Pole dat odeslaných z formuláře
      * @return Group Objekt nové poznávačky, která je již uložena do databáze
+     * @throws AccessDeniedException V případě, že zadaná data nesplňují podmínky, nebo se nepodaří poznávačku vytvořit
+     * @throws DatabaseException
      */
     public function processFormData(array $POSTdata): Group
     {
@@ -46,8 +49,9 @@ class GroupAdder
     /**
      * Metoda ověřující, zda jsou poskytnutá data v pořádku
      * @param string $groupName Název přidávané poznávačky
-     * @throws AccessDeniedException V případě že data nesplňují podmínky
      * @return boolean TRUE, pokud může být daný název použit
+     * @throws DatabaseException
+     * @throws AccessDeniedException V případě že data nesplňují podmínky
      */
     public function checkData(string $groupName): bool
     {
@@ -92,8 +96,9 @@ class GroupAdder
     /**
      * Metoda vkládající poznávačku do databáze a přidávající do ní první, prázdnou část
      * @param string $groupName Název pro novou poznávačku (musí být ověřen metodou GroupAdder::checkData())
-     * @throws AccessDeniedException V případě, že se poznávačku nepodaří vytvořit
      * @return Group Objekt nově přidané poznávačky
+     * @throws DatabaseException
+     * @throws AccessDeniedException V případě, že se poznávačku nepodaří vytvořit
      */
     private function addGroup(string $groupName): Group
     {
