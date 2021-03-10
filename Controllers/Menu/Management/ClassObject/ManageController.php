@@ -10,8 +10,8 @@ use Poznavacky\Controllers\SynchronousController;
 class ManageController extends SynchronousController
 {
     /**
-     * Metoda ověřující, zda má uživatel do správy třídy přístup (je její správce nebo administrátor systému) a nastavující hlavičku stránky a pohled
-     * @param array $parameters Pole parametrů pro zpracování kontrolerem, zde může být prvním prvkem URL název kontroleru, kterému se má předat řízení
+     * Metoda nastavující hlavičku stránky a pohled
+     * @param array $parameters Pole parametrů pro zpracování kontrolerem (nevyužíváno)
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void

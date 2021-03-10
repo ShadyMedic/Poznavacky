@@ -15,7 +15,7 @@ class SubmitPictureController extends AjaxController
 {
 
     /**
-     * Metoda ověřující, zda má uživatel do třídy přístup a volající model pro uložení nového obrázku
+     * Metoda volající model pro uložení nového obrázku
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws DatabaseException
      * @see AjaxController::process()

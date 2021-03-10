@@ -14,8 +14,8 @@ use Poznavacky\Models\MessageBox;
 class TestController extends SynchronousController
 {
     /**
-     * Metoda ověřující, zda má uživatel do třídy přístup a nastavující hlavičku stránky a pohled
-     * @param array $parameters Pole parametrů pro zpracování kontrolerem, zde může jako první prvek obsahovat URL název dalšího kontroleru, kterému má tento kontroler předat řízení
+     * Metoda nastavující hlavičku stránky a pohled
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see SynchronousController::process()
      */

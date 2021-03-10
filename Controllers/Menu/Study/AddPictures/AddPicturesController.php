@@ -15,7 +15,7 @@ class AddPicturesController extends SynchronousController
 {
 
     /**
-     * Metoda ověřující, zda má uživatel do třídy přístup a nastavující hlavičku stránky a pohled
+     * Metoda nastavující hlavičku stránky a pohled
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see SynchronousController::process()

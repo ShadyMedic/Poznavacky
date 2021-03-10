@@ -15,8 +15,8 @@ class AdministrateController extends SynchronousController
 {
 
     /**
-     * Metoda ověřující, zda má uživatel do administrace přístup a nastavující hlavičku stránky a pohled
-     * @param array $parameters Pole parametrů pro zpracování kontrolerem, zde může být prvním elementem URL název dalšího kontroleru, kterému se má předat řízení
+     * Metoda nastavující hlavičku stránky a pohled
+     * @param array $parameters Pole parametrů pro zpracování kontrolerem (nevyužíváno)
      * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @throws DatabaseException
      * @see SynchronousController::process()
