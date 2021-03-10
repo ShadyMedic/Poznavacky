@@ -34,11 +34,17 @@ mb_internal_encoding('UTF-8');
 $antiCSRF = new AntiCsrfMiddleware();
 $antiCSRF->verifyRequest(); //V případě chyby (včetně vypršení sezení) je na tomto řádku skript zastaven
 
-//Zpracuj URL adresu a zobraz vygenerovanou webovou stránku
-$rooter = new RooterController();
+//Inicializuj dočasné úložiště
+$_SESSION['temp'] = array();
 
+//Zpracuj URL adresu a získej data pro zobrazení
+$rooter = new RooterController();
 $rooter->process(array($_SERVER['REQUEST_URI']));
 
+//Vymaž dočasné úložiště
+unset($_SESSION['temp']);
+
+//Zobraz vygenerovanou webovou stránku
 try { $rooter->displayView(); }
 catch (ErrorException $e)
 {
