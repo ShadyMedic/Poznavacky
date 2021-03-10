@@ -27,7 +27,7 @@ class MenuController extends SynchronousController
      * Metoda nastavující hlavičky stránky a získává informace pro zobrazení v tabulce
      * Dále také zjišťuje, zda má být uživateli zobrazen changelog a případně jej získává
      * Nakonec také obsluhuje formulář pro odeslání žádosti na založení nové třídy
-     * @param array $parameters Parametry pro zpracování kontrolerem, zde seznam URL argumentů v postupném pořadí jako prvky pole
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @throws DatabaseException
      * @see SynchronousController::process()
@@ -51,6 +51,7 @@ class MenuController extends SynchronousController
             {
                 $classesGetter = new TestGroupsFetcher();
                 $classes = $classesGetter->getClasses();
+                $lastVisitedFolderPath = '';
                 self::$data['table'] = $classes;
                 self::$data['invitations'] = UserManager::getUser()->getActiveInvitations();
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam dostupných tříd', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
@@ -59,6 +60,7 @@ class MenuController extends SynchronousController
             {
                 $groupsGetter = new TestGroupsFetcher();
                 $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
+                $lastVisitedFolderPath = $_SESSION['selection']['class']->getUrl();
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam poznávaček ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $_SESSION['selection']['class']->getId()));
                 self::$data['table'] = $groups;
             }
@@ -66,12 +68,13 @@ class MenuController extends SynchronousController
             {
                 $partsGetter = new TestGroupsFetcher();
                 $parts = $partsGetter->getParts($_SESSION['selection']['group']);
+                $lastVisitedFolderPath = $_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl();
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam částí v poznávačce s ID {groupId} ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $_SESSION['selection']['group']->getId(), 'classId' => $_SESSION['selection']['class']->getId()));
                 self::$data['table'] = $parts;
             }
 
             //Aktualizovat poslední navštívenou tabulku na menu stránce
-            UserManager::getUser()->updateLastMenuTableUrl(implode('/', $parameters));
+            UserManager::getUser()->updateLastMenuTableUrl($lastVisitedFolderPath);
         }
         catch (NoDataException $e)
         {
