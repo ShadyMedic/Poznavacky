@@ -16,6 +16,12 @@ use Poznavacky\Models\Logger;
  */
 class RooterController extends SynchronousController
 {
+    const CONTROLLER_EXTENSION = 'Controller';
+    const CONTROLLER_FOLDER = 'Controllers';
+    const DATA_GETTER_EXTENSION = 'DataGetter';
+    const DATA_GETTER_FOLDER = 'DataGetters';
+    const MODEL_FOLDER = 'Models';
+    const VIEW_FOLDER = 'Views';
 
     private const ROUTES_INI_FILE = 'routes.ini';
     private const INI_ARRAY_SEPARATOR = ',';
@@ -24,6 +30,8 @@ class RooterController extends SynchronousController
     private const IGNORE_SELECTION_VALUE = 'ignore';
     private const NON_SELECTION_VALUE = 'skip';
     private const OR_CHECK_OPERATOR = '?';
+
+    protected ControllerInterface $controllerToCall;
 
     /**
      * Metoda zpracovávající zadanou URL adresu a přesměrovávající uživatele na zvolený kontroler

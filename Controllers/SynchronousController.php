@@ -9,14 +9,6 @@ use Poznavacky\Models\MessageBox;
  */
 abstract class SynchronousController implements ControllerInterface
 {
-    const CONTROLLER_EXTENSION = 'Controller';
-    const CONTROLLER_FOLDER = 'Controllers';
-    const DATA_GETTER_EXTENSION = 'DataGetter';
-    const DATA_GETTER_FOLDER = 'DataGetters';
-    const MODEL_FOLDER = 'Models';
-    const VIEW_FOLDER = 'Views';
-
-    protected ControllerInterface $controllerToCall;
     //Informace pro zobrazení v pohledech - statické, protože každý požadavek vede k zobrazení maximálně jedné stránky
     protected static array $data = array();
     protected static array $pageHeader = array('title' => 'Poznávačky', 'keywords' => '', 'description' => '', 'cssFile' => array(), 'jsFile' => array());
