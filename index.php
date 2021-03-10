@@ -30,7 +30,7 @@ spl_autoload_register('Poznavacky\\autoloader');
 session_start();
 mb_internal_encoding('UTF-8');
 
-//Zkontroluj a obnov CSRF token
+//Zkontroluj a obnov CSRF token (toto také přesměruje nepřihlášené uživatele pokoušející se přistoupit na nějakou menu stránku na index)
 $antiCSRF = new AntiCsrfMiddleware();
 $antiCSRF->verifyRequest(); //V případě chyby (včetně vypršení sezení) je na tomto řádku skript zastaven
 
