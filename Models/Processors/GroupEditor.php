@@ -6,6 +6,7 @@ use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\DatabaseItems\Part;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
 use \InvalidArgumentException;
@@ -17,25 +18,27 @@ use \RangeException;
  */
 class GroupEditor
 {
-    private $group;
-    private $originalGroupId;
-    private $partsToSave;
-    
+    private Group $group;
+    private int $originalGroupId;
+    private array $partsToSave;
+
     /**
      * Konstruktor nastavující objekt poznávačky, která může být tímto objektem modifikována, jako vlastnost
      * @param Group $group Objekt poznávačky, kterou bude možné tímto objektem upravit
+     * @throws DatabaseException
      */
     public function __construct(Group $group)
     {
         $this->group = $group;
         $this->originalGroupId = $group->getId(); //Vynuť načtení ID potřebného pro volání některých metod - po změně vlastností již nepůjde nalézt v databázi
     }
-    
+
     /**
      * Metoda kontrolující nové jméno na délku, znaky a unikátnost a přejmenovávající ji
      * Změna není trvale uložena do databáze, pro to je potřeba zavolat metodu GroupEditor::commit()
      * @param string $newName Nový název třídy (nemusí být ošetřen)
      * @throws AccessDeniedException Pokud název poznávačky není unikátní, nevyhovuje jeho délka nebo obsahuje nepovolené znaky
+     * @throws DatabaseException
      */
     public function rename(string $newName): void
     {
@@ -53,10 +56,8 @@ class GroupEditor
             {
                 case 'short':
                     throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_SHORT, null, $e);
-                    break;
                 case 'long':
                     throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_LONG, null, $e);
-                    break;
             }
         }
         catch (InvalidArgumentException $e)
@@ -87,13 +88,14 @@ class GroupEditor
 
         $this->group->rename($newName);
     }
-    
+
     /**
      * Metoda tvořící z pole obecných objektů pole částí s objekty přírodnin a ukládající ho jako vlastnost tohoto objektu
      * Přírodniny jsou spojeny s jejich ekvivalenty v databázi (podle názvu necitlivého na velká písmena) nebo jsou vytvořeny nové objekty, které však zatím nejsou uloženy do databáze
      * Názvy přírodnin i částí jsou touto metodou ošetřeny
      * @param array $partsArray Pole obecných objektů definující vždy název části a seznam názvů přírodnin, které do ní mají být přidány
      * @throws AccessDeniedException Pokud se v některé části vyskytuje tatáž přírodnina vícekrát nebo pokud některý z názvů nesplňuje podmínky v oblasti délky, znaků nebo unikátnosti
+     * @throws DatabaseException
      */
     public function unpackParts(array $partsArray): void
     {
@@ -156,10 +158,8 @@ class GroupEditor
                             {
                                 case 'short':
                                     throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_SHORT, null, $e);
-                                    break;
                                 case 'long':
                                     throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_LONG, null, $e);
-                                    break;
                             }
                         }
                         catch (InvalidArgumentException $e)
@@ -187,10 +187,8 @@ class GroupEditor
                 {
                     case 'short':
                         throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_SHORT, null, $e);
-                        break;
                     case 'long':
                         throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_LONG, null, $e);
-                        break;
                 }
             }
             catch (InvalidArgumentException $e)
@@ -222,9 +220,10 @@ class GroupEditor
         }
         $this->partsToSave = $partsObjects;
     }
-    
+
     /**
      * Metoda trvale ukládající všechny změny provedené v poznávačce, kterou tento objekt upravuje
+     * @throws DatabaseException
      */
     public function commit(): void
     {

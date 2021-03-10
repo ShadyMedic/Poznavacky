@@ -1,27 +1,31 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\DatabaseItems\Invitation;
 use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
 use \DateTime;
+use \Exception;
 
 /**
  * Kontroler zpracovávající data odeslaná z formuláře na přijetí nebo odmítnutí pozvánky do nějaké třídy na menu stránce
  * @author Jan Štěch
  */
-class AnswerInvitationController extends Controller
+class AnswerInvitationController extends SynchronousController
 {
     /**
      * Metoda zpracovávající odpověď na pozvánku
      * @param array $parameters Parametry ke zpracování (nepoužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
-     * @see Controller::process()
+     * @throws Exception Pokud se nepodaří vytvořit objekt DateTime
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {

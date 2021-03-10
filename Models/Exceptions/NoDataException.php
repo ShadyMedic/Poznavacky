@@ -2,6 +2,7 @@
 namespace Poznavacky\Models\Exceptions;
 
 use \Exception;
+use \Throwable;
 
 /**
  * Výjimka sloužící pro případ, že z databáze nejsou navrácena žádná data, která pohled vyžaduje
@@ -22,14 +23,14 @@ class NoDataException extends Exception
     const UNKNOWN_INVITATION = 'Pozvánka nenalezena';
     const UNKNOWN_NAME_CHANGE_REQUEST = 'Žádost o změnu jména nenalezena';
     const NATURAL_UNASSIGNED = 'Tato přířodnina není přiřazena do žádné poznávačky nebo neexistuje';
-    
+
     /**
      * Konstruktor podmínky
-     * @param string $message Obecná zpráva, která může být zobrazena běžnému uživateli
-     * @param int $code Číslo chyby, které může být zobrazeno běžnému uživateli
-     * @param Exception $previous Předcházející podmínka (pro účely propagace podmínek)
+     * @param string|null $message Obecná zpráva, která může být zobrazena běžnému uživateli
+     * @param int|null $code Číslo chyby, které může být zobrazeno běžnému uživateli
+     * @param Throwable|null $previous Předcházející podmínka (pro účely propagace podmínek)
      */
-    public function __construct(string $message = null, int $code = null, Exception $previous = null)
+    public function __construct(string $message = null, int $code = null, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

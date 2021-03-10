@@ -18,7 +18,7 @@ class Logger implements LoggerInterface
     private const TIME_FORMAT = 'Y-m-d H:i:s';
 
     private $handle;
-    private $oneUse;
+    private bool $oneUse;
 
     /**
      * Konstruktor třídy otevírající logovací soubor pro připojování dalšího zápisu na konec
@@ -43,7 +43,7 @@ class Logger implements LoggerInterface
      * Před zprávu je jako u automatického logování vložen datum a čas zápisu a na konec je vložen konec řádku
      * @param string $level Typ zprávy, musí být jedna z konstant třídy Psr\Log\LogLevel
      * @param string $message Zpráva pro zapsání do logovacího souboru
-     * @param array $context Kontextová data pro doplnění do zprávy
+     * @param mixed[] $context Kontextová data pro doplnění do zprávy
      * @throws LoggerInvalidArgumentException Pokud první argument není jednou z konstant třídy Psr\Log\LogLevel
      */
     public function log($level, $message, array $context = array()): void
@@ -80,6 +80,8 @@ class Logger implements LoggerInterface
 
     /**
      * Systém je nepoužitelný
+     * @param string $message Zpráva k zalogování
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      * @see LoggerInterface::emergency()
      */
     public function emergency($message, array $context = array())
@@ -91,6 +93,8 @@ class Logger implements LoggerInterface
 
     /**
      * Okamžitě musí být provedena akce
+     * @param string $message Zpráva k zalogování
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      * @see LoggerInterface::alert()
      */
     public function alert($message, array $context = array())
@@ -102,6 +106,8 @@ class Logger implements LoggerInterface
 
     /**
      * Kritická situace
+     * @param string $message Zpráva k zalogování
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      * @see LoggerInterface::critical()
      */
     public function critical($message, array $context = array())
@@ -113,6 +119,8 @@ class Logger implements LoggerInterface
 
     /**
      * Chyba, která nevyžaduje bezprostřední akci
+     * @param string $message Zpráva k zalogování
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      * @see LoggerInterface::ërror()
      */
     public function error($message, array $context = array())
@@ -124,6 +132,8 @@ class Logger implements LoggerInterface
 
     /**
      * Vyjímečné situace, které nelze považovat za chyby
+     * @param string $message Zpráva k zalogování
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      * @see LoggerInterface::warning()
      */
     public function warning($message, array $context = array())
@@ -135,6 +145,8 @@ class Logger implements LoggerInterface
 
     /**
      * Běžné, avšak zajímavé události
+     * @param string $message Zpráva k zalogování
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      * @see LoggerInterface::notice()
      */
     public function notice($message, array $context = array())
@@ -146,6 +158,8 @@ class Logger implements LoggerInterface
 
     /**
      * Normální události
+     * @param string $message Zpráva k zalogování
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      * @see LoggerInterface::alert()
      */
     public function info($message, array $context = array())
@@ -157,6 +171,8 @@ class Logger implements LoggerInterface
 
     /**
      * Informace využívané při vyvíjení a opravování systému, které jsou zapisovány do samostatného souboru.
+     * @param mixed $message Zpráva k zalogování, může se jednat i o objekt nebo pole, v takovém případě je zalogován výstup funkce print_r($message)
+     * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      */
     public function debug($message, array $context = array())
     {
@@ -195,12 +211,12 @@ class Logger implements LoggerInterface
 
     /**
      * Metoda skládající dohromady aktuální čas a jednotlivé části zprávy poskytnuty v argumentech
-     * @param $prefix Předpona zprávy, například typ zprávy (info, warning, error...), nepovinné
-     * @param $message Hlavní část zprávy
+     * @param $prefix string Předpona zprávy, například typ zprávy (info, warning, error...), nepovinné
+     * @param $message string Hlavní část zprávy nepovinné
      * @param string $suffix Přípona zprávy, základně znak konce řádky, nepovinné
      * @return string Řetězec vzniklý poskládáním jednotlivých částí zprávy
      */
-    private function constructMessage($prefix = '', $message, $suffix = PHP_EOL): string
+    private function constructMessage($prefix = '', string $message = '', $suffix = PHP_EOL): string
     {
         $date = (new DateTime())->format(self::TIME_FORMAT);
         return '[' . $date . '] ' . $prefix . $message . $suffix;

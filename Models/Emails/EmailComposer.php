@@ -17,7 +17,7 @@ class EmailComposer
     public const EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED = 5;
     public const EMAIL_TYPE_NEW_CLASS_REQUEST = 6;
     
-    private $message;
+    private string $message;
     
     /**
      * Metoda vyplňující potřebnou e-mailovou šablonu poskytnutými daty a nastavující jí jako vlastnost objektu
@@ -25,7 +25,7 @@ class EmailComposer
      * @param array $data Asociativní pole obsahující proměnné pro doplnění šablon (viz šablony ve složce Views/EmailTemplates pro požadované názvy klíčů)
      * @throws InvalidArgumentException Pokud je specifikován neplatný typ šablony
      */
-    public function composeMail($emailType, array $data): void
+    public function composeMail(int $emailType, array $data): void
     {
         extract($data);
         ob_start();
@@ -67,14 +67,6 @@ class EmailComposer
     public function getMail(): string
     {
         return $this->message;
-    }
-    
-    /**
-     * Metoda odstraňující obsah vlastnosti objektu s poskládanou e-mailovou zprávou
-     */
-    public function clearMail(): void
-    {
-        unset($this->message);
     }
 }
 

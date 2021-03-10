@@ -15,9 +15,9 @@ class GitHubFileFetcher
     private const PRIVACY_POLICY_PATH = 'documents/PRIVACY_POLICY.md';
     private const COOKIES_INFO_PATH = 'documents/COOKIES_INFO.md';
 
-    private $termsOfServiceHtml;
-    private $privacyPolicyHtml;
-    private $cookiesInfoHtml;
+    private string $termsOfServiceHtml;
+    private string $privacyPolicyHtml;
+    private string $cookiesInfoHtml;
 
     /**
      * Metoda stahující JSON data o markdown souboru hostovaném na GitHub na specifikovaném URL

@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\undefined;
 use \DateTime;
 
@@ -58,29 +59,32 @@ class Invitation extends DatabaseItem
         $this->class = $class;
         $this->expiration = $expiration;
     }
-    
+
     /**
      * Metoda navracející objekt třídy, do které je možné pomocí této pozvánky získat přístup
      * @return ClassObject Objekt třídy, které se týká tato pozvánka
+     * @throws DatabaseException
      */
     public function getClass(): ClassObject
     {
         $this->loadIfNotLoaded($this->class);
         return $this->class;
     }
-    
+
     /**
      * Metoda navracející datum (bez času), ve kterém tato pozvánka expiruje
      * @return string Datum expirace této pozvánky ve formátu "den. měsíc. rok" (například 24. 07. 2020)
+     * @throws DatabaseException
      */
     public function getExpirationDate(): string
     {
         $this->loadIfNotLoaded($this->expiration);
         return $this->expiration->format('d. m. Y');
     }
-    
+
     /**
      * Metoda přijímající pozvánku a vytvářející členství v dané třídě pro daného uživatele
+     * @throws DatabaseException
      */
     public function accept(): void
     {

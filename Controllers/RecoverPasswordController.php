@@ -13,22 +13,15 @@ use Poznavacky\Models\Statics\Db;
  * Kontroler starající se o výpis stránky pro obnovu hesla
  * @author Jan Štěch
  */
-class RecoverPasswordController extends Controller
+class RecoverPasswordController extends SynchronousController
 {
     /**
      * Metoda ověřující, zda je zadán platný kód pro obnovu hesla, nastavující hlavičku stránky a pohled
      * @param array $parameters Parametry pro kontroler; první element by měl obsahovat kód pro obnovu hesla
-     * @see Controller::process()
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
-        $this->pageHeader['title'] = 'Obnovit heslo';
-        $this->pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
-        $this->pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
-        $this->pageHeader['cssFiles'] = array('css/css.css');
-        $this->pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
-        $this->pageHeader['bodyId'] = 'recover-password';
-
         $code = null;
         try
         {
@@ -39,7 +32,7 @@ class RecoverPasswordController extends Controller
                 throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_NO_TOKEN, null, null);
             }
             $code = $parameters[0];
-            $this->data['token'] = $code;
+            self::$data['token'] = $code;
             
             $codeVerificator = new PasswordRecoveryCodeVerificator();
             $userId = $codeVerificator->verifyCode($code);
@@ -53,11 +46,12 @@ class RecoverPasswordController extends Controller
             //Získat jméno uživatele pro zobrazení na stránce
             $username = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['name'].' FROM '.User::TABLE_NAME.' WHERE '.User::COLUMN_DICTIONARY['id'].' = ?', array($userId), false)[User::COLUMN_DICTIONARY['name']];
             
-            $this->data['username'] = $username;
+            self::$data['username'] = $username;
         }
         catch (AccessDeniedException $e)
         {
             //Chybný kód
+            (new Logger(true))->alert('Uživatel přistupující do systému z IP adresy {ip} odeslal kód pro obnovu hesla (hash {hash}), který však zřejmě nebyl platný', array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => md5($code)));
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
             $this->redirect('');
         }
@@ -65,13 +59,18 @@ class RecoverPasswordController extends Controller
         {
             (new Logger(true))->alert('Uživatel přistupující do systému z IP adresy {ip} odeslal kód pro obnovu hesla (hash {hash}), který se však nepodařilo ověřit kvůli chybě databáze; je možné, že se k databázi nelze připojit', array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => md5($code)));
             $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED);
+            $this->redirect('');
         }
 
-        if (isset($this->data['username']))
-        {
-            //Kód nalezen a uživatel identifikován
-            $this->view = 'recoverPassword';
-        }
+        //Kontrola kódu v pořádku
+
+        self::$pageHeader['title'] = 'Obnovit heslo';
+        self::$pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
+        self::$pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
+        self::$pageHeader['bodyId'] = 'recover-password';
+
     }
 }
 

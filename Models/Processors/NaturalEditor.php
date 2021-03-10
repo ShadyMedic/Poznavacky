@@ -5,6 +5,7 @@ namespace Poznavacky\Models\Processors;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use \InvalidArgumentException;
 use \RangeException;
@@ -16,12 +17,13 @@ use \RangeException;
  */
 class NaturalEditor
 {
-    private $class;
-    private $idsOfNaturalsInClass;
+    private ClassObject $class;
+    private array $idsOfNaturalsInClass;
 
     /**
      * Konstruktor modelu nastavující objekt třídy, v níž je dovoleno upravovat přírodniny a získávající seznam jejich ID
      * @param ClassObject $class Objekt třídy, která má být pomocí tohoto objektu spravována
+     * @throws DatabaseException
      */
     public function __construct(ClassObject $class)
     {
@@ -29,6 +31,15 @@ class NaturalEditor
         $this->idsOfNaturalsInClass = array_map(function($item) { return $item->getId(); }, $class->getNaturals());
     }
 
+    /**
+     * Metoda pro přejmenování přírodniny
+     * Název je nejprve zkontrolován
+     * @param Natural $natural Přírodnina k přejmenování
+     * @param string $newName Nový název pro přírodninu
+     * @return bool TRUE, pokud se podaří změnu názvu provést a uložit
+     * @throws AccessDeniedException Pokud poskytnutý název nevyhovuje podmínkám
+     * @throws DatabaseException
+     */
     public function rename(Natural $natural, string $newName): bool
     {
         //Zkontroluj, zda je název přírodniny platný
@@ -44,10 +55,8 @@ class NaturalEditor
             {
                 case 'short':
                     throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_SHORT, null, $e);
-                    break;
                 case 'long':
                     throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_LONG, null, $e);
-                    break;
             }
         }
         catch (InvalidArgumentException $e)
@@ -73,6 +82,14 @@ class NaturalEditor
         return $natural->save();
     }
 
+    /**
+     * Metoda pro sloučení obrázků a použití dvou přírodnin do sebe
+     * @param Natural $from Přírodnina, jejíž obrázky a použití mají být převedeny, po dokončení akce je odstraněna
+     * @param Natural $to Přírodnina, do které mají být převedeny obrázky a použití první přírodniny
+     * @return array Asociativní pole obsahující klíče "mergedPictures" a "mergedUses" a počet sloučených obrázků a využití jako hodnoty
+     * @throws AccessDeniedException Pokud alespoň jedna z poskytnutých přírodnin nepatří do zvolené třídy
+     * @throws DatabaseException
+     */
     public function merge(Natural $from, Natural $to): array
     {
         if (!in_array($from->getId(), $this->idsOfNaturalsInClass))
@@ -87,6 +104,13 @@ class NaturalEditor
         return $from->merge($to);
     }
 
+    /**
+     * Metoda pro odstranění přírodniny
+     * @param Natural $natural Přírodnina k odstranění
+     * @return bool TRUE, pokud se odstranění povede
+     * @throws AccessDeniedException Pokud přírodnina nepatří do zvolené třídy
+     * @throws DatabaseException
+     */
     public function delete(Natural $natural): bool
     {
         if (!in_array($natural->getId(), $this->idsOfNaturalsInClass))
@@ -97,3 +121,4 @@ class NaturalEditor
         return $natural->delete();
     }
 }
+

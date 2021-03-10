@@ -4,6 +4,7 @@ namespace Poznavacky\Models\Processors;
 use Poznavacky\Models\DatabaseItems\LoggedUser;
 use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Logger;
 use \DateTime;
@@ -25,6 +26,7 @@ class RegisterUser
      * @param array $POSTdata Data odeslaná registračním formulářem, pole s klíči name, pass, repass a email
      * @throws RuntimeException Pokud proces registrace selže
      * @throws AccessDeniedException Pokud některý ze zadaných údajů nesplňuje podmínky
+     * @throws DatabaseException
      */
     public function processRegister(array $POSTdata): void
     {
@@ -54,6 +56,7 @@ class RegisterUser
      * @param string $email Zadaný e-mail uživatele (null, pokud nebyl zadán)
      * @return boolean TRUE, pokud všechny údaje splňují podmínky
      * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky
+     * @throws DatabaseException
      */
     private function validateData(string $name, string $pass, string $repass, string $email): bool
     {
@@ -174,6 +177,7 @@ class RegisterUser
      * @param string $password Heslo zvolené uživatelem
      * @param string|null $email E-mail zadaný uživatelem (null, pokud žádný nezadal)
      * @return boolean TRUE, pokud je uživatel úspěšně zaregistrován
+     * @throws DatabaseException
      */
     private function register(string $name, string $password, ?string $email): bool
     {        

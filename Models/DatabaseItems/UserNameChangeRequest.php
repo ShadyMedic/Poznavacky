@@ -1,8 +1,10 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\Exceptions\DatabaseException;
 
 /**
  * Třída reprezenzující žádost o změnu jména uživatele
@@ -26,15 +28,15 @@ class UserNameChangeRequest extends NameChangeRequest
     
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
-    
-    protected const SUBJECT_CLASS_NAME = 'User';
+
     protected const SUBJECT_TABLE_NAME = User::TABLE_NAME;
     protected const SUBJECT_NAME_DB_NAME = User::COLUMN_DICTIONARY['name'];
-    
+
     /**
      * Metoda navracející aktuální jméno uživatele
      * @return string Stávající jméno uživatele
      * {@inheritDoc}
+     * @throws DatabaseException
      * @see NameChangeRequest::getOldName()
      */
     public function getOldName(): string
@@ -42,11 +44,12 @@ class UserNameChangeRequest extends NameChangeRequest
         $this->loadIfNotLoaded($this->subject);
         return $this->subject['name'];
     }
-    
+
     /**
      * Metoda navracející e-mail uživatele žádající o změnu svého jména
      * @return string E-mailová adresa autora této žádosti
      * {@inheritDoc}
+     * @throws DatabaseException
      * @see NameChangeRequest::getRequestersEmail()
      */
     public function getRequestersEmail(): string
@@ -54,11 +57,13 @@ class UserNameChangeRequest extends NameChangeRequest
         $this->loadIfNotLoaded($this->subject);
         return $this->subject[User::COLUMN_DICTIONARY['email']];
     }
-    
+
     /**
      * Metoda odesílající autorovi této žádosti e-mail o potvrzení změny jména (pokud uživatel zadal svůj e-mail)
      * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
+     * @throws Exception Pokud se nepodaří e-mail odeslat
+     * @throws DatabaseException
      * @see NameChangeRequest::sendApprovedEmail()
      */
     public function sendApprovedEmail(): bool
@@ -73,12 +78,14 @@ class UserNameChangeRequest extends NameChangeRequest
         
         return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
-    
+
     /**
      * Metoda odesílající autorovi této žádosti e-mail o jejím zamítnutí (pokud uživatel zadal svůj e-mail)
      * @param string $reason Důvod k zamítnutí jména zadaný správcem
      * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
      * {@inheritDoc}
+     * @throws Exception Pokud se nepodaří e-mail odeslat
+     * @throws DatabaseException
      * @see NameChangeRequest::sendDeclinedEmail()
      */
     public function sendDeclinedEmail(string $reason): bool

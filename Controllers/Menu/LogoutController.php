@@ -1,7 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
@@ -11,12 +13,15 @@ use Poznavacky\Models\MessageBox;
  * Kontroler starající se o odhlášení uživatele a jeho přesměrování na index stránku.
  * @author Jan Štěch
  */
-class LogoutController extends Controller
+class LogoutController extends SynchronousController
 {
 
     /**
      * Metoda odhlašující uživatele a přesměrovávající jej na index stránku
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException Pokud se nepodaří odstranit kód pro trvalé přihlhášení  (za předpokladu, že je přítomen)
+     * @throws AccessDeniedException Pokud není přilhášen žádný uživatel
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
@@ -31,7 +36,7 @@ class LogoutController extends Controller
             
             //Odstraň cookie pro trvalé přihlášení
             unset($_COOKIE['instantLogin']);
-            setcookie('instantLogin', null, -1);
+            setcookie('instantLogin', null, -1, '/');
             
             //Vymaž kód pro trvalé přihlášení z databáze
             Db::executeQuery('DELETE FROM sezeni WHERE kod_cookie = ? LIMIT 1', array(md5($code)));

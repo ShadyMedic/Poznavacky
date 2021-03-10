@@ -1,10 +1,12 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\DatabaseItems\Folder;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Security\NumberAsWordCaptcha;
 use Poznavacky\Models\Statics\UserManager;
@@ -19,13 +21,15 @@ use RangeException;
  */
 class NewClassRequester
 {
-    private const ADMIN_EMAIL = 'honza.stech@gmail.com';
-    
+    private const WEBMASTER_EMAIL = 'honza.stech@gmail.com';
+
     /**
      * Metoda zpracovávající data z formuláře a řídící odesílání e-mailu správci služby
      * @param array $POSTdata Data odeslaná z formuláře na request-new-class stránkce
-     * @throws AccessDeniedException Pokud odeslaná data nesplňují podmínky
      * @return boolean TRUE, pokud se podařilo odeslat e-mail, FALSE, pokud ne
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud odeslaná data nesplňují podmínky
+     * @throws Exception Pokud se nepodaří odeslat webmasterovi e-mail
      */
     public function processFormData(array $POSTdata): bool
     {
@@ -46,18 +50,19 @@ class NewClassRequester
             $composer->composeMail(EmailComposer::EMAIL_TYPE_NEW_CLASS_REQUEST, array('username' => UserManager::getName(), 'websiteAddress' => $_SERVER['SERVER_NAME'], 'name' => htmlspecialchars($name), 'message' => nl2br(htmlspecialchars($text)), 'email' => htmlspecialchars($email)));
             
             $sender = new EmailSender();
-            return $sender->sendMail(self::ADMIN_EMAIL, 'Žádost o založení nové třídy od '.UserManager::getName(), $composer->getMail());
+            return $sender->sendMail(self::WEBMASTER_EMAIL, 'Žádost o založení nové třídy od '.UserManager::getName(), $composer->getMail());
         }
         return false;
     }
-    
+
     /**
      * Metoda ověřující, zda odeslaná data splňují podmínky
      * @param mixed $email E-mail uživatele, pokud byl zadán
      * @param string $name Požadované jméno nové třídy
      * @param mixed $antispam Odpověď na captchu
-     * @throws AccessDeniedException Pokud jsou data vyplněna nesprávně
      * @return boolean TRUE, pokud jsou všechna data vyplněna správně
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud jsou data vyplněna nesprávně
      */
     private function validate($email, string $name, $antispam): bool
     {

@@ -17,7 +17,7 @@ class Db
     private const DEFAULT_PASSWORD = '';
     private const DEFAULT_DATABASE = 'poznavacky';
     
-    private static $connection;
+    private static PDO $connection;
     private static array $settings = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
@@ -45,14 +45,6 @@ class Db
             return null;
         }
         return self::$connection;
-    }
-    
-    /**
-     * Metoda ničící PDO objekt zajišťující spojení s databází
-     */
-    public static function disconnect(): void
-    {
-        self::$connection->null;
     }
     
     /**

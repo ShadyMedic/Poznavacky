@@ -1,9 +1,10 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\System;
 
-use Poznavacky\Controllers\Controller;
+use PHPMailer\PHPMailer\Exception;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
-use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Administration;
 use Poznavacky\Models\AjaxResponse;
 
@@ -11,34 +12,23 @@ use Poznavacky\Models\AjaxResponse;
  * Kontroler zpracovávající data odeslaná ze stránky administrate AJAX požadavkem
  * @author Jan Štěch
  */
-class AdministrateActionController extends Controller
+class AdministrateActionController extends AjaxController
 {
     /**
      * Metoda odlišující, jaká akce má být vykonána a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
+     * @throws Exception Pokud akcí bylo odeslání e-mailu a ten se nepodařilo odeslat
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
-        if (empty($_POST))
+        if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
-        
-        //Kontrola, zda je nějaký uživatel přihlášen
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser())
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
-        //Kontrola, zda je přihlášený uživatel administrátorem
-        if (!$aChecker->checkSystemAdmin())
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
-        
+
         header('Content-Type: application/json');
         $administration = new Administration();
         try
@@ -135,7 +125,7 @@ class AdministrateActionController extends Controller
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
-                    exit();
+                    return;
             }
         }
         catch (AccessDeniedException $e)
@@ -143,9 +133,6 @@ class AdministrateActionController extends Controller
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

@@ -13,8 +13,8 @@ class MessageBox
     public const MESSAGE_TYPE_ERROR = 3;
     private const CSS_CLASSES = array(0 => 'success-message', 1 => 'info-message', 2 => 'warning-message', 3 => 'error-message');
     
-    private $message;
-    private $cssClass;
+    private string $message;
+    private string $cssClass;
 
     /**
      * Konstruktor hlášky nastavující její typ a obsah

@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\LoginUser;
@@ -10,7 +11,7 @@ use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 use Poznavacky\Models\Logger;
-use InvalidArgumentException;
+use \InvalidArgumentException;
 
 /**
  * Kontroler zpracovávající data z formulářů na index stránce
@@ -18,14 +19,14 @@ use InvalidArgumentException;
  * Kontroler je volán pomocí AJAX požadavku z index.js
  * @author Jan Štěch
  */
-class IndexFormsController extends Controller
+class IndexFormsController extends AjaxController
 {
     /**
      * Metoda přijímající data z formulářů skrz $_POST a volající model, který je zpracuje.
      * Podle výsledku zpracování dat odesílá instrukce k přesměrování na menu stránku nebo odesílá chybovou hlášku.
      * V případě, že se během zpracovávání dat narazilo na větší množství chyb, jsou v odpovědi odděleny svislítkem ("|")
      * @param array $parameters Parametry pro kontroler (nevyužíváno)
-     * @see Controller::process()
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
@@ -60,7 +61,9 @@ class IndexFormsController extends Controller
                     $form = 'login';
                     $userLogger = new LoginUser();
                     $userLogger->processLogin($_POST);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu/'.UserManager::getUser()['lastMenuTableUrl']);
+                    $menuUrl = 'menu';
+                    if (!empty(UserManager::getUser()['lastMenuTableUrl'])) { $menuUrl .= '/'.UserManager::getUser()['lastMenuTableUrl']; }
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, $menuUrl);
                     echo $response->getResponseString();
                     break;
                 //Registrace
@@ -75,11 +78,12 @@ class IndexFormsController extends Controller
                 case 'p':
                     $form = 'passRecovery';
                     $passwordRecoverer = new RecoverPassword();
-                    if ($passwordRecoverer->processRecovery($_POST))
+                    try
                     {
+                        $passwordRecoverer->processRecovery($_POST);
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', array('origin' => $form));
                     }
-                    else
+                    catch (Exception $e)
                     {
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.', array('origin' => $form));
                     }
@@ -98,9 +102,6 @@ class IndexFormsController extends Controller
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED, array('origin' => $form));
             echo $response->getResponseString();
         }
-
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

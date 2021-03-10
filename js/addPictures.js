@@ -91,7 +91,7 @@ function submitPicture(event)
 				{
 					if (messageType === "success")
 					{
-						//newMessage(message, "success");
+						newMessage(message, "success");
 
 						//Reset HTML
 						$("#url-input").val("");

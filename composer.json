@@ -19,7 +19,8 @@
 		"ext-mbstring": "^7.4",
 		"ext-json": "^7.4",
 		"ext-intl": "^7.4",
-		"ext-pdo": "^7.4"
+		"ext-pdo": "^7.4",
+		"ext-curl": "^7.4"
 	},
 	"minimum-stability" : "dev",
 	"homepage" : "http://poznavacky.com/",

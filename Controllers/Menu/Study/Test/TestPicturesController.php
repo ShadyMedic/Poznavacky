@@ -1,17 +1,18 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Study\Test;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
-use Poznavacky\Models\Logger;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Logger;
 
 /** 
  * Kontroler volaný pomocí AJAX, který zajišťuje odeslání adresy obrázků pro testovací stránku
  * @author Jan Štěch
  */
-class TestPicturesController extends Controller
+class TestPicturesController extends AjaxController
 {
     private const PICTURES_SENT_PER_REQUEST = 20;
 
@@ -19,19 +20,12 @@ class TestPicturesController extends Controller
      * Metoda odesílající daný počet náhodně zvolených obrázků ze zvolené části/přírodniny
      * Adresy jsou odeslány jako pole v JSON formátu
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
-     * @see Controller::process()
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
         //Kontrola přístupu již proběhla v MenuController.php
-
-        //Kontrola, zda byl tento kontroler zavolán jako AJAX
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest' )
-        {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit ke kontroleru test-pictures z IP adresy {ip} jinak než pomocí AJAX požadavku', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-            header('HTTP/1.0 400 Bad Request');
-            exit();
-        }
 
         $class = $_SESSION['selection']['class'];
         $group = $_SESSION['selection']['group'];
@@ -55,7 +49,7 @@ class TestPicturesController extends Controller
             //Žádné přírodniny
             (new Logger(true))->warning('Uživatel s ID {userId} se pokusil získat náhodné obrázky pro zkoušecí stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak zvolená poznávačka/část neobsahuje žádné přírodniny', array('userId' => UserManager::getId(), 'groupId' => $group->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
 
         //Získání objektů obrázků
@@ -93,9 +87,6 @@ class TestPicturesController extends Controller
         header('Content-Type: application/json');
         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('pictures' => $picturesArr));
         echo $response->getResponseString();
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 
