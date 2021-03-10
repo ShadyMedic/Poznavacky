@@ -35,12 +35,6 @@ class AccountSettingsController extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/css.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/accountSettings.js');
         self::$pageHeader['bodyId'] = 'account-settings';
-        self::$data['navigationBar'] = array(
-            0 => array(
-                'text' => self::$pageHeader['title'],
-                'link' => 'menu/account-settings'
-            )
-        );
     }
 }
 

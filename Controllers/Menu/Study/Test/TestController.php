@@ -57,24 +57,10 @@ class TestController extends SynchronousController
 
         if ($allParts)
         {
-            self::$data['navigationBar'] = array(
-                0 => array(
-                    'text' => self::$pageHeader['title'],
-                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/test'
-                )
-            );
-
             (new Logger(true))->info('Přístup na stránku pro zkoušení ze všech částí poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
         else
         {
-            self::$data['navigationBar'] = array(
-                0 => array(
-                    'text' => self::$pageHeader['title'],
-                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl().'/test'
-                )
-            );
-
             (new Logger(true))->info('Přístup na stránku pro zkoušení z části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('partId' => $part->getId(), 'groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
     }

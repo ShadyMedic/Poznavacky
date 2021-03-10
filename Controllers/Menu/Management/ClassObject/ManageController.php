@@ -28,11 +28,6 @@ class ManageController extends SynchronousController
         self::$data['className'] = $_SESSION['selection']['class']->getName();
         self::$data['classStatus'] = $_SESSION['selection']['class']->getStatus();
         self::$data['classCode'] = $_SESSION['selection']['class']->getCode();
-
-        self::$data['navigationBar'][] = array(
-            'text' => 'Správa třídy',
-            'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage'
-        );
     }
 }
 

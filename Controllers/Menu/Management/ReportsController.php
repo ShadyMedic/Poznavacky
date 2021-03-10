@@ -27,12 +27,6 @@ class ReportsController extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/css.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/resolveReports.js');
         self::$pageHeader['bodyId'] = 'resolve-reports';
-        self::$data['navigationBar'] = array(
-            0 => array(
-                'text' => self::$pageHeader['title'],
-                'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests/'.$_SESSION['selection']['group']->getUrl().'/reports'
-            )
-        );
     }
 }
 

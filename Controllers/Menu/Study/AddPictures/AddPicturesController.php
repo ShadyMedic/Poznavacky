@@ -58,25 +58,11 @@ class AddPicturesController extends SynchronousController
         
         if ($allParts)
         {
-            self::$data['navigationBar'] = array(
-                0 => array(
-                    'text' => self::$pageHeader['title'],
-                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/addPictures'
-                )
-            );
-
             self::$data['naturals'] = $group->getNaturals();
             (new Logger(true))->info('Přístup na stránku pro přidávání obrázků do všech částí poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }
         else
         {
-            self::$data['navigationBar'] = array(
-                0 => array(
-                    'text' => self::$pageHeader['title'],
-                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl().'/addPictures'
-                )
-            );
-
             self::$data['naturals'] = $part->getNaturals();
             (new Logger(true))->info('Přístup na stránku pro přidávání obrázků do části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('partId' => $part->getId(), 'groupId' => $group->getId(), 'classId' => $class->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         }

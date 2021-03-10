@@ -17,13 +17,6 @@ class TestsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        self::$data['navigationBar'] = array(
-            0 => array(
-                'text' => self::$pageHeader['title'],
-                'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests'
-            )
-        );
-
         self::$pageHeader['title'] = 'Správa poznávaček';
         self::$pageHeader['description'] = 'Nástroj pro správce tříd umožnňující snadnou správu poznávaček';
         self::$pageHeader['keywords'] = '';

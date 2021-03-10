@@ -24,9 +24,6 @@ class MenuController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        self::$data['navigationBar'] = array();
-        self::$data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
-
         //Vypsání tabulky na menu stránce
         self::$pageHeader['bodyId'] = 'menu';
         $controllerName = __NAMESPACE__.'\\MenuTable'.self::CONTROLLER_EXTENSION;
