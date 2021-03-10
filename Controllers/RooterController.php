@@ -103,6 +103,10 @@ class RooterController extends SynchronousController
             $dataGetters[] = $dataGetter;
         }
 
+        //Dočasné uložení naparsované URL adresy pro definitivní kontrolery a získávače dat
+        $_SESSION['temp']['parsedUrlTemplate'] = $path;
+        $_SESSION['temp']['parsedUrl'] = $parsedURL;
+
         /* Všechny potřebné informace z routes.ini získány */
 
         //Nastavení složek
