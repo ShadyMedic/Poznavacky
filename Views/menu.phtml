@@ -18,8 +18,13 @@
 		<nav>
 		<?php for ($i = 0; $i < count($navigationBar); $i++) : ?>
 			<?php if ($i < count($navigationBar) - 1) : ?>
-				<a class="btn inline black" href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
-				<span>>></span>
+                <?php if ($navigationBar[$i]['link'] !== '#') : ?>
+				    <a class="btn inline black" href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
+				<?php endif ?>
+                <?php if ($navigationBar[$i]['link'] === '#') : ?>
+                    <span class="inline black"><?= $navigationBar[$i]['text'] ?></span>
+                <?php endif ?>
+                <span>>></span>
 			<?php endif ?>
 			<?php if ($i == count($navigationBar) - 1) : ?>
 				<span><?= $navigationBar[$i]['text'] ?></span>

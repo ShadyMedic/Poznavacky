@@ -37,19 +37,19 @@ class MenuDataGetter implements DataGetter
             {
                 //Pouze statický text
                 $navigationItem = mb_substr($navigationItem, 1);
-                $link = 'javascript:;';
+                $link = '#';
             }
             if (isset($_SESSION['selection'][$navigationItem]))
             {
                 //Název složky jako text
                 $text = $_SESSION['selection'][$navigationItem]->getName();
-                if ($link !== 'javascript:;') { $link = $currentLink; }
+                if ($link !== '#') { $link = $currentLink; }
             }
             else
             {
                 //Jiný text
                 $text = $navigationItem;
-                if ($link !== 'javascript:;') { $link = $currentLink; }
+                if ($link !== '#') { $link = $currentLink; }
             }
 
             $result['navigationBar'][] = array('text' => $text, 'link' => $link);
