@@ -26,32 +26,6 @@ class LearnPicturesController extends AjaxController
      */
     public function process(array $parameters): void
     {
-        //Kontrola přístupu již proběhla v MenuController.php
-
-        $group = $_SESSION['selection']['group'];
-        $part = null;
-        if (isset($_SESSION['selection']['part']))
-        {
-            $part = $_SESSION['selection']['part'];
-            $allParts = false;
-        }
-        else
-        {
-            $allParts = true;
-        }
-
-        //Kontrola přítomnosti přírodnin
-        if (
-            ($allParts && count($group->getNaturals()) === 0) ||
-            (!$allParts && $part->getNaturalsCount() === 0)
-        )
-        {
-            //Žádné přírodniny
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil získat obrázek pro učební stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak zvolená poznávačka/část neobsahuje žádné přírodniny', array('userId' => UserManager::getId(), 'groupId' => $group->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-            header('HTTP/1.0 400 Bad Request');
-            return;
-        }
-
         $naturalName = urldecode($_GET['natural']);
         
         $natural = new Natural(false);

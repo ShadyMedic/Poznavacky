@@ -23,9 +23,6 @@ class SubmitPictureController extends AjaxController
     function process(array $parameters): void
     {
         $group = $_SESSION['selection']['group'];
-
-        //Kontrola přístupu je provedena již v MenuController.php
-
         $adder = new PictureAdder($group);
         $response = null;
         try

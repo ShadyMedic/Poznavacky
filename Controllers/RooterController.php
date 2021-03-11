@@ -284,6 +284,12 @@ class RooterController extends SynchronousController
                     case 'group':
                         if (!$aChecker->checkGroup()) { $subCheckResult = false; }
                         break;
+                    case 'naturals':
+                        if (
+                            ($aChecker->checkPart() && $_SESSION['selection']['part']->getNaturalsCount() === 0) ||
+                            (!$aChecker->checkPart() && count($_SESSION['selection']['group']->getNaturals()) === 0)
+                        ) { $subCheckResult = false; }
+                        break;
                 }
                 if ($subCheckResult === true) { $subCheckSuccessfulResults++; }
             }
