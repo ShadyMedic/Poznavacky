@@ -14,7 +14,7 @@ use \Exception;
  */
 class AntiCsrfMiddleware
 {
-    private const TOKEN_NAME = 'csfrToken';
+    public const TOKEN_NAME = 'csfrToken';
     private const TOKEN_LENGTH = 8; //Délka řetězce v bajtech - 8 bajtů --> 16 znaků hexadecimálního kódu
     private const TOKEN_GENERATION_ATTEMPTS = 5; //Počet pokusů na vygenerování náhodného kódu před tím, než je zalogována chyba na úrovni EMERGENCY
 

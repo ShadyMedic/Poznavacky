@@ -4,6 +4,7 @@ namespace Poznavacky\Controllers\Menu;
 use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Security\AntiCsrfMiddleware;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
@@ -25,9 +26,8 @@ class LogoutController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        //Vymaž současné odhlášení uživatele
         $userId = UserManager::getId();
-        unset($_SESSION['user']);
+        $futureCsrfToken = $_SESSION[AntiCsrfMiddleware::TOKEN_NAME];
         
         //Odstraň trvalé přihlášení
         if (isset($_COOKIE['instantLogin']))
@@ -42,6 +42,13 @@ class LogoutController extends SynchronousController
             Db::executeQuery('DELETE FROM sezeni WHERE kod_cookie = ? LIMIT 1', array(md5($code)));
             unset($code);
         }
+
+        //Vymaž současné přihlášení uživatele a s ním i všechno ostatní v $_SESSION
+        session_unset();
+        session_commit();
+
+        //Obnov současný CSRF token
+        $_SESSION[AntiCsrfMiddleware::TOKEN_NAME] = $futureCsrfToken;
         
         $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Byli jste úspěšně odhlášeni');
         (new Logger(true))->info('Uživatel s ID {userId} se z IP adresy {ip} odhlásil', array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR']));
