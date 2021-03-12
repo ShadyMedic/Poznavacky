@@ -42,7 +42,7 @@ abstract class Captcha
      */
     public function checkAnswer($answer, string $index): bool
     {
-        $result = $_SESSION[$index] === (int)$answer;
+        $result = $_SESSION[$index] === (string)$answer;
         
         $this->unsetAnswer($index);
         
