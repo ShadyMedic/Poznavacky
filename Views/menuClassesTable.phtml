@@ -61,19 +61,19 @@
 		</li>
 		<li id="request-class-wrapper">
 			<h5>Vytvořte novou třídu</h5>
-			<span <?php if ($displayNewClassForm) : ?>style="display: none"<?php endif ?>>Vyplňte krátký formulář pro tvorbu třídy:</span>
-			<button id="request-class-button" class='btn border-btn non-transparent black' <?php if ($displayNewClassForm) : ?>style="display: none"<?php endif ?>>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
-			<form method="POST" id="request-class-form" <?php if (!$displayNewClassForm) : ?>style="display: none"<?php endif ?>>
+			<span>Vyplňte krátký formulář pro tvorbu třídy:</span>
+			<button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
+			<form method="POST" id="request-class-form" style="display:none;">
 				<label for="new-class-form-name">Požadovaný název třídy</label>
-				<input id='new-class-form-name' class="text-field" name="className" type=text maxlength=31 value="<?= @$classNameValue ?>" />
+				<input id='new-class-form-name' class="text-field" type=text maxlength=31 />
 				<?php if (!$specifiedEmail) : ?>
 					<label for="new-class-form-email">Kontaktní e-mailová adresa</label>
-					<input class='text-field' id='new-class-form-email' name="email" length=255 value="<?= @$emailValue ?>" />
+					<input class='text-field' id='new-class-form-email' length=255 />
 				<?php endif ?>
 				<label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
-				<textarea class="text-field" id='new-class-form-info' name="text"><?= @$textValue ?></textarea>
-				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span> <?= $antispamCode ?> </span></label>
-				<input id='new-class-form-antispam' class="text-field" name="antispam" min=0 max=99 maxlength=2 />
+				<textarea class="text-field" id='new-class-form-info'></textarea>
+				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span id="antispam-question"> <?= $antispamCode ?> </span></label>
+				<input id='new-class-form-antispam' class="text-field" min=0 max=99 maxlength=2 />
 				<input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
 				<button id="request-class-cancel-button" class="btn inline black">Zrušit</button>
 			</form>

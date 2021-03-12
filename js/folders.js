@@ -5,6 +5,7 @@ $(function() {
 	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
 	$("#request-class-button").click(function() {showNewClassForm()})
 	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
+	$("#request-class-form").on("submit", function(event) {processNewClassForm(event)});
 	$(".display-buttons-button").click(function(){displayButtons(this)})
 
 	//event listener kliknutí myši
@@ -30,6 +31,48 @@ function hideNewClassForm(event) {
 	$("#request-class-wrapper > span").show();
 	$("#request-class-form").hide();
 	$("#request-class-form .text-field").val("");
+}
+
+
+//funkce odesílající AJAX požadavek s informacemi vyplněnými do formuláře pro založení nové třídy
+function processNewClassForm(event)
+{
+	event.preventDefault();
+
+	let name = $("#new-class-form-name").val();
+	let email = $("#new-class-form-email").val();	//Pokud pole neexistuje, vrátí undefined
+	let info = $("#new-class-form-info").val();
+	let antispam = $("#new-class-form-antispam").val();
+
+	$.post('menu/request-new-class',
+		{
+			className: name,
+			email: email,
+			text: info,
+			antispam: antispam
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						newMessage(message, "error"); //TODO zobrazit ve formuláři
+						//Aktualizuj ochranu proti robotům
+						$("#antispam-question").text(data.newCaptcha);
+						$("#new-class-form-antispam").val("");
+					}
+					else if (messageType === "success")
+					{
+						newMessage(message, "success");
+						hideNewClassForm();
+					}
+				}
+			);
+		},
+		"json"
+	);
 }
 
 //zobrazí tlačítka "Přidat obrázky", "Učit se" a "Vyzkoušet se"
