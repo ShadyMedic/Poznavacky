@@ -27,7 +27,6 @@ class LogoutController extends SynchronousController
     public function process(array $parameters): void
     {
         $userId = UserManager::getId();
-        $futureCsrfToken = $_SESSION[AntiCsrfMiddleware::TOKEN_NAME];
         
         //Odstraň trvalé přihlášení
         if (isset($_COOKIE['instantLogin']))
@@ -45,10 +44,10 @@ class LogoutController extends SynchronousController
 
         //Vymaž současné přihlášení uživatele a s ním i všechno ostatní v $_SESSION
         session_unset();
-        session_commit();
-
-        //Obnov současný CSRF token
-        $_SESSION[AntiCsrfMiddleware::TOKEN_NAME] = $futureCsrfToken;
+        session_destroy();
+        session_write_close();
+        setcookie(session_name(), '', 0, '/');
+        session_regenerate_id();
         
         $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Byli jste úspěšně odhlášeni');
         (new Logger(true))->info('Uživatel s ID {userId} se z IP adresy {ip} odhlásil', array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR']));
