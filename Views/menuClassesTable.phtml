@@ -6,7 +6,7 @@
 	</div>
 	<ul class="rows">
 		<?php foreach ($table as $tableRow) : ?>
-			<button class="btn" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>
+			<button class="btn class-item" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>
 				<h4 class="col1">
 					<!--<a href="<?= $tableRow['rowLink'] ?>">
 					<?= $tableRow[0] ?>
@@ -25,7 +25,7 @@
                     <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" class="btn inline black col3">Správa třídy</a>
                     <?php endif ?>
                     <?php if ($tableRow[2] === 'leave') : ?>
-                    <a href="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn inline black col3">Opustit třídu</a>
+                    <a href="javascript:;" data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn inline black col3 leave-link">Opustit třídu</a>
                     <?php endif ?>
                     <?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
                     <?= $tableRow[2] ?>
@@ -83,7 +83,7 @@
 </div>
 
 <div id="class-item-template" style="display:none;">
-    <button class="btn" onclick="window.location.href='/menu/{url}'"><li>
+    <button class="btn class-item" onclick="window.location.href='/menu/{url}'"><li>
         <h4 class="col1">
             {name}
         </h4>
@@ -91,6 +91,6 @@
             <span class="tiles">poznávaček: </span>
             <span>{groups}</span>
         </span>
-        <a href="/menu/{url}/leave" class="btn inline black col3">Opustit třídu</a>
+        <a href="javascript:;" data-leave-url="/menu/{url}/leave" class="btn inline black col3 leave-link">Opustit třídu</a>
     </li></button>
 </div>

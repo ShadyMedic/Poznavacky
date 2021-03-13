@@ -2,7 +2,8 @@
 $(function() {
 
 	//event listenery tlačítek
-	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
+	$("#change-folders-layout-button").click(function() {changeFoldersLayout()})
+	$(".leave-link").click(function(event) {leaveClass(event)})
 	$("#class-code-form").on("submit", function(event) {submitClassCode(event)})
 	$("#request-class-button").click(function() {showNewClassForm()})
 	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
@@ -16,6 +17,39 @@ $(function() {
 
 //vše, co se děje při změně velikosti okna
 $(window).resize(function(){})
+
+//odešle AJAX požadavek na opuštění dané třídy
+function leaveClass(event)
+{
+	let url = $(event.target).attr("data-leave-url");
+	let $leftClass = $(event.target).closest('.class-item');
+
+	event.stopPropagation();
+
+	$.post(url, {},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Chyba při zpracování požadavku (například protože je uživatel správce dané třídy)
+						newMessage(message, "error");
+					}
+					else if (messageType === "success")
+					{
+						//Odebrání opuštěné třídy z DOM
+						$leftClass.remove();
+
+						newMessage(message, "success");
+					}
+				}
+			);
+		},
+		"json"
+	);
+}
 
 //odešle zadaný kód třídy
 function submitClassCode(event)
@@ -56,6 +90,9 @@ function submitClassCode(event)
 							classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
 							$(classDomItem).insertAfter('.rows > button:last');
 						}
+
+						//Nastavení event handleru pro opuštění nových tříd
+						$(".leave-link").click(function(event) {leaveClass(event)})
 
 						newMessage(message, "success");
 					}
