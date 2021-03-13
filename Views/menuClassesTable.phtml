@@ -54,8 +54,8 @@
 		<li id="enter-code-wrapper">
 			<h5>Připojte se pomocí kódu</h5>
 			<span>Zadejte kód soukromé třídy, do které chcete vstoupit:</span>
-			<form id='class-code-form' action="menu/enter-class-code" method="POST">
-				<input id='class-code-input' class="text-field" name="code" min=0 max=9999 maxlength=4/>
+			<form id='class-code-form'>
+				<input id='class-code-input' class="text-field" min=0 max=9999 maxlength=4/>
 				<button class='btn border-btn non-transparent black'>OK</button>
 			</form>
 		</li>
@@ -80,4 +80,17 @@
 		</li>
         <?php endif ?>
 	</ul>
+</div>
+
+<div id="class-item-template" style="display:none;">
+    <button class="btn" onclick="window.location.href='/menu/{url}'"><li>
+        <h4 class="col1">
+            {name}
+        </h4>
+        <span class="col2">
+            <span class="tiles">poznávaček: </span>
+            <span>{groups}</span>
+        </span>
+        <a href="/menu/{url}/leave" class="btn inline black col3">Opustit třídu</a>
+    </li></button>
 </div>

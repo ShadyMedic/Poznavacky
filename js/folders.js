@@ -3,9 +3,10 @@ $(function() {
 
 	//event listenery tlačítek
 	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
+	$("#class-code-form").on("submit", function(event) {submitClassCode(event)})
 	$("#request-class-button").click(function() {showNewClassForm()})
 	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
-	$("#request-class-form").on("submit", function(event) {processNewClassForm(event)});
+	$("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
 	$(".display-buttons-button").click(function(){displayButtons(this)})
 
 	//event listener kliknutí myši
@@ -14,8 +15,56 @@ $(function() {
 });
 
 //vše, co se děje při změně velikosti okna
-$(window).resize(function(){
-})
+$(window).resize(function(){})
+
+//odešle zadaný kód třídy
+function submitClassCode(event)
+{
+	event.preventDefault();
+
+	let code = $("#class-code-input").val();
+
+	$.post('menu/enter-class-code',
+		{
+			code: code
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Chyba při zpracování požadavku (zřejmě neplatný formát kódu)
+						newMessage(message, "error"); //TODO zobrazit ve formuláři
+					}
+					else if (messageType === "warning")
+					{
+						//Se zadaným kódem se nelze dostat do žádné třídy
+						newMessage(message, "warning"); //TODO zobrazit ve formuláři
+					}
+					else if (messageType === "success")
+					{
+						//Přidání nových tříd na konec seznamu
+						let classes = data.accessedClassesInfo;
+						for (let i = 0; i < classes.length; i++)
+						{
+							let classData = classes[i];
+							let classDomItem = $('#class-item-template').html();
+							classDomItem = classDomItem.replace(/{name}/g, classData.name);
+							classDomItem = classDomItem.replace(/{url}/g, classData.url);
+							classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
+							$(classDomItem).insertAfter('.rows > button:last');
+						}
+
+						newMessage(message, "success");
+					}
+				}
+			);
+		},
+		"json"
+	);
+}
 
 //zobrazí formulář na žádost o vytvoření nové třídy
 function showNewClassForm() {
@@ -32,8 +81,6 @@ function hideNewClassForm(event) {
 	$("#request-class-form").hide();
 	$("#request-class-form .text-field").val("");
 }
-
-
 //funkce odesílající AJAX požadavek s informacemi vyplněnými do formuláře pro založení nové třídy
 function processNewClassForm(event)
 {
