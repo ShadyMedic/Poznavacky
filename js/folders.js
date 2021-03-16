@@ -4,6 +4,8 @@ $(function() {
 	//event listenery tlačítek
 	$("#change-folders-layout-button").click(function() {changeFoldersLayout()})
 	$(".leave-link").click(function(event) {leaveClass(event)})
+	$(".accept-invitation-button").click(function (event) {answerInvitation(event, true)})
+	$(".reject-invitation-button").click(function (event) {answerInvitation(event, false)})
 	$("#class-code-form").on("submit", function(event) {submitClassCode(event)})
 	$("#request-class-button").click(function() {showNewClassForm()})
 	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
@@ -41,6 +43,54 @@ function leaveClass(event)
 					{
 						//Odebrání opuštěné třídy z DOM
 						$leftClass.remove();
+
+						newMessage(message, "success");
+					}
+				}
+			);
+		},
+		"json"
+	);
+}
+
+//odešle odpověď na pozvánku (pozitivní i negativní)
+function answerInvitation(event, answer)
+{
+	let className = $(event.target).closest(".invitation").find(".col1").text();
+	let classUrl = $(event.target).closest("div").attr('data-class-url');
+	let classGroupsCount = $(event.target).closest(".invitation").find(".col2").text();
+
+	let ajaxUrl = "menu/" + classUrl + "/invitation/" + ((answer) ? "accept" : "reject");
+    let $answeredInvitation = $(event.target).closest(".invitation");
+
+	$.post(ajaxUrl, {},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Chyba při zpracování požadavku (zřejmě neplatný formát kódu)
+						newMessage(message, "error");
+					}
+					else if (messageType === "success")
+					{
+					    if (answer)
+					    {
+                            //Přidání nové třídy na konec seznamu
+                            let classDomItem = $('#class-item-template').html();
+                            classDomItem = classDomItem.replace(/{name}/g, className);
+                            classDomItem = classDomItem.replace(/{url}/g, classUrl);
+                            classDomItem = classDomItem.replace(/{groups}/g, classGroupsCount);
+                            $(classDomItem).insertAfter('.rows > button:last');
+
+                            //Nastavení event handleru pro opuštění nových tříd
+                            $(".leave-link").click(function(event) {leaveClass(event)})
+                        }
+
+                        //Odstranění pozvánky
+                        $answeredInvitation.remove();
 
 						newMessage(message, "success");
 					}
@@ -199,6 +249,6 @@ function changeFoldersLayout() {
 }
 
 //funkce převádějící rem na pixely
-function remToPixels(rem) {    
+function remToPixels(rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
