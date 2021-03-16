@@ -4,10 +4,10 @@ namespace Poznavacky\Controllers;
 use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\PasswordRecoveryCodeVerificator;
-use Poznavacky\Models\Statics\Db;
 
 /** 
  * Kontroler starající se o výpis stránky pro obnovu hesla
@@ -68,7 +68,7 @@ class RecoverPasswordController extends SynchronousController
         self::$pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
         self::$pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
         self::$pageHeader['cssFiles'] = array('css/css.css');
-        self::$pageHeader['jsFiles'] = array('js/generic.js','js/recoverPassword.js');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/recoverPassword.js');
         self::$pageHeader['bodyId'] = 'recover-password';
 
     }

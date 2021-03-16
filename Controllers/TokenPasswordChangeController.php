@@ -3,14 +3,14 @@ namespace Poznavacky\Controllers;
 
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
-use Poznavacky\Models\MessageBox;
 use Poznavacky\Models\TokenPasswordChanger;
+use Poznavacky\Models\AjaxResponse;
 
 /**
  * Kontroler starající se o zpracování dat odeslaných z formuláře pro obnovení hesla
  * @author Jan Štěch
  */
-class TokenPasswordChangeController extends SynchronousController
+class TokenPasswordChangeController extends AjaxController
 {
 
     /**
@@ -25,7 +25,7 @@ class TokenPasswordChangeController extends SynchronousController
         $token = $_POST['token'];
         $pass = $_POST['pass'];
         $repass = $_POST['repass'];
-        
+
         try
         {
             $passwordChanger = new TokenPasswordChanger($token, $pass, $repass);
@@ -36,12 +36,13 @@ class TokenPasswordChangeController extends SynchronousController
         }
         catch (AccessDeniedException $e)
         {
-            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
-            $this->redirect('recoverPassword/'.$token);
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage());
+            echo $response->getResponseString();
+            return;
         }
-        
-        $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno');
-        $this->redirect('');
+
+        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno. Za okamžik budete přesměrováni na domovskou stránku.');
+        echo $response->getResponseString();
     }
 }
 
