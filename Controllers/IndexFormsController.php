@@ -80,7 +80,11 @@ class IndexFormsController extends AjaxController
                     $passwordRecoverer = new RecoverPassword();
                     try
                     {
-                        $passwordRecoverer->processRecovery($_POST);
+                        if (!$passwordRecoverer->processRecovery($_POST))
+                        {
+                            //Chyba nevyvolala výjimku
+                            throw new Exception();
+                        }
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', array('origin' => $form));
                     }
                     catch (Exception $e)
