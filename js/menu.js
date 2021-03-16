@@ -2,6 +2,8 @@ var smallTablet = 672;
 
 //vše, co se děje po načtení stránky
 $(function() {
+	$("#logout-button img").on("click", logout)
+
 	//skrytí částí postranního panelu, aby se při prvním otevření zobrazila jen jedna
 	$("#aside-nav").hide();
 	$("#aside-settings").hide();
@@ -24,4 +26,10 @@ function checkHeader() {
 		$("main, aside").css("padding-top", $("header").outerHeight());
 	else 
 		$("main, aside").css("padding-top", 0);
+}
+
+//odešle požadavek na odhlášení
+function logout()
+{
+	$.get('menu/logout', function (response, status) { ajaxCallback(response, status, function() {}); }, "json");
 }
