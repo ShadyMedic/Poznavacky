@@ -28,8 +28,11 @@ class IndexController extends SynchronousController
         if ($aChecker->checkUser())
         {
             //Uživatel je již přihlášen
+            $lastFolderUrl = UserManager::getOtherInformation()['lastMenuTableUrl'];
+            if (empty($lastFolderUrl)) { $url = 'menu'; }
+            else { $url = 'menu/'.$lastFolderUrl; }
             (new Logger(true))->info('Přesměrovávání uživatele s ID {userId} do systému z index stránky, jelikož již je přihlášen (IP: {ip})', array('userId'=> UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-            $this->redirect('menu');
+            $this->redirect($url);
         }
         
         //Kontrola automatického přihlášení
