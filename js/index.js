@@ -220,6 +220,7 @@ function showLoginDiv(divId) {
 	$("#login").hide();
 	$("#password-recovery").hide();
 	$("#" + divId).show();
+	$("#" + divId + " .text-field").first().focus();
 	emptyForms(".user-data input.text-field, .user-data .message");
 }
 

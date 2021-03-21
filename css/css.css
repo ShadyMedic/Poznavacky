@@ -79,8 +79,8 @@ body .btn::-moz-focus-inner {
 }
 
 body.tab .btn.border-btn:focus {
-  -webkit-box-shadow: inset 0 0 0 2px rgba(121, 207, 64, 0.8);
-          box-shadow: inset 0 0 0 2px rgba(121, 207, 64, 0.8);
+  -webkit-box-shadow: inset 0 0 0 1.6px #79cf40;
+          box-shadow: inset 0 0 0 1.6px #79cf40;
 }
 
 body.tab .btn.inline:focus {
@@ -98,18 +98,18 @@ body.tab .btn.arrow-btn:focus img {
 }
 
 body.tab input:focus ~ .checkmark {
-  -webkit-box-shadow: inset 0 0 0 2px rgba(71, 153, 17, 0.2);
-          box-shadow: inset 0 0 0 2px rgba(71, 153, 17, 0.2);
+  -webkit-box-shadow: inset 0 0 0 1.6px rgba(121, 207, 64, 0.6);
+          box-shadow: inset 0 0 0 1.6px rgba(121, 207, 64, 0.6);
 }
 
 body.tab input[type="checkbox"]:checked:focus ~ .checkmark {
-  -webkit-box-shadow: inset 0 0 0 2px rgba(121, 207, 64, 0.8);
-          box-shadow: inset 0 0 0 2px rgba(121, 207, 64, 0.8);
+  -webkit-box-shadow: inset 0 0 0 1.6px #79cf40;
+          box-shadow: inset 0 0 0 1.6px #79cf40;
 }
 
 body .text-field:focus {
-  -webkit-box-shadow: inset 0 0 0 2px rgba(71, 153, 17, 0.2);
-          box-shadow: inset 0 0 0 2px rgba(71, 153, 17, 0.2);
+  -webkit-box-shadow: inset 0 0 0 1.6px rgba(121, 207, 64, 0.6);
+          box-shadow: inset 0 0 0 1.6px rgba(121, 207, 64, 0.6);
 }
 
 .container {

@@ -27,7 +27,7 @@ body {
 	}
 	&.tab { //focus styly aplikované, pouze pokud uživatel používá k navigaci tabulátor
 		.btn.border-btn:focus {
-			box-shadow: inset 0 0 0 2px rgba($greenLight, 0.8);
+			box-shadow: inset 0 0 0 1.6px rgba($greenLight, 1);
 		}
 		.btn.inline:focus {
 			font-weight: bold;
@@ -43,14 +43,14 @@ body {
 			}
 		}
 		input:focus ~ .checkmark {
-			box-shadow: inset 0 0 0 2px rgba($greenMid, 0.2);
+			box-shadow: inset 0 0 0 1.6px rgba($greenLight, 0.6);
 		}
 		input[type="checkbox"]:checked:focus ~ .checkmark {
-			box-shadow: inset 0 0 0 2px rgba($greenLight, 0.8);
+			box-shadow: inset 0 0 0 1.6px rgba($greenLight, 1);
 		}
 	}
 	.text-field:focus {
-		box-shadow: inset 0 0 0 2px rgba($greenMid, 0.2);
+		box-shadow: inset 0 0 0 1.6px rgba($greenLight, 0.6);
 	}
 }
 
