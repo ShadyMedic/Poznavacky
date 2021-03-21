@@ -4720,19 +4720,22 @@ body#index #back-to-top img {
 }
 
 body#recover-password main {
-  margin: auto;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 2;
+  grid-row: 2/4;
 }
 
 body#recover-password .wrapper {
   width: 90vw;
   max-width: 520px;
+  margin: 0 auto;
 }
 
 body#recover-password h2 {
   font-size: 1.6rem;
 }
 
-body#recover-password .user-data {
+body#recover-password #recover-password-form .user-data {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4742,21 +4745,21 @@ body#recover-password .user-data {
           flex-direction: column;
 }
 
-body#recover-password .user-data label {
+body#recover-password #recover-password-form .user-data label {
   font-size: 0.9rem;
 }
 
-body#recover-password .user-data label,
-body#recover-password .user-data input.text-field {
+body#recover-password #recover-password-form .user-data label,
+body#recover-password #recover-password-form .user-data input.text-field {
   margin: 0.12rem 0;
 }
 
-body#recover-password .user-data label:not(:nth-of-type(1)),
-body#recover-password .user-data .checkbox {
+body#recover-password #recover-password-form .user-data label:not(:nth-of-type(1)),
+body#recover-password #recover-password-form .user-data .checkbox {
   margin-top: 0.54rem;
 }
 
-body#recover-password .user-data input.text-field {
+body#recover-password #recover-password-form .user-data input.text-field {
   color: #222;
   font-family: 'Roboto', sans-serif;
   background: #eee;
@@ -4764,14 +4767,14 @@ body#recover-password .user-data input.text-field {
   padding-bottom: 0.6em;
 }
 
-body#recover-password .message {
+body#recover-password #recover-password-form .message {
   font-size: 0.72rem;
   line-height: 0.96rem;
   min-height: 0.96rem;
   color: #a00;
 }
 
-body#recover-password .message.server {
+body#recover-password #recover-password-form .message.server {
   margin-bottom: 0.6rem;
 }
 
