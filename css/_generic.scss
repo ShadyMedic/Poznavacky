@@ -303,18 +303,6 @@ h5 {
 			color: $black1;
 		}
 	}
-	// TODO zrušit tuto třídu -> vše .icon
-	&.cross {
-		height: 1em;
-		width: 1em;
-		> img {
-			height: 100%;
-			width: 100%;
-		}
-		&:active {
-			transform: scale(0.88);
-		}
-	}
 	&.icon {
 		display: block;
 		height: 1em;
@@ -342,11 +330,6 @@ h5 {
 .center {
 	display: block;
 	margin: auto;
-}
-
-.cross {
-	width: 1em;
-	height: 1em;
 }
 
 input,

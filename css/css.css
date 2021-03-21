@@ -443,21 +443,6 @@ h5 {
   color: #101010;
 }
 
-.btn.cross {
-  height: 1em;
-  width: 1em;
-}
-
-.btn.cross > img {
-  height: 100%;
-  width: 100%;
-}
-
-.btn.cross:active {
-  -webkit-transform: scale(0.88);
-          transform: scale(0.88);
-}
-
 .btn.icon {
   display: block;
   height: 1em;
@@ -491,11 +476,6 @@ h5 {
 .center {
   display: block;
   margin: auto;
-}
-
-.cross {
-  width: 1em;
-  height: 1em;
 }
 
 input,
@@ -4453,7 +4433,7 @@ body#index #index-login-section .button-wrapper {
   height: 2rem;
 }
 
-body#index #index-login-section .cross {
+body#index #index-login-section .btn.icon {
   position: absolute;
   top: 0;
   right: 0;
