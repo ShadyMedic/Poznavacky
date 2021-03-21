@@ -1,6 +1,7 @@
 //scss partial soubor, který má na starost jedinečné styly pro index
 
-body#index {
+body#index
+{
 	width: 100vw;
 	height: 100%;
 	position: relative;
@@ -9,36 +10,7 @@ body#index {
 	overflow-x: hidden;
 	overflow-y: auto;
 	@include scrollbar(12px, $gray3, $gray2);
-	.container {
-		min-height: 100%;
-		display: grid;
-		grid-template-rows: auto auto 1fr auto;
-	}
-	#background {
-		position: fixed;
-		background-image: url("../images/indexbg.jpg");
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		height: 100%;
-		width: 100%;
-		transform: scale(1.02);
-		z-index: -2;
-	}
-	#background-overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		height: 100vh;
-		width: 100vw;
-		background: #001000;
-		opacity: 0;
-		z-index: -1;
-	}
 	header {
-		background: $greenDark;
 		padding: 1rem 1rem;
 		@media screen and (min-width: $mobile) {
 			padding: 1rem 3rem;
@@ -49,7 +21,6 @@ body#index {
 		@media screen and (min-width: $smallDesktop) {
 			padding: 1rem 6rem;
 		}
-		grid-row: 1/2;
 		.content {
 			display: flex;
 			flex-wrap: wrap;
@@ -203,7 +174,14 @@ body#index {
 			padding: 4rem 20vw;
 		}
 		p {
-			font-size: 1.32rem;
+			font-size: 1.24rem;
+		}
+		#info-icons {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			grid-template-rows: auto auto;
+			column-gap: 2rem;
+			margin: 1rem 0;
 		}
 	}	
 
@@ -251,7 +229,7 @@ body#index {
 			background: white;
 			height: 2rem;
 		}
-		.cross {
+		.btn.icon {
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -290,7 +268,6 @@ body#index {
 				padding-top: 0.6em;
 				padding-bottom: 0.6em;
 			}
-
 		}
 		.message {
 			font-size: 0.72rem;
@@ -308,6 +285,9 @@ body#index {
 		p {
 			text-align: left;
 			padding: 0;
+			&:not(:last-child) {
+				margin-bottom: 0.4rem;
+			}
 		}
 		.border-btn {
 			margin: 0.8rem auto 0.2rem auto;
@@ -349,15 +329,20 @@ body#index {
 		}
 		display: flex;
 		justify-content: space-between;
+		align-content: center;
 		transition: transform 0.6s ease-in-out;
 		&.show {
 			transform: translateY(0);
 		}
-		span {
-			padding-right: 2rem;
+		.wrapper {
+			padding-right: 6rem;
+			p {
+				margin-bottom: 0.6rem;
+			}
 		}
 		button {
 			flex-shrink: 0;
+			margin: auto 0;
 		}
 	}
 
@@ -392,50 +377,4 @@ body#index {
 			bottom: 0.2rem;
 		}
 	}
-
-	/*
-	&.loaded {
-		#index-text-section .content {
-			opacity: 1;
-			transform: translateY(0);
-			pointer-events: auto;
-		}
-		#index-buttons-section .content {
-			opacity: 1;
-			transform: translateY(0);
-			pointer-events: auto;
-		}
-		footer .content {
-			opacity: 1;
-			transform: translateY(0);
-			pointer-events: auto;
-		}	
-	}
-	&.load {
-		#index-text-section .content {
-			pointer-events: none;
-			animation: display-content 1s ease-in-out 0.2s forwards;
-		}
-		#index-buttons-section .content {
-			pointer-events: none;
-			animation: display-content 1s ease-in-out 1.2s forwards;
-		}
-		footer .content {
-			pointer-events: none;
-			animation: display-content 1s ease-in-out 2.2s forwards;
-		}
-	}
-	@keyframes darken-blur {
-		100% {
-			opacity: 0.68;
-		}
-	}
-	@keyframes display-content {
-		100% {
-			opacity: 1;
-			//transform: translateY(0);
-			pointer-events: auto;
-		}
-	}
-	*/
 }

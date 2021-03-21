@@ -25,16 +25,58 @@ body {
 	.btn::-moz-focus-inner {
 		border: 0;
 	}
-	&.tab {
+	&.tab { //focus styly aplikované, pouze pokud uživatel používá k navigaci tabulátor
 		.btn.border-btn:focus {
-			border: 2px solid rgba($greenMid, 0.5);
+			box-shadow: inset 0 0 0 1.6px rgba($greenLight, 1);
 		}
 		.btn.inline:focus {
 			font-weight: bold;
 			color: $greenMid;
-		} 
-		.text-field:focus {
-			box-shadow: inset 0 0 0 2px rgba($greenMid, 0.5);
+		}
+		.btn.arrow-btn:focus {
+			span {
+				color: $greenMid;
+			}
+			img {
+				//přebarvení SVG šipky (barva $greenMid: #479911) pomocí https://codepen.io/sosuke/pen/Pjoqqp
+				filter: brightness(0) saturate(100%) invert(50%) sepia(23%) saturate(1490%) hue-rotate(53deg) brightness(94%) contrast(96%);
+			}
+		}
+		input:focus ~ .checkmark {
+			box-shadow: inset 0 0 0 1.6px rgba($greenLight, 0.6);
+		}
+		input[type="checkbox"]:checked:focus ~ .checkmark {
+			box-shadow: inset 0 0 0 1.6px rgba($greenLight, 1);
+		}
+	}
+	.text-field:focus {
+		box-shadow: inset 0 0 0 1.6px rgba($greenLight, 0.6);
+	}
+}
+
+.container {
+	min-height: 100vh;
+	height: 100%;
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+}
+
+header {
+	grid-row: 1/2;
+	padding: 0.2rem 0.6rem;
+	min-height: 3.2rem;
+	background: $greenDark;
+	.logo {
+		@media screen and (min-width: $smallTablet) {
+			margin: 0;
+			height: 100%;
+		}
+		h1 {
+			font-size: 2rem;
+			line-height: 2.8rem;
+			letter-spacing: -0.08em;
+			color: white;
+			margin: 0;
 		}
 	}
 }
@@ -239,7 +281,8 @@ h5 {
 			top: 0.12em;
 			transition: transform 0.2s ease-out;
 		}
-		&:hover {
+		&:hover,
+		&:focus {
 			transform: translateX(-0.16em);
 			img {
 				transform: translateX(0.32em);
@@ -258,18 +301,6 @@ h5 {
 		}
 		&.black {
 			color: $black1;
-		}
-	}
-	// TODO zrušit tuto třídu -> vše .icon
-	&.cross {
-		height: 1em;
-		width: 1em;
-		> img {
-			height: 100%;
-			width: 100%;
-		}
-		&:active {
-			transform: scale(0.88);
 		}
 	}
 	&.icon {
@@ -299,11 +330,6 @@ h5 {
 .center {
 	display: block;
 	margin: auto;
-}
-
-.cross {
-	width: 1em;
-	height: 1em;
 }
 
 input,
@@ -411,15 +437,12 @@ label {
 	&:hover input ~ .checkmark {
 		background-color: #d8d8d8;
 	}
-
-	/* When the checkbox is checked, add a blue background */
 	input[type="checkbox"]:checked ~ .checkmark {
 		background-color: $greenDark;
 		&:after {
 			display: block;
 		}
 	}
-
 }
 
 

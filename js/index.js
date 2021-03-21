@@ -32,39 +32,39 @@ $(function() {
   
 	//Odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
 	$("#register-name").blur(function()
-  {
-    if (!($("#register-name").val() != "" && checkRegisterName())) { return; }
-    enqueueAjaxRequest
-    (
-      new ajaxRequest
-      (
-        'index-forms',
-        {
-          text: $("#register-name").val(),
-          type: 'u'
-        },
-        function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-name")); }
-      )
-    );
-  });
+	{
+		if (!($("#register-name").val() != "" && checkRegisterName())) { return; }
+		enqueueAjaxRequest
+		(
+		new ajaxRequest
+		(
+			'index-forms',
+			{
+			text: $("#register-name").val(),
+			type: 'u'
+			},
+			function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-name")); }
+		)
+		);
+	});
 
 	//Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
 	$("#register-email").blur(function()
-  {
-    if (!($("#register-email").val() != "" && checkRegisterEmail())) { return; }
-    enqueueAjaxRequest
-    (
-      new ajaxRequest
-      (
-        'index-forms',
-        {
-          text: $("#register-email").val(),
-          type: 'e'
-        },
-        function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-email")); }
-      )
-    );
-  });
+	{
+		if (!($("#register-email").val() != "" && checkRegisterEmail())) { return; }
+		enqueueAjaxRequest
+		(
+		new ajaxRequest
+		(
+			'index-forms',
+			{
+			text: $("#register-email").val(),
+			type: 'e'
+			},
+			function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-email")); }
+		)
+		);
+	});
 
 	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
@@ -220,7 +220,8 @@ function showLoginDiv(divId) {
 	$("#login").hide();
 	$("#password-recovery").hide();
 	$("#" + divId).show();
-	emptyForms(".user-data input.text-field, .message");
+	$("#" + divId + " .text-field").first().focus();
+	emptyForms(".user-data input.text-field, .user-data .message");
 }
 
 //skrytí login sekce
@@ -228,7 +229,7 @@ function hideLoginSection() {
 	$("#index-login-section").removeClass("show");
 	$(".overlay").removeClass("show");
 	$("body").css("overflowY", "auto");
-	emptyForms(".user-data input.text-field, .message");
+	emptyForms(".user-data input.text-field, .user-data .message");
 }
 
 //přihlášení pod demo účtem (kliknutí na tlačítko "Vyzkoušet demo")
