@@ -267,7 +267,6 @@ body#index {
 				padding-top: 0.6em;
 				padding-bottom: 0.6em;
 			}
-
 		}
 		.message {
 			font-size: 0.72rem;
@@ -285,6 +284,9 @@ body#index {
 		p {
 			text-align: left;
 			padding: 0;
+			&:not(:last-child) {
+				margin-bottom: 0.4rem;
+			}
 		}
 		.border-btn {
 			margin: 0.8rem auto 0.2rem auto;

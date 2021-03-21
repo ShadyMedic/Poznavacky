@@ -4527,6 +4527,10 @@ body#index #index-login-section p {
   padding: 0;
 }
 
+body#index #index-login-section p:not(:last-child) {
+  margin-bottom: 0.4rem;
+}
+
 body#index #index-login-section .border-btn {
   margin: 0.8rem auto 0.2rem auto;
   font-size: 1.2rem;

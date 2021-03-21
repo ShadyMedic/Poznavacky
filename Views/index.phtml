@@ -85,10 +85,12 @@
 			<p>Již máte účet? <button class="btn inline black show-login-section-login-button" onclick="showLoginDiv('login')">Přihlašte se</button>.</p>
 		</div>
 		<div id="password-recovery">
+			<h2>Obnova hesla</h2>
 			<p>Zadejte svoji e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</p>
 			<form id="pass-recovery-form">
 				<div class="user-data">
 					<input id='password-recovery-hidden' type='hidden' name='type' value='p'>
+					<label for="password-recovery-email">E-mail</label>
 					<input id='password-recovery-email' class="text-field" name="passRecoveryEmail" maxlength=255 />
 					<div id="password-recovery-email-message" class="message"></div>
 				</div>
