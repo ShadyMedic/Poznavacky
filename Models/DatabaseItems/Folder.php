@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use \Transliterator;
 
@@ -12,20 +13,22 @@ abstract class Folder extends DatabaseItem
 {
     protected $name;
     protected $url;
-    
+
     /**
      * Metoda navracející jméno této třídy, poznávačky, nebo části
      * @return string Jméno složky
+     * @throws DatabaseException
      */
     public function getName(): string
     {
         $this->loadIfNotLoaded($this->name);
         return $this->name;
     }
-    
+
     /**
      * Metoda navracející reprezentaci jména této třídy, poznávačky, nebo části pro použití v url
      * @return string URL jméno složky
+     * @throws DatabaseException
      */
     public function getUrl(): string
     {
@@ -47,7 +50,7 @@ abstract class Folder extends DatabaseItem
         //Odstranit diakritiku
         //Kód napsaný podle odpovědi na StackOverflow: https://stackoverflow.com/a/35178027
         $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
-        $url = $transliterator->transliterate($name);
+        $url = $transliterator->transliterate($url);
         
         //Nahradit všechny ostatní povolené znaky pomlčkami/mínusy/spojovníky/whatever "-" is
         $charsToReplace = DataValidator::CLASS_NAME_ALLOWED_CHARS.DataValidator::GROUP_NAME_ALLOWED_CHARS.DataValidator::PART_NAME_ALLOWED_CHARS;

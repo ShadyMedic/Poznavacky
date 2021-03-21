@@ -2,12 +2,14 @@
 namespace Poznavacky\Models\DatabaseItems;
 
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 use \ArrayAccess;
 use \BadMethodCallException;
 use \DateTime;
+use \Exception;
 
 /** 
  * Třída uchovávající data o uživateli (ne nutně přihlášeném)
@@ -46,8 +48,7 @@ class User extends DatabaseItem implements ArrayAccess
     const STATUS_MEMBER = 'Member';
     const STATUS_CLASS_OWNER = 'Class Owner';
     const STATUS_ADMIN = 'Administrator';
-    
-    protected $id;
+
     public $name;
     protected $email;
     protected $lastLogin;
@@ -89,10 +90,12 @@ class User extends DatabaseItem implements ArrayAccess
         $this->karma = $karma;
         $this->status = $status;
     }
-    
+
     /**
      * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
      * @return Invitation[] Pole aktivních pozvánek jako objekty
+     * @throws DatabaseException
+     * @throws Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public function getActiveInvitations(): array
     {
@@ -116,15 +119,16 @@ class User extends DatabaseItem implements ArrayAccess
         
         return $invitations;
     }
-    
+
     /**
      * Metoda upravující některá data tohoto uživatele z rozhodnutí administrátora
      * @param int $addedPictures Nový počet přidaných obrázků
      * @param int $guessedPictures Nový počet uhodnutých obrázků
      * @param int $karma Nová hodnota karmy
      * @param string $status Nový status uživatele
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou uživatelova data úspěšně aktualizována
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
      */
     public function updateAccount(int $addedPictures, int $guessedPictures, int $karma, string $status): bool
     {
@@ -152,12 +156,13 @@ class User extends DatabaseItem implements ArrayAccess
         
         return true;
     }
-    
+
     /**
      * Metoda odstraňující tento uživatelský účet na základě rozhodnutí administrátora
      * Před samotným odstraněním je provedena kontrola, zda je možné uživatele odstranit
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
      */
     public function deleteAccountAsAdmin(): bool
     {
@@ -183,10 +188,11 @@ class User extends DatabaseItem implements ArrayAccess
         
         return true;
     }
-    
+
     /**
      * Metoda pro zjišťování existence některé vlastnosti uživatele
      * {@inheritDoc}
+     * @throws DatabaseException
      * @see ArrayAccess::offsetExists()
      */
     public function offsetExists($offset): bool
@@ -194,10 +200,11 @@ class User extends DatabaseItem implements ArrayAccess
         $this->loadIfNotLoaded($this->$offset);
         return (isset($this->$offset));
     }
-    
+
     /**
      * Metoda pro získání hodnoty nějaké z vlastností uživatele
      * {@inheritDoc}
+     * @throws DatabaseException
      * @see ArrayAccess::offsetGet()
      */
     public function offsetGet($offset)
@@ -218,7 +225,7 @@ class User extends DatabaseItem implements ArrayAccess
     {
         if ($offset !== 'id')
         {
-            $this->offset = $value;
+            $this->$offset = $value;
         }
         else
         {

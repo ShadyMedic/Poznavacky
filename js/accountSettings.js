@@ -110,7 +110,7 @@ function changePasswordConfirm()
 	newPass = encodeURIComponent(newPass);
 	rePass = encodeURIComponent(rePass);
 	
-	$.post("account-update",
+	$.post("menu/account-update",
 		{
 			action: "change password",
 			oldPassword: oldPass,
@@ -169,7 +169,7 @@ function changeEmailConfirm()
 	newEmail = encodeURIComponent(newEmail);
 	var pass = $("#change-email-password").val();
 	
-	$.post("account-update",
+	$.post("menu/account-update",
 		{
 			action: "change email",
 			password: password,
@@ -220,7 +220,7 @@ function deleteAccountVerify()
 {
 	var password = $("#delete-account-password").val();
 	
-	$.post("account-update",
+	$.post("menu/account-update",
 		{
 			action: "verify password",
 			password: password
@@ -249,7 +249,7 @@ function deleteAccountFinal()
 {
 	var password = $("#delete-account-password").val();
 	
-	$.post("account-update",
+	$.post("menu/account-update",
 		{
 			action: "delete account",
 			password: password

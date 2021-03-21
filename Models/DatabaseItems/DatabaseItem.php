@@ -1,12 +1,16 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AntiXssSanitizer;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 use \BadMethodCallException;
 use \DateTime;
+use \ErrorException;
+use \Exception;
 use \ReflectionClass;
+use \ReflectionException;
 use \UnexpectedValueException;
 
 /**
@@ -112,12 +116,13 @@ abstract class DatabaseItem
      * V případě nespecifikování všech argumentů jsou neznámé vlastnosti naplněny základními hodnotami
      */
     public abstract function initialize(): void;
-    
+
     /**
      * Metoda ošetřující definované vlastnosti objektu proti XSS útoku
      * Pokud je vlastnost $sanitizationStarted nastavena na TRUE, nic se nestane
      * POZOR! Pokud byly po zavolání této metody ovlivňovány některé vlastnosti tohoto objektu, nebudou ošetřené, ale znovuzavolání této metody je také neoštří.
      * Tato metoda by proto měla být volána pouze jednou pro každý objekt a to těsně před výpisem dat do pohledu
+     * @throws ErrorException Pokud se ošetření nepodaří
      */
     public function sanitizeSelf(): void
     {
@@ -133,10 +138,11 @@ abstract class DatabaseItem
             $this->$propertyName = $sanitizer->sanitize($propertyValue);
         }
     }
-    
+
     /**
      * Metoda navracející ID tohoto databázového záznamu
      * @return int ID záznamu
+     * @throws DatabaseException
      */
     public function getId(): int
     {
@@ -162,26 +168,11 @@ abstract class DatabaseItem
     {
         return (!$property instanceof undefined);
     }
-    
-    /**
-     * Metoda načítající všechny vlastnosti objektu z databáze, pokud jakákoliv z vlastností objektů není definována
-     */
-    protected function loadIfNotAllLoaded(): void
-    {
-        //Kontrola, zda není nějaká vlastnost nedefinována
-        $properties = get_object_vars($this);
-        foreach ($properties as $property)
-        {
-            if (!$this->isDefined($property))
-            {
-                $this->load();
-                return;
-            }
-        }
-    }
-    
+
     /**
      * Metoda načítající všechny vlastnosti objektu z databáze, pokud vlastnost specifikovaná jako argument není definována
+     * @param $property mixed Vlastnost, která má být zkontrolována na načtení
+     * @throws DatabaseException
      */
     protected function loadIfNotLoaded($property): void
     {
@@ -247,12 +238,13 @@ abstract class DatabaseItem
         }
         return $result;
     }
-    
+
     /**
      * Metoda načítající podle údajů uložených ve známých vlastnostech hodnoty všech ostatních vlastností z databáze
      * Z databáze jsou vybrány záznamy, které jejichž hodnoty odpovídají hodnotám uložených v definovaným vlastnostech objektu
-     * @throws BadMethodCallException V případě, že není objekt zatím uložen v databázi, není z databáze navrácen ani jeden záznam odpovídající definovaným vlastnostem, nebo pokud jich je navrácených více
      * @return boolean TRUE, pokud jsou data položky úspěšně načtena
+     * @throws BadMethodCallException V případě, že není objekt zatím uložen v databázi, není z databáze navrácen ani jeden záznam odpovídající definovaným vlastnostem, nebo pokud jich je navrácených více; případně také pokud není nalezena třída, ze které je některá z neprimitivních vlastností načátaného objektu vytvořena
+     * @throws DatabaseException
      */
     public function load(): bool
     {
@@ -322,13 +314,29 @@ abstract class DatabaseItem
                 if (is_subclass_of($this::NON_PRIMITIVE_PROPERTIES[$propertyName], __CLASS__))
                 {
                     //Konstrukce databázového modelu
-                    $ref = new ReflectionClass($this::NON_PRIMITIVE_PROPERTIES[$propertyName]);
-                    $this->$propertyName = $ref->newInstanceArgs(array(false, $result[$this::COLUMN_DICTIONARY[$propertyName]]));
+                    try
+                    {
+                        $ref = new ReflectionClass($this::NON_PRIMITIVE_PROPERTIES[$propertyName]);
+                        $this->$propertyName = $ref->newInstanceArgs(array(false, $result[$this::COLUMN_DICTIONARY[$propertyName]]));
+                    }
+                    catch (ReflectionException $e)
+                    {
+                        //Tahle metoda je používána v těch nejvnitřenějších částech systému, kdyby vyhazovala více než jednu podmínku, tak to tak bude i u spousty dalších metod a zblázníme se z toho
+                        throw new BadMethodCallException('Třída, ze které je objekt vytvořen nebyla nalezena', 0, $e);
+                    }
                 }
                 else if (is_subclass_of(self::NON_PRIMITIVE_PROPERTIES[$propertyName], 'DateTime'))
                 {
                     //Konstrukce objektu DateTime
-                    $this->$propertyName = new DateTime($result[$this::COLUMN_DICTIONARY[$propertyName]]);
+                    try
+                    {
+                        $this->$propertyName = new DateTime($result[$this::COLUMN_DICTIONARY[$propertyName]]);
+                    }
+                    catch (Exception $e)
+                    {
+                        //Tahle metoda je používána v těch nejvnitřenějších částech systému, kdyby vyhazovala více než jednu podmínku, tak to tak bude i u spousty dalších metod a zblázníme se z toho
+                        throw new BadMethodCallException('Nepodařilo se vytvořit objekt DateTime');
+                    }
                 }
                 else
                 {
@@ -353,15 +361,15 @@ abstract class DatabaseItem
         }
         return true;
     }
-    
+
     /**
      * Metoda ukládající známá data této položky do databáze
      * Pokud se jedná o novou položku (vlastnost $savedInDb je nastavena na FALSE), je vložen nový záznam
      * V opačném případě jsou přepsána data položky se stejným ID
      * Neznámé vlastnosti (obsahující instanci undefined) nejsou ukládány
      * Tato metoda využívá metody DatabaseItem::create() a DatabaseItem::update(), přečtěte si i jejich phpDoc
-     * @return boolean TRUE, pokud je poznávačka úspěšně uložena do databáze
-     * {@inheritDoc}
+     * @return boolean TRUE, pokud je položka úspěšně uložena do databáze
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
      * @see DatabaseItem::save()
      */
     public function save(): bool
@@ -378,12 +386,13 @@ abstract class DatabaseItem
         }
         return $result;
     }
-    
+
     /**
      * Metoda vytvářející v databázové tabulce nový záznam s daty dané položky
      * I pokud je vyplněno ID nebo je vlastnost $savedInDb nastavena na TRUE, bude položka uložena jako nový záznam a vlastnost ID objektu bude přepsána
-     * @throws BadMethodCallException Pokud některá z vlastností ukládaných do databáze není známa
      * @return boolean TRUE, pokud je úspěšně vytvořen v databázi nový záznam a ID položky nastaveno / aktualizováno, FALSE, pokud ne
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
+     * @throws BadMethodCallException Pokud některá z vlastností ukládaných do databáze není známa
      */
     protected function create(): bool
     {
@@ -425,13 +434,14 @@ abstract class DatabaseItem
         }
         return false;
     }
-    
+
     /**
      * Metoda ukládající data této databázové položky do databáze
      * Tato metoda NEVYTVÁŘÍ nový záznam v databázy, pouze aktualizuje již existující
      * ID položky musí být známo a data záznamu se stejným ID jsou v databázi přepsána
-     * @throws BadMethodCallException Pokud není známo ID záznamu
      * @return boolean TRUE, pokud je položka úspěšně v databázi aktualizována, FALSE, pokud nejsou známy žádné vlastnosti nebo pokud selže SQL dotaz
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
+     * @throws BadMethodCallException Pokud není známo ID záznamu
      */
     protected function update(): bool
     {
@@ -473,10 +483,11 @@ abstract class DatabaseItem
         
         return Db::executeQuery('UPDATE '.$this::TABLE_NAME.' SET '.$columnString.' WHERE '.$this::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array_pad($databaseColumnValues, count($databaseColumnValues) + 1, $this->id));
     }
-    
+
     /**
      * Metoda odstraňující tuto položku z databáze
      * @return boolean TRUE, pokud je položka úspěšně odstraněna z databáze
+     * @throws DatabaseException
      */
     public function delete(): bool
     {

@@ -3,11 +3,14 @@ namespace Poznavacky\Models\Security;
 
 use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
 use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Folder;
 use Poznavacky\Models\DatabaseItems\Group;
+use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\DatabaseItems\Part;
 use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\DatabaseItems\UserNameChangeRequest;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use \BadMethodCallException;
 use \InvalidArgumentException;
@@ -38,9 +41,9 @@ class DataValidator
     public const USER_EMAIL_MAX_LENGTH = 255;
     public const CLASS_NAME_MIN_LENGTH = 5;
     public const CLASS_NAME_MAX_LENGTH = 31;
+    //Při změně následujících konstant je nutné změnit hodnoty i v souborech edit.js, edit.phtml a naturals.js
     public const GROUP_NAME_MIN_LENGTH = 3;
     public const GROUP_NAME_MAX_LENGTH = 31;
-    //Při změně následujících čtyř konstant je nutné změnit hodnoty i v souborech edit.js a edit.phtml
     public const PART_NAME_MIN_LENGTH = 1;
     public const PART_NAME_MAX_LENGTH = 31;
     public const NATURAL_NAME_MIN_LENGTH = 1;
@@ -54,7 +57,7 @@ class DataValidator
     public const PART_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-';  //Při změně je nutné změnit hodnoty i v souboru edit.js
     public const NATURAL_NAME_ALLOWED_CHARS = '0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-+/*%()\'\"';  //Při změně je nutné změnit hodnoty i v souboru edit.js
 
-    public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
+    public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz'; //(plus znak -)
 
     public const CLASS_RESERVED_URLS = array('account-settings', 'enter-class-code');
     public const GROUP_RESERVED_URLS = array('leave', 'manage');
@@ -70,7 +73,7 @@ class DataValidator
      * @throws RangeException Pokud délka řetězce nespadá mezi $min a $max. Zpráva výjimky je 'long' nebo 'short' podle toho, jaká hranice byla přesažena
      * @return boolean TRUE, pokud délka řetězce spadá mezi $min a $max
      */
-    public function checkLength($subject, int $min, int $max, int $stringType): bool
+    public function checkLength(string $subject, int $min, int $max, int $stringType): bool
     {
         if (mb_strlen($subject) > $max)
         {
@@ -104,18 +107,19 @@ class DataValidator
         }
         return true;
     }
-    
+
     /**
      * Metoda ověřující, zda se již řetězec v adekvátní databázové tabulce nevyskytuje
      * Takto lze kontrolovat pouze uživatelské jméno, jméno třídy nebo uživatelský e-mail
      * @param string $subject Řetězec jehož unikátnost chceme zjistit
      * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - viz konstanty této třídy začínající na "TYPE_"
      * @param Folder|null $parentFolder Objekt složky, jejíž součástí je kontrolovaný objekt (pouze u poznávaček a jejich částí) - bude tak kontrolována unikátnout pouze vůči položkám ve stejné složce (u ostatních typů nepovinné)
-     * @throws InvalidArgumentException Pokud se již řetězec v databázi vyskytuje
-     * @throws BadMethodCallException Pokud druhý argument neoznačuje položku, pro kterou je tato operace podporována nebo pokud není vyplněn poslední argument a je kontrolována unikátnost URL poznávačky nebo části
      * @return boolean TRUE, pokud se řetězec zatím v databázi nevyskytuje
+     * @throws BadMethodCallException Pokud druhý argument neoznačuje položku, pro kterou je tato operace podporována nebo pokud není vyplněn poslední argument a je kontrolována unikátnost URL poznávačky nebo části
+     * @throws InvalidArgumentException Pokud se již řetězec v databázi vyskytuje
+     * @throws DatabaseException
      */
-    public function checkUniqueness(string $subject, int $stringType, object $parentFolder = null): bool
+    public function checkUniqueness(string $subject, int $stringType, Folder $parentFolder = null): bool
     {
         switch ($stringType)
         {
@@ -169,6 +173,18 @@ class DataValidator
                     throw new InvalidArgumentException(null, $stringType);
                 }
                 break;
+            case self::TYPE_NATURAL_NAME:
+                if ($parentFolder === null)
+                {
+                    throw new BadMethodCallException('Parent object must be specified for this check');
+                }
+
+                $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['name'].' = ? AND '.Natural::COLUMN_DICTIONARY['class'].' = ? LIMIT 1', array($subject, $parentFolder->getId()), false);
+                if ($result['cnt'] > 0)
+                {
+                    throw new InvalidArgumentException(null, $stringType);
+                }
+                break;
             default:
                 throw new BadMethodCallException('Invalid string type');
         }
@@ -205,8 +221,9 @@ class DataValidator
     /**
      * Metoda získávající ID uživatele přidruženého k e-mailové adrese
      * @param string $email E-mailová adresa, jejíhož vlastníka chceme najít
-     * @throws AccessDeniedException Pokud taková adresa nepatří žádnému zaregistrovanému uživateli
      * @return int ID uživatele, kterému patří daná e-mailová adresa
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud taková adresa nepatří žádnému zaregistrovanému uživateli
      */
     public function getUserIdByEmail(string $email): int
     {

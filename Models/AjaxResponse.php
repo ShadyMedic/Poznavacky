@@ -18,9 +18,9 @@ class AjaxResponse
     private const MESSAGE_KEY = 'message';
     private const MESSAGE_DATA_KEY = 'data';
     
-    private $messageType;
-    private $message;
-    private $data = null;
+    private string $messageType;
+    private string $message;
+    private array $data;
     
     /**
      * Konstruktor objektu pro odpověď na AJAX request nastavující všechny jeho vlastnosti

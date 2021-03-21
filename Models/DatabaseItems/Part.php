@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 
@@ -74,27 +75,29 @@ class Part extends Folder
         $this->naturalsCount = $naturalsCount;
         $this->picturesCount = $picturesCount;
     }
-    
+
     /**
      * Metoda navracející objekt poznávačky, do které tato část patří
      * @return Group Poznávačka do které patří část
+     * @throws DatabaseException
      */
     public function getGroup(): Group
     {
         $this->loadIfNotLoaded($this->group);
         return $this->group;
     }
-    
+
     /**
      * Metoda navracející počet obrázků v této části
      * @return int počet obrázků v části
+     * @throws DatabaseException
      */
     public function getPicturesCount(): int
     {
         $this->loadIfNotLoaded($this->picturesCount);
         return $this->picturesCount;
     }
-    
+
     /**
      * Metoda navracející objekt náhodně vybraného obrázku náhodné přírodniny patřící do této části
      * Všechny přírodniny mají stejnou šanci, že jejich obrázek bude vybrán
@@ -102,6 +105,7 @@ class Part extends Folder
      * Pokud nejsou při volání této funkce načteny přírodniny této části, budou načteny
      * @param int $count Požadovaný počet náhodných obrázků (není zajištěna absence duplikátů)
      * @return array Pole náhodně vybraných obrázků z této části jako objekty
+     * @throws DatabaseException Pokud se vyskytne chyba při práci s databází
      */
     public function getRandomPictures(int $count): array
     {
@@ -126,21 +130,23 @@ class Part extends Folder
         
         return $result;
     }
-    
+
     /**
      * Metoda navracející počet přírodnin patřících do této části
      * @return int Počet přírodnin v části
+     * @throws DatabaseException
      */
     public function getNaturalsCount(): int
     {
         $this->loadIfNotLoaded($this->naturalsCount);
         return $this->naturalsCount;
     }
-    
+
     /**
      * Metoda navracející objekty přírodnin patřících do této poznávačky
      * Pokud zatím nebyly přírodniny načteny, budou načteny z databáze
      * @return array Pole přírodnin v této části jako objekty
+     * @throws DatabaseException
      */
     public function getNaturals(): array
     {
@@ -150,9 +156,10 @@ class Part extends Folder
         }
         return $this->naturals;
     }
-    
+
     /**
      * Metoda načítající přírodniny které jsou součástí této části a ukládající je jako vlastnost
+     * @throws DatabaseException
      */
     public function loadNaturals(): void
     {
@@ -170,7 +177,7 @@ class Part extends Folder
             foreach ($result as $naturalData)
             {
                 $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
-                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null);
+                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']]);
                 $this->naturals[] = $natural;
             }
         }

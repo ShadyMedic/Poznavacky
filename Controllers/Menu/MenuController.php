@@ -1,304 +1,109 @@
 <?php
 namespace Poznavacky\Controllers\Menu;
 
-use Poznavacky\Controllers\Controller;
-use Poznavacky\Models\DatabaseItems\ClassObject;
-use Poznavacky\Models\DatabaseItems\Group;
-use Poznavacky\Models\DatabaseItems\Part;
+use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
-use Poznavacky\Models\Processors\LoginUser;
+use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Security\NumberAsWordCaptcha;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\ChangelogManager;
-use \BadMethodCallException;
+use Poznavacky\Models\Logger;
+use Poznavacky\Models\TestGroupsFetcher;
 
 /**
- * Kontroler starající se o zobrazení layoutu pro všechny stránky kromě indexu
+ * Kontroler starající se o zobrazení tabulky tříd (a pozvánek do nich), poznávaček, nebo částí
+ * Dále se stará o zobrazování changelogu
  * @author Jan Štěch
  */
-class MenuController extends Controller
+class MenuController extends SynchronousController
 {
-    private $argumentsToPass = array();
 
     /**
-     * Metoda rozhodující o tom, co se v layoutu zadaném v menu.phtml robrazí podle počtu specifikovaných argumentů v URL
-     * Metoda nejprve zkontroluje, zda je uživatel přihlášen
-     * @see Controller::process()
+     * Metoda nastavující hlavičky stránky a získává informace pro zobrazení v tabulce
+     * Dále také zjišťuje, zda má být uživateli zobrazen changelog a případně jej získává
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
-        //Kontrola, zda je uživatel přihlášen
+        self::$pageHeader['title'] = 'Volba poznávačky';
+        self::$pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
+        self::$pageHeader['keywords'] = 'poznávačky, biologie, příroda';
+        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/menu.js','js/folders.js', 'js/invitations.js');
+        self::$pageHeader['bodyId'] = 'menu';
+
+        //Získání dat pro tabulku
+        $dataForTable = null;
+        $viewForTable = null;
         $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser())
+        try
         {
-            //Přihlášení uživatele vypršelo
-            //Kontrola instantcookie sezení
-            if (isset($_COOKIE['instantLogin']))
+            if (!$aChecker->checkClass())
             {
-                try
-                {
-                    $userLogger = new LoginUser();
-                    $userLogger->processCookieLogin($_COOKIE['instantLogin']);
-                    //Přihlášení obnoveno
-                }
-                catch(AccessDeniedException $e)
-                {
-                    //Chybný kód
-                    //Vymaž cookie s neplatným kódem
-                    setcookie('instantLogin', null, -1, '/');
-                    unset($_COOKIE['instantLogin']);
-
-                    $this->redirect('');
-                }
+                $classesGetter = new TestGroupsFetcher();
+                $classes = $classesGetter->getClasses();
+                $lastVisitedFolderPath = '';
+                self::$data['table'] = $classes;
+                self::$data['invitations'] = UserManager::getUser()->getActiveInvitations();
+                (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam dostupných tříd', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            }
+            else if (!$aChecker->checkGroup())
+            {
+                $groupsGetter = new TestGroupsFetcher();
+                $groups = $groupsGetter->getGroups($_SESSION['selection']['class']);
+                $lastVisitedFolderPath = $_SESSION['selection']['class']->getUrl();
+                (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam poznávaček ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $_SESSION['selection']['class']->getId()));
+                self::$data['table'] = $groups;
             }
             else
             {
-                $this->redirect('');
+                $partsGetter = new TestGroupsFetcher();
+                $parts = $partsGetter->getParts($_SESSION['selection']['group']);
+                $lastVisitedFolderPath = $_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl();
+                (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam částí v poznávačce s ID {groupId} ve třídě s ID {classId}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $_SESSION['selection']['group']->getId(), 'classId' => $_SESSION['selection']['class']->getId()));
+                self::$data['table'] = $parts;
             }
-        }
-
-        $this->data['navigationBar'] = array();
-        $this->data['navigationBar'][] = array('text' => 'Menu', 'link' => 'menu');
-
-        //Načtení argumentů vztahujících se k této stránce
-        //Minimálně 0 (v případě domena.cz/menu)
-        //Maximálně 5 (v případě domena.cz/menu/nazev-tridy/nazev-poznavacky/nazev-casti/akce/ajax-kontroller)
-        $menuArguments = array();
-        $parametersCopy = $parameters;
-        for ($i = 0; $i < 5 && $arg = array_shift($parametersCopy); $i++)
-        {
-            $menuArguments[] = $arg;
-        }
-
-        $argumentCount = count($menuArguments);
-
-        if ($argumentCount === 0)
-        {
-            //Vypisují se třídy
-
-            //Vymazání objektů skladujících vybranou složku ze $_SESSION
-            $this->unsetSelection(true, true, true);
-        }
-        if ($argumentCount > 0)
-        {
-            $controllerName = $this->kebabToCamelCase($menuArguments[0]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
-            if ($pathToController && $argumentCount === 1)
-            {
-                //AdministrateController nebo AccountSettingsController
-                $this->controllerToCall = new $pathToController();
-
-                //Vymazání objektů skladujících vybranou složku ze $_SESSION
-                $this->unsetSelection(true, true, true);
-                $this->argumentsToPass = array_slice($menuArguments, 1);
-            }
-            else
-            {
-                //Název třídy
-                //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
-                if (!isset($_SESSION['selection']['class']) || $menuArguments[0] !== $_SESSION['selection']['class']->getUrl())
-                {
-                    //Uložení objektu třídy do $_SESSION
-                    $_SESSION['selection']['class'] = new ClassObject(false, 0);
-                    $_SESSION['selection']['class']->initialize(null, $menuArguments[0]);
-                    try
-                    {
-                        $_SESSION['selection']['class']->load();
-                    }
-                    catch (BadMethodCallException $e)
-                    {
-                        //Třída splňující daná kritéria neexistuje
-                        $this->redirect('error404');
-                    }
-
-                    //Kontrola, zda má uživatel do třídy přístup
-                    if (!($_SESSION['selection']['class']->checkAccess(UserManager::getId()) || $aChecker->checkSystemAdmin()))
-                    {
-                        $this->unsetSelection(true, true, true);    //Vymaž právě nastavenou třídu ze $_SESSION
-                        $this->redirect('error403');
-                    }
-                    //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
-                    $this->unsetSelection(true, true);
-                }
-
-                $this->data['navigationBar'][] = array(
-                    'text' => $_SESSION['selection']['class']->getName(),
-                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl()
-                );
-
-                if ($argumentCount === 1)
-                {
-                    //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
-                    $this->unsetSelection(true, true);
-                }
-            }
-        }
-        if ($argumentCount > 1 && !isset($this->controllerToCall))
-        {
-            $controllerName = $this->kebabToCamelCase($menuArguments[1]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
-            if ($pathToController && ($argumentCount === 2 || $controllerName === 'ManageController'))
-            {
-                //ManageController / LeaveController
-                $this->controllerToCall = new $pathToController();
-                $this->argumentsToPass = array_slice($menuArguments, 2);
-
-                if ($controllerName === 'LeaveController')
-                {
-                    //Vymazání objektů skladujících vybranou poznávačku a část ze $_SESSION
-                    //Toto nedělej při zvolení ManageController, protože v $_SESSION['selection'] mohou být uloženy pozměněné informace, které mají mít přednost před URL argumenty
-                    $this->unsetSelection(true, true);
-                }
-            }
-            else
-            {
-                //Název poznávačky
-                //Kontrola, zda právě zvolený název souhlasí s názvem poznávačky uložené v $_SESSION
-                if (!isset($_SESSION['selection']['group']) || $menuArguments[1] !== @$_SESSION['selection']['group']->getUrl())
-                {
-                    //Uložení objektu poznávačky do $_SESSION
-                    $_SESSION['selection']['group'] = new Group(false);
-                    $_SESSION['selection']['group']->initialize(null, $menuArguments[1], $_SESSION['selection']['class'], null, null);
-                    try
-                    {
-                        $_SESSION['selection']['group']->load();
-                    }
-                    catch (BadMethodCallException $e)
-                    {
-                        //Poznávačka splňující daná kritéria neexistuje
-                        $this->redirect('error404');
-                    }
-                    //Vymazání objektů skladujících vybranou část ze $_SESSION
-                    $this->unsetSelection(true);
-                }
-
-                $this->data['navigationBar'][] = array(
-                    'text' => $_SESSION['selection']['group']->getName(),
-                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl()
-                );
-
-                if ($argumentCount === 2)
-                {
-                    //Vymazání objektů skladujících vybranou část ze $_SESSION
-                    $this->unsetSelection(true);
-                }
-            }
-        }
-        if ($argumentCount > 2 && !isset($this->controllerToCall))
-        {
-            //Jsou zvoleny všechny části najednou?
-            $controllerName = $this->kebabToCamelCase($menuArguments[2]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
-            if ($pathToController)
-            {
-                //Ano
-                $this->controllerToCall = new $pathToController();
-                $this->argumentsToPass = array_slice($menuArguments, 3);
-
-                //Vymazání objektu skladujícího vybranou část ze $_SESSION
-                $this->unsetSelection(true);
-            }
-            else
-            {
-                //Ne --> v dalším argumentu musí být specifikována akce
-                if ($argumentCount === 3)
-                {
-                    //Je specifikována část, ale ne akce --> návrat na seznam částí
-                    $this->redirect('menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl());
-                }
-
-                //Nastavení části (pouze, pokud nejsou vybrány všechny části najednou)
-                //Kontrola, zda právě zvolený název souhlasí s názvem třídy uložené v $_SESSION
-                if (!isset($_SESSION['selection']['part']) || $menuArguments[2] !== @$_SESSION['selection']['part']->getUrl())
-                {
-                    //Uložení objektu části do $_SESSION
-                    $_SESSION['selection']['part'] = new Part(false);
-                    $_SESSION['selection']['part']->initialize(null, $menuArguments[2], $_SESSION['selection']['group'], null, null, null);
-                    try
-                    {
-                        $_SESSION['selection']['part']->load();
-                    }
-                    catch (BadMethodCallException $e)
-                    {
-                        //Část splňující daná kritéria neexistuje
-                        $this->redirect('error404');
-                    }
-                }
-
-                $this->data['navigationBar'][] = array(
-                    'text' => $_SESSION['selection']['part']->getName(),
-                    'link' => 'menu/'.$_SESSION['selection']['class']->getUrl().'/'.$_SESSION['selection']['group']->getUrl().'/'.$_SESSION['selection']['part']->getUrl()
-                );
-            }
-        }
-        if ($argumentCount > 3 && !isset($this->controllerToCall))
-        {
-            //Akce pro část
-            $controllerName = $this->kebabToCamelCase($menuArguments[3]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
-            if ($pathToController)
-            {
-                $this->controllerToCall = new $pathToController();
-                $this->argumentsToPass = array_slice($menuArguments, 4);
-            }
-            else
-            {
-                //Neplatný kontroler
-                $this->redirect('error404');
-            }
-        }
-
-        if (isset($this->controllerToCall))
-        {
-            //Kontroler je nastaven --> předat posbírané argumenty dál
-            $this->controllerToCall->process($this->argumentsToPass);
-            $this->pageHeader['bodyId'] = $this->controllerToCall->pageHeader['bodyId'];
-            $this->data['navigationBar'] = array_merge($this->data['navigationBar'], $this->controllerToCall->data['navigationBar']);
-        }
-        else
-        {
-            //Kontroler není nastaven --> vypsat tabulku na menu stránce
-            $this->pageHeader['bodyId'] = 'menu';
-            $controllerName = __NAMESPACE__.'\\MenuTable'.self::CONTROLLER_EXTENSION;
-            $this->controllerToCall = new $controllerName();
-            $this->controllerToCall->process(array());
 
             //Aktualizovat poslední navštívenou tabulku na menu stránce
-            UserManager::getUser()->updateLastMenuTableUrl(implode('/', $parameters));
+            UserManager::getUser()->updateLastMenuTableUrl($lastVisitedFolderPath);
         }
+        catch (NoDataException $e)
+        {
+            (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
 
-        $this->pageHeader['title'] = $this->controllerToCall->pageHeader['title'];
-        $this->pageHeader['description'] = $this->controllerToCall->pageHeader['description'];
-        $this->pageHeader['keywords'] = $this->controllerToCall->pageHeader['keywords'];
-        $this->pageHeader['cssFiles'] = $this->controllerToCall->pageHeader['cssFiles'];
-        $this->pageHeader['jsFiles'] = $this->controllerToCall->pageHeader['jsFiles'];
+            //Nahraď pohled s tabulkou pohledem pro obyčejnou hlášku
+            for ($i = 0; $i < count(self::$views); $i++)
+            {
+                $view = self::$views[$i];
+                if (
+                    $view === 'menuClassesTable' ||
+                    $view === 'menuGroupsTable' ||
+                    $view === 'menuPartsTable'
+                ) { self::$views[$i] = 'menuTableMessage'; }
+            }
 
-        $this->data['loggedUserName'] = UserManager::getName();
-        $this->data['adminLogged'] = $aChecker->checkSystemAdmin();
-        $this->data['demoVersion'] = $aChecker->checkDemoAccount();
+            self::$data['message'] = $e->getMessage();
+        }
 
         $changelogManager = new ChangelogManager();
         if (!$changelogManager->checkLatestChangelogRead())
         {
             UserManager::getUser()->updateLastSeenChangelog(ChangelogManager::LATEST_VERSION);
-            $this->data['staticTitle'] = array($changelogManager->getTitle());
-            $this->data['staticContent'] = array($changelogManager->getContent());
+            self::$data['staticTitle'] = array($changelogManager->getTitle());
+            self::$data['staticContent'] = array($changelogManager->getContent());
+            (new Logger(true))->info('Uživateli s ID {userId} byl zobrazen nejnovější changelog pro verzi {version}', array('userId' => UserManager::getId(), 'version' => ChangelogManager::LATEST_VERSION));
         }
 
-        $this->view = 'menu';
-    }
-
-    /**
-     * Metoda odstraňující ze $_SESSION objekty ukládající vybranou třídu, poznávačku, nebo její část
-     * @param bool $unsetPart TRUE, pokud se má odstranit část; defaultně FALSE
-     * @param bool $unsetGroup TRUE, pokud se má odstranit poznávačka; defaultně FALSE
-     * @param bool $unsetClass TRUE, pokud se má odstranit třída; defaultně FALSE
-     */
-    private function unsetSelection(bool $unsetPart = false, bool $unsetGroup = false, bool $unsetClass = false): void
-    {
-        if ($unsetPart){ unset($_SESSION['selection']['part']); }
-        if ($unsetGroup){ unset($_SESSION['selection']['group']); }
-        if ($unsetClass){ unset($_SESSION['selection']['class']); }
+        //Data pro formulář pro založení nové třídy
+        $antispamGenerator = new NumberAsWordCaptcha();
+        $antispamGenerator->generate();
+        self::$data['antispamCode'] = $antispamGenerator->question;
+        self::$data['specifiedEmail'] = (empty(UserManager::getEmail())) ? false : true;
     }
 }
 

@@ -1,5 +1,3 @@
-var deletedTableRow;    //Ukládá řádek tabulky členů, který je odstraňován
-
 //Nastavení URL pro AJAX požadavky
 let ajaxUrl = window.location.href;
 if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
@@ -36,7 +34,7 @@ function kickUserConfirm(event)
 {
 	let memberId = $(event.target).closest(".members-data-item").attr("data-member-id");
 
-    deletedTableRow = $(event.target).closest(".members-data-item").remove();
+    let $deletedTableRow = $(event.target).closest(".members-data-item");
     $.post(ajaxUrl,
 		{
     		action: 'kick member',
@@ -56,9 +54,8 @@ function kickUserConfirm(event)
 						//newMessage(message, "success")
 
 						//odebrání uživatele z DOM
-						deletedTableRow.remove();
+						$deletedTableRow.remove();
 					}
-					deletedTableRow = undefined;
 				}
 			);
 		},

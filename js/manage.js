@@ -297,13 +297,18 @@ function deleteClassFinal()
 		function (response, status)
 		{
 			ajaxCallback(response, status, 
-				function (response)
+				function (messageType, message, data)
 				{
-					if (response["messageType"] === "error")
+					if (messageType === "error")
 					{
-						newMessage(response["message"], "error");
+						newMessage(message, "error");
 					}
-					//V případě úspěchu je přesměrování zařízeno v js/ajaxMediator.js
+					else if (messageType === "success")
+					{
+						newMessage(message, "success");
+						//Přesměruj uživatele za tři vteřiny zpět na seznam tříd
+						setInterval(function () { window.location = 'menu'; }, 3000);
+					}
 				}
 			);
 		},

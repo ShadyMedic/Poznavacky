@@ -6,7 +6,7 @@
 	</div>
 	<ul class="rows">
 		<?php foreach ($table as $tableRow) : ?>
-			<button class="btn" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>
+			<button class="btn class-item" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>
 				<h4 class="col1">
 					<!--<a href="<?= $tableRow['rowLink'] ?>">
 					<?= $tableRow[0] ?>
@@ -25,7 +25,7 @@
                     <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" class="btn inline black col3">Správa třídy</a>
                     <?php endif ?>
                     <?php if ($tableRow[2] === 'leave') : ?>
-                    <a href="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn inline black col3">Opustit třídu</a>
+                    <a href="javascript:;" data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn inline black col3 leave-link">Opustit třídu</a>
                     <?php endif ?>
                     <?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
                     <?= $tableRow[2] ?>
@@ -39,13 +39,9 @@
 			<span class="invitation-info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
 			<h4 class="col1"><?= $invitation->getClass()->getName(); ?></h4>
 			<span class="col2"><?= $invitation->getClass()->getGroupsCount() ?></span>
-			<div class="invitation-accept">
-				<form action="menu/answer-invitation" method="POST">
-					<input type='hidden' name='invitationId' value=<?= $invitation->getId() ?> />
-					<input type='hidden' name='invitationAnswer' value='unselected' />
-					<button class='btn icon' id="accept-invitation-button" title='Přijmout pozvánku'><img src='images/tick.svg'/></button>
-					<button class='btn icon' id="reject-invitation-button" title='Odmítnout pozvánku'><img src='images/cross.svg'/></button>
-				</form>
+			<div class="invitation-accept" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
+                <button class="btn icon accept-invitation-button" title="Přijmout pozvánku"><img src='images/tick.svg'/></button>
+                <button class="btn icon reject-invitation-button" title="Odmítnout pozvánku"><img src='images/cross.svg'/></button>
 			</div>
 		</li>
 		<?php endforeach ?>
@@ -54,30 +50,43 @@
 		<li id="enter-code-wrapper">
 			<h5>Připojte se pomocí kódu</h5>
 			<span>Zadejte kód soukromé třídy, do které chcete vstoupit:</span>
-			<form id='class-code-form' action="menu/enter-class-code" method="POST">
-				<input id='class-code-input' class="text-field" name="code" min=0 max=9999 maxlength=4/>
+			<form id='class-code-form'>
+				<input id='class-code-input' class="text-field" min=0 max=9999 maxlength=4/>
 				<button class='btn border-btn non-transparent black'>OK</button>
 			</form>
 		</li>
 		<li id="request-class-wrapper">
 			<h5>Vytvořte novou třídu</h5>
-			<span <?php if ($displayNewClassForm) : ?>style="display: none"<?php endif ?>>Vyplňte krátký formulář pro tvorbu třídy:</span>
-			<button id="request-class-button" class='btn border-btn non-transparent black' <?php if ($displayNewClassForm) : ?>style="display: none"<?php endif ?>>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
-			<form method="POST" id="request-class-form" <?php if (!$displayNewClassForm) : ?>style="display: none"<?php endif ?>>
+			<span>Vyplňte krátký formulář pro tvorbu třídy:</span>
+			<button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
+			<form method="POST" id="request-class-form" style="display:none;">
 				<label for="new-class-form-name">Požadovaný název třídy</label>
-				<input id='new-class-form-name' class="text-field" name="className" type=text maxlength=31 value="<?= @$classNameValue ?>" />
+				<input id='new-class-form-name' class="text-field" type=text maxlength=31 />
 				<?php if (!$specifiedEmail) : ?>
 					<label for="new-class-form-email">Kontaktní e-mailová adresa</label>
-					<input class='text-field' id='new-class-form-email' name="email" length=255 value="<?= @$emailValue ?>" />
+					<input class='text-field' id='new-class-form-email' length=255 />
 				<?php endif ?>
 				<label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
-				<textarea class="text-field" id='new-class-form-info' name="text"><?= @$textValue ?></textarea>
-				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span> <?= $antispamCode ?> </span></label>
-				<input id='new-class-form-antispam' class="text-field" name="antispam" min=0 max=99 maxlength=2 />
+				<textarea class="text-field" id='new-class-form-info'></textarea>
+				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span id="antispam-question"> <?= $antispamCode ?> </span></label>
+				<input id='new-class-form-antispam' class="text-field" min=0 max=99 maxlength=2 />
 				<input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
 				<button id="request-class-cancel-button" class="btn inline black">Zrušit</button>
 			</form>
 		</li>
         <?php endif ?>
 	</ul>
+</div>
+
+<div id="class-item-template" style="display:none;">
+    <button class="btn class-item" onclick="window.location.href='/menu/{url}'"><li>
+        <h4 class="col1">
+            {name}
+        </h4>
+        <span class="col2">
+            <span class="tiles">poznávaček: </span>
+            <span>{groups}</span>
+        </span>
+        <a href="javascript:;" data-leave-url="/menu/{url}/leave" class="btn inline black col3 leave-link">Opustit třídu</a>
+    </li></button>
 </div>

@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Models;
 
+use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Natural;
@@ -11,6 +12,7 @@ use Poznavacky\Models\DatabaseItems\UserNameChangeRequest;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
@@ -54,11 +56,14 @@ class Administration
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
     }
-    
+
     /**
      * Metoda navracející většinu informací o všech uživatelích v databázi
      * @param bool $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
      * @return User[] Pole instancí třídy User
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel a parametr je nastaven na FALSE
+     * @throws DatabaseException
+     * @throws \Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public function getAllUsers(bool $includeLogged = true): array
     {
@@ -81,10 +86,11 @@ class Administration
         
         return $users;
     }
-    
+
     /**
      * Metoda navracející pole všech tříd uložených v databázi jako objekty
      * @return array Pole objektů tříd
+     * @throws DatabaseException
      */
     public function getAllClasses(): array
     {
@@ -100,11 +106,12 @@ class Administration
         
         return $classes;
     }
-    
+
     /**
      * Metoda navracející informace o hlášeních obrázků, které byly nahlášeny z jednoho z důvodů, které musí řešit správce celého systému
      * Důvody, které musí být řešeny touto cestou jsou specifikovány v konstantách třídy Report
      * @return Report[] Pole instancí třídy Report
+     * @throws DatabaseException
      */
     public function getAdminReports(): array
     {
@@ -130,9 +137,9 @@ class Administration
         foreach ($result as $reportInfo)
         {
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
-            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky'], null);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky']);
             $picture = new Picture(false, $reportInfo['obrazky_id']);
-            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno'], null);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
             $report = new Report(false, $reportInfo['hlaseni_id']);
             $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'], $reportInfo['hlaseni_pocet']);
             $reports[] = $report;
@@ -140,10 +147,12 @@ class Administration
         
         return $reports;
     }
-    
+
     /**
      * Metoda získávající seznam všech žádostí o změnu uživatelského jména a navrací je jako objekty
      * @return UserNameChangeRequest[] Pole objektů se žádostmi
+     * @throws DatabaseException
+     * @throws \Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public function getUserNameChangeRequests(): array
     {
@@ -169,10 +178,12 @@ class Administration
         }
         return $requests;
     }
-    
+
     /**
      * Metoda získávající seznam všech žádostí o změnu názvu třídy a navrací je jako objekty
      * @return ClassNameChangeRequest[] Pole objektů se žádostmi
+     * @throws DatabaseException
+     * @throws \Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public function getClassNameChangeRequests(): array
     {
@@ -205,50 +216,58 @@ class Administration
     }
     
     /* Metody využívané AJAX kontrolerem AdministrateActionController */
-    
+
     /**
      * Metoda upravující uživatelova data v databázi po jejich změně administrátorem
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
      * @param int $userId ID uživatele, jehož data mají být změněna
      * @param array $values Pole nových hodnot, podporované indexy jsou "addedPics", "guessedPics", "karma" a "status"
+     * @throws AccessDeniedException Pokud jsou zadané hodnoty neplatné nebo přihlášený uživatel není systémový administrátor
+     * @throws DatabaseException
      */
     public function editUser(int $userId, array $values): void
     {
         $user = new User(false, $userId);
         $user->updateAccount($values['addedPics'], $values['guessedPics'], $values[User::COLUMN_DICTIONARY['karma']], $values['status']);
     }
-    
+
     /**
      * Metoda odstraňující uživatelský účet a všechna jeho data z rozhodnutí administrátora
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda může být daný uživatel odstraněn
      * @param int $userId ID uživatele k odstranění
+     * @throws AccessDeniedException Pokud není přihlášený uživatel systémovým administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
+     * @throws DatabaseException
      */
     public function deleteUser(int $userId): void
     {
         $user = new User(false, $userId);
         $user->deleteAccountAsAdmin();
     }
-    
+
     /**
      * Metoda upravující přístupová data třídy v databázi po jejich změně administrátorem
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
      * @param int $classId ID třídy, jejíž data mají být změněna
      * @param array $values Pole nových hodnot, podporované indexy jsou "status" a "code"
+     * @throws AccessDeniedException Pokud není přihlášený uživatel systímovým administrátorem nebo jsou zadaná data neplatná
+     * @throws DatabaseException
      */
     public function editClass(int $classId, array $values): void
     {
         $class = new ClassObject(false, $classId);
         $class->updateAccessDataAsAdmin($values['status'], $values['code']);
     }
-    
+
     /**
      * Metoda měnící správce třídy v databázi po jeho změně administrátorem
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
      * @param int $classId ID třídy, jejíž správce je měněn
      * @param int|string $newAdminIdentifier ID nebo jméno nového správce třídy
      * @param string $changedIdentifier Údaj o tom, zda je druhý argument této metody ID nového správce třídy, nebo jeho jméno
-     * @throws AccessDeniedException Pokud není některý z údajů platný (například pokud uživatel s daným ID nebo jménem neexistuje)
      * @return User Objekt uživatele reprezentující právě nastaveného správce třídy
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není některý z údajů platný (například pokud uživatel s daným ID nebo jménem neexistuje)
+     * @throws \Exception  Pokud se nepodaří vytvořit objekt DateTime
      */
     public function changeClassAdmin(int $classId, $newAdminIdentifier, string $changedIdentifier): User
     {
@@ -263,7 +282,6 @@ class Administration
                 break;
             default:
                 throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_INVALID_IDENTIFIER);
-                break;
         }
         if ($result === false)
         {
@@ -278,10 +296,12 @@ class Administration
         $class->changeClassAdminAsAdmin($admin);
         return $admin;
     }
-    
+
     /**
      * Metoda odstraňující třídu z databáze společně se všemi jejími poznávačkami, skupinami, přírodninami, obrázky a hlášeními
      * @param int $classId ID třídy k odstranění
+     * @throws AccessDeniedException
+     * @throws DatabaseException
      */
     public function deleteClass(int $classId): void
     {
@@ -289,7 +309,7 @@ class Administration
         $class->deleteAsAdmin();
         unset($class);
     }
-    
+
     /**
      * Metoda řešící vyřízení žádosti o změnu jména uživatele nebo třídy
      * V případě schválení je jméno uživatele nebo třídy změněno
@@ -300,6 +320,7 @@ class Administration
      * @param bool $approved TRUE, pokud byla žádost schválena, FALSE, pokud zamítnuta
      * @param string $reason V případě zamítnutí žádosti důvod jejího zamítnutí - je odesláno e-mailem uživateli; při schválení žádosti nepovinné
      * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
+     * @throws DatabaseException
      */
     public function resolveNameChange(int $requestId, bool $classNameChange, bool $approved, string $reason = ""): bool
     {
@@ -332,7 +353,7 @@ class Administration
         $emailComposer->composeMail($emailComposer::EMAIL_TYPE_EMPTY_LAYOUT, array('content' => $rawMessage, 'footer' => $rawFooter));
         return $emailComposer->getMail();
     }
-    
+
     /**
      * Metoda odesílající e-mail s daty z formuláře na správcovské stránce
      * @param string $addressee E-mailová adresa adresáta e-mailu
@@ -341,8 +362,9 @@ class Administration
      * @param string $rawFooter Obsah patičky e-mailu (může být zformátován pomocí HTML), může být jako jediný parametr prázdný řetězec
      * @param string $sender Jméno odesílatele e-mailu, které bude zobrazeno jako odesílatel e-mailové zprávy
      * @param string $fromAddress E-mailová adresa pro odpověď (bude to tak trochu vypadat, jako kdyby e-mail přišel z této adresy)
-     * @throws AccessDeniedException V případě, že některý z parametrů je nedostatečně nebo chybně vyplněn
      * @return boolean TRUE, pokud se e-mail podaří odeslat
+     * @throws Exception Pokud se nepodaří e-mail odeslat
+     * @throws AccessDeniedException V případě, že některý z parametrů je nedostatečně nebo chybně vyplněn
      */
     public function sendEmail(string $addressee, string $subject, string $rawMessage, string $rawFooter, string $sender, string $fromAddress): bool
     {

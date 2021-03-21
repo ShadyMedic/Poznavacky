@@ -2,9 +2,14 @@
 $(function() {
 
 	//event listenery tlačítek
-	$("#change-folders-layout-button").click(function(){changeFoldersLayout()})
+	$("#change-folders-layout-button").click(function() {changeFoldersLayout()})
+	$(".leave-link").click(function(event) {leaveClass(event)})
+	$(".accept-invitation-button").click(function (event) {answerInvitation(event, true)})
+	$(".reject-invitation-button").click(function (event) {answerInvitation(event, false)})
+	$("#class-code-form").on("submit", function(event) {submitClassCode(event)})
 	$("#request-class-button").click(function() {showNewClassForm()})
 	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
+	$("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
 	$(".display-buttons-button").click(function(){displayButtons(this)})
 
 	//event listener kliknutí myši
@@ -13,8 +18,140 @@ $(function() {
 });
 
 //vše, co se děje při změně velikosti okna
-$(window).resize(function(){
-})
+$(window).resize(function(){})
+
+//odešle AJAX požadavek na opuštění dané třídy
+function leaveClass(event)
+{
+	let url = $(event.target).attr("data-leave-url");
+	let $leftClass = $(event.target).closest('.class-item');
+
+	event.stopPropagation();
+
+	$.post(url, {},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Chyba při zpracování požadavku (například protože je uživatel správce dané třídy)
+						newMessage(message, "error");
+					}
+					else if (messageType === "success")
+					{
+						//Odebrání opuštěné třídy z DOM
+						$leftClass.remove();
+
+						newMessage(message, "success");
+					}
+				}
+			);
+		},
+		"json"
+	);
+}
+
+//odešle odpověď na pozvánku (pozitivní i negativní)
+function answerInvitation(event, answer)
+{
+	let className = $(event.target).closest(".invitation").find(".col1").text();
+	let classUrl = $(event.target).closest("div").attr('data-class-url');
+	let classGroupsCount = $(event.target).closest(".invitation").find(".col2").text();
+
+	let ajaxUrl = "menu/" + classUrl + "/invitation/" + ((answer) ? "accept" : "reject");
+    let $answeredInvitation = $(event.target).closest(".invitation");
+
+	$.post(ajaxUrl, {},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Chyba při zpracování požadavku (zřejmě neplatný formát kódu)
+						newMessage(message, "error");
+					}
+					else if (messageType === "success")
+					{
+					    if (answer)
+					    {
+                            //Přidání nové třídy na konec seznamu
+                            let classDomItem = $('#class-item-template').html();
+                            classDomItem = classDomItem.replace(/{name}/g, className);
+                            classDomItem = classDomItem.replace(/{url}/g, classUrl);
+                            classDomItem = classDomItem.replace(/{groups}/g, classGroupsCount);
+                            $(classDomItem).insertAfter('.rows > button:last');
+
+                            //Nastavení event handleru pro opuštění nových tříd
+                            $(".leave-link").click(function(event) {leaveClass(event)})
+                        }
+
+                        //Odstranění pozvánky
+                        $answeredInvitation.remove();
+
+						newMessage(message, "success");
+					}
+				}
+			);
+		},
+		"json"
+	);
+}
+
+//odešle zadaný kód třídy
+function submitClassCode(event)
+{
+	event.preventDefault();
+
+	let code = $("#class-code-input").val();
+
+	$.post('menu/enter-class-code',
+		{
+			code: code
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						//Chyba při zpracování požadavku (zřejmě neplatný formát kódu)
+						newMessage(message, "error"); //TODO zobrazit ve formuláři
+					}
+					else if (messageType === "warning")
+					{
+						//Se zadaným kódem se nelze dostat do žádné třídy
+						newMessage(message, "warning"); //TODO zobrazit ve formuláři
+					}
+					else if (messageType === "success")
+					{
+						//Přidání nových tříd na konec seznamu
+						let classes = data.accessedClassesInfo;
+						for (let i = 0; i < classes.length; i++)
+						{
+							let classData = classes[i];
+							let classDomItem = $('#class-item-template').html();
+							classDomItem = classDomItem.replace(/{name}/g, classData.name);
+							classDomItem = classDomItem.replace(/{url}/g, classData.url);
+							classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
+							$(classDomItem).insertAfter('.rows > button:last');
+						}
+
+						//Nastavení event handleru pro opuštění nových tříd
+						$(".leave-link").click(function(event) {leaveClass(event)})
+
+						newMessage(message, "success");
+					}
+				}
+			);
+		},
+		"json"
+	);
+}
 
 //zobrazí formulář na žádost o vytvoření nové třídy
 function showNewClassForm() {
@@ -30,6 +167,46 @@ function hideNewClassForm(event) {
 	$("#request-class-wrapper > span").show();
 	$("#request-class-form").hide();
 	$("#request-class-form .text-field").val("");
+}
+//funkce odesílající AJAX požadavek s informacemi vyplněnými do formuláře pro založení nové třídy
+function processNewClassForm(event)
+{
+	event.preventDefault();
+
+	let name = $("#new-class-form-name").val();
+	let email = $("#new-class-form-email").val();	//Pokud pole neexistuje, vrátí undefined
+	let info = $("#new-class-form-info").val();
+	let antispam = $("#new-class-form-antispam").val();
+
+	$.post('menu/request-new-class',
+		{
+			className: name,
+			email: email,
+			text: info,
+			antispam: antispam
+		},
+		function (response, status)
+		{
+			ajaxCallback(response, status,
+				function (messageType, message, data)
+				{
+					if (messageType === "error")
+					{
+						newMessage(message, "error"); //TODO zobrazit ve formuláři
+						//Aktualizuj ochranu proti robotům
+						$("#antispam-question").text(data.newCaptcha);
+						$("#new-class-form-antispam").val("");
+					}
+					else if (messageType === "success")
+					{
+						newMessage(message, "success");
+						hideNewClassForm();
+					}
+				}
+			);
+		},
+		"json"
+	);
 }
 
 //zobrazí tlačítka "Přidat obrázky", "Učit se" a "Vyzkoušet se"
@@ -72,6 +249,6 @@ function changeFoldersLayout() {
 }
 
 //funkce převádějící rem na pixely
-function remToPixels(rem) {    
+function remToPixels(rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }

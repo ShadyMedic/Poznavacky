@@ -187,7 +187,7 @@ function displayResult(messageType, message, data)
 	{
 		//Vyskytla se chyba - v response.result je "error" nebo něco úplně jiného
 		//V data.answer je chybová hláška
-		newMessage(data.answer, "error");
+		newMessage(message, "error");
 	}
 	
 	$("#result").show();

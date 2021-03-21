@@ -2,9 +2,11 @@
 namespace Poznavacky\Models\DatabaseItems;
 
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\PictureAdder;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
+use \RuntimeException;
 
 /** 
  * Třída reprezentující objekt obrázku
@@ -62,45 +64,49 @@ class Picture extends DatabaseItem
         $this->enabled = $enabled;
         $this->reports = $reports;
     }
-    
+
     /**
      * Metoda navracející URL adresu toho obrázku
      * @return string Zdroj (URL) obrázku
+     * @throws DatabaseException
      */
     public function getSrc(): string
     {
         $this->loadIfNotLoaded($this->src);
         return $this->src;
     }
-    
+
     /**
      * Metoda navracející objekt přírodniny, kterou zachycuje tento obrázek
      * @return Natural Přírodnina na obrázku
+     * @throws DatabaseException
      */
     public function getNatural(): Natural
     {
         $this->loadIfNotLoaded($this->natural);
         return $this->natural;
     }
-    
+
     /**
      * Metoda navracející stav obrázku
      * @return bool TRUE, je-li obrázek povolený, FALSE, pokud je skrytý
+     * @throws DatabaseException
      */
     public function isEnabled(): bool
     {
         $this->loadIfNotLoaded($this->enabled);
         return $this->enabled;
     }
-    
+
     /**
      * Metoda upravující přírodninu a adresu tohoto obrázku z rozhodnutí administrátora nebo správce třídy
      * Údaje v databázi nejsou aktualizovány - pro potvrzení změn je nutné zavolat metodu Picture::save()
      * @param Natural $newNatural Objekt reprezentující nově zvolenou přírodninu
      * @param string $newUrl Nová adresa k obrázku
      * @param Group $group Objekt reprezentující poznávačku, do které musí nová přírodnina patřit (pro kontrolu)
-     * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou údaje tohoto obrázku úspěšně aktualizovány
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      */
     public function updatePicture(Natural $newNatural, string $newUrl, Group $group): bool
     {
@@ -116,20 +122,40 @@ class Picture extends DatabaseItem
         
         return true;
     }
-    
+
+    /**
+     * Metoda převádějící tento obrázek k jiné přírodnině
+     * Není kontrolováno, zda nová přírodnina patří do té samé třídy, jako ta stávající
+     * Je provedena kontrola, zda obrázek s danou URL již není přidán k nové přírodnině
+     * Změny nejsou uloženy do databáze, aby se tak stalo, musí být zavolána metoda Picture::save()
+     * @param Natural $newNatural Objekt přírodniny, ke které má být tento obrázek převeden
+     * @throws RuntimeException Pokud je tento obrázek již ke specifikované přírodnině přidán
+     * @throws DatabaseException
+     */
+    public function transfer(Natural $newNatural): void
+    {
+        if ($newNatural->pictureExists($this->getSrc()))
+        {
+            throw new RuntimeException('Picture with this URL is already added to the new natural.');
+        }
+        $this->natural = $newNatural;
+    }
+
     /**
      * Metoda navracející pole hlášení tohoto obrázku
      * Pokud hlášení zatím nebyla načtena z databáze, budou před navrácením načtena
      * @return Report[] Pole hlášení tohoto obrázku jako objekty
+     * @throws DatabaseException
      */
     public function getReports(): array
     {
         if (!$this->isDefined($this->reports)){ $this->loadReports(); }
         return $this->reports;
     }
-    
+
     /**
      * Metoda načítající hlášení tohoto obrázku z databáze a ukládající je do vlastnosti této instance jako objekty
+     * @throws DatabaseException
      */
     public function loadReports(): void
     {

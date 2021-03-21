@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\AjaxResponse;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
@@ -13,18 +13,20 @@ use \Exception;
  * Kontroler zpracovávající data o změně poznávačky odeslaná ze stránky edit
  * @author Jan Štěch
  */
-class ConfirmGroupEditController extends Controller
+class ConfirmGroupEditController extends AjaxController
 {
     /**
      * Metoda dekódující odeslaný JSON string a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
-        if (empty($_POST))
+        if (!isset($_POST['data']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
         
         $group = $_SESSION['selection']['group'];
@@ -61,9 +63,6 @@ class ConfirmGroupEditController extends Controller
         }
         
         echo $response->getResponseString();
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

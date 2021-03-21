@@ -1,10 +1,11 @@
 var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstraňován
+var ajaxUrl;
 
 //vše, co se děje po načtení stránky
 $(function() {
   
   //Nastavení URL pro AJAX požadavky
-  let ajaxUrl = window.location.href;
+  ajaxUrl = window.location.href;
   if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
   ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //Nahraď neAJAX akci AJAX akcí
   
@@ -51,8 +52,18 @@ function newTestConfirm()
 					}
 					else if (messageType === "success")
 					{
-						//Znovu načti stránku, ať se zobrazí nová poznávačka v DOM
-						location.reload();
+						//Získej z data.newGroupData informace a zobraz je v tabulce v DOM
+						let groupData = data.newGroupData;
+						let groupDomItem = $('#test-data-item-template').html();
+						groupDomItem = groupDomItem.replace(/{id}/g, groupData.id);
+						groupDomItem = groupDomItem.replace(/{name}/g, groupData.name);
+						groupDomItem = groupDomItem.replace(/{url}/g, groupData.url);
+						groupDomItem = groupDomItem.replace(/{parts}/g, groupData.parts);
+						$('.tests-data-section').append(groupDomItem);
+						newMessage(response["message"], "success");
+
+						//Schování formuláře
+						newTestCancel();
 					}
 				}
 			);
@@ -66,7 +77,7 @@ function deleteTest(event)
 	let testId = $(event.target).attr('data-group-id');
 	let name = $(event.target).attr('data-group-name');
 
-    if (!confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny, ale zůstanou nepřiřazeny, dokud je nepřidáte do jiné poznávačky. Tato akce je nevratná!"))
+    if (!confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!"))
     {
     	return;
 	}
@@ -89,6 +100,7 @@ function deleteTest(event)
 					else if (response["messageType"] === "success")
 					{
 						deletedTableRow.remove();
+						newMessage(response["message"], "success");
 					}
 					deletedTableRow = undefined;
 				}

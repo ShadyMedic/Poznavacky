@@ -1446,7 +1446,7 @@ label.required:after {
   text-align: left;
 }
 
-#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept form {
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1459,7 +1459,7 @@ label.required:after {
           justify-content: space-evenly;
 }
 
-#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept form .btn {
+#menu .folders#menu-classes-table ul.rows li.invitation .invitation-accept .btn {
   margin: 0 0.4rem;
 }
 

@@ -6,7 +6,9 @@ use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Logger;
 use \DateTime;
+use \Exception;
 
 /**
  * Třída ověřující uživatelovi přihlašovací údaje a přihlašující jej
@@ -15,12 +17,13 @@ use \DateTime;
 class LoginUser
 {
     //Čas po jaký není nutné znovu přidávat heslo, pokud je při přihlášení zaškrtnuto políčko "Zůstat přihlášen"
-    private const INSTALOGIN_COOKIE_LIFESPAN = 2592000;    //2 592 000‬ s = 30 dní
-    private const RECENTLOGIN_COOKIE_LIFESPAN = 28800;     //28 800 s = 8 hodin
+    private const INSTALOGIN_COOKIE_LIFESPAN = 2592000;    //2 592 000 s = 30 dní
 
     /**
      * Metoda která se stará o všechny kroky přihlašování
      * @param array $POSTdata Data odeslaná přihlašovacím formulářem, pole s klíči name, pass a popřípadě stayLogged
+     * @throws AccessDeniedException Pokud není nějaká z informací vyplněná nebo nesouhlasí jméno s heslem
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      */
     public function processLogin(array $POSTdata): void
     {
@@ -33,17 +36,26 @@ class LoginUser
         //Pokud není něco vyplněné, nemá smysl pokračovat
         if (!empty($errors))
         {
+            (new Logger(true))->notice('Pokus o přihlášení z IP adresy {ip} selhal kvůli nevyplnění některého z údajů', array('ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(implode('|', $errors));
         }
 
         //Pokusit se přihlásit
+        $userData = null;
         try
         {
             $userData = self::authenticate($POSTdata['name'], $POSTdata['pass']);
         }
         catch (AccessDeniedException $e)
         {
+            (new Logger(true))->notice('Pokus o přihlášení z IP adresy {ip} k uživatelskému účtu {userName} selhal kvůli neshodě mezi zadanými údaji', array('ip' => $_SERVER['REMOTE_ADDR'], 'userName' => $POSTdata['name']));
             $errors[] = $e->getMessage();
+        }
+        catch (Exception $e)
+        {
+            //Přihlášení se nepovedlo kvůli neznámé chybě
+            (new Logger(true))->alert('Nebylo možné přihlásit uživatele na IP adresa {ip}, ačkoliv zřejmě zadal správné údaje! Chybová hláška: {exception}', array('ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e));
+            $errors[] = AccessDeniedException::REASON_UNEXPECTED;
         }
 
         //Je přihlášen úspěšně?
@@ -52,14 +64,22 @@ class LoginUser
             //Uložit data do $_SESSION
             self::login($userData);
 
+            (new Logger(true))->info('Z IP adresy {ip} se přihlásil uživatel k účtu s ID {userId}', array('ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $userData[LoggedUser::COLUMN_DICTIONARY['id']]));
+
             //Vygenerovat a uložit token pro trvalé přihlášení
             if ($POSTdata['stayLogged'] === 'true')
             {
-                self::setLoginCookie($userData[User::COLUMN_DICTIONARY['id']]);
+                try { self::setLoginCookie($userData[User::COLUMN_DICTIONARY['id']]); }
+                catch (Exception $e)
+                {
+                    (new Logger(true))->error('Nepodařilo se vygenerovat kód pro trvalé přihlášení pro uživatele s ID {userId} přihlašujícího se z IP adresy {ip}', array('userId' => $userData[LoggedUser::COLUMN_DICTIONARY['id']], 'ip' => $_SERVER['REMOTE_ADDR']));
+                }
+                (new Logger(true))->info('Kód pro trvalé přihlášení byl vygenerován na základě požadavku z IP adresy {ip} a byl přidružen k uživatelskému účtu s ID {userId}', array('ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $userData[User::COLUMN_DICTIONARY['id']]));
             }
         }
         else
         {
+            if (empty($errors)) { (new Logger(true))->error('Neznámá chyba při přihlašování uživatele - nebylo možné načíst uživatelská data při požadavku z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR'])); }
             throw new AccessDeniedException(implode('|', $errors));
         }
     }
@@ -67,6 +87,8 @@ class LoginUser
     /**
      * Metoda, která se stará o všechny kroky přihlášení pomocí kódu ze souboru cookie pro trvalé přihlášení
      * @param string $code Kód uložený v souboru cookie
+     * @throws AccessDeniedException Pokud není kód platný
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      */
     public function processCookieLogin(string $code): void
     {
@@ -83,8 +105,9 @@ class LoginUser
      * Metoda ověřující existenci uživatele a správnost hesla.
      * @param string $username Přihlašovací jméno nebo e-mail uživatele
      * @param string $password Přihlašovací heslo
-     * @throws AccessDeniedException Pokud uživatel neexistuje nebo heslo nesouhlasí
      * @return array Pole s daty o uživateli z databáze v případě úspěchu
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
+     * @throws AccessDeniedException Pokud uživatel neexistuje nebo heslo nesouhlasí
      */
     private function authenticate(string $username, string $password): array
     {
@@ -106,8 +129,9 @@ class LoginUser
     /**
      * Metoda kontrolující, zda je v databázi uložen hash kódu obdrženého z instalogin cookie
      * @param string $code Nezahešovaný kód obsažený v souboru cookie
-     * @throws AccessDeniedException Pokud není kód platný
      * @return array|boolean Data o uživateli uložená v databázi, k jehož účtu se lze pomocí daného kódu přihlásit nebo FALSE, pokud je kód neplatný
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
+     * @throws AccessDeniedException Pokud není kód platný
      */
     private function verifyCode(string $code): array
     {
@@ -118,7 +142,8 @@ class LoginUser
 
     /**
      * Metoda ukládající data o uživateli z databáze do $_SESSION a aktualizující datum posledního přihlášení v databázi
-     * @param array $userData
+     * @param array $userData Pole uživatelských dat získaných z databáze
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      */
     private function login(array $userData): void
     {
@@ -132,6 +157,7 @@ class LoginUser
     /**
      * Metoda generující kód pro cookie trvalého přihlášení a ukládající jej do databáze
      * @param int $userId ID uživatele, s nímž bude kód svázán
+     * @throws Exception Pokud se nepovede vygenerovat náhodný kód
      */
     private function setLoginCookie(int $userId): void
     {

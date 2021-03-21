@@ -2,6 +2,7 @@
 namespace Poznavacky\Models\DatabaseItems;
 
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
@@ -83,13 +84,14 @@ class LoggedUser extends User
         $this->lastChangelog = $lastChangelog;
         $this->lastMenuTableUrl = $lastMenuTableUrl;
     }
-    
+
     /**
      * Metoda ukládající do databáze nový požadavek na změnu jména od přihlášeného uživatele, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
      * Data jsou předem ověřena
      * @param string $newName Požadované nové jméno
-     * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
      * @return boolean TRUE, pokud je žádost úspěšně vytvořena/aktualizována
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
      */
     public function requestNameChange(string $newName): bool
     {
@@ -151,15 +153,16 @@ class LoggedUser extends User
         }
         return true;
     }
-    
+
     /**
      * Metoda ověřující heslo přihlášeného uživatele a v případě úspěchu měnící jeho heslo
      * Všechna data jsou předem ověřena
      * @param string $oldPassword Stávající heslo pro ověření
      * @param string $newPassword Nové heslo
      * @param string $newPasswordAgain Opsané nové heslo
-     * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
      * @return boolean TRUE, pokud je heslo úspěšně změněno
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
      */
     public function changePassword(string $oldPassword, string $newPassword, string $newPasswordAgain): bool
     {
@@ -217,14 +220,15 @@ class LoggedUser extends User
         $this->hash = $hashedPassword;
         return true;
     }
-    
+
     /**
      * Metoda ověřující heslo uživatele a v případě úspěchu měnící e-mailovou adresu přihlášeného uživatele v databázi
      * Data jsou předtím ověřena
      * @param string $password Heslo přihlášeného uživatele pro ověření
      * @param string $newEmail Nový e-mail
-     * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
      * @return boolean TRUE, pokud je e-mail úspěšně změněn
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky systému
      */
     public function changeEmail(string $password, string $newEmail): bool
     {
@@ -257,7 +261,7 @@ class LoggedUser extends User
             }
             
             //Kontrola platnosti e-mailu
-            if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL) && !empty($newEmail))
+            if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL))
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL);
             }
@@ -277,6 +281,7 @@ class LoggedUser extends User
      * Metoda aktualizující uživateli jak v $_SESSION tak v databázi číslo verze, jejíž poznámky k vydání uživatel naposledy viděl
      * @param string $version Nová nejnovější verze, poznámky k jejímuž vydání byly zobrazeny (například "3.2")
      * @return bool TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
      */
     public function updateLastSeenChangelog(string $version): bool
     {
@@ -290,6 +295,7 @@ class LoggedUser extends User
      * Metoda aktualizující uživateli jak v $_SESSION tak v databázi URL adresu poslední zobrazení tabulky na menu stránce
      * @param string $url Nová URL adresa k uložení
      * @return bool TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
      */
     public function updateLastMenuTableUrl(string $url): bool
     {
@@ -302,6 +308,7 @@ class LoggedUser extends User
     /**
      * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli přidaných obrázků
      * @return boolean TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
      */
     public function incrementAddedPictures(): bool
     {
@@ -310,10 +317,11 @@ class LoggedUser extends User
         $this->addedPictures++;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['addedPictures'].' = (pridane_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
-    
+
     /**
      * Metoda přidávající uživateli jak v $_SESSION tak v databázi jeden bod v poli uhodnutých obrázků
      * @return boolean TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
      */
     public function incrementGuessedPictures(): bool
     {
@@ -322,15 +330,16 @@ class LoggedUser extends User
         $this->guessedPictures++;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['guessedPictures'].' = (uhodnute_obrazky + 1) WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->id));
     }
-    
+
     /**
      * Metoda ověřující heslo přihlášeného uživatele a v případě úspěchu odstraňující jeho uživatelský účet
      * Po odstranění z databáze jsou uživatelova data vymazána i ze $_SESSION
      * Data z vlastností této instance jsou vynulována
      * Instance, na které je tato metoda provedena by měla být ihned zničena pomocí unset()
      * @param string $password Heslo přihlášeného uživatele pro ověření
-     * @throws AccessDeniedException Pokud není heslo správné, vyplněné nebo uživatel nemůže smazat svůj účet
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze a odhlášen
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není heslo správné, vyplněné nebo uživatel nemůže smazat svůj účet
      */
     public function deleteAccount(string $password): bool
     {

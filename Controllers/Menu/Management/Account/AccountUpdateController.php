@@ -1,8 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\Account;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
@@ -11,26 +12,20 @@ use Poznavacky\Models\AjaxResponse;
  * Kontroler zpracovávající data odeslaná ze stránky account-settings
  * @author Jan Štěch
  */
-class AccountUpdateController extends Controller
+class AccountUpdateController extends AjaxController
 {
     /**
      * Metoda odlišující, jaká data si přeje uživatel změnit a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
-        if (empty($_POST))
+        if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
-        }
-
-        //Kontrola, zda je nějaký uživatel přihlášen a zda se nejedná o demo účet
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser() || $aChecker->checkDemoAccount())
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
+            return;
         }
         
         header('Content-Type: application/json');
@@ -70,7 +65,6 @@ class AccountUpdateController extends Controller
                     //Naposled přesměruj uživatele ven ze systému
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, '');
                     echo $response->getResponseString();
-                    exit();
                     break;
                 case 'verify password':
                     $password = urldecode($_POST['password']);
@@ -78,6 +72,7 @@ class AccountUpdateController extends Controller
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
+                    $aChecker = new AccessChecker();
                     if (!$aChecker->recheckPassword($password))
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
@@ -87,7 +82,7 @@ class AccountUpdateController extends Controller
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
-                    exit();
+                    return;
             }
         }
         catch (AccessDeniedException $e)
@@ -95,9 +90,6 @@ class AccountUpdateController extends Controller
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
-
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

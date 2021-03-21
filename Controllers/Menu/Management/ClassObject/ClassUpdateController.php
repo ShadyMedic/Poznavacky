@@ -1,53 +1,40 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
-use Poznavacky\Controllers\Controller;
+use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Processors\GroupAdder;
 use Poznavacky\Models\Security\AccessChecker;
-use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
-use Poznavacky\Models\MessageBox;
 use \BadMethodCallException;
 
 /**
  * Kontroler zpracovávající data odeslaná ze stránky manage
  * @author Jan Štěch
  */
-class ClassUpdateController extends Controller
+class ClassUpdateController extends AjaxController
 {
     /**
      * Metoda odlišující, jakou akci si přeje správce třídy provést a volající příslušný model
-     * @see Controller::process()
+     * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
+     * @throws DatabaseException
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
-        if (empty($_POST))
+        if (!isset($_POST['action']))
         {
             header('HTTP/1.0 400 Bad Request');
-            exit();
+            return;
         }
         
         header('Content-Type: application/json');
         //Kontrola, zda je zvolena nějaká třída
-        if (!isset($_SESSION['selection']['class']))
-        {
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_CLASS_NOT_CHOSEN, array('origin' => $_POST['action']));
-            echo $response->getResponseString();
-            exit();
-        }
         $class = $_SESSION['selection']['class'];
-        
-        //Kontrola, zda je nějaký uživatel přihlášen a zda je přihlášený uživatel správcem vybrané třídy nebo systémový administrátor
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkUser() || !($class->checkAdmin(UserManager::getId()) || $aChecker->checkSystemAdmin()))
-        {
-            header('HTTP/1.0 403 Forbidden');
-            exit();
-        }
         
         try
         {
@@ -81,9 +68,13 @@ class ClassUpdateController extends Controller
                     break;
                 case 'create test':
                     $adder = new GroupAdder($class);
-                    $adder->processFormData($_POST);
-                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena');
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS);
+                    $group = $adder->processFormData($_POST);
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Poznávačka '.$_POST['testName'].' úspěšně vytvořena', array('newGroupData' => array(
+                        'id' => $group->getId(),
+                        'name' => $group->getName(),
+                        'url' => $group->getUrl(),
+                        'parts' => $group->getPartsCount()
+                        )));
                     echo $response->getResponseString();
                     break;
                 case 'delete test':
@@ -96,8 +87,7 @@ class ClassUpdateController extends Controller
                 case 'delete class':
                     $adminPassword = $_POST['password'];
                     $class->deleteAsClassAdmin($adminPassword);
-                    $this->addMessage(MessageBox::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, 'menu');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
                     echo $response->getResponseString();
                     break;
                 case 'verify password':
@@ -106,6 +96,7 @@ class ClassUpdateController extends Controller
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
+                    $aChecker = new AccessChecker();
                     if (!$aChecker->recheckPassword($password))
                     {
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
@@ -115,7 +106,7 @@ class ClassUpdateController extends Controller
                     break;
                 default:
                     header('HTTP/1.0 400 Bad Request');
-                    exit();
+                    return;
             }
         }
         catch (AccessDeniedException | NoDataException $e)
@@ -123,9 +114,6 @@ class ClassUpdateController extends Controller
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
-        
-        //Zastav zpracování PHP, aby se nevypsala šablona
-        exit();
     }
 }
 

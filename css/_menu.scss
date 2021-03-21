@@ -214,13 +214,11 @@
 						text-align: left;
 					}
 					.invitation-accept {
-						form {
-							display: flex;
-							flex-direction: row;
-							justify-content: space-evenly;
-							.btn {
-								margin: 0 0.4rem
-							}
+						display: flex;
+						flex-direction: row;
+						justify-content: space-evenly;
+						.btn {
+							margin: 0 0.4rem
 						}
 					}
 				}

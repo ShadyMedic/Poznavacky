@@ -1,10 +1,13 @@
 <?php
 namespace Poznavacky\Models;
 
+use Poznavacky\Models\DatabaseItems\ClassObject;
+use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\DatabaseItems\Picture;
 use Poznavacky\Models\DatabaseItems\Report;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 
@@ -14,14 +17,15 @@ use Poznavacky\Models\Statics\UserManager;
  */
 class ReportResolver
 {
-    private $class;
-    private $group;
-    private $adminIsLogged = false;
+    private Classobject $class;
+    private Group $group;
+    private bool $adminIsLogged = false;
 
     /**
      * Konstruktor zajišťující, že instanci této třídy lze vytvořit pouze pokud je přihlášen správce zvolené třídy
      * Také je nastavena poznávačka, ve které je možné vytvořenou instancí řešit hlášení a třída, do které musí spadat přírodniny, k jejímž obrázkům se všechna hlášení vztahují
      * @throws AccessDeniedException V případě, že není vybrána žádná třída nebo skupina nebo pokud přihlášený uživatel není správcem zvolené třídy
+     * @throws DatabaseException
      */
     public function __construct()
     {
@@ -55,14 +59,15 @@ class ReportResolver
             $this->group = $_SESSION['selection']['group'];
         }
     }
-    
+
     /**
-     * 
+     *
      * Metoda upravující přírodninu a/nebo adresu obrázku uloženého v databázi
      * @param int $pictureId ID obrázku, jehož data chceme změnit
      * @param string $newNaturalName Název nové přírodniny, kterou obrázek zobrazuje
      * @param string $newUrl Nová adresa obrázku
      * @throws AccessDeniedException V případě, že nově zvolená přírodnina nepatří do té samé poznávačky, jako ta stávající
+     * @throws DatabaseException
      */
     public function editPicture(int $pictureId, string $newNaturalName, string $newUrl): void
     {
@@ -97,10 +102,12 @@ class ReportResolver
         
         $picture->save();
     }
-    
+
     /**
      * Metoda odstraňující obrázek s daným ID z databáze i se všemi jeho hlášeními
      * @param int $pictureId ID obrázku k odstranění
+     * @throws AccessDeniedException Pokud obrázek nepatří k přírodnině, která je součástí zvolené třídy
+     * @throws DatabaseException
      */
     public function deletePicture(int $pictureId): void
     {
@@ -112,10 +119,12 @@ class ReportResolver
         }
         $picture->delete();
     }
-    
+
     /**
      * Metoda odstraňující hlášení s daným ID z databáze
      * @param int $reportId ID hlášení k odstranění
+     * @throws AccessDeniedException Pokud hlášení nepatří k obrázku, který nepatří k přírodnině, která je součástí zvolené třídy
+     * @throws DatabaseException
      */
     public function deleteReport(int $reportId): void
     {
@@ -127,11 +136,12 @@ class ReportResolver
         }
         $report->delete();
     }
-    
+
     /**
-     * Metoda kontrolující, zda je daný obrázek přiřazen k přírodnině, která je součástí nějaké poznávačky spravované třídy 
+     * Metoda kontrolující, zda je daný obrázek přiřazen k přírodnině, která je součástí nějaké poznávačky spravované třídy
      * @param Picture $picture Obrázek pro kontrolu
      * @return bool TRUE, pokud je obrázek součástí nějaké poznávačky patřící do spravované třídy, FALSE, pokud ne
+     * @throws DatabaseException
      */
     private function checkPictureBelongsToClass(Picture $picture): bool
     {

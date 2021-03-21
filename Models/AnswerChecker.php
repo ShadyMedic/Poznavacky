@@ -11,15 +11,15 @@ use \Transliterator;
 class AnswerChecker
 {
     private const TOLERANCE = 0.34;    //Maximální povolený poměr (špatné znaky / všechny znaky), aby byla odpověď uznána
-    
-    public $lastResult;
-    public $lastSavedAnswer;
-    
+
+    public string $lastSavedAnswer;
+
     /**
      * Metoda pro ověření správnosti odpovědi
      * @param string $answer Odpověď zadaná uživatelem
      * @param int $questionNum Číslo, pod kterým je v $_SESSION['testAnswers'] uložena správná odpověď
      * @return bool TRUE, pokud je odpověď správná, FALSE, pokud ne
+     * @throws AccessDeniedException
      */
     public function verify(string $answer, int $questionNum): bool
     {

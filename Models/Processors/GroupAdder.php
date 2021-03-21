@@ -3,8 +3,10 @@ namespace Poznavacky\Models\Processors;
 
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Folder;
+use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Part;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use \InvalidArgumentException;
 use \RangeException;
@@ -17,7 +19,7 @@ class GroupAdder
 {
     private const DEFAULT_PART_NAME = "Hlavní část";
 
-    private $class;
+    private ClassObject $class;
 
     /**
      * Konstruktor nastavující objekt třídy, do které bude objekt přidávat poznávačky
@@ -32,9 +34,11 @@ class GroupAdder
      * Metoda zpracovávající data odeslaná z formuláře na stránce se správou třídy
      * Data jsou ověřena a posléze i uložena do databáze, nebo je vyvolána výjimka s chybovou hláškou
      * @param array $POSTdata Pole dat odeslaných z formuláře
-     * @return boolean TRUE, pokud vše proběhne tak, jak má
+     * @return Group Objekt nové poznávačky, která je již uložena do databáze
+     * @throws AccessDeniedException V případě, že zadaná data nesplňují podmínky, nebo se nepodaří poznávačku vytvořit
+     * @throws DatabaseException
      */
-    public function processFormData(array $POSTdata): bool
+    public function processFormData(array $POSTdata): Group
     {
         $groupName = $POSTdata['testName'];
 
@@ -45,8 +49,9 @@ class GroupAdder
     /**
      * Metoda ověřující, zda jsou poskytnutá data v pořádku
      * @param string $groupName Název přidávané poznávačky
-     * @throws AccessDeniedException V případě že data nesplňují podmínky
      * @return boolean TRUE, pokud může být daný název použit
+     * @throws DatabaseException
+     * @throws AccessDeniedException V případě že data nesplňují podmínky
      */
     public function checkData(string $groupName): bool
     {
@@ -91,10 +96,11 @@ class GroupAdder
     /**
      * Metoda vkládající poznávačku do databáze a přidávající do ní první, prázdnou část
      * @param string $groupName Název pro novou poznávačku (musí být ověřen metodou GroupAdder::checkData())
+     * @return Group Objekt nově přidané poznávačky
+     * @throws DatabaseException
      * @throws AccessDeniedException V případě, že se poznávačku nepodaří vytvořit
-     * @return boolean TRUE, pokud je úspěšně uložen nový obrázek
      */
-    private function addGroup(string $groupName): bool
+    private function addGroup(string $groupName): Group
     {
         //Vložení poznávačky do databáze
         $newGroup = $this->class->addGroup($groupName);
@@ -107,7 +113,7 @@ class GroupAdder
         $part = new Part(true);
         $part->initialize(self::DEFAULT_PART_NAME, Folder::generateUrl(self::DEFAULT_PART_NAME), $newGroup, array(), 0, 0);
         $newGroup->replaceParts(array($part));
-        return true;
+        return $newGroup;
     }
 }
 

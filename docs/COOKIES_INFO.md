@@ -29,4 +29,4 @@ Pokud chcete z jakéhokoli důvodu všechny uložené soubory cookie odstranit, 
 
 V běžných webových prohlížečích pro počítače (Microsoft Edge, Google Chrome, Mozila Firefox) naleznete tuto možnost po levé straně adresního řádku. Po kliknutí na ikonku zámku signalizující zabezpečené připojení klikněte na `Soubory cookie` (Microsoft Edge, Google Chrome) nebo `Vymazat cookies a data stránky` (Mozila Firefox), následně vyberte doménu `poznavacky.com` a klikněte na `Odebrat`, případně `Odstranit`.
 
-Na mobilních prohlížečích naleznete tuto možnost na podobném místě, avšak obvykle v menu "Nastavení webu". V případě problémů nás můžete kontaktovat na e-mailové adrese _poznavacky@email.com_.
+Na mobilních prohlížečích naleznete tuto možnost na podobném místě, avšak obvykle v menu "Nastavení webu". V případě problémů nás můžete kontaktovat na e-mailové adrese *poznavacky@email.com*.

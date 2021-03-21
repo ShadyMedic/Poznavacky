@@ -59,10 +59,10 @@
 	</section>
 	<section class="class-buttons-section">
 		<div id="manage-buttons">
-			<button class="btn border-btn non-transparent black" id="members-management-button" onclick='window.location.href=window.location.href+"/members";'<?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>style="display:none"<?php endif ?>>Spravovat členy třídy
-			</button>
-			<button class="btn border-btn non-transparent black" onclick='window.location.href=window.location.href+"/tests";'>Spravovat poznávačky</button>
-		</div>
+			<a class="btn border-btn non-transparent black" id="members-management-button" href="<?= $baseUrl ?>/members" <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>style="display:none"<?php endif ?>>Spravovat členy třídy</a>
+			<a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/tests">Spravovat poznávačky</a>
+		    <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/naturals">Spravovat přírodniny</a>
+        </div>
 		<button class="btn border-btn non-transparent black" id="delete-class-button">Zrušit třídu</button>
 		<div id="delete-class" style="display: none;">
 			<h3>Zrušení účtu</h3>

@@ -1,8 +1,9 @@
 <?php
 namespace Poznavacky\Controllers\Menu\Management\System;
 
-use Poznavacky\Controllers\Controller;
-use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Administration;
 
@@ -10,58 +11,34 @@ use Poznavacky\Models\Administration;
  * Kontroler starající se o výpis administrační stránky správcům služby
  * @author Jan Štěch
  */
-class AdministrateController extends Controller
+class AdministrateController extends SynchronousController
 {
 
     /**
-     * Metoda ověřující, zda má uživatel do administrace přístup a nastavující hlavičku stránky a pohled
-     * @see Controller::process()
+     * Metoda nastavující hlavičku stránky a pohled
+     * @param array $parameters Pole parametrů pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
+     * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
-        $aChecker = new AccessChecker();
-        if (!$aChecker->checkSystemAdmin())
-        {
-            $this->redirect('error403');
-        }
+        $administration = new Administration();
 
-        //Zkontroluj, zda není specifikován další kontroler
-        if (!empty($parameters))
-        {
-            //ReportActionController
-            $controllerName = $this->kebabToCamelCase($parameters[0]).self::CONTROLLER_EXTENSION;
-            $pathToController = $this->controllerExists($controllerName);
-            if ($pathToController)
-            {
-                $this->controllerToCall = new $pathToController();
-            }
-        }
+        self::$data['loggedAdminName'] = UserManager::getName();
 
-        if (!empty($this->controllerToCall))
-        {
-            $this->controllerToCall->process(array_slice($parameters, 1));
-        }
-        else
-        {
-            $administration = new Administration();
+        self::$data['users'] = $administration->getAllUsers(false);
+        self::$data['classes'] = $administration->getAllClasses();
+        self::$data['reports'] = $administration->getAdminReports();
+        self::$data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
+        self::$data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
 
-            $this->data['loggedAdminName'] = UserManager::getName();
-
-            $this->data['users'] = $administration->getAllUsers(false);
-            $this->data['classes'] = $administration->getAllClasses();
-            $this->data['reports'] = $administration->getAdminReports();
-            $this->data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
-            $this->data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
-
-            $this->pageHeader['title'] = 'Správa služby';
-            $this->pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
-            $this->pageHeader['keywords'] = '';
-            $this->pageHeader['cssFiles'] = array('css/private.css');
-            $this->pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/administrate.js');
-            $this->pageHeader['bodyId'] = 'administrate';
-
-            $this->view = 'administrate';
-        }
+        self::$pageHeader['title'] = 'Správa služby';
+        self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
+        self::$pageHeader['keywords'] = '';
+        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['jsFiles'] = array('js/generic.js','js/ajaxMediator.js','js/administrate.js');
+        self::$pageHeader['bodyId'] = 'administrate';
     }
 }
 

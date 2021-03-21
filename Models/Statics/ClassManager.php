@@ -1,9 +1,11 @@
 <?php
 namespace Poznavacky\Models\Statics;
 
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\User;
 use \DateTime;
+use \Exception;
 
 /** 
  * Třída získávající informace o třídě z databáze, například za účelem pro získání ID z názvu a obráceně
@@ -13,21 +15,6 @@ use \DateTime;
 class ClassManager
 {
     /**
-     * Metoda kontrolující, zda třída daného jména existuje
-     * @param string $className Jméno třídy
-     * @return boolean TRUE, pokud byla třída nalezene, FALSE, pokud ne
-     */
-    public static function classExists(string $className): bool
-    {
-        $cnt = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['name'].' = ?', array($className), false);
-        if ($cnt['cnt'] > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
      * Metoda získávající z databáze seznam všech tříd, které splňují jisté podmínky, jako objekty
      * Podmínky, které musí splňovat:
      * 1) Jejich přístupový kód musí být stejný jako první argument této metody
@@ -36,6 +23,8 @@ class ClassManager
      * @param int $code Kód podle kterého vyhledáváme
      * @param int $userId ID uživatele, který se pokouší použít kód k získání přístupu do nových tříd
      * @return ClassObject[] Pole tříd, které splňují podmínky výše, jako objekty, nebo prázdné pole, pokud žádné takové třídy neexistují
+     * @throws DatabaseException
+     * @throws Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public static function getNewClassesByAccessCode(int $code, int $userId): array
     {

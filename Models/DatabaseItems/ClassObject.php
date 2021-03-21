@@ -1,14 +1,16 @@
 <?php
 namespace Poznavacky\Models\DatabaseItems;
 
-use Poznavacky\Models\undefined;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\undefined;
 use \BadMethodCallException;
 use \DateTime;
+use \Exception;
 use \InvalidArgumentException;
 use \RangeException;
 
@@ -107,59 +109,64 @@ class ClassObject extends Folder
         $this->members = $members;
         $this->admin = $admin;
     }
-    
+
     /**
      * Metoda navracející počet poznávaček v této třídě
      * @return int Počet poznávaček
+     * @throws DatabaseException
      */
     public function getGroupsCount(): int
     {
         $this->loadIfNotLoaded($this->groupsCount);
         return $this->groupsCount;
     }
-    
+
     /**
      * Metoda navracející uložený status této třídy.
      * @return string Status třídy (viz konstanty třídy)
+     * @throws DatabaseException
      */
     public function getStatus(): string
     {
         $this->loadIfNotLoaded($this->status);
         return $this->status;
     }
-    
+
     /**
      * Metoda navracející uložený vstupní kód této třídy
      * @return int|null Čtyřmístný kód této třídy nebo NULL, pokud žádný kód není nastaven
+     * @throws DatabaseException
      */
-    public function getCode()
+    public function getCode(): ?int
     {
         $this->loadIfNotLoaded($this->code);
         return $this->code;
     }
-    
+
     /**
      * Metoda pro získání objektu uživatele, který je správcem této třídy
      * @return User Objekt správce třídy
+     * @throws DatabaseException
      */
     public function getAdmin(): User
     {
         $this->loadIfNotLoaded($this->admin);
         return $this->admin;
     }
-    
+
     /**
      * Metoda načítající a navracející pole přírodnin patřících do této třídy jako objekty
      * Data nejsou po navrácení výsledku nikde uložena, proto je v případě opakovaného použití potřeba uložit si je do nějaké proměnné, aby se opakovaným dotazováním databáze nezpomalovalo zpracování požadavku
      * @return Natural[] Pole přírodnin patřících do této třídy jako objekty
+     * @throws DatabaseException
      */
     public function getNaturals(): array
     {
         $this->loadIfNotLoaded($this->id);
-        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].' FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['class'].' = ?;', array($this->id), true);
+        $result = Db::fetchQuery('SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.Natural::COLUMN_DICTIONARY['picturesCount'].',(SELECT COUNT(*) FROM prirodniny_casti WHERE prirodniny_id = '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].') AS "uses" FROM '.Natural::TABLE_NAME.' WHERE '.Natural::COLUMN_DICTIONARY['class'].' = ?;', array($this->id), true);
         if ($result === false || count($result) === 0)
         {
-            //Žádné poznávačky nenalezeny
+            //Žádné přírodniny nenalezeny
             return array();
         }
         else
@@ -169,17 +176,18 @@ class ClassObject extends Folder
             {
                 $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
                 //Místo posledního null by se mělo nastavit $this, avšak výsledné pole obsahuje příliš mnoho úrovní vnořených objektů a jeho ošetření proti XSS útoku trvá strašně dlouho
-                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null);
+                $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null, $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], null, null, $naturalData['uses']);
                 $naturals[] = $natural;
             }
         }
         return $naturals;
     }
-    
+
     /**
      * Metoda navracející pole poznávaček patřících do této třídy jako objekty
      * Pokud zatím nebyly poznávačky načteny, budou načteny z databáze
      * @return Group[] Pole poznávaček patřících do této třídy jako objekty
+     * @throws DatabaseException
      */
     public function getGroups(): array
     {
@@ -189,10 +197,11 @@ class ClassObject extends Folder
         }
         return $this->groups;
     }
-    
+
     /**
      * Metoda načítající poznávačky patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
      * Počet poznávaček v této třídě je také aktualizován (vlastnost ClassObject::$groupsCount)
+     * @throws DatabaseException
      */
     private function loadGroups(): void
     {
@@ -217,11 +226,12 @@ class ClassObject extends Folder
         
         $this->groupsCount = count($this->groups);
     }
-    
+
     /**
      * Metoda přidávající do databáze i do instance třídy novou poznávačku
      * @param string $groupName Ošetřený název nové poznávačky
      * @return Group|boolean Objekt vytvořené poznávačky, pokud je poznávačka vytvořena a přidána úspěšně, FALSE, pokud ne
+     * @throws DatabaseException
      */
     public function addGroup(string $groupName)
     {
@@ -245,13 +255,14 @@ class ClassObject extends Folder
         
         return false;
     }
-    
+
     /**
      *
      * Metoda odstraňující danou poznávačku z této třídy i z databáze
      * @param Group $group Objekt poznávačky, který má být odstraněn
-     * @throws BadMethodCallException Pokud daná poznávačka není součástí této třídy
      * @return boolean TRUE, v případě, že se odstranění poznávačky povede, FALSE, pokud ne
+     * @throws DatabaseException
+     * @throws BadMethodCallException Pokud daná poznávačka není součástí této třídy
      */
     public function removeGroup(Group $group): bool
     {
@@ -274,12 +285,14 @@ class ClassObject extends Folder
         //Odstranění poznávačky z databáze
         return $group->delete();
     }
-    
+
     /**
      * Metoda navracející pole členů této třídy jako objekty
      * Pokud zatím nebyly členové načteny, budou načteny z databáze
      * @param boolean $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
      * @return User[] Pole členů patřících do této třídy jako instance třídy User
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
      */
     public function getMembers($includeLogged = true): array
     {
@@ -296,9 +309,11 @@ class ClassObject extends Folder
         }
         return $result;
     }
-    
+
     /**
      * Metoda načítající členy patřící do této třídy a ukládající je jako vlastnosti do pole jako objekty
+     * @throws DatabaseException
+     * @throws Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public function loadMembers(): void
     {
@@ -321,14 +336,16 @@ class ClassObject extends Folder
             }
         }
     }
-    
+
     /**
      * Metoda vytvářející pozvánku do této třídy pro určitého uživatele
      * Pokud byl již uživatel do této třídy pozván, je prodloužena životnost existující pozvánky
      * Pokud pozvaný uživatel představuje demo účet, není jeho pozvání do třídy možné
-     * @param int $userName Jméno uživatele, pro kterého je pozvánka určena
-     * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem představuje demo účet, neexistuje nebo je již členem této třídy
+     * @param string $userName Jméno uživatele, pro kterého je pozvánka určena
      * @return boolean TRUE, pokud je pozvánka úspěšně vytvořena
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud je tato třída veřejná, uživatel se zadaným jménem představuje demo účet, neexistuje nebo je již členem této třídy
+     * @throws Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public function inviteUser(string $userName): bool
     {
@@ -381,12 +398,13 @@ class ClassObject extends Folder
         
         return true;
     }
-    
+
     /**
      * Metoda přidávající uživatele do třídy (přidává spojení uživatele a třídy do tabulky "clenstvi")
      * Pokud je tato třída veřejná nebo uzamčená, nic se nestane
      * @param int $userId ID uživatele získávajícího členství
      * @return boolean TRUE, pokud je členství ve třídě úspěšně přidáno, FALSE, pokud ne
+     * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      */
     public function addMember(int $userId): bool
     {
@@ -408,22 +426,18 @@ class ClassObject extends Folder
         #     return false;
         # }
         
-        if (Db::executeQuery('INSERT INTO clenstvi (uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id)))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        Db::executeQuery('INSERT INTO clenstvi (uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id));
+        
+		return true;
     }
-    
+
     /**
      * Metoda odstraňující uživatele ze třídy (odstraňuje spojení uživatele a třídy z tabulky "clenstvi")
      * Pokud je třída veřejná, nic se nestane
      * @param int $userId
-     * @throws AccessDeniedException Pokud se jedná o veřejnou třídu, pokud uživatel s daným ID není členem této třídy nebo pokud se vyskytne chyba při odstraňování iživatelova členství z databáze
      * @return boolean TRUE, v případě, že se odstranění uživatele povede
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud se jedná o veřejnou třídu, pokud uživatel s daným ID není členem této třídy nebo pokud se vyskytne chyba při odstraňování iživatelova členství z databáze
      */
     public function removeMember(int $userId): bool
     {
@@ -478,6 +492,8 @@ class ClassObject extends Folder
      * @param int $userId ID ověřovaného uživatele
      * @param bool $forceAgain Pokud je tato funkce jednou zavolána, uloží se její výsledek jako vlastnost tohoto objektu třídy a příště se použije namísto dalšího databázového dotazu. Pokud tuto hodnotu nastavíte na TRUE, bude znovu poslán dotaz na databázi. Defaultně FALSE
      * @return boolean TRUE, pokud má uživatel přístup do třídy, FALSE pokud ne
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @throws DatabaseException
      */
     public function checkAccess(int $userId, bool $forceAgain = false): bool
     {
@@ -499,28 +515,31 @@ class ClassObject extends Folder
             $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].' = "public" OR '.self::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?));', array($this->id, $userId), false);
         }
 
-        $this->accessCheckResult = ($result['cnt'] === 1) ? true : false;
-        return ($result['cnt'] === 1) ? true : false;
+        $this->accessCheckResult = $result['cnt'] === 1;
+        return $result['cnt'] === 1;
     }
-    
+
     /**
      * Metoda kontrolující, zda je určitý uživatel správcem této třídy
      * Pokud zatím nebyl načten správce této třídy, bude načten z databáze
      * @param int $userId ID ověřovaného uživatele
      * @return boolean TRUE, pokud je uživatelem správce třídy, FALSE pokud ne
+     * @throws DatabaseException
      */
     public function checkAdmin(int $userId): bool
     {
         $this->loadIfNotLoaded($this->admin);
-        return ($this->admin->getId() === $userId) ? true : false;
+        return $this->admin->getId() === $userId;
     }
 
     /**
      * Metoda ukládající do databáze nový požadavek na změnu názvu této třídy vyvolaný správcem této třídy, pokud žádný takový požadavek neexistuje nebo aktualizující stávající požadavek
      * Data jsou předem ověřena
      * @param string $newName Požadovaný nový název
-     * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
      * @return boolean TRUE, pokud je žádost úspěšně vytvořena/aktualizována
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud jméno nevyhovuje podmínkám systému
+     * @throws Exception Pokud se nepodaří vytvořit objekt DateTime
      */
     public function requestNameChange(string $newName): bool
     {
@@ -590,15 +609,16 @@ class ClassObject extends Folder
         }
         return true;
     }
-    
+
     /**
      * Metoda upravující přístupová data této třídy z rozhodnutí administrátora
      * @param string $status Nový status třídy (musí být jedna z konstant této třídy)
-     * @param int|NULL $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked")
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
+     * @param int|null $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked")
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo jsou zadaná data neplatná
      */
-    public function updateAccessDataAsAdmin(string $status, $code): bool
+    public function updateAccessDataAsAdmin(string $status, ?int $code): bool
     {
         //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
         if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
@@ -608,7 +628,7 @@ class ClassObject extends Folder
         
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         $aChecker = new AccessChecker();
-        if (!$aChecker::checkSystemAdmin())
+        if (!$aChecker->checkSystemAdmin())
         {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
@@ -631,15 +651,16 @@ class ClassObject extends Folder
         
         return true;
     }
-    
+
     /**
      * Metoda upravující přístupová data této třídy po jejich změně správcem třídy
      * @param string $status Nový status třídy (musí být jedna z konstant této třídy)
      * @param int|NULL $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked")
-     * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     * @throws AccessDeniedException Pokud jsou zadaná data neplatná
+     * @throws DatabaseException
      */
-    public function updateAccessData(string $status, $code): bool
+    public function updateAccessData(string $status, ?int $code): bool
     {
         //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
         if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED)
@@ -669,12 +690,13 @@ class ClassObject extends Folder
         
         return true;
     }
-    
+
     /**
      * Metoda měnící správce této třídy z rozhodnutí administrátora
      * @param User $newAdmin Instance třídy uživatele reprezentující nového správce
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      */
     public function changeClassAdminAsAdmin(User $newAdmin): bool
     {
@@ -695,11 +717,12 @@ class ClassObject extends Folder
         
         return true;
     }
-    
+
     /**
      * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí administrátora
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem
      */
     public function deleteAsAdmin(): bool
     {
@@ -716,12 +739,13 @@ class ClassObject extends Folder
         
         return true;
     }
-    
+
     /**
      * Metoda odstraňující tuto třídu z databáze na základě rozhodnutí jejího správce
      * @param string $password Heslo správce třídy pro ověření
-     * @throws AccessDeniedException Pokud přihlášený uživatel není správcem této třídy nebo zadal špatné / žádné heslo
      * @return boolean TRUE, pokud je třída úspěšně odstraněna z databáze
+     * @throws DatabaseException
+     * @throws AccessDeniedException Pokud přihlášený uživatel není správcem této třídy nebo zadal špatné / žádné heslo
      */
     public function deleteAsClassAdmin(string $password): bool
     {
