@@ -25,17 +25,32 @@ body {
 	.btn::-moz-focus-inner {
 		border: 0;
 	}
-	&.tab {
+	&.tab { //focus styly aplikované, pouze pokud uživatel používá k navigaci tabulátor
 		.btn.border-btn:focus {
-			border: 2px solid rgba($greenMid, 0.5);
+			box-shadow: inset 0 0 0 2px rgba($greenLight, 0.8);
 		}
 		.btn.inline:focus {
 			font-weight: bold;
 			color: $greenMid;
-		} 
-		.text-field:focus {
-			box-shadow: inset 0 0 0 2px rgba($greenMid, 0.5);
 		}
+		.btn.arrow-btn:focus {
+			span {
+				color: $greenMid;
+			}
+			img {
+				//přebarvení SVG šipky (barva $greenMid: #479911) pomocí https://codepen.io/sosuke/pen/Pjoqqp
+				filter: brightness(0) saturate(100%) invert(50%) sepia(23%) saturate(1490%) hue-rotate(53deg) brightness(94%) contrast(96%);
+			}
+		}
+		input:focus ~ .checkmark {
+			box-shadow: inset 0 0 0 2px rgba($greenMid, 0.2);
+		}
+		input[type="checkbox"]:checked:focus ~ .checkmark {
+			box-shadow: inset 0 0 0 2px rgba($greenLight, 0.8);
+		}
+	}
+	.text-field:focus {
+		box-shadow: inset 0 0 0 2px rgba($greenMid, 0.2);
 	}
 }
 
@@ -266,7 +281,8 @@ h5 {
 			top: 0.12em;
 			transition: transform 0.2s ease-out;
 		}
-		&:hover {
+		&:hover,
+		&:focus {
 			transform: translateX(-0.16em);
 			img {
 				transform: translateX(0.32em);
@@ -438,15 +454,12 @@ label {
 	&:hover input ~ .checkmark {
 		background-color: #d8d8d8;
 	}
-
-	/* When the checkbox is checked, add a blue background */
 	input[type="checkbox"]:checked ~ .checkmark {
 		background-color: $greenDark;
 		&:after {
 			display: block;
 		}
 	}
-
 }
 
 
