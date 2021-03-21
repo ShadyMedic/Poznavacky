@@ -4634,8 +4634,8 @@ body#index #back-to-top img {
   bottom: 0.2rem;
 }
 
-#legal nav {
-  background: #444;
+#legal main nav {
+  background: white;
   padding: 0.4rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4647,7 +4647,7 @@ body#index #back-to-top img {
 }
 
 @media screen and (min-width: 576px) {
-  #legal nav {
+  #legal main nav {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
@@ -4658,45 +4658,61 @@ body#index #back-to-top img {
   }
 }
 
-#legal nav.sticky {
+#legal main nav.sticky {
   position: fixed;
   top: 0;
   width: 100%;
+  -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-#legal nav .border-btn {
+#legal main nav .btn {
   margin: 0.4rem 1rem;
 }
 
-#legal section {
+#legal main nav .btn.selected {
+  font-weight: bold;
+}
+
+#legal main .content {
   padding: 1rem 1rem;
 }
 
 @media screen and (min-width: 576px) {
-  #legal section {
+  #legal main .content {
     padding: 1rem 3rem;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #legal section {
+  #legal main .content {
     padding: 1.2rem 6rem;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #legal section {
+  #legal main .content {
     padding: 1.2rem 16vw;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  #legal section {
+  #legal main .content {
     padding: 1.2rem 20vw;
   }
 }
 
-#legal section p {
+#legal main .content section {
+  margin: 1rem 0;
+}
+
+@media screen and (min-width: 768px) {
+  #legal main .content section {
+    margin: 1.2rem 0;
+  }
+}
+
+#legal main .content p {
   text-align: justify;
 }
 /*# sourceMappingURL=css.css.map */
