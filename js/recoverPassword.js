@@ -35,10 +35,11 @@ function submitForm(event)
                         $("#change-password-button").prop("disabled", false);
 
                         //Chyba při zpracování požadavku (zřejmě neplatný formát kódu)
-                        newMessage(message, "error"); //TODO zobrazit ve formuláři
+						$("#new-server-message").text(message);
                     }
                     else if (messageType === "success")
                     {
+						$("#new-server-message").text("");
                         newMessage(message, "success");
 
                         //Přesměruj uživatele za tři vteřiny zpět na domovskou stránku
