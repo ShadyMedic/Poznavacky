@@ -20,11 +20,11 @@ function newTest()
 {
 	$("#new-test-button").hide();
 	$("#new-test").show();
+	$("#new-test-name").focus();
 	$("#new-test")[0].scrollIntoView({ 
 		behavior: 'smooth',
 		block: "start" 
 	});
-	$("#new-test-name").focus();
 }
 function newTestCancel()
 {

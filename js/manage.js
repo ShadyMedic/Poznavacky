@@ -252,8 +252,9 @@ function deleteClass()
 	$("#delete-class").show();
 	$("#delete-class1").show();
 	$("#delete-class-password").focus();
-	document.querySelector("#delete-class").scrollIntoView({ 
-		behavior: 'smooth' 
+	$("#delete-class")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
 	});
 	changeClassNameCancel();
 	changeClassStatusCancel();
