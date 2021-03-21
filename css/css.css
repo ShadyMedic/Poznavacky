@@ -4738,4 +4738,65 @@ body#index #back-to-top img {
 #legal main .content p {
   text-align: justify;
 }
+
+body#recover-password main {
+  margin: auto;
+}
+
+body#recover-password .wrapper {
+  width: 90vw;
+  max-width: 520px;
+}
+
+body#recover-password h2 {
+  font-size: 1.6rem;
+}
+
+body#recover-password .user-data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body#recover-password .user-data label {
+  font-size: 0.9rem;
+}
+
+body#recover-password .user-data label,
+body#recover-password .user-data input.text-field {
+  margin: 0.12rem 0;
+}
+
+body#recover-password .user-data label:not(:nth-of-type(1)),
+body#recover-password .user-data .checkbox {
+  margin-top: 0.54rem;
+}
+
+body#recover-password .user-data input.text-field {
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+  background: #eee;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+}
+
+body#recover-password .message {
+  font-size: 0.72rem;
+  line-height: 0.96rem;
+  min-height: 0.96rem;
+  color: #a00;
+}
+
+body#recover-password .message.server {
+  margin-bottom: 0.6rem;
+}
+
+body#recover-password .border-btn {
+  margin: 0.8rem auto 0.2rem auto;
+  width: 100%;
+}
 /*# sourceMappingURL=css.css.map */
