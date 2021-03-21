@@ -326,15 +326,20 @@ body#index {
 		}
 		display: flex;
 		justify-content: space-between;
+		align-content: center;
 		transition: transform 0.6s ease-in-out;
 		&.show {
 			transform: translateY(0);
 		}
-		span {
-			padding-right: 2rem;
+		.wrapper {
+			padding-right: 6rem;
+			p {
+				margin-bottom: 0.6rem;
+			}
 		}
 		button {
 			flex-shrink: 0;
+			margin: auto 0;
 		}
 	}
 

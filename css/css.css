@@ -4547,6 +4547,8 @@ body#index #cookies-alert {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -ms-flex-line-pack: center;
+      align-content: center;
   -webkit-transition: -webkit-transform 0.6s ease-in-out;
   transition: -webkit-transform 0.6s ease-in-out;
   transition: transform 0.6s ease-in-out;
@@ -4576,13 +4578,18 @@ body#index #cookies-alert.show {
           transform: translateY(0);
 }
 
-body#index #cookies-alert span {
-  padding-right: 2rem;
+body#index #cookies-alert .wrapper {
+  padding-right: 6rem;
+}
+
+body#index #cookies-alert .wrapper p {
+  margin-bottom: 0.6rem;
 }
 
 body#index #cookies-alert button {
   -ms-flex-negative: 0;
       flex-shrink: 0;
+  margin: auto 0;
 }
 
 body#index #back-to-top {
