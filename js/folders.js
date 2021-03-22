@@ -11,6 +11,7 @@ $(function() {
 	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
 	$("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
 	$(".display-buttons-button").click(function(){displayButtons(this)})
+	$(".class-item").click(function(event) {redirectToClass(event)})
 
 	//event listener kliknutí myši
 	$(document).mouseup(function(e){hideButtons(e)});
@@ -20,37 +21,54 @@ $(function() {
 //vše, co se děje při změně velikosti okna
 $(window).resize(function(){})
 
+//funkce přesměrovávající do třídy
+function redirectToClass(event)
+{
+	let classLink = $(event.target).closest(".class-item").attr("data-class-url");
+	
+	//kontrola, jestli uživatel neklikl na link pro opuštění/správu třídy
+	if (!$(event.target).is("a"))
+		window.location.href = classLink;
+}
+
 //odešle AJAX požadavek na opuštění dané třídy
 function leaveClass(event)
 {
-	let url = $(event.target).attr("data-leave-url");
-	let $leftClass = $(event.target).closest('.class-item');
-
-	event.stopPropagation();
-
-	$.post(url, {},
-		function (response, status)
+	let className = $(event.target).closest('.class-item').find("h4").text();
+	let message = "Opravdu chcete opustit třídu" + className + "?";
+	newConfirm(message, "Opustit", "Zrušit", function(confirm){
+		if (confirm) 
 		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (messageType === "error")
-					{
-						//Chyba při zpracování požadavku (například protože je uživatel správce dané třídy)
-						newMessage(message, "error");
-					}
-					else if (messageType === "success")
-					{
-						//Odebrání opuštěné třídy z DOM
-						$leftClass.remove();
+			let url = $(event.target).attr("data-leave-url");
+			let $leftClass = $(event.target).closest('.class-item');
 
-						newMessage(message, "success");
-					}
-				}
+			event.stopPropagation();
+
+			$.post(url, {},
+				function (response, status)
+				{
+					ajaxCallback(response, status,
+						function (messageType, message, data)
+						{
+							if (messageType === "error")
+							{
+								//Chyba při zpracování požadavku (například protože je uživatel správce dané třídy)
+								newMessage(message, "error");
+							}
+							else if (messageType === "success")
+							{
+								//Odebrání opuštěné třídy z DOM
+								$leftClass.remove();
+
+								newMessage(message, "success");
+							}
+						}
+					);
+				},
+				"json"
 			);
-		},
-		"json"
-	);
+		}
+	})
 }
 
 //odešle odpověď na pozvánku (pozitivní i negativní)
