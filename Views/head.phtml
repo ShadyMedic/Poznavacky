@@ -29,6 +29,7 @@
     </head>
     <body id="<?= $bodyId ?>">
 		<div id="overlay"></div>
+		<div id="popups"></div>
 		<div class="container">
 			<?php require $this->getNextView(); ?>
 			<div id="messages">
@@ -61,6 +62,17 @@
 				    <p class="data"></p>
 				</div>
 				<button class="btn icon close-message-button"><img src="../images/crossButtonWhite.svg"></button>
+			</div>
+		</div>
+		<div id="confirm-item-template" style="display: none">
+			<div class="confirm-item">
+				<div class="text">
+					<p class="message"></p>
+				</div>
+				<div class="buttons">
+					<button class="btn border-btn non-transparent black confirm-popup-button"></button>
+					<button class="btn border-btn non-transparent black cancel-popup-button"></button>
+				</div>
 			</div>
 		</div>
 	</body>

@@ -162,13 +162,18 @@ function changeEmailConfirm()
 	
 	if (newEmail.length == 0)
 	{
-		//TODO - zkus vymyslet, jak tohle provést bez popupu
-		if (!confirm("Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.")){return;}
+		let message = "Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.";
+		newConfirm(message, "Odebrat", "Zrušit", function(confirm){
+			if (!confirm) changeEmailFinal(password, newEmail);
+			else return;
+		});	
 	}
-	
+	else changeEmailFinal(password, newEmail);
+}
+
+function changeEmailFinal(password, newEmail) {
 	newEmail = encodeURIComponent(newEmail);
-	var pass = $("#change-email-password").val();
-	
+
 	$.post("menu/account-update",
 		{
 			action: "change email",

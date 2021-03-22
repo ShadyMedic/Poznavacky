@@ -106,6 +106,41 @@ header {
 		background: $red1;
 	}
 }
+#popups {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: none;
+	pointer-events: none;
+	z-index: 6;
+}
+.confirm-item {
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	width: 90vw;
+	max-width: 520px;
+	height: fit-content;
+	padding: 1rem;
+	border-radius: 0.6rem;
+	pointer-events: auto;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	p {
+		text-align: justify;
+	}
+	.buttons {
+		margin-top: 0.6rem;
+		display: flex;
+		justify-content: flex-end;
+		> * {
+			margin-left: 1rem;
+		}
+	}
+}
 
 footer {
 	color: white;

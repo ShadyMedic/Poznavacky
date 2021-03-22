@@ -92,3 +92,23 @@ function newMessage(message, type, data) {
 	$message.find(".data").text(data);
 	$message.addClass(type + "-message");
 }
+
+function newConfirm(message, confirmButtonText, cancelButtonText, callback)
+{
+	$("#popups").append($("#confirm-item-template").html());
+	$confirm = $("#popups .confirm-item:last-child");
+	$confirm.find(".message").text(message);
+	$confirm.find(".confirm-popup-button").text(confirmButtonText);
+	$confirm.find(".cancel-popup-button").text(cancelButtonText);
+	$confirm.on("click", ".confirm-popup-button", function()
+	{
+		$confirm.remove();
+		callback(true);
+	})
+	$confirm.on("click", ".cancel-popup-button", function()
+	{
+		$confirm.remove();
+		callback(false);
+	})
+}
+
