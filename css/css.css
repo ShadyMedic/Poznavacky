@@ -223,7 +223,7 @@ footer .content a:after {
   background: white;
 }
 
-.overlay {
+#overlay {
   position: fixed;
   z-index: 4;
   width: 100vw;
@@ -235,7 +235,7 @@ footer .content a:after {
   transition: opacity 0.32s ease-out;
 }
 
-.overlay.show {
+#overlay.show {
   opacity: 1;
 }
 

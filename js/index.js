@@ -203,7 +203,7 @@ function showScrollButton(event) {
 function showLoginSection(e) {
 	if(!$("#index-login-section").hasClass("show")) {
 		$("#index-login-section").addClass("show");
-		$(".overlay").addClass("show");
+		$("#overlay").addClass("show");
 		$("body").css("overflowY", "hidden");
 	}
 	if ($(e.target).hasClass("show-login-section-login-button"))
@@ -227,7 +227,7 @@ function showLoginDiv(divId) {
 //skrytí login sekce
 function hideLoginSection() {
 	$("#index-login-section").removeClass("show");
-	$(".overlay").removeClass("show");
+	$("#overlay").removeClass("show");
 	$("body").css("overflowY", "auto");
 	emptyForms(".user-data input.text-field, .user-data .message");
 }
