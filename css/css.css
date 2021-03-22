@@ -192,6 +192,9 @@ header .logo h1 {
 
 .confirm-item {
   position: fixed;
+  border: solid 2px #a00;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
   top: 40%;
   left: 50%;
   -webkit-transform: translateX(-50%);
