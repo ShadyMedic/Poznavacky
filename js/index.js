@@ -4,6 +4,7 @@
 
 //zpracování eventů
 $(function() {
+	resizeGrid();
 	//zobrazení cookies alertu
 	setTimeout(() => {
 		$("#cookies-alert").addClass("show");
@@ -68,6 +69,21 @@ $(function() {
 
 	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
+
+$(window).resize(function() {
+	resizeGrid();
+})
+
+
+function resizeGrid()
+{
+	let newClassHeight = $("#new-class-info img").height();
+	let addPicturesHeight = $("#add-pictures-info img").height();
+	let learnHeight = $("#learn-info img").height();
+	let testHeight = $("#test-info img").height();
+	let maxHeight = Math.max(newClassHeight, addPicturesHeight, learnHeight, testHeight);
+	$("#info-icons .info-tile").css("grid-template-rows", maxHeight);
+}
 
 //funkce kontrolující správně zadané jméno při přihlašování
 function checkLoginName() {

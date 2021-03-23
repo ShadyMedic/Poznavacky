@@ -177,11 +177,29 @@ body#index
 			font-size: 1.24rem;
 		}
 		#info-icons {
-			display: grid;
-			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-			grid-template-rows: auto auto;
-			column-gap: 2rem;
+			@media screen and (min-width: $mobile) {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+				grid-template-rows: auto auto;
+				column-gap: 2rem;
+			}
 			margin: 1rem 0;
+			.info-tile {
+				max-width: 360px;
+				margin: 3.6rem auto;
+				@media screen and (min-width: $mobile) {
+					display: grid;
+					grid-auto-rows: auto 1fr;
+					align-items: flex-start;
+					margin: 1.2rem auto;
+				}
+				img {
+					width: 100%;
+					@media screen and (min-width: $mobile) {
+						align-self: flex-end;
+					}
+				}
+			}
 		}
 	}	
 
