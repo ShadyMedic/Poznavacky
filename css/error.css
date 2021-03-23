@@ -603,6 +603,7 @@ textarea.text-field.disabled {
 
 textarea {
   resize: vertical;
+  min-height: 2.2rem;
 }
 
 label {
