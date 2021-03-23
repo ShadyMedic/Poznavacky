@@ -35,9 +35,10 @@
 	<div class="wrapper">
 		<?php require $this->getNextView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
 	</div>
-    <?php if (isset($staticTitle)) : ?>
+</main>
+ <?php if (isset($staticTitle)) : ?>
     <div id="changelog">
+		<h3>Novinky</h3>
         <?php require 'staticArticle.phtml' ?>
     </div>
-    <?php endif ?>
-</main>
+<?php endif ?>

@@ -179,6 +179,39 @@
 	}
 }
 #menu {
+	#changelog {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 10;
+		padding: 1.6rem;
+		background: white;
+		border-radius: 0.6rem;
+		border: 2px solid $greenDark;
+		width: 95vw;
+		max-width: 600px;
+		max-height: 80vh;
+		height: auto;
+		overflow: hidden;
+		ul {
+			overflow-y: auto;
+			max-height: 60vh;
+			@include scrollbar(12px, $gray3, white);
+		}
+		h3 {
+			margin: 0 0 0.8rem 0;
+		}
+		li {
+			list-style-type: circle;
+			padding-left: 0.4rem;
+			margin-left: 1.2rem;
+			padding-right: 0.6rem;
+			&:not(:last-child) {
+				margin-bottom: 0.32rem;
+			}
+		}
+	}
 	.folders {
 		* {
 			margin: auto;

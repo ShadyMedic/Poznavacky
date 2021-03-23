@@ -1455,6 +1455,59 @@ label.required:after {
   font-weight: bold;
 }
 
+#menu #changelog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 10;
+  padding: 1.6rem;
+  background: white;
+  border-radius: 0.6rem;
+  border: 2px solid #366e11;
+  width: 95vw;
+  max-width: 600px;
+  max-height: 80vh;
+  height: auto;
+  overflow: hidden;
+}
+
+#menu #changelog ul {
+  overflow-y: auto;
+  max-height: 60vh;
+  scrollbar-color: #444 white;
+  scrollbar-width: auto;
+}
+
+#menu #changelog ul::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#menu #changelog ul::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+#menu #changelog ul::-webkit-scrollbar-track {
+  background: white;
+}
+
+#menu #changelog h3 {
+  margin: 0 0 0.8rem 0;
+}
+
+#menu #changelog li {
+  list-style-type: circle;
+  padding-left: 0.4rem;
+  margin-left: 1.2rem;
+  padding-right: 0.6rem;
+}
+
+#menu #changelog li:not(:last-child) {
+  margin-bottom: 0.32rem;
+}
+
 #menu .folders * {
   margin: auto;
 }
