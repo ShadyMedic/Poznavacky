@@ -53,12 +53,12 @@ class RegisterUser
      * @param string $name Zadané jméno uživatele
      * @param string $pass Zadané heslo uživatele
      * @param string $repass Zadané opakované heslo uživatele
-     * @param string $email Zadaný e-mail uživatele (null, pokud nebyl zadán)
+     * @param string|null $email Zadaný e-mail uživatele (null, pokud nebyl zadán)
      * @return boolean TRUE, pokud všechny údaje splňují podmínky
      * @throws AccessDeniedException Pokud některý z údajů nesplňuje podmínky
      * @throws DatabaseException
      */
-    private function validateData(string $name, string $pass, string $repass, string $email): bool
+    private function validateData(string $name, string $pass, string $repass, $email): bool
     {
         $errors = array();
         $validator = new DataValidator();
