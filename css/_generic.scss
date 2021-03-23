@@ -67,14 +67,18 @@ header {
 	min-height: 3.2rem;
 	background: $greenDark;
 	.logo {
-		@media screen and (min-width: $smallTablet) {
-			margin: 0;
-			height: 100%;
+		margin-left: 0.6rem;
+		display: flex;
+		img {
+			@media screen and (min-width: $smallTablet) {
+				margin: 0;
+				height: 2rem;
+				margin: 0.4rem 0.4rem 0.4rem 0;
+			}
 		}
 		h1 {
 			font-size: 2rem;
 			line-height: 2.8rem;
-			letter-spacing: -0.08em;
 			color: white;
 			margin: 0;
 		}
