@@ -61,7 +61,7 @@ function changeNameConfirm()
 	var newName = $("#change-name-new").val();
 	newName = encodeURIComponent(newName);
 	
-	$.post("account-update",
+	$.post("menu/account-update",
 		{
 			action: "request name change",
 			name: newName
