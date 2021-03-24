@@ -31,7 +31,7 @@
        
     </head>
     <body id="<?= $bodyId ?>">
-		<div id="overlay"></div>
+		<div id="overlay" <?php if ($displayOverlay) : ?> class="show" <?php endif ?>></div>
 		<div id="popups"></div>
 		<div class="container">
 			<?php require $this->getNextView(); ?>

@@ -289,7 +289,7 @@ footer .content a:after {
 
 #overlay {
   position: fixed;
-  z-index: 4;
+  z-index: 9;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);

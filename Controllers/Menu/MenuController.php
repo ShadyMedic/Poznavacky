@@ -96,6 +96,7 @@ class MenuController extends SynchronousController
             UserManager::getUser()->updateLastSeenChangelog(ChangelogManager::LATEST_VERSION);
             self::$data['staticTitle'] = array($changelogManager->getTitle());
             self::$data['staticContent'] = array($changelogManager->getContent());
+            self::$data['displayOverlay'] = true;
             (new Logger(true))->info('Uživateli s ID {userId} byl zobrazen nejnovější changelog pro verzi {version}', array('userId' => UserManager::getId(), 'version' => ChangelogManager::LATEST_VERSION));
         }
 

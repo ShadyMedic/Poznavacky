@@ -287,7 +287,7 @@ footer .content a:after {
 
 #overlay {
   position: fixed;
-  z-index: 4;
+  z-index: 9;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
@@ -4510,7 +4510,7 @@ body#index #index-login-section {
   height: auto;
   max-height: 90vh;
   max-width: 520px;
-  z-index: 5;
+  z-index: 10;
   background: white;
   opacity: 0;
   pointer-events: none;
