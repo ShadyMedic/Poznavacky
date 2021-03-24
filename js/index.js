@@ -294,9 +294,10 @@ function sendAjaxRequest()
 		request.data,
 		function (response, status)
 		{
-			ajaxCallback(response, status, request.callback);
 			ajaxRequestsQueue.shift(); //Odstraň vyřešený požadavek z fronty
 			if (ajaxRequestsQueue.length > 0) { sendAjaxRequest(); } //Mezitím byl zařazen další požadavek
+
+			ajaxCallback(response, status, request.callback);
 		}
 	);
 }
