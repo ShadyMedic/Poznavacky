@@ -1468,9 +1468,20 @@ label.required:after {
   border: 2px solid #366e11;
   width: 95vw;
   max-width: 600px;
-  max-height: 80vh;
   height: auto;
   overflow: hidden;
+}
+
+#menu #changelog .button-wrapper {
+  position: relative;
+}
+
+#menu #changelog .btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1.6rem;
+  width: 1.6rem;
 }
 
 #menu #changelog ul {

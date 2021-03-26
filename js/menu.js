@@ -3,6 +3,7 @@ var smallTablet = 672;
 //vše, co se děje po načtení stránky
 $(function() {
 	$("#logout-button img").on("click", logout)
+	$("#close-changelog-button").click(function() {closeChangelog()})
 
 	//skrytí částí postranního panelu, aby se při prvním otevření zobrazila jen jedna
 	$("#aside-nav").hide();
@@ -32,4 +33,9 @@ function checkHeader() {
 function logout()
 {
 	$.get('menu/logout', function (response, status) { ajaxCallback(response, status, function() {}); }, "json");
+}
+
+function closeChangelog() {
+	$("#changelog").remove();
+	$("#overlay").removeClass("show");
 }

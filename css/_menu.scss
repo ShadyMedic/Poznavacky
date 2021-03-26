@@ -191,9 +191,19 @@
 		border: 2px solid $greenDark;
 		width: 95vw;
 		max-width: 600px;
-		max-height: 80vh;
+		//max-height: 80vh;
 		height: auto;
 		overflow: hidden;
+		.button-wrapper {
+			position: relative;
+		}
+		.btn {
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 1.6rem;
+			width: 1.6rem;
+		}
 		ul {
 			overflow-y: auto;
 			max-height: 60vh;

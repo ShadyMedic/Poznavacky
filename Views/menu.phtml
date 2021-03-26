@@ -36,8 +36,11 @@
 		<?php require $this->getNextView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
 	</div>
 </main>
- <?php if (isset($staticTitle)) : ?>
+<?php if (isset($staticTitle)) : ?>
     <div id="changelog">
+		<div class="button-wrapper">
+			<button class="btn icon" id="close-changelog-button"><img src="../images/cross2black" alt=""></button>
+		</div>
 		<h3>Novinky</h3>
         <?php require 'staticArticle.phtml' ?>
     </div>
