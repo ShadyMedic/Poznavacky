@@ -38,11 +38,7 @@
 		display: grid;
 		grid-template-columns: auto auto 1fr;
 		grid-template-rows: auto auto;
-		.logo {
-			grid-row: 2/3;
-			grid-column: 1/4;
-		}
-		@media screen and (min-width: $smallMobile) {
+		@media screen and (min-width: 420px) {
 			display: flex;
 			align-items: center;
 			flex-wrap: wrap;
@@ -54,18 +50,22 @@
 		@media screen and (min-width: $smallTablet) {
 			grid-column: 1/3;
 		}
-		/*
-		> * {
-			margin: 0.2rem 1rem;
-			@media screen and (min-width: $desktop) {
-				margin: 0.2rem 0.8rem;
+		.logo {
+			grid-row: 2/3;
+			grid-column: 1/4;
+			margin-left: 0rem;
+			@media screen and (min-width: 420px) {
+				margin-left: 1rem;
 			}
-		}*/
+			@media screen and (min-width: $smallTablet) {
+				margin-left: 0.6rem;
+			}
+		}
 		.btn.icon {
 			@media screen and (min-width: $smallTablet) {
 				display: none;
 			}
-			margin: 0.2rem 1rem 0.2rem 0;
+			margin: 0.4rem 1rem 0.4rem 0;
 			height: 32px;
 			width: 32px;
 			> img {
@@ -80,21 +80,6 @@
 				transform: scale(0.88);
 			}
 		}
-		/*
-		.logo {
-			display: flex;
-			@media screen and (min-width: $smallTablet) {
-				margin: 0;
-				padding: 0.2rem 0.8rem;
-				height: 100%;
-			}
-			h1 {
-				font-size: 2rem;
-				letter-spacing: -0.08em;
-				color: white;
-				margin: 0;
-			}
-		}*/
 	}
 	aside {
 		display: none;

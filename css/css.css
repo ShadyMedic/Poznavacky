@@ -137,12 +137,10 @@ header .logo {
   display: flex;
 }
 
-@media screen and (min-width: 672px) {
-  header .logo img {
-    margin: 0;
-    height: 2rem;
-    margin: 0.4rem 0.4rem 0.4rem 0;
-  }
+header .logo img {
+  margin: 0;
+  height: 2rem;
+  margin: 0.4rem 0.4rem 0.4rem 0;
 }
 
 header .logo h1 {
@@ -934,49 +932,9 @@ label.required:after {
       grid-template-columns: auto auto 1fr;
   -ms-grid-rows: auto auto;
       grid-template-rows: auto auto;
-  /*
-		> * {
-			margin: 0.2rem 1rem;
-			@media screen and (min-width: $desktop) {
-				margin: 0.2rem 0.8rem;
-			}
-		}*/
-  /*
-		.logo {
-			display: flex;
-			@media screen and (min-width: $smallTablet) {
-				margin: 0;
-				padding: 0.2rem 0.8rem;
-				height: 100%;
-			}
-			h1 {
-				font-size: 2rem;
-				letter-spacing: -0.08em;
-				color: white;
-				margin: 0;
-			}
-		}*/
 }
 
-#menu header .logo,
-#learn header .logo,
-#test header .logo,
-#add-pictures header .logo,
-#account-settings header .logo,
-#manage header .logo,
-#members header .logo,
-#tests header .logo,
-#edit-group header .logo,
-#resolve-reports header .logo {
-  -ms-grid-row: 2;
-  -ms-grid-row-span: 1;
-  grid-row: 2/3;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 3;
-  grid-column: 1/4;
-}
-
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 420px) {
   #menu header,
   #learn header,
   #test header,
@@ -1033,6 +991,55 @@ label.required:after {
   }
 }
 
+#menu header .logo,
+#learn header .logo,
+#test header .logo,
+#add-pictures header .logo,
+#account-settings header .logo,
+#manage header .logo,
+#members header .logo,
+#tests header .logo,
+#edit-group header .logo,
+#resolve-reports header .logo {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  margin-left: 0rem;
+}
+
+@media screen and (min-width: 420px) {
+  #menu header .logo,
+  #learn header .logo,
+  #test header .logo,
+  #add-pictures header .logo,
+  #account-settings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #edit-group header .logo,
+  #resolve-reports header .logo {
+    margin-left: 1rem;
+  }
+}
+
+@media screen and (min-width: 672px) {
+  #menu header .logo,
+  #learn header .logo,
+  #test header .logo,
+  #add-pictures header .logo,
+  #account-settings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #edit-group header .logo,
+  #resolve-reports header .logo {
+    margin-left: 0.6rem;
+  }
+}
+
 #menu header .btn.icon,
 #learn header .btn.icon,
 #test header .btn.icon,
@@ -1043,7 +1050,7 @@ label.required:after {
 #tests header .btn.icon,
 #edit-group header .btn.icon,
 #resolve-reports header .btn.icon {
-  margin: 0.2rem 1rem 0.2rem 0;
+  margin: 0.4rem 1rem 0.4rem 0;
   height: 32px;
   width: 32px;
 }
