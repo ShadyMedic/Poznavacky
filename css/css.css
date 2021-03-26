@@ -475,12 +475,12 @@ h5 {
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
 }
 
-.btn.arrow-btn:hover, .btn.arrow-btn:focus {
+.btn.arrow-btn:hover {
   -webkit-transform: translateX(-0.16em);
           transform: translateX(-0.16em);
 }
 
-.btn.arrow-btn:hover img, .btn.arrow-btn:focus img {
+.btn.arrow-btn:hover img {
   -webkit-transform: translateX(0.32em);
           transform: translateX(0.32em);
 }
@@ -4763,7 +4763,7 @@ body#index #cookies-alert button {
   margin: auto 0;
 }
 
-body#index #back-to-top {
+body#index #back-to-top-button {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -4786,19 +4786,19 @@ body#index #back-to-top {
   z-index: 4;
 }
 
-body#index #back-to-top.show {
+body#index #back-to-top-button.show {
   opacity: 1;
   pointer-events: auto;
 }
 
 @media screen and (min-width: 768px) {
-  body#index #back-to-top {
+  body#index #back-to-top-button {
     bottom: 3rem;
     right: 3rem;
   }
 }
 
-body#index #back-to-top img {
+body#index #back-to-top-button img {
   width: 100%;
   height: 100%;
   position: relative;

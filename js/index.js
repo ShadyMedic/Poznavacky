@@ -15,6 +15,8 @@ $(function() {
 	$("#hide-cookies-alert-button").click(function(){hideCookiesAlert()})
 	$(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event){showLoginSection(event)});
     $("#demo-button").click(function(){demoLogin()})
+	$("#learn-more-button").click(function() {learnMore()})
+	$("#back-to-top-button").click(function() {backToTop()})
 
 	//event listener kliknutí myši
 	$(document).mouseup(function(e) {mouseUpChecker(e)})
@@ -74,6 +76,19 @@ $(window).resize(function() {
 	resizeGrid();
 })
 
+function learnMore() {
+	$("#index-info-section")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
+	});
+}
+
+function backToTop() {
+	$("#index")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
+	});
+}
 
 function resizeGrid()
 {
@@ -208,10 +223,10 @@ var scrollOffset = 50;
 function showScrollButton(event) {
 	var scrolled = $(window).scrollTop();
 	if (scrolled > (documentHeight + scrollOffset)) {
-		$("#back-to-top").addClass("show");
+		$("#back-to-top-button").addClass("show");
 	}
 	else if (scrolled <= (documentHeight + scrollOffset)) {
-		$("#back-to-top").removeClass("show");
+		$("#back-to-top-button").removeClass("show");
 	}
 }
 

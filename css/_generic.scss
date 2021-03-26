@@ -320,8 +320,7 @@ h5 {
 			top: 0.12em;
 			transition: transform 0.2s ease-out;
 		}
-		&:hover,
-		&:focus {
+		&:hover{
 			transform: translateX(-0.16em);
 			img {
 				transform: translateX(0.32em);
