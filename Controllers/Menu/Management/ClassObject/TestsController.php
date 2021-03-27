@@ -21,7 +21,7 @@ class TestsController extends SynchronousController
         self::$pageHeader['description'] = 'Nástroj pro správce tříd umožnňující snadnou správu poznávaček';
         self::$pageHeader['keywords'] = '';
         self::$pageHeader['cssFiles'] = array('css/css.css');
-        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js','js/tests.js');
+        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/tests.js');
         self::$pageHeader['bodyId'] = 'tests';
 
         self::$data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/tests';
