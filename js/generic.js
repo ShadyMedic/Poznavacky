@@ -95,6 +95,7 @@ function newMessage(message, type, data) {
 
 function newConfirm(message, confirmButtonText, cancelButtonText, callback)
 {
+	$("#overlay").addClass("show");
 	$("#popups").append($("#confirm-item-template").html());
 	$confirm = $("#popups .confirm-item:last-child");
 	$confirm.find(".message").text(message);
@@ -103,11 +104,13 @@ function newConfirm(message, confirmButtonText, cancelButtonText, callback)
 	$confirm.on("click", ".confirm-popup-button", function()
 	{
 		$confirm.remove();
+		$("#overlay").removeClass("show");
 		callback(true);
 	})
 	$confirm.on("click", ".cancel-popup-button", function()
 	{
 		$confirm.remove();
+		$("#overlay").removeClass("show");
 		callback(false);
 	})
 }

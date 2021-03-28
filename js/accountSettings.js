@@ -162,8 +162,8 @@ function changeEmailConfirm()
 	
 	if (newEmail.length == 0)
 	{
-		let message = "Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.";
-		newConfirm(message, "Odebrat", "Zrušit", function(confirm){
+		let confirmMessage = "Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.";
+		newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm){
 			if (confirm) changeEmailFinal(password, newEmail);
 			else return;
 		});	

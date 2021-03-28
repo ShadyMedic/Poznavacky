@@ -75,13 +75,16 @@ function renameConfirm(event)
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
-            let merge = confirm("Přírodnina s tímto názvem již existuje\nChcete tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna.\nTato akce je nevratná.");
-            if (merge)
-            {
-                let fromNaturalId = $natural.attr("data-natural-id");
-                let toNaturalId = $(".natural-data-item:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
-                mergeNaturals(fromNaturalId, toNaturalId);
-            }
+			let confirmMessage = "Přírodnina s tímto názvem již existuje. Chcete tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna. Tato akce je nevratná.";
+			let merge;
+            newConfirm(confirmMessage, "Sloučit", "Zrušit", function(confirm) {
+				if (confirm) {
+					let fromNaturalId = $natural.attr("data-natural-id");
+					let toNaturalId = $(".natural-data-item:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
+					mergeNaturals(fromNaturalId, toNaturalId);
+				}
+				else return;
+			})
             return;
         }
     }
@@ -181,8 +184,14 @@ function mergeNaturals(fromNaturalId, toNaturalId)
 function remove(event)
 {
 	let $natural = $(event.target).closest('.natural-data-item');
-    if (!confirm('Skutečně chcete odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané?\nTato akce je nevratná!')){ return }
-
+	let confirmMessage = 'Skutečně chcete odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
+	newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
+		if (confirm) removeFinal($natural)
+		else return;
+	})
+}
+function removeFinal($natural)
+{
     $.post(ajaxUrl,
         {
             action: 'delete',

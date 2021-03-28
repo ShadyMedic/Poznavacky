@@ -158,24 +158,29 @@ function changeClassStatusConfirm()
     var newStatus = $("#class-status-select .selected").text();
     var newCode = $("#change-class-status-code").val();
     
-    var confirmation;
+    let confirmMessage;
     switch (newStatus)
     {
         case "Veřejná":
-            confirmation = confirm("Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup. Pokračovat?");
+			confirmMessage = "Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup. Pokračovat?";
             break;
         case "Soukromá":
-            confirmation = confirm("Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup. Pokračovat?");
+			confirmMessage = "Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup. Pokračovat?";
             break;
         case "Uzamčená":
-            confirmation = confirm("Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?");
+			confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?";
             break;
         default:
             return;
     }
     
-    if (!confirmation){return;}
-    
+	newConfirm(confirmMessage, "Potvrdit", "Zrušit", function(confirm) {
+		if (confirm) changeClassStatusFinal(newStatus, newCode);
+		else return;
+	})
+}
+function changeClassStatusFinal(newStatus, newCode)
+{
     $.post(ajaxUrl,
 		{
     		action: 'update access',

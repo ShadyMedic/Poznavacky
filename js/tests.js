@@ -74,15 +74,21 @@ function newTestConfirm()
 /*-------------------------------------------------------*/
 function deleteTest(event)
 {
-	let testId = $(event.target).attr('data-group-id');
-	let name = $(event.target).attr('data-group-name');
+	let $test = $(event.target).closest(".tests-data-item");
+	let name = $test.attr('data-group-name');
 
-    if (!confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!"))
-    {
-    	return;
-	}
-  
-	deletedTableRow = $(event.target).closest(".tests-data-item");
+	let confirmMessage = "Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!";
+	newConfirm(confirmMessage, "Odstranit", "Zrušit", function(confirm) {
+		if (confirm) {
+			deleteTestFinal($test);
+			$test = undefined;
+		}
+		else return;
+	})
+}
+function deleteTestFinal($test)
+{
+	let testId = $test.attr('data-group-id');
 	$.post(ajaxUrl,
 		{
     		action: 'delete test',
@@ -99,10 +105,10 @@ function deleteTest(event)
 					}
 					else if (response["messageType"] === "success")
 					{
-						deletedTableRow.remove();
+						$test.remove();
 						newMessage(response["message"], "success");
 					}
-					deletedTableRow = undefined;
+					$test = undefined;
 				}
 			);
 		},

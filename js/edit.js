@@ -414,15 +414,17 @@ function removeNatural(event)
  */
 function removePart(event)
 {
-	if (!confirm("Opravdu si přejete odebrat tuto část?\nZměny se neprojeví, dokud nebude úprava poznávačky uložena.\nTouto akcí nebudou odstraněny žádné existující přírodniny, ani jejich obrázky."))
-	{
-		return;
-	}
+	let confirmMessage = "Opravdu si přejete odebrat tuto část? Změny se neprojeví, dokud nebude úprava poznávačky uložena. Touto akcí nebudou odstraněny žádné existující přírodniny, ani jejich obrázky.";
+
+	newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
+		if(confirm) {
+			$(event.target).closest(".part-box").remove();
 	
-	$(event.target).closest(".part-box").remove();
-	
-	//byly provedeny změny --> zamkni stárnku
-	lock();
+			//byly provedeny změny --> zamkni stárnku
+			lock();
+		}
+		else return;
+	})	
 }
 
 /**
@@ -474,10 +476,11 @@ function save()
 						//odemkni stránku
 						unlock();
 						
-						if (confirm("Změny byly úspěšně uloženy\nPřejete si aktualizovat stránku pro ověření změn?"))
-						{
-							location.reload();
-						}
+						let confirmMessage = "Změny byly úspěšně uloženy Přejete si aktualizovat stránku pro ověření změn?";
+						newConfirm(confirmMessage, "Aktualizovat", "Zrušit", function(confirm) {
+							if (confirm) location.reload();
+							else return;
+						})
 					}
 					else if (messageType === "error")
 					{

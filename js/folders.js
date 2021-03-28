@@ -35,8 +35,8 @@ function redirectToClass(event)
 function leaveClass(event)
 {
 	let className = $(event.target).closest('.class-item').find("h4").text();
-	let message = "Opravdu chcete opustit třídu" + className + "?";
-	newConfirm(message, "Opustit", "Zrušit", function(confirm){
+	let confirmMessage = "Opravdu chcete opustit třídu" + className + "?";
+	newConfirm(confirmMessage, "Opustit", "Zrušit", function(confirm){
 		if (confirm) 
 		{
 			let url = $(event.target).attr("data-leave-url");
