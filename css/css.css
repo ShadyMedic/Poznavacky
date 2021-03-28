@@ -814,7 +814,8 @@ label.required:after {
 #members,
 #tests,
 #edit-group,
-#resolve-reports {
+#resolve-reports,
+#naturals {
   min-width: 100%;
   height: 100%;
   scrollbar-color: #444 #222;
@@ -833,7 +834,8 @@ label.required:after {
 #members::-webkit-scrollbar,
 #tests::-webkit-scrollbar,
 #edit-group::-webkit-scrollbar,
-#resolve-reports::-webkit-scrollbar {
+#resolve-reports::-webkit-scrollbar,
+#naturals::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
@@ -847,7 +849,8 @@ label.required:after {
 #members::-webkit-scrollbar-thumb,
 #tests::-webkit-scrollbar-thumb,
 #edit-group::-webkit-scrollbar-thumb,
-#resolve-reports::-webkit-scrollbar-thumb {
+#resolve-reports::-webkit-scrollbar-thumb,
+#naturals::-webkit-scrollbar-thumb {
   background: #444;
 }
 
@@ -860,7 +863,8 @@ label.required:after {
 #members::-webkit-scrollbar-track,
 #tests::-webkit-scrollbar-track,
 #edit-group::-webkit-scrollbar-track,
-#resolve-reports::-webkit-scrollbar-track {
+#resolve-reports::-webkit-scrollbar-track,
+#naturals::-webkit-scrollbar-track {
   background: #222;
 }
 
@@ -874,7 +878,8 @@ label.required:after {
   #members,
   #tests,
   #edit-group,
-  #resolve-reports {
+  #resolve-reports,
+  #naturals {
     height: 100vh;
     overflow: hidden;
   }
@@ -889,7 +894,8 @@ label.required:after {
 #members .container,
 #tests .container,
 #edit-group .container,
-#resolve-reports .container {
+#resolve-reports .container,
+#naturals .container {
   position: relative;
 }
 
@@ -903,7 +909,8 @@ label.required:after {
   #members .container,
   #tests .container,
   #edit-group .container,
-  #resolve-reports .container {
+  #resolve-reports .container,
+  #naturals .container {
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
     -ms-grid-rows: auto auto 1fr auto auto;
@@ -920,7 +927,8 @@ label.required:after {
 #members header,
 #tests header,
 #edit-group header,
-#resolve-reports header {
+#resolve-reports header,
+#naturals header {
   position: fixed;
   width: 100%;
   top: 0;
@@ -944,7 +952,8 @@ label.required:after {
   #members header,
   #tests header,
   #edit-group header,
-  #resolve-reports header {
+  #resolve-reports header,
+  #naturals header {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -969,7 +978,8 @@ label.required:after {
   #members header,
   #tests header,
   #edit-group header,
-  #resolve-reports header {
+  #resolve-reports header,
+  #naturals header {
     position: relative;
   }
 }
@@ -984,7 +994,8 @@ label.required:after {
   #members header,
   #tests header,
   #edit-group header,
-  #resolve-reports header {
+  #resolve-reports header,
+  #naturals header {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -1000,7 +1011,8 @@ label.required:after {
 #members header .logo,
 #tests header .logo,
 #edit-group header .logo,
-#resolve-reports header .logo {
+#resolve-reports header .logo,
+#naturals header .logo {
   -ms-grid-row: 2;
   -ms-grid-row-span: 1;
   grid-row: 2/3;
@@ -1020,7 +1032,8 @@ label.required:after {
   #members header .logo,
   #tests header .logo,
   #edit-group header .logo,
-  #resolve-reports header .logo {
+  #resolve-reports header .logo,
+  #naturals header .logo {
     margin-left: 1rem;
   }
 }
@@ -1035,7 +1048,8 @@ label.required:after {
   #members header .logo,
   #tests header .logo,
   #edit-group header .logo,
-  #resolve-reports header .logo {
+  #resolve-reports header .logo,
+  #naturals header .logo {
     margin-left: 0.6rem;
   }
 }
@@ -1049,7 +1063,8 @@ label.required:after {
 #members header .btn.icon,
 #tests header .btn.icon,
 #edit-group header .btn.icon,
-#resolve-reports header .btn.icon {
+#resolve-reports header .btn.icon,
+#naturals header .btn.icon {
   margin: 0.4rem 1rem 0.4rem 0;
   height: 32px;
   width: 32px;
@@ -1065,7 +1080,8 @@ label.required:after {
   #members header .btn.icon,
   #tests header .btn.icon,
   #edit-group header .btn.icon,
-  #resolve-reports header .btn.icon {
+  #resolve-reports header .btn.icon,
+  #naturals header .btn.icon {
     display: none;
   }
 }
@@ -1079,7 +1095,8 @@ label.required:after {
 #members header .btn.icon > img,
 #tests header .btn.icon > img,
 #edit-group header .btn.icon > img,
-#resolve-reports header .btn.icon > img {
+#resolve-reports header .btn.icon > img,
+#naturals header .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -1093,7 +1110,8 @@ label.required:after {
 #members header .btn.icon:last-child,
 #tests header .btn.icon:last-child,
 #edit-group header .btn.icon:last-child,
-#resolve-reports header .btn.icon:last-child {
+#resolve-reports header .btn.icon:last-child,
+#naturals header .btn.icon:last-child {
   margin-left: auto;
   margin-right: 0;
 }
@@ -1107,7 +1125,8 @@ label.required:after {
 #members header .btn.icon:active,
 #tests header .btn.icon:active,
 #edit-group header .btn.icon:active,
-#resolve-reports header .btn.icon:active {
+#resolve-reports header .btn.icon:active,
+#naturals header .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -1121,7 +1140,8 @@ label.required:after {
 #members aside,
 #tests aside,
 #edit-group aside,
-#resolve-reports aside {
+#resolve-reports aside,
+#naturals aside {
   display: none;
   width: 64px;
   -ms-grid-row: 2;
@@ -1144,7 +1164,8 @@ label.required:after {
   #members aside,
   #tests aside,
   #edit-group aside,
-  #resolve-reports aside {
+  #resolve-reports aside,
+  #naturals aside {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1164,7 +1185,8 @@ label.required:after {
 #members aside .btn.icon,
 #tests aside .btn.icon,
 #edit-group aside .btn.icon,
-#resolve-reports aside .btn.icon {
+#resolve-reports aside .btn.icon,
+#naturals aside .btn.icon {
   margin: 1rem auto;
   height: 32px;
   width: 32px;
@@ -1179,7 +1201,8 @@ label.required:after {
 #members aside .btn.icon > img,
 #tests aside .btn.icon > img,
 #edit-group aside .btn.icon > img,
-#resolve-reports aside .btn.icon > img {
+#resolve-reports aside .btn.icon > img,
+#naturals aside .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -1193,7 +1216,8 @@ label.required:after {
 #members aside .btn.icon:last-child,
 #tests aside .btn.icon:last-child,
 #edit-group aside .btn.icon:last-child,
-#resolve-reports aside .btn.icon:last-child {
+#resolve-reports aside .btn.icon:last-child,
+#naturals aside .btn.icon:last-child {
   margin-top: auto;
 }
 
@@ -1206,7 +1230,8 @@ label.required:after {
 #members aside .btn.icon:active,
 #tests aside .btn.icon:active,
 #edit-group aside .btn.icon:active,
-#resolve-reports aside .btn.icon:active {
+#resolve-reports aside .btn.icon:active,
+#naturals aside .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -1220,7 +1245,8 @@ label.required:after {
 #members .wrapper,
 #tests .wrapper,
 #edit-group .wrapper,
-#resolve-reports .wrapper {
+#resolve-reports .wrapper,
+#naturals .wrapper {
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
@@ -1237,7 +1263,8 @@ label.required:after {
   #members .wrapper,
   #tests .wrapper,
   #edit-group .wrapper,
-  #resolve-reports .wrapper {
+  #resolve-reports .wrapper,
+  #naturals .wrapper {
     padding: 1.6rem 2rem;
   }
 }
@@ -1252,7 +1279,8 @@ label.required:after {
   #members .wrapper,
   #tests .wrapper,
   #edit-group .wrapper,
-  #resolve-reports .wrapper {
+  #resolve-reports .wrapper,
+  #naturals .wrapper {
     padding: 2.4rem 3rem;
   }
 }
@@ -1266,7 +1294,8 @@ label.required:after {
 #members main,
 #tests main,
 #edit-group main,
-#resolve-reports main {
+#resolve-reports main,
+#naturals main {
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
@@ -1282,7 +1311,8 @@ label.required:after {
   #members main,
   #tests main,
   #edit-group main,
-  #resolve-reports main {
+  #resolve-reports main,
+  #naturals main {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2/3;
@@ -1299,7 +1329,8 @@ label.required:after {
   #members main::-webkit-scrollbar,
   #tests main::-webkit-scrollbar,
   #edit-group main::-webkit-scrollbar,
-  #resolve-reports main::-webkit-scrollbar {
+  #resolve-reports main::-webkit-scrollbar,
+  #naturals main::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
@@ -1312,7 +1343,8 @@ label.required:after {
   #members main::-webkit-scrollbar-thumb,
   #tests main::-webkit-scrollbar-thumb,
   #edit-group main::-webkit-scrollbar-thumb,
-  #resolve-reports main::-webkit-scrollbar-thumb {
+  #resolve-reports main::-webkit-scrollbar-thumb,
+  #naturals main::-webkit-scrollbar-thumb {
     background: #444;
   }
   #menu main::-webkit-scrollbar-track,
@@ -1324,7 +1356,8 @@ label.required:after {
   #members main::-webkit-scrollbar-track,
   #tests main::-webkit-scrollbar-track,
   #edit-group main::-webkit-scrollbar-track,
-  #resolve-reports main::-webkit-scrollbar-track {
+  #resolve-reports main::-webkit-scrollbar-track,
+  #naturals main::-webkit-scrollbar-track {
     background: #eee;
   }
 }
@@ -1338,7 +1371,8 @@ label.required:after {
 #members #messages,
 #tests #messages,
 #edit-group #messages,
-#resolve-reports #messages {
+#resolve-reports #messages,
+#naturals #messages {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -1356,7 +1390,8 @@ label.required:after {
   #members #messages,
   #tests #messages,
   #edit-group #messages,
-  #resolve-reports #messages {
+  #resolve-reports #messages,
+  #naturals #messages {
     position: relative;
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
@@ -1376,7 +1411,8 @@ label.required:after {
 #members footer,
 #tests footer,
 #edit-group footer,
-#resolve-reports footer {
+#resolve-reports footer,
+#naturals footer {
   -ms-grid-row: 4;
   -ms-grid-row-span: 1;
   grid-row: 4/5;
@@ -1392,7 +1428,8 @@ label.required:after {
   #members footer,
   #tests footer,
   #edit-group footer,
-  #resolve-reports footer {
+  #resolve-reports footer,
+  #naturals footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -1411,7 +1448,8 @@ label.required:after {
 #members h2,
 #tests h2,
 #edit-group h2,
-#resolve-reports h2 {
+#resolve-reports h2,
+#naturals h2 {
   font-size: 1.2rem;
   font-weight: normal;
   padding: 1.2rem 1rem 0.4rem 1rem;
@@ -1429,7 +1467,8 @@ label.required:after {
   #members h2,
   #tests h2,
   #edit-group h2,
-  #resolve-reports h2 {
+  #resolve-reports h2,
+  #naturals h2 {
     padding: 1.6rem 2rem 0 2rem;
   }
 }
@@ -1444,7 +1483,8 @@ label.required:after {
   #members h2,
   #tests h2,
   #edit-group h2,
-  #resolve-reports h2 {
+  #resolve-reports h2,
+  #naturals h2 {
     padding: 2rem 3rem 0 3rem;
   }
 }
@@ -1458,7 +1498,8 @@ label.required:after {
 #members h2 span:last-child,
 #tests h2 span:last-child,
 #edit-group h2 span:last-child,
-#resolve-reports h2 span:last-child {
+#resolve-reports h2 span:last-child,
+#naturals h2 span:last-child {
   font-weight: bold;
 }
 
@@ -2613,28 +2654,94 @@ label.required:after {
   }
 }
 
-#account-settings .user-data-section .user-data-item,
-#account-settings .user-data-section .class-data-item,
-#account-settings .class-data-section .user-data-item,
-#account-settings .class-data-section .class-data-item,
-#manage .user-data-section .user-data-item,
-#manage .user-data-section .class-data-item,
-#manage .class-data-section .user-data-item,
-#manage .class-data-section .class-data-item,
-#members .user-data-section .user-data-item,
-#members .user-data-section .class-data-item,
-#members .class-data-section .user-data-item,
-#members .class-data-section .class-data-item,
-#tests .user-data-section .user-data-item,
-#tests .user-data-section .class-data-item,
-#tests .class-data-section .user-data-item,
-#tests .class-data-section .class-data-item {
+#account-settings .user-data-item,
+#account-settings .class-data-item,
+#account-settings .natural-data-item,
+#account-settings .members-data-item,
+#manage .user-data-item,
+#manage .class-data-item,
+#manage .natural-data-item,
+#manage .members-data-item,
+#members .user-data-item,
+#members .class-data-item,
+#members .natural-data-item,
+#members .members-data-item,
+#tests .user-data-item,
+#tests .class-data-item,
+#tests .natural-data-item,
+#tests .members-data-item,
+#naturals .user-data-item,
+#naturals .class-data-item,
+#naturals .natural-data-item,
+#naturals .members-data-item {
   margin: 0.6rem;
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
   border-radius: 0.2rem;
   display: -ms-grid;
   display: grid;
+}
+
+@media screen and (min-width: 672px) {
+  #account-settings .user-data-item,
+  #account-settings .class-data-item,
+  #account-settings .natural-data-item,
+  #account-settings .members-data-item,
+  #manage .user-data-item,
+  #manage .class-data-item,
+  #manage .natural-data-item,
+  #manage .members-data-item,
+  #members .user-data-item,
+  #members .class-data-item,
+  #members .natural-data-item,
+  #members .members-data-item,
+  #tests .user-data-item,
+  #tests .class-data-item,
+  #tests .natural-data-item,
+  #tests .members-data-item,
+  #naturals .user-data-item,
+  #naturals .class-data-item,
+  #naturals .natural-data-item,
+  #naturals .members-data-item {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+#account-settings .user-data-item > span,
+#account-settings .class-data-item > span,
+#account-settings .natural-data-item > span,
+#account-settings .members-data-item > span,
+#manage .user-data-item > span,
+#manage .class-data-item > span,
+#manage .natural-data-item > span,
+#manage .members-data-item > span,
+#members .user-data-item > span,
+#members .class-data-item > span,
+#members .natural-data-item > span,
+#members .members-data-item > span,
+#tests .user-data-item > span,
+#tests .class-data-item > span,
+#tests .natural-data-item > span,
+#tests .members-data-item > span,
+#naturals .user-data-item > span,
+#naturals .class-data-item > span,
+#naturals .natural-data-item > span,
+#naturals .members-data-item > span {
+  padding: calc(0.4em + 4px) 0;
+}
+
+#account-settings .user-data-item,
+#account-settings .class-data-item,
+#manage .user-data-item,
+#manage .class-data-item,
+#members .user-data-item,
+#members .class-data-item,
+#tests .user-data-item,
+#tests .class-data-item,
+#naturals .user-data-item,
+#naturals .class-data-item {
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
   -ms-grid-rows: auto auto;
@@ -2642,121 +2749,69 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #account-settings .user-data-section .user-data-item,
-  #account-settings .user-data-section .class-data-item,
-  #account-settings .class-data-section .user-data-item,
-  #account-settings .class-data-section .class-data-item,
-  #manage .user-data-section .user-data-item,
-  #manage .user-data-section .class-data-item,
-  #manage .class-data-section .user-data-item,
-  #manage .class-data-section .class-data-item,
-  #members .user-data-section .user-data-item,
-  #members .user-data-section .class-data-item,
-  #members .class-data-section .user-data-item,
-  #members .class-data-section .class-data-item,
-  #tests .user-data-section .user-data-item,
-  #tests .user-data-section .class-data-item,
-  #tests .class-data-section .user-data-item,
-  #tests .class-data-section .class-data-item {
+  #account-settings .user-data-item,
+  #account-settings .class-data-item,
+  #manage .user-data-item,
+  #manage .class-data-item,
+  #members .user-data-item,
+  #members .class-data-item,
+  #tests .user-data-item,
+  #tests .class-data-item,
+  #naturals .user-data-item,
+  #naturals .class-data-item {
     -ms-grid-columns: 10rem 13rem 1fr;
         grid-template-columns: 10rem 13rem 1fr;
     -ms-grid-rows: auto 1fr;
         grid-template-rows: auto 1fr;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
   }
 }
 
-#account-settings .user-data-section .user-data-item > span,
-#account-settings .user-data-section .class-data-item > span,
-#account-settings .class-data-section .user-data-item > span,
-#account-settings .class-data-section .class-data-item > span,
-#manage .user-data-section .user-data-item > span,
-#manage .user-data-section .class-data-item > span,
-#manage .class-data-section .user-data-item > span,
-#manage .class-data-section .class-data-item > span,
-#members .user-data-section .user-data-item > span,
-#members .user-data-section .class-data-item > span,
-#members .class-data-section .user-data-item > span,
-#members .class-data-section .class-data-item > span,
-#tests .user-data-section .user-data-item > span,
-#tests .user-data-section .class-data-item > span,
-#tests .class-data-section .user-data-item > span,
-#tests .class-data-section .class-data-item > span {
-  padding: calc(0.4em + 4px) 0;
-}
-
-#account-settings .user-data-section .user-data-item .user-property-action,
-#account-settings .user-data-section .user-data-item .class-property-action,
-#account-settings .user-data-section .class-data-item .user-property-action,
-#account-settings .user-data-section .class-data-item .class-property-action,
-#account-settings .class-data-section .user-data-item .user-property-action,
-#account-settings .class-data-section .user-data-item .class-property-action,
-#account-settings .class-data-section .class-data-item .user-property-action,
-#account-settings .class-data-section .class-data-item .class-property-action,
-#manage .user-data-section .user-data-item .user-property-action,
-#manage .user-data-section .user-data-item .class-property-action,
-#manage .user-data-section .class-data-item .user-property-action,
-#manage .user-data-section .class-data-item .class-property-action,
-#manage .class-data-section .user-data-item .user-property-action,
-#manage .class-data-section .user-data-item .class-property-action,
-#manage .class-data-section .class-data-item .user-property-action,
-#manage .class-data-section .class-data-item .class-property-action,
-#members .user-data-section .user-data-item .user-property-action,
-#members .user-data-section .user-data-item .class-property-action,
-#members .user-data-section .class-data-item .user-property-action,
-#members .user-data-section .class-data-item .class-property-action,
-#members .class-data-section .user-data-item .user-property-action,
-#members .class-data-section .user-data-item .class-property-action,
-#members .class-data-section .class-data-item .user-property-action,
-#members .class-data-section .class-data-item .class-property-action,
-#tests .user-data-section .user-data-item .user-property-action,
-#tests .user-data-section .user-data-item .class-property-action,
-#tests .user-data-section .class-data-item .user-property-action,
-#tests .user-data-section .class-data-item .class-property-action,
-#tests .class-data-section .user-data-item .user-property-action,
-#tests .class-data-section .user-data-item .class-property-action,
-#tests .class-data-section .class-data-item .user-property-action,
-#tests .class-data-section .class-data-item .class-property-action {
+#account-settings .user-data-item .user-property-action,
+#account-settings .user-data-item .class-property-action,
+#account-settings .class-data-item .user-property-action,
+#account-settings .class-data-item .class-property-action,
+#manage .user-data-item .user-property-action,
+#manage .user-data-item .class-property-action,
+#manage .class-data-item .user-property-action,
+#manage .class-data-item .class-property-action,
+#members .user-data-item .user-property-action,
+#members .user-data-item .class-property-action,
+#members .class-data-item .user-property-action,
+#members .class-data-item .class-property-action,
+#tests .user-data-item .user-property-action,
+#tests .user-data-item .class-property-action,
+#tests .class-data-item .user-property-action,
+#tests .class-data-item .class-property-action,
+#naturals .user-data-item .user-property-action,
+#naturals .user-data-item .class-property-action,
+#naturals .class-data-item .user-property-action,
+#naturals .class-data-item .class-property-action {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
 }
 
 @media screen and (min-width: 672px) {
-  #account-settings .user-data-section .user-data-item .user-property-action,
-  #account-settings .user-data-section .user-data-item .class-property-action,
-  #account-settings .user-data-section .class-data-item .user-property-action,
-  #account-settings .user-data-section .class-data-item .class-property-action,
-  #account-settings .class-data-section .user-data-item .user-property-action,
-  #account-settings .class-data-section .user-data-item .class-property-action,
-  #account-settings .class-data-section .class-data-item .user-property-action,
-  #account-settings .class-data-section .class-data-item .class-property-action,
-  #manage .user-data-section .user-data-item .user-property-action,
-  #manage .user-data-section .user-data-item .class-property-action,
-  #manage .user-data-section .class-data-item .user-property-action,
-  #manage .user-data-section .class-data-item .class-property-action,
-  #manage .class-data-section .user-data-item .user-property-action,
-  #manage .class-data-section .user-data-item .class-property-action,
-  #manage .class-data-section .class-data-item .user-property-action,
-  #manage .class-data-section .class-data-item .class-property-action,
-  #members .user-data-section .user-data-item .user-property-action,
-  #members .user-data-section .user-data-item .class-property-action,
-  #members .user-data-section .class-data-item .user-property-action,
-  #members .user-data-section .class-data-item .class-property-action,
-  #members .class-data-section .user-data-item .user-property-action,
-  #members .class-data-section .user-data-item .class-property-action,
-  #members .class-data-section .class-data-item .user-property-action,
-  #members .class-data-section .class-data-item .class-property-action,
-  #tests .user-data-section .user-data-item .user-property-action,
-  #tests .user-data-section .user-data-item .class-property-action,
-  #tests .user-data-section .class-data-item .user-property-action,
-  #tests .user-data-section .class-data-item .class-property-action,
-  #tests .class-data-section .user-data-item .user-property-action,
-  #tests .class-data-section .user-data-item .class-property-action,
-  #tests .class-data-section .class-data-item .user-property-action,
-  #tests .class-data-section .class-data-item .class-property-action {
+  #account-settings .user-data-item .user-property-action,
+  #account-settings .user-data-item .class-property-action,
+  #account-settings .class-data-item .user-property-action,
+  #account-settings .class-data-item .class-property-action,
+  #manage .user-data-item .user-property-action,
+  #manage .user-data-item .class-property-action,
+  #manage .class-data-item .user-property-action,
+  #manage .class-data-item .class-property-action,
+  #members .user-data-item .user-property-action,
+  #members .user-data-item .class-property-action,
+  #members .class-data-item .user-property-action,
+  #members .class-data-item .class-property-action,
+  #tests .user-data-item .user-property-action,
+  #tests .user-data-item .class-property-action,
+  #tests .class-data-item .user-property-action,
+  #tests .class-data-item .class-property-action,
+  #naturals .user-data-item .user-property-action,
+  #naturals .user-data-item .class-property-action,
+  #naturals .class-data-item .user-property-action,
+  #naturals .class-data-item .class-property-action {
     -ms-grid-column: 3;
     -ms-grid-column-span: 1;
     grid-column: 3/4;
@@ -2783,7 +2838,12 @@ label.required:after {
 #tests #change-password,
 #tests #change-email,
 #tests #change-class-name,
-#tests #change-class-status {
+#tests #change-class-status,
+#naturals #change-name,
+#naturals #change-password,
+#naturals #change-email,
+#naturals #change-class-name,
+#naturals #change-class-status {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
@@ -2809,7 +2869,12 @@ label.required:after {
   #tests #change-password,
   #tests #change-email,
   #tests #change-class-name,
-  #tests #change-class-status {
+  #tests #change-class-status,
+  #naturals #change-name,
+  #naturals #change-password,
+  #naturals #change-email,
+  #naturals #change-class-name,
+  #naturals #change-class-status {
     -ms-grid-column: 2;
     -ms-grid-column-span: 2;
     grid-column: 2/4;
@@ -2839,7 +2904,12 @@ label.required:after {
 #tests #change-password .border-btn,
 #tests #change-email .border-btn,
 #tests #change-class-name .border-btn,
-#tests #change-class-status .border-btn {
+#tests #change-class-status .border-btn,
+#naturals #change-name .border-btn,
+#naturals #change-password .border-btn,
+#naturals #change-email .border-btn,
+#naturals #change-class-name .border-btn,
+#naturals #change-class-status .border-btn {
   margin: 0.6rem auto 0.2rem auto;
   width: 100%;
 }
@@ -2863,7 +2933,12 @@ label.required:after {
 #tests #change-password .inline.btn,
 #tests #change-email .inline.btn,
 #tests #change-class-name .inline.btn,
-#tests #change-class-status .inline.btn {
+#tests #change-class-status .inline.btn,
+#naturals #change-name .inline.btn,
+#naturals #change-password .inline.btn,
+#naturals #change-email .inline.btn,
+#naturals #change-class-name .inline.btn,
+#naturals #change-class-status .inline.btn {
   margin-top: 0.4rem;
   margin-bottom: 0.2rem;
 }
@@ -2911,7 +2986,18 @@ label.required:after {
 #tests #delete-class1,
 #tests #delete-class2,
 #tests #invite-user-form,
-#tests #new-test {
+#tests #new-test,
+#naturals #change-name,
+#naturals #change-password,
+#naturals #change-email,
+#naturals #delete-account1,
+#naturals #delete-account2,
+#naturals #change-class-name,
+#naturals #change-class-status,
+#naturals #delete-class1,
+#naturals #delete-class2,
+#naturals #invite-user-form,
+#naturals #new-test {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2964,7 +3050,18 @@ label.required:after {
 #tests #delete-class1 label,
 #tests #delete-class2 label,
 #tests #invite-user-form label,
-#tests #new-test label {
+#tests #new-test label,
+#naturals #change-name label,
+#naturals #change-password label,
+#naturals #change-email label,
+#naturals #delete-account1 label,
+#naturals #delete-account2 label,
+#naturals #change-class-name label,
+#naturals #change-class-status label,
+#naturals #delete-class1 label,
+#naturals #delete-class2 label,
+#naturals #invite-user-form label,
+#naturals #new-test label {
   font-size: 0.9rem;
 }
 
@@ -3099,7 +3196,40 @@ label.required:after {
 #tests #invite-user-form .custom-select-wrapper,
 #tests #new-test label,
 #tests #new-test input.text-field,
-#tests #new-test .custom-select-wrapper {
+#tests #new-test .custom-select-wrapper,
+#naturals #change-name label,
+#naturals #change-name input.text-field,
+#naturals #change-name .custom-select-wrapper,
+#naturals #change-password label,
+#naturals #change-password input.text-field,
+#naturals #change-password .custom-select-wrapper,
+#naturals #change-email label,
+#naturals #change-email input.text-field,
+#naturals #change-email .custom-select-wrapper,
+#naturals #delete-account1 label,
+#naturals #delete-account1 input.text-field,
+#naturals #delete-account1 .custom-select-wrapper,
+#naturals #delete-account2 label,
+#naturals #delete-account2 input.text-field,
+#naturals #delete-account2 .custom-select-wrapper,
+#naturals #change-class-name label,
+#naturals #change-class-name input.text-field,
+#naturals #change-class-name .custom-select-wrapper,
+#naturals #change-class-status label,
+#naturals #change-class-status input.text-field,
+#naturals #change-class-status .custom-select-wrapper,
+#naturals #delete-class1 label,
+#naturals #delete-class1 input.text-field,
+#naturals #delete-class1 .custom-select-wrapper,
+#naturals #delete-class2 label,
+#naturals #delete-class2 input.text-field,
+#naturals #delete-class2 .custom-select-wrapper,
+#naturals #invite-user-form label,
+#naturals #invite-user-form input.text-field,
+#naturals #invite-user-form .custom-select-wrapper,
+#naturals #new-test label,
+#naturals #new-test input.text-field,
+#naturals #new-test .custom-select-wrapper {
   margin: 0.2rem 0;
 }
 
@@ -3146,7 +3276,18 @@ label.required:after {
 #tests #delete-class1 label:not(:nth-of-type(1)),
 #tests #delete-class2 label:not(:nth-of-type(1)),
 #tests #invite-user-form label:not(:nth-of-type(1)),
-#tests #new-test label:not(:nth-of-type(1)) {
+#tests #new-test label:not(:nth-of-type(1)),
+#naturals #change-name label:not(:nth-of-type(1)),
+#naturals #change-password label:not(:nth-of-type(1)),
+#naturals #change-email label:not(:nth-of-type(1)),
+#naturals #delete-account1 label:not(:nth-of-type(1)),
+#naturals #delete-account2 label:not(:nth-of-type(1)),
+#naturals #change-class-name label:not(:nth-of-type(1)),
+#naturals #change-class-status label:not(:nth-of-type(1)),
+#naturals #delete-class1 label:not(:nth-of-type(1)),
+#naturals #delete-class2 label:not(:nth-of-type(1)),
+#naturals #invite-user-form label:not(:nth-of-type(1)),
+#naturals #new-test label:not(:nth-of-type(1)) {
   margin-top: 0.54rem;
 }
 
@@ -3193,7 +3334,18 @@ label.required:after {
 #tests #delete-class1 p,
 #tests #delete-class2 p,
 #tests #invite-user-form p,
-#tests #new-test p {
+#tests #new-test p,
+#naturals #change-name p,
+#naturals #change-password p,
+#naturals #change-email p,
+#naturals #delete-account1 p,
+#naturals #delete-account2 p,
+#naturals #change-class-name p,
+#naturals #change-class-status p,
+#naturals #delete-class1 p,
+#naturals #delete-class2 p,
+#naturals #invite-user-form p,
+#naturals #new-test p {
   margin-bottom: 0.6rem;
   text-align: justify;
 }
@@ -3241,7 +3393,18 @@ label.required:after {
 #tests #delete-class1 .message,
 #tests #delete-class2 .message,
 #tests #invite-user-form .message,
-#tests #new-test .message {
+#tests #new-test .message,
+#naturals #change-name .message,
+#naturals #change-password .message,
+#naturals #change-email .message,
+#naturals #delete-account1 .message,
+#naturals #delete-account2 .message,
+#naturals #change-class-name .message,
+#naturals #change-class-status .message,
+#naturals #delete-class1 .message,
+#naturals #delete-class2 .message,
+#naturals #invite-user-form .message,
+#naturals #new-test .message {
   font-size: 0.72rem;
   line-height: 0.96rem;
   min-height: 0.96rem;
@@ -3291,7 +3454,18 @@ label.required:after {
 #tests #delete-class1 .message.server,
 #tests #delete-class2 .message.server,
 #tests #invite-user-form .message.server,
-#tests #new-test .message.server {
+#tests #new-test .message.server,
+#naturals #change-name .message.server,
+#naturals #change-password .message.server,
+#naturals #change-email .message.server,
+#naturals #delete-account1 .message.server,
+#naturals #delete-account2 .message.server,
+#naturals #change-class-name .message.server,
+#naturals #change-class-status .message.server,
+#naturals #delete-class1 .message.server,
+#naturals #delete-class2 .message.server,
+#naturals #invite-user-form .message.server,
+#naturals #new-test .message.server {
   margin-bottom: 0.2rem;
   min-height: 0;
 }
@@ -3299,7 +3473,8 @@ label.required:after {
 #account-settings h3,
 #manage h3,
 #members h3,
-#tests h3 {
+#tests h3,
+#naturals h3 {
   font-size: 1em;
   font-weight: bold;
   line-height: 1.2em;
@@ -3320,7 +3495,11 @@ label.required:after {
 #tests #delete-account1,
 #tests #delete-class1,
 #tests #invite-user-form,
-#tests #new-test {
+#tests #new-test,
+#naturals #delete-account1,
+#naturals #delete-class1,
+#naturals #invite-user-form,
+#naturals #new-test {
   max-width: 400px;
 }
 
@@ -3339,7 +3518,11 @@ label.required:after {
 #tests #delete-account1 .border-btn,
 #tests #delete-class1 .border-btn,
 #tests #invite-user-form .border-btn,
-#tests #new-test .border-btn {
+#tests #new-test .border-btn,
+#naturals #delete-account1 .border-btn,
+#naturals #delete-class1 .border-btn,
+#naturals #invite-user-form .border-btn,
+#naturals #new-test .border-btn {
   margin: 0.6rem auto 0.2rem auto;
   width: 100%;
 }
@@ -3359,7 +3542,11 @@ label.required:after {
 #tests #delete-account1 .inline.btn,
 #tests #delete-class1 .inline.btn,
 #tests #invite-user-form .inline.btn,
-#tests #new-test .inline.btn {
+#tests #new-test .inline.btn,
+#naturals #delete-account1 .inline.btn,
+#naturals #delete-class1 .inline.btn,
+#naturals #invite-user-form .inline.btn,
+#naturals #new-test .inline.btn {
   margin-top: 0.4rem;
 }
 
@@ -3374,7 +3561,10 @@ label.required:after {
 #members .kick-user span,
 #tests #delete-account2 span,
 #tests #delete-class2 span,
-#tests .kick-user span {
+#tests .kick-user span,
+#naturals #delete-account2 span,
+#naturals #delete-class2 span,
+#naturals .kick-user span {
   color: #a00;
 }
 
@@ -3389,7 +3579,10 @@ label.required:after {
 #members .kick-user .buttons,
 #tests #delete-account2 .buttons,
 #tests #delete-class2 .buttons,
-#tests .kick-user .buttons {
+#tests .kick-user .buttons,
+#naturals #delete-account2 .buttons,
+#naturals #delete-class2 .buttons,
+#naturals .kick-user .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3409,7 +3602,10 @@ label.required:after {
 #members .kick-user .buttons .border-btn,
 #tests #delete-account2 .buttons .border-btn,
 #tests #delete-class2 .buttons .border-btn,
-#tests .kick-user .buttons .border-btn {
+#tests .kick-user .buttons .border-btn,
+#naturals #delete-account2 .buttons .border-btn,
+#naturals #delete-class2 .buttons .border-btn,
+#naturals .kick-user .buttons .border-btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -3427,8 +3623,145 @@ label.required:after {
 #members .kick-user .buttons .border-btn:not(:last-child),
 #tests #delete-account2 .buttons .border-btn:not(:last-child),
 #tests #delete-class2 .buttons .border-btn:not(:last-child),
-#tests .kick-user .buttons .border-btn:not(:last-child) {
+#tests .kick-user .buttons .border-btn:not(:last-child),
+#naturals #delete-account2 .buttons .border-btn:not(:last-child),
+#naturals #delete-class2 .buttons .border-btn:not(:last-child),
+#naturals .kick-user .buttons .border-btn:not(:last-child) {
   margin-right: 0.6rem;
+}
+
+#naturals #naturals-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+#naturals #naturals-info-section {
+  margin: 0 0.4rem 1.6rem 0.4rem;
+}
+
+#naturals #naturals-info-section ul {
+  margin: 0.8rem 0;
+}
+
+#naturals #naturals-info-section li {
+  list-style-type: circle;
+  padding-left: 0.4rem;
+  margin-left: 1.2rem;
+}
+
+#naturals .naturals-data-properties,
+#naturals .natural-data-item {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 7.2rem 6rem 6rem 1fr;
+      grid-template-columns: 7.2rem 6rem 6rem 1fr;
+}
+
+@media screen and (min-width: 672px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 10.2rem 7.2rem 7.2rem 1fr;
+        grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 12rem 8rem 8rem 1fr;
+        grid-template-columns: 12rem 8rem 8rem 1fr;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 16rem 9.2rem 9.2rem 1fr;
+        grid-template-columns: 16rem 9.2rem 9.2rem 1fr;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 20rem 10rem 10rem 1fr;
+        grid-template-columns: 20rem 10rem 10rem 1fr;
+  }
+}
+
+#naturals .natural-name-wrapper,
+#naturals .natural-name,
+#naturals .natural-uses-count,
+#naturals .natural-pictures-count,
+#naturals .natural-action {
+  width: 100%;
+  text-align: center;
+}
+
+#naturals .natural-name-wrapper .text-field,
+#naturals .natural-name .text-field,
+#naturals .natural-uses-count .text-field,
+#naturals .natural-pictures-count .text-field,
+#naturals .natural-action .text-field {
+  max-width: 100%;
+}
+
+#naturals .natural-name-wrapper .normal-buttons,
+#naturals .natural-name-wrapper .rename-buttons,
+#naturals .natural-name .normal-buttons,
+#naturals .natural-name .rename-buttons,
+#naturals .natural-uses-count .normal-buttons,
+#naturals .natural-uses-count .rename-buttons,
+#naturals .natural-pictures-count .normal-buttons,
+#naturals .natural-pictures-count .rename-buttons,
+#naturals .natural-action .normal-buttons,
+#naturals .natural-action .rename-buttons {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#naturals .natural-name-wrapper .normal-buttons .btn,
+#naturals .natural-name-wrapper .rename-buttons .btn,
+#naturals .natural-name .normal-buttons .btn,
+#naturals .natural-name .rename-buttons .btn,
+#naturals .natural-uses-count .normal-buttons .btn,
+#naturals .natural-uses-count .rename-buttons .btn,
+#naturals .natural-pictures-count .normal-buttons .btn,
+#naturals .natural-pictures-count .rename-buttons .btn,
+#naturals .natural-action .normal-buttons .btn,
+#naturals .natural-action .rename-buttons .btn {
+  margin: auto 0.4rem;
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .natural-name-wrapper .normal-buttons .btn,
+  #naturals .natural-name-wrapper .rename-buttons .btn,
+  #naturals .natural-name .normal-buttons .btn,
+  #naturals .natural-name .rename-buttons .btn,
+  #naturals .natural-uses-count .normal-buttons .btn,
+  #naturals .natural-uses-count .rename-buttons .btn,
+  #naturals .natural-pictures-count .normal-buttons .btn,
+  #naturals .natural-pictures-count .rename-buttons .btn,
+  #naturals .natural-action .normal-buttons .btn,
+  #naturals .natural-action .rename-buttons .btn {
+    margin: auto 0.8rem;
+  }
 }
 
 #account-settings #account-settings-wrapper {
@@ -3532,12 +3865,6 @@ label.required:after {
 }
 
 #members .members-data-section .members-data-item {
-  margin: 0.4rem;
-  padding: 0.2rem 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 0.2rem;
-  display: -ms-grid;
-  display: grid;
   -ms-grid-columns: 10rem 1fr;
       grid-template-columns: 10rem 1fr;
   -ms-grid-rows: auto auto;
@@ -3548,14 +3875,7 @@ label.required:after {
   #members .members-data-section .members-data-item {
     -ms-grid-rows: auto 1fr;
         grid-template-rows: auto 1fr;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
   }
-}
-
-#members .members-data-section .members-data-item > span {
-  padding: calc(0.2em + 4px) 0;
 }
 
 #members .members-data-section .members-data-item .member-action {

@@ -11,7 +11,8 @@
 #members,
 #tests,
 #edit-group,
-#resolve-reports {
+#resolve-reports,
+#naturals {
 	min-width: 100%;
 	height: 100%;
 	@include scrollbar(12px, $gray3, $gray1);
@@ -485,33 +486,38 @@
 #account-settings,
 #manage,
 #members,
-#tests {
-	.user-data-section,
-	.class-data-section {
-		.user-data-item,
-		.class-data-item {
-			margin: 0.6rem;
-			padding: 0.4rem 0.8rem;
-			border: 1px solid #ccc;
-			border-radius: 0.2rem;
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: auto auto;
+#tests,
+#naturals {
+	.user-data-item,
+	.class-data-item,
+	.natural-data-item,
+	.members-data-item {
+		margin: 0.6rem;
+		padding: 0.4rem 0.8rem;
+		border: 1px solid #ccc;
+		border-radius: 0.2rem;
+		display: grid;
+		@media screen and (min-width: $smallTablet) {
+			align-items: center;
+		}
+		> span {
+			padding: calc(0.4em + 4px) 0;
+		}
+	}
+	.user-data-item,
+	.class-data-item {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto;
+		@media screen and (min-width: $smallTablet) {
+			grid-template-columns: 10rem 13rem 1fr;
+			grid-template-rows: auto 1fr;
+		}
+		.user-property-action,
+		.class-property-action {
+			grid-column: 2/3;
 			@media screen and (min-width: $smallTablet) {
-				grid-template-columns: 10rem 13rem 1fr;
-				grid-template-rows: auto 1fr;
-				align-items: center;
-			}
-			> span {
-				padding: calc(0.4em + 4px) 0;
-			}
-			.user-property-action,
-			.class-property-action {
-				grid-column: 2/3;
-				@media screen and (min-width: $smallTablet) {
-					grid-column: 3/4;
-					text-align: right;
-				}
+				grid-column: 3/4;
+				text-align: right;
 			}
 		}
 	}
@@ -611,7 +617,69 @@
 		}
 	}
 }
-
+#naturals {
+	#naturals-wrapper {
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+	#naturals-info-section {
+		margin: 0 0.4rem 1.6rem 0.4rem;
+		ul {
+			margin: 0.8rem 0;
+		}
+		li {
+			list-style-type: circle;
+			padding-left: 0.4rem;
+			margin-left: 1.2rem;
+		}
+	}
+	.naturals-data-properties,
+	.natural-data-item {
+		min-width: fit-content;
+		align-items: center;
+		justify-items: center;
+		margin: 0.4rem;
+		padding: 0.2rem 0.8rem;
+		display: grid;
+		grid-template-columns: 7.2rem 6rem 6rem 1fr;
+		@media screen and (min-width: $smallTablet) {
+			grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
+		}
+		@media screen and (min-width: $tablet) {
+			grid-template-columns: 12rem 8rem 8rem 1fr;
+		}
+		@media screen and (min-width: $smallDesktop) {
+			grid-template-columns: 16rem 9.2rem 9.2rem 1fr;
+		}
+		@media screen and (min-width: $desktop) {
+			grid-template-columns: 20rem 10rem 10rem 1fr;
+		}
+	}
+	.natural-name-wrapper,
+	.natural-name,
+	.natural-uses-count,
+	.natural-pictures-count,
+	.natural-action {
+		width: 100%;
+		text-align: center;
+		.text-field {
+			max-width: 100%;
+		}
+		.normal-buttons,
+		.rename-buttons {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			.btn {
+				margin: auto 0.4rem;
+				@media screen and (min-width: $smallDesktop) {
+					margin: auto 0.8rem;
+				}
+			}
+		}
+	}
+}
 #account-settings {
 	#account-settings-wrapper {
 		margin: auto;
@@ -686,19 +754,10 @@
 	}
 	.members-data-section {
 		.members-data-item {
-			margin: 0.4rem;
-			padding: 0.2rem 0.8rem;
-			border: 1px solid #ccc;
-			border-radius: 0.2rem;
-			display: grid;
 			grid-template-columns: 10rem 1fr;
 			grid-template-rows: auto auto;
 			@media screen and (min-width: $smallTablet) {
 				grid-template-rows: auto 1fr;
-				align-items: center;
-			}
-			> span {
-				padding: calc(0.2em + 4px) 0;
 			}
 			.member-action {
 				text-align: right;
