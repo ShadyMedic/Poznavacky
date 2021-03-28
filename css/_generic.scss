@@ -219,6 +219,10 @@ h5 {
 	&:hover {
 		cursor: pointer;
 	}
+	&.disabled {
+		pointer-events: none;
+		cursor: auto;
+	}
 	&.border-btn {
 		display: inline-block;
 		text-align: center;
@@ -244,8 +248,6 @@ h5 {
 					background: #888;
 					border-color: #888;
 					color: #ddd;
-					pointer-events: none;
-					cursor: auto;
 					> img {
 						filter: grayscale(50%);
 					}
@@ -274,6 +276,10 @@ h5 {
 				border: 2px solid $black1;
 				&:after {
 					background: rgba(black, 0.06);
+				}
+				&.disabled {
+					border-color: #888;
+					color: #888;
 				}
 			}
 		}
@@ -351,8 +357,6 @@ h5 {
 			width: 100%;
 		}
 		&.disabled {
-			pointer-events: none;
-			cursor: auto;
 			> img {
 				filter: grayscale(100%);
 			}

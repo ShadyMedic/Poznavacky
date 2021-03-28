@@ -341,6 +341,11 @@ h5 {
   cursor: pointer;
 }
 
+.btn.disabled {
+  pointer-events: none;
+  cursor: auto;
+}
+
 .btn.border-btn {
   display: inline-block;
   text-align: center;
@@ -372,8 +377,6 @@ h5 {
   background: #888;
   border-color: #888;
   color: #ddd;
-  pointer-events: none;
-  cursor: auto;
 }
 
 .btn.border-btn.non-transparent.black.disabled > img {
@@ -411,6 +414,11 @@ h5 {
 
 .btn.border-btn.transparent.black:after {
   background: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.transparent.black.disabled {
+  border-color: #888;
+  color: #888;
 }
 
 .btn.border-btn.rounded {
@@ -516,11 +524,6 @@ h5 {
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
   height: 100%;
   width: 100%;
-}
-
-.btn.icon.disabled {
-  pointer-events: none;
-  cursor: auto;
 }
 
 .btn.icon.disabled > img {
@@ -1867,6 +1870,13 @@ label.required:after {
         -ms-flex-pack: end;
             justify-content: flex-end;
   }
+}
+
+#menu .folders#menu-parts-table ul.rows li .part-info {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 4;
+  grid-column: 1/5;
+  margin-top: 0.4rem;
 }
 
 #menu .folders .table-title.rows {

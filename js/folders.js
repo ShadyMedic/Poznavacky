@@ -10,7 +10,7 @@ $(function() {
 	$("#request-class-button").click(function() {showNewClassForm()})
 	$("#request-class-cancel-button").click(function() {hideNewClassForm(event)})
 	$("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
-	$(".display-buttons-button").click(function(){displayButtons(this)})
+	$(".display-buttons-button:not(.disabled)").click(function(){displayButtons(this)})
 	$(".class-item").click(function(event) {redirectToClass(event)})
 
 	//event listener kliknutí myši
