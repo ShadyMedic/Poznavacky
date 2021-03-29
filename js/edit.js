@@ -182,7 +182,8 @@ function renameConfirm(event, type)
 	//Kontrola délky
 	if (newName === undefined || !(newName.length >= minChars && newName.length <= maxChars))
 	{
-		alert("Název " + errorString + " musí mít 1 až 31 znaků");
+		let message = "Název " + errorString + " musí mít 1 až 31 znaků";
+		newMessage(message, "error");
 		return;
 	}
 	
@@ -190,7 +191,8 @@ function renameConfirm(event, type)
 	let re = new RegExp("[^" + allowedChars + "]", 'g');
 	if (newName.match(re) !== null)
 	{
-		alert("Název " + errorString + " může obsahovat pouze písmena, číslice, mezeru a znaky " + allowedSpecialChars);
+		let message = "Název " + errorString + " může obsahovat pouze písmena, číslice, mezeru a znaky " + allowedSpecialChars;
+		newMessage(message, "error");
 		return;
 	}
 
@@ -203,7 +205,8 @@ function renameConfirm(event, type)
 		{
 			if (groupUrls.includes(url))
 			{
-				alert("Poznávačka se stejným URL již ve vybrané třídě existuje");
+				let message = "Poznávačka se stejným URL již ve vybrané třídě existuje";
+				newMessage(message, "error");
 				return;
 			}
 		}
@@ -216,7 +219,8 @@ function renameConfirm(event, type)
 		{
 			if (partUrls.includes(url))
 			{
-				alert("Část se stejným URL již ve vybrané poznávačce existuje");
+				let message = "Část se stejným URL již ve vybrané poznávačce existuje";
+				newMessage(message, "error");
 				return;
 			}
 		}
@@ -229,7 +233,8 @@ function renameConfirm(event, type)
 
 		if (presentNaturals.includes(newName.toUpperCase()))
 		{
-			alert("Tato přírodnina je již do této části přidána");
+			let message = "Tato přírodnina je již do této části přidána";
+			newMessage(message, "error");
 			return;
 		}
 	}
@@ -366,14 +371,16 @@ function addNatural(event)
 	let presentNaturals = $(event.target).closest(".part-box").find(".natural-name").map(function() {return $(this).text().toUpperCase(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
 	if (presentNaturals.includes(naturalName.toUpperCase()))
 	{
-		alert("Tato přírodnina je již do této části přidána");
+		let message = "Tato přírodnina je již do této části přidána";
+		newMessage(message, "error");
 		return;
 	}
 	
 	//Kontrola délky
 	if (naturalName === undefined || !(naturalName.length >= naturalMinLength && naturalName.length <= naturalMaxLength))
 	{
-		alert("Název přírodniny musí mít 1 až 31 znaků");
+		let message = "Název přírodniny musí mít 1 až 31 znaků";
+		newMessage(message, "error");
 		return;
 	}
 	
@@ -381,7 +388,8 @@ function addNatural(event)
 	let re = new RegExp("[^" + naturalAllowedChars + "]", 'g');
 	if (naturalName.match(re) !== null)
 	{
-		alert("Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky _ . - + / * % ( ) \' \"");
+		let message = "Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky _ . - + / * % ( ) \' \"";
+		newMessage(message, "error");
 		return;
 	}
 	
@@ -504,7 +512,6 @@ function save()
 					else if (messageType = "warning")
 					{
 						//Chyba ukládání
-						alert(message + data["json"]);
 						newMessage(message, "warning", data["json"]);
 					}
 				}
