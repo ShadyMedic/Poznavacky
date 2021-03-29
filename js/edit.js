@@ -24,7 +24,7 @@ $(function()
 	$("#edit-group-wrapper").on("click", ".rename-natural-cancel", function(event) { renameCancel(event); })
 	$("#edit-group-wrapper").on("click", ".rename-part-cancel", function(event) { renameCancel(event); })
 	$("#edit-group-wrapper").on("click", ".rename-group-cancel", function(event) { renameCancel(event); })
-	$("#add-part-button").click(addPart);
+	$("#add-part-button").click(function(){addPart()});
 	$("#submit-button").click(save);
 	$(window).click(function(event) {renameCancelAll(event)})
 
@@ -108,21 +108,34 @@ function renameCancelAll(event)
 {
 	let $nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
 	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
+	let $addPartButton = $("#add-part-button");
 
-	//pouze, pokud se neklikne do nameInputBoxu
-	if (!$nameInputBox.is(event.target) && $nameInputBox.has(event.target).length === 0)
+	//pouze, pokud se neklikne do nameInputBoxu nebo na tlačítko přidávající novou část
+	if (!$nameInputBox.is(event.target) && $nameInputBox.has(event.target).length === 0 && !$addPartButton.is(event.target))
 	{
 		//zobrazení všech nameBoxů kromě nameBoxu položky, kterou chceme přejmenovat
-		$nameBox.not($(event.target).closest($nameBox)).show();
+		//pokud je nameInputBox příslušného nameBoxu prázdný, k zobrazení nameBoxu nedojde
+		let $otherNameBoxes = $nameBox.not($(event.target).closest($nameBox));
+		$otherNameBoxes.each(function() {
+			let isNamed = $(this).find("span").text() != "";
+			if (isNamed)
+				$(this).show();
+		})
 
 		//skrytí všech nameInputBoxů kromě nameInputBoxu položky, kterou chceme přejmenovat, a obnovení jejich textových polí
+		//pokud je nameInputBox prázdný, ke skrytí nedojde
 		let $otherNameInputBoxes = $($nameInputBox.not($(event.target).closest($nameBox).siblings().filter($nameInputBox)));
-		$otherNameInputBoxes.hide();
 		$otherNameInputBoxes.each(function() {
-			$(this).find(".text-field").val($(this).siblings().filter($nameBox).find("span").text());
+			let isNamed = $(this).closest($nameInputBox).siblings().filter($nameBox).find("span").text() != "";
+			if (isNamed)
+			{
+				$(this).find(".text-field").val($(this).siblings().filter($nameBox).find("span").text());
+				$(this).hide();
+			}
 		})
 	}
 }
+
 
 function renameCancel(event) {
 	let $nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
