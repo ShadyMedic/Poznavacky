@@ -220,7 +220,8 @@ function next()
 		cancelReport();
 		
 	//Nastavení načítání
-	$("#main-img").attr("src","images/loading.gif");
+	$("#main-img").attr("src","../images/blank.gif");
+	$("#loading").show();
 	
 	$("#result").hide();
 	$("#answerForm").show();
@@ -239,6 +240,7 @@ function next()
 	let newNum = newPicture["num"];
 	let newUrl = newPicture["url"];
 	
+	$("#loading").hide();
 	$("#main-img").attr("src", newUrl);
 	$("#answer-hidden").val(newNum);
 }

@@ -79,6 +79,8 @@ function natural(name)
 	{
 		//Odeslání AJAX požadavku
 		selectedNatural.status = "loading";
+		$("#main-img").attr("src","../images/blank.gif");
+		$("#loading").show();
 		let url = window.location.href;
 		if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
 		url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/learn)
@@ -95,6 +97,7 @@ function natural(name)
 							selectedNatural.status = "loaded";
 							
 							//Zobrazení obrázku
+							$("#loading").hide();
 							selectedNatural.getPicture(pictureOffset);
 					    }
 					    else

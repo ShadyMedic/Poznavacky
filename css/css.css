@@ -2215,6 +2215,19 @@ label.required:after {
   border-radius: 3.2px;
 }
 
+#learn #learn-wrapper .picture #loading,
+#learn #test-wrapper .picture #loading,
+#test #learn-wrapper .picture #loading,
+#test #test-wrapper .picture #loading {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  bottom: 25%;
+  right: 25%;
+  -webkit-animation: rotation 2s infinite linear;
+          animation: rotation 2s infinite linear;
+}
+
 #learn .report-button,
 #test .report-button {
   position: absolute;
@@ -2661,6 +2674,28 @@ label.required:after {
 @media screen and (min-width: 960px) {
   #add-pictures #add-pictures-form-wrapper .picture #preview-img {
     width: 320px;
+  }
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
   }
 }
 

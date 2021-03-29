@@ -139,12 +139,10 @@ header .logo {
   display: flex;
 }
 
-@media screen and (min-width: 672px) {
-  header .logo img {
-    margin: 0;
-    height: 2rem;
-    margin: 0.4rem 0.4rem 0.4rem 0;
-  }
+header .logo img {
+  margin: 0;
+  height: 2rem;
+  margin: 0.4rem 0.4rem 0.4rem 0;
 }
 
 header .logo h1 {
@@ -196,7 +194,7 @@ header .logo h1 {
   height: 100vh;
   background: none;
   pointer-events: none;
-  z-index: 6;
+  z-index: 10;
 }
 
 .confirm-item {
@@ -345,6 +343,11 @@ h5 {
   cursor: pointer;
 }
 
+.btn.disabled {
+  pointer-events: none;
+  cursor: auto;
+}
+
 .btn.border-btn {
   display: inline-block;
   text-align: center;
@@ -376,8 +379,6 @@ h5 {
   background: #888;
   border-color: #888;
   color: #ddd;
-  pointer-events: none;
-  cursor: auto;
 }
 
 .btn.border-btn.non-transparent.black.disabled > img {
@@ -415,6 +416,11 @@ h5 {
 
 .btn.border-btn.transparent.black:after {
   background: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.transparent.black.disabled {
+  border-color: #888;
+  color: #888;
 }
 
 .btn.border-btn.rounded {
@@ -479,12 +485,12 @@ h5 {
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
 }
 
-.btn.arrow-btn:hover, .btn.arrow-btn:focus {
+.btn.arrow-btn:hover {
   -webkit-transform: translateX(-0.16em);
           transform: translateX(-0.16em);
 }
 
-.btn.arrow-btn:hover img, .btn.arrow-btn:focus img {
+.btn.arrow-btn:hover img {
   -webkit-transform: translateX(0.32em);
           transform: translateX(0.32em);
 }
@@ -520,11 +526,6 @@ h5 {
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
   height: 100%;
   width: 100%;
-}
-
-.btn.icon.disabled {
-  pointer-events: none;
-  cursor: auto;
 }
 
 .btn.icon.disabled > img {
