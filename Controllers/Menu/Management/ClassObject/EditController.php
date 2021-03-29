@@ -5,7 +5,10 @@ use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\DatabaseItems\Group;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\DatabaseItems\Part;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Logger;
 
 /**
  * Kontroler starající se o stránku umožňující úpravu poznávaček pro administrátory tříd
@@ -18,10 +21,13 @@ class EditController extends SynchronousController
      * Metoda nastavující hlavičku stránky a pohled k zobrazení
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws DatabaseException
+     * @throws AccessDeniedException Pokud není přihlhášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
+        (new Logger(true))->info('Přístup na stránku pro úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('groupId' => $_SESSION['selection']['group']->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+
         self::$pageHeader['title'] = 'Upravit poznávačku';
         self::$pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující snadnou úpravu poznávaček.';
         self::$pageHeader['keywords'] = '';

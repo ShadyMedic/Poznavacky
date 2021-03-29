@@ -2,6 +2,9 @@
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Logger;
+use Poznavacky\Models\Statics\UserManager;
 
 /** 
  * Kontroler starající se o výpis stránky pro správu poznávaček správcům třídy, do které patří
@@ -13,10 +16,13 @@ class TestsController extends SynchronousController
     /**
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled
      * @param array $parameters Pole parametrů pro zpracování kontrolerem, zde může být na první pozici URL název kotnroleru, kterému se má předat řízení
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
+        (new Logger(true))->info('Přístup na stránku pro správu poznávaček třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('classId' => $_SESSION['selection']['class']->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+
         self::$pageHeader['title'] = 'Správa poznávaček';
         self::$pageHeader['description'] = 'Nástroj pro správce tříd umožnňující snadnou správu poznávaček';
         self::$pageHeader['keywords'] = '';
