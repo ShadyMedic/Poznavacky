@@ -242,7 +242,7 @@ abstract class DatabaseItem
     /**
      * Metoda načítající podle údajů uložených ve známých vlastnostech hodnoty všech ostatních vlastností z databáze
      * Z databáze jsou vybrány záznamy, které jejichž hodnoty odpovídají hodnotám uložených v definovaným vlastnostech objektu
-     * @return boolean TRUE, pokud jsou data položky úspěšně načtena
+     * @return boolean TRUE, pokud jsou data položky úspěšně načtena, FALSE, pokud všchna načtitelná data již byla načtena při vyvolání této metody
      * @throws BadMethodCallException V případě, že není objekt zatím uložen v databázi, není z databáze navrácen ani jeden záznam odpovídající definovaným vlastnostem, nebo pokud jich je navrácených více; případně také pokud není nalezena třída, ze které je některá z neprimitivních vlastností načátaného objektu vytvořena
      * @throws DatabaseException
      */
@@ -258,6 +258,7 @@ abstract class DatabaseItem
         
         $propertiesToLoad = array_keys($undefinedProperties);
         $columnsToLoad = array_intersect_key($this::COLUMN_DICTIONARY, array_flip($propertiesToLoad));
+        if (count($columnsToLoad) === 0) { return false; }
         $selectString = implode(',', $columnsToLoad);
         
         //Získej seznam definovaných vlastností, podle kterých se provede vyhledávání
