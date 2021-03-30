@@ -6,7 +6,9 @@ use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\NaturalEditor;
+use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Logger;
 
 /**
  * Kontroler zpracovávající data odeslaná ze stránky manage
@@ -43,6 +45,7 @@ class UpdateNaturalsController extends AjaxController
                     $newName = $_POST['newName'];
                     $natural = new Natural(false, $naturalId);
                     $editor->rename($natural, $newName);
+                    (new Logger(true))->info('Uživatel s ID {userId} přejmenoval ve třídě s ID {classId} přírodninu s ID {naturalId} na {newName} z IP adresy {ip}', array('userId' => UserManager::getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'naturalId' => $naturalId, 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodnina úspěšně přejmenována');
                     echo $response->getResponseString();
                     break;
@@ -52,6 +55,7 @@ class UpdateNaturalsController extends AjaxController
                     $fromNatural = new Natural(false, $fromNaturalId);
                     $toNatural = new Natural(false, $toNaturalId);
                     $mergeResult = $editor->merge($fromNatural, $toNatural);
+                    (new Logger(true))->info('Uživatel s ID {userId} sloučil ve třídě s ID {classId} přírodninu s ID {fromNaturalId} do přírodniny s ID {toNaturalId} z IP adresy {ip}', array('userId' => UserManager::getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'fromNaturalId' => $fromNaturalId, 'toNaturalId' => $toNaturalId, 'ip' => $_SERVER['REMOTE_ADDR']));
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodniny úspěšně sloučeny a obrázky převedeny', array('newUsesCount' => $mergeResult['mergedUses'], 'newPicturesCount' => $mergeResult['mergedPictures']));
                     echo $response->getResponseString();
                     break;
@@ -59,6 +63,7 @@ class UpdateNaturalsController extends AjaxController
                     $naturalId = $_POST['naturalId'];
                     $natural = new Natural(false, $naturalId);
                     $editor->delete($natural);
+                    (new Logger(true))->info('Uživatel s ID {userId} odstranil ze třídy s ID {classId} přírodninu s ID {naturalId} z IP adresy {ip}', array('userId' => UserManager::getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'naturalId' => $naturalId, 'ip' => $_SERVER['REMOTE_ADDR']));
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodnina úspěšně odstraněna');
                     echo $response->getResponseString();
                     break;
