@@ -1,5 +1,6 @@
 var groupUrls;    //Pole url poznávaček, které jsou v tétož třídě již obsaženy (včetně upravované)
 var naturalNames; //Pole názvů přírodnin, které patří do této třídy
+var currentGroupUrl //Nové URL poznávačky, pokud je přejmenována
 $(function()
 {
 	//Načtení dočasných dat do proměnných a jejich odstranění z DOM
@@ -194,6 +195,7 @@ function renameConfirm(event, type)
 				return;
 			}
 		}
+		currentGroupUrl = url;
 	}
 	else if (type === "part")
 	{
@@ -476,7 +478,13 @@ function save()
 						
 						if (confirm("Změny byly úspěšně uloženy\nPřejete si aktualizovat stránku pro ověření změn?"))
 						{
-							location.reload();
+							if (currentGroupUrl !== undefined)
+							{
+								//Jméno poznávačky bylo změněno
+								let url = location.href;
+								url = url.replace(/\/[a-z0-9-]+\/edit/, "/" + currentGroupUrl + "/edit");
+								window.location.href = url;
+							}
 						}
 					}
 					else if (messageType === "error")
@@ -488,7 +496,7 @@ function save()
 					else if (messageType = "warning")
 					{
 						//Chyba ukládání
-						alert(message + data["json"]);
+						//alert(message + data["json"]);
 						newMessage(message, "warning", data["json"]);
 					}
 				}
