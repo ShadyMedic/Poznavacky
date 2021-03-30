@@ -1,21 +1,25 @@
-//vše, co se děje po načtení stránky
-$(function() {
-	//event listener formuláře na odeslání odpovědi
-	$("#answer-form").submit(function(event){answer(event)});
+$(function()
+{
+	resizeMainImg();
+	next();
 
 	//eventy listenery tlačítek
-	$("#next-button").click(function(){next()});
+	$("#next-button").click(function() {next()});
 
+	//event listener formuláře na odeslání odpovědi
+	$("#answer-form").submit(function(event) {answer(event)});
+})
+
+$(window).resize(function()
+{
 	resizeMainImg();
 })
 
-//vše, co se děje při změně velikosti okna
-$(window).resize(function() {
-	resizeMainImg();
-})
-
-//funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
-function resizeMainImg(){
+/**
+ * Funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
+ */
+function resizeMainImg()
+{
 	$("#test-wrapper .picture").css("height", $("#test-wrapper .picture").outerWidth());
 }
 
@@ -39,8 +43,8 @@ function pictureList()
 	
 	/**
 	 * Metoda získávající ze serveru náhodné obrázky z části/poznávačky pomocí AJAX get požadavku
-	 * Po obdržení odpovědi je sezma, obrázků naplněn (staré obrázky jsou přepsány)
-	 * Parametr callNextUponResponse - TRUE, pokud se má po obdržení odpovědi zavolat funkce pro zobrazení dalšího obrázku
+	 * Po obdržení odpovědi je seznam obrázků naplněn (staré obrázky jsou přepsány)
+	 * @param {bool} callNextUponResponse True, pokud se má po obdržení odpovědi zavolat funkce pro zobrazení dalšího obrázku
 	 */
 	this.loadPictures = function(callNextUponResponse)
 	{
@@ -54,8 +58,9 @@ function pictureList()
 		}
 
 		let url = window.location.href;
-		if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
-		url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/test)
+		if (url.endsWith('/')) { url = url.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
+		url = url.substr(0, url.lastIndexOf("/")); //Odstranění akce (/test)
+
 		$.get(url + "/test-pictures",
 			function (response, status)
 			{
@@ -64,13 +69,13 @@ function pictureList()
 					{
 						if (messageType === "success")
 						{
-							//Přepsání dvourozměrného pole do jednorozměrného s objekty
+							//přepsání dvourozměrného pole do jednorozměrného s objekty
 							for (let i = 0; i < data.pictures.length; i++) { data.pictures[i] = new picture(data.pictures[i]["num"], data.pictures[i]["url"]); }
 							
-							//Z nějakého důvodu nejde odkazovat pomocí this
+							//z nějakého důvodu nejde odkazovat pomocí this
 							pictureManager.pictures = data.pictures;
 							
-							//Zkontrolovat, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
+							//kontrola, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
 							if (pictureManager.callNext === true)
 							{
 								next();
@@ -78,7 +83,6 @@ function pictureList()
 						}
 						else
 						{
-							//Požadavek nebyl úspěšný
 							newMessage(message, "error");
 						}
 					}
@@ -105,24 +109,12 @@ function pictureList()
 	}
 }
 
-/*---------------------------------------------------------------------------------*/
-
-//Jediná instance správce obrázků (statika není zatím moc spolehlivá)
+//jediná instance správce obrázků (statika není zatím moc spolehlivá)
 var pictureManager = new pictureList();
 
 /**
- * Funkce, která po načtení dokumentu načítá první obrázek
- */
-$(function()
-{
-	next();
-})
-
-/*---------------------------------------------------------------------------------*/
-
-/**
  * Funkce odesílající zadanou odpověď na server ke kontrole
- * @param event
+ * @param {event} event
  */
 function answer(event)
 {
@@ -131,62 +123,60 @@ function answer(event)
 	let ans = $("#answer").val();
 	let num = $("#answer-hidden").val();
 	
-	$("#answerForm").hide();
-
 	let url = window.location.href;
-	if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
-	url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/test)
+	if (url.endsWith('/')) { url = url.slice(0, -1); } //dstranění trailing slashe (pokud je přítomen)
+	url = url.substr(0, url.lastIndexOf("/")); //odstranění akce (/test)
+
 	$.post(
-			url + "/check-test-answer",
-			{
-				qNum: num,
-				ans: ans
-			},
-			function (response, status) { ajaxCallback(response, status, displayResult); }
-		);
+		url + "/check-test-answer",
+		{
+			qNum: num,
+			ans: ans
+		},
+		function (response, status) { ajaxCallback(response, status, displayResult); }
+	);
 }
 
 /**
- * Funkce volaná po obdržení odpovědi ze serveru (požadavek je vyvolán funkcí answer()), která zobrazuje výsledek vyhodnocení
- * @param response Odpověď se serveru obsahující objekt s vlastnostmi "result" (hodnoty "correct"/"wrong") a answer (správná odpověď)
+ * Funkce zobrazující, zda uživatel odpověděl správně
+ * @param {string} messageType Typ hlášky
+ * @param {string} message Text hlášky
+ * @param {string} data Dodatečné informace
  */
 function displayResult(messageType, message, data)
 {
-	var correctAnswer = $("<p class='correct'></>").text("Správně!"); 
-	var correctTypoAnswer = $("<p class='correct-typo'></p>").text("Správně, ale s překlepem."); 
-	var incorrectAnswer = $("<p class='incorrect'></p>").text("Špatně."); 
-	var correction = $("<p class='correction'></p>").text("Správná odpověď je: ");
-	var error = $("<p class='error'></p>").text("Vyskytla se chyba: ");
+	let $correctAnswer = $("<p class='correct'></>").text("Správně!"); 
+	let $correctTypoAnswer = $("<p class='correct-typo'></p>").text("Správně, ale s překlepem."); 
+	let $incorrectAnswer = $("<p class='incorrect'></p>").text("Špatně."); 
+	let $correction = $("<p class='correction'></p>").text("Správná odpověď je: ");
 	
 	$("#result-text").empty();
 
+	//odpověď byla uznána
 	if (message === "correct")
 	{
-		//Odpověď byla uznána
+		//odpověď bez překlepů
 		if (softCheck($("#answer").val(), data.answer))
 		{
-			//Odpověď bez překlepů
-			$("#result-text").append(correctAnswer);
+			$("#result-text").append($correctAnswer);
 		}
+		//odpověď s překlepy
 		else
 		{
-			//Odpověď s překlepy
-			$("#result-text").append(correctTypoAnswer);
-			$("#result-text").append(correction);
-			correction.append("<span>" + data.answer + "</span>");
+			$("#result-text").append($correctTypoAnswer);
+			$("#result-text").append($correction);
+			$correction.append("<span>" + data.answer + "</span>");
 		}
 	}
+	//odpověď nebyla uznána
 	else if (message === "wrong")
 	{
-		//Odpověď nebyla uznána
-		$("#result-text").append(incorrectAnswer);
-		$("#result-text").append(correction);
-		correction.append("<span>" + data.answer + "</span>");
+		$("#result-text").append($incorrectAnswer);
+		$("#result-text").append($correction);
+		$correction.append("<span>" + data.answer + "</span>");
 	}
 	else
 	{
-		//Vyskytla se chyba - v response.result je "error" nebo něco úplně jiného
-		//V data.answer je chybová hláška
 		newMessage(message, "error");
 	}
 	
@@ -207,8 +197,8 @@ function softCheck(answer, correct)
 	answer = answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 	correct = correct.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 	
-	if (answer === correct){ return true; }
-	return false;
+	if (answer === correct) return true;
+	else return false;
 }
 
 /**
@@ -216,10 +206,13 @@ function softCheck(answer, correct)
  */
 function next()
 {
+	//pokud je dosavadní obrázek nahlašován, je nahlašování zrušeno
 	if ($(".report-box").hasClass("show"))
+	{
 		cancelReport();
+	}
 		
-	//Nastavení načítání
+	//nastavení načítání
 	$("#main-img").attr("src","../images/blank.gif");
 	$("#loading").show();
 	
@@ -228,11 +221,10 @@ function next()
 	$("#answer").val("");
 	$("#answer").focus();
 	
-	
-	//Získání dalšího obrázku
+	//získání dalšího obrázku
 	if (!pictureManager.picturesAvailable())
 	{
-		pictureManager.loadPictures(true);	//Argument true zajistí, že po obdržení odpovědi a načtení obrázků bude tato funkce zavolána znovu
+		pictureManager.loadPictures(true);	//argument true zajistí, že po obdržení odpovědi a načtení obrázků bude tato funkce zavolána znovu
 		return;
 	}
 	

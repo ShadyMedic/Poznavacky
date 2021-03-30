@@ -1,21 +1,20 @@
 var ajaxUrl;
 
-//vše, co se děje po načtení stránky
-$(function() {
-
-  ajaxUrl = window.location.href;
-  if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
-  if (ajaxUrl.endsWith("/administrate"))
-  {
-    //Správa hlášení administrátorem
-    ajaxUrl = ajaxUrl + "/report-action";
-  }
-  else
-  {
-    //Správa hlášení správcem třídy
-    ajaxUrl = ajaxUrl.replace("reports", "report-action");
-  }
-  
+$(function()
+{
+	ajaxUrl = window.location.href;
+	if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
+	if (ajaxUrl.endsWith("/administrate"))
+	{
+		//správa hlášení administrátorem
+		ajaxUrl = ajaxUrl + "/report-action";
+	}
+	else
+	{
+		//správa hlášení správcem třídy
+		ajaxUrl = ajaxUrl.replace("reports", "report-action");
+	}
+	
 	//event listenery tlačítek
 	$(".show-picture-button").click(function(event) {showPicture(event)})
 	$(".hide-picture-button").click(function(event) {hidePicture(event)})
@@ -27,7 +26,10 @@ $(function() {
   
 })
 
-//funkce zobrazující náhled nahlášeného obrázku
+/**
+ * Funkce zobrazující náhled nahlášeného obrázku
+ * @param {event} event 
+ */
 function showPicture(event)
 {
 	let $report = $(event.target).closest(".reports-data-item");
@@ -39,10 +41,12 @@ function showPicture(event)
 	//doplnění url a zobrazení obrázku
 	$report.find(".report-image > img").attr("src", url);
 	$report.find(".report-image").show();
-
 }
 
-//funkce skrývající náhled nahlášeného obrázku
+/**
+ * Funkce skrývající náhled nahlášeného obrázku
+ * @param {event} event 
+ */
 function hidePicture(event)
 {
 	let $report = $(event.target).closest(".reports-data-item");
@@ -52,9 +56,12 @@ function hidePicture(event)
 
 var currentName;
 var currentUrl;
+/**
+ * Funkce zahajující úpravu informací o nahlášeném obrázku
+ * @param {event} event 
+ */
 function editPicture(event)
 {
-	//report, který je upravován
 	let $report = $(event.target).closest(".reports-data-item");
 
 	//skrytí ostatních zobrazených obrázků
@@ -76,18 +83,22 @@ function editPicture(event)
 	$report.find(".report-url-edit").show();
 }
 
+/**
+ * Funkce rušící úpravu informací o nahlášeném obrázku
+ * @param {event} event 
+ */
 function editPictureCancel(event)
 {
 	let $report = $(event.target).closest(".reports-data-item");
+	let $reportNaturalSelect = $report.find(".report-name-edit .report-natural-select");
 
 	//reset custom select boxu
-	
-	$report.find(".report-name-edit .report-natural-select .custom-option").removeClass("selected");
-	$report.find(".report-name-edit .report-natural-select .custom-select-main span").text(currentName);
-	$report.find(".report-name-edit .report-natural-select .custom-option:contains(" + currentName + ")").addClass("selected");
+	$reportNaturalSelect.find(".custom-option").removeClass("selected");
+	$reportNaturalSelect.find(".custom-select-main span").text(currentName);
+	$reportNaturalSelect.find(".custom-option:contains(" + currentName + ")").addClass("selected");
+
 	//reset url pole
 	$report.find(".report-url-edit .text-field").val(currentUrl);
-
 
 	//zobrazení příslušných tlačítek, skrytí polí
 	$report.find(".report-action > .btn").show();
@@ -101,16 +112,19 @@ function editPictureCancel(event)
 	$(".report-action > .btn").removeClass("disabled");	
 }
 
+/**
+ * Funkce odesílající požadavek na úpravu informací o nahlášeném obrázku
+ * @param {event} event 
+ */
 function editPictureConfirm(event)
 {
 	let $report = $(event.target).closest(".reports-data-item");
-	let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
+	let pictureId = $report.attr("data-picture-id");
 
 	//uložení nových hodnot
 	currentName = $report.find(".report-name-edit .report-natural-select .selected").text().trim();
 	currentUrl = $report.find(".report-url-edit .text-field").val().trim();
 	
-	//Odeslat data na server
 	$.post(ajaxUrl,
 		{
 			action: 'update picture',
@@ -125,14 +139,12 @@ function editPictureConfirm(event)
 				{
 					if (messageType === "success")
 					{
-						//Reset DOM (simulace kliknutí na tlačítko cancel kvůli eventu jako parametru funkce)
+						//reset DOM (simulace kliknutí na tlačítko cancel kvůli eventu jako parametru funkce)
 						$report.find(".edit-picture-cancel-button").trigger("click");
 
 						console.log(currentName);
 						$report.find(".report-name").text(currentName);
 						$report.find(".report-url").text(currentUrl);
-
-						//newMessage(message, "success");
 					}
 					if (messageType === "error")
 					{
@@ -143,16 +155,21 @@ function editPictureConfirm(event)
 						//aktualizuj údaje u hlášení stejného obrázku v DOM
 						let $reportsToUpdate = $(".reports-data-item[data-picture-id='" + pictureId + "']");
 						let reportsToUpdateCount = $reportsToUpdate.length;
+
 						for (let i = 0; i < reportsToUpdateCount; i++)
 						{
-							$reportsToUpdate.each(function() {
+							$reportsToUpdate.each(function()
+							{
+								let $reportNaturalSelect = $(this).find(".report-name-edit .report-natural-select");
 								//aktualizace spanů
 								$(this).find(".report-name").text(currentName);
 								$(this).find(".report-url").text(currentUrl);
+
 								//aktualizace custom select boxu
-								$(this).find(".report-name-edit .report-natural-select .custom-option").removeClass("selected");
-								$(this).find(".report-name-edit .report-natural-select .custom-select-main span").text(currentName);
-								$(this).find(".report-name-edit .report-natural-select .custom-option:contains(" + currentName + ")").addClass("selected");
+								$reportNaturalSelect.find(".custom-option").removeClass("selected");
+								$reportNaturalSelect.find(".custom-select-main span").text(currentName);
+								$reportNaturalSelect.find(".custom-option:contains(" + currentName + ")").addClass("selected");
+
 								//aktualizace url textarey
 								$(this).find(".report-url-edit .text-field").val(currentUrl);
 							})
@@ -165,9 +182,14 @@ function editPictureConfirm(event)
 	);
 }
 
+/**
+ * Funkce odesílající požadavek an odstranění obrázku
+ * @param {event} event 
+ */
 function deletePicture(event)
 {
-  let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
+  	let pictureId = $(event.target).closest(".reports-data-item").attr("data-picture-id");
+
 	$.post(ajaxUrl,
 			{
 				action: 'delete picture',
@@ -194,9 +216,14 @@ function deletePicture(event)
 		);
 }
 
+/**
+ * Funkce odesílající požadavek na odstranění hlášení
+ * @param {event} event 
+ */
 function deleteReport(event)
 {
-  let reportId = $(event.target).closest(".reports-data-item").attr("data-report-id");
+ 	let reportId = $(event.target).closest(".reports-data-item").attr("data-report-id");
+	
 	$.post(ajaxUrl,
 		{
 			action: 'delete report',

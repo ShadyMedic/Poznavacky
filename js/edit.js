@@ -1,43 +1,59 @@
-var groupUrls;    //Pole url poznávaček, které jsou v tétož třídě již obsaženy (včetně upravované)
-var naturalNames; //Pole názvů přírodnin, které patří do této třídy
+var groupUrls; //pole url poznávaček, které jsou v tétož třídě již obsaženy (včetně upravované)
+var naturalNames; //pole názvů přírodnin, které patří do této třídy
+
+var $nameBox; //všechny name boxy (obsahují název a tlačítko na přejmenování)
+var $nameInputBox; //všechny name input boxy (obsahují textové pole a tlačítka na potvrzení a zrušení přejmenování)
+
 $(function()
 {
-	//Načtení dočasných dat do proměnných a jejich odstranění z DOM
+	//načtení dočasných dat do proměnných a jejich odstranění z DOM
 	groupUrls = JSON.parse($("#group-urls-json").text());
 	naturalNames = JSON.parse($("#natural-names-json").text());
 	$("#temp-data").remove();
+
+	findNameBoxes();
 	
 	//event listenery tlačítek
-	$("#help-button").click(function() { $("#help-text").toggle(); })
-	$(".rename-group").click(function(event) { rename(event, "group"); })
-	$(".rename-group-confirm").click(function(event) { renameConfirm(event, "group"); })
-	$("#edit-group-wrapper").on("click", ".remove-part", function(event) { removePart(event); })
-	$("#edit-group-wrapper").on("click", ".rename-part", function(event) { rename(event, "part"); })
-	$("#edit-group-wrapper").on("keyup", ".part-name-input", function(event) { nameTyped(event, "part"); })
-	$("#edit-group-wrapper").on("click", ".rename-part-confirm", function(event) { renameConfirm(event, "part"); })
-	$("#edit-group-wrapper").on("keyup", ".natural-name-input", function(event) { nameTyped(event, "natural") })
-	$("#edit-group-wrapper").on("keyup", ".new-natural-name-input", function(event) { nameTyped(event, "natural", true) })
-	$("#edit-group-wrapper").on("click", ".new-natural-button", function(event) { addNatural(event) })
-	$("#edit-group-wrapper").on("click", ".rename-natural", function(event) { rename(event, "natural"); })
-	$("#edit-group-wrapper").on("click", ".rename-natural-confirm", function(event) { renameConfirm(event, "natural"); })
-	$("#edit-group-wrapper").on("click", ".remove-natural", function(event) { removeNatural(event); })
-	$("#edit-group-wrapper").on("click", ".rename-natural-cancel", function(event) { renameCancel(event); })
-	$("#edit-group-wrapper").on("click", ".rename-part-cancel", function(event) { renameCancel(event); })
-	$("#edit-group-wrapper").on("click", ".rename-group-cancel", function(event) { renameCancel(event); })
+	$("#help-button").click(function() {$("#help-text").toggle()})
+	$(".rename-group").click(function(event) {rename(event, "group")})
+	$(".rename-group-confirm").click(function(event) {renameConfirm(event, "group")})
+	$("#edit-group-wrapper").on("click", ".remove-part", function(event) {removePart(event)})
+	$("#edit-group-wrapper").on("click", ".rename-part", function(event) {rename(event, "part")})
+	$("#edit-group-wrapper").on("click", ".rename-part-confirm", function(event) {renameConfirm(event, "part")})
+	$("#edit-group-wrapper").on("click", ".new-natural-button", function(event) {addNatural(event)})
+	$("#edit-group-wrapper").on("click", ".rename-natural", function(event) {rename(event, "natural")})
+	$("#edit-group-wrapper").on("click", ".rename-natural-confirm", function(event) {renameConfirm(event, "natural")})
+	$("#edit-group-wrapper").on("click", ".remove-natural", function(event) {removeNatural(event); })
+	$("#edit-group-wrapper").on("click", ".rename-natural-cancel", function(event) {renameCancel(event)})
+	$("#edit-group-wrapper").on("click", ".rename-part-cancel", function(event) {renameCancel(event)})
+	$("#edit-group-wrapper").on("click", ".rename-group-cancel", function(event) {renameCancel(event)})
 	$("#add-part-button").click(function(){addPart()});
 	$("#submit-button").click(save);
 	$(window).click(function(event) {renameCancelAll(event)})
 
+	//event listenery stisknutí klávesy
+	$("#edit-group-wrapper").on("keyup", ".part-name-input", function(event) {nameTyped(event, "part")})
+	$("#edit-group-wrapper").on("keyup", ".natural-name-input", function(event) {nameTyped(event, "natural")})
+	$("#edit-group-wrapper").on("keyup", ".new-natural-name-input", function(event) {nameTyped(event, "natural", true)})
+
 	//event listener stisknutí klávesy
-	$(".group-name-input").keyup(function(event) { nameTyped(event, "group"); });
+	$(".group-name-input").keyup(function(event) {nameTyped(event, "group")});
 
 })
 
-/* -------------------------------------------------------------------------------------------- */
+/**
+ * Funkce zaplňující proměnné $nameBox a $nameInput box příslušnými elementy
+ * Nutné volat opakovaně, protože při určitých akcích tyto elementy vznikají
+ */
+function findNameBoxes() 
+{
+	$nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
+	$nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
+}
 
 /**
  * Objekt pro uchování dat poznávačky
- * @param groupName Název poznávačky
+ * @param {string} groupName Název poznávačky
  */
 function groupData(groupName)
 {
@@ -72,8 +88,6 @@ function partData(partName)
 	}
 }
 
-/* -------------------------------------------------------------------------------------------- */
-
 /**
  * Funkce přidávající do DOM nový element části
  */
@@ -84,30 +98,32 @@ function addPart()
 		behavior: "smooth",
 		block: "start"
 	});
-	$(".part-box:last-child .part-name-input").focus(); //Uživatel by měl rovnou zadat jméno části
+	$(".part-box:last-child .part-name-input").focus();
 }
 
 /**
- * Funkce umožňující změnu jména poznávačky nebo části
- * @param event
- * @param type Typ měněného názvu ("group", "part" nebo "natural")
+ * Funkce zahajující přejmenování položky
+ * @param {event} event
+ * @param {string} type Typ měněného názvu ("group", "part" nebo "natural")
  */
 function rename(event, type)
 {
-	let $nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
-	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
+	findNameBoxes();
+	let $selectedNameBox = $(event.target).closest($nameBox);
 
-	$(event.target).closest($nameBox).hide();
-	$(event.target).closest($nameBox).siblings().filter($nameInputBox).show();
-	$(event.target).closest($nameBox).siblings().filter($nameInputBox).find(".text-field").focus().select();
+	$selectedNameBox.hide();
+	$selectedNameBox.siblings().filter($nameInputBox).show();
+	$selectedNameBox.siblings().filter($nameInputBox).find(".text-field").focus().select();
 
 }
 
-//funkce rušící všechna aktivní přejmenovávání
+/**
+ * Funkce rušící všechna aktivní přejmenování
+ * @param {event} event 
+ */
 function renameCancelAll(event) 
 {
-	let $nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
-	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
+	findNameBoxes();
 	let $addPartButton = $("#add-part-button");
 
 	//pouze, pokud se neklikne do nameInputBoxu nebo na tlačítko přidávající novou část
@@ -115,17 +131,27 @@ function renameCancelAll(event)
 	{
 		//zobrazení všech nameBoxů kromě nameBoxu položky, kterou chceme přejmenovat
 		//pokud je nameInputBox příslušného nameBoxu prázdný, k zobrazení nameBoxu nedojde
+
+		//všechny nameBoxy, do nichž nebylo kliknuto
 		let $otherNameBoxes = $nameBox.not($(event.target).closest($nameBox));
-		$otherNameBoxes.each(function() {
+
+		$otherNameBoxes.each(function()
+		{
 			let isNamed = $(this).find("span").text() != "";
 			if (isNamed)
+			{
 				$(this).show();
+			}
 		})
 
 		//skrytí všech nameInputBoxů kromě nameInputBoxu položky, kterou chceme přejmenovat, a obnovení jejich textových polí
-		//pokud je nameInputBox prázdný, ke skrytí nedojde
+		//pokud je příslušný nameBox prázdný, ke skrytí nedojde
+
+		//všechny nameInputBoxy, do jejichž příslušného nameBoxu nebylo kliknuto
 		let $otherNameInputBoxes = $($nameInputBox.not($(event.target).closest($nameBox).siblings().filter($nameInputBox)));
-		$otherNameInputBoxes.each(function() {
+
+		$otherNameInputBoxes.each(function()
+		{
 			let isNamed = $(this).closest($nameInputBox).siblings().filter($nameBox).find("span").text() != "";
 			if (isNamed)
 			{
@@ -136,15 +162,20 @@ function renameCancelAll(event)
 	}
 }
 
+/**
+ * Funkce rušící přejmenování položky
+ * @param {event} event 
+ */
+function renameCancel(event)
+{
+	findNameBoxes();
+	let $selectedNameInputBox = $(event.target).closest($nameInputBox);
 
-function renameCancel(event) {
-	let $nameBox = $(".natural-name-box, .part-name-box, .group-name-box");
-	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
-
-	$(event.target).closest($nameInputBox).hide();
-	$(event.target).closest($nameInputBox).siblings().filter($nameBox).show();
+	$selectedNameInputBox.hide();
+	$selectedNameInputBox.siblings().filter($nameBox).show();
 	$(event.target).siblings().filter(".text-field").val("");
 }
+
 /**
  * Funkce ukládající změnu jména poznávačky nebo části
  * @param event
@@ -152,34 +183,47 @@ function renameCancel(event) {
  */
 function renameConfirm(event, type)
 {
-	//let className = (type === "group") ? "group" : (type === "part") ? "part" : "natural";
-	let className = type; //V případě přejmenování tříd nebo změny argumentů odkomentovat předchozí řádku a tuto zakomentovat
-	let errorString = (type === "group") ? "poznávačky" : (type === "part") ? "části" : "přírodniny";
-	let minChars = (type === "group") ? 3 : (type === "part") ? 1 : 1;
-	//let maxChars = (type === "group") ? 31 : (type === "part") ? 31 : 31;
-	let maxChars = 31; //V případě, že by horní limit všech typů stringů neměl být stejný, odkomentovat předchozí řádku a tuto zakomentovat
-	//Při změně povolených znaků nezapomenout aktualizovat i znaky nahrazované "-" ve funkci generateUrl()
-	let allowedChars = (type === "group") ? "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-" : (type === "part") ? "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-" : "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci"
-	let allowedSpecialChars = (type === "group") ? ". _ -" : (type === "part") ? ". _ -" : "_ . - + / * % ( ) \' \"" //Pouze pro použití v chybových hláškách
+	let className = type; // "group" / "part" / "natural"
+	let errorString;
+	let minChars;
+	let maxChars;
+	let allowedChars;
+	let allowedSpecialChars;
 
-	let $nameInputBox = $(".natural-name-input-box, .part-name-input-box, .group-name-input-box");
-	let newName;
-	let oldName; //Pro kotnrolu unikátnosti u částí a poznávačky
-
-	if ($(event.target).prop("tagName") !== "INPUT")
+	switch (type)
 	{
-		//Potvrzení tlačítkem (kliknuto na obrázek, který jej vyplňuje)
-		newName = $(event.target).closest($nameInputBox).find("input").val();
-		oldName = $(event.target).closest($nameInputBox).siblings().find("span").text();
-	}
-	else
-	{
-		//Potvrzení Enterem
-		newName = $(event.target).val();
-		oldName = $(event.target).parent().siblings().find("." + className + "-name").text();
+		//při změně povolených znaků nezapomenout aktualizovat i znaky nahrazované "-" ve funkci generateUrl()
+
+		case "group":
+			errorString = "poznávačky";
+			minChars = 3;
+			maxChars = 31;
+			allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-";
+			allowedSpecialChars = ". _ -";
+			break;
+		case "part":
+			errorString = "části";
+			minChars = 1;
+			maxChars = 31;
+			allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-";
+			allowedSpecialChars = ". _ -";
+			break;
+		case "natural":
+			errorString = "přírodniny";
+			minChars = 1;
+			maxChars = 31;
+			allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-";
+			allowedSpecialChars = "_ . - + / * % ( ) \' \"";
+			break;
 	}
 
-	//Kontrola délky
+	findNameBoxes();
+	let $selectedNameInputBox = $(event.target).closest($nameInputBox);
+
+	let newName = $selectedNameInputBox.find(".text-field").val();
+	let oldName = $selectedNameInputBox.siblings().find("span").text(); //pro kontrolu unikátnosti u částí a poznávačky
+
+	//kontrola délky
 	if (newName === undefined || !(newName.length >= minChars && newName.length <= maxChars))
 	{
 		let message = "Název " + errorString + " musí mít 1 až 31 znaků";
@@ -187,7 +231,7 @@ function renameConfirm(event, type)
 		return;
 	}
 	
-	//Kontrola znaků
+	//kontrola znaků
 	let re = new RegExp("[^" + allowedChars + "]", 'g');
 	if (newName.match(re) !== null)
 	{
@@ -196,7 +240,7 @@ function renameConfirm(event, type)
 		return;
 	}
 
-	//Kontrola unikátnosti
+	//kontrola unikátnosti
 	let url = generateUrl(newName);
 	let oldUrl = generateUrl(oldName);
 	if (type === "group")
@@ -213,7 +257,7 @@ function renameConfirm(event, type)
 	}
 	else if (type === "part")
 	{
-		//Získej pole jmen všech částí
+		//získání pole jmen všech částí
 		let partUrls = $(".part-name").map(function () { return generateUrl($(this).text()); }).get();
 		if (url !== oldUrl)
 		{
@@ -228,7 +272,7 @@ function renameConfirm(event, type)
 	else
 	{
 		let presentNaturals;
-		//Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077	
+		//získání seznamu přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077	
 		presentNaturals = $(event.target).closest(".naturals-in-part").find(".natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
 
 		if (presentNaturals.includes(newName.toUpperCase()))
@@ -241,134 +285,102 @@ function renameConfirm(event, type)
 	
 
 	//skrytí inputu, zobrazení textu
-	$(event.target).closest($nameInputBox).siblings().find("." + className + "-name").text(newName);
-	$(event.target).closest($nameInputBox).hide();
-	$(event.target).closest($nameInputBox).siblings().filter("." + className + "-name-box").show();
+	$selectedNameInputBox.siblings().find("." + className + "-name").text(newName);
+	$selectedNameInputBox.hide();
+	$selectedNameInputBox.siblings().filter("." + className + "-name-box").show();
 	
-	//byly provedeny změny --> zamkni stránku
+	//byly provedeny změny -> zamkni stránku
 	lock();
 }
 
 /**
- * Funkce volaná při zadání dalšího znaku do pole pro přejmenování poznávačky nebo části a generující URL reprezentaci nového názvu a zobrazuje jej
- * @param event
- * @param type Typ měněného názvu ("group", "part" nebo "natural")
- * @param addAsNew Týká se pouze přejmenovávání přírodniny, TRUE, pokud se jedná o novou přírodninu, FALSE, pokud se přejmenovává již přidaná přírodnina
+ * Funkce generující URL reprezentaci nového názvu a zobrazující jej
+ * Je volaná při zadání znaku do textového pole
+ * @param {event} event
+ * @param {string} type Typ měněného názvu ("group", "part" nebo "natural")
+ * @param {bool} addAsNew Týká se pouze přejmenovávání přírodniny, TRUE, pokud se jedná o novou přírodninu, FALSE, pokud se přejmenovává již přidaná přírodnina
  */
 function nameTyped(event, type, addAsNew = false)
 {
+	//byl stisknut Enter -> potvrď změnu
 	if (event.keyCode === 13)
 	{
-		//Byl stisknut Enter --> potvrď změnu
-		if (type === "natural" && addAsNew) { addNatural(event); }
-		else { renameConfirm(event, type); }
+		if (type === "natural" && addAsNew) {addNatural(event); }
+		else {renameConfirm(event, type);}
 	}
 	else
 	{
-		//let className = (type === "group") ? "group" : (type === "part") ? "part" : "natural";
-		let className = type; //V případě přejmenování tříd nebo změny argumentů odkomentovat předchozí řádku a tuto zakomentovat
+		let className = type; //"group" / "part" / "natural"
 
 		if (type !== "natural")
 		{
-			//Vygeneruj a zobraz URL verzi nového názvu
+			//vygenerování a zobrazení URL verze nového názvu
 			let url = generateUrl($(event.target).val());
-			//Zobraz URL do příslušného elementu
-			$(event.target).parent().siblings().filter("." + className + "-name-url").text("V URL bude zobrazováno jako " + url);
-		}
-		else
-		{
-			if (!addAsNew)
-			{
-				//Pokud přejmenováváme neuloženou přírodninu, není příliš potřeba napovídat
-				//Kdyby chtěl uživatel přidat nějakou existující přírodninu, tak tu s překlepem prostě smaže
-				return;
-			}
-			let inputElement = $(event.target);
-			let suggestionsElement = $(event.target).parent().children().filter(".new-natural-name-suggestions");
-			let currentTextLowercase = inputElement.val().toLowerCase();
-			if (naturalNames.includes(currentTextLowercase))
-			{
-				inputElement.css("backgroundColor", "#77FF77");
-			}
-			else if (currentTextLowercase !== "")
-			{
-				inputElement.css("backgroundColor", "#ff7777");
-				let suggestions = naturalNames.filter(word => word.startsWith(currentTextLowercase));
-				console.log(suggestions);
-
-				//TODO - zobraz nejbližší shodu (vázáno na element v edit.phtml)
-				let suggestionsHTML = "";
-				for (let i = 0; i < suggestions.length; i++)
-				{
-					suggestionsHTML += "<option>" + suggestions[i] + "</option>";
-				}
-				suggestionsElement.html(suggestionsHTML);
-			}
-			else
-			{
-				inputElement.css("backgroundColor", "");
-			}
+			let $selectedNameContainer = $(event.target).closest(".group-name-container, .part-info");
+			$selectedNameContainer.find("." + className + "-name-url").text("V URL bude zobrazováno jako " + url);
 		}
 	}
 }
 
 /**
  * Funkce generující URL formu názvu poznávačky nebo části
- * @param text Řetězec k převedení na URL
+ * @param {string} text Název k převedení na URL
  * @returns URL reprezentace řetězce poskytnutého jako argument
  */
 function generateUrl(text)
 {
-	//Vytvoř ze jména jeho URL formu, stejným způsobem, jako to dělá backend
+	//vytvoření URL formy názvu stejným způsobem, jako to dělá backend
 	let url;
 	
-	//Převod na malá písmena
+	//převod na malá písmena
 	url = text.toLowerCase();
 
-	//Odstranění diakritiky (napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/37511463/14011077)
+	//odstranění diakritiky (napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/37511463/14011077)
 	url = url.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-	//Převedení mezer, podtržítek, teček a pomlček na "-"
+	//převedení mezer, podtržítek, teček a pomlček na "-"
 	url = url.replace(/ /g, "-");
 	url = url.replace(/\./g, "-");
 	url = url.replace(/_/g, "-");
 
-	//Nahrazení násobných "-" za jedno
+	//nahrazení násobných "-" za jedno
 	url = url.replace(/--+/g, "-");
 
-	//Oříznutí "-" na začátku a na konci
+	//oříznutí "-" na začátku a na konci
 	url = url.replace(/-/g, " ");
-	url = url.trim();	//Protože JavaScript má funkci jenom pro zkracování o mezery :P
+	url = url.trim();	//protože JavaScript má funkci jenom pro zkracování o mezery 
 	url = url.replace(/ /g, "-");
 	
 	return url;
 }
 
 /**
- * Funkce volaná při stisknutí tlačítka pro přidání nové části
- * @param event
+ * Funkce volaná přidávající novou část
+ * @param {event} event
  */
 function addNatural(event)
 {
 	let $naturalInput;
+
+	//potvrzení tlačítkem
 	if ($(event.target).prop("tagName") === "BUTTON")
 	{
-		//Potvrzení tlačítekm
 		$naturalInput = $(event.target).siblings().filter(".new-natural-name-input");
 	}
+	//potvrzení Enterem
 	else
 	{
-		//Potvrzení enterem
 		$naturalInput = $(event.target);
 	}
+
 	let naturalName = $naturalInput.val();
 
 	let naturalMinLength = 1;
 	let naturalMaxLength = 31;
-	let naturalAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci
+	let naturalAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-";
 	
-	//Proveď kontrolu unikátnosti
-	let presentNaturals = $(event.target).closest(".part-box").find(".natural-name").map(function() {return $(this).text().toUpperCase(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
+	//kontrola unikátnosti
+	let presentNaturals = $naturalInput.closest(".part-box").find(".natural-name").map(function() {return $(this).text().toUpperCase(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
 	if (presentNaturals.includes(naturalName.toUpperCase()))
 	{
 		let message = "Tato přírodnina je již do této části přidána";
@@ -376,7 +388,7 @@ function addNatural(event)
 		return;
 	}
 	
-	//Kontrola délky
+	//kontrola délky
 	if (naturalName === undefined || !(naturalName.length >= naturalMinLength && naturalName.length <= naturalMaxLength))
 	{
 		let message = "Název přírodniny musí mít 1 až 31 znaků";
@@ -384,7 +396,7 @@ function addNatural(event)
 		return;
 	}
 	
-	//Kontrola znaků
+	//kontrola znaků
 	let re = new RegExp("[^" + naturalAllowedChars + "]", 'g');
 	if (naturalName.match(re) !== null)
 	{
@@ -393,39 +405,28 @@ function addNatural(event)
 		return;
 	}
 	
-	let $naturalList;
-	if ($(event.target).prop("tagName") === "BUTTON")
-	{
-		//Potvrzení tlačítekm
-		$naturalList = $(event.target).closest(".part-box").find(".naturals-in-part");
-	}
-	else
-	{
-		//Potvrzení enterem
-		$naturalList = $(event.target).closest(".part-box").find(".naturals-in-part");
-	}
+	let $naturalList = $(event.target).closest(".part-box").find(".naturals-in-part");
 
-
-	$($naturalList).prepend($("#natural-item-template").html());
-	$($naturalList.children().first()).find(".natural-name").text(naturalName);
-	$($naturalList.children().first()).find(".natural-name-input").attr("value", naturalName);
+	$naturalList.prepend($("#natural-item-template").html());
+	$naturalList.children().first().find(".natural-name").text(naturalName);
+	$naturalList.children().first().find(".natural-name-input").attr("value", naturalName);
 	
-	//Vymaž vstup
+	//vymazání vstupu
 	$naturalInput.val("").focus();
 	
-	//byly provedeny změny --> zamkni stárnku
+	//byly provedeny změny -> zamkni stárnku
 	lock();
 }
 
 /**
  * Funkce odebírající určitou přírodninu
- * @param event
+ * @param {event} event
  */
 function removeNatural(event)
 {
 	$(event.target).closest("li").remove();
 	
-	//byly provedeny změny --> zamkni stárnku
+	//byly provedeny změny -> zamkni stárnku
 	lock();
 }
 
@@ -438,10 +439,11 @@ function removePart(event)
 	let confirmMessage = "Opravdu si přejete odebrat tuto část? Změny se neprojeví, dokud nebude úprava poznávačky uložena. Touto akcí nebudou odstraněny žádné existující přírodniny, ani jejich obrázky.";
 
 	newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
-		if(confirm) {
+		if (confirm)
+		{
 			$(event.target).closest(".part-box").remove();
 	
-			//byly provedeny změny --> zamkni stárnku
+			//byly provedeny změny -> zamkni stárnku
 			lock();
 		}
 		else return;
@@ -449,26 +451,26 @@ function removePart(event)
 }
 
 /**
- * Funkce volaná po kliknutí na tlačítko "Uložit", která poskládá JSON objekt obsahující všechna data poznávačky a odesílající je na backend
+ * Funkce volaná po kliknutí na tlačítko "Uložit", která poskládá JSON objekt obsahující všechna data poznávačky a odešle ho na backend
  */
 function save()
 {
 	let data;
 
-	//Krok 1: Získej nový název poznávačky
+	//krok 1: získání nového názvu poznávačky
 	let newGroupName = $(".group-name").text();
 	data = new groupData(newGroupName);
 
-	//Krok 2: Získej pole všech částí
+	//krok 2: získání pole všech částí
 	let partsArray = $("#edit-group-wrapper .part-box").get();
 
-	//Krok 3: Z každé části získej její název
+	//krok 3: získání názvu každé části
 	for (let i = 0; i < partsArray.length; i++)
 	{
 		data.addPart($(partsArray[i]).find(".part-name").text());
 	}
 
-	//Krok 4: Z každé části získej seznam přírodnin
+	//krok 4: získání seznamu přírodnin z každé části
 	for (let i = 0; i < partsArray.length; i++)
 	{
 		let naturalsArray = $(partsArray[i]).find(".naturals-in-part").children().get();
@@ -478,8 +480,8 @@ function save()
 		}
 	}
 
-	//Odešli data na server
-	let url = window.location.href.replace(/\/$/, "").replace(/edit$/, "")+"confirm-group-edit"; //Adresa současné stránky (bez edit a lomena na konci)
+	//odeslání dat na server
+	let url = window.location.href.replace(/\/$/, "").replace(/edit$/, "")+"confirm-group-edit"; //adresa současné stránky (bez edit a lomena na konci)
 	$.post(url,
 		{
 			data: JSON.stringify(data)
@@ -491,27 +493,27 @@ function save()
 				{
 					if (messageType === "success")
 					{
-						//Zruš tlačítka pro rychlé prejmenování
+						//zrušení tlačítek pro rychlé přejmenování
 						$(".rename-natural").hide();
 						
-						//odemkni stránku
+						//odemčení stránky
 						unlock();
 						
 						let confirmMessage = "Změny byly úspěšně uloženy Přejete si aktualizovat stránku pro ověření změn?";
-						newConfirm(confirmMessage, "Aktualizovat", "Zrušit", function(confirm) {
+						newConfirm(confirmMessage, "Aktualizovat", "Zrušit", function(confirm)
+						{
 							if (confirm) location.reload();
 							else return;
 						})
 					}
 					else if (messageType === "error")
 					{
-						//Chyba vstupu
+						//chyba vstupu
 						newMessage(message, "error");
-
 					}
 					else if (messageType = "warning")
 					{
-						//Chyba ukládání
+						//chyba ukládání
 						newMessage(message, "warning", data["json"]);
 					}
 				}
@@ -522,7 +524,8 @@ function save()
 }
 
 /**
- * Funkce zamykající stránku, tzn. při pokusu o její opuštění je zobrazen potvrzovací dialog pro zamezení ztráty neuložených změn v poznávačce
+ * Funkce zamykající stránku
+ * Při pokusu o její opuštění je zobrazen potvrzovací dialog pro zamezení ztráty neuložených změn v poznávačce
  */
 function lock()
 {
@@ -530,7 +533,8 @@ function lock()
 }
 
 /**
- * Funkce odemykající stránku, tzn. při pokusu o její opuštění se již nebude zobrazovat potvrzovací dialog
+ * Funkce odemykající stránku
+ * Při pokusu o její opuštění se již nebude zobrazovat potvrzovací dialog
  */
 function unlock()
 {

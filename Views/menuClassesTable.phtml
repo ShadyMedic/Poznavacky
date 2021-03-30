@@ -35,11 +35,11 @@
 		<?php endforeach ?>
 
 		<?php foreach ($invitations as $invitation) : ?>
-		<li class="invitation">
+		<li class="invitation" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
 			<span class="invitation-info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
 			<h4 class="col1"><?= $invitation->getClass()->getName(); ?></h4>
 			<span class="col2"><?= $invitation->getClass()->getGroupsCount() ?></span>
-			<div class="invitation-accept" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
+			<div class="invitation-accept">
                 <button class="btn icon accept-invitation-button" title="Přijmout pozvánku"><img src='images/tick.svg'/></button>
                 <button class="btn icon reject-invitation-button" title="Odmítnout pozvánku"><img src='images/cross.svg'/></button>
 			</div>

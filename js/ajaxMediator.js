@@ -5,9 +5,9 @@
  * 3. Pole dalších informací
  * Tyto informace se následně předají jako parametry fukci specifikované ve třetím argumentu
  * Pokud je typ zprávy nastaven na přesměrování, provádí tato funkce i okamžité přesměrovnání na adresu uvedenou ve zprávě
- * @param response Odpověď ze serveru
- * @param status Status odpovědi
- * @param processingFunction Funkce, které se mají předat výše zmíněné tři informace
+ * @param {string} response Odpověď ze serveru
+ * @param {string} status Status odpovědi
+ * @param {funkce} processingFunction Funkce, které se mají předat výše zmíněné tři informace
  */
 function ajaxCallback(response, status, processingFunction)
 {

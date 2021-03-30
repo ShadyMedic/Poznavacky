@@ -1,84 +1,104 @@
 var smallTablet = 672;
-/**
- * Funkce, která po načtení stránky nastavuje even handlery na skrytý náhled obrázku.
- * src atributa skrytého náhledu se nastavuje po potvrzení zadané URL adresy
- * Pokud se tento obrázek v pořádku načte, je adresa nastavena jako src atributa viditelného náhledu a je zobrazeno tlačítko pro odeslání fomruláře
- */
-//vše, co se děje po načtení stránky
+
 $(function()
 {
 	//přidání třídy disabled tlačítkům a inputům, které nelze zpočátku využít
 	$(".url-fieldset label, #url-input, #url-confirm-button, .preview-buttons-fieldset .btn").addClass("disabled");
 
+	resizeMainImg();
+
 	//event listenery tlačítek
 	$("#url-confirm-button").click(function(event) {pictureSelected(event)});
-	$("#add-natural-select .custom-options .custom-option").click(function() {setTimeout(function() {naturalSelected()}), 0}); //nastaven setTimeout s intervalem 0 na změnu pořadí volaných funkcí (tato se nyní správně volá později než funkce spravující custom select box ze souboru generic.js)
+	//nastaven setTimeout s intervalem 0 na změnu pořadí volaných funkcí (tato se nyní správně volá později než funkce spravující custom select box ze souboru generic.js)
+	$("#add-natural-select .custom-options .custom-option").click(function() {setTimeout(function() {naturalSelected()}), 0});
 	$("#submit-button").click(function(event) {submitPicture(event)});
-
-	resizeMainImg();
 
 	//event listenery kontrolující správné načtení obrázku po zadání url adresy
 	//chyba při načítání obrázku
-	$("#preview-img-hidden").on("error", function() {
+	$("#preview-img-hidden").on("error", function()
+	{
 		$("#preview-img").attr("src", "images/imagePreview.png");
 		$("#submit-button").addClass("disabled");
 	});
 	//obrázek načten úspěšně
-	$("#preview-img-hidden").on("load", function() {
+	$("#preview-img-hidden").on("load", function()
+	{
 		$("#preview-img").attr("src", $("#preview-img-hidden").attr("src"));
 		$("#submit-button").removeClass("disabled");
-
 	});
 })
 
-//vše, co se děje při změně velikosti okna
-$(window).resize(function() {
+$(window).resize(function()
+{
 	resizeMainImg();
 })
 
-//funkce nastavující výšku #preview-img a .preview-buttons-fieldset tak, aby byla shodná s šířkou #preview-img
+/**
+ * Funkce nastavující výšku #preview-img a .preview-buttons-fieldset tak, aby byla shodná s šířkou #preview-img
+ */
 function resizeMainImg(){
-	$("#add-pictures-form-wrapper #preview-img").css("height", $("#add-pictures-form-wrapper #preview-img").outerWidth());
+	let imageWidth = $("#add-pictures-form-wrapper #preview-img").outerWidth()
+	$("#add-pictures-form-wrapper #preview-img").css("height", imageWidth);
+
+	//nastavení výšky .preview-buttons-fieldset pouze v případě, že se zobrazuje vedle #preview-img a ne pod ním
 	if ($(window).width() >= smallTablet)
+	{
 		$(".preview-buttons-fieldset").css("height", $("#add-pictures-form-wrapper #preview-img").height());
+	}
 	else 
+	{
 		$(".preview-buttons-fieldset").css("height", "auto");
+	}
 }
 
-
-// funkce, která se spouští po výberu přírodniny a nastavuje název té vybrané
+/**
+ * Funkce nastavující název vybrané přírodniny
+ */
 function naturalSelected()
 {
 	let selectedNatural = "";
+
+	//odstranění počtu obrázku dané přirodniny v závorce
 	var arr = $("#add-natural-select .custom-options .selected").text();
-	for (var i = arr.length - 1; arr[i] != '('; i--){}
-	for (var j = 0; j < i - 1; j++){selectedNatural += arr[j];}
+	for (var i = arr.length - 1; arr[i] != '('; i--) {}
+	for (var j = 0; j < i - 1; j++) {selectedNatural += arr[j];}
+
 	$("#duck-link").attr("href", "https://duckduckgo.com/?q=" + selectedNatural + "&iax=images&ia=images");
 	$("#google-link").attr("href", "https://www.google.com/search?q=" + selectedNatural + "&tbm=isch");
 	$("#natural-name-hidden").val(selectedNatural);
+
 	$(".url-fieldset label, #url-input, #url-confirm-button, #duck-link, #google-link").removeClass("disabled");
 }
 
-
-//funkce, která se spouští po potvrzení URL adresy a která nastavuje adresu pro skrytý náhled obrázku
+/**
+ * Funkce nastavující adresu pro skrytý náhled obrázku
+ * @param {event} event 
+ */
 function pictureSelected(event)
 {
 	event.preventDefault();
+
 	$("#preview-img-hidden").attr("src", $("#url-input").val());
+
 	//kontrola správného načtení pomocí event listenerů v hlavní funkci
 }
 
-//funkce, která se spouští po odeslání obrázku a odesílá AJAX požadavek na server
+/**
+ * Funkce odesílající požadavek na uložení obrázku
+ * @param {event} event 
+ */
 function submitPicture(event)
 {
 	event.preventDefault();
+
 	let url = document.location.href;
-	if (url[url.length - 1] === '/'){ url = url.substr(0, url.length - 1); } //Odstraň trailing slash
-	url = url.substr(0, url.lastIndexOf("/")); //Odstraň název posledního kontroleru
+	if (url[url.length - 1] === '/'){ url = url.substr(0, url.length - 1); } //odstranění trailing slashe
+	url = url.substr(0, url.lastIndexOf("/")); //odstranění názvu posledního kontroleru
 	url += "/submit-picture"
 	let naturalName = $("#add-natural-select .custom-options .selected").text();
-	naturalName = naturalName.trim();	//Ořež whitespace
-	naturalName = naturalName.substr(0, naturalName.lastIndexOf("(") - 1); //Odstraň mezeru následovanou závorkami s počtem obrázků
+	naturalName = naturalName.trim();	//Ořezání whitespace
+	naturalName = naturalName.substr(0, naturalName.lastIndexOf("(") - 1); //Odstranění mezery následované závorkami s počtem obrázků
+
 	$.post(url,
 		{
 			naturalName: naturalName,

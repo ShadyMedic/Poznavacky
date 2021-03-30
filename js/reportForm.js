@@ -1,6 +1,6 @@
 //DO VŠECH STRÁNEK POUŽÍVAJÍCÍCH TENTO SKRIPT MUSÍ BÝT ZAHRNUT I SOUBOR ajaxMediator.js
 
-// proměnné obsahující elementy select boxu s důvody nahlášení
+// proměnné obsahující elementy položek select boxu s důvody nahlášení
 var $reasonNotDisplaying;
 var $reasonLongLoading;
 var $reasonIncorrectNatural;
@@ -10,65 +10,73 @@ var $reasonCopyright;
 var $reasonOther;
 var $reasonOtherAdmin;
 
-//vše, co se děje po načtení stránky
-$(function() {
-
+$(function()
+{
     //načtení proměnných skladujících důvody nahlášení
-    $reasonNotDisplaying = $("#report-reason .custom-option:contains('Obrázek se nezobrazuje správně')");
-    $reasonLongLoading = $("#report-reason .custom-option:contains('Obrázek se načítá příliš dlouho')");
-    $reasonIncorrectNatural = $("#report-reason .custom-option:contains('Obrázek zobrazuje nesprávnou přírodninu')");
-    $reasonContainsName = $("#report-reason .custom-option:contains('Obrázek obsahuje název přírodniny')");
-    $reasonBadResolution = $("#report-reason .custom-option:contains('Obrázek má příliš špatné rozlišení')");
-    $reasonCopyright = $("#report-reason .custom-option:contains('Obrázek porušuje autorská práva')");
-    $reasonOther = $("#report-reason .custom-option:contains('Jiný důvod (řeší správce třídy)')");
-    $reasonOtherAdmin = $("#report-reason .custom-option:contains('Jiný důvod (řeší správce služby)')");
+    $reasonNotDisplaying = $("#reason-not-displaying");
+    $reasonLongLoading = $("#reason-long-loading");
+    $reasonIncorrectNatural = $("#reason-incorrect-natural");
+    $reasonContainsName = $("#reason-contains-name");
+    $reasonBadResolution = $("#reason-bad-resolution");
+    $reasonCopyright = $("#reason-copyright");
+    $reasonOther = $("#reason-other");
+    $reasonOtherAdmin = $("#reason-other-admin");
 
-	//event listener tlačítek
+	displayImgPreview();
+
+	//event listenery tlačítek
 	$(".report-button").click(function(){reportImg()});
 	$("#report-reason .custom-options").click(function(){updateReport()});
 	$("#submit-report-button").click(function(e){submitReport(e)})
 	$("#cancel-report-button").click(function(e){cancelReport(e)})
 
-	
-	displayImgPreview();
 });
 
-//vše, co se děje při změně velikosti okna
-$(window).resize(function() {
+$(window).resize(function()
+{
 	displayImgPreview();
 })
 
-//funkce zobrazující náhled nahlašovaného obrázku
-//zobrazení závisí na velikosti okna - aby se náhled vešel
+/**
+ * Funkce zobrazující náhled nahlašovaného obrázku
+ * Zobrazení závisí na velikosti okna - aby se náhled vešel
+ */
 function displayImgPreview() 
 {
 	if ($("#main-img").height() < 400)
+	{
 		$("#report-img-preview").hide();
+	}
 	else $("#report-img-preview").show();
 }
 
-// funkce na nahlášení obrázku
+/**
+ * Funkce zahajující nahlášení obrázku
+ */
 function reportImg()
 {
 	$(".report-button").hide();
 	$(".report-box").addClass("show");
 
-	//nastavení url náhledu nahlašovaného obrázku
 	url = $("#main-img").attr("src");
 	$("#report-img-preview > img").attr("src", url);
 }
 
-// funkce na zrušení hlášení
+/**
+ * Funkce rušící nahlášení obrázku
+ */
 function cancelReport()
 {
-	// skrytí report boxu a zobrazení tlačítka na jeho zobrazení
+	//skrytí report boxu a zobrazení tlačítka na jeho zobrazení
 	$(".report-box").removeClass("show");
 	$(".report-button").show();
-    // obnovení hlavního select boxu
+
+    //obnovení hlavního select boxu
     $("#report-reason .selected").removeClass("selected");
     $("#report-reason .custom-option:first").addClass("selected");
     $("#report-reason .custom-select-main span").text($("#report-reason .selected").text());
-    // obnovení dodatečných polí a select boxů
+
+    //obnovení dodatečných polí a select boxů
     $(".additional-report-info > *:not(#report-message)").hide();
     $("#long-loading-info .selected").removeClass("selected");
     $("#long-loading-info .custom-option:first").addClass("selected");
@@ -77,85 +85,99 @@ function cancelReport()
     $(".additional-report-info textarea").val("");
 }
 
-// funkce aktualizující obsah report boxu
+/**
+ * Funkce aktualizující obsah report boxu podle zvoleného důvodu nahlášení
+ */
 function updateReport()
 {
 	$(".additional-report-info > *:not(#report-message)").hide();
-    if ($reasonLongLoading.hasClass("selected"))  //Obrázek se načítá příliš dlouho
+
+	//obrázek se načítá příliš dlouho
+    if ($reasonLongLoading.hasClass("selected")) 
 	{
         $("#long-loading-info").show();
     }
-    else if ($reasonIncorrectNatural.hasClass("selected")) //Obrázek zobrazuje nesprávnou přírodninu
+	//obrázek zobrazuje nesprávnou přírodninu
+    else if ($reasonIncorrectNatural.hasClass("selected"))
     {
         $(".incorrect-natural-info-wrapper").show();
     }
-    else if ($reasonOther.hasClass("selected")) //Jiný důvod (pro správce třídy)
+	//jiný důvod (pro správce třídy)
+    else if ($reasonOther.hasClass("selected"))
     {
         $(".other-info-wrapper").show();
     }
-    else if ($reasonOtherAdmin.hasClass("selected")) //Jiný důvod (pro správce systému)
+	//jiný důvod (pro správce systému)
+    else if ($reasonOtherAdmin.hasClass("selected"))
     {
         $(".other-admin-info-wrapper").show();
     }
 }
 
-// funkce odesílající hlášení
+/**
+ * Funkce odesílající hlášení
+ * @returns 
+ */
 function submitReport()
 {
-    let $reason = $("#report-reason").find(".selected");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/10659117
+    let $reason = $("#report-reason").find(".selected");
     let picUrl = $("#main-img").attr("src");
     let reasonInfo = "";
 	
-    let additionalInfoElement = $(".additional-report-info").find("*:visible:first");	//Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/18162730
-    if (additionalInfoElement.length > 0) //Je-li vidět nějaké pole pro zadání dalších informací
-    {
-        //Napsáno podle odpovědi na StackOverflow: https://stackoverflow.com/a/5347371
-        //Momentálně není nutné, jelikož nejsou využívány defaultní select boxy
-        /*if (additionalInfoElement.prop("tagName") === "SELECT"){reasonInfo = additionalInfoElement.find(":selected").text();}*/
+    let $additionalInfoElement = $(".additional-report-info").find("*:visible:first");
 
-        if (additionalInfoElement.hasClass("custom-select-wrapper")) {
-            reasonInfo = additionalInfoElement.find(".custom-options .selected").text();
+	//je vidět nějaké pole pro zadání dalších informací
+    if ($additionalInfoElement.length > 0)
+    {
+        if ($additionalInfoElement.hasClass("custom-select-wrapper"))
+		{
+            reasonInfo = $additionalInfoElement.find(".custom-options .selected").text();
 		}
 		else
 		{
-		    //Jiný důvod - hledání <textarea> nebo <input>
-			reasonInfo = additionalInfoElement.find("textarea,input").val();
+			reasonInfo = $additionalInfoElement.find(".text-field").val();
 		}
 	}
 	
-    //Kontrola vyplnění informací pro obecná hlášení
-    if (($reason.get(0).isEqualNode($reasonOther.get(0)) || $reason.get(0).isEqualNode($reasonOtherAdmin.get(0))) && reasonInfo.length === 0)
+    //kontrola vyplnění informací pro obecná hlášení
+    if (($reason[0] == $reasonOther[0] || $reason[0] == $reasonOtherAdmin[0]) && reasonInfo.length === 0)
 	{
 		$("#report-message").text("Musíte vyplnit důvod hlášení");
         return;
     }
 
-	//Kontrola obrázku
-	switch (picUrl)
+	//kontrola obrázku
+	if (picUrl == "../images/blank.gif" || picUrl == "images/blank.gif")
 	{
-	case "images/noImage.png":
-        case "images/imagePreview.png":
+		//obrázek se načítá a je zvolen jiný důvod než dlouhé načítání obrázku
+		if ($reason[0] != $reasonLongLoading[0] && $("#loading").is(":visible"))
+		{
+			console.log("check1");
+			$("#report-message").text("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
+			return;
+		}
+		//obrázek se nenačítá
+		else if ($("#loading").is(":hidden"))
+		{
+			console.log("check2");
 			$("#report-message").text("Tento obrázek nemůžete nahlásit");
-            return;
-        case "images/loading.gif":
-            if (!$reason.get(0).isEqualNode($reasonLongLoading.get(0)))
-		    {
-				$("#report-message").text("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
-                return;
-            }
+			return;
+		}
+		//TODO - při reportu obrázku blank.gif (důvodem pomalé načítání) vrátí server zprávu Neznámý obrázek
     }
 
 	//nebyla zaznamenána žádná chyba
 	$("#report-message").text("");
 
     let url = window.location.href;
-    if (url.endsWith('/')) { url = url.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
-    url = url.substr(0, url.lastIndexOf("/")); //Odstraň akci (/learn nebo /test)
+    if (url.endsWith('/')) { url = url.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
+    url = url.substr(0, url.lastIndexOf("/")); //odstranění akce (/learn nebo /test)
+	
     $.post(url + '/new-report',
         {
-            picUrl:picUrl,
-            reason:$reason.text(),
-			info:reasonInfo
+            picUrl: picUrl,
+            reason: $reason.text(),
+			info: reasonInfo
 		},
 		function (response, status)
 		{
@@ -164,7 +186,7 @@ function submitReport()
 				{
 					newMessage(message, messageType);
 					
-                    //Skrýt formulář pro nahlašování
+                    //skrytí formuláře pro nahlašování
                     cancelReport();
                 }
             );
