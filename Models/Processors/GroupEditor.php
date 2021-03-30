@@ -72,7 +72,7 @@ class GroupEditor
         //Ověř unikátnost názvu - toto nelze udělat pomocí třídy DataValidator, protože je možné, že poznávačka nebyla přejmenována a název tak již existuje a přitom je platný
         //Musí být proto porovnáno ID u záznamů se shodnou URL adresou
         $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ? LIMIT 2', array(Folder::generateUrl($newName), $this->group->getClass()->getId()), true);
-        //if ($result === false) { /* Žádná poznávačka se stejným URL nebyla ve třídě nalezena - platné přejmenování */ }
+        if ($result === false) { $result = array(array(Group::COLUMN_DICTIONARY['id'] => $this->group->getId())); } //Žádná poznávačka se stejným URL nebyla ve třídě nalezena - platné přejmenování
         //if ($result[Group::COLUMN_DICTIONARY['id']] === $this->group->getId()) { /* Nalezena poznávačka se stejným URL i ID - poznávačka nebyla přejmenována */ }
         $ids = array();
         foreach ($result as $row) { $ids[] = $row[Group::COLUMN_DICTIONARY['id']]; }
