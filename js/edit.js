@@ -485,6 +485,10 @@ function save()
 								url = url.replace(/\/[a-z0-9-]+\/edit/, "/" + currentGroupUrl + "/edit");
 								window.location.href = url;
 							}
+							else
+							{
+								window.location.reload();
+							}
 						}
 					}
 					else if (messageType === "error")
