@@ -240,6 +240,14 @@ class Natural extends DatabaseItem
         if ($result)
         {
             $this->pictures[] = $picture;
+            $this->picturesCount++; //Zvyš počet obrázků u této přírodniny
+            $this->save();
+            $uses = $this->getUses(); //Zvyš počet obrázků u všech částí, ve kterých se tato přírodnina vyskytuje
+            foreach ($uses as $use)
+            {
+                $use->initialize(null, null, null, null, null, ($use->getPicturesCount() + 1));
+                $use->save();
+            }
             return true;
         }
         return false;
