@@ -1795,6 +1795,11 @@ label.required:after {
   }
 }
 
+#menu .folders#menu-parts-table ul.rows li.empty .col2,
+#menu .folders#menu-parts-table ul.rows li.empty .col3 {
+  color: #a00;
+}
+
 #menu .folders#menu-parts-table ul.rows li .col1 {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
@@ -1873,10 +1878,34 @@ label.required:after {
 }
 
 #menu .folders#menu-parts-table ul.rows li .part-info {
+  display: none;
+}
+
+#menu .folders#menu-parts-table ul.rows li .part-info.show {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0 0.4rem;
   -ms-grid-column: 1;
   -ms-grid-column-span: 4;
   grid-column: 1/5;
-  margin-top: 0.4rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-parts-table ul.rows li .part-info.show {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2/5;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  #menu .folders#menu-parts-table ul.rows li .part-info.show {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2/5;
+    text-align: right;
+  }
 }
 
 #menu .folders .table-title.rows {

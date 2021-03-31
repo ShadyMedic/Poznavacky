@@ -263,7 +263,7 @@ function displayButtons($button)
 	if (!$($button).hasClass("show"))
 	{
 		$($button).find(".col2, .col3").hide();
-		$($button).find(".buttons").addClass("show");
+		$($button).find(".buttons, .part-info").addClass("show");
 		$($button).find("li").addClass("show");
 	}
 }
@@ -282,7 +282,7 @@ function hideButtons(event)
 			if ($(this).find("li").hasClass("show"))
 			{
 				$(this).find(".col2, .col3").show();
-				$(this).find(".buttons").removeClass("show");
+				$(this).find(".buttons, .part-info").removeClass("show");
 				$(this).find("li").removeClass("show");
 			}
 		}
