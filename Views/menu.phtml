@@ -2,16 +2,16 @@
 	<a class="btn icon" href="menu/account-settings"><img src="../images/user.svg" alt=""></a> 
 	<a class="btn icon" href="administrate"><img src="../images/settings.svg" alt=""></a> 
 	<div class="logo">
-		 <!-- <img src="">LOGO -->
+		 <img src="../images/iconWhite1.svg">
 		<h1>Poznávačky</h1>
 	</div>
-	<button id="logout-button" class="btn icon"><img src="../images/logout.svg" alt=""></button>
+	<button class="btn icon logout-button"><img src="../images/logout.svg" alt=""></button>
 </header>
 <aside>
 	<a class="btn icon" href="menu"><img src="../images/home.svg" alt="Hlavní stránka"></a>
 	<?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings"><img src="../images/user.svg" alt="Správa účtu"></a><?php endif ?>
 	<?php if ($adminLogged) : ?><a class="btn icon" href="administrate"><img src="../images/settings.svg" alt="Správa služby"></a><?php endif ?>
-    <button id="logout-button" class="btn icon"><img src="../images/logout.svg" alt=""></button>
+    <button class="btn icon logout-button"><img src="../images/logout.svg" alt=""></button>
 </aside>
 <main class="menu">
 	<h2 id="level-nav">
@@ -35,9 +35,13 @@
 	<div class="wrapper">
 		<?php require $this->getNextView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
 	</div>
-    <?php if (isset($staticTitle)) : ?>
+</main>
+<?php if (isset($staticTitle)) : ?>
     <div id="changelog">
+		<div class="button-wrapper">
+			<button class="btn icon" id="close-changelog-button"><img src="../images/cross2black.svg" alt=""></button>
+		</div>
+		<h3>Novinky</h3>
         <?php require 'staticArticle.phtml' ?>
     </div>
-    <?php endif ?>
-</main>
+<?php endif ?>

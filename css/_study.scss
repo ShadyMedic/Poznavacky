@@ -74,6 +74,14 @@
 				object-fit: contain;
 				border-radius: 3.2px;
 			}
+			#loading {
+				position: absolute;
+				top: 25%;
+				left: 25%;
+				bottom: 25%;
+				right: 25%;
+				animation: rotation 2s infinite linear;
+			}
 		}
 	}
 	.report-button {
@@ -366,4 +374,13 @@
 			}
 		}
 	}
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }

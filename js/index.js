@@ -1,19 +1,19 @@
+$(function()
+{
+	resizeGrid();
 
-/*--------------------------------------------------------------------------*/
-/* Funkce upravující viditelný obsah stránky */
-
-//zpracování eventů
-$(function() {
 	//zobrazení cookies alertu
-	setTimeout(() => {
+	setTimeout(function() {
 		$("#cookies-alert").addClass("show");
 	}, 1000);
 
 	//event listenery tlačítek
-	$("#hide-login-section-button").click(function(){hideLoginSection()})
-	$("#hide-cookies-alert-button").click(function(){hideCookiesAlert()})
-	$(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event){showLoginSection(event)});
-    $("#demo-button").click(function(){demoLogin()})
+	$("#hide-login-section-button").click(function() {hideLoginSection()})
+	$("#hide-cookies-alert-button").click(function() {hideCookiesAlert()})
+	$(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event) {showLoginSection(event)});
+    $("#demo-button").click(function() {demoLogin()})
+	$("#learn-more-button").click(function() {learnMore()})
+	$("#back-to-top-button").click(function() {backToTop()})
 
 	//event listener kliknutí myši
 	$(document).mouseup(function(e) {mouseUpChecker(e)})
@@ -30,10 +30,10 @@ $(function() {
 	$("#register-email").on("input", function() {checkRegisterEmail()})
 	$("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
   
-	//Odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
+	//odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
 	$("#register-name").blur(function()
 	{
-		if (!($("#register-name").val() != "" && checkRegisterName())) { return; }
+		if (!($("#register-name").val() != "" && checkRegisterName())) return
 		enqueueAjaxRequest
 		(
 		new ajaxRequest
@@ -51,7 +51,7 @@ $(function() {
 	//Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
 	$("#register-email").blur(function()
 	{
-		if (!($("#register-email").val() != "" && checkRegisterEmail())) { return; }
+		if (!($("#register-email").val() != "" && checkRegisterEmail())) return
 		enqueueAjaxRequest
 		(
 		new ajaxRequest
@@ -69,191 +69,366 @@ $(function() {
 	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
 
-//funkce kontrolující správně zadané jméno při přihlašování
-function checkLoginName() {
-	var loginNameMessage;
-	if($("#login-name").val().length == 0)
+$(window).resize(function()
+{
+	resizeGrid();
+})
+
+/**
+ * Funkce scrollující do info sekce
+ */
+function learnMore()
+{
+	$("#index-info-section")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
+	});
+}
+
+/**
+ * Funkce scrollující na začátek stránky
+ */
+function backToTop()
+{
+	$("#index")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
+	});
+}
+
+/**
+ * Funkce nastavující výšku vektorových obrázků v info sekci podle toho nejvyššího
+ */
+function resizeGrid()
+{
+	let newClassHeight = $("#new-class-info img").height();
+	let addPicturesHeight = $("#add-pictures-info img").height();
+	let learnHeight = $("#learn-info img").height();
+	let testHeight = $("#test-info img").height();
+	let maxHeight = Math.max(newClassHeight, addPicturesHeight, learnHeight, testHeight);
+
+	$("#info-icons .info-tile").css("grid-template-rows", maxHeight);
+}
+
+/**
+ * Funkce kontrolující správně zadané jméno při přihlašování
+ */
+function checkLoginName()
+{
+	let loginNameMessage;
+
+	//přihlašovací jméno není vyplněno
+	if($("#login-name").val().length == 0) 
+	{
 		loginNameMessage = "Jméno musí být vyplněno.";
+	}
 	else loginNameMessage = "";
+
 	$("#login-name-message").text(loginNameMessage);
 }
 
-//funkce kontrolující správně zadané heslo při přihlašování
-function checkLoginPassword() {
-	var loginPasswordMessage;
+/**
+ * Funkce kontrolující správně zadané heslo při přihlašování
+ */
+function checkLoginPassword()
+{
+	let loginPasswordMessage;
+
+	//heslo není vyplněno
 	if($("#login-pass").val().length == 0)
+	{
 		loginPasswordMessage = "Heslo musí být vyplněno.";
+	}
 	else loginPasswordMessage = "";
+
 	$("#login-pass-message").text(loginPasswordMessage);
 }
 
-//funkce kontrolující správně zadané jméno při registraci
-function checkRegisterName() {
-	var nameAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ";
-	var registerNameMessage;
+/**
+ * Funkce kontrolující správně zadané jméno při registraci
+ * @returns True, pokud je jméno zadáno správně, false, pokud je zadáno špatně (nutné pro požadavek na kontrolu unikátnosti)
+ */
+function checkRegisterName()
+{
+	let nameAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ";
+	let registerNameMessage;
+
+	//jméno není vyplněno
 	if ($("#register-name").val().length == 0)
-		registerNameMessage = "Jméno musí být vyplněno."
-	else if ($("#register-name").val().length < 4)
-		registerNameMessage = "Jméno musí být alespoň 4 znaky dlouhé."
-	else if ($("#register-name").val().length > 15)
-		registerNameMessage = "Jméno může být nejvíce 15 znaků dlouhé."
-	else registerNameMessage = "";
-	for (let i = 0; i < $("#register-name").val().length; i++ ) {
-		if (!nameAllowedChars.includes($("#register-name").val()[i]))
-			registerNameMessage = "Jméno obsahuje nepovolené znaky."
+	{
+		registerNameMessage = "Jméno musí být vyplněno.";
 	}
+	//jméno je kratší než 4 znaky
+	else if ($("#register-name").val().length < 4)
+	{
+		registerNameMessage = "Jméno musí být alespoň 4 znaky dlouhé.";
+	}
+	//jméno je delší než 15 znaků
+	else if ($("#register-name").val().length > 15)
+	{
+		registerNameMessage = "Jméno může být nejvíce 15 znaků dlouhé.";
+	}
+
+	else registerNameMessage = "";
+
+	//některý ze znaků není povolený
+	for (let i = 0; i < $("#register-name").val().length; i++ )
+	{
+		if (!nameAllowedChars.includes($("#register-name").val()[i]))
+		{
+			registerNameMessage = "Jméno obsahuje nepovolené znaky.";
+		}
+	}
+
 	$("#register-name-message").text(registerNameMessage);
 
-	//používá jako podmínka zavolání funkce na kontrolu jedinečnosti jména
 	if (registerNameMessage == "") return true;
-	else {
+	else
+	{
 		$("#register-name").removeClass("checked");
 		return false;
 	}
 }
 
-//funkce kontrolující správně zadané heslo při registraci
-function checkRegisterPassword() {
-	var passwordAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\''";
-	var registerPasswordMessage;
+/**
+ * Funkce kontrolující správně zadané heslo při registraci
+ */
+function checkRegisterPassword()
+{
+	let passwordAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\''";
+	let registerPasswordMessage;
+
+	//heslo není vyplněno
 	if ($("#register-pass").val().length == 0)
-		registerPasswordMessage = "Heslo musí být vyplněno."
-	else if ($("#register-pass").val().length < 6)
-		registerPasswordMessage = "Heslo musí být alespoň 6 znaků dlouhé."
-	else if ($("#register-pass").val().length > 31)
-		registerPasswordMessage = "Heslo může být nejvíce 31 znaků dlouhé."
-	else registerPasswordMessage = "";
-	for (let i = 0; i < $("#register-pass").val().length; i++ ) {
-		if (!passwordAllowedChars.includes($("#register-pass").val()[i]))
-			registerPasswordMessage = "Heslo obsahuje nepovolené znaky."
+	{
+		registerPasswordMessage = "Heslo musí být vyplněno.";
 	}
+	//heslo je kratší než 6 znaků
+	else if ($("#register-pass").val().length < 6)
+	{
+		registerPasswordMessage = "Heslo musí být alespoň 6 znaků dlouhé.";
+	}
+	//heslo je delší než 31 znaků
+	else if ($("#register-pass").val().length > 31)
+	{
+		registerPasswordMessage = "Heslo může být nejvíce 31 znaků dlouhé.";
+	}
+
+	else registerPasswordMessage = "";
+
+	//některý ze znaků není povolený
+	for (let i = 0; i < $("#register-pass").val().length; i++ )
+	{
+		if (!passwordAllowedChars.includes($("#register-pass").val()[i]))
+		{
+			registerPasswordMessage = "Heslo obsahuje nepovolené znaky.";
+		}
+	}
+
 	$("#register-pass-message").text(registerPasswordMessage);
 
 	if (registerPasswordMessage == "")
+	{
 		$("#register-pass").addClass("checked");
+	}
 	else $("#register-pass").removeClass("checked");
 
 	checkRegisterRePassword();
 }
 
-//funkce kontrolující správně zadané heslo znovu při registraci
-function checkRegisterRePassword() {
-	var registerRePasswordMessage;
+/**
+ * Funkce kontrolující správně zadané heslo znovu při registraci
+ */
+function checkRegisterRePassword()
+{
+	let registerRePasswordMessage;
+
+	//heslo znovu není vyplněno
 	if ($("#register-repass").val().length == 0)
-		registerRePasswordMessage = "Heslo znovu musí být vyplněno."
+	{
+		registerRePasswordMessage = "Heslo znovu musí být vyplněno.";
+	}
+	//heslo znovu je jiné než heslo
 	else if ($("#register-repass").val() != $("#register-pass").val())
-		registerRePasswordMessage = "Zadaná hesla se neshodují."
+	{
+		registerRePasswordMessage = "Zadaná hesla se neshodují.";
+	}
+
 	else registerRePasswordMessage = "";
 
 	if (registerRePasswordMessage == "")
+	{
 		$("#register-repass").addClass("checked");
+	}
 	else $("#register-repass").removeClass("checked");
 
 	$("#register-repass-message").text(registerRePasswordMessage);
 }
 
-//funkce kontrolující správně zadaný email při registraci
-function checkRegisterEmail() {
-	var registerEmailMessage;
-  	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+/**
+ * Funkce kontrolující správně zadaný email při registraci
+ * @returns True, pokud je email zadán správně, false, pokud je zadán špatně (nutné pro požadavek na kontrolu unikátnosti)
+ */
+function checkRegisterEmail()
+{
+	let registerEmailMessage;
+  	let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+	//tvar emailu se neshoduje s tvarem udaným regex výrazem
 	if ($("#register-email").val() != "" && !regex.test($("#register-email").val()))
-		registerEmailMessage = "Zadaný email má nesprávný tvar."
+	{
+		registerEmailMessage = "Zadaný email má nesprávný tvar.";
+	}
+
 	else registerEmailMessage= "";
+
 	$("#register-email-message").text(registerEmailMessage);
 
-	//používá jako podmínka zavolání funkce na kontrolu jedinečnosti jména
 	if (registerEmailMessage == "") return true;
-	else {
+	else
+	{
 		$("#register-email").removeClass("checked");
 		return false;
 	}
 }
 
-//funkce kontrolující správně zadaný email při obnově hesla
-function checkRecoveryEmail() {
-	var recoveryEmailMessage;
-  	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+/**
+ * Funkce kontrolující správně zadaný email při obnově hesla
+ */
+function checkRecoveryEmail()
+{
+	let recoveryEmailMessage;
+  	let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	
+	//email není vyplněn
 	if ($("#password-recovery-email").val().length == 0)
-		recoveryEmailMessage = "Email musí být vyplněn."
+	{
+		recoveryEmailMessage = "Email musí být vyplněn.";
+	}
+	//tvar emailu se neshoduje s tvarem udaným regex výrazem
 	else if ($("#password-recovery-email").val() != "" && !regex.test($("#password-recovery-email").val()))
-		recoveryEmailMessage = "Zadaný email má nesprávný tvar."
+	{
+		recoveryEmailMessage = "Zadaný email má nesprávný tvar.";
+	}
+
 	else recoveryEmailMessage= "";
+
 	$("#password-recovery-email-message").text(recoveryEmailMessage);
 }
 
-//zasunutí cookies alertu
-function hideCookiesAlert(){
+/**
+ * Funkce zasouvající cookies alert
+ */
+function hideCookiesAlert()
+{
 	$("#cookies-alert").removeClass("show");
 }
 
-//zobrazení/skrytí back-to-top tlačítka podle toho, kolik je odscrollováno
 var documentHeight = $(window).height();
 var scrollOffset = 50;
-function showScrollButton(event) {
-	var scrolled = $(window).scrollTop();
-	if (scrolled > (documentHeight + scrollOffset)) {
-		$("#back-to-top").addClass("show");
+/**
+ * Funkce zobrazující/skrývající back to top tlačítko podle toho, kolik je odscrollováno
+ */
+function showScrollButton()
+{
+	let scrolled = $(window).scrollTop();
+
+	if (scrolled > (documentHeight + scrollOffset))
+	{
+		$("#back-to-top-button").addClass("show");
 	}
-	else if (scrolled <= (documentHeight + scrollOffset)) {
-		$("#back-to-top").removeClass("show");
+	else if (scrolled <= (documentHeight + scrollOffset))
+	{
+		$("#back-to-top-button").removeClass("show");
 	}
 }
 
-//zobrazení login sekce
-function showLoginSection(e) {
-	if(!$("#index-login-section").hasClass("show")) {
+/**
+ * Funkce zobrazující login sekci
+ * @param {event} event 
+ */
+function showLoginSection(event)
+{
+	if (!$("#index-login-section").hasClass("show"))
+	{
 		$("#index-login-section").addClass("show");
-		$(".overlay").addClass("show");
+		$("#overlay").addClass("show");
 		$("body").css("overflowY", "hidden");
 	}
-	if ($(e.target).hasClass("show-login-section-login-button"))
-		showLoginDiv('login');
-	else if ($(e.target).hasClass("show-login-section-register-button"))
-		showLoginDiv('register');
-	else if ($(e.target).hasClass("show-login-section-password-recovery-button"))
-		showLoginDiv('password-recovery');
+
+	if ($(event.target).hasClass("show-login-section-login-button"))
+	{
+		showLoginDiv($("#login"));
+	}
+	else if ($(event.target).hasClass("show-login-section-register-button"))
+	{
+		showLoginDiv($("#register"));
+	}
+	else if ($(event.target).hasClass("show-login-section-password-recovery-button"))
+	{
+		showLoginDiv($("#password-recovery"));
+	}
 }
 
-//zobrazení požadované části v login sekci
-function showLoginDiv(divId) {
+/**
+ * Funkce zobrazující požadovanou část login sekce
+ * @param {jQuery objekt} $loginSectionDiv Část, kterou chce uživatel zobrazit
+ */
+function showLoginDiv($loginSectionDiv)
+{
 	$("#register").hide();
 	$("#login").hide();
 	$("#password-recovery").hide();
-	$("#" + divId).show();
-	$("#" + divId + " .text-field").first().focus();
-	emptyForms(".user-data input.text-field, .user-data .message");
+	$loginSectionDiv.show();
+	$loginSectionDiv.find(".text-field").first().focus();
+
+	emptyForms($(".user-data .text-field, .user-data .message"));
 }
 
-//skrytí login sekce
-function hideLoginSection() {
+/**
+ * Funkce skrývající login sekci
+ */
+function hideLoginSection()
+{
 	$("#index-login-section").removeClass("show");
-	$(".overlay").removeClass("show");
+	$("#overlay").removeClass("show");
 	$("body").css("overflowY", "auto");
-	emptyForms(".user-data input.text-field, .user-data .message");
+
+	emptyForms($(".user-data .text-field, .user-data .message"));
 }
 
-//přihlášení pod demo účtem (kliknutí na tlačítko "Vyzkoušet demo")
-function demoLogin() {
+/**
+ * Funkce přihlašující uživatele pod demo účtem
+ */
+function demoLogin()
+{
     $("#login-name").val("Demo");
     $("#login-pass").val("6F{1NPL#/p[O-y25JkKeOp2N7MLN@p}"); 
     $("#login-persist").prop("checked", false);
     $("#login-form").submit();
 }
 
-//vymaže obsah textových polí ve formuláři
-function emptyForms(fields) {
-	var formTextFields = [];
-	formTextFields = $(fields);
-	formTextFields.val('');
-	formTextFields.text('');
+/**
+ * Funkce mazající obsah všech textových polí ve formuláři
+ * @param {jQuery objekt} $fields 
+ */
+function emptyForms($fields)
+{
+	$fields.val('');
+	$fields.text('');
 }
 
-//detekce kliknutí mimo login sekci
-function mouseUpChecker(e) {
-	var container = $("#index-login-section");
-	var cookiesAlert = $("#cookies-alert");
+/**
+ * Funkce skrývající login sekci, pokud bylo kliknuto mimo
+ * @param {event} event 
+ */
+function mouseUpChecker(event)
+{
+	let $container = $("#index-login-section");
+	let $cookiesAlert = $("#cookies-alert");
 
-	if (!container.is(e.target) && !cookiesAlert.is(e.target) && container.has(e.target).length === 0 && cookiesAlert.has(e.target).length === 0)
+	//nebylo kliknuto na login sekci nebo na cookies alert
+	if (!$container.is(event.target) && !$cookiesAlert.is(event.target) && $container.has(event.target).length === 0 && $cookiesAlert.has(event.target).length === 0)
 	{
 		hideLoginSection();
 	}
@@ -285,7 +460,9 @@ function enqueueAjaxRequest(request)
 	}
 }
 
-//Funkce odesílající první AJAX požadavek ve frontě, tato funkce by se neměla volat přímo
+/**
+ * Funkce odesílající první AJAX požadavek ve frontě, tato funkce by se neměla volat přímo
+ */
 function sendAjaxRequest()
 {
 	let request = ajaxRequestsQueue[0]; //Načti údaje o požadavku
@@ -302,7 +479,14 @@ function sendAjaxRequest()
 	);
 }
 
-//Funkce zpracovávající odpověď na AJAX požadavek pro zjištění, zda je dané jméno nebo e-mail unikátní
+/**
+ * Funkce zpracovávající odpověď na AJAX požadavek pro zjištění, zda je dané jméno nebo e-mail unikátní
+ * @param {string} messageType Typ hlášky
+ * @param {string} message Text hlášky
+ * @param {string} data Dodatečná data
+ * @param {bool} shouldBeUnique True, pokud má být obsah daného textového pole v celé databázi unikátní
+ * @param {jQuery objekt} $inputElement Posuzované textové pole
+ */
 function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inputElement)
 {
 	if (messageType === "success")
@@ -311,10 +495,15 @@ function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inp
 		{
 			//zobrazení chybové hlášky
 			$inputElement.removeClass("checked");
+
 			if ($inputElement[0] === $("#register-name")[0])
-				$("#register-name-message").text("Toto jméno už používá jiný uživatel.")
+			{
+				$("#register-name-message").text("Toto jméno už používá jiný uživatel.");
+			}
 			else if ($inputElement[0] === $("#register-email")[0])
+			{
 				$("#register-email-message").text("Tento email už používá jiný uživatel.")
+			}
 		}
 		else
 		{
@@ -324,34 +513,39 @@ function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inp
 	}
 }
 
-//Funkce volaná při odeslání jakéhokoli formuláře, která z něj načte data a zařadí AJAX požadavek, který je odešle
+/**
+ * Funkce volaná při odeslání jakéhokoli formuláře, která z něj načte data a zařadí AJAX požadavek, který je odešle
+ * @param {event} event 
+ * @returns TODO
+ */
 function formSubmitted(event)
 {
 	event.preventDefault();
 
-	var formId = event.target.id;
-	var type = $("#"+formId).find('*').filter(':input:first').val();	//Hodnota prvního <input> prvku (identifikátor formuláře)
-	var name = "";
-	var pass = "";
-	var repass = "";
-	var email = "";
-	var stayLogged = "";
+	let formId = event.target.id;
+	let type = $("#"+formId).find('*').filter(':input:first').val();	//Hodnota prvního <input> prvku (identifikátor formuláře)
+	let name = "";
+	let pass = "";
+	let repass = "";
+	let email = "";
+	let stayLogged = "";
+
 	switch (type)
 	{
-		//Přihlašovací formulář
+		//přihlašovací formulář
 		case 'l':
 			name = $("#login-name").val();
 			pass = $("#login-pass").val();
 			stayLogged = $("#login-persist").is(":checked");
 			break;
-		//Registrační formulář
+		//registrační formulář
 		case 'r':
 			name = $("#register-name").val();
 			pass = $("#register-pass").val();
 			repass = $("#register-repass").val();
 			email = $("#register-email").val();
 			break;
-		//Formulář pro obnovu hesla
+		//formulář pro obnovu hesla
 		case 'p':
 			email = $("#password-recovery-email").val();
 			break;
@@ -376,15 +570,22 @@ function formSubmitted(event)
 	);
 }
 
-//Funkce zpracovávající odpověď na AJAX požadavek odesílající data z odeslaného formuláře
+/**
+ * Funkce zpracovávající odpověď na AJAX požadavek odesílající data z odeslaného formuláře
+ * @param {string} messageType Typ hlášky
+ * @param {string} message Text hlášky
+ * @param {string} data Dodatečná data
+ */
 function serverResponse(messageType, message, data)
 {
-	var errors = message.replaceAll("|", ". ");
-	if (!errors.endsWith(".")) {
+	let errors = message.replaceAll("|", ". ");
+	if (!errors.endsWith("."))
+	{
 		errors = errors.concat(".");
 	}
 
-	switch(data.origin) {
+	switch(data.origin)
+	{
 		case "login":
 			$("#login-server-message").text(errors);
 			break;

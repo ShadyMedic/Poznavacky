@@ -67,14 +67,16 @@ header {
 	min-height: 3.2rem;
 	background: $greenDark;
 	.logo {
-		@media screen and (min-width: $smallTablet) {
+		margin-left: 0.6rem;
+		display: flex;
+		img {
 			margin: 0;
-			height: 100%;
+			height: 2rem;
+			margin: 0.4rem 0.4rem 0.4rem 0;
 		}
 		h1 {
 			font-size: 2rem;
 			line-height: 2.8rem;
-			letter-spacing: -0.08em;
 			color: white;
 			margin: 0;
 		}
@@ -106,6 +108,43 @@ header {
 		background: $red1;
 	}
 }
+#popups {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: none;
+	pointer-events: none;
+	z-index: 10;
+}
+.confirm-item {
+	position: fixed;
+	border: solid 2px $red1;
+	box-shadow: 0px 0px 4px 2px rgba(black, 0.2);
+	top: 40%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	width: 90vw;
+	max-width: 520px;
+	height: fit-content;
+	padding: 1rem;
+	border-radius: 0.6rem;
+	pointer-events: auto;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	p {
+		text-align: justify;
+	}
+	.buttons {
+		margin-top: 0.6rem;
+		display: flex;
+		justify-content: flex-end;
+		> * {
+			margin-left: 1rem;
+		}
+	}
+}
 
 footer {
 	color: white;
@@ -133,9 +172,9 @@ footer {
 
 }
 
-.overlay {
+#overlay {
 	position: fixed;
-	z-index: 4;
+	z-index: 9;
 	width: 100vw;
 	height: 100vh;
 	background: rgba(black, 0.6);
@@ -180,6 +219,10 @@ h5 {
 	&:hover {
 		cursor: pointer;
 	}
+	&.disabled {
+		pointer-events: none;
+		cursor: auto;
+	}
 	&.border-btn {
 		display: inline-block;
 		text-align: center;
@@ -205,8 +248,6 @@ h5 {
 					background: #888;
 					border-color: #888;
 					color: #ddd;
-					pointer-events: none;
-					cursor: auto;
 					> img {
 						filter: grayscale(50%);
 					}
@@ -235,6 +276,10 @@ h5 {
 				border: 2px solid $black1;
 				&:after {
 					background: rgba(black, 0.06);
+				}
+				&.disabled {
+					border-color: #888;
+					color: #888;
 				}
 			}
 		}
@@ -281,8 +326,7 @@ h5 {
 			top: 0.12em;
 			transition: transform 0.2s ease-out;
 		}
-		&:hover,
-		&:focus {
+		&:hover{
 			transform: translateX(-0.16em);
 			img {
 				transform: translateX(0.32em);
@@ -313,8 +357,6 @@ h5 {
 			width: 100%;
 		}
 		&.disabled {
-			pointer-events: none;
-			cursor: auto;
 			> img {
 				filter: grayscale(100%);
 			}
@@ -381,6 +423,7 @@ textarea {
 
 textarea {
 	resize: vertical;
+	min-height: 2.2rem;
 }
 
 label {

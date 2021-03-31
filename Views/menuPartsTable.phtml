@@ -6,27 +6,25 @@
 	</div>
 	<ul class="rows">
 	<?php foreach ($table as $tableRow) : ?>
-		<button class="btn display-buttons-button"><li>
+		<button class="btn display-buttons-button"><li <?php if ($tableRow[1] === '0') : ?>class="empty"<?php endif ?>>
     		<h4 class="col1"><?= $tableRow[0] ?></h4>
-			<span class="col2">
-				<span class="tiles">přírodnin: </span>
-				<span><?= $tableRow[1] ?></span>
-			</span>
-			<span class="col3">
-				<span class="tiles">obrázků: </span>
-				<span><?= $tableRow[2] ?></span>
-			</span>
+				<span class="col2">
+					<span class="tiles">přírodnin: </span>
+					<span><?= $tableRow[1] ?></span>
+				</span>
+				<span class="col3">
+					<span class="tiles">obrázků: </span>
+					<span><?= $tableRow[2] ?></span>
+				</span>
             <?php if ($tableRow[1] > 0) : ?>
             <div class="buttons">
                 <a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn transparent black border-btn">Přidat obrázky</a>
-                <a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent black border-btn">Učit se</a>
-                <a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent black border-btn">Vyzkoušet se</a>
+                <a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Učit se</a>
+                <a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Vyzkoušet se</a>
             </div>
             <?php endif ?>
             <?php if ($tableRow[1] === '0') : ?>
-                <div>
-                    <span>Pro používání této části do ní musí být nejprve přidány přírodniny</span>
-                </div>
+                <div class="part-info">Pro používání této části do ní musí být nejprve přidány přírodniny</div>
             <?php endif ?>
 		</li></button>
 	<?php endforeach; ?>

@@ -1,6 +1,8 @@
 @import url(//fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Ubuntu);
 @import "_reset.scss";
 @import "_variables.scss";
+@import "_generic.scss";
 
 * {
 	margin: 0;
@@ -10,23 +12,46 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 header {
+	background: none;
+	.error-img {
+		width: 90vw;
+		max-width: 280px;
+		display: block;
+		margin: 1rem auto;
+	}
     h1 {
-        font-size: 1.6rem;
-        margin: 1em;
+        font-size: 2rem;
+        margin: 1em 0;
+		text-align: center;
         .error-code {
             color: $red1;
-            font-family: 'Consolas', 'Courier New', Courier, monospace;
         }
     }
 }
 
 main {
+	width: 95vw;
+	max-width: 800px;
+	margin: auto;
     h2 {
         font-size: 1.2rem;
-        margin: 1em;
+        margin: 1em 0;
     }
+	ul li {
+		list-style-type: circle;
+		padding-left: 0.4rem;
+		margin-left: 1.2rem;
+	}
+	a {
+		color: $black1;
+		font-weight: bold;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }

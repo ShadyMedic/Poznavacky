@@ -1,4 +1,3 @@
-//vše, co se děje po načtení stránky
 $(function()
 {
 	//event listenery tlačítek
@@ -17,48 +16,60 @@ $(function()
 	$("#delete-account-cancel-button, #delete-account-final-cancel-button").click(function() {deleteAccountCancel()})
 })
 
-//vše, co se děje při změně velikosti okna
-$(window).resize(function() {
-})
-
-function changeNameCancel() {
+/**
+ * Funkce rušící změnu jména
+ */
+function changeNameCancel()
+{
 	$("#change-name-button").show()
 	$("#change-name").closest(".user-data-item").find(".user-property-value").show();
 	$("#change-name").hide();
-	$("#change-name-new").val("");
+	$("#change-name .text-field").val("");
 }
 
-function changePasswordCancel() {
+/**
+ * Funkce rušící změnu hesla
+ */
+function changePasswordCancel()
+{
 	$("#change-password-button").show()
 	$("#change-password").closest(".user-data-item").find(".user-property-value").show();
 	$("#change-password").hide();
-	$("#change-password-old").val("");
-	$("#change-password-new").val("");
-	$("#change-password-re-new").val("");
+	$("#change-password .text-field").val("");
 }
 
-function changeEmailCancel() {
+/**
+ * Funkce rušící změnu emailu
+ */
+function changeEmailCancel()
+{
 	$("#change-email-button").show()
 	$("#change-email").closest(".user-data-item").find(".user-property-value").show();
 	$("#change-email").hide();
-	$("#change-email-password").val("");
-	$("#chabge-email-new").val("");
+	$("#change-email .text-field").val("");
 }
 
+/**
+ * Funkce zahajující žádost o změnu jména
+ */
 function changeName()
 {
 	$("#change-name-button").hide()
 	$("#change-name").closest(".user-data-item").find(".user-property-value").hide();
 	$("#change-name").show();
 	$("#change-name-new").focus();
+
 	changePasswordCancel();
 	changeEmailCancel();
 	deleteAccountCancel();
 }
 
+/**
+ * Funkce potvrzující žádost o změnu jména
+ */
 function changeNameConfirm()
 {
-	var newName = $("#change-name-new").val();
+	let newName = $("#change-name-new").val();
 	newName = encodeURIComponent(newName);
 	
 	$.post("menu/account-update",
@@ -74,12 +85,9 @@ function changeNameConfirm()
 					if (messageType === "success")
 					{
 						//Reset HTML
-						$("#change-name-new").val("");
-						$("#change-name").hide();
-						$("#change-name-button").show();
+						changeNameCancel();
 					}
-					
-					evaluateResponse(messageType, message, data);
+					newMessage(message, messageType);
 				}
 			);
 		},
@@ -87,24 +95,29 @@ function changeNameConfirm()
 	);
 }
 
-/*-----------------------------------------------------------------------------*/
-
+/**
+ * Funkce zahajující změnu hesla
+ */
 function changePassword()
 {
 	$("#change-password-button").hide()
 	$("#change-password").closest(".user-data-item").find(".user-property-value").hide();
 	$("#change-password").show();
 	$("#change-password-old").focus();
+
 	changeNameCancel();
 	changeEmailCancel();
 	deleteAccountCancel();
 }
 
+/**
+ * Funkce potvrzující změnu hesla
+ */
 function changePasswordConfirm()
 {
-	var oldPass = $("#change-password-old").val();
-	var newPass = $("#change-password-new").val();
-	var rePass = $("#change-password-re-new").val();
+	let oldPass = $("#change-password-old").val();
+	let newPass = $("#change-password-new").val();
+	let rePass = $("#change-password-re-new").val();
 	
 	oldPass = encodeURIComponent(oldPass);
 	newPass = encodeURIComponent(newPass);
@@ -132,9 +145,8 @@ function changePasswordConfirm()
 						//Výmaz nového hesla a zobrazení pole pro nové heslo poprvé
 						$("#change-password-new").val("");
 						$("#change-password-re-new").val("");
-					}
-					
-					evaluateResponse(messageType, message, data);
+					}				
+					newMessage(message, messageType);
 				}
 			);
 		},
@@ -142,33 +154,48 @@ function changePasswordConfirm()
 	);
 }
 
-/*-----------------------------------------------------------------------------*/
-
+/**
+ * Funkce zahajující změnu emailu
+ */
 function changeEmail()
 {
 	$("#change-email-button").hide()
 	$("#change-email").closest(".user-data-item").find(".user-property-value").hide();
 	$("#change-email").show();
 	$("#change-email-password").focus();
+
 	changeNameCancel();
 	changePasswordCancel();
 	deleteAccountCancel();
 }
 
+/**
+ * Funkce potvrzující změnu emailu
+ */
 function changeEmailConfirm()
 {
-	var password = $("#change-email-password").val();
-	var newEmail = $("#change-email-new").val();
+	let password = $("#change-email-password").val();
+	let newEmail = $("#change-email-new").val();
 	
 	if (newEmail.length == 0)
 	{
-		//TODO - zkus vymyslet, jak tohle provést bez popupu
-		if (!confirm("Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.")){return;}
+		let confirmMessage = "Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.";
+		newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm)
+		{
+			if (confirm) changeEmailFinal(password, newEmail);
+			else return;
+		});	
 	}
-	
-	newEmail = encodeURIComponent(newEmail);
-	var pass = $("#change-email-password").val();
-	
+	else changeEmailFinal(password, newEmail);
+}
+
+/**
+ * Funkce odesílající požadavek na změnu emailu, pokud byla změna potvrzena
+ * @param {string} password Heslo uživatele
+ * @param {string} newEmail Nový email uživatele
+ */
+function changeEmailFinal(password, newEmail)
+{
 	$.post("menu/account-update",
 		{
 			action: "change email",
@@ -177,7 +204,8 @@ function changeEmailConfirm()
 		},
 		function (response, code){
 			ajaxCallback(response, code,
-				function (messageType, message, data) {
+				function (messageType, message, data)
+				{
 					//Funkce zajišťující změnu e-mailu v DOM v případě úspěšné změny
 					if (messageType === 'success')
 					{
@@ -186,7 +214,7 @@ function changeEmailConfirm()
 						//Reset HTML
 						changeEmailCancel();
 					}
-					evaluateResponse(messageType, message, data);
+					newMessage(message, messageType);
 				}
 			);
 		},
@@ -194,13 +222,9 @@ function changeEmailConfirm()
 	);
 }
 
-function updateEmail(newEmail)
-{
-	$("#email-address").innerHTML = newEmail;
-}
-
-/*-----------------------------------------------------------------------------*/
-
+/**
+ * Funkce zahajující odstranění účtu
+ */
 function deleteAccount()
 {
 	$("#delete-account-button").hide();
@@ -211,14 +235,18 @@ function deleteAccount()
 		behavior: 'smooth',
 		block: "start" 
 	});
+
 	changeNameCancel();
 	changePasswordCancel();
 	changeEmailCancel();
 }
 
+/**
+ * Funkce ověřující heslo uživatele při odstraňování účtu
+ */
 function deleteAccountVerify()
 {
-	var password = $("#delete-account-password").val();
+	let password = $("#delete-account-password").val();
 	
 	$.post("menu/account-update",
 		{
@@ -230,6 +258,12 @@ function deleteAccountVerify()
 	);
 }
 
+/**
+ * Funkce zobrazující druhou fázi odstranění účtu v případě ověřeného hesla, v opačném případě zobrazující chybovou hlášku
+ * @param {string} messageType Typ hlášky
+ * @param {string} message Text hlášky
+ * @param {string} data Dodatečná data
+ */
 function deleteAccountConfirm(messageType, message, data)
 {
 	if (data.verified === true)
@@ -240,14 +274,16 @@ function deleteAccountConfirm(messageType, message, data)
 	else
 	{
 		$("#delete-account-message").text(message);
-		
 		$("#delete-account-password").val("");
 	}
 }
 
+/**
+ * Funkce odesílající požadavek na odstranění účtu
+ */
 function deleteAccountFinal()
 {
-	var password = $("#delete-account-password").val();
+	let password = $("#delete-account-password").val();
 	
 	$.post("menu/account-update",
 		{
@@ -264,8 +300,7 @@ function deleteAccountFinal()
 						//Uvedení HTML do původního stavu (má smysl pouze v případě selhání)
 						deleteAccountCancel();
 					}
-					
-					evaluateResponse(messageType, message, data);
+					newMessage(message, messageType);
 				}
 			)
 		},
@@ -273,6 +308,9 @@ function deleteAccountFinal()
 	);
 }
 
+/**
+ * Funkce rušící odstranění účtu
+ */
 function deleteAccountCancel()
 {
 	$("#delete-account-password").val("");
@@ -280,19 +318,4 @@ function deleteAccountCancel()
 	$("#delete-account").hide();
 	$("#delete-account2").hide();
 	$("#delete-account-message").text("");
-}
-
-/**
- * Funkce vyhodocující odpověď serveru
- */
-function evaluateResponse(messageType, message, data)
-{	
-	//Zobrazení hlášky
-	//messageType = success / info / warning / error
-	//message Chybová nebo úspěchová hláška
-	//data = Další informace, pod data.origin je název akce, která vyvolala AJAX požadavek
-	
-	//console.log("["+messageType+" - " + data.origin + "] " + message);
-
-	newMessage(message, messageType);
 }

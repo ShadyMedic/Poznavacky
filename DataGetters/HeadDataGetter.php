@@ -10,6 +10,7 @@ class HeadDataGetter implements DataGetter
     public function get(): array
     {
         $result = array();
+        $result['displayOverlay'] = false; //Defaultní hodnota, v případě potřeby zobrazení je přepsáno v definitivním kontroleru
         $result['messages'] = $this->getMessages();
         $result['currentYear'] = date('Y');
         return $result;

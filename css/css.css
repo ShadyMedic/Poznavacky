@@ -130,17 +130,22 @@ header {
   background: #366e11;
 }
 
-@media screen and (min-width: 672px) {
-  header .logo {
-    margin: 0;
-    height: 100%;
-  }
+header .logo {
+  margin-left: 0.6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+header .logo img {
+  margin: 0;
+  height: 2rem;
+  margin: 0.4rem 0.4rem 0.4rem 0;
 }
 
 header .logo h1 {
   font-size: 2rem;
   line-height: 2.8rem;
-  letter-spacing: -0.08em;
   color: white;
   margin: 0;
 }
@@ -179,6 +184,61 @@ header .logo h1 {
 
 #messages .error-message {
   background: #a00;
+}
+
+#popups {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: none;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.confirm-item {
+  position: fixed;
+  border: solid 2px #a00;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: white;
+  width: 90vw;
+  max-width: 520px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  pointer-events: auto;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.confirm-item p {
+  text-align: justify;
+}
+
+.confirm-item .buttons {
+  margin-top: 0.6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.confirm-item .buttons > * {
+  margin-left: 1rem;
 }
 
 footer {
@@ -223,9 +283,9 @@ footer .content a:after {
   background: white;
 }
 
-.overlay {
+#overlay {
   position: fixed;
-  z-index: 4;
+  z-index: 9;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
@@ -235,7 +295,7 @@ footer .content a:after {
   transition: opacity 0.32s ease-out;
 }
 
-.overlay.show {
+#overlay.show {
   opacity: 1;
 }
 
@@ -281,6 +341,11 @@ h5 {
   cursor: pointer;
 }
 
+.btn.disabled {
+  pointer-events: none;
+  cursor: auto;
+}
+
 .btn.border-btn {
   display: inline-block;
   text-align: center;
@@ -312,8 +377,6 @@ h5 {
   background: #888;
   border-color: #888;
   color: #ddd;
-  pointer-events: none;
-  cursor: auto;
 }
 
 .btn.border-btn.non-transparent.black.disabled > img {
@@ -351,6 +414,11 @@ h5 {
 
 .btn.border-btn.transparent.black:after {
   background: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.transparent.black.disabled {
+  border-color: #888;
+  color: #888;
 }
 
 .btn.border-btn.rounded {
@@ -415,12 +483,12 @@ h5 {
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
 }
 
-.btn.arrow-btn:hover, .btn.arrow-btn:focus {
+.btn.arrow-btn:hover {
   -webkit-transform: translateX(-0.16em);
           transform: translateX(-0.16em);
 }
 
-.btn.arrow-btn:hover img, .btn.arrow-btn:focus img {
+.btn.arrow-btn:hover img {
   -webkit-transform: translateX(0.32em);
           transform: translateX(0.32em);
 }
@@ -456,11 +524,6 @@ h5 {
   transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
   height: 100%;
   width: 100%;
-}
-
-.btn.icon.disabled {
-  pointer-events: none;
-  cursor: auto;
 }
 
 .btn.icon.disabled > img {
@@ -539,6 +602,7 @@ textarea.text-field.disabled {
 
 textarea {
   resize: vertical;
+  min-height: 2.2rem;
 }
 
 label {
@@ -753,7 +817,8 @@ label.required:after {
 #members,
 #tests,
 #edit-group,
-#resolve-reports {
+#resolve-reports,
+#naturals {
   min-width: 100%;
   height: 100%;
   scrollbar-color: #444 #222;
@@ -772,7 +837,8 @@ label.required:after {
 #members::-webkit-scrollbar,
 #tests::-webkit-scrollbar,
 #edit-group::-webkit-scrollbar,
-#resolve-reports::-webkit-scrollbar {
+#resolve-reports::-webkit-scrollbar,
+#naturals::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
@@ -786,7 +852,8 @@ label.required:after {
 #members::-webkit-scrollbar-thumb,
 #tests::-webkit-scrollbar-thumb,
 #edit-group::-webkit-scrollbar-thumb,
-#resolve-reports::-webkit-scrollbar-thumb {
+#resolve-reports::-webkit-scrollbar-thumb,
+#naturals::-webkit-scrollbar-thumb {
   background: #444;
 }
 
@@ -799,7 +866,8 @@ label.required:after {
 #members::-webkit-scrollbar-track,
 #tests::-webkit-scrollbar-track,
 #edit-group::-webkit-scrollbar-track,
-#resolve-reports::-webkit-scrollbar-track {
+#resolve-reports::-webkit-scrollbar-track,
+#naturals::-webkit-scrollbar-track {
   background: #222;
 }
 
@@ -813,7 +881,8 @@ label.required:after {
   #members,
   #tests,
   #edit-group,
-  #resolve-reports {
+  #resolve-reports,
+  #naturals {
     height: 100vh;
     overflow: hidden;
   }
@@ -828,7 +897,8 @@ label.required:after {
 #members .container,
 #tests .container,
 #edit-group .container,
-#resolve-reports .container {
+#resolve-reports .container,
+#naturals .container {
   position: relative;
 }
 
@@ -842,7 +912,8 @@ label.required:after {
   #members .container,
   #tests .container,
   #edit-group .container,
-  #resolve-reports .container {
+  #resolve-reports .container,
+  #naturals .container {
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
     -ms-grid-rows: auto auto 1fr auto auto;
@@ -859,7 +930,8 @@ label.required:after {
 #members header,
 #tests header,
 #edit-group header,
-#resolve-reports header {
+#resolve-reports header,
+#naturals header {
   position: fixed;
   width: 100%;
   top: 0;
@@ -871,49 +943,9 @@ label.required:after {
       grid-template-columns: auto auto 1fr;
   -ms-grid-rows: auto auto;
       grid-template-rows: auto auto;
-  /*
-		> * {
-			margin: 0.2rem 1rem;
-			@media screen and (min-width: $desktop) {
-				margin: 0.2rem 0.8rem;
-			}
-		}*/
-  /*
-		.logo {
-			display: flex;
-			@media screen and (min-width: $smallTablet) {
-				margin: 0;
-				padding: 0.2rem 0.8rem;
-				height: 100%;
-			}
-			h1 {
-				font-size: 2rem;
-				letter-spacing: -0.08em;
-				color: white;
-				margin: 0;
-			}
-		}*/
 }
 
-#menu header .logo,
-#learn header .logo,
-#test header .logo,
-#add-pictures header .logo,
-#account-settings header .logo,
-#manage header .logo,
-#members header .logo,
-#tests header .logo,
-#edit-group header .logo,
-#resolve-reports header .logo {
-  -ms-grid-row: 2;
-  -ms-grid-row-span: 1;
-  grid-row: 2/3;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 3;
-  grid-column: 1/4;
-}
-
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 420px) {
   #menu header,
   #learn header,
   #test header,
@@ -923,7 +955,8 @@ label.required:after {
   #members header,
   #tests header,
   #edit-group header,
-  #resolve-reports header {
+  #resolve-reports header,
+  #naturals header {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -948,7 +981,8 @@ label.required:after {
   #members header,
   #tests header,
   #edit-group header,
-  #resolve-reports header {
+  #resolve-reports header,
+  #naturals header {
     position: relative;
   }
 }
@@ -963,10 +997,63 @@ label.required:after {
   #members header,
   #tests header,
   #edit-group header,
-  #resolve-reports header {
+  #resolve-reports header,
+  #naturals header {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
+  }
+}
+
+#menu header .logo,
+#learn header .logo,
+#test header .logo,
+#add-pictures header .logo,
+#account-settings header .logo,
+#manage header .logo,
+#members header .logo,
+#tests header .logo,
+#edit-group header .logo,
+#resolve-reports header .logo,
+#naturals header .logo {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  margin-left: 0rem;
+}
+
+@media screen and (min-width: 420px) {
+  #menu header .logo,
+  #learn header .logo,
+  #test header .logo,
+  #add-pictures header .logo,
+  #account-settings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #edit-group header .logo,
+  #resolve-reports header .logo,
+  #naturals header .logo {
+    margin-left: 1rem;
+  }
+}
+
+@media screen and (min-width: 672px) {
+  #menu header .logo,
+  #learn header .logo,
+  #test header .logo,
+  #add-pictures header .logo,
+  #account-settings header .logo,
+  #manage header .logo,
+  #members header .logo,
+  #tests header .logo,
+  #edit-group header .logo,
+  #resolve-reports header .logo,
+  #naturals header .logo {
+    margin-left: 0.6rem;
   }
 }
 
@@ -979,8 +1066,9 @@ label.required:after {
 #members header .btn.icon,
 #tests header .btn.icon,
 #edit-group header .btn.icon,
-#resolve-reports header .btn.icon {
-  margin: 0.2rem 1rem 0.2rem 0;
+#resolve-reports header .btn.icon,
+#naturals header .btn.icon {
+  margin: 0.4rem 1rem 0.4rem 0;
   height: 32px;
   width: 32px;
 }
@@ -995,7 +1083,8 @@ label.required:after {
   #members header .btn.icon,
   #tests header .btn.icon,
   #edit-group header .btn.icon,
-  #resolve-reports header .btn.icon {
+  #resolve-reports header .btn.icon,
+  #naturals header .btn.icon {
     display: none;
   }
 }
@@ -1009,7 +1098,8 @@ label.required:after {
 #members header .btn.icon > img,
 #tests header .btn.icon > img,
 #edit-group header .btn.icon > img,
-#resolve-reports header .btn.icon > img {
+#resolve-reports header .btn.icon > img,
+#naturals header .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -1023,7 +1113,8 @@ label.required:after {
 #members header .btn.icon:last-child,
 #tests header .btn.icon:last-child,
 #edit-group header .btn.icon:last-child,
-#resolve-reports header .btn.icon:last-child {
+#resolve-reports header .btn.icon:last-child,
+#naturals header .btn.icon:last-child {
   margin-left: auto;
   margin-right: 0;
 }
@@ -1037,7 +1128,8 @@ label.required:after {
 #members header .btn.icon:active,
 #tests header .btn.icon:active,
 #edit-group header .btn.icon:active,
-#resolve-reports header .btn.icon:active {
+#resolve-reports header .btn.icon:active,
+#naturals header .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -1051,7 +1143,8 @@ label.required:after {
 #members aside,
 #tests aside,
 #edit-group aside,
-#resolve-reports aside {
+#resolve-reports aside,
+#naturals aside {
   display: none;
   width: 64px;
   -ms-grid-row: 2;
@@ -1074,7 +1167,8 @@ label.required:after {
   #members aside,
   #tests aside,
   #edit-group aside,
-  #resolve-reports aside {
+  #resolve-reports aside,
+  #naturals aside {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1094,7 +1188,8 @@ label.required:after {
 #members aside .btn.icon,
 #tests aside .btn.icon,
 #edit-group aside .btn.icon,
-#resolve-reports aside .btn.icon {
+#resolve-reports aside .btn.icon,
+#naturals aside .btn.icon {
   margin: 1rem auto;
   height: 32px;
   width: 32px;
@@ -1109,7 +1204,8 @@ label.required:after {
 #members aside .btn.icon > img,
 #tests aside .btn.icon > img,
 #edit-group aside .btn.icon > img,
-#resolve-reports aside .btn.icon > img {
+#resolve-reports aside .btn.icon > img,
+#naturals aside .btn.icon > img {
   height: 100%;
   width: 100%;
 }
@@ -1123,7 +1219,8 @@ label.required:after {
 #members aside .btn.icon:last-child,
 #tests aside .btn.icon:last-child,
 #edit-group aside .btn.icon:last-child,
-#resolve-reports aside .btn.icon:last-child {
+#resolve-reports aside .btn.icon:last-child,
+#naturals aside .btn.icon:last-child {
   margin-top: auto;
 }
 
@@ -1136,7 +1233,8 @@ label.required:after {
 #members aside .btn.icon:active,
 #tests aside .btn.icon:active,
 #edit-group aside .btn.icon:active,
-#resolve-reports aside .btn.icon:active {
+#resolve-reports aside .btn.icon:active,
+#naturals aside .btn.icon:active {
   -webkit-transform: scale(0.88);
           transform: scale(0.88);
 }
@@ -1150,7 +1248,8 @@ label.required:after {
 #members .wrapper,
 #tests .wrapper,
 #edit-group .wrapper,
-#resolve-reports .wrapper {
+#resolve-reports .wrapper,
+#naturals .wrapper {
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
@@ -1167,7 +1266,8 @@ label.required:after {
   #members .wrapper,
   #tests .wrapper,
   #edit-group .wrapper,
-  #resolve-reports .wrapper {
+  #resolve-reports .wrapper,
+  #naturals .wrapper {
     padding: 1.6rem 2rem;
   }
 }
@@ -1182,7 +1282,8 @@ label.required:after {
   #members .wrapper,
   #tests .wrapper,
   #edit-group .wrapper,
-  #resolve-reports .wrapper {
+  #resolve-reports .wrapper,
+  #naturals .wrapper {
     padding: 2.4rem 3rem;
   }
 }
@@ -1196,7 +1297,8 @@ label.required:after {
 #members main,
 #tests main,
 #edit-group main,
-#resolve-reports main {
+#resolve-reports main,
+#naturals main {
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2/4;
@@ -1212,7 +1314,8 @@ label.required:after {
   #members main,
   #tests main,
   #edit-group main,
-  #resolve-reports main {
+  #resolve-reports main,
+  #naturals main {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2/3;
@@ -1229,7 +1332,8 @@ label.required:after {
   #members main::-webkit-scrollbar,
   #tests main::-webkit-scrollbar,
   #edit-group main::-webkit-scrollbar,
-  #resolve-reports main::-webkit-scrollbar {
+  #resolve-reports main::-webkit-scrollbar,
+  #naturals main::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
@@ -1242,7 +1346,8 @@ label.required:after {
   #members main::-webkit-scrollbar-thumb,
   #tests main::-webkit-scrollbar-thumb,
   #edit-group main::-webkit-scrollbar-thumb,
-  #resolve-reports main::-webkit-scrollbar-thumb {
+  #resolve-reports main::-webkit-scrollbar-thumb,
+  #naturals main::-webkit-scrollbar-thumb {
     background: #444;
   }
   #menu main::-webkit-scrollbar-track,
@@ -1254,7 +1359,8 @@ label.required:after {
   #members main::-webkit-scrollbar-track,
   #tests main::-webkit-scrollbar-track,
   #edit-group main::-webkit-scrollbar-track,
-  #resolve-reports main::-webkit-scrollbar-track {
+  #resolve-reports main::-webkit-scrollbar-track,
+  #naturals main::-webkit-scrollbar-track {
     background: #eee;
   }
 }
@@ -1268,7 +1374,8 @@ label.required:after {
 #members #messages,
 #tests #messages,
 #edit-group #messages,
-#resolve-reports #messages {
+#resolve-reports #messages,
+#naturals #messages {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -1286,7 +1393,8 @@ label.required:after {
   #members #messages,
   #tests #messages,
   #edit-group #messages,
-  #resolve-reports #messages {
+  #resolve-reports #messages,
+  #naturals #messages {
     position: relative;
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
@@ -1306,7 +1414,8 @@ label.required:after {
 #members footer,
 #tests footer,
 #edit-group footer,
-#resolve-reports footer {
+#resolve-reports footer,
+#naturals footer {
   -ms-grid-row: 4;
   -ms-grid-row-span: 1;
   grid-row: 4/5;
@@ -1322,7 +1431,8 @@ label.required:after {
   #members footer,
   #tests footer,
   #edit-group footer,
-  #resolve-reports footer {
+  #resolve-reports footer,
+  #naturals footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
@@ -1341,7 +1451,8 @@ label.required:after {
 #members h2,
 #tests h2,
 #edit-group h2,
-#resolve-reports h2 {
+#resolve-reports h2,
+#naturals h2 {
   font-size: 1.2rem;
   font-weight: normal;
   padding: 1.2rem 1rem 0.4rem 1rem;
@@ -1359,7 +1470,8 @@ label.required:after {
   #members h2,
   #tests h2,
   #edit-group h2,
-  #resolve-reports h2 {
+  #resolve-reports h2,
+  #naturals h2 {
     padding: 1.6rem 2rem 0 2rem;
   }
 }
@@ -1374,7 +1486,8 @@ label.required:after {
   #members h2,
   #tests h2,
   #edit-group h2,
-  #resolve-reports h2 {
+  #resolve-reports h2,
+  #naturals h2 {
     padding: 2rem 3rem 0 3rem;
   }
 }
@@ -1388,8 +1501,73 @@ label.required:after {
 #members h2 span:last-child,
 #tests h2 span:last-child,
 #edit-group h2 span:last-child,
-#resolve-reports h2 span:last-child {
+#resolve-reports h2 span:last-child,
+#naturals h2 span:last-child {
   font-weight: bold;
+}
+
+#menu #changelog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 10;
+  padding: 1.6rem;
+  background: white;
+  border-radius: 0.6rem;
+  border: 2px solid #366e11;
+  width: 95vw;
+  max-width: 600px;
+  height: auto;
+  overflow: hidden;
+}
+
+#menu #changelog .button-wrapper {
+  position: relative;
+}
+
+#menu #changelog .btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1.6rem;
+  width: 1.6rem;
+}
+
+#menu #changelog ul {
+  overflow-y: auto;
+  max-height: 60vh;
+  scrollbar-color: #444 white;
+  scrollbar-width: auto;
+}
+
+#menu #changelog ul::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#menu #changelog ul::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+#menu #changelog ul::-webkit-scrollbar-track {
+  background: white;
+}
+
+#menu #changelog h3 {
+  margin: 0 0 0.8rem 0;
+}
+
+#menu #changelog li {
+  list-style-type: circle;
+  padding-left: 0.4rem;
+  margin-left: 1.2rem;
+  padding-right: 0.6rem;
+}
+
+#menu #changelog li:not(:last-child) {
+  margin-bottom: 0.32rem;
 }
 
 #menu .folders * {
@@ -1617,6 +1795,11 @@ label.required:after {
   }
 }
 
+#menu .folders#menu-parts-table ul.rows li.empty .col2,
+#menu .folders#menu-parts-table ul.rows li.empty .col3 {
+  color: #a00;
+}
+
 #menu .folders#menu-parts-table ul.rows li .col1 {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
@@ -1694,6 +1877,37 @@ label.required:after {
   }
 }
 
+#menu .folders#menu-parts-table ul.rows li .part-info {
+  display: none;
+}
+
+#menu .folders#menu-parts-table ul.rows li .part-info.show {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0 0.4rem;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 4;
+  grid-column: 1/5;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-parts-table ul.rows li .part-info.show {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2/5;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  #menu .folders#menu-parts-table ul.rows li .part-info.show {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2/5;
+    text-align: right;
+  }
+}
+
 #menu .folders .table-title.rows {
   width: 100%;
   max-width: 780px;
@@ -1746,6 +1960,7 @@ label.required:after {
   display: grid;
   width: 100%;
   padding: 0.4rem;
+  min-height: 2.98rem;
   color: #101010;
 }
 
@@ -2027,6 +2242,19 @@ label.required:after {
   -o-object-fit: contain;
      object-fit: contain;
   border-radius: 3.2px;
+}
+
+#learn #learn-wrapper .picture #loading,
+#learn #test-wrapper .picture #loading,
+#test #learn-wrapper .picture #loading,
+#test #test-wrapper .picture #loading {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  bottom: 25%;
+  right: 25%;
+  -webkit-animation: rotation 2s infinite linear;
+          animation: rotation 2s infinite linear;
 }
 
 #learn .report-button,
@@ -2478,28 +2706,116 @@ label.required:after {
   }
 }
 
-#account-settings .user-data-section .user-data-item,
-#account-settings .user-data-section .class-data-item,
-#account-settings .class-data-section .user-data-item,
-#account-settings .class-data-section .class-data-item,
-#manage .user-data-section .user-data-item,
-#manage .user-data-section .class-data-item,
-#manage .class-data-section .user-data-item,
-#manage .class-data-section .class-data-item,
-#members .user-data-section .user-data-item,
-#members .user-data-section .class-data-item,
-#members .class-data-section .user-data-item,
-#members .class-data-section .class-data-item,
-#tests .user-data-section .user-data-item,
-#tests .user-data-section .class-data-item,
-#tests .class-data-section .user-data-item,
-#tests .class-data-section .class-data-item {
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+#account-settings .user-data-item,
+#account-settings .class-data-item,
+#account-settings .natural-data-item,
+#account-settings .members-data-item,
+#manage .user-data-item,
+#manage .class-data-item,
+#manage .natural-data-item,
+#manage .members-data-item,
+#members .user-data-item,
+#members .class-data-item,
+#members .natural-data-item,
+#members .members-data-item,
+#tests .user-data-item,
+#tests .class-data-item,
+#tests .natural-data-item,
+#tests .members-data-item,
+#naturals .user-data-item,
+#naturals .class-data-item,
+#naturals .natural-data-item,
+#naturals .members-data-item {
   margin: 0.6rem;
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
   border-radius: 0.2rem;
   display: -ms-grid;
   display: grid;
+}
+
+@media screen and (min-width: 672px) {
+  #account-settings .user-data-item,
+  #account-settings .class-data-item,
+  #account-settings .natural-data-item,
+  #account-settings .members-data-item,
+  #manage .user-data-item,
+  #manage .class-data-item,
+  #manage .natural-data-item,
+  #manage .members-data-item,
+  #members .user-data-item,
+  #members .class-data-item,
+  #members .natural-data-item,
+  #members .members-data-item,
+  #tests .user-data-item,
+  #tests .class-data-item,
+  #tests .natural-data-item,
+  #tests .members-data-item,
+  #naturals .user-data-item,
+  #naturals .class-data-item,
+  #naturals .natural-data-item,
+  #naturals .members-data-item {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+#account-settings .user-data-item > span,
+#account-settings .class-data-item > span,
+#account-settings .natural-data-item > span,
+#account-settings .members-data-item > span,
+#manage .user-data-item > span,
+#manage .class-data-item > span,
+#manage .natural-data-item > span,
+#manage .members-data-item > span,
+#members .user-data-item > span,
+#members .class-data-item > span,
+#members .natural-data-item > span,
+#members .members-data-item > span,
+#tests .user-data-item > span,
+#tests .class-data-item > span,
+#tests .natural-data-item > span,
+#tests .members-data-item > span,
+#naturals .user-data-item > span,
+#naturals .class-data-item > span,
+#naturals .natural-data-item > span,
+#naturals .members-data-item > span {
+  padding: calc(0.4em + 4px) 0;
+}
+
+#account-settings .user-data-item,
+#account-settings .class-data-item,
+#manage .user-data-item,
+#manage .class-data-item,
+#members .user-data-item,
+#members .class-data-item,
+#tests .user-data-item,
+#tests .class-data-item,
+#naturals .user-data-item,
+#naturals .class-data-item {
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
   -ms-grid-rows: auto auto;
@@ -2507,121 +2823,69 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #account-settings .user-data-section .user-data-item,
-  #account-settings .user-data-section .class-data-item,
-  #account-settings .class-data-section .user-data-item,
-  #account-settings .class-data-section .class-data-item,
-  #manage .user-data-section .user-data-item,
-  #manage .user-data-section .class-data-item,
-  #manage .class-data-section .user-data-item,
-  #manage .class-data-section .class-data-item,
-  #members .user-data-section .user-data-item,
-  #members .user-data-section .class-data-item,
-  #members .class-data-section .user-data-item,
-  #members .class-data-section .class-data-item,
-  #tests .user-data-section .user-data-item,
-  #tests .user-data-section .class-data-item,
-  #tests .class-data-section .user-data-item,
-  #tests .class-data-section .class-data-item {
+  #account-settings .user-data-item,
+  #account-settings .class-data-item,
+  #manage .user-data-item,
+  #manage .class-data-item,
+  #members .user-data-item,
+  #members .class-data-item,
+  #tests .user-data-item,
+  #tests .class-data-item,
+  #naturals .user-data-item,
+  #naturals .class-data-item {
     -ms-grid-columns: 10rem 13rem 1fr;
         grid-template-columns: 10rem 13rem 1fr;
     -ms-grid-rows: auto 1fr;
         grid-template-rows: auto 1fr;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
   }
 }
 
-#account-settings .user-data-section .user-data-item > span,
-#account-settings .user-data-section .class-data-item > span,
-#account-settings .class-data-section .user-data-item > span,
-#account-settings .class-data-section .class-data-item > span,
-#manage .user-data-section .user-data-item > span,
-#manage .user-data-section .class-data-item > span,
-#manage .class-data-section .user-data-item > span,
-#manage .class-data-section .class-data-item > span,
-#members .user-data-section .user-data-item > span,
-#members .user-data-section .class-data-item > span,
-#members .class-data-section .user-data-item > span,
-#members .class-data-section .class-data-item > span,
-#tests .user-data-section .user-data-item > span,
-#tests .user-data-section .class-data-item > span,
-#tests .class-data-section .user-data-item > span,
-#tests .class-data-section .class-data-item > span {
-  padding: calc(0.4em + 4px) 0;
-}
-
-#account-settings .user-data-section .user-data-item .user-property-action,
-#account-settings .user-data-section .user-data-item .class-property-action,
-#account-settings .user-data-section .class-data-item .user-property-action,
-#account-settings .user-data-section .class-data-item .class-property-action,
-#account-settings .class-data-section .user-data-item .user-property-action,
-#account-settings .class-data-section .user-data-item .class-property-action,
-#account-settings .class-data-section .class-data-item .user-property-action,
-#account-settings .class-data-section .class-data-item .class-property-action,
-#manage .user-data-section .user-data-item .user-property-action,
-#manage .user-data-section .user-data-item .class-property-action,
-#manage .user-data-section .class-data-item .user-property-action,
-#manage .user-data-section .class-data-item .class-property-action,
-#manage .class-data-section .user-data-item .user-property-action,
-#manage .class-data-section .user-data-item .class-property-action,
-#manage .class-data-section .class-data-item .user-property-action,
-#manage .class-data-section .class-data-item .class-property-action,
-#members .user-data-section .user-data-item .user-property-action,
-#members .user-data-section .user-data-item .class-property-action,
-#members .user-data-section .class-data-item .user-property-action,
-#members .user-data-section .class-data-item .class-property-action,
-#members .class-data-section .user-data-item .user-property-action,
-#members .class-data-section .user-data-item .class-property-action,
-#members .class-data-section .class-data-item .user-property-action,
-#members .class-data-section .class-data-item .class-property-action,
-#tests .user-data-section .user-data-item .user-property-action,
-#tests .user-data-section .user-data-item .class-property-action,
-#tests .user-data-section .class-data-item .user-property-action,
-#tests .user-data-section .class-data-item .class-property-action,
-#tests .class-data-section .user-data-item .user-property-action,
-#tests .class-data-section .user-data-item .class-property-action,
-#tests .class-data-section .class-data-item .user-property-action,
-#tests .class-data-section .class-data-item .class-property-action {
+#account-settings .user-data-item .user-property-action,
+#account-settings .user-data-item .class-property-action,
+#account-settings .class-data-item .user-property-action,
+#account-settings .class-data-item .class-property-action,
+#manage .user-data-item .user-property-action,
+#manage .user-data-item .class-property-action,
+#manage .class-data-item .user-property-action,
+#manage .class-data-item .class-property-action,
+#members .user-data-item .user-property-action,
+#members .user-data-item .class-property-action,
+#members .class-data-item .user-property-action,
+#members .class-data-item .class-property-action,
+#tests .user-data-item .user-property-action,
+#tests .user-data-item .class-property-action,
+#tests .class-data-item .user-property-action,
+#tests .class-data-item .class-property-action,
+#naturals .user-data-item .user-property-action,
+#naturals .user-data-item .class-property-action,
+#naturals .class-data-item .user-property-action,
+#naturals .class-data-item .class-property-action {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
 }
 
 @media screen and (min-width: 672px) {
-  #account-settings .user-data-section .user-data-item .user-property-action,
-  #account-settings .user-data-section .user-data-item .class-property-action,
-  #account-settings .user-data-section .class-data-item .user-property-action,
-  #account-settings .user-data-section .class-data-item .class-property-action,
-  #account-settings .class-data-section .user-data-item .user-property-action,
-  #account-settings .class-data-section .user-data-item .class-property-action,
-  #account-settings .class-data-section .class-data-item .user-property-action,
-  #account-settings .class-data-section .class-data-item .class-property-action,
-  #manage .user-data-section .user-data-item .user-property-action,
-  #manage .user-data-section .user-data-item .class-property-action,
-  #manage .user-data-section .class-data-item .user-property-action,
-  #manage .user-data-section .class-data-item .class-property-action,
-  #manage .class-data-section .user-data-item .user-property-action,
-  #manage .class-data-section .user-data-item .class-property-action,
-  #manage .class-data-section .class-data-item .user-property-action,
-  #manage .class-data-section .class-data-item .class-property-action,
-  #members .user-data-section .user-data-item .user-property-action,
-  #members .user-data-section .user-data-item .class-property-action,
-  #members .user-data-section .class-data-item .user-property-action,
-  #members .user-data-section .class-data-item .class-property-action,
-  #members .class-data-section .user-data-item .user-property-action,
-  #members .class-data-section .user-data-item .class-property-action,
-  #members .class-data-section .class-data-item .user-property-action,
-  #members .class-data-section .class-data-item .class-property-action,
-  #tests .user-data-section .user-data-item .user-property-action,
-  #tests .user-data-section .user-data-item .class-property-action,
-  #tests .user-data-section .class-data-item .user-property-action,
-  #tests .user-data-section .class-data-item .class-property-action,
-  #tests .class-data-section .user-data-item .user-property-action,
-  #tests .class-data-section .user-data-item .class-property-action,
-  #tests .class-data-section .class-data-item .user-property-action,
-  #tests .class-data-section .class-data-item .class-property-action {
+  #account-settings .user-data-item .user-property-action,
+  #account-settings .user-data-item .class-property-action,
+  #account-settings .class-data-item .user-property-action,
+  #account-settings .class-data-item .class-property-action,
+  #manage .user-data-item .user-property-action,
+  #manage .user-data-item .class-property-action,
+  #manage .class-data-item .user-property-action,
+  #manage .class-data-item .class-property-action,
+  #members .user-data-item .user-property-action,
+  #members .user-data-item .class-property-action,
+  #members .class-data-item .user-property-action,
+  #members .class-data-item .class-property-action,
+  #tests .user-data-item .user-property-action,
+  #tests .user-data-item .class-property-action,
+  #tests .class-data-item .user-property-action,
+  #tests .class-data-item .class-property-action,
+  #naturals .user-data-item .user-property-action,
+  #naturals .user-data-item .class-property-action,
+  #naturals .class-data-item .user-property-action,
+  #naturals .class-data-item .class-property-action {
     -ms-grid-column: 3;
     -ms-grid-column-span: 1;
     grid-column: 3/4;
@@ -2648,7 +2912,12 @@ label.required:after {
 #tests #change-password,
 #tests #change-email,
 #tests #change-class-name,
-#tests #change-class-status {
+#tests #change-class-status,
+#naturals #change-name,
+#naturals #change-password,
+#naturals #change-email,
+#naturals #change-class-name,
+#naturals #change-class-status {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
@@ -2674,7 +2943,12 @@ label.required:after {
   #tests #change-password,
   #tests #change-email,
   #tests #change-class-name,
-  #tests #change-class-status {
+  #tests #change-class-status,
+  #naturals #change-name,
+  #naturals #change-password,
+  #naturals #change-email,
+  #naturals #change-class-name,
+  #naturals #change-class-status {
     -ms-grid-column: 2;
     -ms-grid-column-span: 2;
     grid-column: 2/4;
@@ -2704,7 +2978,12 @@ label.required:after {
 #tests #change-password .border-btn,
 #tests #change-email .border-btn,
 #tests #change-class-name .border-btn,
-#tests #change-class-status .border-btn {
+#tests #change-class-status .border-btn,
+#naturals #change-name .border-btn,
+#naturals #change-password .border-btn,
+#naturals #change-email .border-btn,
+#naturals #change-class-name .border-btn,
+#naturals #change-class-status .border-btn {
   margin: 0.6rem auto 0.2rem auto;
   width: 100%;
 }
@@ -2728,7 +3007,12 @@ label.required:after {
 #tests #change-password .inline.btn,
 #tests #change-email .inline.btn,
 #tests #change-class-name .inline.btn,
-#tests #change-class-status .inline.btn {
+#tests #change-class-status .inline.btn,
+#naturals #change-name .inline.btn,
+#naturals #change-password .inline.btn,
+#naturals #change-email .inline.btn,
+#naturals #change-class-name .inline.btn,
+#naturals #change-class-status .inline.btn {
   margin-top: 0.4rem;
   margin-bottom: 0.2rem;
 }
@@ -2776,7 +3060,18 @@ label.required:after {
 #tests #delete-class1,
 #tests #delete-class2,
 #tests #invite-user-form,
-#tests #new-test {
+#tests #new-test,
+#naturals #change-name,
+#naturals #change-password,
+#naturals #change-email,
+#naturals #delete-account1,
+#naturals #delete-account2,
+#naturals #change-class-name,
+#naturals #change-class-status,
+#naturals #delete-class1,
+#naturals #delete-class2,
+#naturals #invite-user-form,
+#naturals #new-test {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2829,7 +3124,18 @@ label.required:after {
 #tests #delete-class1 label,
 #tests #delete-class2 label,
 #tests #invite-user-form label,
-#tests #new-test label {
+#tests #new-test label,
+#naturals #change-name label,
+#naturals #change-password label,
+#naturals #change-email label,
+#naturals #delete-account1 label,
+#naturals #delete-account2 label,
+#naturals #change-class-name label,
+#naturals #change-class-status label,
+#naturals #delete-class1 label,
+#naturals #delete-class2 label,
+#naturals #invite-user-form label,
+#naturals #new-test label {
   font-size: 0.9rem;
 }
 
@@ -2964,7 +3270,40 @@ label.required:after {
 #tests #invite-user-form .custom-select-wrapper,
 #tests #new-test label,
 #tests #new-test input.text-field,
-#tests #new-test .custom-select-wrapper {
+#tests #new-test .custom-select-wrapper,
+#naturals #change-name label,
+#naturals #change-name input.text-field,
+#naturals #change-name .custom-select-wrapper,
+#naturals #change-password label,
+#naturals #change-password input.text-field,
+#naturals #change-password .custom-select-wrapper,
+#naturals #change-email label,
+#naturals #change-email input.text-field,
+#naturals #change-email .custom-select-wrapper,
+#naturals #delete-account1 label,
+#naturals #delete-account1 input.text-field,
+#naturals #delete-account1 .custom-select-wrapper,
+#naturals #delete-account2 label,
+#naturals #delete-account2 input.text-field,
+#naturals #delete-account2 .custom-select-wrapper,
+#naturals #change-class-name label,
+#naturals #change-class-name input.text-field,
+#naturals #change-class-name .custom-select-wrapper,
+#naturals #change-class-status label,
+#naturals #change-class-status input.text-field,
+#naturals #change-class-status .custom-select-wrapper,
+#naturals #delete-class1 label,
+#naturals #delete-class1 input.text-field,
+#naturals #delete-class1 .custom-select-wrapper,
+#naturals #delete-class2 label,
+#naturals #delete-class2 input.text-field,
+#naturals #delete-class2 .custom-select-wrapper,
+#naturals #invite-user-form label,
+#naturals #invite-user-form input.text-field,
+#naturals #invite-user-form .custom-select-wrapper,
+#naturals #new-test label,
+#naturals #new-test input.text-field,
+#naturals #new-test .custom-select-wrapper {
   margin: 0.2rem 0;
 }
 
@@ -3011,7 +3350,18 @@ label.required:after {
 #tests #delete-class1 label:not(:nth-of-type(1)),
 #tests #delete-class2 label:not(:nth-of-type(1)),
 #tests #invite-user-form label:not(:nth-of-type(1)),
-#tests #new-test label:not(:nth-of-type(1)) {
+#tests #new-test label:not(:nth-of-type(1)),
+#naturals #change-name label:not(:nth-of-type(1)),
+#naturals #change-password label:not(:nth-of-type(1)),
+#naturals #change-email label:not(:nth-of-type(1)),
+#naturals #delete-account1 label:not(:nth-of-type(1)),
+#naturals #delete-account2 label:not(:nth-of-type(1)),
+#naturals #change-class-name label:not(:nth-of-type(1)),
+#naturals #change-class-status label:not(:nth-of-type(1)),
+#naturals #delete-class1 label:not(:nth-of-type(1)),
+#naturals #delete-class2 label:not(:nth-of-type(1)),
+#naturals #invite-user-form label:not(:nth-of-type(1)),
+#naturals #new-test label:not(:nth-of-type(1)) {
   margin-top: 0.54rem;
 }
 
@@ -3058,7 +3408,18 @@ label.required:after {
 #tests #delete-class1 p,
 #tests #delete-class2 p,
 #tests #invite-user-form p,
-#tests #new-test p {
+#tests #new-test p,
+#naturals #change-name p,
+#naturals #change-password p,
+#naturals #change-email p,
+#naturals #delete-account1 p,
+#naturals #delete-account2 p,
+#naturals #change-class-name p,
+#naturals #change-class-status p,
+#naturals #delete-class1 p,
+#naturals #delete-class2 p,
+#naturals #invite-user-form p,
+#naturals #new-test p {
   margin-bottom: 0.6rem;
   text-align: justify;
 }
@@ -3106,7 +3467,18 @@ label.required:after {
 #tests #delete-class1 .message,
 #tests #delete-class2 .message,
 #tests #invite-user-form .message,
-#tests #new-test .message {
+#tests #new-test .message,
+#naturals #change-name .message,
+#naturals #change-password .message,
+#naturals #change-email .message,
+#naturals #delete-account1 .message,
+#naturals #delete-account2 .message,
+#naturals #change-class-name .message,
+#naturals #change-class-status .message,
+#naturals #delete-class1 .message,
+#naturals #delete-class2 .message,
+#naturals #invite-user-form .message,
+#naturals #new-test .message {
   font-size: 0.72rem;
   line-height: 0.96rem;
   min-height: 0.96rem;
@@ -3156,7 +3528,18 @@ label.required:after {
 #tests #delete-class1 .message.server,
 #tests #delete-class2 .message.server,
 #tests #invite-user-form .message.server,
-#tests #new-test .message.server {
+#tests #new-test .message.server,
+#naturals #change-name .message.server,
+#naturals #change-password .message.server,
+#naturals #change-email .message.server,
+#naturals #delete-account1 .message.server,
+#naturals #delete-account2 .message.server,
+#naturals #change-class-name .message.server,
+#naturals #change-class-status .message.server,
+#naturals #delete-class1 .message.server,
+#naturals #delete-class2 .message.server,
+#naturals #invite-user-form .message.server,
+#naturals #new-test .message.server {
   margin-bottom: 0.2rem;
   min-height: 0;
 }
@@ -3164,7 +3547,8 @@ label.required:after {
 #account-settings h3,
 #manage h3,
 #members h3,
-#tests h3 {
+#tests h3,
+#naturals h3 {
   font-size: 1em;
   font-weight: bold;
   line-height: 1.2em;
@@ -3185,7 +3569,11 @@ label.required:after {
 #tests #delete-account1,
 #tests #delete-class1,
 #tests #invite-user-form,
-#tests #new-test {
+#tests #new-test,
+#naturals #delete-account1,
+#naturals #delete-class1,
+#naturals #invite-user-form,
+#naturals #new-test {
   max-width: 400px;
 }
 
@@ -3204,7 +3592,11 @@ label.required:after {
 #tests #delete-account1 .border-btn,
 #tests #delete-class1 .border-btn,
 #tests #invite-user-form .border-btn,
-#tests #new-test .border-btn {
+#tests #new-test .border-btn,
+#naturals #delete-account1 .border-btn,
+#naturals #delete-class1 .border-btn,
+#naturals #invite-user-form .border-btn,
+#naturals #new-test .border-btn {
   margin: 0.6rem auto 0.2rem auto;
   width: 100%;
 }
@@ -3224,7 +3616,11 @@ label.required:after {
 #tests #delete-account1 .inline.btn,
 #tests #delete-class1 .inline.btn,
 #tests #invite-user-form .inline.btn,
-#tests #new-test .inline.btn {
+#tests #new-test .inline.btn,
+#naturals #delete-account1 .inline.btn,
+#naturals #delete-class1 .inline.btn,
+#naturals #invite-user-form .inline.btn,
+#naturals #new-test .inline.btn {
   margin-top: 0.4rem;
 }
 
@@ -3239,7 +3635,10 @@ label.required:after {
 #members .kick-user span,
 #tests #delete-account2 span,
 #tests #delete-class2 span,
-#tests .kick-user span {
+#tests .kick-user span,
+#naturals #delete-account2 span,
+#naturals #delete-class2 span,
+#naturals .kick-user span {
   color: #a00;
 }
 
@@ -3254,7 +3653,10 @@ label.required:after {
 #members .kick-user .buttons,
 #tests #delete-account2 .buttons,
 #tests #delete-class2 .buttons,
-#tests .kick-user .buttons {
+#tests .kick-user .buttons,
+#naturals #delete-account2 .buttons,
+#naturals #delete-class2 .buttons,
+#naturals .kick-user .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3274,7 +3676,10 @@ label.required:after {
 #members .kick-user .buttons .border-btn,
 #tests #delete-account2 .buttons .border-btn,
 #tests #delete-class2 .buttons .border-btn,
-#tests .kick-user .buttons .border-btn {
+#tests .kick-user .buttons .border-btn,
+#naturals #delete-account2 .buttons .border-btn,
+#naturals #delete-class2 .buttons .border-btn,
+#naturals .kick-user .buttons .border-btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -3292,8 +3697,145 @@ label.required:after {
 #members .kick-user .buttons .border-btn:not(:last-child),
 #tests #delete-account2 .buttons .border-btn:not(:last-child),
 #tests #delete-class2 .buttons .border-btn:not(:last-child),
-#tests .kick-user .buttons .border-btn:not(:last-child) {
+#tests .kick-user .buttons .border-btn:not(:last-child),
+#naturals #delete-account2 .buttons .border-btn:not(:last-child),
+#naturals #delete-class2 .buttons .border-btn:not(:last-child),
+#naturals .kick-user .buttons .border-btn:not(:last-child) {
   margin-right: 0.6rem;
+}
+
+#naturals #naturals-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+#naturals #naturals-info-section {
+  margin: 0 0.4rem 1.6rem 0.4rem;
+}
+
+#naturals #naturals-info-section ul {
+  margin: 0.8rem 0;
+}
+
+#naturals #naturals-info-section li {
+  list-style-type: circle;
+  padding-left: 0.4rem;
+  margin-left: 1.2rem;
+}
+
+#naturals .naturals-data-properties,
+#naturals .natural-data-item {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 7.2rem 6rem 6rem 1fr;
+      grid-template-columns: 7.2rem 6rem 6rem 1fr;
+}
+
+@media screen and (min-width: 672px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 10.2rem 7.2rem 7.2rem 1fr;
+        grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 12rem 8rem 8rem 1fr;
+        grid-template-columns: 12rem 8rem 8rem 1fr;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 16rem 9.2rem 9.2rem 1fr;
+        grid-template-columns: 16rem 9.2rem 9.2rem 1fr;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 20rem 10rem 10rem 1fr;
+        grid-template-columns: 20rem 10rem 10rem 1fr;
+  }
+}
+
+#naturals .natural-name-wrapper,
+#naturals .natural-name,
+#naturals .natural-uses-count,
+#naturals .natural-pictures-count,
+#naturals .natural-action {
+  width: 100%;
+  text-align: center;
+}
+
+#naturals .natural-name-wrapper .text-field,
+#naturals .natural-name .text-field,
+#naturals .natural-uses-count .text-field,
+#naturals .natural-pictures-count .text-field,
+#naturals .natural-action .text-field {
+  max-width: 100%;
+}
+
+#naturals .natural-name-wrapper .normal-buttons,
+#naturals .natural-name-wrapper .rename-buttons,
+#naturals .natural-name .normal-buttons,
+#naturals .natural-name .rename-buttons,
+#naturals .natural-uses-count .normal-buttons,
+#naturals .natural-uses-count .rename-buttons,
+#naturals .natural-pictures-count .normal-buttons,
+#naturals .natural-pictures-count .rename-buttons,
+#naturals .natural-action .normal-buttons,
+#naturals .natural-action .rename-buttons {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#naturals .natural-name-wrapper .normal-buttons .btn,
+#naturals .natural-name-wrapper .rename-buttons .btn,
+#naturals .natural-name .normal-buttons .btn,
+#naturals .natural-name .rename-buttons .btn,
+#naturals .natural-uses-count .normal-buttons .btn,
+#naturals .natural-uses-count .rename-buttons .btn,
+#naturals .natural-pictures-count .normal-buttons .btn,
+#naturals .natural-pictures-count .rename-buttons .btn,
+#naturals .natural-action .normal-buttons .btn,
+#naturals .natural-action .rename-buttons .btn {
+  margin: auto 0.4rem;
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .natural-name-wrapper .normal-buttons .btn,
+  #naturals .natural-name-wrapper .rename-buttons .btn,
+  #naturals .natural-name .normal-buttons .btn,
+  #naturals .natural-name .rename-buttons .btn,
+  #naturals .natural-uses-count .normal-buttons .btn,
+  #naturals .natural-uses-count .rename-buttons .btn,
+  #naturals .natural-pictures-count .normal-buttons .btn,
+  #naturals .natural-pictures-count .rename-buttons .btn,
+  #naturals .natural-action .normal-buttons .btn,
+  #naturals .natural-action .rename-buttons .btn {
+    margin: auto 0.8rem;
+  }
 }
 
 #account-settings #account-settings-wrapper {
@@ -3397,12 +3939,6 @@ label.required:after {
 }
 
 #members .members-data-section .members-data-item {
-  margin: 0.4rem;
-  padding: 0.2rem 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 0.2rem;
-  display: -ms-grid;
-  display: grid;
   -ms-grid-columns: 10rem 1fr;
       grid-template-columns: 10rem 1fr;
   -ms-grid-rows: auto auto;
@@ -3413,14 +3949,7 @@ label.required:after {
   #members .members-data-section .members-data-item {
     -ms-grid-rows: auto 1fr;
         grid-template-rows: auto 1fr;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
   }
-}
-
-#members .members-data-section .members-data-item > span {
-  padding: calc(0.2em + 4px) 0;
 }
 
 #members .members-data-section .members-data-item .member-action {
@@ -4330,15 +4859,48 @@ body#index #index-info-section p {
 }
 
 body#index #index-info-section #info-icons {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  -ms-grid-rows: auto auto;
-      grid-template-rows: auto auto;
-  -webkit-column-gap: 2rem;
-          column-gap: 2rem;
   margin: 1rem 0;
+}
+
+@media screen and (min-width: 576px) {
+  body#index #index-info-section #info-icons {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    -ms-grid-rows: auto auto;
+        grid-template-rows: auto auto;
+    -webkit-column-gap: 2rem;
+            column-gap: 2rem;
+  }
+}
+
+body#index #index-info-section #info-icons .info-tile {
+  max-width: 360px;
+  margin: 3.6rem auto;
+}
+
+@media screen and (min-width: 576px) {
+  body#index #index-info-section #info-icons .info-tile {
+    display: -ms-grid;
+    display: grid;
+    grid-auto-rows: auto 1fr;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    margin: 1.2rem auto;
+  }
+}
+
+body#index #index-info-section #info-icons .info-tile img {
+  width: 100%;
+}
+
+@media screen and (min-width: 576px) {
+  body#index #index-info-section #info-icons .info-tile img {
+    -ms-flex-item-align: end;
+        align-self: flex-end;
+  }
 }
 
 body#index #index-login-section {
@@ -4361,7 +4923,7 @@ body#index #index-login-section {
   height: auto;
   max-height: 90vh;
   max-width: 520px;
-  z-index: 5;
+  z-index: 10;
   background: white;
   opacity: 0;
   pointer-events: none;
@@ -4595,7 +5157,7 @@ body#index #cookies-alert button {
   margin: auto 0;
 }
 
-body#index #back-to-top {
+body#index #back-to-top-button {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -4618,19 +5180,19 @@ body#index #back-to-top {
   z-index: 4;
 }
 
-body#index #back-to-top.show {
+body#index #back-to-top-button.show {
   opacity: 1;
   pointer-events: auto;
 }
 
 @media screen and (min-width: 768px) {
-  body#index #back-to-top {
+  body#index #back-to-top-button {
     bottom: 3rem;
     right: 3rem;
   }
 }
 
-body#index #back-to-top img {
+body#index #back-to-top-button img {
   width: 100%;
   height: 100%;
   position: relative;
@@ -4720,19 +5282,22 @@ body#index #back-to-top img {
 }
 
 body#recover-password main {
-  margin: auto;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 2;
+  grid-row: 2/4;
 }
 
 body#recover-password .wrapper {
   width: 90vw;
   max-width: 520px;
+  margin: 0 auto;
 }
 
 body#recover-password h2 {
   font-size: 1.6rem;
 }
 
-body#recover-password .user-data {
+body#recover-password #recover-password-form .user-data {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4742,21 +5307,21 @@ body#recover-password .user-data {
           flex-direction: column;
 }
 
-body#recover-password .user-data label {
+body#recover-password #recover-password-form .user-data label {
   font-size: 0.9rem;
 }
 
-body#recover-password .user-data label,
-body#recover-password .user-data input.text-field {
+body#recover-password #recover-password-form .user-data label,
+body#recover-password #recover-password-form .user-data input.text-field {
   margin: 0.12rem 0;
 }
 
-body#recover-password .user-data label:not(:nth-of-type(1)),
-body#recover-password .user-data .checkbox {
+body#recover-password #recover-password-form .user-data label:not(:nth-of-type(1)),
+body#recover-password #recover-password-form .user-data .checkbox {
   margin-top: 0.54rem;
 }
 
-body#recover-password .user-data input.text-field {
+body#recover-password #recover-password-form .user-data input.text-field {
   color: #222;
   font-family: 'Roboto', sans-serif;
   background: #eee;
@@ -4764,14 +5329,14 @@ body#recover-password .user-data input.text-field {
   padding-bottom: 0.6em;
 }
 
-body#recover-password .message {
+body#recover-password #recover-password-form .message {
   font-size: 0.72rem;
   line-height: 0.96rem;
   min-height: 0.96rem;
   color: #a00;
 }
 
-body#recover-password .message.server {
+body#recover-password #recover-password-form .message.server {
   margin-bottom: 0.6rem;
 }
 

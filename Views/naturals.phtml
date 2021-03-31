@@ -1,53 +1,49 @@
 <div id='naturals-wrapper'>
-    <p>Na této stránce můžete spravovat přírodniny, které ve vaší třídě existují.</p>
-    <p>Nahrané obrázky jsou pevně svázány s jednotlivými přírodninami. Odstraněním
-    přírodniny dojde i k odstranění všech obrázků, které k ní byly přidány</p>
-    <p>Odstraněním přírodniny, která je přiřazená do alespoň jedné poznávačky
-    jí odeberete i ze všech poznávaček a jejich částí</p>
-    <p>Přejmenováním přírodniny dojde k aktualizaci názvu ve všech poznávačkách,
-    ve kterých se přírodnina vyskytuje.</p>
-    <p>Nové přírodniny jsou přidávány automaticky při tvorbě nebo úpravě poznávaček.</p>
-    <p>Přírodniny jsou seřazeny podle data přidání. Pro rychlé nalezení určité
-    přírodniny můžete použít kombinaci kláves <kbd>Ctrl</kbd>+<kbd>F</kbd></p>
+	<section id="naturals-info-section">
+		<p>Na této stránce můžete spravovat přírodniny, které ve vaší třídě existují.</p>
+		<ul>
+			<li>Nahrané obrázky jsou pevně svázány s jednotlivými přírodninami. Odstraněním
+			přírodniny dojde i k odstranění všech obrázků, které k ní byly přidány.</li>
+			<li>Odstraněním přírodniny, která je přiřazená do alespoň jedné poznávačky
+			jí odeberete i ze všech poznávaček a jejich částí.</li>
+			<li>Přejmenováním přírodniny dojde k aktualizaci názvu ve všech poznávačkách,
+			ve kterých se přírodnina vyskytuje.</li>
+			<li>Nové přírodniny jsou přidávány automaticky při tvorbě nebo úpravě poznávaček.</li>
+			<li>Přírodniny jsou seřazeny podle data přidání. Pro rychlé nalezení určité
+			přírodniny můžete použít kombinaci kláves Ctrl+F.</li>
+		</ul>
+	</section>
 
-    <table>
-        <tr>
-            <th>Název přírodniny</th>
-            <th>Místa výskytu</th>
-            <th>Počet obrázků</th>
-            <th>Akce</th>
-        </tr>
+    <section id="naturals-data-section">
+        <div class="naturals-data-properties">
+            <span class="natural-name">Název přírodniny</span>
+            <span class="natural-uses-count">Místa výskytu</span>
+            <span class="natural-pictures-count">Počet obrázků</span>
+            <span class="natural-action">Akce</span>
+        </div>
         <?php foreach ($naturals as $natural) : ?>
-        <tr data-natural-id="<?= $natural->getId() ?>">
-            <td>
+        <div class="natural-data-item" data-natural-id="<?= $natural->getId() ?>">
+            <div class="natural-name-wrapper">
                 <div class="natural-name-box">
                     <span class="natural-name"><?= $natural->getName() ?></span>
                 </div>
                 <div class="natural-name-input-box" style="display:none;">
                     <input type="text" maxlength="31" class="text-field natural-name-input" value="<?= $natural->getName() ?>"/>
                 </div>
-            </td>
-            <td><?= $natural->getUsesCount() ?></td>
-            <td><?= $natural->getPicturesCount() ?></td>
-            <td>
+            </div>
+            <span class="natural-uses-count"><?= $natural->getUsesCount() ?></span>
+            <span class="natural-pictures-count"><?= $natural->getPicturesCount() ?></span>
+            <div class="natural-action">
                 <div class="normal-buttons">
-                    <button title="Přejmenovat" class="rename-natural btn icon">
-                        <img src='images/pencil.svg'/>
-                    </button>
-                    <button title="Odebrat" class="remove-natural btn icon">
-                        <img src='images/cross.svg'/>
-                    </button>
+                    <button title="Přejmenovat" class="rename-natural-button btn inline black">Přejmenovat</button>
+                    <button title="Odebrat" class="remove-natural-button btn inline black">Odebrat</button>
                 </div>
                 <div class="rename-buttons" style="display:none;">
-                    <button class="rename-confirm btn icon">
-                        <img src='images/tick.svg'/>
-                    </button>
-                    <button class="rename-cancel btn icon">
-                        <img src='images/crossRed.svg'/>
-                    </button>
+                    <button class="rename-confirm-button btn inline black">Potvrdit</button>
+                    <button class="rename-cancel-button btn inline black">Zrušit</button>
                 </div>
-            </td>
-        </tr>
+            </div>
+        </div>
         <?php endforeach ?>
-    </table>
+    </section>
 </div>

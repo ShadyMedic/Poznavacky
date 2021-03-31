@@ -1,22 +1,23 @@
-var deletedTableRow;    //Ukládá řádek tabulky potnávaček, který je odstraňován
+var deletedTableRow;    //ukládá řádek tabulky poznávaček, který je odstraňován
 var ajaxUrl;
 
-//vše, co se děje po načtení stránky
-$(function() {
-  
-  //Nastavení URL pro AJAX požadavky
-  ajaxUrl = window.location.href;
-  if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
-  ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //Nahraď neAJAX akci AJAX akcí
+$(function()
+{
+	//nastavení URL pro AJAX požadavky
+	ajaxUrl = window.location.href;
+	if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
+	ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //nahrazení neAJAX akci AJAX akcí
   
 	//eventy listenery tlačítek
 	$(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
 	$("#new-test-button").click(function() {newTest()})
 	$("#new-test-confirm-button").click(function() {newTestConfirm()})
 	$("#new-test-cancel-button").click(function() {newTestCancel()})
-  
 })
 
+/**
+ * Funkce zahajující přidání nové poznávačky
+ */
 function newTest()
 {
 	$("#new-test-button").hide();
@@ -27,15 +28,24 @@ function newTest()
 		block: "start" 
 	});
 }
+
+/**
+ * Funkce rušící přidání nové poznávačky
+ */
 function newTestCancel()
 {
 	$("#new-test-name").val("");
 	$("#new-test").hide();
 	$("#new-test-button").show();
 }
+
+/**
+ * Funkce odesílající požadavek na vytvoření nové poznávačky
+ */
 function newTestConfirm()
 {
-	var testName = $("#new-test-name").val();
+	let testName = $("#new-test-name").val();
+
 	$.post(ajaxUrl,
 		{
     		action: 'create test',
@@ -52,17 +62,19 @@ function newTestConfirm()
 					}
 					else if (messageType === "success")
 					{
-						//Získej z data.newGroupData informace a zobraz je v tabulce v DOM
+						//zaískání informací z data.newGroupData a jejich zobrazení v tabulce v DOM
 						let groupData = data.newGroupData;
 						let groupDomItem = $('#test-data-item-template').html();
+
 						groupDomItem = groupDomItem.replace(/{id}/g, groupData.id);
 						groupDomItem = groupDomItem.replace(/{name}/g, groupData.name);
 						groupDomItem = groupDomItem.replace(/{url}/g, groupData.url);
 						groupDomItem = groupDomItem.replace(/{parts}/g, groupData.parts);
+
 						$('.tests-data-section').append(groupDomItem);
+
 						newMessage(response["message"], "success");
 
-						//Schování formuláře
 						newTestCancel();
 					}
 				}
@@ -71,18 +83,34 @@ function newTestConfirm()
 		"json"
 	);
 }
-/*-------------------------------------------------------*/
+
+/**
+ * Funkce zahajující odstranění poznávačky
+ * @param {event} event 
+ */
 function deleteTest(event)
 {
-	let testId = $(event.target).attr('data-group-id');
-	let name = $(event.target).attr('data-group-name');
+	let $test = $(event.target).closest(".tests-data-item");
+	let name = $test.attr('data-group-name');
 
-    if (!confirm("Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!"))
-    {
-    	return;
-	}
-  
-	deletedTableRow = $(event.target).closest(".tests-data-item");
+	let confirmMessage = "Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!";
+	newConfirm(confirmMessage, "Odstranit", "Zrušit", function(confirm) {
+		if (confirm) {
+			deleteTestFinal($test);
+			$test = undefined;
+		}
+		else return;
+	})
+}
+
+/**
+ * Funkce odesílající požadavek na odstranění poznávačky
+ * @param {event} $test 
+ */
+function deleteTestFinal($test)
+{
+	let testId = $test.attr('data-group-id');
+	
 	$.post(ajaxUrl,
 		{
     		action: 'delete test',
@@ -99,10 +127,10 @@ function deleteTest(event)
 					}
 					else if (response["messageType"] === "success")
 					{
-						deletedTableRow.remove();
+						$test.remove();
 						newMessage(response["message"], "success");
 					}
-					deletedTableRow = undefined;
+					$test = undefined;
 				}
 			);
 		},

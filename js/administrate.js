@@ -454,7 +454,7 @@ function showPicture(url)
 {
 	$("#image-preview img").attr("src", url);
 	$("#image-preview").show();
-	$(".overlay").show();
+	$("#overlay").show();
 }
 var currentReportValues = new Array(2);
 function editPicture(event)

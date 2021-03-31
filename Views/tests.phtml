@@ -6,13 +6,13 @@
 			<span class='test-action'>Akce</span>
 		</div>
 		<?php foreach ($groups as $group) : ?>
-		<div class='tests-data-item'>
+		<div class='tests-data-item' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>
 			<span class='test-name'><?= $group->getName() ?></span>
 			<span class='test-parts'><?= $group->getPartsCount() ?></span>
 			<div class='test-action'>
 				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports'>Správa hlášení</a>
 				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit'>Upravit</a>
-				<a class='btn inline black delete-group-button' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>Odstranit</a>
+				<a class='btn inline black delete-group-button'>Odstranit</a>
 			</div>
 		</div>
 		<?php endforeach ?>
@@ -31,13 +31,13 @@
 </div>
 
 <div id="test-data-item-template" style="display: none">
-    <div class='tests-data-item'>
+    <div class='tests-data-item'  data-group-id='{id}' data-group-name='{name}'>
         <span class='test-name'>{name}</span>
         <span class='test-parts'>{parts}</span>
         <div class='test-action'>
             <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/reports'>Správa hlášení</a>
             <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/edit'>Upravit</a>
-            <a class='btn inline black delete-group-button' data-group-id='{id}' data-group-name='{name}'>Odstranit</a>
+            <a class='btn inline black delete-group-button'>Odstranit</a>
         </div>
     </div>
 </div>

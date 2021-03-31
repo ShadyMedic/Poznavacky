@@ -1,34 +1,39 @@
-//Nastavení URL pro AJAX požadavky
-let ajaxUrl = window.location.href;
+//nastavení URL pro AJAX požadavky
+var ajaxUrl = window.location.href;
 if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
 ajaxUrl = ajaxUrl.replace('/naturals', '/update-naturals'); //Nahraď neAJAX akci AJAX akcí
 
-// vše, co se děje po načtení stránky
-$(function() {
-
+$(function()
+{
     //event listenery tlačítek
-    $(".rename-natural").click(function(event) {rename(event)})
-    $(".natural-name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
-    $(".rename-confirm").click(function(event) {renameConfirm(event)})
-    $(".rename-cancel").click(function(event) {renameCancel(event.target)})
-    $(".remove-natural").click(function(event) {remove(event)})
+    $(".rename-natural-button").click(function(event) {rename(event)})
+    $(".rename-confirm-button").click(function(event) {renameConfirm(event)})
+    $(".rename-cancel-button").click(function(event) {renameCancel($(event.target))})
+    $(".remove-natural-button").click(function(event) {remove(event)})
+
+	//event listener zmáčknutí klávesy
+	$(".natural-name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
 })
 
 /**
  * Funkce zobrazující vstupní pole pro přejmenování přírodniny
+ * @param {event} event 
  */
 function rename(event)
 {
-    $(event.target).closest('tr[data-natural-id]').find('.normal-buttons').hide();
-    $(event.target).closest('tr[data-natural-id]').find('.natural-name-box').hide();
-    $(event.target).closest('tr[data-natural-id]').find('.rename-buttons').show();
-    $(event.target).closest('tr[data-natural-id]').find('.natural-name-input-box').show();
+	let $natural = $(event.target).closest('.natural-data-item');
 
-    $(event.target).closest('tr[data-natural-id]').find('.natural-name-input').select();
+    $natural.find('.normal-buttons').hide();
+    $natural.find('.natural-name-box').hide();
+    $natural.find('.rename-buttons').show();
+    $natural.find('.natural-name-input-box').show();
+    $natural.find('.natural-name-input').select();
 }
 
 /**
  * Funkce potvrzující přejmenování přírodniny, kontrolující údaje a odesílající AJAX požadavek na server
+ * @param {event} event 
+ * @returns 
  */
 function renameConfirm(event)
 {
@@ -36,61 +41,67 @@ function renameConfirm(event)
     let maxChars = 31;
     let allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci"
 
+	let $natural = $(event.target).closest('.natural-data-item');
+	let newName;
+	let oldName;
+
+	//potvrzení tlačítkem
     if ($(event.target).prop("tagName") !== "INPUT")
     {
-        //Potvrzení tlačítkem (kliknuto na obrázek, který jej vyplňuje)
-        newName = $(event.target).closest('tr[data-natural-id]').find(".natural-name-input").val();
-        oldName = $(event.target).closest('tr[data-natural-id]').find(".natural-name").text();
+        newName = $natural.find(".natural-name-input").val();
+        oldName = $natural.find(".natural-name").text();
     }
+	//potvrzení Enterem
     else
     {
-        //Potvrzení Enterem
         newName = $(event.target).val();
-        oldName = $(event.target).closest('td').find(".natural-name").text();
+        oldName = $natural.find(".natural-name").text();
     }
 
-    if (newName.toUpperCase() !== oldName.toUpperCase()) //Prováděj kontroly pouze pokud se nejedná o změny ve velikosti písmen
+	//nový a starý název přírodniny se liší (odlišná velikost písma nevadí)
+    if (newName.toUpperCase() !== oldName.toUpperCase())
     {
-        //Kontrola délky
+        //kontrola délky
         if (newName === undefined || !(newName.length >= minChars && newName.length <= maxChars))
         {
-            alert("Název přírodniny musí mít 1 až 31 znaků");
+            newMessage("Název přírodniny musí mít 1 až 31 znaků", "error");
             return;
         }
 
-        //Kontrola znaků
+        //kontrola znaků
         let re = new RegExp("[^" + allowedChars + "]", 'g');
         if (newName.match(re) !== null)
         {
-            alert("Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky _ . - + / * % ( ) \' \"");
+            newMessage("Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky _ . - + / * % ( ) \' \"", "error");
             return;
         }
 
-        //Kontrola unikátnosti
-        let presentNaturals;
-        //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
-        presentNaturals = $("#naturals-wrapper").find(".natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
+        //kontrola unikátnosti
+
+        //Získání seznamu přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
+        let presentNaturals = $(".natural-data-item .natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
-            let merge = confirm("Přírodnina s tímto názvem již existuje\nChcete tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna.\nTato akce je nevratná.");
-            if (merge)
-            {
-                let fromNaturalId = $(event.target).closest('tr[data-natural-id]').attr("data-natural-id");
-                let toNaturalId = $("#naturals-wrapper").find("tr[data-natural-id]:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
-                mergeNaturals(fromNaturalId, toNaturalId);
-            }
+			let confirmMessage = "Přírodnina s tímto názvem již existuje. Chcete tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna. Tato akce je nevratná.";
+            newConfirm(confirmMessage, "Sloučit", "Zrušit", function(confirm) {
+				if (confirm) {
+					let fromNaturalId = $natural.attr("data-natural-id");
+					let toNaturalId = $(".natural-data-item:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
+					mergeNaturals(fromNaturalId, toNaturalId);
+				}
+				else return;
+			})
             return;
         }
     }
 
-    //Kontrola informací OK
+    //kontrola informací OK
 
-    let $targetRow = $(event.target).closest('tr[data-natural-id]');
     $.post(ajaxUrl,
         {
             action: 'rename',
-            naturalId: $(event.target).closest('tr[data-natural-id]').attr('data-natural-id'),
+            naturalId: $natural.attr('data-natural-id'),
             newName: newName
         },
         function (response, status)
@@ -104,12 +115,10 @@ function renameConfirm(event)
                     }
                     else if (messageType === "success")
                     {
-                        //newMessage(message, "success")
+                        //nastavení nového názvu přírodniny a reset DOM
+                        $natural.find(".natural-name").text($natural.find(".natural-name-input").val())
 
-                        //Nastavení nového názvu přírodniny a reset DOM
-                        $targetRow.find(".natural-name").text($targetRow.find(".natural-name-input").val())
-
-                        renameCancel(event.target)
+                        renameCancel($(event.target))
                     }
                 }
             );
@@ -120,28 +129,30 @@ function renameConfirm(event)
 
 /**
  * Funkce skrývající vstupní pole pro přejmenování přírodniny a obnovující ho do původního stavu
- * @param clickedButton HTML element tlačítka, na které bylo kliknuto
+ * @param $clickedButton Tlačítko, na které bylo kliknuto
  */
-function renameCancel(clickedButton)
+function renameCancel($clickedButton)
 {
-    $(clickedButton).closest('tr[data-natural-id]').find('.rename-buttons').hide();
-    $(clickedButton).closest('tr[data-natural-id]').find('.natural-name-input-box').hide();
-    $(clickedButton).closest('tr[data-natural-id]').find('.normal-buttons').show();
-    $(clickedButton).closest('tr[data-natural-id]').find('.natural-name-box').show();
+	let $natural = $clickedButton.closest(".natural-data-item");
 
-    $(clickedButton).closest('tr[data-natural-id]').find('.natural-name-input').val($(clickedButton).closest('tr').find('.natural-name').text());
+    $natural.find('.rename-buttons').hide();
+    $natural.find('.natural-name-input-box').hide();
+    $natural.find('.normal-buttons').show();
+    $natural.find('.natural-name-box').show();
+
+    $natural.find('.natural-name-input').val($natural.find('.natural-name').text());
 }
 
 /**
- * Funkce slučující dvě přírodniny (odstraňuje vybranou a převádí její obrázky k nové)
- * Toto je stvrzno odesláním AJAX požadavku na provedení změn v databázi
+ * Funkce odesílající požadavek na sloučení dvou přírodnin (odstraňuje vybranou a převádí její obrázky k nové)
  * @param fromNaturalId ID přírodniny, jejíž obrázky mají být převedeny a přírodnina odstraněna
  * @param toNaturalId ID přírodniny, ke které mají být obrázky převedeny
  */
 function mergeNaturals(fromNaturalId, toNaturalId)
 {
-    let $deletedTableRow = $("[data-natural-id=" + fromNaturalId + "]");
-    let $mergedTableRow = $("[data-natural-id=" + toNaturalId + "]");
+    let $deletedNatural = $("[data-natural-id=" + fromNaturalId + "]");
+    let $mergedNatural = $("[data-natural-id=" + toNaturalId + "]");
+
     $.post(ajaxUrl,
         {
             action: 'merge',
@@ -159,12 +170,10 @@ function mergeNaturals(fromNaturalId, toNaturalId)
                     }
                     else if (messageType === "success")
                     {
-                        //newMessage(message, "success")
-
                         //odebrání sloučené přírodniny z DOM a přičtení jejích statistik k přírodnině, do které byla sloučena
-                        $deletedTableRow.remove();
-                        $mergedTableRow.find('td:eq(1)').text(Number($mergedTableRow.find('td:eq(1)').text()) + data.newUsesCount);
-                        $mergedTableRow.find('td:eq(2)').text(Number($mergedTableRow.find('td:eq(2)').text()) + data.newPicturesCount);
+                        $deletedNatural.remove();
+                        $mergedNatural.find('.natural-uses-count').text(Number($mergedNatural.find('.natural-uses-count').text()) + data.newUsesCount);
+                        $mergedNatural.find('.natural-pictures-count').text(Number($mergedNatural.find('.natural-pictures-count').text()) + data.newPicturesCount);
                     }
                 }
             );
@@ -174,17 +183,28 @@ function mergeNaturals(fromNaturalId, toNaturalId)
 }
 
 /**
- * Funkce odebírající přírodninu a odesílající AJAX požadavek na její odstranění na server
+ * Funkce odstraňující přírodninu
+ * @param {event} event 
  */
 function remove(event)
 {
-    if (!confirm('Skutečně chcete odstranit přírodninu "'+$(event.target).closest('tr[data-natural-id]').find('.natural-name').text()+'" a všechny obrázky k ní přidané?\nTato akce je nevratná!')){ return }
-
-    let deletedTableRow = $(event.target).closest('tr');
+	let $natural = $(event.target).closest('.natural-data-item');
+	let confirmMessage = 'Skutečně chcete odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
+	newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
+		if (confirm) removeFinal($natural)
+		else return;
+	})
+}
+/**
+ * Funkce odesílající požadavek na odstranění přírodniny
+ * @param {jQuery objekt} $natural 
+ */
+function removeFinal($natural)
+{
     $.post(ajaxUrl,
         {
             action: 'delete',
-            naturalId: $(event.target).closest('tr[data-natural-id]').attr('data-natural-id')
+            naturalId: $natural.attr('data-natural-id')
         },
         function (response, status)
         {
@@ -197,10 +217,8 @@ function remove(event)
                     }
                     else if (messageType === "success")
                     {
-                        //newMessage(message, "success")
-
                         //odebrání přírodniny z DOM
-                        deletedTableRow.remove();
+                        $natural.remove();
                     }
                 }
             );

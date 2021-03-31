@@ -1,20 +1,19 @@
-var initialStatus;      //Ukládá status třídy uložený v databázi
-var initialCode;        //Ukládá vstupní kód třídy uložený v databázi
+var $initialStatus;		//ukládá zvolenou položku v custom select elementu statutu třídy uloženého v databázi
+var initialStatus;      //ukládá status třídy uložený v databázi
+var initialCode;        //ukládá vstupní kód třídy uložený v databázi
 
-//Nastavení URL pro AJAX požadavky
-let ajaxUrl = window.location.href;
+//nastavení URL pro AJAX požadavky
+var ajaxUrl = window.location.href;
 if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
 ajaxUrl = ajaxUrl.replace('/manage', '/class-update'); //Nahraď neAJAX akci AJAX akcí
 
-//vše, co se děje po načtení stránky
-$(function() {
-
+$(function()
+{
 	//získání původních přístupových informací třídy z dokumentu
 	$initialStatus = $("#class-status-select .selected");
     initialStatus = $("#class-status-select .selected").text();
     initialCode = $("#change-class-status-code").val();
 
-	//Správně zobrazit tlačítko a vstupní pole pro kód
     statusChange();
 
 	//event listenery tlačítek
@@ -36,10 +35,9 @@ $(function() {
 	$("#class-status-select span").on('DOMSubtreeModified',function(){statusChange()});
 })
 
-//vše, co se děje při změně velikosti okna
-$(window).resize(function() {
-})
-
+/**
+ * Funkce zahajující změnu názvu třídy
+ */
 function changeClassName()
 {
     $("#change-class-name-button").hide();
@@ -51,9 +49,12 @@ function changeClassName()
 	deleteClassCancel();
 }
 
+/**
+ * Funkce potvrzující změnu názvu třídy
+ */
 function changeClassNameConfirm()
 {
-    var newName = $("#change-class-name-new").val();
+    let newName = $("#change-class-name-new").val();
 
     $.post(ajaxUrl,
 		{
@@ -82,6 +83,10 @@ function changeClassNameConfirm()
 		"json"
 	);
 }
+
+/**
+ * Funkce rušící změnu názvu třídy
+ */
 function changeClassNameCancel()
 {
     $("#change-class-name-new").val("");
@@ -90,8 +95,10 @@ function changeClassNameCancel()
 	$("#change-class-name").closest(".class-data-item").find(".class-property-value").show();
 	$("#change-class-name-message").text("");
 }
-/*-------------------------------------------------------*/
 
+/**
+ * Funkce zahajující změnu statutu třídy
+ */
 function changeClassStatus()
 {
     $("#change-class-status-button").hide();
@@ -103,79 +110,96 @@ function changeClassStatus()
 	deleteClassCancel();
 }
 
+/**
+ * Funkce nastavující zobrazení elementů podle zvoleného statutu třídy
+ * @returns 
+ */
 function statusChange()
 {
+	//status třídy se nezměnil
     if ($("#class-status-select .selected").text() === initialStatus)
     {
-        //Status třídy se nezměnil
+		//třída není jako soukromá
         if ($("#class-status-select .selected").text() !== "Soukromá")
         {
-            //Třída není ani jako soukromá --> není možné změnit vstupní kód --> vše skrýt
+			//není možné změnit vstupní kód -> skrytí
             hideClassStatusCode();
             return;
         }
     }
+
+	//status třídy se změnil
     else
     {
-        //Status třídy se změnil
-    	$("#statusCancelButton").show();
+		//třída není nastavena jako soukromá
         if ($("#class-status-select .selected").text() !== "Soukromá")
         {
-            //Třída není nastavována jako soukromá --> zobraz tlačítko, ale skryj vstupní kód
+            //není možné nastavit vstupní kód -> skrytí
             $("#change-class-status-confirm-button").removeClass("disabled");
             hideClassStatusCode();
             return;
         }
     }
-    //Sem se program dostane pouze pokud je třída nastavována jako soukromá --> zobraz vstupní kód
+
+    //sem se program dostane, pouze pokud je třída nastavována jako soukromá -> zobrazení vstupního kódu
     showClassStatusCode();
-    
-	/*
-    if ($("#change-class-status-code").val() !== initialCode)
-    {
-    	//Kód se změnil
-    	$("#statusCancelButton").show();
-    }
-	*/
-    
+
+	//kód není dlouhý 4 znaky nebo obsahuje písmena    
     if ($("#change-class-status-code").val().length !== 4 || parseInt($("#change-class-status-code").val()) != $("#change-class-status-code").val())
     {
-        //Kód není platný --> skryj tlačítko pro uložení
+        //kód není platný -> skrytí tlačítka pro uložení
         $("#change-class-status-confirm-button").addClass("disabled");
     }
+
+	//kód je platný
     else
     {
-        //Kód je platný
+		//kód se změnil
     	if ($("#change-class-status-code").val() !== initialCode)
     	{
-    		 //Kód je platný a změnil se --> zobraz tlačítko pro uložení
             $("#change-class-status-confirm-button").removeClass("disabled");
     	}
     }
 }
+
+/**
+ * Funkce potvrzující změnu statutu třídy
+ * @returns 
+ */
 function changeClassStatusConfirm()
 {
-    var newStatus = $("#class-status-select .selected").text();
-    var newCode = $("#change-class-status-code").val();
+    let newStatus = $("#class-status-select .selected").text();
+    let newCode = $("#change-class-status-code").val();
     
-    var confirmation;
+    let confirmMessage;
     switch (newStatus)
     {
         case "Veřejná":
-            confirmation = confirm("Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup. Pokračovat?");
+			confirmMessage = "Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup. Pokračovat?";
             break;
         case "Soukromá":
-            confirmation = confirm("Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup. Pokračovat?");
+			confirmMessage = "Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup. Pokračovat?";
             break;
         case "Uzamčená":
-            confirmation = confirm("Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?");
+			confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?";
             break;
         default:
             return;
     }
     
-    if (!confirmation){return;}
-    
+	newConfirm(confirmMessage, "Potvrdit", "Zrušit", function(confirm) {
+		if (confirm) changeClassStatusFinal(newStatus, newCode);
+		else return;
+	})
+}
+
+/**
+ * Funkce odesílající požadavek na změnu statutu třídy
+ * @param {string} newStatus Nový status třídy (veřejná/soukromá/uzamčená)
+ * @param {int} newCode Nový kód třídy
+ */
+function changeClassStatusFinal(newStatus, newCode)
+{
     $.post(ajaxUrl,
 		{
     		action: 'update access',
@@ -196,10 +220,8 @@ function changeClassStatusConfirm()
 						$("#status").text(newStatus);
 						$("#class-status-select .custom-option").removeClass("selected");
 						$("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
-
-						//newMessage(message, "success");
 						
-						//Skrytí nastavení členů, pokud byla třída změněna na veřejnou
+						//skrytí nastavení členů, pokud byla třída změněna na veřejnou
 						if (newStatus === "Veřejná")
 						{
 							$("#members-management-button").hide();
@@ -209,7 +231,7 @@ function changeClassStatusConfirm()
 							$("#members-management-button").show();
 						}
 						
-					    //Reset HTML
+					    //reset HTML
 					    $("#change-class-status-button").show();
 						$("#change-class-status").hide();
 						$("#change-class-status").closest(".class-data-item").find(".class-property-value").show();
@@ -224,28 +246,44 @@ function changeClassStatusConfirm()
 		"json"
 	);
 }
+
+/**
+ * Funkce rušící změnu statutu třídy
+ */
 function changeClassStatusCancel()
 {	
 	$("#change-class-status-button").show();
     $("#change-class-status").hide();
 	$("#change-class-status").closest(".class-data-item").find(".class-property-value").show();
     
-	//Toto má význam pouze při zrušení změn
+	//zrušení změn
 	$("#class-status-select .custom-option").removeClass("selected");
 	$initialStatus.addClass("selected");
 	$("#class-status-select .custom-select-main span").text(initialStatus);
     $("#change-class-status-code").val(initialCode);
+
     statusChange();
 }
 
-function hideClassStatusCode() {
+/**
+ * Funkce skrývající pole pro zadání kódu třídy
+ */
+function hideClassStatusCode()
+{
 	$("#change-class-status-code, label[for='change-class-status-code']").hide();
 }
 
-function showClassStatusCode() {
+/**
+ * Funkce zobrazující pole pro zadání kódu třídy
+ */
+function showClassStatusCode()
+{
 	$("#change-class-status-code, label[for='change-class-status-code']").show();
 }
-/*-------------------------------------------------------*/
+
+/**
+ * Funkce zahajující odstranění třídy
+ */
 function deleteClass()
 {
 	$("#delete-class-button").hide();
@@ -256,12 +294,18 @@ function deleteClass()
 		behavior: 'smooth',
 		block: "start" 
 	});
+
 	changeClassNameCancel();
 	changeClassStatusCancel();
 }
+
+/**
+ * Funkce ověřuující heslo správce třídy při odstraňování třídy
+ */
 function deleteClassVerify()
 {
-	var password = $("#delete-class-password").val();
+	let password = $("#delete-class-password").val();
+
 	$.post(ajaxUrl,
 		{
     		action: 'verify password',
@@ -271,6 +315,13 @@ function deleteClassVerify()
 		"json"
 	);
 }
+
+/**
+ * Funkce zobrazující druhou fázi odstranění třídy v případě ověřeného hesla, v opačném případě zobrazující chybovou hlášku
+ * @param {string} messageType Typ hlášky
+ * @param {string} message Text hlášky
+ * @param {string} data Dodatečné informace
+ */
 function deleteClassConfirm(messageType, message, data)
 {
 	if (data.verified === true)
@@ -285,9 +336,13 @@ function deleteClassConfirm(messageType, message, data)
 		$("#delete-class-password").val("");
 	}
 }
+
+/**
+ * Funkce odesílající požadavek na odstranění třídy
+ */
 function deleteClassFinal()
 {
-	var password = $("#delete-class-password").val();
+	let password = $("#delete-class-password").val();
 
 	$.post(ajaxUrl,
 		{
@@ -306,7 +361,7 @@ function deleteClassFinal()
 					else if (messageType === "success")
 					{
 						newMessage(message, "success");
-						//Přesměruj uživatele za tři vteřiny zpět na seznam tříd
+						//přesměruj uživatele za tři vteřiny zpět na seznam tříd
 						setInterval(function () { window.location = 'menu'; }, 3000);
 					}
 				}
@@ -315,6 +370,10 @@ function deleteClassFinal()
 		"json"
 	);
 }
+
+/**
+ * Funkce rušící odstranění třídy
+ */
 function deleteClassCancel()
 {
 	$("#delete-class-password").val("");

@@ -1,13 +1,12 @@
-var parameter;
-var navOffset;
-var tosOffset;
-var ppOffset;
-var cookiesOffset;
-var windowHeight;
+var parameter; //část url za '?'
+var navOffset; //vzdálenost navigace od začátku stránky
+var tosOffset; //vzdálenost terms of service sekce od začátku stránky
+var ppOffset; //vzdálenost privacy policy sekce od začátku stránky
+var cookiesOffset; //vzdálenost cookies sekce od začátku stránky
+var windowHeight; //výška okna
 
-//vše, co se děje po načtení stránky
-$(function() {
-
+$(function()
+{
 	parameter = location.search.substring(1).split("&");
 
 	navOffset = $('nav').offset().top;
@@ -18,7 +17,7 @@ $(function() {
 
 	$('#tos-button').addClass('selected');
 
-	//zonrazení části stránky podle parametru předaného v url adrese
+	//zobrazení části stránky podle parametru předaného v url adrese
 	if (parameter == 'tos') showToS();
 	else if (parameter == 'pp') showPP();
 	else if (parameter == 'cookies') showCookies();
@@ -29,48 +28,73 @@ $(function() {
 	$("#cookies-button").click(function(){showCookies()})
 
 	//event listener scrollování
-	$(window).scroll(function() 
-	{  
-		var top = $(window).scrollTop();
-		if(top >= navOffset) 
-		{
-			$("nav").addClass("sticky");
-			$("main .content").css("padding-top", navOffset);
-		}
-		else
-		{
-			$("nav").removeClass("sticky");
-			$("main .content").css("padding-top", 0);
-		}
-
-		if ((cookiesOffset - top) < windowHeight/2) {
-			$('#tos-button, #pp-button').removeClass('selected');
-			$('#cookies-button').addClass('selected');
-		}
-		else if ((ppOffset - top) < windowHeight/2) {
-			$('#tos-button, #cookies-button').removeClass('selected');
-			$('#pp-button').addClass('selected');
-		}
-		else if ((tosOffset - top) < windowHeight/2) {
-			$('#pp-button, #cookies-button').removeClass('selected');
-			$('#tos-button').addClass('selected');
-		}
-	});
+	$(window).scroll(function() {scrollCheck()})
 })
 
-function showToS() {
+/**
+ * Funkce kontrolující, kolik bylo odscrollováno, a nastavující příslušné třídy
+ */
+function scrollCheck()
+{
+	//odscrollovaná vzdálenost od začátku stránky
+	let top = $(window).scrollTop();
+
+	if (top >= navOffset) 
+	{
+		$("nav").addClass("sticky");
+		$("main .content").css("padding-top", navOffset);
+	}
+	else
+	{
+		$("nav").removeClass("sticky");
+		$("main .content").css("padding-top", 0);
+	}
+
+	//většinu stránky zabírá cookies sekce
+	if ((cookiesOffset - top) < windowHeight/2)
+	{
+		$('#tos-button, #pp-button').removeClass('selected');
+		$('#cookies-button').addClass('selected');
+	}
+	//většinu stránky zabírá privacy policy sekce
+	else if ((ppOffset - top) < windowHeight/2)
+	{
+		$('#tos-button, #cookies-button').removeClass('selected');
+		$('#pp-button').addClass('selected');
+	}
+	//většinu stránky zabírá terms of service sekce
+	else if ((tosOffset - top) < windowHeight/2)
+	{
+		$('#pp-button, #cookies-button').removeClass('selected');
+		$('#tos-button').addClass('selected');
+	}
+}
+
+/**
+ * Funkce zobrazující terms of service sekci
+ */
+function showToS()
+{
 	$(window).scrollTop(tosOffset - navOffset);
 	$('#pp-button, #cookies-button').removeClass('selected');
 	$('#tos-button').addClass('selected');
 }
 
-function showPP() {
+/**
+ * Funkce zobrazující privacy policy sekci
+ */
+function showPP()
+{
 	$(window).scrollTop(ppOffset - navOffset);
 	$('#tos-button, #cookies-button').removeClass('selected');
 	$('#pp-button').addClass('selected');
 }
 
-function showCookies() {
+/**
+ * Funkce zobrazující cookies sekci
+ */
+function showCookies()
+{
 	$(window).scrollTop(cookiesOffset - navOffset);
 	$('#tos-button, #pp-button').removeClass('selected');
 	$('#cookies-button').addClass('selected');

@@ -1,40 +1,52 @@
-//Nastavení URL pro AJAX požadavky
-let ajaxUrl = window.location.href;
+//nastavení URL pro AJAX požadavky
+var ajaxUrl = window.location.href;
 if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
 ajaxUrl = ajaxUrl.replace('/manage/members', '/class-update'); //Nahraď neAJAX akci AJAX akcí
 
-//vše, co se děje po načtení stránky
-$(function() {
-
+$(function()
+{
 	//event listenery tlačítek
-	$(".kick-user-button").click(function(event) {kickUser(event)})
-	$(".kick-user-confirm-button").click(function(event) {kickUserConfirm(event)})
-	$(".kick-user-cancel-button").click(function(event) {kickUserCancel(event)})
+	$(".kick-user-button").click(function(event) {kickMember(event)})
+	$(".kick-user-confirm-button").click(function(event) {kickMemberConfirm(event)})
+	$(".kick-user-cancel-button").click(function(event) {kickMemberCancel(event)})
 	$("#invite-user-button").click(function() {inviteFormShow()})
 	$("#invite-user-confirm-button").click(function() {inviteUser()})
 	$("#invite-user-cancel-button").click(function() {inviteFormHide()})
 })
 
-//vše, co se děje při změně velikosti okna
-$(window).resize(function() {
-})
-
-
-function kickUser(event) {
-	$(event.target).closest(".members-data-item").find(".kick-user-button").hide();
-	$(event.target).closest(".members-data-item").find(".kick-user").show();
-} 
-
-function kickUserCancel(event) {
-	$(event.target).closest(".members-data-item").find(".kick-user-button").show();
-	$(event.target).closest(".members-data-item").find(".kick-user").hide();
-} 
-
-function kickUserConfirm(event)
+/**
+ * Funkce zahajující odebrání člena třídy
+ * @param {event} event 
+ */
+function kickMember(event)
 {
-	let memberId = $(event.target).closest(".members-data-item").attr("data-member-id");
+	let $member = $(event.target).closest(".members-data-item");
 
-    let $deletedTableRow = $(event.target).closest(".members-data-item");
+	$member.find(".kick-user-button").hide();
+	$member.find(".kick-user").show();
+} 
+
+/**
+ * Funkce rušící odebrání člena třídy
+ * @param {event} event 
+ */
+function kickMemberCancel(event)
+{
+	let $member = $(event.target).closest(".members-data-item");
+
+	$member.find(".kick-user-button").show();
+	$member.find(".kick-user").hide();
+} 
+
+/**
+ * Funkce odesílající požadavek na odebrání člena třídy
+ * @param {event} event 
+ */
+function kickMemberConfirm(event)
+{
+	let $member = $(event.target).closest(".members-data-item");
+	let memberId = $member.attr("data-member-id");
+
     $.post(ajaxUrl,
 		{
     		action: 'kick member',
@@ -51,10 +63,8 @@ function kickUserConfirm(event)
 					}
 					else if (messageType === "success")
 					{
-						//newMessage(message, "success")
-
 						//odebrání uživatele z DOM
-						$deletedTableRow.remove();
+						$member.remove();
 					}
 				}
 			);
@@ -62,20 +72,38 @@ function kickUserConfirm(event)
 		"json"
 	);
 }
+
+/**
+ * Funkce zobrazující formulář na pozvání uživatele do třídy
+ */
 function inviteFormShow()
 {
     $("#invite-user-button").hide();
     $("#invite-user-form").show();
+	$("#invite-user-form")[0].scrollIntoView({ 
+		behavior: 'smooth',
+		block: "start" 
+	});
+	$("#invite-user-name").focus();
 }
+
+/** 
+ * Funkce skrývající formulář na pozvání uživatele do třídy
+ */
 function inviteFormHide()
 {
     $("#invite-user-name").val("");
     $("#invite-user-button").show();
     $("#invite-user-form").hide();
 }
+
+/**
+ * Funkce odesílající požadavek na pozvání uživatele do třídy
+ */
 function inviteUser()
 {
-    var userName = $("#invite-user-name").val();
+    let userName = $("#invite-user-name").val();
+
     $.post(ajaxUrl,
 		{
       action: 'invite user',
@@ -88,10 +116,8 @@ function inviteUser()
 				{
 					if (messageType === "success")
 					{
-						//Vynuluj a skryj formulář
 					    inviteFormHide();
 					    
-					    //TODO - ideálně zobrazit přímo ve formuláři
 						newMessage(message,"success");
 					}
 					if (messageType === "error")
