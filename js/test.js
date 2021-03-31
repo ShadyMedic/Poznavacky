@@ -217,7 +217,6 @@ function next()
 	$("#loading").show();
 	
 	$("#result").hide();
-	$("#answerForm").show();
 	$("#answer").val("");
 	$("#answer").focus();
 	
