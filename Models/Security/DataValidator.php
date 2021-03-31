@@ -59,9 +59,43 @@ class DataValidator
 
     public const URL_ALLOWED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz'; //(plus znak -)
 
-    public const CLASS_RESERVED_URLS = array('account-settings', 'enter-class-code');
-    public const GROUP_RESERVED_URLS = array('leave', 'manage');
-    public const PART_RESERVED_URLS = array('reports', 'edit');
+    public const RESERVED_URLS = array(
+        "error403",
+        "error404",
+        "index",
+        "index-forms",
+        "legal",
+        "recover-password",
+        "token-password-change",
+        "administrate",
+        "administrate-action",
+        "logout",
+        "leave",
+        "invitation",
+        "enter-class-code",
+        "request-new-class",
+        "menu",
+        "add-pictures",
+        "submit-picture",
+        "learn",
+        "learn-pictures",
+        "test",
+        "test-pictures",
+        "check-test-answer",
+        "new-report",
+        "manage",
+        "class-update",
+        "members",
+        "naturals",
+        "update-naturals",
+        "tests",
+        "edit",
+        "confirm-group-edit",
+        "reports",
+        "report-action",
+        "account-settings",
+        "account-update"
+    );
     
     /**
      * Metoda ověřující, zda se délka řetězce nachází mezi minimální a maximální hodnotou.
@@ -201,20 +235,7 @@ class DataValidator
      */
     public function checkForbiddenUrls(string $subject, int $stringType): bool
     {
-        switch ($stringType)
-        {
-            case self::TYPE_CLASS_URL:
-                if (in_array($subject, self::CLASS_RESERVED_URLS)) { throw new InvalidArgumentException(null, $stringType); }
-                break;
-            case self::TYPE_GROUP_URL:
-                if (in_array($subject, self::GROUP_RESERVED_URLS)) { throw new InvalidArgumentException(null, $stringType); }
-                break;
-            case self::TYPE_PART_URL:
-                if (in_array($subject, self::PART_RESERVED_URLS)) { throw new InvalidArgumentException(null, $stringType); }
-                break;
-            default:
-                throw new BadMethodCallException('Invalid string type');
-        }
+        if (in_array($subject, self::RESERVED_URLS)) { throw new InvalidArgumentException(null, $stringType); }
         return true;
     }
 

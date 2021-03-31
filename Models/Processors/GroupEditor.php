@@ -9,6 +9,8 @@ use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Logger;
 use \InvalidArgumentException;
 use \RangeException;
 
@@ -52,6 +54,7 @@ class GroupEditor
         }
         catch (RangeException $e)
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli nepřijatelné délce nového názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $newName));
             switch ($e->getMessage())
             {
                 case 'short':
@@ -62,17 +65,21 @@ class GroupEditor
         }
         catch (InvalidArgumentException $e)
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli přítomnosti nepovolených znaků', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $newName));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_INVALID_CHARACTERS, null, $e);
         }
         
         //Ověř unikátnost názvu - toto nelze udělat pomocí třídy DataValidator, protože je možné, že poznávačka nebyla přejmenována a název tak již existuje a přitom je platný
         //Musí být proto porovnáno ID u záznamů se shodnou URL adresou
-        $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ? LIMIT 2', array($this->group->getUrl(), $this->group->getClass()->getId()), false);
-        //if ($result === false) { /* Žádná poznávačka se stejným URL nebyla ve třídě nalezena - platné přejmenování */ }
+        $result = Db::fetchQuery('SELECT '.Group::COLUMN_DICTIONARY['id'].' FROM '.Group::TABLE_NAME.' WHERE '.Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].' = ? LIMIT 2', array(Folder::generateUrl($newName), $this->group->getClass()->getId()), true);
+        if ($result === false) { $result = array(array(Group::COLUMN_DICTIONARY['id'] => $this->group->getId())); } //Žádná poznávačka se stejným URL nebyla ve třídě nalezena - platné přejmenování
         //if ($result[Group::COLUMN_DICTIONARY['id']] === $this->group->getId()) { /* Nalezena poznávačka se stejným URL i ID - poznávačka nebyla přejmenována */ }
-        if ($result[Group::COLUMN_DICTIONARY['id']] !== $this->group->getId())
+        $ids = array();
+        foreach ($result as $row) { $ids[] = $row[Group::COLUMN_DICTIONARY['id']]; }
+        if (!(in_array($this->group->getId(), $ids) && count($ids) === 1))
         {
             //Nalezena poznávačka se stejným URL a rozdílným ID - přejmenování na název příliš podobný jiné poznávačce
+            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli neunikátnímu názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $newName));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_GROUP);
         }
 
@@ -83,6 +90,7 @@ class GroupEditor
         }
         catch (InvalidArgumentException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli rezervované URL reprezentaci nového názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $newName));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_FORBIDDEN_URL, null, $e);
         }
 
@@ -115,6 +123,7 @@ class GroupEditor
                 //Kontrola, zda již přírodnina v této části neexistuje
                 if (in_array(mb_strtoupper($naturalName), $naturalNamesUppercaseArray))
                 {
+                    (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole přírodnin v některé z částí kvůli neunikátnímu názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId()));
                     throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_NATURAL);
                 }
                 $naturalNamesArray[] = $naturalName;
@@ -154,6 +163,7 @@ class GroupEditor
                         }
                         catch (RangeException $e)
                         {
+                            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů přírodnin - u názvu {newName} - kvůli nepřijatelné délce nového názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $naturalName));
                             switch ($e->getMessage())
                             {
                                 case 'short':
@@ -164,6 +174,7 @@ class GroupEditor
                         }
                         catch (InvalidArgumentException $e)
                         {
+                            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů přírodnin - u názvu {newName} - kvůli přítomnosti nepovolených znaků', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $naturalName));
                             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_INVALID_CHARACTERS, null, $e);
                         }
                         
@@ -183,6 +194,7 @@ class GroupEditor
             }
             catch (RangeException $e)
             {
+                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli nepřijatelné délce nového názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $partName));
                 switch ($e->getMessage())
                 {
                     case 'short':
@@ -193,6 +205,7 @@ class GroupEditor
             }
             catch (InvalidArgumentException $e)
             {
+                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli přítomnosti nepovolených znaků', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $partName));
                 throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_INVALID_CHARACTERS, null, $e);
             }
             
@@ -200,6 +213,7 @@ class GroupEditor
             $partUrl = Folder::generateUrl($partName);
             if (in_array($partUrl, $partUrls))
             {
+                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli neunikátnímu názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $partName));
                 throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_PART);
             }
             $partUrls[] = $partUrl;
@@ -211,6 +225,7 @@ class GroupEditor
             }
             catch (InvalidArgumentException $e)
             {
+                (new Logger(true))->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli zarezervované URL reprezentace názvu', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'groupId' => $this->group->getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'newName' => $partName));
                 throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_FORBIDDEN_URL, null, $e);
             }
             

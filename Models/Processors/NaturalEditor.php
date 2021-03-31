@@ -7,6 +7,8 @@ use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
+use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Logger;
 use \InvalidArgumentException;
 use \RangeException;
 
@@ -51,6 +53,7 @@ class NaturalEditor
         }
         catch (RangeException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli nepřijatelné délce názvu', array('userId' => UserManager::getId(), 'classId' => $this->class->getId(), 'naturalId' => $natural->getId(), 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));
             switch ($e->getMessage())
             {
                 case 'short':
@@ -61,6 +64,7 @@ class NaturalEditor
         }
         catch (InvalidArgumentException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli přítomnosti nepovolených znaků v názvu', array('userId' => UserManager::getId(), 'classId' => $this->class->getId(), 'naturalId' => $natural->getId(), 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_RENAME_INVALID_CHARACTERS, null, $e);
         }
 
@@ -70,11 +74,13 @@ class NaturalEditor
         }
         catch (InvalidArgumentException $e)
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli neunikátnímu názvu', array('userId' => UserManager::getId(), 'classId' => $this->class->getId(), 'naturalId' => $natural->getId(), 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_RENAME_DUPLICATE_NAME);
         }
 
         if (!in_array($natural->getId(), $this->idsOfNaturalsInClass))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak přejmenovávaná přírodnina nepatří do spravované třídy', array('userId' => UserManager::getId(), 'classId' => $this->class->getId(), 'naturalId' => $natural->getId(), 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_RENAME_FOREIGN_NATURAL);
         }
 
@@ -94,10 +100,12 @@ class NaturalEditor
     {
         if (!in_array($from->getId(), $this->idsOfNaturalsInClass))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} sloučit přírodninu s ID {naturalId} do jiné přírodniny z IP adresy {ip}, avšak slučovaná přírodnina nepatří do spravované třídy', array('userId' => UserManager::getId(), 'classId' => $this->class->getId(), 'naturalId' => $from->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_MERGE_FROM_FOREIGN_NATURAL);
         }
         if (!in_array($to->getId(), $this->idsOfNaturalsInClass))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} sloučit jinou přírodninu do přírodniny s ID {naturalId} z IP adresy {ip}, avšak přírodnina, do které má být jiná přírodnina sloučena nepatří do spravované třídy', array('userId' => UserManager::getId(), 'classId' => $this->class->getId(), 'naturalId' => $to->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_MERGE_TO_FOREIGN_NATURAL);
         }
 
@@ -115,6 +123,7 @@ class NaturalEditor
     {
         if (!in_array($natural->getId(), $this->idsOfNaturalsInClass))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil odstranit ze třídy s ID {classId} přírodninu s ID {naturalId} z IP adresy {ip}, což mu nebylo umožněno, jelikož daná přírodnina nepatří do spravované třídy', array('userId' => UserManager::getId(), 'classId' => $this->class->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_DELETE_FOREIGN_NATURAL);
         }
 

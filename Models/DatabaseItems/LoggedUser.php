@@ -7,6 +7,7 @@ use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Logger;
 use Poznavacky\Models\undefined;
 use \DateTime;
 use \InvalidArgumentException;
@@ -95,7 +96,11 @@ class LoggedUser extends User
      */
     public function requestNameChange(string $newName): bool
     {
-        if (mb_strlen($newName) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NO_NAME);}
+        if (mb_strlen($newName) === 0)
+        {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odeslat žádost o změnu jména z IP adresy {ip}, avšak žádné jméno nevyplnil', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NO_NAME);
+        }
         
         //Kontrola délky jména
         $validator = new DataValidator();
@@ -105,6 +110,7 @@ class LoggedUser extends User
         }
         catch(RangeException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odeslat žádost o změnu jména z IP adresy {ip}, avšak požadované jméno mělo nevyhovující délku', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             if ($e->getMessage() === 'long')
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_NAME_TOO_LONG, null, $e);
@@ -122,6 +128,7 @@ class LoggedUser extends User
         }
         catch (InvalidArgumentException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odeslat žádost o změnu jména z IP adresy {ip}, avšak požadované jméno obsahovalo nepovolené znaky', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_INVALID_CHARACTERS, null, $e);
         }
         
@@ -132,6 +139,7 @@ class LoggedUser extends User
         }
         catch (InvalidArgumentException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odeslat žádost o změnu jména z IP adresy {ip}, avšak požadované jméno nebylo unikátní', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NAME_CHANGE_DUPLICATE_NAME, null, $e);
         }
         
@@ -145,11 +153,13 @@ class LoggedUser extends User
             $this->loadIfNotLoaded($this->id);
             
             Db::executeQuery('UPDATE '.UserNameChangeRequest::TABLE_NAME.' SET '.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].' = ?, '.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].' = NOW() WHERE '.UserNameChangeRequest::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newName, $applications[UserNameChangeRequest::COLUMN_DICTIONARY['id']]));
+            (new Logger(true))->info('Uživatel s ID {userId} odeslal žádost o změnu jména na {newName} z IP adresy {ip}, čímž přepsal již existující žádost', array('userId' => UserManager::getId(), 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));
         }
         else
         {
             //Uložení nové žádosti
             Db::executeQuery('INSERT INTO '.UserNameChangeRequest::TABLE_NAME.' ('.UserNameChangeRequest::COLUMN_DICTIONARY['subject'].','.UserNameChangeRequest::COLUMN_DICTIONARY['newName'].','.UserNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].') VALUES (?,?,NOW())', array($this->id, $newName));
+            (new Logger(true))->info('Uživatel s ID {userId} odeslal žádost o změnu jména na {newName} z IP adresy {ip}', array('userId' => UserManager::getId(), 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));
         }
         return true;
     }
@@ -166,14 +176,23 @@ class LoggedUser extends User
      */
     public function changePassword(string $oldPassword, string $newPassword, string $newPasswordAgain): bool
     {
-        if (mb_strlen($oldPassword) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_OLD_PASSWORD);}
-        if (mb_strlen($newPassword) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_PASSWORD);}
-        if (mb_strlen($newPasswordAgain) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_REPEATED_PASSWORD);}
-        
+        try
+        {
+            if (mb_strlen($oldPassword) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_OLD_PASSWORD);}
+            if (mb_strlen($newPassword) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_PASSWORD);}
+            if (mb_strlen($newPasswordAgain) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_NO_REPEATED_PASSWORD);}
+        }
+        catch (AccessDeniedException $e)
+        {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil o změnu svého hesla z IP adresy {ip}, avšak nevyplnil některý z údajů', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            throw $e;
+        }
+
         //Kontrola hesla
         $aChecker = new AccessChecker();
         if (!$aChecker->recheckPassword($oldPassword))
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil o změnu svého hesla z IP adresy {ip}, avšak staré heslo nebylo platné', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_WRONG_PASSWORD);
         }
         
@@ -185,6 +204,7 @@ class LoggedUser extends User
         }
         catch (RangeException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil o změnu svého hesla z IP adresy {ip}, avšak nové heslo mělo nevyhovující délku', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             if ($e->getMessage() === 'long')
             {
                 throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_TOO_LONG, null, $e);
@@ -202,11 +222,13 @@ class LoggedUser extends User
         }
         catch(InvalidArgumentException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil o změnu svého hesla z IP adresy {ip}, avšak nové heslo obsahovalo nepovolené znaky', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_INVALID_CHARACTERS, null, $e);
         }
         //Kontrola shodnosti hesel
         if ($newPassword !== $newPasswordAgain)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil o změnu svého hesla z IP adresy {ip}, avšak hesla se neshodovala', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_CHANGE_DIFFERENT_PASSWORDS);
         }
         
@@ -218,6 +240,7 @@ class LoggedUser extends User
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['hash'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($hashedPassword, UserManager::getId()));
         $this->hash = $hashedPassword;
+        (new Logger(true))->info('Uživatel s ID {userId} změnil své heslo z IP adresy {ip}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         return true;
     }
 
@@ -232,13 +255,19 @@ class LoggedUser extends User
      */
     public function changeEmail(string $password, string $newEmail): bool
     {
-        if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_NO_PASSWORD);}
+        if (mb_strlen($password) === 0)
+        {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil změnit svou e-mailovou adresu z IP adresy {ip}, avšak nevyplnil své heslo', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_NO_PASSWORD);
+        }
+
         if (mb_strlen($newEmail) === 0){$newEmail = NULL;}
         
         //Kontrola hesla
         $aChecker = new AccessChecker();
         if (!$aChecker->recheckPassword($password))
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil změnit svou e-mailovou adresu z IP adresy {ip}, avšak vyplněné heslo nebylo správné', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_WRONG_PASSWORD);
         }
         
@@ -253,16 +282,19 @@ class LoggedUser extends User
             }
             catch (RangeException $e)
             {
+                (new Logger(true))->notice('Uživatel s ID {userId} se pokusil změnit svou e-mailovou adresu z IP adresy {ip}, avšak nová e-mailová adresa byla příliš dlouhá', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                 throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_EMAIL_TOO_LONG, null, $e);
             }
             catch (InvalidArgumentException $e)
             {
+                (new Logger(true))->notice('Uživatel s ID {userId} se pokusil změnit svou e-mailovou adresu z IP adresy {ip}, avšak zadanou e-mailovou adresu již používá jiný uživatelský účet', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                 throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_DUPLICATE_EMAIL, null, $e);
             }
             
             //Kontrola platnosti e-mailu
             if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL))
             {
+                (new Logger(true))->notice('Uživatel s ID {userId} se pokusil změnit svou e-mailovou adresu z IP adresy {ip}, avšak zadaná e-mailová adresa měla neplatný formát', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                 throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL);
             }
         }
@@ -274,6 +306,7 @@ class LoggedUser extends User
         
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['email'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1', array($newEmail, UserManager::getId()));
         $this->email = $newEmail;
+        (new Logger(true))->info('Uživatel s ID {userId} změnil svou e-mailovou adresu na {newEmail} z IP adresy {ip}', array('userId' => UserManager::getId(), 'newEmail' => $newEmail, 'ip' => $_SERVER['REMOTE_ADDR']));
         return true;
     }
 
@@ -343,12 +376,17 @@ class LoggedUser extends User
      */
     public function deleteAccount(string $password): bool
     {
-        if (mb_strlen($password) === 0){throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_NO_PASSWORD);}
+        if (mb_strlen($password) === 0)
+        {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odstranit svůj účet z IP adresy {ip}, avšak nezadal své heslo', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_NO_PASSWORD);
+        }
         
         //Kontrola hesla
         $aChecker = new AccessChecker();
         if (!$aChecker->recheckPassword($password))
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odstranit svůj účet z IP adresy {ip}, avšak zadané heslo nebylo správné', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_WRONG_PASSWORD);
         }
         
@@ -356,14 +394,18 @@ class LoggedUser extends User
         $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array(UserManager::getId()));
         if ($administratedClasses['cnt'] > 0)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odstranit svůj účet z IP adresy {ip}, avšak nebylo mu to umožněno, jelikož je správcem nějaké třídy', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR);
         }
         
         //Kontrola dat OK
-        
+
+        $userId = UserManager::getId();
         //Odstranit uživatele z databáze
         $result = $this->delete();
-        
+
+        (new Logger(true))->info('Uživatel s ID {userId} odstranil svůj účet z IP adresy {ip}', array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR']));
+
         //Odhlásit uživatele
         unset($_SESSION['user']);
         

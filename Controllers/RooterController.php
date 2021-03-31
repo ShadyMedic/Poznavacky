@@ -1,14 +1,15 @@
 <?php
 namespace Poznavacky\Controllers;
 
-use BadMethodCallException;
-use ErrorException;
+use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\AntiXssSanitizer;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
+use \BadMethodCallException;
+use \ErrorException;
 
 /**
  * Třída směrovače přesměrovávající uživatele z index.php na správný kontroler
@@ -190,34 +191,50 @@ class RooterController extends SynchronousController
             }
             $currentUrl = array_shift($urlVariablesValues);
 
-            $folderClass = null;
-            $parentFolder = null;
+            $folder = null;
+            $folderNotFound = false;
             $alreadySet = false;
             switch ($selection)
             {
                 case 'class':
-                    $folderClass = 'Poznavacky\\Models\\DatabaseItems\\ClassObject';
                     $parentFolder = null;
                     $alreadySet = ($aChecker->checkClass() && $_SESSION['selection']['class']->getUrl() === $currentUrl);
+                    if (!$alreadySet)
+                    {
+                        $folder = new ClassObject(false, 0);
+                        $folder->initialize(null, $currentUrl);
+                    }
                     break;
                 case 'group':
-                    $folderClass = 'Poznavacky\\Models\\DatabaseItems\\Group';
                     $parentFolder = $_SESSION['selection']['class'];
-                    $alreadySet = ($aChecker->checkGroup() && $_SESSION['selection']['group']->getUrl() === $currentUrl);
+                    if (!$alreadySet)
+                    {
+                        $groups = $parentFolder->getGroups();
+                        for ($j = 0; $j < count($groups) && $groups[$j]->getUrl() !== $currentUrl; $j++) {}
+                        if ($j === count($groups)) { $folderNotFound = true; }
+                        else { $folder = $groups[$j]; }
+                    }
                     break;
                 case 'part':
-                    $folderClass = 'Poznavacky\\Models\\DatabaseItems\\Part';
                     $parentFolder = $_SESSION['selection']['group'];
                     $alreadySet = ($aChecker->checkPart() && $_SESSION['selection']['part']->getUrl() === $currentUrl);
+                    if (!$alreadySet)
+                    {
+                        $parts = $parentFolder->getParts();
+                        for ($j = 0; $j < count($parts) && $parts[$j]->getUrl() !== $currentUrl; $j++) {}
+                        if ($j === count($parts)) { $folderNotFound = true; }
+                        else { $folder = $parts[$j]; }
+                    }
                     break;
             }
 
             //Kontrola, zda není složka se stejným URL již náhodou zvolena
             if ($alreadySet) { continue; }
-            //Uložení objektu třídy/poznávačky/části do $_SESSION
-            $folder = new $folderClass(false, 0);
-            $folder->initialize(null, $currentUrl, $parentFolder); //U ClassObject je třetí argument $status, ale zde to bude prostě NULL
-            try { $folder->load(); }
+            try
+            {
+                if ($folderNotFound) { throw new BadMethodCallException(); }
+                $folder->load();
+            }
             catch (BadMethodCallException $e)
             {
                 //Třída/poznávačka/část splňující daná kritéria neexistuje

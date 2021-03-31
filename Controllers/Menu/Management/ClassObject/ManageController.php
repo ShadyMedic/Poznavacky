@@ -2,6 +2,9 @@
 namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Logger;
+use Poznavacky\Models\Statics\UserManager;
 
 /**
  * Kontroler starající se o výpis stránky pro administraci třídy jejím správcům
@@ -12,10 +15,13 @@ class ManageController extends SynchronousController
     /**
      * Metoda nastavující hlavičku stránky a pohled
      * @param array $parameters Pole parametrů pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @see SynchronousController::process()
      */
     public function process(array $parameters): void
     {
+        (new Logger(true))->info('Přístup na stránku pro správu třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('classId' => $_SESSION['selection']['class']->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+
         self::$pageHeader['title'] = 'Správa třídy';
         self::$pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu třídy';
         self::$pageHeader['keywords'] = '';

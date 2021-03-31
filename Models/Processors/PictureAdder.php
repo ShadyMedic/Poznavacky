@@ -116,7 +116,11 @@ class PictureAdder
     private function addPicture(Natural $natural, string $url): bool
     {
         //Vložení obrázku do databáze
-        try { $natural->addPicture($url); }
+        try
+        {
+            $natural->addPicture($url);
+            $_SESSION['selection']['part']->initialize(null, null, null, null, null, ($_SESSION['selection']['part']->getPicturesCount() + 1));
+        }
         catch (DatabaseException $e)
         {
             (new Logger(true))->alert('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak neznámá chyba zabránila uložení obrázku; pokud toto nebyla ojedinělá chyba, může být vážně narušeno fungování systému', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureUrl' => $url));

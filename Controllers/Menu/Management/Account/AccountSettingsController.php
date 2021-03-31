@@ -4,6 +4,7 @@ namespace Poznavacky\Controllers\Menu\Management\Account;
 use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Statics\UserManager;
+use Poznavacky\Models\Logger;
 
 /**
  * Kontroler starající se o výpis stránky s nastavením účtu
@@ -20,6 +21,8 @@ class AccountSettingsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
+        (new Logger(true))->info('Přístup na stránku pro správu účtu uživatelem s ID {userId} z IP adresy {ip}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+
         self::$data['userId'] = UserManager::getId();
         self::$data['userName'] = UserManager::getName();
         self::$data['userEmail'] = UserManager::getEmail();
