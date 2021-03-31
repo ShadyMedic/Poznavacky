@@ -210,9 +210,9 @@ class RooterController extends SynchronousController
                     if (!$alreadySet)
                     {
                         $groups = $parentFolder->getGroups();
-                        for ($i = 0; $i < count($groups) && $groups[$i]->getUrl() !== $currentUrl; $i++) {}
-                        if ($i === count($groups)) { $folderNotFound = true; }
-                        else { $folder = $groups[$i]; }
+                        for ($j = 0; $j < count($groups) && $groups[$j]->getUrl() !== $currentUrl; $j++) {}
+                        if ($j === count($groups)) { $folderNotFound = true; }
+                        else { $folder = $groups[$j]; }
                     }
                     break;
                 case 'part':
@@ -221,9 +221,9 @@ class RooterController extends SynchronousController
                     if (!$alreadySet)
                     {
                         $parts = $parentFolder->getParts();
-                        for ($i = 0; $i < count($parts) && $parts[$i]->getUrl() !== $currentUrl; $i++) {}
-                        if ($i === count($parts)) { $folderNotFound = true; }
-                        else { $folder = $parts[$i]; }
+                        for ($j = 0; $j < count($parts) && $parts[$j]->getUrl() !== $currentUrl; $j++) {}
+                        if ($j === count($parts)) { $folderNotFound = true; }
+                        else { $folder = $parts[$j]; }
                     }
                     break;
             }
