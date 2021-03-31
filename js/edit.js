@@ -529,7 +529,10 @@ function save()
  */
 function lock()
 {
-	$(window).on("beforeunload", function() { return ""; })
+	$(window).on("beforeunload", function(event) {
+		event.preventDefault();
+		return "";
+	})
 }
 
 /**
