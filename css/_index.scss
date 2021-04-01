@@ -1,16 +1,12 @@
 //scss partial soubor, který má na starost jedinečné styly pro index
 
-body#index
-{
-	width: 100vw;
-	height: 100%;
+#index {
 	position: relative;
 	color: $gray1;
-	font-size: 100%;
-	overflow-x: hidden;
 	overflow-y: auto;
 	@include scrollbar(12px, $gray3, $gray2);
 	header {
+		background: $greenDark;
 		padding: 1rem 1rem;
 		@media screen and (min-width: $mobile) {
 			padding: 1rem 3rem;
@@ -66,8 +62,6 @@ body#index
 	}
 
 	#index-text-section {
-		background: white;
-		display: block;
 		@media screen and (min-width: $tablet) {
 			display: grid;
 			grid-template-columns: 2fr 1fr 3fr;
@@ -79,11 +73,15 @@ body#index
 		}
 		> .content {
 			padding: 3rem 1rem;
+			text-align: center;
 			@media screen and (min-width: $mobile) {
 				padding: 3rem 3rem;
 			}
 			@media screen and (min-width: $tablet) {
 				padding: 3rem 4rem;
+				grid-row: 1/3;
+				grid-column: 1/3;
+				text-align: justify;
 			}
 			@media screen and (min-width: $smallDesktop) {
 				padding: 4rem 6rem;
@@ -91,16 +89,9 @@ body#index
 			@media screen and (min-width: $desktop) {
 				padding: 4rem 10rem;
 			}
-			@media screen and (min-width: $tablet) {
-				grid-row: 1/3;
-				grid-column: 1/3;
-			}
-			text-align: center;
-			@media screen and (min-width: $tablet) {
-				text-align: justify;
-			}
 			p {
 				font-size: 1.4rem;
+				margin-bottom: 0.4rem;
 				@media screen and (min-width: $tablet) {
 					font-size: 1.6rem;
 					text-align: left;
@@ -108,32 +99,31 @@ body#index
 				@media screen and (min-width: $smallDesktop) {
 					font-size: 1.8rem;
 				}
-				margin-bottom: 0.4rem;
 			}
 			.btn {
 				font-size: 1.6rem;
+				padding: 0.4rem;
+				text-decoration: none;
+				color: $gray1;
 				@media screen and (min-width: $tablet) {
 					font-size: 1.8rem;
 				}
 				@media screen and (min-width: $smallDesktop) {
 					font-size: 2rem;
 				}
-				padding: 0.4rem;
-				text-decoration: none;
-				color: $gray1;
 			}
 		}
 		> img {
+			width: 100%;
 			@media screen and (min-width: $tablet) {
 				grid-row: 2/4;
 				grid-column: 2/4;
 				align-self: end;
 				justify-self: end;
 			}
-			width: 100%;
 			@media screen and (max-width: $tablet) {
 				position: relative;
-				bottom: -5px;
+				bottom: -5px; //z neznámého důvodu je jinak pod obrázkem prázdné místo
 			}
 		}
 	}
@@ -142,7 +132,7 @@ body#index
 		background: $gray1;
 		padding: 3rem 1rem;
 		@media screen and (min-width: $mobile) {
-				padding: 3rem;
+			padding: 3rem 3rem;
 		}
 		.content {
 			display: flex;
@@ -150,11 +140,12 @@ body#index
 			align-items: center;
 			.btn {
 				width: 100%;
-				@media screen and (min-width: $smallMobile) {
-					width: 10em;
-				}
 				margin: 1rem 0;
-				font-size: 1.8rem;
+				font-size: 1.4rem;
+				max-width: 10em;
+				@media screen and (min-width: $smallMobile) {
+					font-size: 1.8rem;
+				}
 			}
 		}
 	}
@@ -189,7 +180,7 @@ body#index
 				margin: 3.6rem auto;
 				@media screen and (min-width: $mobile) {
 					display: grid;
-					grid-auto-rows: auto 1fr;
+					grid-auto-rows: auto 1fr; //konkrétní výška první řádky (s obrázkem) nastavena pomocí js, aby byla všude stejná
 					align-items: flex-start;
 					margin: 1.2rem auto;
 				}
@@ -211,32 +202,29 @@ body#index
 		padding: 0 0.4rem;
 		box-shadow: 0px 0px 4px 2px rgba(black,0.2);
 		border: 0.8rem solid white;
-		@media screen and (min-width: $mobile) {
-			border-width: 1.6rem;
-		}
 		border-radius: 1rem;
-		//font-size: 1.2rem;
-		top: 50vh;
-		left: 50vw;
-		transform: translate(-50%, calc(-50% + 5px));
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		width: 90vw;
 		height: auto;
 		max-height: 90vh;
 		max-width: 520px;
 		z-index: 10;
 		background: white;
-		//transform: translateY(5px);
 		opacity: 0;
 		pointer-events: none;
 		transition: transform 0.32s ease-out, opacity 0.32s ease-out;
+		@media screen and (min-width: $mobile) {
+			border-width: 1.6rem;
+		}
 		&.show {
-			transform: translate(-50%, -50%);
 			opacity: 1;
 			pointer-events: auto;
 		}
-		> #register,
-		> #login,
-		> #password-recovery {
+		#register,
+		#login,
+		#password-recovery {
 			@include scrollbar(12px, $gray3, $gray2);
 		}
 		.button-wrapper {
@@ -246,23 +234,17 @@ body#index
 			z-index: 6;
 			background: white;
 			height: 2rem;
-		}
-		.btn.icon {
-			position: absolute;
-			top: 0;
-			right: 0;
-			height: 1.6rem;
-			width: 1.6rem;
+			.btn {
+				position: absolute;
+				top: 0;
+				right: 0;
+				height: 1.6rem;
+				width: 1.6rem;
+			}
 		}
 		h2 {
 			font-size: 1.6rem;
 			margin: 0 0 0.8rem 0;
-			> img {
-				height: 1em;
-				width: 1em;
-				margin-right: 0.4rem;
-				transform: translateY(10%);
-			}
 		}
 		.user-data {
 			display: flex;
@@ -280,8 +262,7 @@ body#index
 			}
 			input.text-field {
 				color: $gray1;
-				font-family: 'Roboto', sans-serif;
-				//font-size: 1.2rem;
+				font-family: 'Ubuntu', sans-serif;
 				background: #eee;
 				padding-top: 0.6em;
 				padding-bottom: 0.6em;
@@ -299,8 +280,6 @@ body#index
 		.btn.inline,
 		p {
 			font-size: inherit;
-		}
-		p {
 			text-align: left;
 			padding: 0;
 			&:not(:last-child) {
@@ -332,10 +311,13 @@ body#index
 		transform: translateY(100%);
 		background: #444;
 		color: white;
-		display: block;
 		text-align: justify;
 		z-index: 6;
 		padding: 1rem 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-content: center;
+		transition: transform 0.6s ease-in-out;
 		@media screen and (min-width: $mobile) {
 			padding: 1rem 3rem;
 		}
@@ -345,10 +327,6 @@ body#index
 		@media screen and (min-width: $smallDesktop) {
 			padding: 1rem 6rem;
 		}
-		display: flex;
-		justify-content: space-between;
-		align-content: center;
-		transition: transform 0.6s ease-in-out;
 		&.show {
 			transform: translateY(0);
 		}
@@ -358,23 +336,16 @@ body#index
 				margin-bottom: 0.6rem;
 			}
 		}
-		button {
+		.btn {
 			flex-shrink: 0;
 			margin: auto 0;
 		}
 	}
 
 	#back-to-top-button {
-		width: fit-content;
-		height: fit-content;
-		padding: 0;
 		transition: opacity 0.2s ease-in-out;
 		opacity: 0;
 		pointer-events: none;
-		&.show {
-			opacity: 1;
-			pointer-events: auto;
-		}
 		height: 4rem;
 		width: 4rem;
 		padding: 0.8rem;
@@ -383,11 +354,15 @@ body#index
 		position: fixed; 
 		bottom: 2rem;
 		right: 2rem;
+		z-index: 4;
 		@media screen and (min-width: $tablet) {
 			bottom: 3rem;
 			right: 3rem;
 		}
-		z-index: 4;
+		&.show {
+			opacity: 1;
+			pointer-events: auto;
+		}
 		img {
 			width: 100%;
 			height: 100%;
