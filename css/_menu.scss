@@ -13,24 +13,21 @@
 #edit-group,
 #resolve-reports,
 #naturals {
-	min-width: 100%;
-	height: 100%;
 	@include scrollbar(12px, $gray3, $gray1);
 	position: relative;
-	overflow-y: auto;
+	background: #eee;
 	@media screen and (min-width: $smallTablet) {
 		height: 100vh;
 		overflow: hidden;
 	}
-	background: #eee;
 	.container {
-		position: relative;
 		@media screen and (min-width: $smallTablet) {
 			grid-template-columns: auto 1fr;
 			grid-template-rows: auto auto 1fr auto auto;
 		}
 	}
 	header {	
+		background: $greenDark;
 		position: fixed;
 		width: 100%;
 		top: 0;
@@ -47,8 +44,6 @@
 		}
 		@media screen and (min-width: $smallTablet) {
 			position: relative;
-		}
-		@media screen and (min-width: $smallTablet) {
 			grid-column: 1/3;
 		}
 		.logo {
@@ -62,50 +57,36 @@
 				margin-left: 0.6rem;
 			}
 		}
-		.btn.icon {
-			@media screen and (min-width: $smallTablet) {
-				display: none;
-			}
+		.icon {
 			margin: 0.4rem 1rem 0.4rem 0;
 			height: 32px;
 			width: 32px;
-			> img {
-				height: 100%;
-				width: 100%;
+			@media screen and (min-width: $smallTablet) {
+				display: none;
 			}
 			&:last-child {
 				margin-left: auto;
 				margin-right: 0;	
-			}
-			&:active {
-				transform: scale(0.88);
 			}
 		}
 	}
 	aside {
 		display: none;
 		width: 64px;
-		@media screen and (min-width: $smallTablet) {
-			display: flex;
-			flex-direction: column;
-		}
 		grid-row: 2/5;
 		grid-column: 1/2;
 		color: white;
 		background: $gray3;
-		.btn.icon {
+		@media screen and (min-width: $smallTablet) {
+			display: flex;
+			flex-direction: column;
+		}
+		.icon {
 			margin: 1rem auto;
 			height: 32px;
 			width: 32px;
-			> img {
-				height: 100%;
-				width: 100%;
-			}
 			&:last-child {
 				margin-top: auto;	
-			}
-			&:active {
-				transform: scale(0.88);
 			}
 		}
 	}
@@ -164,6 +145,8 @@
 		}
 	}
 }
+
+
 #menu {
 	#changelog {
 		position: fixed;
@@ -222,7 +205,7 @@
 			box-shadow: 0 3px 2px -1px rgba(black, 0.2);
 		}
 		&#menu-classes-table {
-			ul.rows li {
+			li {
 				grid-template-columns: 1fr 6rem 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: 1fr 8rem 6rem;
@@ -230,84 +213,84 @@
 				@media screen and (min-width: $mobile) {
 					grid-template-columns: 1fr 8rem 8rem;
 				}
-				&.invitation {
-					grid-template-rows: auto auto;
-					margin: 0.4rem 0 0.6rem 0;
-					.invitation-info
-					 {
-						font-size: 0.8rem;
-						width: 100%;
-						padding: 0 0.6rem;
-						grid-row: 1/2;
-						grid-column: 1/4;
-						text-align: left;
-					}
-					.invitation-accept {
-						display: flex;
-						flex-direction: row;
-						justify-content: space-evenly;
-						.btn {
-							margin: 0 0.4rem
-						}
-					}
+			}
+			.invitation {
+				grid-template-rows: auto auto;
+				margin: 0.4rem 0 0.6rem 0;
+				.invitation-info
+				{
+					font-size: 0.8rem;
+					width: 100%;
+					padding: 0 0.6rem;
+					grid-row: 1/2;
+					grid-column: 1/4;
+					text-align: left;
 				}
-				&#enter-code-wrapper,
-				&#request-class-wrapper {
+				.invitation-accept {
 					display: flex;
-					flex-direction: column;
-					margin: 0.6rem 0;
-					text-align: center;
-					> * {
-						margin: 0.2rem 0;
-					}
-				}
-				#class-code-form {
+					flex-direction: row;
+					justify-content: space-evenly;
 					.btn {
-						width: fit-content;
-					}
-					.text-field {
-						width: 8rem;
+						margin: 0 0.4rem
 					}
 				}
-				&#request-class-wrapper {
-					padding-bottom: 0.6rem;
-					.btn {
-						width: fit-content;
-						margin: 0.2rem auto;
-					}
+			}
+			#enter-code-wrapper,
+			#request-class-wrapper {
+				display: flex;
+				flex-direction: column;
+				margin: 0.6rem 0;
+				text-align: center;
+				> * {
+					margin: 0.2rem 0;
 				}
-				#request-class-form {
-					display: flex;
-					flex-direction: column;
-					width: 90%;
-					max-width: 400px;
-					margin: auto;
-					> * {
-						margin: 0;
-					}
-					.border-btn {
-						width: 100%;
-						margin: 0.6rem auto;
-					}
-					label, 
-					input.text-field {
-						margin: 0.12rem 0;
-						text-align: left;
-					}
-					label:not(:nth-of-type(1)) {
-						margin-top: 0.54rem;
-					}
-					label > span {
-						font-weight: bold;
-					}
-					textarea {
-						max-height: 160px;
-					}
+			}
+			#class-code-form {
+				.btn {
+					width: fit-content;
+				}
+				.text-field {
+					width: 8rem;
+				}
+			}
+			#request-class-wrapper {
+				padding-bottom: 0.6rem;
+				.btn {
+					width: fit-content;
+					margin: 0.2rem auto;
+				}
+			}
+			#request-class-form {
+				display: flex;
+				flex-direction: column;
+				width: 90%;
+				max-width: 400px;
+				margin: auto;
+				> * {
+					margin: 0;
+				}
+				.border-btn {
+					width: 100%;
+					margin: 0.6rem auto;
+				}
+				label, 
+				input.text-field {
+					margin: 0.12rem 0;
+					text-align: left;
+				}
+				label:not(:nth-of-type(1)) {
+					margin-top: 0.54rem;
+				}
+				label > span {
+					font-weight: bold;
+				}
+				textarea {
+					max-height: 160px;
 				}
 			}
 		}
 		&#menu-groups-table {
-			.table-title.rows {
+			.table-title {
 				grid-template-columns: 1fr 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: 1fr 6rem;
@@ -316,7 +299,7 @@
 					grid-template-columns: 1fr 8rem;
 				}
 			}
-			ul.rows li {
+			li {
 				grid-template-columns: 1fr 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: 1fr 6rem;
@@ -327,7 +310,7 @@
 			} 
 		}
 		&#menu-parts-table {
-			ul.rows li {
+			li {
 				grid-template-columns: auto 1fr 6rem 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: auto 1fr 8rem 6rem;
@@ -336,7 +319,7 @@
 					grid-template-columns: auto 1fr 8rem 8rem;
 				}
 				&.show {
-					.col1 {
+					.part-name {
 						display: none;
 						@media screen and (min-width: 820px) {
 							display: block;
@@ -349,18 +332,18 @@
 					cursor: default;
 				}
 				&.empty {
-					.col2,
-					.col3 {
+					.part-naturals-count,
+					.part-pictures-count {
 						color: $red1;
 					}
 				}
-				.col1 {
+				.part-name {
 					grid-column: 1/3;
 				}
-				.col2 {
+				.part-naturals-count {
 					grid-column: 3/4;
 				}
-				.col3 {
+				.part-pictures-count {
 					grid-column: 4/5;
 				}
 				.buttons {
@@ -409,7 +392,7 @@
 				}
 			} 
 		}
-		.table-title.rows {
+		.table-title {
 			width: 100%;
 			max-width: 780px;
 			padding: 0.4rem;
@@ -423,78 +406,31 @@
 			}
 		}
 		ul {
-			display: grid;
-			&.rows {
-				display: flex;
-				flex-direction: column;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			max-width: 780px;
+			position: relative;
+			button {
 				width: 100%;
-				max-width: 780px;
-				position: relative;
-				button {
-					width: 100%;
-					margin: 0.4rem 0;
-				}
-				li {
-					display: grid;
-					width: 100%;
-					padding: 0.4rem;
-					min-height: 2.98rem;
-					color: $black1;
-				}
-				.col1 {
-					font-size: 1rem;
-					@media screen and (min-width: $smallMobile) {
-						font-size: 1.2rem;
-					}
-					@media screen and (min-width: 820px) {
-						font-size: 1.4rem;
-					}
-				}
-				span.tiles {
-					display: none;
-				}
+				margin: 0.4rem 0;
 			}
-			&.tiles {
-				grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-				grid-gap: 1rem;
-				@media screen and (min-width: $mobile) {
-					grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-					grid-gap: 2rem;
+			li {
+				display: grid;
+				width: 100%;
+				padding: 0.4rem;
+				min-height: 2.98rem;
+				color: $black1;
+			}
+			.class-name, 
+			.test-name,
+			.part-name {
+				font-size: 1rem;
+				@media screen and (min-width: $smallMobile) {
+					font-size: 1.2rem;
 				}
-				/*&.not-enough-tiles {
-					grid-template-columns: repeat(auto-fit, 16rem);
-				}*/
-				grid-auto-rows: auto;
-				> button, > li {
-					width: 100%;
-					min-height: 16rem;
-					height: 100%;
-					align-self: stretch;
-					max-width: 16rem;
-				}
-				span, h4, h5 {
-					text-align: center;
-				}
-				li {
-					height: 100%;
-					width: 100%;
-					padding: 1rem;
-					display: flex;
-					flex-direction: column;
-					align-content: center;
-					h4 {
-						word-break: break-word;
-					}
-					a.btn {
-						margin: 0.4rem auto;
-					}
-				}
-				#class-code-form {
-					width: 100%;
-					> * {
-						width: 100%;
-						margin: 4px 0;
-					}
+				@media screen and (min-width: 820px) {
+					font-size: 1.4rem;
 				}
 			}
 			.text-field {
