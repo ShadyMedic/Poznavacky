@@ -448,7 +448,13 @@ class ClassObject extends Folder
             //Nelze odstranit člena z veřejné třídy
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS);
         }
-        
+
+        if ($userId === UserManager::getId())
+        {
+            //Správce třídy nemůže sám sebe vyhodit
+            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_CANT_SELF);
+        }
+
         $this->loadIfNotLoaded($this->id);
         if (!$this->isDefined($this->members)){ $this->loadMembers(); }
         

@@ -100,6 +100,7 @@ class AccessDeniedException extends Exception
     const REASON_MANAGEMENT_INVITE_USER_DEMO_ACCOUNT = 'Do své třídy nemůžete pozvat demo účet';
     const REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER = 'Tento uživatel je již členem této třídy';
     const REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS = 'Z této třídy nelze odebrat žádného člena';
+    const REASON_MANAGEMENT_KICK_USER_CANT_SELF = 'Jako správce této třídy se nemůžete sám odebrat';
     const REASON_MANAGEMENT_KICK_USER_NOT_A_MEMBER = 'Tento uživatel není členem této třídy';
     const REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME = 'Poznávačka s tímto nebo velmi podobným názvem již ve vaší třídě existuje';
     const REASON_MANAGEMENT_NEW_GROUP_FORBIDDEN_URL = 'Tento název poznávačky nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
