@@ -386,7 +386,7 @@ function confirmClassAdminEdit(classId)
 				$("#editable-class-admin-row .class-admin-table .class-admin-data:eq(2)").text(newStatus);
 				
 				//Vypnutí nebo zapnutí tlačítka pro kontaktování správce třídy a změna adresáta předávaného jako parametr
-				if (newEmail.length === 0)
+				if (newEmail === null)
 				{
 					//Nový správce nemá e-mail --> vypnout tlačítko
 					$("#editable-class-admin-row .class-admin-mail-btn").attr("disabled", "");
