@@ -73,6 +73,9 @@ function newTestConfirm()
 
 						$('.tests-data-section').append(groupDomItem);
 
+						//doplň event listener na tlačítko pro odstranění poznávačky
+						$(".tests-data-section .test-action:last .delete-group-button").click(function(event) {deleteTest(event)})
+
 						newMessage(response["message"], "success");
 
 						newTestCancel();
