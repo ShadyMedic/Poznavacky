@@ -123,6 +123,7 @@ function statusChange()
         if ($("#class-status-select .selected").text() !== "Soukromá")
         {
 			//není možné změnit vstupní kód -> skrytí
+			$("#change-class-status-confirm-button").addClass("disabled");
             hideClassStatusCode();
             return;
         }
@@ -159,6 +160,11 @@ function statusChange()
     	{
             $("#change-class-status-confirm-button").removeClass("disabled");
     	}
+    	//kód se nezměnil a status také ne
+    	else if ($("#class-status-select .selected").text() === initialStatus)
+		{
+			$("#change-class-status-confirm-button").addClass("disabled");
+		}
     }
 }
 
@@ -170,17 +176,19 @@ function changeClassStatusConfirm()
 {
     let newStatus = $("#class-status-select .selected").text();
     let newCode = $("#change-class-status-code").val();
-    
+
     let confirmMessage;
     switch (newStatus)
     {
         case "Veřejná":
 			confirmMessage = "Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup. Pokračovat?";
-            break;
+            newCode = "";
+			break;
         case "Soukromá":
 			confirmMessage = "Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup. Pokračovat?";
             break;
         case "Uzamčená":
+			newCode = "";
 			confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?";
             break;
         default:
