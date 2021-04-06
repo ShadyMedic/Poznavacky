@@ -88,6 +88,7 @@ class RooterController extends SynchronousController
             header('HTTP/1.0 404 Not Found');
             $this->controllerToCall = new Error404Controller();
             $path = '/error404';
+            $urlArguments = array('error404');
         }
         else
         {
