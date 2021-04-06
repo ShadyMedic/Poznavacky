@@ -70,7 +70,7 @@ class PictureAdder
         //Přírodnina s tímto názvem ve zvolené poznávačce neexistuje
         if ($i === count($naturals))
         {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'naturalName' => $naturalName));
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'naturalName' => $naturalName));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL, null, null);
         }
         
@@ -82,23 +82,30 @@ class PictureAdder
 
         $url_headers = @get_headers($url, 1);
         if (isset($url_headers['Content-Type'])){
+            $statusCode = substr($url_headers[0], 9, 3);
             $type = @strtolower($url_headers['Content-Type']);
+            if ($statusCode >= 400 ){ $typeCheck = null; }
             if (in_array($type, self::ALLOWED_IMAGE_TYPES))
             {
                 $typeCheck = true;
             }
         }
-        
+
+        if (is_null($typeCheck))
+        {
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek nemohl být načten (zadaná URL adresa: {url})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'url' => $url));
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_URL, null, null);
+        }
         if ($typeCheck === false)
         {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek byl v neakceptovaném formátu ({imageFormat})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'imageFormat' => $type));
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek byl v neakceptovaném formátu ({imageFormat})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'imageFormat' => $type));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_FORMAT, null, null);
         }
         
         //Ověření, zda již obrázek u stejné přírodniny není nahrán
         if ($natural->pictureExists($url))
         {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureUrl' => $url));
+            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})', array('userId' => UserManager::getId(), 'groupId' => $this->group->getId(), 'naturalId' => $natural->getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureUrl' => $url));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_DUPLICATE_PICTURE, null, null);
         }
         
