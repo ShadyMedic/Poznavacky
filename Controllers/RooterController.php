@@ -86,10 +86,14 @@ class RooterController extends SynchronousController
                 (new Logger(true))->warning('Nepřihlášený uživatel odeslal z IP adresy {ip} požadavek na URL adresu {requestUrl}, avšak daná cesta nebyla v konfiguraci nalezena', array('ip' => $_SERVER['REMOTE_ADDR'], 'requestUrl' => $_SERVER['REQUEST_URI']));
             }
             header('HTTP/1.0 404 Not Found');
-            exit();
+            $this->controllerToCall = new Error404Controller();
+            $path = '/error404';
         }
-        $pathToController = $this->classExists($controllerName.self::CONTROLLER_EXTENSION, self::CONTROLLER_FOLDER);
-        $this->controllerToCall = new $pathToController;
+        else
+        {
+            $pathToController = $this->classExists($controllerName.self::CONTROLLER_EXTENSION, self::CONTROLLER_FOLDER);
+            $this->controllerToCall = new $pathToController;
+        }
 
         //Získání seznamu nastavní složek
         $selections = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Selections'][$path]);
@@ -132,14 +136,19 @@ class RooterController extends SynchronousController
         if (!$this->setFolders($selections, $urlVariablesValues)) //Předávání podle reference zajistí, že se spotřebované parametry odeberou
         {
             header('HTTP/1.0 404 Not Found');
-            exit();
+            $this->controllerToCall = new Error404Controller();
+            $checks = array();
+            $shortPath = '/error404';
+            self::$views = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Views'][$shortPath]);
         }
 
         //Provedení kontrol
         if (!$this->runChecks($checks))
         {
             header('HTTP/1.0 403 Forbidden');
-            exit();
+            $this->controllerToCall = new Error403Controller();
+            $shortPath = '/error403';
+            self::$views = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Views'][$shortPath]);
         }
 
         //Získání dat pro zobrazení v obalových pohledech
