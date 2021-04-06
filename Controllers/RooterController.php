@@ -296,7 +296,7 @@ class RooterController extends SynchronousController
                         }
                         break;
                     case 'classAdmin':
-                        if (!$_SESSION['selection']['class']->checkAdmin(UserManager::getId())) { $subCheckResult = false; }
+                        if (!($aChecker->checkClass() && $_SESSION['selection']['class']->checkAdmin(UserManager::getId()))) { $subCheckResult = false; }
                         break;
                     case 'group':
                         if (!$aChecker->checkGroup()) { $subCheckResult = false; }
