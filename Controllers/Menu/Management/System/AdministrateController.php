@@ -6,6 +6,7 @@ use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Administration;
+use Poznavacky\Models\Logger;
 
 /** 
  * Kontroler starající se o výpis administrační stránky správcům služby
@@ -24,6 +25,7 @@ class AdministrateController extends SynchronousController
     public function process(array $parameters): void
     {
         $administration = new Administration();
+        (new Logger(true))->info('Přístup na stránku pro správu systému systémovým administrátorem s ID {userId} z IP adresy {ip}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
 
         self::$data['loggedAdminName'] = UserManager::getName();
 

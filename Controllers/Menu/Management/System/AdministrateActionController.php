@@ -5,8 +5,10 @@ use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Administration;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Logger;
 
 /**
  * Kontroler zpracovávající data odeslaná ze stránky administrate AJAX požadavkem
@@ -25,9 +27,19 @@ class AdministrateActionController extends AjaxController
     {
         if (!isset($_POST['action']))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému, avšak nespecifikoval typ akce', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
             return;
         }
+
+        //Připrav obsah pole pro logování
+        $postDataForLog = $_POST;
+        if (array_key_exists('htmlMessage', $postDataForLog)) { $postDataForLog['htmlMessage'] = "[REDACTED]"; } //Odeber dlouhý údaj
+        if (array_key_exists('htmlFooter', $postDataForLog)) { $postDataForLog['htmlFooter'] = "[REDACTED]"; } //Odeber dlouhý údaj
+        $postDataForLog = print_r($postDataForLog, true);
+        $postDataForLog = str_replace("\n", ' | ', $postDataForLog); //Odeber znaky nových řádků a nahraď je " | "
+        $postDataForLog = substr($postDataForLog, 11, strlen($postDataForLog) - 18); //Odstraň "Array | ( | " ze začátku a " | ) | " z konce
+        $postDataForLog = preg_replace('!\s+!', ' ', $postDataForLog); //Nahraď vícero mezer jednou
 
         header('Content-Type: application/json');
         $administration = new Administration();
@@ -41,7 +53,7 @@ class AdministrateActionController extends AjaxController
                     $guessedPics = $_POST['guessedPics'];
                     $karma = $_POST['karma'];
                     $status = $_POST['status'];
-                    
+
                     $values = array(
                         'addedPics' => $addedPics,
                         'guessedPics' => $guessedPics,
@@ -60,7 +72,7 @@ class AdministrateActionController extends AjaxController
                     $classId = $_POST['classId'];
                     $status = $_POST['status'];
                     $code = $_POST['code'];
-                    
+
                     $values = array(
                         'status' => $status,
                         'code' => $code
@@ -127,9 +139,11 @@ class AdministrateActionController extends AjaxController
                     header('HTTP/1.0 400 Bad Request');
                     return;
             }
+            (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému; odeslané údaje byly:{postData}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'postData' => $postDataForLog));
         }
         catch (AccessDeniedException $e)
         {
+            (new Logger(true))->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému, avšak neuspěl kvůli následující chybě: {exception}; odeslané údaje byly:{postData}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e, 'postData' => $postDataForLog));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
