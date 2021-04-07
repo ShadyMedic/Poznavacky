@@ -4,7 +4,7 @@
     	<div class="members-data-item" data-member-id="<?= $member["id"] ?>">
             <span class='member-name'><?= $member['name'] ?></span>
             <div class="member-action">
-            	<button class='btn inline black kick-user-button'>Odebrat uživatele</button>
+            	<?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn inline black kick-user-button'>Odebrat uživatele</button><?php endif ?>
             </div>
 			<div class="kick-user" style="display: none">
 				<span>Opravdu chcete odebrat tohoto uživatele ze třídy?</span>

@@ -115,7 +115,14 @@ function submitPicture(event)
 
 						//Reset HTML
 						$("#url-input").val("");
-						$("#add-natural-select .custom-select-main > span").text(" ");
+						
+						//Zvyš počet obrázků u přírodniny v select boxu
+						let optionText = $(".custom-select-main>span").text().trim();
+						let countPosition = optionText.search(/\(\d+\)$/) + 1;
+						let count = optionText.substring(countPosition, optionText.length - 1);
+						optionText = optionText.replace(/\(\d+\)$/, '(' + (++count) + ')');
+						$(".custom-select-main span").text(optionText);
+						$(".custom-options>.custom-option.selected").text(optionText);
 					}
 					else if (messageType === "error")
 					{

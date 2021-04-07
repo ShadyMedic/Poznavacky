@@ -5,7 +5,9 @@ use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Logger;
 use Poznavacky\Models\ReportResolver;
 
 /**
@@ -25,6 +27,7 @@ class ReportActionController extends AjaxController
     {
         if (!isset($_POST['action']))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na vyřešení hlášení, avšak nespecifikoval žádnou akci', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
             return;
         }
@@ -34,6 +37,7 @@ class ReportActionController extends AjaxController
         $aChecker = new AccessChecker();
         if (!(isset($_SESSION['selection']['class']) || $aChecker->checkSystemAdmin()))
         {
+            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil odeslat požadavek na vyřešení hlášení z IP adresy {ip}, avšak neměl zvolenou žádnou třídu a nejednalo se o systémového administrátora', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_CLASS_NOT_CHOSEN, array('origin' => $_POST['action']));
             echo $response->getResponseString();
             return;

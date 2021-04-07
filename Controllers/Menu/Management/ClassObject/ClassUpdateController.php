@@ -9,7 +9,9 @@ use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Processors\GroupAdder;
 use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
+use Poznavacky\Models\Logger;
 use \BadMethodCallException;
 
 /**
@@ -41,7 +43,7 @@ class ClassUpdateController extends AjaxController
             switch ($_POST['action'])
             {
                 case 'request name change':
-                    $newName =$_POST['newName'];
+                    $newName = $_POST['newName'];
                     $class->requestNameChange($newName);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Žádost o změnu názvu třídy byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši žádost posoudí správce, dostanete zprávu.');
                     echo $response->getResponseString();
@@ -94,14 +96,17 @@ class ClassUpdateController extends AjaxController
                     $password = urldecode($_POST['password']);
                     if (mb_strlen($password) === 0)
                     {
+                        (new Logger(true))->notice('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} selhalo, protože žádné heslo nebylo vyplněno', array('userId' => UserManager::getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
                     $aChecker = new AccessChecker();
                     if (!$aChecker->recheckPassword($password))
                     {
+                        (new Logger(true))->notice('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} selhalo, protože zadané heslo nebylo správné', array('userId' => UserManager::getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('verified' => true));
+                    (new Logger(true))->info('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} bylo úspěšné', array('userId' => UserManager::getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                     echo $response->getResponseString();
                     break;
                 default:

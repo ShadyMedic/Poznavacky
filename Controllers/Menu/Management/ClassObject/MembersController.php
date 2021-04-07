@@ -40,7 +40,7 @@ class MembersController extends SynchronousController
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/members.js');
         self::$pageHeader['bodyId'] = 'members';
 
-        self::$data['members'] = $_SESSION['selection']['class']->getMembers(false); //false zajistí, že se nezobrazí právě přihlášený uživatel
+        self::$data['members'] = $_SESSION['selection']['class']->getMembers();
     }
 }
 
