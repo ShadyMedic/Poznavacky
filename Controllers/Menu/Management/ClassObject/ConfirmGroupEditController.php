@@ -39,7 +39,7 @@ class ConfirmGroupEditController extends AjaxController
         
         try
         {
-            $groupName = $data->name;
+            $groupName = trim($data->name); //Ořež mezery
             $partsArr = $data->parts;
             
             $editor->rename($groupName);

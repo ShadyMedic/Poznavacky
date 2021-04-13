@@ -40,7 +40,7 @@ class IndexFormsController extends AjaxController
                 case 'u':
                 case 'e':
                     $form = 'unknown';
-                    $string = $_POST['text'];
+                    $string = trim($_POST['text']); //Ořež mezery
                     $stringType = ($_POST['type'] === 'u' && !str_contains($string, '@')) ? DataValidator::TYPE_USER_NAME : DataValidator::TYPE_USER_EMAIL;
                     $validator = new DataValidator();
                     try

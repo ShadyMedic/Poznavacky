@@ -83,7 +83,7 @@ class AdministrateActionController extends AjaxController
                 case 'change class admin':
                     $classId = $_POST['classId'];
                     $changedIdentifier = $_POST['changedIdentifier'];
-                    $identifier = ($changedIdentifier === 'id') ? $_POST['adminId'] : (($changedIdentifier === 'name') ? $_POST['adminName'] : null);
+                    $identifier = ($changedIdentifier === 'id') ? $_POST['adminId'] : (($changedIdentifier === 'name') ? trim($_POST['adminName']) /* Ořež mezery*/ : null);
                     $newClassAdmin = $administration->changeClassAdmin($classId, $identifier, $changedIdentifier);
                     echo json_encode(array(
                         'messageType' => 'success',
@@ -120,12 +120,12 @@ class AdministrateActionController extends AjaxController
                     echo json_encode(array('content' => $result));
                     break;
                 case 'send email':
-                    $to = $_POST['addressee'];
-                    $subject = $_POST['subject'];
+                    $to = trim($_POST['addressee']); //Ořež mezery
+                    $subject = trim($_POST['subject']); //Ořež mezery
                     $msg = $_POST['htmlMessage'];
                     $footer = $_POST['htmlFooter'];
-                    $fromAddress = $_POST['fromAddress'];
-                    $sender = $_POST['sender'];
+                    $fromAddress = trim($_POST['fromAddress']); //Ořež mezery
+                    $sender = trim($_POST['sender']); //Ořež mezery
                     $result = $administration->sendEmail($to, $subject, $msg, $footer, $sender, $fromAddress);
                     if ($result) { echo json_encode(array('messageType' => 'success', 'message' => 'E-mail byl úspěšně odeslán')); }
                     else { echo json_encode(array('messageType' => 'error', 'message' => 'E-mail nemohl být odeslán')); }

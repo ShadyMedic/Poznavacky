@@ -51,8 +51,8 @@ class ReportActionController extends AjaxController
             {
                 case 'update picture':
                     $pictureId = $_POST['pictureId'];
-                    $newNatural = $_POST['natural'];
-                    $newUrl = $_POST['url'];
+                    $newNatural = trim($_POST['natural']); //Ořež mezery
+                    $newUrl = trim($_POST['url']); //Ořež mezery
                     $resolver->editPicture($pictureId, $newNatural, $newUrl);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny');
                     echo $response->getResponseString();

@@ -27,6 +27,8 @@ class LoginUser
      */
     public function processLogin(array $POSTdata): void
     {
+        $POSTdata['name'] = trim($POSTdata['name']); //Ořež mezery
+
         $errors = array();
 
         //Ověřit vyplněnost dat

@@ -42,7 +42,7 @@ class GroupAdder
      */
     public function processFormData(array $POSTdata): Group
     {
-        $groupName = $POSTdata['testName'];
+        $groupName = trim($POSTdata['testName']); //Ořež mezery
 
         $this->checkData($groupName);       //Kontrola dat
         return $this->addGroup($groupName); //Ovlivnění databáze

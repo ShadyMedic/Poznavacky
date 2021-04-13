@@ -35,7 +35,7 @@ class AccountUpdateController extends AjaxController
             switch ($_POST['action'])
             {
                 case 'request name change':
-                    $newName = urldecode($_POST['name']);
+                    $newName = trim(urldecode($_POST['name'])); //Ořež mezery
                     $user = UserManager::getUser();
                     $user->requestNameChange($newName);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Žádost o změnu jména byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši změnu posoudí správce, dostanete zprávu.', array('origin' => $_POST['action']));
@@ -52,7 +52,7 @@ class AccountUpdateController extends AjaxController
                     break;
                 case 'change email':
                     $password = urldecode($_POST['password']);
-                    $email = urldecode($_POST['newEmail']);
+                    $email = trim(urldecode($_POST['newEmail'])); //Ořež mezery
                     $user = UserManager::getUser();
                     $user->changeEmail($password, $email);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'E-mail byl úspěšně změněn', array('origin' => $_POST['action']));

@@ -43,7 +43,7 @@ class ClassUpdateController extends AjaxController
             switch ($_POST['action'])
             {
                 case 'request name change':
-                    $newName = $_POST['newName'];
+                    $newName = trim($_POST['newName']); //Ořež mezery
                     $class->requestNameChange($newName);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Žádost o změnu názvu třídy byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši žádost posoudí správce, dostanete zprávu.');
                     echo $response->getResponseString();
@@ -63,7 +63,7 @@ class ClassUpdateController extends AjaxController
                     echo $response->getResponseString();
                     break;
                 case 'invite user':
-                    $invitedUserName = $_POST['userName'];
+                    $invitedUserName = trim($_POST['userName']); //Ořež mezery
                     $class->inviteUser($invitedUserName);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Pozvánka úspěšně odeslána');
                     echo $response->getResponseString();

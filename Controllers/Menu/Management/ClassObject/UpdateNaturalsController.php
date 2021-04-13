@@ -42,7 +42,7 @@ class UpdateNaturalsController extends AjaxController
             {
                 case 'rename':
                     $naturalId = $_POST['naturalId'];
-                    $newName = $_POST['newName'];
+                    $newName = trim($_POST['newName']); //Ořež mezery
                     $natural = new Natural(false, $naturalId);
                     $editor->rename($natural, $newName);
                     (new Logger(true))->info('Uživatel s ID {userId} přejmenoval ve třídě s ID {classId} přírodninu s ID {naturalId} na {newName} z IP adresy {ip}', array('userId' => UserManager::getId(), 'classId' => $_SESSION['selection']['class']->getId(), 'naturalId' => $naturalId, 'newName' => $newName, 'ip' => $_SERVER['REMOTE_ADDR']));

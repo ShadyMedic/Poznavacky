@@ -32,6 +32,8 @@ class RecoverPassword
      */
     public function processRecovery(array $POSTdata): bool
     {
+        $POSTdata['email'] = trim($POSTdata['email']); //Ořež mezery
+
         if (mb_strlen($POSTdata['email']) === 0)
         {
             (new Logger(true))->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} selhal kvůli nevyplnění e-mailové adresy', array('ip' => $_SERVER['REMOTE_ADDR']));

@@ -120,6 +120,7 @@ class GroupEditor
             //Získej seznam jmen přírodnin v části
             foreach ($partData->naturals as $naturalName)
             {
+                $naturalName = trim($naturalName); //Ořež mezery
                 //Kontrola, zda již přírodnina v této části neexistuje
                 if (in_array(mb_strtoupper($naturalName), $naturalNamesUppercaseArray))
                 {
@@ -186,7 +187,7 @@ class GroupEditor
             }
             
 			//Zkontroluj, zda je název části platný
-            $partName = $partData->name;
+            $partName = trim($partData->name); //Ořež mezery
             try
             {
                 $validator->checkLength($partName, DataValidator::PART_NAME_MIN_LENGTH, DataValidator::PART_NAME_MAX_LENGTH, DataValidator::TYPE_PART_NAME);

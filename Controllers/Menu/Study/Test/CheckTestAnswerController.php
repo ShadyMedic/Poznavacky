@@ -25,7 +25,7 @@ class CheckTestAnswerController extends AjaxController
     public function process(array $parameters): void
     {
         $questionNum = $_POST['qNum'];
-        $answer = $_POST['ans'];
+        $answer = trim($_POST['ans']); //Ořež mezery
         
         header('Content-Type: application/json');
         $checker = new AnswerChecker();

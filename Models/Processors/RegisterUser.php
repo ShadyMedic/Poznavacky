@@ -30,10 +30,10 @@ class RegisterUser
      */
     public function processRegister(array $POSTdata): void
     {
-        $name = $POSTdata['name'];
+        $name = trim($POSTdata['name']); //Ořež mezery
         $pass = $POSTdata['pass'];
         $repass = $POSTdata['repass'];
-        $email = $POSTdata['email'];
+        $email = trim($POSTdata['email']); //Ořež mezery
         
         if (mb_strlen($email) === 0) { $email = null; }
         

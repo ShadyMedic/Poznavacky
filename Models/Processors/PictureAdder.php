@@ -46,8 +46,8 @@ class PictureAdder
      */
     public function processFormData(array $POSTdata): bool
     {
-        $naturalName = $POSTdata['naturalName'];
-        $url = $POSTdata['url'];
+        $naturalName = trim($POSTdata['naturalName']); //Ořež mezery
+        $url = trim($POSTdata['url']); //Ořež mezery
         
         $natural = $this->checkData($naturalName, $url);    //Kontrola dat
         return $this->addPicture($natural, $url);           //Ovlivnění databáze

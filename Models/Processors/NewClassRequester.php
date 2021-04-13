@@ -33,8 +33,8 @@ class NewClassRequester
      */
     public function processFormData(array $POSTdata): bool
     {
-        $email = @$POSTdata['email'];
-        $name = @$POSTdata['className'];
+        $email = trim(@$POSTdata['email']); //Ořež mezery
+        $name = trim(@$POSTdata['className']); //Ořež mezery
         $text = @$POSTdata['text'];
         $antispam = @$POSTdata['antispam'];
         
