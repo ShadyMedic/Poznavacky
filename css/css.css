@@ -2251,17 +2251,17 @@ label.required:after {
   width: 16px;
 }
 
-#learn #learn-wrapper .controllers .custom-select {
+#learn .controllers .custom-select {
   width: 100%;
   margin: 6px auto;
 }
 
-#learn #learn-wrapper .controllers .btn {
+#learn .controllers .btn {
   width: 100%;
   margin: 4px auto;
 }
 
-#learn #learn-wrapper .picture .picture-control {
+#learn .picture .picture-control {
   background: none;
   width: 12%;
   height: 100%;
@@ -2270,32 +2270,32 @@ label.required:after {
   padding: 10px;
 }
 
-#learn #learn-wrapper .picture .picture-control#picture-back-button {
+#learn .picture .picture-control#picture-back-button {
   top: 0;
   bottom: 0;
   left: 0;
 }
 
-#learn #learn-wrapper .picture .picture-control#picture-forward-button {
+#learn .picture .picture-control#picture-forward-button {
   top: 0;
   bottom: 0;
   right: 0;
 }
 
-#learn #learn-wrapper .picture .picture-control > img {
+#learn .picture .picture-control > img {
   -webkit-filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
           filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
 }
 
-#test #test-wrapper .controllers * {
+#test .controllers * {
   width: 100%;
 }
 
-#test #test-wrapper .controllers * :not(:last-child) {
+#test .controllers * :not(:last-child) {
   margin-bottom: 6px;
 }
 
-#test #test-wrapper .controllers > * {
+#test .controllers > * {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2306,16 +2306,16 @@ label.required:after {
   margin: 6px auto;
 }
 
-#test #test-wrapper .controllers #result-text {
+#test .controllers #result-text {
   padding: 8px 4px;
 }
 
-#test #test-wrapper .controllers #result-text .correct,
-#test #test-wrapper .controllers #result-text .correct-typo {
+#test .controllers #result-text .correct,
+#test .controllers #result-text .correct-typo {
   color: #366e11;
 }
 
-#test #test-wrapper .controllers #result-text .incorrect {
+#test .controllers #result-text .incorrect {
   color: #a00;
 }
 
