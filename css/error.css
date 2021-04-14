@@ -270,6 +270,7 @@ footer .content a:after {
 
 #overlay.show {
   opacity: 1;
+  pointer-events: auto;
 }
 
 h1,

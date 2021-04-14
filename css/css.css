@@ -268,6 +268,7 @@ footer .content a:after {
 
 #overlay.show {
   opacity: 1;
+  pointer-events: auto;
 }
 
 h1,
@@ -4400,10 +4401,9 @@ label.required:after {
   display: -ms-grid;
   display: grid;
   position: fixed;
-  overflow: auto;
+  overflow: hidden;
   scrollbar-color: #444 white;
   scrollbar-width: auto;
-  padding: 0 0.4rem;
   -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
   border: 0.8rem solid white;
@@ -4414,16 +4414,11 @@ label.required:after {
           transform: translate(-50%, -50%);
   width: 90vw;
   height: auto;
-  max-height: 90vh;
   max-width: 520px;
   z-index: 10;
   background: white;
   opacity: 0;
   pointer-events: none;
-  -webkit-transition: opacity 0.32s ease-out, -webkit-transform 0.32s ease-out;
-  transition: opacity 0.32s ease-out, -webkit-transform 0.32s ease-out;
-  transition: transform 0.32s ease-out, opacity 0.32s ease-out;
-  transition: transform 0.32s ease-out, opacity 0.32s ease-out, -webkit-transform 0.32s ease-out;
 }
 
 #index #index-login-section::-webkit-scrollbar {
@@ -4453,6 +4448,9 @@ label.required:after {
 #index #index-login-section #register,
 #index #index-login-section #login,
 #index #index-login-section #password-recovery {
+  max-height: 76vh;
+  padding: 0 0.4rem;
+  overflow: auto;
   scrollbar-color: #444 #eee;
   scrollbar-width: auto;
 }
@@ -4476,22 +4474,10 @@ label.required:after {
   background: #eee;
 }
 
-#index #index-login-section .button-wrapper {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 6;
-  background: white;
-  height: 2rem;
-}
-
-#index #index-login-section .button-wrapper .btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 1.6rem;
-  width: 1.6rem;
+#index #index-login-section #hide-login-section-button {
+  margin: 0 0 0.6rem auto;
+  height: 1.4rem;
+  width: 1.4rem;
 }
 
 #index #index-login-section h2 {

@@ -177,6 +177,7 @@ footer {
 	transition: opacity 0.32s ease-out;
 	&.show {
 		opacity: 1;
+		pointer-events: auto;
 	}
 }
 

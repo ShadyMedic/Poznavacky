@@ -198,9 +198,9 @@
 	#index-login-section {
 		display: grid;
 		position: fixed;
-		overflow: auto;
+		overflow: hidden;
 		@include scrollbar(8px, $gray3, white);
-		padding: 0 0.4rem;
+		//padding: 0 0.4rem;
 		box-shadow: 0px 0px 4px 2px rgba(black,0.2);
 		border: 0.8rem solid white;
 		border-radius: 1rem;
@@ -209,13 +209,11 @@
 		transform: translate(-50%, -50%);
 		width: 90vw;
 		height: auto;
-		max-height: 90vh;
 		max-width: 520px;
 		z-index: 10;
 		background: white;
 		opacity: 0;
 		pointer-events: none;
-		transition: transform 0.32s ease-out, opacity 0.32s ease-out;
 		@media screen and (min-width: $mobile) {
 			border-width: 1.6rem;
 		}
@@ -226,22 +224,15 @@
 		#register,
 		#login,
 		#password-recovery {
+			max-height: 76vh;
+			padding: 0 0.4rem;
+			overflow: auto;
 			@include scrollbar(12px, $gray3, $gray2);
 		}
-		.button-wrapper {
-			position: sticky;
-			top: 0;
-			width: 100%;
-			z-index: 6;
-			background: white;
-			height: 2rem;
-			.btn {
-				position: absolute;
-				top: 0;
-				right: 0;
-				height: 1.6rem;
-				width: 1.6rem;
-			}
+		#hide-login-section-button {
+			margin: 0 0 0.6rem auto;
+			height: 1.4rem;
+			width: 1.4rem;
 		}
 		h2 {
 			font-size: 1.6rem;
