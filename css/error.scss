@@ -4,19 +4,7 @@
 @import "_variables.scss";
 @import "_generic.scss";
 
-* {
-	margin: 0;
-	padding: 0;
-	border: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Ubuntu', sans-serif;
-}
-
 header {
-	background: none;
 	.error-img {
 		width: 90vw;
 		max-width: 280px;
@@ -47,11 +35,6 @@ main {
 		margin-left: 1.2rem;
 	}
 	a {
-		color: $black1;
 		font-weight: bold;
-		text-decoration: none;
-		&:hover {
-			text-decoration: underline;
-		}
 	}
 }

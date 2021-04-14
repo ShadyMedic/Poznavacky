@@ -1,6 +1,5 @@
 //scss partial soubor, který má na starost styly vyskytující se všude
 
-@import url(//fonts.googleapis.com/css?family=Roboto);
 @import url(//fonts.googleapis.com/css?family=Ubuntu);
 @import "_variables.scss";
 
@@ -49,6 +48,7 @@ body {
 	}
 }
 
+
 .container {
 	min-height: 100vh;
 	height: 100%;
@@ -60,7 +60,6 @@ header {
 	grid-row: 1/2;
 	padding: 0.2rem 0.6rem;
 	min-height: 3.2rem;
-	background: $greenDark;
 	.logo {
 		margin-left: 0.6rem;
 		display: flex;
