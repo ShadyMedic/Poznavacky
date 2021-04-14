@@ -277,25 +277,7 @@ h2,
 h3,
 h4,
 h5 {
-  line-height: 1.3em;
   font-weight: bold;
-  margin: 0.8em 0 0.4em 0;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.6rem;
-}
-
-h4 {
-  font-size: 1.6rem;
-}
-
-h5 {
-  font-size: 1.4rem;
 }
 
 .btn {
