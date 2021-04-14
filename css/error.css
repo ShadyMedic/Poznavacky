@@ -35,12 +35,6 @@ html {
   scroll-behavior: smooth;
 }
 
-html.noscroll {
-  position: fixed;
-  overflow-y: scroll;
-  width: 100%;
-}
-
 body {
   font-family: 'Ubuntu', sans-serif;
   line-height: 1.25em;
