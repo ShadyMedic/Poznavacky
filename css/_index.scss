@@ -2,6 +2,8 @@
 
 #index {
 	position: relative;
+	width: 100vw;
+	overflow-x: hidden;
 	color: $gray1;
 	overflow-y: auto;
 	@include scrollbar(12px, $gray3, $gray2);

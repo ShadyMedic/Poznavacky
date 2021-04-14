@@ -4054,6 +4054,8 @@ label.required:after {
 
 #index {
   position: relative;
+  width: 100vw;
+  overflow-x: hidden;
   color: #222;
   overflow-y: auto;
   scrollbar-color: #444 #eee;
