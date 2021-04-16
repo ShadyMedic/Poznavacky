@@ -1,4 +1,12 @@
-ErrorDocument 403 /err403.html
-ErrorDocument 404 /err404.html
-ErrorDocument 500 /err500.html
-ErrorDocument 503 /err503.html
+Options -Indexes
+
+RewriteEngine On
+# RewriteBase /
+
+# front controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip|tar\.gz)$ index.php [L]
+# RewriteRule !\.(css|js|txt|jpg|png|gif|bmp|icon)$ index.php [L]
+
+AddType application/x-httpd-php .php .phtml

@@ -1,0 +1,43 @@
+<div id="tests-wrapper">
+	<section class="tests-data-section">
+		<div class="tests-data-properties">
+			<span class='test-name'>Název</span>
+			<span class='test-parts'>Části</span>
+			<span class='test-action'>Akce</span>
+		</div>
+		<?php foreach ($groups as $group) : ?>
+		<div class='tests-data-item' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>
+			<span class='test-name'><?= $group->getName() ?></span>
+			<span class='test-parts'><?= $group->getPartsCount() ?></span>
+			<div class='test-action'>
+				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports'>Správa hlášení</a>
+				<a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit'>Upravit</a>
+				<a class='btn inline black delete-group-button'>Odstranit</a>
+			</div>
+		</div>
+		<?php endforeach ?>
+	</section>
+	<section class="tests-new-section">
+		<button id='new-test-button' class="btn border-btn non-transparent black">Vytvořit novou poznávačku</button>
+		<div id='new-test' style="display: none;">
+			<h3>Nová poznávačka</h3>
+			<p>Zadejte název nové poznávačky. Do poznávačky budete moci přidat části a přírodniny později.</p>
+			<label for="new-test-name">Název poznávačky</label>
+			<input id='new-test-name' type='text' class='text-field' maxlength=31>
+			<button id="new-test-confirm-button" class='btn border-btn non-transparent black'>Vytvořit</button>
+			<button id="new-test-cancel-button" class='btn inline black'>Zrušit</button>
+		</div>
+	</section>
+</div>
+
+<div id="test-data-item-template" style="display: none">
+    <div class='tests-data-item'  data-group-id='{id}' data-group-name='{name}'>
+        <span class='test-name'>{name}</span>
+        <span class='test-parts'>{parts}</span>
+        <div class='test-action'>
+            <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/reports'>Správa hlášení</a>
+            <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/edit'>Upravit</a>
+            <a class='btn inline black delete-group-button'>Odstranit</a>
+        </div>
+    </div>
+</div>

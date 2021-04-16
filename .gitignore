@@ -1,5 +1,9 @@
+desktop.ini
 .buildpath
 .project
-.settings/*
-local/*
-log.txt
+.settings/
+.idea/
+vendor/
+local/
+debug.log
+poznavacky.log

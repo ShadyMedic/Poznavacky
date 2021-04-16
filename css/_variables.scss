@@ -1,3 +1,38 @@
+//scss partial soubor, kde jsou uloženy proměnné
+
+$smallMobile: 360px;
 $mobile: 576px;
+$smallTablet: 672px;
 $tablet: 768px;
 $smallDesktop: 960px;
+$desktop: 1200px;
+
+$gray1: #222;
+$gray2: #eee;
+$gray3: #444;
+$black1: #101010;
+
+$red1: #a00;
+
+$greenDark: #366e11;
+$greenMid: #479911;
+$greenLight: #79cf40;
+$purpleLight: #bd4ac2;
+$purpleDark: #6a106e;
+
+@mixin scrollbar($size, $foreground-color, $background-color) {
+	scrollbar-color: $foreground-color $background-color;
+	scrollbar-width: auto;
+	&::-webkit-scrollbar {
+		width:  $size;
+		height: $size;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: $foreground-color;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: $background-color;
+	}	
+}

@@ -1,0 +1,22 @@
+<div id="test-wrapper">
+	<section class="picture">
+		<img id="main-img" src="../images/blank.gif" /> <!-- Adresa bude dodána JavaScriptem -->
+		<button class="btn report-button icon" title="Nahlásit"><img src="../images/report.svg"></button>
+		<div class="report-box">
+			<?php require 'Views/reportForm.phtml'; ?>
+		</div>
+	</section>
+	<section class="controllers">
+		<form id="answer-form">
+			<label for="answer">Zadejte odpověď:</label>
+			<input type=text autocomplete="off" id="answer" class="text-field" />
+			<input type=hidden id="answer-hidden" />
+			<button id="submit-answer-button" class="btn border-btn non-transparent black">Odeslat odpověď</button>
+		</form>
+		<div id="result">
+			<!-- ZHODNOCENÍ ODPOVĚDI -->
+			<div id="result-text"></div>
+			<button id="next-button" class="btn border-btn non-transparent black">Další obrázek</button>
+		</div>
+	</section>
+</div>

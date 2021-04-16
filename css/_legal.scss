@@ -1,0 +1,53 @@
+#legal {
+	header {
+		background: $greenDark;
+	}
+	main {
+		nav {
+			background: white;
+			padding: 0.4rem;
+			display: flex;
+			flex-direction: column;
+			@media screen and (min-width: $mobile) {
+				flex-direction: row;
+				justify-content: center;
+			}
+			&.sticky {
+				position: fixed;
+				top: 0;
+				width: 100%;
+				box-shadow: 0px 4px 4px 0px rgba(black, 0.2);
+			}
+			.btn {
+				margin: 0.4rem 1rem;
+				&.selected {
+					font-weight: bold;
+				}
+			}
+		}
+		.content {
+			padding: 1rem 1rem;
+			@media screen and (min-width: $mobile) {
+				padding: 1rem 3rem;
+			}
+			@media screen and (min-width: $tablet) {
+				padding: 1.2rem 6rem;
+			}
+			@media screen and (min-width: $smallDesktop) {
+				padding: 1.2rem 16vw;
+			}
+			@media screen and (min-width: $desktop) {
+				padding: 1.2rem 20vw;
+			}
+			section {
+				margin: 1rem 0;
+				@media screen and (min-width: $tablet) {
+					margin: 1.2rem 0;
+				}
+			}
+			p {
+				text-align: justify;
+			}
+		}
+	}
+}

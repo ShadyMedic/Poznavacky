@@ -1,0 +1,51 @@
+<section id="naturals-info-section">
+	<button id="hide-naturals-info-button" class="btn icon" title="Zavřít"><img src="images/crossButtonBlack.svg" alt=""></button>
+	<h3>Nápověda</h3>
+	<p>Na této stránce můžete spravovat přírodniny, které ve vaší třídě existují.</p>
+	<ul>
+		<li>Nahrané obrázky jsou pevně svázány s jednotlivými přírodninami. Odstraněním
+		přírodniny dojde i k odstranění všech obrázků, které k ní byly přidány.</li>
+		<li>Odstraněním přírodniny, která je přiřazená do alespoň jedné poznávačky
+		jí odeberete i ze všech poznávaček a jejich částí.</li>
+		<li>Přejmenováním přírodniny dojde k aktualizaci názvu ve všech poznávačkách,
+		ve kterých se přírodnina vyskytuje.</li>
+		<li>Nové přírodniny jsou přidávány automaticky při tvorbě nebo úpravě poznávaček.</li>
+		<li>Přírodniny jsou seřazeny podle data přidání. Pro rychlé nalezení určité
+		přírodniny můžete použít kombinaci kláves Ctrl+F.</li>
+	</ul>
+</section>
+<button id="show-naturals-info-button" class="btn icon" title="Nápověda"><img src="images/info.svg" alt=""></button>
+<div id='naturals-wrapper'>
+    <section id="naturals-data-section">
+        <div class="naturals-data-properties">
+            <span class="natural-name">Název přírodniny</span>
+            <span class="natural-uses-count">Místa výskytu</span>
+            <span class="natural-pictures-count">Počet obrázků</span>
+            <span class="natural-action">Akce</span>
+        </div>
+        <?php foreach ($naturals as $natural) : ?>
+        <div class="natural-data-item" data-natural-id="<?= $natural->getId() ?>">
+            <div class="natural-name-wrapper">
+                <div class="natural-name-box">
+                    <span class="natural-name"><?= $natural->getName() ?></span>
+                </div>
+                <div class="natural-name-input-box" style="display:none;">
+                    <input type="text" maxlength="31" class="text-field natural-name-input" value="<?= $natural->getName() ?>"/>
+                </div>
+            </div>
+            <span class="natural-uses-count"><?= $natural->getUsesCount() ?></span>
+            <span class="natural-pictures-count"><?= $natural->getPicturesCount() ?></span>
+            <div class="natural-action">
+                <div class="normal-buttons">
+                    <button title="Přejmenovat" class="rename-natural-button btn inline black">Přejmenovat</button>
+                    <button title="Odebrat" class="remove-natural-button btn inline black">Odebrat</button>
+                </div>
+                <div class="rename-buttons" style="display:none;">
+                    <button class="rename-confirm-button btn inline black">Potvrdit</button>
+                    <button class="rename-cancel-button btn inline black">Zrušit</button>
+                </div>
+            </div>
+        </div>
+        <?php endforeach ?>
+    </section>
+</div>

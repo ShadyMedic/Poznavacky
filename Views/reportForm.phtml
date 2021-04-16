@@ -1,0 +1,52 @@
+<h3>Nahlásit obrázek</h3>
+<div id="report-img-preview">
+	<img src="" id="report-img-preview">
+</div>
+<div class="custom-select-wrapper" id="report-reason">
+	<div class="custom-select">
+		<div class="custom-select-main">
+			<span><?= Poznavacky\Models\DatabaseItems\Report::REASON_NOT_DISPLAYING ?></span>
+			<img class="arrow" src="../images/arrowBlack.svg">
+		</div>
+		<ul class="custom-options">
+			<li class="custom-option" id="reason-not-displaying"><?= Poznavacky\Models\DatabaseItems\Report::REASON_NOT_DISPLAYING ?></li>
+			<li class="custom-option" id="reason-long-loading"><?= Poznavacky\Models\DatabaseItems\Report::REASON_LONG_LOADING ?></li>
+			<li class="custom-option" id="reason-incorrect-natural"><?= Poznavacky\Models\DatabaseItems\Report::REASON_INCORRECT_NATURAL ?></li>
+			<li class="custom-option" id="reason-contains-name"><?= Poznavacky\Models\DatabaseItems\Report::REASON_CONTAINS_NAME ?></li>
+			<li class="custom-option" id="reason-bad-resolution"><?= Poznavacky\Models\DatabaseItems\Report::REASON_BAD_RESOLUTION ?></li>
+			<li class="custom-option" id="reason-copyright"><?= Poznavacky\Models\DatabaseItems\Report::REASON_COPYRIGHT ?></li>
+			<li class="custom-option" id="reason-other"><?= Poznavacky\Models\DatabaseItems\Report::REASON_OTHER ?></li>
+			<li class="custom-option" id="reason-other-admin"><?= Poznavacky\Models\DatabaseItems\Report::REASON_OTHER_ADMIN ?></li>
+		</ul>
+	</div>
+</div>
+<div class="additional-report-info">
+	<div class="custom-select-wrapper" id="long-loading-info" style="display:none">
+		<div class="custom-select">
+			<div class="custom-select-main">
+				<span><?= Poznavacky\Models\DatabaseItems\Report::LONG_LOADING_AVAILABLE_DELAYS[0] ?></span>
+				<img class="arrow" src="../images/arrowBlack.svg">
+			</div>
+			<ul class="custom-options">
+				<?php foreach (Poznavacky\Models\DatabaseItems\Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
+					<li class="custom-option"><?= $delay ?></li>
+				<?php endforeach ?>
+			</ul>
+		</div>
+	</div>
+	<div class="incorrect-natural-info-wrapper" style="display:none;">
+		<label for="incorrect-natural-info">Přírodnina na obrázku: </label>
+		<input id="incorrect-natural-info" type='text' class='text-field' maxlength=31>
+	</div>
+	<div class="other-info-wrapper" style="display:none;">
+		<label for="other-info">Specifikujte prosím důvod:</label>
+		<textarea id="other-info" class='text-field' maxlength=255></textarea>
+	</div>
+	<div class="other-admin-info-wrapper" style="display:none;">
+		<label for="other-admin-info">Specifikujte prosím důvod:</label>
+		<textarea id="other-admin-info" class='text-field' maxlength=255></textarea>
+	</div>
+	<div id="report-message" class="message server"></div>
+</div>
+<button id="submit-report-button" class="btn border-btn non-transparent black">Odeslat</button>
+<button id="cancel-report-button" class="btn icon" title="Zrušit"><img src="../images/crossButtonBlack.svg"></button>

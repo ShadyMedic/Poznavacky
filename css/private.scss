@@ -14,20 +14,21 @@ body {
   line-height: 1.2rem;
   overflow: hidden;
   position: relative;
+  font-family: serif;
 }
 .container {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 }
-.overlay {
+#overlay {
 	position: fixed;
 	left: 0;
 	top: 0;
 	z-index: 9;
 	width: 100vw;
 	height: 100vh;
-	background: rgba(black, 0.6);
+	background: rgba(black, 0.4);
 	display: none;
 }
 main {
@@ -46,22 +47,26 @@ nav {
 	display: flex;
 	flex-wrap: wrap;
 	a {
+		text-decoration: none;
 		padding: 0.6rem;
 		height: 2.4rem;
 		&:last-child {
 			color: gray;
 		}
 	}
-	.activeTab {
+	.active-tab {
 		background: lightgray;
 		cursor: default;
 	}
-	:not(.activeTab) {
+	:not(.active-tab) {
 		&:hover {
 			cursor: pointer;
 			background:#eee;
 		}
 	}
+}
+footer {
+	display: none;
 }
 table {
 	border-collapse: collapse;
@@ -71,6 +76,8 @@ input {
 	padding-right: 0.2rem;
 	background: none;
 	border: 1px solid gray;
+	font-family: serif;
+	font-size: 100%;
 }
 td,
 th {
@@ -95,15 +102,15 @@ button {
 		cursor: pointer;
 	}
 }
-.borderBtn {
+.border-btn {
 	border: 1px solid gray;
 	padding: 0.26rem 0.4rem 0.2rem 0.4rem;
-	margin: 0.3rem auto;
+	margin: 0.4rem auto;
 	&:hover {
 		background-color: rgba(black, 0.1);
 	}
 }
-.activeBtn,
+.active-btn,
 .grayscale {
 	height: 1.2rem;
 	width: 1.2rem;
@@ -142,8 +149,8 @@ button {
 	text-align: center;
 	display: block;
 }
-/*----------- Tab1 ------------*/
-#tab1 {
+/*----------- Tab1 ------------*/ //původní tab s konstantami
+/*#tab1 {
 	table {
 		margin: auto;
 		text-align: center;
@@ -160,8 +167,9 @@ button {
 	.constantField {
 		border: 0;
 	}
-}
+}*/
 /*----------- Tab2, Tab3, Tab4 ------------*/
+#tab1,
 #tab2,
 #tab3,
 #tab4 {
@@ -178,6 +186,9 @@ button {
 	}
 	tr:nth-child(odd) {
 		background: #eee;
+	}
+	.class-admin-table tr:nth-child(odd) {
+		background: transparent;
 	}
 	td {
 		padding: 0.1rem 0.4rem;
@@ -198,7 +209,7 @@ button {
 		background: transparent;
 	}
 }
-#singleReport {
+#image-preview {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -216,8 +227,9 @@ button {
 	}
 	img {
 		width: 100%;
+		border: 1px solid black;
 	}
-	.borderBtn {
+	.border-btn {
 		display: block;
 		margin: auto;
 		background: white;
@@ -249,19 +261,36 @@ button {
 			}
 		}
 	}
-	.borderBtn {
+	.border-btn {
 		margin: 0 0.2rem 0 0;
 	}
-	textarea {
-		border: 1px solid gray;
-		padding: 0.2rem;
-		resize: vertical;
-		min-height: 3.8rem;
-		max-height: 40vh;
-		margin-bottom: -0.24rem;
-		width: 100%;
+	#email-info {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		justify-content: start;
+		margin: 0.4rem 0;
+		* {
+			margin: 0.2rem 0;
+			padding: 0.2rem 0.4rem;
+		}
+		label {
+			margin-right: 0.2rem;
+		}
 	}
-	#emailPreview {
+	#email-editor {
+		margin: 0.4rem 0;
+		textarea {
+			border: 1px solid gray;
+			padding: 0.2rem 0.4rem;
+			resize: vertical;
+			height: 16vh;
+			min-height: 3.8rem;
+			max-height: 36vh;
+			width: 100%;
+			margin: 0.2rem 0;
+		}
+	}
+	#email-preview {
 		width: 100%;
 		margin: 1rem auto;
 		span {
@@ -275,7 +304,7 @@ button {
 	#sql {
 		width: 100%;
 	}
-	.sqlCenter {
+	.sql-center {
 		display: block;
 		margin: auto;
 		text-align: justify;
@@ -290,28 +319,54 @@ button {
 			width: 56%;
 		}
 	}
-	#sqlWarning {
-		margin: 0.2rem auto 0.3rem auto;
-	}	
-	textarea {
-		border: 1px solid gray;
-		padding: 0.2rem;
-		resize: vertical;
-		min-height: 3.8rem;
-		max-height: 40vh;
-		margin-bottom: -0.24rem;
-		width: 100%;
+	#sql-warning {
+		margin: 0.4rem auto;
 	}
-	table {
-		border-collapse: collapse;
-		margin: 0.2rem auto;
-		tr:nth-child(even) {
-			background: #eee;
+	#sql-query {
+		margin: 0.4rem auto;
+		textarea {
+			border: 1px solid gray;
+			padding: 0.2rem 0.4rem;
+			resize: vertical;
+			min-height: 3.8rem;
+			max-height: 24vh;
+			width: 100%;
+			margin: 0.2rem 0;
 		}
-		td {
-			padding: 0.1rem 0.4rem;
-			&:not(:last-child) {
-				border-right: 1px solid lightgray;
+	}	
+	#sql-result {
+		p {
+			display: block;
+			margin: 0 auto 0.4rem auto;
+			width: 96%;
+			@media screen and (min-width: $mobile) {
+				width: 88%;
+			}
+			@media screen and (min-width: $tablet) {
+				width: 72%;
+			}
+			@media screen and (min-width: $smallDesktop) {
+				width: 56%;
+			}
+		}
+		table {
+			position: relative;
+			margin: auto;
+			text-align: center;
+			th {
+				position: sticky;
+				top: 0;
+				background: lightgray;
+				padding: 0.1rem 0.4rem;
+			}
+			tr:nth-child(odd) {
+				background: #eee;
+			}
+			td {
+				padding: 0.1rem 0.4rem;
+				&:not(:last-child) {
+					border-right: 1px solid lightgray;
+				}
 			}
 		}
 	}
