@@ -1,6 +1,6 @@
 <header>
-	<a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="../images/user.svg"></a> 
-	<a class="btn icon" href="administrate" title="Správa služby"><img src="../images/settings.svg"></a> 
+	<?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="../images/user.svg"></a><?php endif ?>
+	<?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="../images/settings.svg"></a><?php endif ?>
 	<div class="logo">
 		 <img src="../images/iconWhite1.svg">
 		<h1>Poznávačky</h1>
