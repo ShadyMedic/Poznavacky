@@ -5,7 +5,7 @@ $(function()
 
 	//eventy listenery tlačítek
 	$("#next-button").click(function() {next()});
-
+i
 	//event listener formuláře na odeslání odpovědi
 	$("#answer-form").submit(function(event) {answer(event)});
 })

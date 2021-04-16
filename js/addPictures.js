@@ -17,7 +17,7 @@ $(function()
 	//chyba při načítání obrázku
 	$("#preview-img-hidden").on("error", function()
 	{
-		$("#preview-img").attr("src", "images/imagePreview.png");
+		$("#preview-img").attr("src", "images/blank.gif");
 		$("#submit-button").addClass("disabled");
 	});
 	//obrázek načten úspěšně
