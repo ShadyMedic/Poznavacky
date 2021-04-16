@@ -120,12 +120,17 @@ function answer(event)
 {
 	event.preventDefault();
 	
+	$("#submit-answer-button").addClass("disabled");
+
 	let ans = $("#answer").val();
 	let num = $("#answer-hidden").val();
+	$("#answer-hidden").val(-1);
 	
 	let url = window.location.href;
 	if (url.endsWith('/')) { url = url.slice(0, -1); } //dstranění trailing slashe (pokud je přítomen)
 	url = url.substr(0, url.lastIndexOf("/")); //odstranění akce (/test)
+
+	if (num == -1) return;
 
 	$.post(
 		url + "/check-test-answer",
@@ -232,4 +237,6 @@ function next()
 
 	$("#main-img").attr("src", newUrl);
 	$("#answer-hidden").val(newNum);
+
+	$("#submit-answer-button").removeClass("disabled");
 }
