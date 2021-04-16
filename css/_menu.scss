@@ -105,7 +105,7 @@
 		@media screen and (min-width: $smallTablet) {
 			grid-column: 2/3;
 			overflow-y: auto;
-			@include scrollbar(12px, $gray3, $gray2);
+			@include scrollbar(12px, $gray3, none);
 		}
 	}
 	#messages {
@@ -176,7 +176,7 @@
 		ul {
 			overflow-y: auto;
 			max-height: 60vh;
-			@include scrollbar(12px, $gray3, white);
+			@include scrollbar(12px, $gray3, none);
 		}
 		h3 {
 			margin: 0 0 0.8rem 0;

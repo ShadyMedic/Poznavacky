@@ -1183,7 +1183,7 @@ label.required:after {
     -ms-grid-column-span: 1;
     grid-column: 2/3;
     overflow-y: auto;
-    scrollbar-color: #444 #eee;
+    scrollbar-color: #444 none;
     scrollbar-width: auto;
   }
   #menu main::-webkit-scrollbar,
@@ -1224,7 +1224,7 @@ label.required:after {
   #edit-group main::-webkit-scrollbar-track,
   #resolve-reports main::-webkit-scrollbar-track,
   #naturals main::-webkit-scrollbar-track {
-    background: #eee;
+    background: none;
   }
 }
 
@@ -1401,7 +1401,7 @@ label.required:after {
 #menu #changelog ul {
   overflow-y: auto;
   max-height: 60vh;
-  scrollbar-color: #444 white;
+  scrollbar-color: #444 none;
   scrollbar-width: auto;
 }
 
@@ -1415,7 +1415,7 @@ label.required:after {
 }
 
 #menu #changelog ul::-webkit-scrollbar-track {
-  background: white;
+  background: none;
 }
 
 #menu #changelog h3 {
@@ -3818,6 +3818,21 @@ label.required:after {
 
 #edit-group .part-box .naturals-in-part {
   overflow-y: auto;
+  scrollbar-color: #444 none;
+  scrollbar-width: auto;
+}
+
+#edit-group .part-box .naturals-in-part::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#edit-group .part-box .naturals-in-part::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+#edit-group .part-box .naturals-in-part::-webkit-scrollbar-track {
+  background: none;
 }
 
 #edit-group .part-info {
@@ -4119,7 +4134,7 @@ label.required:after {
   overflow-x: hidden;
   color: #222;
   overflow-y: auto;
-  scrollbar-color: #444 #eee;
+  scrollbar-color: #444 #222;
   scrollbar-width: auto;
 }
 
@@ -4133,7 +4148,7 @@ label.required:after {
 }
 
 #index::-webkit-scrollbar-track {
-  background: #eee;
+  background: #222;
 }
 
 #index header {
@@ -4462,8 +4477,6 @@ label.required:after {
   display: grid;
   position: fixed;
   overflow: hidden;
-  scrollbar-color: #444 white;
-  scrollbar-width: auto;
   -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
   border: 0.8rem solid white;
@@ -4479,19 +4492,6 @@ label.required:after {
   background: white;
   opacity: 0;
   pointer-events: none;
-}
-
-#index #index-login-section::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-#index #index-login-section::-webkit-scrollbar-thumb {
-  background: #444;
-}
-
-#index #index-login-section::-webkit-scrollbar-track {
-  background: white;
 }
 
 @media screen and (min-width: 576px) {
@@ -4511,7 +4511,7 @@ label.required:after {
   max-height: 76vh;
   padding: 0 0.4rem;
   overflow: auto;
-  scrollbar-color: #444 #eee;
+  scrollbar-color: #444 none;
   scrollbar-width: auto;
 }
 
@@ -4531,7 +4531,7 @@ label.required:after {
 #index #index-login-section #register::-webkit-scrollbar-track,
 #index #index-login-section #login::-webkit-scrollbar-track,
 #index #index-login-section #password-recovery::-webkit-scrollbar-track {
-  background: #eee;
+  background: none;
 }
 
 #index #index-login-section #hide-login-section-button {
