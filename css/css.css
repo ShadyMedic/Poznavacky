@@ -3242,151 +3242,6 @@ label.required:after {
   margin-right: 0.6rem;
 }
 
-#naturals #naturals-info-section {
-  display: none;
-  position: fixed;
-  background: white;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  z-index: 9;
-  width: 90%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow: auto;
-  padding: 1.6rem;
-  border-radius: 0.6rem;
-}
-
-@media screen and (min-width: 672px) {
-  #naturals #naturals-info-section {
-    -webkit-transform: translate(calc(-50% + 32px - 6px), -50%);
-            transform: translate(calc(-50% + 32px - 6px), -50%);
-    width: calc(90% - 64px - 12px);
-  }
-}
-
-#naturals #naturals-info-section #hide-naturals-info-button {
-  margin: 0 0 0.2rem auto;
-}
-
-#naturals #naturals-info-section h3 {
-  margin-bottom: 0.8rem;
-}
-
-#naturals #naturals-info-section ul {
-  margin: 0.8rem 0;
-}
-
-#naturals #naturals-info-section li {
-  list-style-type: circle;
-  padding-left: 0.4rem;
-  margin-left: 1.2rem;
-}
-
-#naturals #show-naturals-info-button {
-  height: 1.4rem;
-  width: 1.4rem;
-  margin-bottom: 0.4rem;
-}
-
-#naturals #naturals-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-#naturals .naturals-data-properties,
-#naturals .natural-data-item {
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  justify-items: center;
-  margin: 0.4rem;
-  padding: 0.2rem 0.8rem;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 7.2rem 6rem 6rem 1fr;
-      grid-template-columns: 7.2rem 6rem 6rem 1fr;
-}
-
-@media screen and (min-width: 672px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
-    -ms-grid-columns: 10.2rem 7.2rem 7.2rem 1fr;
-        grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
-    -ms-grid-columns: 12rem 8rem 8rem 1fr;
-        grid-template-columns: 12rem 8rem 8rem 1fr;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
-    -ms-grid-columns: 16rem 9.2rem 9.2rem 1fr;
-        grid-template-columns: 16rem 9.2rem 9.2rem 1fr;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
-    -ms-grid-columns: 20rem 10rem 10rem 1fr;
-        grid-template-columns: 20rem 10rem 10rem 1fr;
-  }
-}
-
-#naturals .naturals-data-properties > *,
-#naturals .natural-data-item > * {
-  width: 100%;
-  text-align: center;
-}
-
-#naturals .naturals-data-properties > * .text-field,
-#naturals .natural-data-item > * .text-field {
-  max-width: 100%;
-}
-
-#naturals .naturals-data-properties > * .normal-buttons,
-#naturals .naturals-data-properties > * .rename-buttons,
-#naturals .natural-data-item > * .normal-buttons,
-#naturals .natural-data-item > * .rename-buttons {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-#naturals .naturals-data-properties > * .normal-buttons .btn,
-#naturals .naturals-data-properties > * .rename-buttons .btn,
-#naturals .natural-data-item > * .normal-buttons .btn,
-#naturals .natural-data-item > * .rename-buttons .btn {
-  margin: auto 0.4rem;
-}
-
-@media screen and (min-width: 960px) {
-  #naturals .naturals-data-properties > * .normal-buttons .btn,
-  #naturals .naturals-data-properties > * .rename-buttons .btn,
-  #naturals .natural-data-item > * .normal-buttons .btn,
-  #naturals .natural-data-item > * .rename-buttons .btn {
-    margin: auto 0.8rem;
-  }
-}
-
 #account-settings #account-settings-wrapper {
   margin: auto;
 }
@@ -3816,6 +3671,80 @@ label.required:after {
   text-align: center;
 }
 
+#edit-group #edit-info-section,
+#edit-group #naturals-info-section,
+#naturals #edit-info-section,
+#naturals #naturals-info-section {
+  display: none;
+  position: fixed;
+  background: white;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 9;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 1.6rem;
+  border-radius: 0.6rem;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #edit-info-section,
+  #edit-group #naturals-info-section,
+  #naturals #edit-info-section,
+  #naturals #naturals-info-section {
+    -webkit-transform: translate(calc(-50% + 32px - 6px), -50%);
+            transform: translate(calc(-50% + 32px - 6px), -50%);
+    width: calc(90% - 64px - 12px);
+  }
+}
+
+#edit-group #edit-info-section #hide-edit-info-button,
+#edit-group #edit-info-section #hide-naturals-info-button,
+#edit-group #naturals-info-section #hide-edit-info-button,
+#edit-group #naturals-info-section #hide-naturals-info-button,
+#naturals #edit-info-section #hide-edit-info-button,
+#naturals #edit-info-section #hide-naturals-info-button,
+#naturals #naturals-info-section #hide-edit-info-button,
+#naturals #naturals-info-section #hide-naturals-info-button {
+  margin: 0 0 0.2rem auto;
+}
+
+#edit-group #edit-info-section h3,
+#edit-group #naturals-info-section h3,
+#naturals #edit-info-section h3,
+#naturals #naturals-info-section h3 {
+  margin-bottom: 0.8rem;
+}
+
+#edit-group #edit-info-section ul,
+#edit-group #naturals-info-section ul,
+#naturals #edit-info-section ul,
+#naturals #naturals-info-section ul {
+  margin: 0.8rem 0;
+}
+
+#edit-group #edit-info-section li,
+#edit-group #naturals-info-section li,
+#naturals #edit-info-section li,
+#naturals #naturals-info-section li {
+  list-style-type: circle;
+  padding-left: 0.4rem;
+  margin-left: 1.2rem;
+}
+
+#edit-group #show-edit-info-button,
+#edit-group #show-naturals-info-button,
+#naturals #show-edit-info-button,
+#naturals #show-naturals-info-button {
+  height: 1.4rem;
+  width: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
 @media screen and (min-width: 672px) {
   #edit-group #edit-group-wrapper {
     display: -ms-grid;
@@ -4085,6 +4014,102 @@ label.required:after {
   #edit-group .natural-name-input-box {
     -ms-grid-columns: 14rem 1rem 1rem;
         grid-template-columns: 14rem 1rem 1rem;
+  }
+}
+
+#naturals #naturals-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+#naturals .naturals-data-properties,
+#naturals .natural-data-item {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  margin: 0.4rem;
+  padding: 0.2rem 0.8rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 7.2rem 6rem 6rem 1fr;
+      grid-template-columns: 7.2rem 6rem 6rem 1fr;
+}
+
+@media screen and (min-width: 672px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 10.2rem 7.2rem 7.2rem 1fr;
+        grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 12rem 8rem 8rem 1fr;
+        grid-template-columns: 12rem 8rem 8rem 1fr;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 16rem 9.2rem 9.2rem 1fr;
+        grid-template-columns: 16rem 9.2rem 9.2rem 1fr;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #naturals .naturals-data-properties,
+  #naturals .natural-data-item {
+    -ms-grid-columns: 20rem 10rem 10rem 1fr;
+        grid-template-columns: 20rem 10rem 10rem 1fr;
+  }
+}
+
+#naturals .naturals-data-properties > *,
+#naturals .natural-data-item > * {
+  width: 100%;
+  text-align: center;
+}
+
+#naturals .naturals-data-properties > * .text-field,
+#naturals .natural-data-item > * .text-field {
+  max-width: 100%;
+}
+
+#naturals .naturals-data-properties > * .normal-buttons,
+#naturals .naturals-data-properties > * .rename-buttons,
+#naturals .natural-data-item > * .normal-buttons,
+#naturals .natural-data-item > * .rename-buttons {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#naturals .naturals-data-properties > * .normal-buttons .btn,
+#naturals .naturals-data-properties > * .rename-buttons .btn,
+#naturals .natural-data-item > * .normal-buttons .btn,
+#naturals .natural-data-item > * .rename-buttons .btn {
+  margin: auto 0.4rem;
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .naturals-data-properties > * .normal-buttons .btn,
+  #naturals .naturals-data-properties > * .rename-buttons .btn,
+  #naturals .natural-data-item > * .normal-buttons .btn,
+  #naturals .natural-data-item > * .rename-buttons .btn {
+    margin: auto 0.8rem;
   }
 }
 

@@ -2,54 +2,20 @@
 	<pre id="group-urls-json"><?= json_encode($groupList); ?></pre>
 	<pre id="natural-names-json"><?= json_encode($naturalList); ?></pre>
 </div>
+<section id="edit-info-section">
+	<button id="hide-edit-info-button" class="btn icon"><img src="images/crossButtonBlack.svg" alt=""></button>
+	<h3>Nápověda</h3>
+	<p>Na této stránce můžete spravovat přírodniny, které ve vaší třídě existují.</p>
+	<ul>
+		<li>Název poznávačky musí být jedinečný. Název části musí být jedinečný v rámci dané poznávačky.</li>
+		<li>Odebráním části nebudou smazány žádné přírodniny ani obrázky k nim nahrané. Přírodniny, které jsou do takovýchto částí přiřazeny, zůstanou dostupné a budete je moci později přiřadit do jiných částí a poznávaček.</li>
+		<li>V jedné části se nesmí stejná přírodnina vyskytovat vícekrát. Může se ale vyskytovat vícekrát v různých částech nebo v různých poznávačkách.</li>
+		<li>Pokud do některé části přidáte přírodninu, která už se ve vaší třídě nachází, bude automaticky propojena s již existujícími obrázky, které k ní patří.</li>
+		<li>Pokud při úpravách uděláte chybu (například odeberete část, která obsahuje velké množství přírodnin), můžete poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy, dokud nekliknete na tlačítko Uložit v horní části stránky. Nezapomeňte si proto změny, o které nechcete přijít, průběžně ukládat.</li>
+	</ul>
+</section>
+<button id="show-edit-info-button" class="btn icon" title="Nápověda"><img src="images/info.svg" alt=""></button>
 <div id="edit-group-wrapper">
-	<!--
-	<div id="help-container">
-		<button title="Nápověda" id="help-button" class="btn icon">
-			<img src='images/info.svg'/>
-		</button>
-		<div id="help-text" style="display:none">
-			<p>
-				Vítejte v rozhraní pro editaci poznávačky. Na této stránce můžete vybranou poznávačku přejmenovat,
-				přidávat či odebírat z ní části a přejmenovávat i je. A samozřejmě můžete do těchto částí přidávat
-				přírodniny.
-			</p>
-			<p>
-				Při přejmenovávání poznávačky dávejte pozor, abyste nezvolili jméno, které už má nějaká z jiných
-				poznávaček patřících do vaší třídy. V případě konfliktu budete okamžitě upozorněni. To samé se týká jmen
-				částí, také musí být unikátní, avšak můžete mít v různých poznávačkách části se stejnými jmény.
-			</p>
-			<p>
-				Odebráním části nebudou smazány žádné přírodniny ani obrázky k nim nahrané. Přírodniny, které jsou do
-				takovýchto částí přiřazeny zůstanou dostupné a budete je moci později přiřadit do jiných částí a
-				poznávaček.
-			</p>
-			<p>
-				Každou přírodninu můžete přidat do více různých poznávaček a dokonce ji můžete mít i vícekrát v různých
-				částech tétož poznávačky. Jediným pravidlem je, že tatáž přírodnina se nesmí vícekrát vyskytovat ve
-				stejné části.
-			</p>
-			<p>
-				Při přidávání přírodnin se vám budou automaticky nabízet přírodniny, které již ve vaší třídě existují.
-				Pokud některou z existujících přírodnin vyberete, budou v této poznávačce rovnou dostupné i všechny
-				obrázky, které k ní byly přidány v jiných poznávačkách. Funguje to i obráceně – pokud k dané přírodnině
-				v této poznávačce někdo přidá obrázek, bude tento obrázek zobrazován i ve všech ostatních poznávačkách
-				používajících danou přírodninu.
-			</p>
-			<p>
-				Pokud pro přidání zvolíte přírodninu, která zatím neexistuje, bude po uložení změn vytvořena. Takováto
-				přírodnina bude nejprve bez obrázků, ale to se změní s prvním přidaným obrázkem. Nově vytvořené
-				přírodniny mohou být také použity v ostatních poznávačkách.
-			</p>
-			<p>
-				Pokud při úpravách uděláte chybu, například že odeberete část, která obsahuje velké množství přírodnin,
-				můžete poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy,
-				dokud nekliknete na tlačítko "Uložit" v dolní části stránky. Nezapomeňte si proto změny průběžné
-				ukládat.
-			</p>
-		</div>
-	</div>
-	-->
 	<div id="group-name-container">
 		<div class="group-name-box">
 			<span class="group-name"><?= $groupName ?></span>
