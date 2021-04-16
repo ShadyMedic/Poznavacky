@@ -4423,6 +4423,11 @@ label.required:after {
   }
 }
 
+#index #index-info-section h3 {
+  font-size: 1.32rem;
+  margin: 1.6rem 0 0.4rem 0;
+}
+
 #index #index-info-section p {
   font-size: 1.24rem;
 }
