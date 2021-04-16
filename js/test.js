@@ -120,12 +120,17 @@ function answer(event)
 {
 	event.preventDefault();
 	
+	$("#submit-answer-button").addClass("disabled");
+
 	let ans = $("#answer").val();
 	let num = $("#answer-hidden").val();
+	$("#answer-hidden").val(-1);
 	
 	let url = window.location.href;
 	if (url.endsWith('/')) { url = url.slice(0, -1); } //dstranění trailing slashe (pokud je přítomen)
 	url = url.substr(0, url.lastIndexOf("/")); //odstranění akce (/test)
+
+	if (num == -1) return;
 
 	$.post(
 		url + "/check-test-answer",
@@ -213,8 +218,7 @@ function next()
 	}
 		
 	//nastavení načítání
-	$("#main-img").attr("src","../images/blank.gif");
-	$("#loading").show();
+	$("#main-img").attr("src","../images/loading.svg");
 	
 	$("#result").hide();
 	$("#answer").val("");
@@ -230,8 +234,9 @@ function next()
 	let newPicture = pictureManager.getNextPicture();
 	let newNum = newPicture["num"];
 	let newUrl = newPicture["url"];
-	
-	$("#loading").hide();
+
 	$("#main-img").attr("src", newUrl);
 	$("#answer-hidden").val(newNum);
+
+	$("#submit-answer-button").removeClass("disabled");
 }

@@ -1,14 +1,8 @@
 //scss partial soubor, který má na starost styly vyskytující se všude
 
-@import url(//fonts.googleapis.com/css?family=Roboto);
 @import url(//fonts.googleapis.com/css?family=Ubuntu);
 @import "_variables.scss";
 
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
 html {
 	scroll-behavior: smooth;
 }
@@ -54,6 +48,7 @@ body {
 	}
 }
 
+
 .container {
 	min-height: 100vh;
 	height: 100%;
@@ -65,7 +60,6 @@ header {
 	grid-row: 1/2;
 	padding: 0.2rem 0.6rem;
 	min-height: 3.2rem;
-	background: $greenDark;
 	.logo {
 		margin-left: 0.6rem;
 		display: flex;
@@ -183,6 +177,7 @@ footer {
 	transition: opacity 0.32s ease-out;
 	&.show {
 		opacity: 1;
+		pointer-events: auto;
 	}
 }
 
@@ -191,21 +186,7 @@ h2,
 h3,
 h4,
 h5 {
-	line-height: 1.3em;
 	font-weight: bold;
-	margin: 0.8em 0 0.4em 0;
-}
-h2 {
-	font-size: 2rem;
-}
-h3 {
-	font-size: 1.6rem;
-}
-h4 {
-	font-size: 1.6rem;
-}
-h5 {
-	font-size: 1.4rem;
 }
 
 .btn {

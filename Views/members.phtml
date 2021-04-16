@@ -1,7 +1,7 @@
 <div id='members-wrapper'>
 	<section class="members-data-section">
     	<?php foreach ($members as $member) : ?>
-    	<div class="members-data-item" data-member-id="<?= $member["id"] ?>">
+    	<div class="member-data-item" data-member-id="<?= $member["id"] ?>">
             <span class='member-name'><?= $member['name'] ?></span>
             <div class="member-action">
             	<?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn inline black kick-user-button'>Odebrat uživatele</button><?php endif ?>

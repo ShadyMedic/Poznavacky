@@ -24,15 +24,14 @@
 		<button id="natural-forward-button" class="btn border-btn non-transparent black">Následující přírodnina</button>
 	</section>
 	<section class="picture">
-		<button id="picture-back-button" class="btn icon picture-control">
+		<button id="picture-back-button" class="btn icon picture-control" title="Předchozí obrázek">
 			<img src="images/arrowWhite.svg" style="transform: rotate(180deg);" />
 		</button>
 		<img id="main-img" src="../images/blank.gif"> <!-- Adresa bude dodána JavaScriptem -->
-		<div id="loading"><img src="../images/loading.svg" alt=""></div>
-		<button id="picture-forward-button" class="btn icon picture-control">
+		<button id="picture-forward-button" class="btn icon picture-control" title="Následující obrázek">
 			<img src="images/arrowWhite.svg" />
 		</button>
-		<button class="btn report-button icon"><img src="../images/report.svg" alt="Tlačítko na nahlášení obrázku"></button>
+		<button class="btn report-button icon" title="Nahlásit"><img src="../images/report.svg"></button>
 		<div class="report-box">
 			<?php require 'Views/reportForm.phtml'; ?>
 		</div>

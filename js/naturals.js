@@ -10,10 +10,32 @@ $(function()
     $(".rename-confirm-button").click(function(event) {renameConfirm(event)})
     $(".rename-cancel-button").click(function(event) {renameCancel($(event.target))})
     $(".remove-natural-button").click(function(event) {remove(event)})
+	$("#hide-naturals-info-button").click(function() {hideInfo()});
+	$("#show-naturals-info-button").click(function() {showInfo()});
 
 	//event listener zmáčknutí klávesy
 	$(".natural-name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
 })
+
+/**
+ * Funkce zobrazující sekci s nápovědou
+ */
+function showInfo()
+{
+	$("#naturals-info-section").show();
+	$("#overlay").addClass("show");	
+	$("body").css("overflowY", "hidden");
+}
+
+/**
+ * Funkce skrývající sekci s nápovědou
+ */
+function hideInfo()
+{
+	$("#naturals-info-section").hide();
+	$("#overlay").removeClass("show");
+	$("body").css("overflowY", "auto");
+}
 
 /**
  * Funkce zobrazující vstupní pole pro přejmenování přírodniny

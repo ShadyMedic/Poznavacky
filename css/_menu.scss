@@ -13,24 +13,21 @@
 #edit-group,
 #resolve-reports,
 #naturals {
-	min-width: 100%;
-	height: 100%;
 	@include scrollbar(12px, $gray3, $gray1);
 	position: relative;
-	overflow-y: auto;
+	background: #eee;
 	@media screen and (min-width: $smallTablet) {
 		height: 100vh;
 		overflow: hidden;
 	}
-	background: #eee;
 	.container {
-		position: relative;
 		@media screen and (min-width: $smallTablet) {
 			grid-template-columns: auto 1fr;
 			grid-template-rows: auto auto 1fr auto auto;
 		}
 	}
 	header {	
+		background: $greenDark;
 		position: fixed;
 		width: 100%;
 		top: 0;
@@ -47,8 +44,6 @@
 		}
 		@media screen and (min-width: $smallTablet) {
 			position: relative;
-		}
-		@media screen and (min-width: $smallTablet) {
 			grid-column: 1/3;
 		}
 		.logo {
@@ -62,50 +57,36 @@
 				margin-left: 0.6rem;
 			}
 		}
-		.btn.icon {
-			@media screen and (min-width: $smallTablet) {
-				display: none;
-			}
+		.icon {
 			margin: 0.4rem 1rem 0.4rem 0;
 			height: 32px;
 			width: 32px;
-			> img {
-				height: 100%;
-				width: 100%;
+			@media screen and (min-width: $smallTablet) {
+				display: none;
 			}
 			&:last-child {
 				margin-left: auto;
 				margin-right: 0;	
-			}
-			&:active {
-				transform: scale(0.88);
 			}
 		}
 	}
 	aside {
 		display: none;
 		width: 64px;
-		@media screen and (min-width: $smallTablet) {
-			display: flex;
-			flex-direction: column;
-		}
 		grid-row: 2/5;
 		grid-column: 1/2;
 		color: white;
 		background: $gray3;
-		.btn.icon {
+		@media screen and (min-width: $smallTablet) {
+			display: flex;
+			flex-direction: column;
+		}
+		.icon {
 			margin: 1rem auto;
 			height: 32px;
 			width: 32px;
-			> img {
-				height: 100%;
-				width: 100%;
-			}
 			&:last-child {
 				margin-top: auto;	
-			}
-			&:active {
-				transform: scale(0.88);
 			}
 		}
 	}
@@ -124,7 +105,7 @@
 		@media screen and (min-width: $smallTablet) {
 			grid-column: 2/3;
 			overflow-y: auto;
-			@include scrollbar(12px, $gray3, $gray2);
+			@include scrollbar(12px, $gray3, none);
 		}
 	}
 	#messages {
@@ -164,6 +145,8 @@
 		}
 	}
 }
+
+
 #menu {
 	#changelog {
 		position: fixed;
@@ -193,7 +176,7 @@
 		ul {
 			overflow-y: auto;
 			max-height: 60vh;
-			@include scrollbar(12px, $gray3, white);
+			@include scrollbar(12px, $gray3, none);
 		}
 		h3 {
 			margin: 0 0 0.8rem 0;
@@ -222,7 +205,7 @@
 			box-shadow: 0 3px 2px -1px rgba(black, 0.2);
 		}
 		&#menu-classes-table {
-			ul.rows li {
+			li {
 				grid-template-columns: 1fr 6rem 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: 1fr 8rem 6rem;
@@ -230,84 +213,84 @@
 				@media screen and (min-width: $mobile) {
 					grid-template-columns: 1fr 8rem 8rem;
 				}
-				&.invitation {
-					grid-template-rows: auto auto;
-					margin: 0.4rem 0 0.6rem 0;
-					.invitation-info
-					 {
-						font-size: 0.8rem;
-						width: 100%;
-						padding: 0 0.6rem;
-						grid-row: 1/2;
-						grid-column: 1/4;
-						text-align: left;
-					}
-					.invitation-accept {
-						display: flex;
-						flex-direction: row;
-						justify-content: space-evenly;
-						.btn {
-							margin: 0 0.4rem
-						}
-					}
+			}
+			.invitation {
+				grid-template-rows: auto auto;
+				margin: 0.4rem 0 0.6rem 0;
+				.invitation-info
+				{
+					font-size: 0.8rem;
+					width: 100%;
+					padding: 0 0.6rem;
+					grid-row: 1/2;
+					grid-column: 1/4;
+					text-align: left;
 				}
-				&#enter-code-wrapper,
-				&#request-class-wrapper {
+				.invitation-accept {
 					display: flex;
-					flex-direction: column;
-					margin: 0.6rem 0;
-					text-align: center;
-					> * {
-						margin: 0.2rem 0;
-					}
-				}
-				#class-code-form {
+					flex-direction: row;
+					justify-content: space-evenly;
 					.btn {
-						width: fit-content;
-					}
-					.text-field {
-						width: 8rem;
+						margin: 0 0.4rem
 					}
 				}
-				&#request-class-wrapper {
-					padding-bottom: 0.6rem;
-					.btn {
-						width: fit-content;
-						margin: 0.2rem auto;
-					}
+			}
+			#enter-code-wrapper,
+			#request-class-wrapper {
+				display: flex;
+				flex-direction: column;
+				margin: 0.6rem 0;
+				text-align: center;
+				> * {
+					margin: 0.2rem 0;
 				}
-				#request-class-form {
-					display: flex;
-					flex-direction: column;
-					width: 90%;
-					max-width: 400px;
-					margin: auto;
-					> * {
-						margin: 0;
-					}
-					.border-btn {
-						width: 100%;
-						margin: 0.6rem auto;
-					}
-					label, 
-					input.text-field {
-						margin: 0.12rem 0;
-						text-align: left;
-					}
-					label:not(:nth-of-type(1)) {
-						margin-top: 0.54rem;
-					}
-					label > span {
-						font-weight: bold;
-					}
-					textarea {
-						max-height: 160px;
-					}
+			}
+			#class-code-form {
+				.btn {
+					width: fit-content;
+				}
+				.text-field {
+					width: 8rem;
+				}
+			}
+			#request-class-wrapper {
+				padding-bottom: 0.6rem;
+				.btn {
+					width: fit-content;
+					margin: 0.2rem auto;
+				}
+			}
+			#request-class-form {
+				display: flex;
+				flex-direction: column;
+				width: 90%;
+				max-width: 400px;
+				margin: auto;
+				> * {
+					margin: 0;
+				}
+				.border-btn {
+					width: 100%;
+					margin: 0.6rem auto;
+				}
+				label, 
+				input.text-field {
+					margin: 0.12rem 0;
+					text-align: left;
+				}
+				label:not(:nth-of-type(1)) {
+					margin-top: 0.54rem;
+				}
+				label > span {
+					font-weight: bold;
+				}
+				textarea {
+					max-height: 160px;
 				}
 			}
 		}
 		&#menu-groups-table {
-			.table-title.rows {
+			.table-title {
 				grid-template-columns: 1fr 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: 1fr 6rem;
@@ -316,7 +299,7 @@
 					grid-template-columns: 1fr 8rem;
 				}
 			}
-			ul.rows li {
+			li {
 				grid-template-columns: 1fr 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: 1fr 6rem;
@@ -327,7 +310,7 @@
 			} 
 		}
 		&#menu-parts-table {
-			ul.rows li {
+			li {
 				grid-template-columns: auto 1fr 6rem 5rem;
 				@media screen and (min-width: $smallMobile) {
 					grid-template-columns: auto 1fr 8rem 6rem;
@@ -336,7 +319,7 @@
 					grid-template-columns: auto 1fr 8rem 8rem;
 				}
 				&.show {
-					.col1 {
+					.part-name {
 						display: none;
 						@media screen and (min-width: 820px) {
 							display: block;
@@ -349,18 +332,18 @@
 					cursor: default;
 				}
 				&.empty {
-					.col2,
-					.col3 {
+					.part-naturals-count,
+					.part-pictures-count {
 						color: $red1;
 					}
 				}
-				.col1 {
+				.part-name {
 					grid-column: 1/3;
 				}
-				.col2 {
+				.part-naturals-count {
 					grid-column: 3/4;
 				}
-				.col3 {
+				.part-pictures-count {
 					grid-column: 4/5;
 				}
 				.buttons {
@@ -409,7 +392,7 @@
 				}
 			} 
 		}
-		.table-title.rows {
+		.table-title {
 			width: 100%;
 			max-width: 780px;
 			padding: 0.4rem;
@@ -423,78 +406,31 @@
 			}
 		}
 		ul {
-			display: grid;
-			&.rows {
-				display: flex;
-				flex-direction: column;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			max-width: 780px;
+			position: relative;
+			button {
 				width: 100%;
-				max-width: 780px;
-				position: relative;
-				button {
-					width: 100%;
-					margin: 0.4rem 0;
-				}
-				li {
-					display: grid;
-					width: 100%;
-					padding: 0.4rem;
-					min-height: 2.98rem;
-					color: $black1;
-				}
-				.col1 {
-					font-size: 1rem;
-					@media screen and (min-width: $smallMobile) {
-						font-size: 1.2rem;
-					}
-					@media screen and (min-width: 820px) {
-						font-size: 1.4rem;
-					}
-				}
-				span.tiles {
-					display: none;
-				}
+				margin: 0.4rem 0;
 			}
-			&.tiles {
-				grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-				grid-gap: 1rem;
-				@media screen and (min-width: $mobile) {
-					grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-					grid-gap: 2rem;
+			li {
+				display: grid;
+				width: 100%;
+				padding: 0.4rem;
+				min-height: 2.98rem;
+				color: $black1;
+			}
+			.class-name, 
+			.test-name,
+			.part-name {
+				font-size: 1rem;
+				@media screen and (min-width: $smallMobile) {
+					font-size: 1.2rem;
 				}
-				/*&.not-enough-tiles {
-					grid-template-columns: repeat(auto-fit, 16rem);
-				}*/
-				grid-auto-rows: auto;
-				> button, > li {
-					width: 100%;
-					min-height: 16rem;
-					height: 100%;
-					align-self: stretch;
-					max-width: 16rem;
-				}
-				span, h4, h5 {
-					text-align: center;
-				}
-				li {
-					height: 100%;
-					width: 100%;
-					padding: 1rem;
-					display: flex;
-					flex-direction: column;
-					align-content: center;
-					h4 {
-						word-break: break-word;
-					}
-					a.btn {
-						margin: 0.4rem auto;
-					}
-				}
-				#class-code-form {
-					width: 100%;
-					> * {
-						width: 100%;
-						margin: 4px 0;
-					}
+				@media screen and (min-width: 820px) {
+					font-size: 1.4rem;
 				}
 			}
 			.text-field {
@@ -506,636 +442,4 @@
 
 @import "_study.scss" ;
 
-#account-settings,
-#manage,
-#members,
-#tests,
-#naturals {
-	.user-data-item,
-	.class-data-item,
-	.natural-data-item,
-	.members-data-item {
-		margin: 0.6rem;
-		padding: 0.4rem 0.8rem;
-		border: 1px solid #ccc;
-		border-radius: 0.2rem;
-		display: grid;
-		@media screen and (min-width: $smallTablet) {
-			align-items: center;
-		}
-		> span {
-			padding: calc(0.4em + 4px) 0;
-		}
-	}
-	.user-data-item,
-	.class-data-item {
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: auto auto;
-		@media screen and (min-width: $smallTablet) {
-			grid-template-columns: 10rem 13rem 1fr;
-			grid-template-rows: auto 1fr;
-		}
-		.user-property-action,
-		.class-property-action {
-			grid-column: 2/3;
-			@media screen and (min-width: $smallTablet) {
-				grid-column: 3/4;
-				text-align: right;
-			}
-		}
-	}
-	#change-name,
-	#change-password,
-	#change-email,
-	#change-class-name,
-	#change-class-status {
-		grid-column: 1/3;
-		@media screen and (min-width: $smallTablet) {
-			grid-column: 2/4;
-			grid-row: 1/3;
-			max-width: 400px;
-		}
-		.border-btn {
-			margin: 0.6rem auto 0.2rem auto;
-			width: 100%;
-		}
-		.inline.btn {
-			margin-top: 0.4rem;
-			margin-bottom: 0.2rem;
-		}
-	}
-	#change-name,
-	#change-password,
-	#change-email,
-	#delete-account1,
-	#delete-account2,
-	#change-class-name,
-	#change-class-status,
-	#delete-class1,
-	#delete-class2,
-	#invite-user-form,
-	#new-test {
-		display: flex;
-		flex-direction: column;
-		label {
-			font-size: 0.9rem;
-		}
-		label, 
-		input.text-field,
-		.custom-select-wrapper {
-			margin: 0.2rem 0;
-		}
-		label:not(:nth-of-type(1)) {
-			margin-top: 0.54rem;
-		}
-		p {
-			margin-bottom: 0.6rem;
-			text-align: justify;
-		}
-		.message {
-			font-size: 0.72rem;
-			line-height: 0.96rem;
-			min-height: 0.96rem; 
-			color: $red1;
-			&.server {
-				margin-bottom: 0.2rem;
-				min-height: 0;
-			}
-		}
-	}
-	h3 {
-		font-size: 1em;
-		font-weight: bold;
-		line-height: 1.2em;
-	}
-	#delete-account1,
-	#delete-class1,
-	#invite-user-form,
-	#new-test {
-		max-width: 400px;
-		.border-btn {
-			margin: 0.6rem auto 0.2rem auto;
-			width: 100%
-		}
-		.inline.btn {
-			margin-top: 0.4rem;
-		}
-	}
-	#delete-account2,
-	#delete-class2,
-	.kick-user {
-		span {
-			color: $red1;
-		}
-		.buttons {
-			display: flex;
-			justify-content: left;
-			.border-btn {
-				width: fit-content;
-				margin: 0.6rem 0 0 0;
-				&:not(:last-child) {
-					margin-right: 0.6rem;
-				}
-			}
-		}
-	}
-}
-#naturals {
-	#naturals-wrapper {
-		max-width: 1100px;
-		margin: 0 auto;
-	}
-	#naturals-info-section {
-		margin: 0 0.4rem 1.6rem 0.4rem;
-		ul {
-			margin: 0.8rem 0;
-		}
-		li {
-			list-style-type: circle;
-			padding-left: 0.4rem;
-			margin-left: 1.2rem;
-		}
-	}
-	.naturals-data-properties,
-	.natural-data-item {
-		min-width: fit-content;
-		align-items: center;
-		justify-items: center;
-		margin: 0.4rem;
-		padding: 0.2rem 0.8rem;
-		display: grid;
-		grid-template-columns: 7.2rem 6rem 6rem 1fr;
-		@media screen and (min-width: $smallTablet) {
-			grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
-		}
-		@media screen and (min-width: $tablet) {
-			grid-template-columns: 12rem 8rem 8rem 1fr;
-		}
-		@media screen and (min-width: $smallDesktop) {
-			grid-template-columns: 16rem 9.2rem 9.2rem 1fr;
-		}
-		@media screen and (min-width: $desktop) {
-			grid-template-columns: 20rem 10rem 10rem 1fr;
-		}
-	}
-	.natural-name-wrapper,
-	.natural-name,
-	.natural-uses-count,
-	.natural-pictures-count,
-	.natural-action {
-		width: 100%;
-		text-align: center;
-		.text-field {
-			max-width: 100%;
-		}
-		.normal-buttons,
-		.rename-buttons {
-			width: 100%;
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			.btn {
-				margin: auto 0.4rem;
-				@media screen and (min-width: $smallDesktop) {
-					margin: auto 0.8rem;
-				}
-			}
-		}
-	}
-}
-#account-settings {
-	#account-settings-wrapper {
-		margin: auto;
-		@media screen and (min-width: $smallDesktop) {
-			max-width: 1100px;
-			display: grid;
-			grid-template-columns: 1fr 3fr;
-			grid-column-gap: 2rem;
-		}
-	}
-
-	.user-image-section {
-		padding: 0.6rem;
-		margin: 0 auto;
-		width: 90%;
-		max-width: 260px;
-		@media screen and (min-width: $smallDesktop) {
-			width: 100%;
-			max-width: auto;
-		}
-		> div {
-			text-align: center;
-			margin: 0.6rem auto;
-			font-size: 1.2rem;
-			> span {
-				font-weight: bold;
-			}
-		}
-	}
-		.delete-account-section {
-		grid-column: 2/3;
-		margin: 0.6rem;
-	}
-}
-
-#manage {
-	#manage-wrapper {
-		margin: auto;
-		max-width: 800px;
-	}
-	.class-buttons-section {
-		padding: 0.6rem;
-		display: flex;
-		flex-direction: column;
-		@media screen and (min-width: 440px) {
-			display: block;
-		}
-		.border-btn {
-			margin: 0.2rem 0;
-		}
-	}
-	#manage-buttons {
-		display: flex;
-		flex-direction: column;
-		margin: 0.4rem 0;
-		@media screen and (min-width: 440px) {
-			display: block;
-			.border-btn {
-				margin: 0.3rem auto;
-				&:not(:last-child) {
-					margin-right: 0.6rem;
-				}
-			}
-		}
-	}
-}
-
-#members {
-	#members-wrapper {
-		margin: auto;
-		max-width: 800px;
-	}
-	.members-data-section {
-		.members-data-item {
-			grid-template-columns: 10rem 1fr;
-			grid-template-rows: auto auto;
-			@media screen and (min-width: $smallTablet) {
-				grid-template-rows: auto 1fr;
-			}
-			.member-action {
-				text-align: right;
-				display: grid;
-				align-items: center;
-				justify-items: right;
-			}
-			.kick-user {
-				grid-row: 1/3;
-				grid-column: 2/3;
-				padding: calc(0.2em + 4px) 0;
-				span {
-					margin-bottom: 0.4rem;
-				}
-			}
-		}
-	}
-	.invite-user-section {
-		padding: 0.4rem;
-	}
-}
-
-#tests {
-	#tests-wrapper {
-		margin: auto;
-		max-width: 800px;
-	}
-	.tests-data-section {
-		width: 100%;
-		.tests-data-properties,
-		.tests-data-item {
-			display: grid;
-			grid-template-columns: 6rem 3rem 1fr;
-			@media screen and (min-width: $smallMobile) {
-				grid-template-columns: 9.6rem 4rem 1fr;
-			}
-			@media screen and (min-width: $mobile) {
-				grid-template-columns: 15rem 4rem 1fr;
-			}
-			@media screen and (min-width: $smallTablet) {
-				grid-template-columns: 13rem 3rem 1fr;
-			}
-			@media screen and (min-width: $tablet) {
-				grid-template-columns: 16rem 4rem 1fr;
-			}
-			align-items: center;
-			justify-items: center;
-			margin: 0.4rem;
-			padding: 0.2rem 0.8rem;
-			> * {
-				margin: auto;
-			}
-		}
-		.tests-data-item {
-			border: 1px solid #ccc;
-			border-radius: 0.2rem;
-			> span {
-				padding: calc(0.2em + 4px) 0;
-			}
-			.test-name {
-				font-weight: bold;
-				text-align: center;
-				overflow-wrap: break-word;
-			}
-			.test-action {
-				width: 100%;
-				display: flex;
-				flex-direction: column;
-				@media screen and (min-width: $smallTablet) {
-					flex-direction: row;
-					justify-content: space-evenly;
-				}
-				.btn {
-					margin: 0.2rem 0.4rem;
-					@media screen and (min-width: $smallTablet) {
-						margin: auto 0.4rem;
-					}
-				}
-			}
-		}
-	}
-	.tests-new-section {
-		padding: 0.4rem;
-	}
-}
-#resolve-reports {
-	width: 100%;
-	.reports-data-properties,
-	.reports-data-item {
-		width: 100%;
-		min-width: fit-content;
-		display: grid;
-		grid-template-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
-		column-gap: 0.6rem;
-		justify-items: stretch;
-		align-items: center;
-		margin: 0.4rem;
-		padding: 0.2rem 0.8rem;
-		> span {
-			padding: calc(0.2em + 4px) 0;
-		}
-	}
-	.reports-data-item {
-		grid-template-rows: auto auto;
-		border: 1px solid #ccc;
-		border-radius: 0.2rem;
-		.report-name,
-		.report-name-edit {
-			grid-column: 1/2;
-			grid-row: 1/2;
-		}
-		.report-name-edit {
-			width: 100%;
-			font-size: 0.8rem;
-		}
-		.report-url,
-		.report-url-edit {
-			grid-column: 2/3;
-			grid-row: 1/2;
-			font-size: 0.8rem;
-		}
-		.report-url {
-			overflow-wrap: break-word;
-			word-wrap: break-word;
-		}
-		.report-url-edit {
-			width: 100%;
-		}
-		.report-reason {
-			grid-column: 3/4;
-			grid-row: 1/2;
-		}
-		.report-additional-info {
-			grid-column: 4/5;
-			grid-row: 1/2;
-		}
-		.report-number {
-			grid-column: 5/6;
-			grid-row: 1/2;
-		}
-		.report-action {
-			grid-column: 6/7;
-			grid-row: 1/2;
-		}
-		.report-action,
-		.report-edit-buttons {
-			width: 100%;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-evenly;
-		}
-		.report-image {
-			grid-column: 1/7;
-			grid-row: 2/3;
-			height: 300px;
-			margin: 1rem auto 0.4rem auto;
-			position: relative;
-			.btn {
-				margin: 1rem;
-				position: absolute;
-				top: 0;
-				right: 0;
-				> img {
-					filter: drop-shadow(0 0 0.16rem rgba(black, 0.6));
-				}
-			}
-			> img {
-				height: 100%;
-			}
-		}
-		.text-field {
-			max-width: 100%;
-			width: 100%;
-			resize: none;
-			height: fit-content;
-			padding: 0.32em 0.4em;
-		}
-		.custom-select-wrapper {
-			.custom-select-main {
-				height: 1.96em;
-				padding: 0.32em 0.4em;
-			}
-			.custom-options {
-				max-height: 200px;
-				padding: 0.3em 0.32em;
-			}
-		}
-	}
-	.report-name,
-	.report-url,
-	.report-reason,
-	.report-additional-info,
-	.report-number,
-	.report-action {
-		text-align: center;
-	}
-}
-#edit-group {
-	#edit-group-wrapper {
-		@media screen and (min-width: $smallTablet) {
-			display: grid;
-			grid-template-rows: auto auto auto;
-			grid-template-columns: 1fr auto;
-		}
-	}
-	.group-name-url,
-	.part-name-url {
-		font-size: 0.8rem;
-	}
-	#group-name-container {
-		margin-bottom: 1rem;
-		@media screen and (min-width: $smallTablet) {
-			grid-row: 1/2;
-			grid-column: 1/2;
-		}
-	}
-	#parts-boxes-container {
-		margin-bottom: 1rem;
-		@media screen and (min-width: $smallTablet) {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-			grid-gap: 1rem;
-			grid-auto-rows: auto;
-			grid-row: 2/3;
-			grid-column: 1/3;
-		}
-	}	
-	.part-box {
-		overflow-y: hidden;
-		height: 480px;
-		min-width: 256px;
-		@media screen and (min-width: $smallTablet) {
-			width: auto;
-		}
-		border: 1px solid #ccc;
-		border-radius: 0.2rem;
-		padding: 1rem;
-		display: grid;
-		grid-template-rows: auto 1fr;
-		.naturals-in-part {
-			overflow-y: auto;
-		}
-	}
-	.part-info {
-		padding-bottom: 0.6rem;
-		height: fit-content;
-		//position: relative;
-		width: 100%;
-		.remove-part {
-			margin-left: auto;
-			display: block;
-		}
-		label {
-			display: grid;
-			//width: 100%;
-			grid-template-rows: auto auto;
-			grid-template-columns: minmax(0, 1fr) auto;
-			column-gap: 0.4rem;
-			margin-top: 0.4rem;
-			span {
-				grid-row: 1/2;
-				grid-column: 1/3;
-			}
-			.text-field {
-				grid-row: 2/3;
-				grid-column: 1/2;
-				width: 100%;
-			}
-			.btn {
-				grid-row: 2/3;
-				grid-column: 2/3;
-			}
-		}
-	}
-	#add-part-button,
-	#submit-button {
-		width: 100%;
-		@media screen and (min-width: $smallTablet) {
-			width: fit-content;
-		}
-	}
-	#add-part-button {
-		margin-bottom: 0.8rem;
-		@media screen and (min-width: $smallTablet) {
-			grid-row: 3/4;
-			grid-column: 1/3;
-			margin-bottom: 0;
-		}
-	}
-	#submit-wrapper {
-		width: 100%;
-		@media screen and (min-width: $smallTablet) {
-			width: fit-content;
-			grid-column: 2/3;
-			grid-row: 1/2;
-		}
-	}
-	.group-name-box,
-	.group-name-input-box,
-	.part-name-box,
-	.part-name-input-box,
-	.natural-name-box, 
-	.natural-name-input-box {
-		line-height: 1.6em;
-		.text-field {
-			height: 1.6em;
-			padding: 0.48em 0.4em;
-			background: #f8f8f8;
-		}
-	}
-	.part-name-input-box {
-		.text-field {
-			flex-grow: 1;
-			width: 100%;
-			max-width: 320px;
-		}
-	}
-	.group-name-input-box {
-		.text-field {
-			width: 100%;
-			max-width: 320px;
-		}
-	}
-	.group-name-box,
-	.group-name-input-box,
-	.part-name-box,
-	.part-name-input-box {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		.btn {
-			margin: 0 0.4rem;
-		}
-	}
-	.group-name-box,
-	.group-name-input-box {
-		font-size: 1.36rem;
-		font-weight: bold;
-	}
-	.part-name-box,
-	.part-name-input-box {
-		font-size: 1.18rem;
-	}
-	.natural-name-box, 
-	.natural-name-input-box {
-		display: grid;
-		grid-template-columns: 10rem 1rem 1rem;
-		@media screen and (min-width: $smallMobile) {
-			grid-template-columns: 12rem 1rem 1rem;
-		}
-		@media screen and (min-width: $tablet) {
-			grid-template-columns: 14rem 1rem 1rem;
-		}
-		grid-gap: 0.8rem;
-		align-items: center;
-		margin: 0.16em 0;
-	}
-}
+@import "_manage.scss" ;

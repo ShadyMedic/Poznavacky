@@ -262,7 +262,7 @@ function displayButtons($button)
 {
 	if (!$($button).hasClass("show"))
 	{
-		$($button).find(".col2, .col3").hide();
+		$($button).find(".part-naturals-count, .part-pictures-count").hide();
 		$($button).find(".buttons, .part-info").addClass("show");
 		$($button).find("li").addClass("show");
 	}
@@ -281,7 +281,7 @@ function hideButtons(event)
 		{
 			if ($(this).find("li").hasClass("show"))
 			{
-				$(this).find(".col2, .col3").show();
+				$(this).find(".part-naturals-count, .part-pictures-count").show();
 				$(this).find(".buttons, .part-info").removeClass("show");
 				$(this).find("li").removeClass("show");
 			}

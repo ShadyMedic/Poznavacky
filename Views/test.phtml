@@ -1,8 +1,7 @@
 <div id="test-wrapper">
 	<section class="picture">
 		<img id="main-img" src="../images/blank.gif" /> <!-- Adresa bude dodána JavaScriptem -->
-		<div id="loading"><img src="../images/loading.svg" alt=""></div>
-		<button class="btn report-button icon"><img src="../images/report.svg" alt="Tlačítko na nahlášení obrázku"></button>
+		<button class="btn report-button icon" title="Nahlásit"><img src="../images/report.svg"></button>
 		<div class="report-box">
 			<?php require 'Views/reportForm.phtml'; ?>
 		</div>
@@ -12,7 +11,7 @@
 			<label for="answer">Zadejte odpověď:</label>
 			<input type=text autocomplete="off" id="answer" class="text-field" />
 			<input type=hidden id="answer-hidden" />
-			<input type=submit value="Odeslat odpověď" class="btn border-btn non-transparent black" />
+			<button id="submit-answer-button" class="btn border-btn non-transparent black">Odeslat odpověď</button>
 		</form>
 		<div id="result">
 			<!-- ZHODNOCENÍ ODPOVĚDI -->
