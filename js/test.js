@@ -213,8 +213,7 @@ function next()
 	}
 		
 	//nastavení načítání
-	$("#main-img").attr("src","../images/blank.gif");
-	$("#loading").show();
+	$("#main-img").attr("src","../images/loading.svg");
 	
 	$("#result").hide();
 	$("#answer").val("");
@@ -230,8 +229,7 @@ function next()
 	let newPicture = pictureManager.getNextPicture();
 	let newNum = newPicture["num"];
 	let newUrl = newPicture["url"];
-	
-	$("#loading").hide();
+
 	$("#main-img").attr("src", newUrl);
 	$("#answer-hidden").val(newNum);
 }

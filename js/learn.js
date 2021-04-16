@@ -87,8 +87,7 @@ function natural(name)
 		selectedNatural.status = "loading";
 
 		//zobrazení ikony načítání
-		$("#main-img").attr("src","../images/blank.gif");
-		$("#loading").show();
+		$("#main-img").attr("src","../images/loading.svg");
 
 		let url = window.location.href;
 		if (url.endsWith('/')) { url = url.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
@@ -107,7 +106,6 @@ function natural(name)
 							selectedNatural.status = "loaded";
 							
 							//zobrazení obrázku
-							$("#loading").hide();
 							selectedNatural.getPicture(pictureOffset);
 					    }
 					    else
