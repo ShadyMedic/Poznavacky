@@ -189,6 +189,16 @@ h5 {
 	font-weight: bold;
 }
 
+ul.list {
+	li {
+		list-style-type: circle;
+		margin-left: 1.2rem;
+		&:not(:last-child) {
+			margin-bottom: 0.32rem;
+		}
+	}
+}
+
 .btn {
 	font-family: 'Ubuntu', sans-serif;
 	background: none;
@@ -382,6 +392,7 @@ textarea {
 		}
 	}
 }
+
 .input-wrapper {
 	position: relative;
 	width: 100%;

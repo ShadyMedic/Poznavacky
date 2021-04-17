@@ -279,6 +279,15 @@ h5 {
   font-weight: bold;
 }
 
+ul.list li {
+  list-style-type: circle;
+  margin-left: 1.2rem;
+}
+
+ul.list li:not(:last-child) {
+  margin-bottom: 0.32rem;
+}
+
 .btn {
   font-family: 'Ubuntu', sans-serif;
   background: none;
@@ -1439,7 +1448,6 @@ label.required:after {
 
 #menu #changelog li {
   list-style-type: circle;
-  padding-left: 0.4rem;
   margin-left: 1.2rem;
   padding-right: 0.6rem;
 }
@@ -3705,15 +3713,6 @@ label.required:after {
 #naturals #edit-info-section ul,
 #naturals #naturals-info-section ul {
   margin: 0.8rem 0;
-}
-
-#edit-group #edit-info-section li,
-#edit-group #naturals-info-section li,
-#naturals #edit-info-section li,
-#naturals #naturals-info-section li {
-  list-style-type: circle;
-  padding-left: 0.4rem;
-  margin-left: 1.2rem;
 }
 
 #edit-group #show-edit-info-button,

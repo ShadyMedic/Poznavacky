@@ -281,6 +281,15 @@ h5 {
   font-weight: bold;
 }
 
+ul.list li {
+  list-style-type: circle;
+  margin-left: 1.2rem;
+}
+
+ul.list li:not(:last-child) {
+  margin-bottom: 0.32rem;
+}
+
 .btn {
   font-family: 'Ubuntu', sans-serif;
   background: none;
@@ -805,12 +814,6 @@ main {
 main h2 {
   font-size: 1.2rem;
   margin: 1em 0;
-}
-
-main ul li {
-  list-style-type: circle;
-  padding-left: 0.4rem;
-  margin-left: 1.2rem;
 }
 
 main a {
