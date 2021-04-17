@@ -71,15 +71,10 @@
 	</ul>
 </div>
 
-<div id="class-item-template" style="display:none;">
-    <button class="btn class-item" onclick="window.location.href='/menu/{url}'"><li>
-        <h4 class="col1">
-            {name}
-        </h4>
-        <span class="col2">
-            <span class="tiles">poznávaček: </span>
-            <span>{groups}</span>
-        </span>
+<div id="class-item-template" style="display: none;">
+    <button class="btn class-item" onclick="window.location.href='/menu/{url}'"><li> <!--TODO ať tu není onclick -->
+        <h4 class="class-name">{name}</h4>
+        <span class="class-test-count">{groups}</span>
         <a href="javascript:;" data-leave-url="/menu/{url}/leave" class="btn inline black col3 leave-link">Opustit třídu</a>
     </li></button>
 </div>
