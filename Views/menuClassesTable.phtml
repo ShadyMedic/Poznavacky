@@ -44,7 +44,7 @@
 			<h5>Připojte se pomocí kódu</h5>
 			<span>Zadejte kód soukromé třídy, do které chcete vstoupit:</span>
 			<form id='class-code-form'>
-				<input id='class-code-input' class="text-field" min=0 max=9999 maxlength=4/>
+				<input id='class-code-input' class="text-field" type="number" min=0 max=9999 maxlength=4/>
 				<button class='btn border-btn non-transparent black'>OK</button>
 			</form>
 		</li>
@@ -62,7 +62,7 @@
 				<label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
 				<textarea class="text-field" id='new-class-form-info'></textarea>
 				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span id="antispam-question"> <?= $antispamCode ?> </span></label>
-				<input id='new-class-form-antispam' class="text-field" min=0 max=99 maxlength=2 />
+				<input id='new-class-form-antispam' class="text-field" type="number" min=0 max=99 maxlength=2 />
 				<input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
 				<button id="request-class-cancel-button" class="btn inline black">Zrušit</button>
 			</form>

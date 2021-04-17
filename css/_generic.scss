@@ -370,6 +370,16 @@ textarea {
 			pointer-events: none;
 			cursor: auto;
 		}
+
+		//skrytí šipek u inputu typu "number"
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+		&[type="number"] {
+			-moz-appearance: textfield;
+		}
 	}
 }
 .input-wrapper {

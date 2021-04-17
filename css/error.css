@@ -522,6 +522,21 @@ textarea.text-field.disabled {
   cursor: auto;
 }
 
+input.text-field::-webkit-outer-spin-button, input.text-field::-webkit-inner-spin-button,
+select.text-field::-webkit-outer-spin-button,
+select.text-field::-webkit-inner-spin-button,
+textarea.text-field::-webkit-outer-spin-button,
+textarea.text-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input.text-field[type="number"],
+select.text-field[type="number"],
+textarea.text-field[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .input-wrapper {
   position: relative;
   width: 100%;
