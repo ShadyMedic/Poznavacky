@@ -71,8 +71,14 @@ function natural(name)
 		{
 			this.lastPicture += this.pictures.length;
 		}
-		
-		$("#main-img").attr("src", this.pictures[this.lastPicture]);
+
+		let nextUrl = this.pictures[this.lastPicture];
+		$("#main-img").attr("src", "images/loading.svg"); //načítací gif bude zobrazován, dokud se plně nenačte obrázek
+		$("#main-img").on("load", function()
+		{
+			$("#main-img").off("load");
+			$("#main-img").attr("src", nextUrl);
+		})
 	}
 	
 	/**
@@ -86,7 +92,7 @@ function natural(name)
 		selectedNatural.status = "loading";
 
 		//zobrazení ikony načítání
-		$("#main-img").attr("src","../images/loading.svg");
+		$("#main-img").attr("src","images/loading.svg");
 
 		let url = window.location.href;
 		if (url.endsWith('/')) { url = url.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
