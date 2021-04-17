@@ -150,12 +150,12 @@ function submitClassCode(event)
 					if (messageType === "error")
 					{
 						//chyba při zpracování požadavku (zřejmě neplatný formát kódu)
-						newMessage(message, "error"); //TODO zobrazit ve formuláři
+						newMessage(message, "error");
 					}
 					else if (messageType === "warning")
 					{
 						//se zadaným kódem se nelze dostat do žádné třídy
-						newMessage(message, "warning"); //TODO zobrazit ve formuláři
+						newMessage(message, "warning");
 					}
 					else if (messageType === "success")
 					{
