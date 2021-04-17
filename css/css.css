@@ -1395,22 +1395,21 @@ label.required:after {
   background: white;
   border-radius: 0.6rem;
   border: 2px solid #366e11;
-  width: 95vw;
-  max-width: 600px;
-  height: auto;
   overflow: hidden;
+  width: 90%;
+  max-width: 800px;
 }
 
-#menu #changelog .button-wrapper {
-  position: relative;
+@media screen and (min-width: 672px) {
+  #menu #changelog {
+    -webkit-transform: translate(calc(-50% + 32px), -50%);
+            transform: translate(calc(-50% + 32px), -50%);
+    width: calc(90% - 64px);
+  }
 }
 
-#menu #changelog .btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 1.6rem;
-  width: 1.6rem;
+#menu #changelog #close-changelog-button {
+  margin: 0 0 0.2rem auto;
 }
 
 #menu #changelog ul {
@@ -1434,7 +1433,8 @@ label.required:after {
 }
 
 #menu #changelog h3 {
-  margin: 0 0 0.8rem 0;
+  margin: 0 0 1.2rem 0;
+  font-size: 1.32rem;
 }
 
 #menu #changelog li {
