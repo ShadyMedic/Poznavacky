@@ -142,7 +142,6 @@ function editPictureConfirm(event)
 						//reset DOM (simulace kliknutí na tlačítko cancel kvůli eventu jako parametru funkce)
 						$report.find(".edit-picture-cancel-button").trigger("click");
 
-						console.log(currentName);
 						$report.find(".report-name").text(currentName);
 						$report.find(".report-url").text(currentUrl);
 					}

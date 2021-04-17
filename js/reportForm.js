@@ -152,14 +152,12 @@ function submitReport()
 		//obrázek se načítá a je zvolen jiný důvod než dlouhé načítání obrázku
 		if ($reason[0] != $reasonLongLoading[0] && $("#loading").is(":visible"))
 		{
-			console.log("check1");
 			$("#report-message").text("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
 			return;
 		}
 		//obrázek se nenačítá
 		else if ($("#loading").is(":hidden"))
 		{
-			console.log("check2");
 			$("#report-message").text("Tento obrázek nemůžete nahlásit");
 			return;
 		}
