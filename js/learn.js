@@ -84,7 +84,7 @@ function natural(name)
 	/**
 	 * Metoda načítající adresy všech obrázků vybrané přírodniny ze serveru
 	 * Skript je pozastaven, dokud nepřijde odpověď ze serveru
-	 * @param {*} pictureOffset Pořadí obrázku dané přírodniny k zobrazení
+	 * @param {int} pictureOffset Pořadí obrázku dané přírodniny k zobrazení
 	 */
 	this.loadPictures = function(pictureOffset)
 	{
