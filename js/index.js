@@ -515,8 +515,7 @@ function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inp
 
 /**
  * Funkce volaná při odeslání jakéhokoli formuláře, která z něj načte data a zařadí AJAX požadavek, který je odešle
- * @param {event} event 
- * @returns TODO
+ * @param {event} event
  */
 function formSubmitted(event)
 {

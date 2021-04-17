@@ -48,7 +48,6 @@ function natural(name)
 	/**
 	 * Metoda pro získání adresy dalšího nebo předchozího obrázku této přírodniny a jejího nastavení do HTML
 	 * @param {int} picture -1, pokud se má zobrazit předchozí obrázek, 0, pokud současný, a 1, pokud následující
-	 * @returns TODO
 	 */
 	this.getPicture = function(picture)
 	{
@@ -79,7 +78,7 @@ function natural(name)
 	/**
 	 * Metoda načítající adresy všech obrázků vybrané přírodniny ze serveru
 	 * Skript je pozastaven, dokud nepřijde odpověď ze serveru
-	 * @param {*} pictureOffset TODO
+	 * @param {*} pictureOffset Pořadí obrázku dané přírodniny k zobrazení
 	 */
 	this.loadPictures = function(pictureOffset)
 	{

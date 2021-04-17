@@ -60,7 +60,7 @@ function closeMessage($button)
  * Funkce pro získání hodnoty cookie
  * Zkopírována z https://www.w3schools.com/js/js_cookies.asp
  * @param {string} cname Název cookie
- * @returns TODO
+ * @returns {string} Obsah cookie
  */
 function getCookie(cname)
 {
