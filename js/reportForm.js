@@ -58,7 +58,9 @@ function reportImg()
 	$(".report-button").hide();
 	$(".report-box").addClass("show");
 
-	url = $("#main-img").attr("src");
+	let url;
+	if ($("#main-img").get(0).complete){ url = $("#main-img").attr("src"); }
+	else { url = "images/loading.svg"; } //obrázek se stále načítá
 	$("#report-img-preview > img").attr("src", url);
 }
 
@@ -121,6 +123,7 @@ function updateReport()
 function submitReport()
 {
     let $reason = $("#report-reason").find(".selected");
+    let isCompletlyLoaded = $("#main-img").get(0).complete;
     let picUrl = $("#main-img").attr("src");
     let reasonInfo = "";
 	
@@ -147,10 +150,10 @@ function submitReport()
     }
 
 	//kontrola obrázku
-	if (picUrl == "../images/blank.gif" || picUrl == "images/blank.gif")
+	if (!isCompletlyLoaded)
 	{
 		//obrázek se načítá a je zvolen jiný důvod než dlouhé načítání obrázku
-		if ($reason[0] != $reasonLongLoading[0] && $("#loading").is(":visible"))
+		if ($reason[0] != $reasonLongLoading[0])
 		{
 			$("#report-message").text("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
 			return;
