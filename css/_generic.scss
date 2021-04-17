@@ -195,7 +195,6 @@ h5 {
 	border: none;
 	text-decoration: none;
 	font-size: 1em;
-	//display: inline-block;
 	transition: transform 0.1s ease-in;
 	&:hover {
 		cursor: pointer;
@@ -409,7 +408,6 @@ textarea {
 
 label {
 	line-height: 1.6em;
-	//padding: 0.48em 0;
 	display: inline-block;
 	&.disabled {
 		pointer-events: none;
