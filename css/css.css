@@ -10,7 +10,6 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   font-size: 100%;
-  line-height: inherit;
   vertical-align: baseline;
 }
 
@@ -2463,10 +2462,9 @@ label.required:after {
 
 #add-pictures #add-pictures-form-wrapper .preview-buttons-fieldset .btn > .logo {
   height: 1em;
-  width: 1em;
   display: inline-block;
-  -webkit-transform: translateY(10%) scale(140%);
-          transform: translateY(10%) scale(140%);
+  -webkit-transform: translateY(10%) scale(1.4);
+          transform: translateY(10%) scale(1.4);
   margin: 0 0.6em;
 }
 
