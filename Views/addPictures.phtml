@@ -1,17 +1,4 @@
 <div id="add-pictures-form-wrapper">
-	<!--<select onchange="naturalSelected()">
-		<option value="" selected disabled hidden></option>
-		<?php foreach ($naturals as $natural) : ?>
-			<?php if ($previousNatural === $natural->getName()) : ?>
-				<option selected>
-			<?php endif ?>
-			<?php if ($previousNatural !== $natural->getName()) : ?>
-				<option>
-			<?php endif ?>
-				<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
-			</option>
-		<?php endforeach ?>
-	</select>-->
 	<label for="add-natural-select">Zvolte přírodninu, jejíž obrázek chcete přidat:</label>
 	<div class="custom-select-wrapper" id="add-natural-select">
 		<div class="custom-select">
@@ -47,7 +34,4 @@
 		<img id="preview-img" class="img" src="images/blank.gif">
 		<img id="preview-img-hidden" style="display: none;" />
 	</fieldset>
-	<!--<fieldset id="submit-fieldset" <?php if (empty($previousUrl)) : ?> style="display:none" <?php endif ?>>
-		<input type=submit value="Přidat" id="send-button" class="btn border-btn black non-transparent" />
-	</fieldset>-->
 </div>
