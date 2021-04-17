@@ -24,7 +24,7 @@ function showInfo()
 {
 	$("#naturals-info-section").show();
 	$("#overlay").addClass("show");	
-	$("body").css("overflowY", "hidden");
+	$("body").css("overflow", "hidden");
 }
 
 /**
@@ -34,7 +34,7 @@ function hideInfo()
 {
 	$("#naturals-info-section").hide();
 	$("#overlay").removeClass("show");
-	$("body").css("overflowY", "auto");
+	$("body").css("overflow", "auto");
 }
 
 /**
