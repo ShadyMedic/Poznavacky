@@ -4782,8 +4782,36 @@ label.required:after {
   }
 }
 
+#legal main .content h1,
+#legal main .content h2,
+#legal main .content p {
+  margin-bottom: 0.4em;
+}
+
+#legal main .content h1 {
+  font-size: 1.6rem;
+}
+
+#legal main .content h2 {
+  font-size: 1.2rem;
+}
+
+#legal main .content h5 {
+  color: #eee;
+  font-size: 0.88rem;
+}
+
 #legal main .content p {
   text-align: justify;
+}
+
+#legal main .content li {
+  list-style-type: circle;
+  margin-left: 1.2rem;
+}
+
+#legal main .content ol {
+  margin-left: 2rem;
 }
 
 body#recover-password main {

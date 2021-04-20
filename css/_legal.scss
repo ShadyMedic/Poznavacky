@@ -45,8 +45,30 @@
 					margin: 1.2rem 0;
 				}
 			}
+			h1,
+			h2,
+			p {
+				margin-bottom: 0.4em;
+			}
+			h1 {
+				font-size: 1.6rem;
+			}
+			h2 {
+				font-size: 1.2rem;
+			}
+			h5 {
+				color: $gray2;
+				font-size: 0.88rem;
+			}
 			p {
 				text-align: justify;
+			}
+			li {
+				list-style-type: circle;
+				margin-left: 1.2rem;
+			}
+			ol {
+				margin-left: 2rem;
 			}
 		}
 	}
