@@ -1,0 +1,35 @@
+@import url(//fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Ubuntu);
+@import "_reset.scss";
+@import "_variables.scss";
+@import "_generic.scss";
+
+header {
+    .error-img {
+        width: 90vw;
+        max-width: 280px;
+        display: block;
+        margin: 1rem auto;
+    }
+    h1 {
+        font-size: 2rem;
+        margin: 1em 0;
+        text-align: center;
+        .error-code {
+            color: $red1;
+        }
+    }
+}
+
+main {
+    width: 95vw;
+    max-width: 800px;
+    margin: auto;
+    h2 {
+        font-size: 1.2rem;
+        margin: 1em 0;
+    }
+    a {
+        font-weight: bold;
+    }
+}

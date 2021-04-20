@@ -1,0 +1,14 @@
+<header>
+    <img src="images/error.svg" class="error-img"/>
+    <h1>HTTP CHYBA <span class="error-code">404</span></h1>
+</header>
+<main>
+    <p>Vámi požadovaná URL adresa nemohla být na serveru nalezena.</p>
+    <h2>Navrhované akce</h2>
+    <ul class="list">
+        <li>Vraťte se na <a class="btn inline black" href="/">domovskou stránku</a></li>
+        <li>Zkontrolujte, zda nemáte v adrese URL chybu.</li>
+        <li>Kontaktujte <a  class="btn inline black" href="mailto:<?= $_SERVER['SERVER_ADMIN'] ?>">správce</a></li>
+        <li>Zkuste to znovu později</li>
+    </ul>
+</main>

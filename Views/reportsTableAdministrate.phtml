@@ -1,0 +1,43 @@
+<table id="reports-table">
+    <tr>
+        <th>Třída / Poznávačka / Část</th>
+        <th>Přírodnina</th>
+        <th>Zdroj</th>
+        <th>Důvod</th>
+        <th>Další informace</th>
+        <th>Počet nahlášení</th>
+        <th>Akce</th>
+    </tr>
+    <?php if (count($reports) === 0) : ?>
+    <tr><td colspan=6>Žádná hlášení k vyřízení</td></tr>
+    <?php endif ?>
+    <?php foreach ($reports as $report) : ?>
+        <tr class="picture-id<?= $report->getPictureId() ?>">
+            <td>
+            <?php foreach ($report->getPicturePaths() as $path) : ?>
+                <li><?= $path ?></li>
+            <?php endforeach ?>
+            </td>
+            <td><?= $report->getPicture()->getNatural()->getName() ?></td>
+            <td><?= $report->getUrl() ?></td>
+            <td><?= $report->getReason() ?></td>
+            <td><?= $report->getAdditionalInformation() ?>
+            <td><?= $report->getReportersCount() ?></td>
+            <td>
+                <button class='report-action active-btn' onclick='showPicture("<?= $report->getUrl() ?>")' title='Zobrazit obrázek'>
+                    <img src='images/eye.svg'/>
+                </button>
+                <button class='report-action active-btn' onclick='deletePicture(event, <?= $report->getPictureId() ?>)' title='Odstranit obrázek'>
+                    <img src='images/cross.svg'/>
+                </button>
+                <button class='report-action active-btn' onclick='deleteReport(event, <?= $report->getId() ?>)' title='Odstranit hlášení'>
+                    <img src='images/minus.svg'/>
+                </button>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>
+<div id="image-preview" style="display:none;">
+    <img alt="Chyba při načítání obrázku" src="" />
+    <button onclick="$('#image-preview').hide(); $('#overlay').hide();" class="border-btn">Zavřít</button>
+</div>

@@ -1,4 +1,19 @@
-ErrorDocument 403 /err403.html
-ErrorDocument 404 /err404.html
-ErrorDocument 500 /err500.html
-ErrorDocument 503 /err503.html
+Options -Indexes
+
+RewriteEngine On
+
+# Pokud server bude mít problémy se správným zpracováním přesměrování, může pomoci odkomentování následujícího řádku
+# RewriteBase /
+
+# Pokud je potřeba povolit přístup ke všem existujícím souborům kromě těch s danými příponami, je potřeba následující dvě řádky odkomentovat
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+
+# Povolení přímého přístupu k konfiguračním souborům pro prohlížeče
+RewriteCond %{REQUEST_URI} !^/browserconfig\.xml$
+RewriteCond %{REQUEST_URI} !^/site\.webmanifest$ 
+
+# Povolení přímého přístupu k souborům s danými příponami
+RewriteRule !\.(css|js|ico|xml|svg|gif|png|jpg\.gz)$ index.php [L]
+
+AddType application/x-httpd-php .php .phtml

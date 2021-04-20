@@ -1,0 +1,110 @@
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Název</th>
+        <th>Poznávačky</th>
+        <th>Správce</th>
+        <th>Status</th>
+        <th>Vstupní kód</th>
+        <th>Akce</th>
+    </tr>
+    <?php foreach($classes as $class) : ?>
+        <tr>
+            <td>
+                <?= $class->getId() ?>
+            </td>
+            <td>
+                <?= $class->getName() ?>
+            </td>
+            <td>
+                <?= $class->getGroupsCount() ?>
+            </td>
+            <td>
+                <table class='class-admin-table'>
+                    <tr>
+                        <td>Jméno: </td>
+                        <td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" onchange='adminNameChanged()' class='class-admin-field class-admin-table-data'/></td>
+                    </tr>
+                    <tr>
+                        <td>ID: </td>
+                        <td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" onchange='adminIdChanged()' class='class-admin-field class-admin-table-data'/></td>
+                    </tr>
+                    <tr>
+                        <td>E-mail: </td><td class='class-admin-data'><?= $class->getAdmin()['email'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Karma: </td><td class='class-admin-data'><?= $class->getAdmin()['karma'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Status: </td><td class='class-admin-data'><?= $class->getAdmin()['status'] ?></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <select disabled class='class-field' onchange='classStatusEdited()'>
+                    <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC ?></option>
+                    <?php endif ?>
+                    <?php if ($class->getStatus() !== Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC ?></option>
+                    <?php endif ?>
+                    
+                    <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE ?></option>
+                    <?php endif ?>
+                    <?php if ($class->getStatus() !== Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE ?></option>
+                    <?php endif ?>
+                    
+                    <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>
+                    <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED ?></option>
+                    <?php endif ?>
+                    <?php if ($class->getStatus() !== Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>
+                    <option><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED ?></option>
+                    <?php endif ?>
+                </select>
+            </td>
+            <td>
+                <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='class-field'/>
+            </td>
+            <td>
+                <button class='class-action active-btn edit-btn' onclick='editClass(event)' title='Upravit status a kód'>
+                    <img src='images/pencil.svg'/>
+                </button>
+                <div class="class-edit-buttons" style="display:none;">
+                    <button class='class-edit-action active-btn' onclick='confirmClassEdit(<?= $class->getId() ?>)' title='Uložit'>
+                        <img src='images/tick.svg'/>
+                    </button>
+                    <button class='class-edit-action active-btn' onclick='cancelClassEdit()' title='Zrušit'>
+                        <img src='images/cross.svg'/>
+                    </button>
+                </div>
+                <div class="class-edit-admin-buttons" style="display:none;">
+                    <button class='class-edit-admin-action active-btn' onclick='confirmClassAdminEdit(<?= $class->getId() ?>)' title='Uložit'>
+                        <img src='images/tick.svg'/>
+                    </button>
+                    <button class='class-edit-admin-action active-btn' onclick='cancelClassAdminEdit()' title='Zrušit'>
+                        <img src='images/cross.svg'/>
+                    </button>
+                </div>
+                <button class='class-action active-btn edit-btn' onclick='changeClassAdmin(event)' title='Změnit správce'>
+                    <img src='images/dot.svg'/>
+                </button>
+                <button class='class-action active-btn' onclick="window.location.href='menu/<?= $class->getUrl() ?>/manage';" title='Spravovat'>
+                    <img src='images/management.svg'/>
+                </button>
+                <?php if (empty($class->getAdmin()['email'])) : ?>
+                <button class='class-action grayscale class-admin-mail-btn' disabled>
+                <?php endif ?>
+                <?php if (!empty($class->getAdmin()['email'])) : ?>
+                <button class='class-action active-btn class-admin-mail-btn' onclick='startMail("<?= $class->getAdmin()['email'] ?>")' title='Kontaktovat správce'>
+                <?php endif ?>
+                    <img src='images/mail.svg'/>
+                </button>
+                <button class='class-action active-btn' onclick='deleteClass(<?= $class->getId() ?>, event)' title='Odstranit'>
+                    <img src='images/cross.svg'/>
+                </button>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>

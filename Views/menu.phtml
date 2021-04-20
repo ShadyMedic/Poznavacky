@@ -1,0 +1,45 @@
+<header>
+    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="../images/user.svg"></a><?php endif ?>
+    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="../images/settings.svg"></a><?php endif ?>
+    <div class="logo">
+         <img src="../images/iconWhite1.svg">
+        <h1>Poznávačky</h1>
+    </div>
+    <button class="btn icon logout-button" title="Odhlásit se"><img src="../images/logout.svg"></button>
+</header>
+<aside>
+    <a class="btn icon" href="menu" title="Hlavní stránka"><img src="../images/home.svg"></a>
+    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="../images/user.svg"></a><?php endif ?>
+    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="../images/settings.svg"></a><?php endif ?>
+    <button class="btn icon logout-button" title="Odhlásit se"><img src="../images/logout.svg"></button>
+</aside>
+<main class="menu">
+    <h2 id="level-nav">
+        <nav>
+        <?php for ($i = 0; $i < count($navigationBar); $i++) : ?>
+            <?php if ($i < count($navigationBar) - 1) : ?>
+                <?php if ($navigationBar[$i]['link'] !== '#') : ?>
+                    <a class="btn inline black" href="<?= $navigationBar[$i]['link'] ?>"><?= $navigationBar[$i]['text'] ?></a>
+                <?php endif ?>
+                <?php if ($navigationBar[$i]['link'] === '#') : ?>
+                    <span class="inline black"><?= $navigationBar[$i]['text'] ?></span>
+                <?php endif ?>
+                <span>>></span>
+            <?php endif ?>
+            <?php if ($i == count($navigationBar) - 1) : ?>
+                <span><?= $navigationBar[$i]['text'] ?></span>
+            <?php endif ?>
+        <?php endfor ?>
+        </nav>
+    </h2>
+    <div class="wrapper">
+        <?php require $this->getNextView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
+    </div>
+</main>
+<?php if (isset($staticTitle)) : ?>
+    <div id="changelog">
+        <button class="btn icon" id="close-changelog-button" title="Zavřít"><img src="../images/crossButtonBlack.svg" alt=""></button>
+        <h3>Novinky</h3>
+        <?php require 'staticArticle.phtml' ?>
+    </div>
+<?php endif ?>

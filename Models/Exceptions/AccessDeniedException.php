@@ -1,0 +1,144 @@
+<?php
+namespace Poznavacky\Models\Exceptions;
+
+use \Exception;
+
+/**
+ * Výjimka sloužící pro případ zjištění nedostatečných oprávnění při sestavování webové stránky
+ * @author Jan Štěch
+ */
+class AccessDeniedException extends Exception
+{
+    public const REASON_UNEXPECTED = 'Něco se pokazilo. Opakujte prosím akci později a pokud problém přetrvá, kontaktujte správce';
+    public const REASON_INSUFFICIENT_PERMISSION = 'Nemáte oprávnění k této akci';
+    public const REASON_CSRF_TOKEN_INVALID = 'CSRF token nesouhlasí. Aktualizujte prosím stránku. Pokud jste zadávali nějaká data, nejprve si je zkopírujte, jinak budou ztracena.';
+    public const REASON_USER_NOT_LOGGED_IN = 'Nejste přihlášeni';
+    public const REASON_NO_PASSWORD_GENERAL = 'Musíte zadat své heslo';
+    public const REASON_WRONG_PASSWORD_GENERAL = 'Špatné heslo';
+    public const REASON_LOGIN_NO_NAME = 'Musíte zadat své přihlašovací jméno nebo e-mail';
+    public const REASON_LOGIN_NO_PASSWORD = 'Musíte zadat své heslo';
+    public const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
+    public const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem nebo e-mailem neexistuje';
+    public const REASON_LOGIN_INVALID_COOKIE_CODE = 'Kód pro trvalé přihlášení není platný';
+    public const REASON_REGISTER_NO_NAME = 'Musíte vyplnit své jméno';
+    public const REASON_REGISTER_NO_PASSWORD = 'Musíte vyplnit své heslo';
+    public const REASON_REGISTER_NO_REPEATED_PASSWORD = 'Musíte své heslo vyplnit znovu';
+    public const REASON_REGISTER_NAME_TOO_SHORT = 'Jméno musí být alespoň 4 znaky dlouhé';
+    public const REASON_REGISTER_NAME_TOO_LONG = 'Jméno nesmí být více než 15 znaků dlouhé';
+    public const REASON_REGISTER_PASSWORD_TOO_SHORT = 'Heslo musí být alespoň 6 znaků dlouhé';
+    public const REASON_REGISTER_PASSWORD_TOO_LONG = 'Heslo nesmí být více než 31 znaků dlouhé';
+    public const REASON_REGISTER_EMAIL_TOO_LONG = 'E-mail nesmí být delší než 255 znaků';
+    public const REASON_REGISTER_NAME_INVALID_CHARACTERS = 'Jméno může obsahovat pouze písmena, číslice a mezery';
+    public const REASON_REGISTER_DUPLICATE_NAME = 'Toto jméno je již používáno jiným uživatelem';
+    public const REASON_REGISTER_PASSWORD_INVALID_CHARACTERS = 'Vaše heslo obsahuje nepovolený znak.';
+    public const REASON_REGISTER_DIFFERENT_PASSWORDS = 'Hesla se neshodují';
+    public const REASON_REGISTER_INVALID_EMAIL = 'E-mail nemá platný formát';
+    public const REASON_REGISTER_DUPLICATE_EMAIL = 'Tento e-mail již používá jiný uživatel';
+    public const REASON_PASSWORD_RECOVERY_NO_EMAIL = 'Musíte zadat e-mailovou adresu přidruženou k vašemu účtu';
+    public const REASON_PASSWORD_RECOVERY_NO_ACCOUNT = 'K této e-mailové adrese není přidružen žádný účet';
+    public const REASON_RECOVER_NO_TOKEN = 'V adrese není přítomen kód pro obnovení hesla';
+    public const REASON_RECOVER_INVALID_TOKEN = 'Váš kód pro obnovu hesla je buď neplatný nebo zastaralý';
+    public const REASON_USER_NOT_MEMBER_IN_CLASS = 'Nemáte přístup do této třídy';
+    public const REASON_USER_NOT_HAVING_ACCESS_TO_GROUP = 'Nemáte přístup do třídy do které patří tato poznávačka';
+    public const REASON_CLASS_NOT_CHOSEN = 'Nebyla vybrána žádná třída';
+    public const REASON_CLASS_NOT_FOUND = 'Tato třída nebyla nalezena';
+    public const REASON_GROUP_NOT_CHOSEN = 'Nebyla vybrána žádná poznávačka';
+    public const REASON_GROUP_NOT_FOUND = 'Tato poznávačka nebyla nalezena';
+    public const REASON_PART_NOT_FOUND = 'Tato část nebyla nalezena';
+    public const REASON_NATURAL_NOT_FOUND = 'Tato přírodnina nebyla nalezena';
+    public const REASON_PICTURE_NOT_FOUND = 'Tento obrázek nebyl nalezen';
+    public const REASON_NEW_CLASS_REQUEST_NO_EMAIL = 'Musíte zadat svůj e-mail, abychom vás mohli kontaktovat';
+    public const REASON_NEW_CLASS_REQUEST_NO_NAME = 'Musíte zadat název třídy';
+    public const REASON_NEW_CLASS_REQUEST_NO_CODE = 'Musíte zadat přístupový kód nové třídy';
+    public const REASON_NEW_CLASS_REQUEST_NO_ANTISPAM = 'Musíte vyplnit ochranu proti robotům';
+    public const REASON_NEW_CLASS_REQUEST_INVALID_EMAIL = self::REASON_REGISTER_INVALID_EMAIL;
+    public const REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT = 'Název třídy musí být alespoň 5 znaků dlouhý';
+    public const REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG = 'Název třídy nesmí být více než 31 znaků dlouhý';
+    public const REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS = 'Název třídy může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
+    public const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto nebo velmi podobným názvem již existuje';
+    public const REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL = 'Tento název třídy nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
+    public const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód třídy nemá platný formát - musí to být čtyři číslice';
+    public const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';
+    public const REASON_NAME_CHANGE_NO_NAME = self::REASON_REGISTER_NO_NAME;
+    public const REASON_NAME_CHANGE_NAME_TOO_LONG = self::REASON_REGISTER_NAME_TOO_LONG;
+    public const REASON_NAME_CHANGE_NAME_TOO_SHORT = self::REASON_REGISTER_NAME_TOO_SHORT;
+    public const REASON_NAME_CHANGE_INVALID_CHARACTERS = self::REASON_REGISTER_NAME_INVALID_CHARACTERS;
+    public  const REASON_NAME_CHANGE_DUPLICATE_NAME = 'Toto jméno již používá jiný uživatel nebo o změnu na něj zažádal';
+    public const REASON_PASSWORD_CHANGE_NO_OLD_PASSWORD = 'Musíte vyplnit své staré heslo';
+    public const REASON_PASSWORD_CHANGE_WRONG_PASSWORD = 'Vaše staré heslo je chybné';
+    public const REASON_PASSWORD_CHANGE_NO_PASSWORD = 'Musíte vyplnit své nové heslo';
+    public const REASON_PASSWORD_CHANGE_NO_REPEATED_PASSWORD = 'Musíte vyplnit své nové heslo znovu';
+    public const REASON_PASSWORD_CHANGE_TOO_LONG = self::REASON_REGISTER_PASSWORD_TOO_LONG;
+    public const REASON_PASSWORD_CHANGE_TOO_SHORT = self::REASON_REGISTER_PASSWORD_TOO_SHORT;
+    public const REASON_PASSWORD_CHANGE_INVALID_CHARACTERS = self::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS;
+    public const REASON_PASSWORD_CHANGE_DIFFERENT_PASSWORDS = self::REASON_REGISTER_DIFFERENT_PASSWORDS;
+    public const REASON_EMAIL_CHANGE_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
+    public const REASON_EMAIL_CHANGE_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
+    public const REASON_EMAIL_CHANGE_EMAIL_TOO_LONG = self::REASON_REGISTER_EMAIL_TOO_LONG;
+    public const REASON_EMAIL_CHANGE_INVALID_EMAIL = self::REASON_REGISTER_INVALID_EMAIL;
+    public const REASON_EMAIL_CHANGE_DUPLICATE_EMAIL = self::REASON_REGISTER_DUPLICATE_EMAIL;
+    public const REASON_ACCOUNT_DELETION_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
+    public const REASON_ACCOUNT_DELETION_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
+    public const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžete odstranit svůj účet, protože spravujete nějakou třídu. Předejte správu tříd, které spravujete, jiným uživatelům pro uvolnění možnosti odstranit svůj účet.';
+    public const REASON_ADD_PICTURE_UNKNOWN_NATURAL = 'Pokoušíte se přidat obrázek k neznámé přírodnině';
+    public const REASON_ADD_PICTURE_DUPLICATE_PICTURE = 'Tento obrázek je již k této přírodnině přidán';
+    public const REASON_ADD_PICTURE_INVALID_URL = 'Na zadané URL adrese nebyl nalezen žádný obrázek';
+    public const REASON_ADD_PICTURE_INVALID_FORMAT = 'Zadaná URL adresa nevede na obrázek v platném formátu';
+    public const REASON_TEST_ANSWER_CHECK_INVALID_QUESTION = 'Neplatné číslo otázky';
+    public const REASON_REPORT_INVALID_REASON = 'Neplatný důvod';
+    public const REASON_REPORT_INVALID_ADDITIONAL_INFORMATION = 'Neplatně vyplněné dodatečné informace';
+    public const REASON_REPORT_UNKNOWN_PICTURE = 'Neznámý obrázek';
+    public const REASON_MANAGEMENT_NAME_CHANGE_NO_NAME = self::REASON_NEW_CLASS_REQUEST_NO_NAME;
+    public const REASON_MANAGEMENT_NAME_CHANGE_NAME_TOO_LONG = self::REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG;
+    public const REASON_MANAGEMENT_NAME_CHANGE_NAME_TOO_SHORT = self::REASON_NEW_CLASS_REQUEST_NAME_TOO_SHORT;
+    public const REASON_MANAGEMENT_NAME_CHANGE_INVALID_CHARACTERS = self::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS;
+    public const REASON_MANAGEMENT_NAME_CHANGE_DUPLICATE_NAME = self::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME;
+    public const REASON_MANAGEMENT_NAME_CHANGE_FORBIDDEN_URL = self::REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL;
+    public const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_CODE = self::REASON_NEW_CLASS_REQUEST_INVALID_CODE;
+    public const REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_STATUS = 'Zvolený status není platný';
+    public const REASON_MANAGEMENT_INVITE_USER_UNKNOWN_USER = 'Uživatel nebyl nalezen';
+    public const REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS = 'Pozvánky do veřejné třídy nelze vytvářet';
+    public const REASON_MANAGEMENT_INVITE_USER_DEMO_ACCOUNT = 'Do své třídy nemůžete pozvat demo účet';
+    public const REASON_MANAGEMENT_INVITE_USER_ALREADY_MEMBER = 'Tento uživatel je již členem této třídy';
+    public const REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS = 'Z této třídy nelze odebrat žádného člena';
+    public const REASON_MANAGEMENT_KICK_USER_CANT_SELF = 'Jako správce této třídy se nemůžete sám odebrat';
+    public const REASON_MANAGEMENT_KICK_USER_NOT_A_MEMBER = 'Tento uživatel není členem této třídy';
+    public const REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME = 'Poznávačka s tímto nebo velmi podobným názvem již ve vaší třídě existuje';
+    public const REASON_MANAGEMENT_NEW_GROUP_FORBIDDEN_URL = 'Tento název poznávačky nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
+    public const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG = 'Název poznávačky nesmí být více než 31 znaků dlouhý';
+    public const REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT = 'Název poznávačky musí být alespoň 3 znaky dlouhý';
+    public const REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS = 'Název poznávačky může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
+    public const REASON_MANAGEMENT_REPORTS_EDIT_PICTURE_ANOTHER_GROUP = 'Obrázek nelze přesunout k přírodnině, která není součástí té samé poznávačky';
+    public const REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL = 'Hlášení se vztahuje k obrázku, který není nahrán k žádné přírodnině ve vaší třídě';
+    public const REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_SHORT = 'Název přírodniny musí být alespoň 1 znak dlouhý';
+    public const REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_LONG = 'Název přírodniny nesmí být více než 31 znaků dlouhý';
+    public const REASON_MANAGEMENT_NATURALS_RENAME_INVALID_CHARACTERS = 'Název přírodniny může obsahovat pouze písmena, číslice, mezeru a znaky . _ - + / * % ( ) \' "';
+    public const REASON_MANAGEMENT_NATURALS_RENAME_DUPLICATE_NAME = 'Tento název má již jiná přírodnina v této třídě';
+    public const REASON_MANAGEMENT_NATURALS_RENAME_FOREIGN_NATURAL = 'Tato přírodnina nepatří do spravované třídy';
+    public const REASON_MANAGEMENT_NATURALS_MERGE_FROM_FOREIGN_NATURAL = 'Přírodnina kterou se pokoušíte sloučit s jinou přírodninou nepatří do spravované třídy';
+    public const REASON_MANAGEMENT_NATURALS_MERGE_TO_FOREIGN_NATURAL = 'Přírodnina se kterou se pokoušíte sloučit jinou přírodniu nepatří do spravované třídy';
+    public const REASON_MANAGEMENT_NATURALS_DELETE_FOREIGN_NATURAL = self::REASON_MANAGEMENT_NATURALS_RENAME_FOREIGN_NATURAL;
+    public const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_GROUP = self::REASON_MANAGEMENT_NEW_GROUP_DUPLICATE_NAME;
+    public const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_PART = 'Jedna nebo více částí se stejným nebo velmi podobným názvem je definována vícekrát'; //Zní to hloupě, ale k dosažení této hlášky je nutné modifikovat JavaScript
+    public const REASON_MANAGEMENT_EDIT_GROUP_DUPLICATE_NATURAL = 'V jedné nebo více částech se některá přírodnina vyskytuje vícekrát'; //Zní to hloupě, ale k dosažení této hlášky je nutné modifikovat JavaScript
+    public const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_LONG = self::REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_LONG;
+    public const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_TOO_SHORT = self::REASON_MANAGEMENT_NEW_GROUP_NAME_TOO_SHORT;
+    public const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_INVALID_CHARACTERS = self::REASON_MANAGEMENT_NEW_GROUP_NAME_INVALID_CHARACTERS;
+    public const REASON_MANAGEMENT_EDIT_GROUP_GROUP_NAME_FORBIDDEN_URL = self::REASON_MANAGEMENT_NEW_GROUP_FORBIDDEN_URL;
+    public const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_SHORT = 'Název části musí být alespoň 1 znak dlouhý';
+    public const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_TOO_LONG = 'Název části nesmí být více než 31 znaků dlouhý';
+    public const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_INVALID_CHARACTERS = 'Název části může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
+    public const REASON_MANAGEMENT_EDIT_GROUP_PART_NAME_FORBIDDEN_URL = 'Název jedné z částí nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
+    public const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_SHORT = self::REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_SHORT;
+    public const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_TOO_LONG = self::REASON_MANAGEMENT_NATURALS_RENAME_NAME_TO_LONG;
+    public const REASON_MANAGEMENT_EDIT_GROUP_NATURAL_NAME_INVALID_CHARACTERS = self::REASON_MANAGEMENT_NATURALS_RENAME_INVALID_CHARACTERS;
+    public const REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA = 'Jeden nebo více zadaných údajů není platných';
+    public const REASON_ADMINISTRATION_CLASS_UPDATE_INVALID_DATA = self::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA;
+    public const REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR = 'Tohoto uživatele nemůžete odstranit, protože spravuje některé třídy. Před opakováním akce změňte správce tříd, které tento uživatel spravuje a to skrze záložku "Správa tříd".';
+    public const REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_INVALID_IDENTIFIER = 'Neplatný typ změněného identifikátoru';
+    public const REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_UNKNOWN_USER = 'Tento uživatel neexistuje';
+    public const REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS = 'Neplatná adresa odesílatele';
+    public const REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS = 'Neplatná adresa adresáta';
+    public const REASON_SEND_EMAIL_EMPTY_FIELDS = 'S výjimkou patičky e-mailu musí být všechna pole vyplněna';
+}
+
