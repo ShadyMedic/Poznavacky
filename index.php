@@ -15,7 +15,7 @@ function autoloader(string $name): void
     //Nahraď zpětná lomítka (používaných v namespacové cestě) běznými lomítky (používaných pro navigaci adresáři)
     $name = str_replace('\\', '/', $name);
     //Odstraň z cesty ke třídě kořenovou složku (v té už je tento soubor)
-    if (str_contains($name, '/'))
+    if (strpos($name, '/') !== false)
     {
         $folders = explode('/', $name);
         unset($folders[0]);
