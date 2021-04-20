@@ -4,16 +4,16 @@ namespace Poznavacky\Models;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use \Transliterator;
 
-/** 
+/**
  * Třída ověřující odpověď zadanou uživatelem na testovací stránce
  * @author Jan Štěch
  */
 class AnswerChecker
 {
     private const TOLERANCE = 0.34;    //Maximální povolený poměr (špatné znaky / všechny znaky), aby byla odpověď uznána
-
+    
     public string $lastSavedAnswer;
-
+    
     /**
      * Metoda pro ověření správnosti odpovědi
      * @param string $answer Odpověď zadaná uživatelem
@@ -23,15 +23,14 @@ class AnswerChecker
      */
     public function verify(string $answer, int $questionNum): bool
     {
-        if (!isset($_SESSION['testAnswers'][$questionNum]))
-        {
-            throw new AccessDeniedException(AccessDeniedException::REASON_TEST_ANSWER_CHECK_INVALID_QUESTION, null, null);
+        if (!isset($_SESSION['testAnswers'][$questionNum])) {
+            throw new AccessDeniedException(AccessDeniedException::REASON_TEST_ANSWER_CHECK_INVALID_QUESTION, null,
+                null);
         }
         $correct = $_SESSION['testAnswers'][$questionNum];
         $this->lastSavedAnswer = $correct;
         
-        if ($this->isCorrect($answer, $correct))
-        {
+        if ($this->isCorrect($answer, $correct)) {
             return true;
         }
         return false;
@@ -51,18 +50,20 @@ class AnswerChecker
         
         //Odstranit diakritiku
         //Kód napsaný podle odpovědi na StackOverflow: https://stackoverflow.com/a/35178027
-        $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
+        $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;',
+            Transliterator::FORWARD);
         $answer = $transliterator->transliterate($answer);
         $correct = $transliterator->transliterate($correct);
         
-        if ($answer === $correct)
-        {
+        if ($answer === $correct) {
             //Odpověď bez překlepů
             return true;
         }
         
         //Dorovnání délky odpovědi
-        while (mb_strlen($correct) > mb_strlen($answer)){ $answer .= 'Ø'; }
+        while (mb_strlen($correct) > mb_strlen($answer)) {
+            $answer .= 'Ø';
+        }
         
         //Připojení dvou dalších znaků na konec obou řetězců, aby cyklus níže nevyvolával OutOfRangeException
         $answer .= '¶¶';
@@ -70,33 +71,32 @@ class AnswerChecker
         
         $errors = 0;
         
-        for ($i = 0; $i < mb_strlen($correct) - 2; $i++)
-        {
+        for ($i = 0; $i < mb_strlen($correct) - 2; $i++) {
             if ($answer[$i] !== $correct[$i])    //Neshodný znak
             {
-                if ($answer[$i] == $correct[$i+1] && $answer[$i+1] == $correct[$i+2])    //Chybějící znak - další dva znaky jsou posunuté
+                if ($answer[$i] == $correct[$i + 1] &&
+                    $answer[$i + 1] == $correct[$i + 2])    //Chybějící znak - další dva znaky jsou posunuté
                 {
-                    $answer = substr($answer, 0, $i).$correct[$i].substr($answer,$i);   //Přidávání chybějícího znaku
+                    $answer = substr($answer, 0, $i).$correct[$i].substr($answer, $i);   //Přidávání chybějícího znaku
                     $errors++;
-                }
-                
-                else if ($answer[$i+1] == $correct[$i] && $answer[$i+2] == $correct[$i+1])    //Přebývající znak - další dva znaky jsou posunuté
-                {
-                    $answer = substr($answer, 0, $i).substr($answer, $i+1);    //Odstraňování přebývajícího znaku
-                    $errors++;
-                }
-                
-                else    //Špatný znak
-                {
-                    $answer = substr($answer, 0, $i).$correct[$i].substr($answer, $i+1);    //Oprava špatného znaku
-                    $errors++;
+                } else {
+                    if ($answer[$i + 1] == $correct[$i] &&
+                        $answer[$i + 2] == $correct[$i + 1])    //Přebývající znak - další dva znaky jsou posunuté
+                    {
+                        $answer = substr($answer, 0, $i).substr($answer, $i + 1);    //Odstraňování přebývajícího znaku
+                        $errors++;
+                    } else    //Špatný znak
+                    {
+                        $answer = substr($answer, 0, $i).$correct[$i].
+                                  substr($answer, $i + 1);    //Oprava špatného znaku
+                        $errors++;
+                    }
                 }
             }
         }
         
         //Výpočet poměru chyb k počtu znaků (- 2, aby nebyly počítány uměle přidané znaky na konec - viz výše)
-        if (($errors / (mb_strlen($correct) - 2)) > self::TOLERANCE)
-        {
+        if (($errors / (mb_strlen($correct) - 2)) > self::TOLERANCE) {
             //Vyší poměr, než je dovoleno
             return false;
         }

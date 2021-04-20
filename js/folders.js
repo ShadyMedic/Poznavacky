@@ -1,19 +1,19 @@
 $(function()
 {
-	//event listenery tlačítek
-	$("#change-folders-layout-button").click(function() {changeFoldersLayout()})
-	$(".leave-link").click(function(event) {leaveClass(event)})
-	$(".accept-invitation-button").click(function (event) {answerInvitation(event, true)})
-	$(".reject-invitation-button").click(function (event) {answerInvitation(event, false)})
-	$("#class-code-form").on("submit", function(event) {submitClassCode(event)})
-	$("#request-class-button").click(function() {showNewClassForm()})
-	$("#request-class-cancel-button").click(function(event) {hideNewClassForm(event)})
-	$("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
-	$(".display-buttons-button:not(.disabled)").click(function(){displayButtons(this)})
-	$(".class-item").click(function(event) {redirectToClass(event)})
+    //event listenery tlačítek
+    $("#change-folders-layout-button").click(function() {changeFoldersLayout()})
+    $(".leave-link").click(function(event) {leaveClass(event)})
+    $(".accept-invitation-button").click(function (event) {answerInvitation(event, true)})
+    $(".reject-invitation-button").click(function (event) {answerInvitation(event, false)})
+    $("#class-code-form").on("submit", function(event) {submitClassCode(event)})
+    $("#request-class-button").click(function() {showNewClassForm()})
+    $("#request-class-cancel-button").click(function(event) {hideNewClassForm(event)})
+    $("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
+    $(".display-buttons-button:not(.disabled)").click(function(){displayButtons(this)})
+    $(".class-item").click(function(event) {redirectToClass(event)})
 
-	//event listener kliknutí myši
-	$(document).mouseup(function(event) {hideButtons(event)});
+    //event listener kliknutí myši
+    $(document).mouseup(function(event) {hideButtons(event)});
 
 });
 
@@ -23,13 +23,13 @@ $(function()
  */
 function redirectToClass(event)
 {
-	let classLink = $(event.target).closest(".class-item").attr("data-class-url");
-	
-	//kontrola, jestli uživatel neklikl na link pro opuštění/správu třídy
-	if (!$(event.target).is("a"))
-	{
-		window.location.href = classLink;
-	}
+    let classLink = $(event.target).closest(".class-item").attr("data-class-url");
+    
+    //kontrola, jestli uživatel neklikl na link pro opuštění/správu třídy
+    if (!$(event.target).is("a"))
+    {
+        window.location.href = classLink;
+    }
 }
 
 /**
@@ -38,42 +38,42 @@ function redirectToClass(event)
  */
 function leaveClass(event)
 {
-	let className = $(event.target).closest('.class-item').find("h4").text();
-	let confirmMessage = "Opravdu chcete opustit třídu" + className + "?";
-	newConfirm(confirmMessage, "Opustit", "Zrušit", function(confirm)
-	{
-		if (confirm) 
-		{
-			let url = $(event.target).attr("data-leave-url");
-			let $leftClass = $(event.target).closest('.class-item');
+    let className = $(event.target).closest('.class-item').find("h4").text();
+    let confirmMessage = "Opravdu chcete opustit třídu" + className + "?";
+    newConfirm(confirmMessage, "Opustit", "Zrušit", function(confirm)
+    {
+        if (confirm) 
+        {
+            let url = $(event.target).attr("data-leave-url");
+            let $leftClass = $(event.target).closest('.class-item');
 
-			event.stopPropagation();
+            event.stopPropagation();
 
-			$.post(url, {},
-				function (response, status)
-				{
-					ajaxCallback(response, status,
-						function (messageType, message, data)
-						{
-							if (messageType === "error")
-							{
-								//chyba při zpracování požadavku (například protože je uživatel správce dané třídy)
-								newMessage(message, "error");
-							}
-							else if (messageType === "success")
-							{
-								//odebrání opuštěné třídy z DOM
-								$leftClass.remove();
+            $.post(url, {},
+                function (response, status)
+                {
+                    ajaxCallback(response, status,
+                        function (messageType, message, data)
+                        {
+                            if (messageType === "error")
+                            {
+                                //chyba při zpracování požadavku (například protože je uživatel správce dané třídy)
+                                newMessage(message, "error");
+                            }
+                            else if (messageType === "success")
+                            {
+                                //odebrání opuštěné třídy z DOM
+                                $leftClass.remove();
 
-								newMessage(message, "success");
-							}
-						}
-					);
-				},
-				"json"
-			);
-		}
-	})
+                                newMessage(message, "success");
+                            }
+                        }
+                    );
+                },
+                "json"
+            );
+        }
+    })
 }
 
 /**
@@ -83,29 +83,29 @@ function leaveClass(event)
  */
 function answerInvitation(event, answer)
 {
-	let $invitation = $(event.target).closest(".invitation");
+    let $invitation = $(event.target).closest(".invitation");
 
-	let className = $invitation.find(".col1").text();
-	let classUrl = $invitation.attr('data-class-url');
-	let classGroupsCount = $invitation.find(".col2").text();
+    let className = $invitation.find(".col1").text();
+    let classUrl = $invitation.attr('data-class-url');
+    let classGroupsCount = $invitation.find(".col2").text();
 
-	let ajaxUrl = "menu/" + classUrl + "/invitation/" + ((answer) ? "accept" : "reject");
+    let ajaxUrl = "menu/" + classUrl + "/invitation/" + ((answer) ? "accept" : "reject");
 
-	$.post(ajaxUrl, {},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (messageType === "error")
-					{
-						//chyba při zpracování požadavku (zřejmě neplatný formát kódu)
-						newMessage(message, "error");
-					}
-					else if (messageType === "success")
-					{
-					    if (answer)
-					    {
+    $.post(ajaxUrl, {},
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "error")
+                    {
+                        //chyba při zpracování požadavku (zřejmě neplatný formát kódu)
+                        newMessage(message, "error");
+                    }
+                    else if (messageType === "success")
+                    {
+                        if (answer)
+                        {
                             //přidání nové třídy na konec seznamu
                             let classDomItem = $('#class-item-template').html();
                             classDomItem = classDomItem.replace(/{name}/g, className);
@@ -116,16 +116,16 @@ function answerInvitation(event, answer)
                             //nastavení event handleru pro opuštění nových tříd
                             $(".leave-link").click(function(event) {leaveClass(event)})
                         }
-						
+                        
                         $invitation.remove();
 
-						newMessage(message, "success");
-					}
-				}
-			);
-		},
-		"json"
-	);
+                        newMessage(message, "success");
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
@@ -134,53 +134,53 @@ function answerInvitation(event, answer)
  */
 function submitClassCode(event)
 {
-	event.preventDefault();
+    event.preventDefault();
 
-	let code = $("#class-code-input").val();
+    let code = $("#class-code-input").val();
 
-	$.post('menu/enter-class-code',
-		{
-			code: code
-		},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (messageType === "error")
-					{
-						//chyba při zpracování požadavku (zřejmě neplatný formát kódu)
-						newMessage(message, "error");
-					}
-					else if (messageType === "warning")
-					{
-						//se zadaným kódem se nelze dostat do žádné třídy
-						newMessage(message, "warning");
-					}
-					else if (messageType === "success")
-					{
-						//přidání nových tříd na konec seznamu
-						let classes = data.accessedClassesInfo;
-						for (let i = 0; i < classes.length; i++)
-						{
-							let classData = classes[i];
-							let classDomItem = $('#class-item-template').html();
-							classDomItem = classDomItem.replace(/{name}/g, classData.name);
-							classDomItem = classDomItem.replace(/{url}/g, classData.url);
-							classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
-							$(classDomItem).insertAfter('ul > .btn:last');
-						}
+    $.post('menu/enter-class-code',
+        {
+            code: code
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "error")
+                    {
+                        //chyba při zpracování požadavku (zřejmě neplatný formát kódu)
+                        newMessage(message, "error");
+                    }
+                    else if (messageType === "warning")
+                    {
+                        //se zadaným kódem se nelze dostat do žádné třídy
+                        newMessage(message, "warning");
+                    }
+                    else if (messageType === "success")
+                    {
+                        //přidání nových tříd na konec seznamu
+                        let classes = data.accessedClassesInfo;
+                        for (let i = 0; i < classes.length; i++)
+                        {
+                            let classData = classes[i];
+                            let classDomItem = $('#class-item-template').html();
+                            classDomItem = classDomItem.replace(/{name}/g, classData.name);
+                            classDomItem = classDomItem.replace(/{url}/g, classData.url);
+                            classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
+                            $(classDomItem).insertAfter('ul > .btn:last');
+                        }
 
-						//nastavení event handleru pro opuštění nových tříd
-						$(".leave-link").click(function(event) {leaveClass(event)})
+                        //nastavení event handleru pro opuštění nových tříd
+                        $(".leave-link").click(function(event) {leaveClass(event)})
 
-						newMessage(message, "success");
-					}
-				}
-			);
-		},
-		"json"
-	);
+                        newMessage(message, "success");
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
@@ -188,10 +188,10 @@ function submitClassCode(event)
  */
 function showNewClassForm()
 {
-	$("#request-class-button").hide();
-	$("#request-class-wrapper > span").hide();
-	$("#request-class-form").show();
-	$("#new-class-form-name").focus();
+    $("#request-class-button").hide();
+    $("#request-class-wrapper > span").hide();
+    $("#request-class-form").show();
+    $("#new-class-form-name").focus();
 }
 
 /**
@@ -200,12 +200,12 @@ function showNewClassForm()
  */
 function hideNewClassForm(event)
 {
-	event.preventDefault();
+    event.preventDefault();
 
-	$("#request-class-button").show();
-	$("#request-class-wrapper > span").show();
-	$("#request-class-form").hide();
-	$("#request-class-form .text-field").val("");
+    $("#request-class-button").show();
+    $("#request-class-wrapper > span").show();
+    $("#request-class-form").hide();
+    $("#request-class-form .text-field").val("");
 }
 
 /**
@@ -214,44 +214,44 @@ function hideNewClassForm(event)
  */
 function processNewClassForm(event)
 {
-	event.preventDefault();
+    event.preventDefault();
 
-	let name = $("#new-class-form-name").val();
-	let email = $("#new-class-form-email").val();	//pokud pole neexistuje, vrátí undefined
-	let info = $("#new-class-form-info").val();
-	let antispam = $("#new-class-form-antispam").val();
+    let name = $("#new-class-form-name").val();
+    let email = $("#new-class-form-email").val();    //pokud pole neexistuje, vrátí undefined
+    let info = $("#new-class-form-info").val();
+    let antispam = $("#new-class-form-antispam").val();
 
-	$.post('menu/request-new-class',
-		{
-			className: name,
-			email: email,
-			text: info,
-			antispam: antispam
-		},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (messageType === "error")
-					{
-						newMessage(message, "error");
+    $.post('menu/request-new-class',
+        {
+            className: name,
+            email: email,
+            text: info,
+            antispam: antispam
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "error")
+                    {
+                        newMessage(message, "error");
 
-						//aktualizace ochrany proti robotům
-						$("#antispam-question").text(data.newCaptcha);
-						$("#new-class-form-antispam").val("");
-					}
-					else if (messageType === "success")
-					{
-						newMessage(message, "success");
+                        //aktualizace ochrany proti robotům
+                        $("#antispam-question").text(data.newCaptcha);
+                        $("#new-class-form-antispam").val("");
+                    }
+                    else if (messageType === "success")
+                    {
+                        newMessage(message, "success");
 
-						hideNewClassForm();
-					}
-				}
-			);
-		},
-		"json"
-	);
+                        hideNewClassForm();
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
@@ -260,12 +260,12 @@ function processNewClassForm(event)
  */
 function displayButtons($button)
 {
-	if (!$($button).hasClass("show"))
-	{
-		$($button).find(".part-naturals-count, .part-pictures-count").hide();
-		$($button).find(".buttons, .part-info").addClass("show");
-		$($button).find("li").addClass("show");
-	}
+    if (!$($button).hasClass("show"))
+    {
+        $($button).find(".part-naturals-count, .part-pictures-count").hide();
+        $($button).find(".buttons, .part-info").addClass("show");
+        $($button).find("li").addClass("show");
+    }
 }
 
 /**
@@ -274,17 +274,17 @@ function displayButtons($button)
  */
 function hideButtons(event)
 {
-	$(".display-buttons-button").each(function()
-	{
-		//kliknutí mimo tlačítko
-		if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
-		{
-			if ($(this).find("li").hasClass("show"))
-			{
-				$(this).find(".part-naturals-count, .part-pictures-count").show();
-				$(this).find(".buttons, .part-info").removeClass("show");
-				$(this).find("li").removeClass("show");
-			}
-		}
-	})
+    $(".display-buttons-button").each(function()
+    {
+        //kliknutí mimo tlačítko
+        if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
+        {
+            if ($(this).find("li").hasClass("show"))
+            {
+                $(this).find(".part-naturals-count, .part-pictures-count").show();
+                $(this).find(".buttons, .part-info").removeClass("show");
+                $(this).find("li").removeClass("show");
+            }
+        }
+    })
 }

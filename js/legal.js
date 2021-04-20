@@ -7,28 +7,28 @@ var windowHeight; //výška okna
 
 $(function()
 {
-	parameter = location.search.substring(1).split("&");
+    parameter = location.search.substring(1).split("&");
 
-	navOffset = $('nav').offset().top;
-	tosOffset = $("#tos").offset().top;
-	ppOffset = $("#pp").offset().top;
-	cookiesOffset = $("#cookies").offset().top;
-	windowHeight = $(window).height();
+    navOffset = $('nav').offset().top;
+    tosOffset = $("#tos").offset().top;
+    ppOffset = $("#pp").offset().top;
+    cookiesOffset = $("#cookies").offset().top;
+    windowHeight = $(window).height();
 
-	$('#tos-button').addClass('selected');
+    $('#tos-button').addClass('selected');
 
-	//zobrazení části stránky podle parametru předaného v url adrese
-	if (parameter == 'tos') showToS();
-	else if (parameter == 'pp') showPP();
-	else if (parameter == 'cookies') showCookies();
+    //zobrazení části stránky podle parametru předaného v url adrese
+    if (parameter == 'tos') showToS();
+    else if (parameter == 'pp') showPP();
+    else if (parameter == 'cookies') showCookies();
 
-	//event listenery tlačítek
-	$("#tos-button").click(function(){showToS()})
-	$("#pp-button").click(function(){showPP()})
-	$("#cookies-button").click(function(){showCookies()})
+    //event listenery tlačítek
+    $("#tos-button").click(function(){showToS()})
+    $("#pp-button").click(function(){showPP()})
+    $("#cookies-button").click(function(){showCookies()})
 
-	//event listener scrollování
-	$(window).scroll(function() {scrollCheck()})
+    //event listener scrollování
+    $(window).scroll(function() {scrollCheck()})
 })
 
 /**
@@ -36,38 +36,38 @@ $(function()
  */
 function scrollCheck()
 {
-	//odscrollovaná vzdálenost od začátku stránky
-	let top = $(window).scrollTop();
+    //odscrollovaná vzdálenost od začátku stránky
+    let top = $(window).scrollTop();
 
-	if (top >= navOffset) 
-	{
-		$("nav").addClass("sticky");
-		$("main .content").css("padding-top", navOffset);
-	}
-	else
-	{
-		$("nav").removeClass("sticky");
-		$("main .content").css("padding-top", 0);
-	}
+    if (top >= navOffset) 
+    {
+        $("nav").addClass("sticky");
+        $("main .content").css("padding-top", navOffset);
+    }
+    else
+    {
+        $("nav").removeClass("sticky");
+        $("main .content").css("padding-top", 0);
+    }
 
-	//většinu stránky zabírá cookies sekce
-	if ((cookiesOffset - top) < windowHeight/2)
-	{
-		$('#tos-button, #pp-button').removeClass('selected');
-		$('#cookies-button').addClass('selected');
-	}
-	//většinu stránky zabírá privacy policy sekce
-	else if ((ppOffset - top) < windowHeight/2)
-	{
-		$('#tos-button, #cookies-button').removeClass('selected');
-		$('#pp-button').addClass('selected');
-	}
-	//většinu stránky zabírá terms of service sekce
-	else if ((tosOffset - top) < windowHeight/2)
-	{
-		$('#pp-button, #cookies-button').removeClass('selected');
-		$('#tos-button').addClass('selected');
-	}
+    //většinu stránky zabírá cookies sekce
+    if ((cookiesOffset - top) < windowHeight/2)
+    {
+        $('#tos-button, #pp-button').removeClass('selected');
+        $('#cookies-button').addClass('selected');
+    }
+    //většinu stránky zabírá privacy policy sekce
+    else if ((ppOffset - top) < windowHeight/2)
+    {
+        $('#tos-button, #cookies-button').removeClass('selected');
+        $('#pp-button').addClass('selected');
+    }
+    //většinu stránky zabírá terms of service sekce
+    else if ((tosOffset - top) < windowHeight/2)
+    {
+        $('#pp-button, #cookies-button').removeClass('selected');
+        $('#tos-button').addClass('selected');
+    }
 }
 
 /**
@@ -75,9 +75,9 @@ function scrollCheck()
  */
 function showToS()
 {
-	$(window).scrollTop(tosOffset - navOffset);
-	$('#pp-button, #cookies-button').removeClass('selected');
-	$('#tos-button').addClass('selected');
+    $(window).scrollTop(tosOffset - navOffset);
+    $('#pp-button, #cookies-button').removeClass('selected');
+    $('#tos-button').addClass('selected');
 }
 
 /**
@@ -85,9 +85,9 @@ function showToS()
  */
 function showPP()
 {
-	$(window).scrollTop(ppOffset - navOffset);
-	$('#tos-button, #cookies-button').removeClass('selected');
-	$('#pp-button').addClass('selected');
+    $(window).scrollTop(ppOffset - navOffset);
+    $('#tos-button, #cookies-button').removeClass('selected');
+    $('#pp-button').addClass('selected');
 }
 
 /**
@@ -95,7 +95,7 @@ function showPP()
  */
 function showCookies()
 {
-	$(window).scrollTop(cookiesOffset - navOffset);
-	$('#tos-button, #pp-button').removeClass('selected');
-	$('#cookies-button').addClass('selected');
+    $(window).scrollTop(cookiesOffset - navOffset);
+    $('#tos-button, #pp-button').removeClass('selected');
+    $('#cookies-button').addClass('selected');
 }

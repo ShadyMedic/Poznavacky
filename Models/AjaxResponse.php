@@ -44,8 +44,7 @@ class AjaxResponse
         $res = array();
         $res[self::MESSAGE_TYPE_KEY] = $this->messageType;
         $res[self::MESSAGE_KEY] = $this->message;
-        if (!empty($this->data))
-        {
+        if (!empty($this->data)) {
             $res[self::MESSAGE_DATA_KEY] = $this->data;
         }
         

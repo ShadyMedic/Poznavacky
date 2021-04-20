@@ -23,22 +23,21 @@ class AccountUpdateController extends AjaxController
      */
     public function process(array $parameters): void
     {
-        if (!isset($_POST['action']))
-        {
+        if (!isset($_POST['action'])) {
             header('HTTP/1.0 400 Bad Request');
             return;
         }
         
         header('Content-Type: application/json');
-        try
-        {
-            switch ($_POST['action'])
-            {
+        try {
+            switch ($_POST['action']) {
                 case 'request name change':
                     $newName = trim(urldecode($_POST['name'])); //Ořež mezery
                     $user = UserManager::getUser();
                     $user->requestNameChange($newName);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Žádost o změnu jména byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši změnu posoudí správce, dostanete zprávu.', array('origin' => $_POST['action']));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
+                        'Žádost o změnu jména byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši změnu posoudí správce, dostanete zprávu.',
+                        array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;
                 case 'change password':
@@ -47,7 +46,8 @@ class AccountUpdateController extends AjaxController
                     $rePassword = urldecode($_POST['rePassword']);
                     $user = UserManager::getUser();
                     $user->changePassword($oldPassword, $newPassword, $rePassword);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno', array('origin' => $_POST['action']));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno',
+                        array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;
                 case 'change email':
@@ -55,7 +55,8 @@ class AccountUpdateController extends AjaxController
                     $email = trim(urldecode($_POST['newEmail'])); //Ořež mezery
                     $user = UserManager::getUser();
                     $user->changeEmail($password, $email);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'E-mail byl úspěšně změněn', array('origin' => $_POST['action']));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'E-mail byl úspěšně změněn',
+                        array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;
                 case 'delete account':
@@ -69,18 +70,19 @@ class AccountUpdateController extends AjaxController
                     break;
                 case 'verify password':
                     $password = urldecode($_POST['password']);
-                    if (mb_strlen($password) === 0)
-                    {
-                        (new Logger(true))->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, avšak žádné heslo ke kontrole nebylo odesláno', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+                    if (mb_strlen($password) === 0) {
+                        (new Logger(true))->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, avšak žádné heslo ke kontrole nebylo odesláno',
+                            array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
                     $aChecker = new AccessChecker();
-                    if (!$aChecker->recheckPassword($password))
-                    {
-                        (new Logger(true))->info('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako nesprávné', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+                    if (!$aChecker->recheckPassword($password)) {
+                        (new Logger(true))->info('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako nesprávné',
+                            array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }
-                    (new Logger(true))->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako správné', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+                    (new Logger(true))->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako správné',
+                        array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('verified' => true));
                     echo $response->getResponseString();
                     break;
@@ -88,10 +90,9 @@ class AccountUpdateController extends AjaxController
                     header('HTTP/1.0 400 Bad Request');
                     return;
             }
-        }
-        catch (AccessDeniedException $e)
-        {
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $_POST['action']));
+        } catch (AccessDeniedException $e) {
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(),
+                array('origin' => $_POST['action']));
             echo $response->getResponseString();
         }
     }

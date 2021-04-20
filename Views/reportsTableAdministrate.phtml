@@ -15,8 +15,8 @@
         <tr class="picture-id<?= $report->getPictureId() ?>">
             <td>
             <?php foreach ($report->getPicturePaths() as $path) : ?>
-        		<li><?= $path ?></li>
-        	<?php endforeach ?>
+                <li><?= $path ?></li>
+            <?php endforeach ?>
             </td>
             <td><?= $report->getPicture()->getNatural()->getName() ?></td>
             <td><?= $report->getUrl() ?></td>
@@ -38,6 +38,6 @@
     <?php endforeach ?>
 </table>
 <div id="image-preview" style="display:none;">
-	<img alt="Chyba při načítání obrázku" src="" />
-	<button onclick="$('#image-preview').hide(); $('#overlay').hide();" class="border-btn">Zavřít</button>
+    <img alt="Chyba při načítání obrázku" src="" />
+    <button onclick="$('#image-preview').hide(); $('#overlay').hide();" class="border-btn">Zavřít</button>
 </div>

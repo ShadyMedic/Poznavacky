@@ -1,8 +1,8 @@
 $(function()
 {
-	//event listenery tlačítek
-	$("#accept-invitation-button").click(function(event) {acceptInvitation(event)})
-	$("#reject-invitation-button").click(function(event) {rejectInvitation(event)})
+    //event listenery tlačítek
+    $("#accept-invitation-button").click(function(event) {acceptInvitation(event)})
+    $("#reject-invitation-button").click(function(event) {rejectInvitation(event)})
 })
 
 /**
@@ -11,12 +11,12 @@ $(function()
  */
 function acceptInvitation(event)
 {
-	event.preventDefault();
-	
-	let $activeInvitationForm = $(event.target).closest(".invitation").find("form");
+    event.preventDefault();
+    
+    let $activeInvitationForm = $(event.target).closest(".invitation").find("form");
 
-	$activeInvitationForm.find("input[name='invitationAnswer']").val("accept");
-	$activeInvitationForm.submit();
+    $activeInvitationForm.find("input[name='invitationAnswer']").val("accept");
+    $activeInvitationForm.submit();
 }
 
 /**
@@ -25,10 +25,10 @@ function acceptInvitation(event)
  */
 function rejectInvitation(event)
 {
-	event.preventDefault();
+    event.preventDefault();
 
-	let $activeInvitationForm = $(event.target).closest(".invitation").find("form");
+    let $activeInvitationForm = $(event.target).closest(".invitation").find("form");
 
-	$activeInvitationForm.find("input[name='invitationAnswer']").val("reject");
-	$activeInvitationForm.submit();
+    $activeInvitationForm.find("input[name='invitationAnswer']").val("reject");
+    $activeInvitationForm.submit();
 }

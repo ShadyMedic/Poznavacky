@@ -24,35 +24,34 @@ class IndexFormsController extends AjaxController
     /**
      * Metoda přijímající data z formulářů skrz $_POST a volající model, který je zpracuje.
      * Podle výsledku zpracování dat odesílá instrukce k přesměrování na menu stránku nebo odesílá chybovou hlášku.
-     * V případě, že se během zpracovávání dat narazilo na větší množství chyb, jsou v odpovědi odděleny svislítkem ("|")
+     * V případě, že se během zpracovávání dat narazilo na větší množství chyb, jsou v odpovědi odděleny svislítkem
+     * ("|")
      * @param array $parameters Parametry pro kontroler (nevyužíváno)
      * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {
         header('Content-Type: application/json');
-        try
-        {
+        try {
             $type = $_POST['type'];
-            switch($type)
-            {
+            switch ($type) {
                 //Kontrola unikátnosti přihlašovacího jména nebo e-mailové adresy
                 case 'u':
                 case 'e':
                     $form = 'unknown';
                     $string = trim($_POST['text']); //Ořež mezery
-                    $stringType = ($_POST['type'] === 'u' && !str_contains($string, '@')) ? DataValidator::TYPE_USER_NAME : DataValidator::TYPE_USER_EMAIL;
+                    $stringType = ($_POST['type'] === 'u' && !str_contains($string, '@')) ?
+                        DataValidator::TYPE_USER_NAME : DataValidator::TYPE_USER_EMAIL;
                     $validator = new DataValidator();
-                    try
-                    {
+                    try {
                         $validator->checkUniqueness($string, $stringType);
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('unique' => true));
-                        (new Logger(true))->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} prošla', array('string' => $string, 'ip' => $_SERVER['REMOTE_ADDR']));
-                    }
-                    catch (InvalidArgumentException $e)
-                    {
+                        (new Logger(true))->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} prošla',
+                            array('string' => $string, 'ip' => $_SERVER['REMOTE_ADDR']));
+                    } catch (InvalidArgumentException $e) {
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('unique' => false));
-                        (new Logger(true))->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} neprošla', array('string' => $string, 'ip' => $_SERVER['REMOTE_ADDR']));
+                        (new Logger(true))->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} neprošla',
+                            array('string' => $string, 'ip' => $_SERVER['REMOTE_ADDR']));
                     }
                     echo $response->getResponseString();
                     break;
@@ -62,7 +61,9 @@ class IndexFormsController extends AjaxController
                     $userLogger = new LoginUser();
                     $userLogger->processLogin($_POST);
                     $menuUrl = 'menu';
-                    if (!empty(UserManager::getUser()['lastMenuTableUrl'])) { $menuUrl .= '/'.UserManager::getUser()['lastMenuTableUrl']; }
+                    if (!empty(UserManager::getUser()['lastMenuTableUrl'])) {
+                        $menuUrl .= '/'.UserManager::getUser()['lastMenuTableUrl'];
+                    }
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_REDIRECT, $menuUrl);
                     echo $response->getResponseString();
                     break;
@@ -78,32 +79,30 @@ class IndexFormsController extends AjaxController
                 case 'p':
                     $form = 'passRecovery';
                     $passwordRecoverer = new RecoverPassword();
-                    try
-                    {
-                        if (!$passwordRecoverer->processRecovery($_POST))
-                        {
+                    try {
+                        if (!$passwordRecoverer->processRecovery($_POST)) {
                             //Chyba nevyvolala výjimku
                             throw new Exception();
                         }
-                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.', array('origin' => $form));
-                    }
-                    catch (Exception $e)
-                    {
-                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.', array('origin' => $form));
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
+                            'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.',
+                            array('origin' => $form));
+                    } catch (Exception $e) {
+                        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
+                            'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.',
+                            array('origin' => $form));
                     }
                     echo $response->getResponseString();
                     break;
             }
-        }
-        catch (AccessDeniedException $e)
-        {
+        } catch (AccessDeniedException $e) {
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $form));
             echo $response->getResponseString();
-        }
-        catch (DatabaseException $e)
-        {
-            (new Logger(true))->emergency('Po odeslání dat z formuláře na index stránce uživatelem na IP adrese {ip} se vyskytla chyba databáze; je možné, že se k databázi není možné vůbec připojit a celý systém je tak nepoužitelný! Text výjimky: {exception}', array('ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e));
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED, array('origin' => $form));
+        } catch (DatabaseException $e) {
+            (new Logger(true))->emergency('Po odeslání dat z formuláře na index stránce uživatelem na IP adrese {ip} se vyskytla chyba databáze; je možné, že se k databázi není možné vůbec připojit a celý systém je tak nepoužitelný! Text výjimky: {exception}',
+                array('ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e));
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED,
+                array('origin' => $form));
             echo $response->getResponseString();
         }
     }

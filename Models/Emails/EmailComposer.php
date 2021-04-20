@@ -3,7 +3,7 @@ namespace Poznavacky\Models\Emails;
 
 use \InvalidArgumentException;
 
-/** 
+/**
  * Třída skládající e-maily do předpřipravených šablon a navracející hotová těla e-mailů
  * @author Jan Štěch
  */
@@ -22,15 +22,15 @@ class EmailComposer
     /**
      * Metoda vyplňující potřebnou e-mailovou šablonu poskytnutými daty a nastavující jí jako vlastnost objektu
      * @param int $emailType Číselné označení požadované e-mailové šablony (viz konstanty této třídy)
-     * @param array $data Asociativní pole obsahující proměnné pro doplnění šablon (viz šablony ve složce Views/EmailTemplates pro požadované názvy klíčů)
+     * @param array $data Asociativní pole obsahující proměnné pro doplnění šablon (viz šablony ve složce
+     *     Views/EmailTemplates pro požadované názvy klíčů)
      * @throws InvalidArgumentException Pokud je specifikován neplatný typ šablony
      */
     public function composeMail(int $emailType, array $data): void
     {
         extract($data);
         ob_start();
-        switch ($emailType)
-        {
+        switch ($emailType) {
             case self::EMAIL_TYPE_EMPTY_LAYOUT:
                 require 'Views/EmailTemplates/emptyLayout.phtml';
                 break;

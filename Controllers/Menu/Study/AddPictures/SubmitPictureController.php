@@ -13,7 +13,7 @@ use Poznavacky\Models\AjaxResponse;
  */
 class SubmitPictureController extends AjaxController
 {
-
+    
     /**
      * Metoda volající model pro uložení nového obrázku
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
@@ -25,18 +25,14 @@ class SubmitPictureController extends AjaxController
         $group = $_SESSION['selection']['group'];
         $adder = new PictureAdder($group);
         $response = null;
-        try
-        {
-            if ($adder->processFormData($_POST))
-            {
+        try {
+            if ($adder->processFormData($_POST)) {
                 $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, "Obrázek úspěšně přidán");
             }
-        }
-        catch (AccessDeniedException $e)
-        {
+        } catch (AccessDeniedException $e) {
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage());
         }
-
+        
         echo $response->getResponseString();
     }
 }

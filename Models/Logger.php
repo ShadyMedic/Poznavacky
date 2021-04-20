@@ -16,28 +16,31 @@ class Logger implements LoggerInterface
 {
     private const LOG_FILE = 'poznavacky.log';
     private const TIME_FORMAT = 'Y-m-d H:i:s';
-
+    
     private $handle;
     private bool $oneUse;
-
+    
     /**
      * Konstruktor třídy otevírající logovací soubor pro připojování dalšího zápisu na konec
-     * @param bool $isOneUse TRUE, pokud má být po zalogování první zprávy automaticky logovací soubor zavřen a tato instance tak znepoužitelněna
+     * @param bool $isOneUse TRUE, pokud má být po zalogování první zprávy automaticky logovací soubor zavřen a tato
+     *     instance tak znepoužitelněna
      */
     public function __construct(bool $isOneUse)
     {
         $this->handle = fopen(self::LOG_FILE, 'a');
         $this->oneUse = $isOneUse;
     }
-
+    
     /**
      * Destruktor třídy zavírající logovací soubor a umožňující tak jeho používání jinými procesy
      */
     public function __destruct()
     {
-        if (get_resource_type($this->handle) === 'stream'){ fclose($this->handle); }
+        if (get_resource_type($this->handle) === 'stream') {
+            fclose($this->handle);
+        }
     }
-
+    
     /**
      * Metoda pro zapsání manuálně nastavené zprávy do logovacího souboru
      * Před zprávu je jako u automatického logování vložen datum a čas zápisu a na konec je vložen konec řádku
@@ -77,7 +80,7 @@ class Logger implements LoggerInterface
                 throw new LoggerInvalidArgumentException('Log level not recognized. Make sure you are using one of the constants of Psr\Log\LogLevel class');
         }
     }
-
+    
     /**
      * Systém je nepoužitelný
      * @param string $message Zpráva k zalogování
@@ -90,7 +93,7 @@ class Logger implements LoggerInterface
         $finalMessage = $this->constructMessage('EMERGENCY ', $message);
         $this->writeMessage($finalMessage);
     }
-
+    
     /**
      * Okamžitě musí být provedena akce
      * @param string $message Zpráva k zalogování
@@ -103,7 +106,7 @@ class Logger implements LoggerInterface
         $finalMessage = $this->constructMessage('ALERT     ', $message);
         $this->writeMessage($finalMessage);
     }
-
+    
     /**
      * Kritická situace
      * @param string $message Zpráva k zalogování
@@ -116,7 +119,7 @@ class Logger implements LoggerInterface
         $finalMessage = $this->constructMessage('CRITICAL  ', $message);
         $this->writeMessage($finalMessage);
     }
-
+    
     /**
      * Chyba, která nevyžaduje bezprostřední akci
      * @param string $message Zpráva k zalogování
@@ -129,7 +132,7 @@ class Logger implements LoggerInterface
         $finalMessage = $this->constructMessage('ERROR     ', $message);
         $this->writeMessage($finalMessage);
     }
-
+    
     /**
      * Vyjímečné situace, které nelze považovat za chyby
      * @param string $message Zpráva k zalogování
@@ -142,7 +145,7 @@ class Logger implements LoggerInterface
         $finalMessage = $this->constructMessage('WARNING   ', $message);
         $this->writeMessage($finalMessage);
     }
-
+    
     /**
      * Běžné, avšak zajímavé události
      * @param string $message Zpráva k zalogování
@@ -155,7 +158,7 @@ class Logger implements LoggerInterface
         $finalMessage = $this->constructMessage('NOTICE    ', $message);
         $this->writeMessage($finalMessage);
     }
-
+    
     /**
      * Normální události
      * @param string $message Zpráva k zalogování
@@ -168,47 +171,47 @@ class Logger implements LoggerInterface
         $finalMessage = $this->constructMessage('INFO      ', $message);
         $this->writeMessage($finalMessage);
     }
-
+    
     /**
      * Informace využívané při vyvíjení a opravování systému, které jsou zapisovány do samostatného souboru.
-     * @param mixed $message Zpráva k zalogování, může se jednat i o objekt nebo pole, v takovém případě je zalogován výstup funkce print_r($message)
+     * @param mixed $message Zpráva k zalogování, může se jednat i o objekt nebo pole, v takovém případě je zalogován
+     *     výstup funkce print_r($message)
      * @param array $context Kontextové pole pro doplnění proměnných do zprávy
      */
     public function debug($message, array $context = array())
     {
         $debugHandle = fopen('debug.log', 'a');
-        if (gettype($message) === 'array' || gettype($message) === 'object')
-        {
+        if (gettype($message) === 'array' || gettype($message) === 'object') {
             ob_start();
             print_r($message);
             $finalMessage = $this->constructMessage('', ob_get_contents());
             ob_end_clean();
-        }
-        else
-        {
+        } else {
             $message = $this->fillInContext($message, $context);
             $finalMessage = $this->constructMessage('', $message);
         }
         fwrite($debugHandle, $finalMessage);
         fclose($debugHandle);
     }
-
+    
     /**
      * Metoda doplňující do zprávy informace z kontextového pole
      * @param string $message Zpráva obsahující placeholery pro data obsažené v kontextovém poli
-     * @param array $context Kontextové pole obsahující data pod stejnými klíči, jaké jsou použity v placeholderech pro ně
+     * @param array $context Kontextové pole obsahující data pod stejnými klíči, jaké jsou použity v placeholderech pro
+     *     ně
      * @return string Vyplněná zpráva
      */
     private function fillInContext(string $message, array $context): string
     {
-        foreach ($context as $key => $val)
-        {
-            if ($val instanceof Exception) { $val = $val->getMessage(); }
-            $message = str_replace('{' . $key . '}', $val, $message);
+        foreach ($context as $key => $val) {
+            if ($val instanceof Exception) {
+                $val = $val->getMessage();
+            }
+            $message = str_replace('{'.$key.'}', $val, $message);
         }
         return $message;
     }
-
+    
     /**
      * Metoda skládající dohromady aktuální čas a jednotlivé části zprávy poskytnuty v argumentech
      * @param $prefix string Předpona zprávy, například typ zprávy (info, warning, error...), nepovinné
@@ -219,9 +222,9 @@ class Logger implements LoggerInterface
     private function constructMessage($prefix = '', string $message = '', $suffix = PHP_EOL): string
     {
         $date = (new DateTime())->format(self::TIME_FORMAT);
-        return '[' . $date . '] ' . $prefix . $message . $suffix;
+        return '['.$date.'] '.$prefix.$message.$suffix;
     }
-
+    
     /**
      * Metoda zapisující finální poskládaný řetězec do logovacího souboru bez jakýchkoliv dalších úprav
      * Pokud je tato instance nastavena jako na jedno použití, je po zapsání zprávy soubor zavřen
@@ -230,7 +233,9 @@ class Logger implements LoggerInterface
     private function writeMessage(string $text): void
     {
         fwrite($this->handle, $text);
-        if ($this->oneUse) { $this->__destruct(); }
+        if ($this->oneUse) {
+            $this->__destruct();
+        }
     }
 }
 

@@ -1,155 +1,155 @@
 <div id="temp-data" style="display:none;">
-	<pre id="group-urls-json"><?= json_encode($groupList); ?></pre>
-	<pre id="natural-names-json"><?= json_encode($naturalList); ?></pre>
+    <pre id="group-urls-json"><?= json_encode($groupList); ?></pre>
+    <pre id="natural-names-json"><?= json_encode($naturalList); ?></pre>
 </div>
 <section id="edit-info-section">
-	<button id="hide-edit-info-button" class="btn icon" title="Zavřít"><img src="images/crossButtonBlack.svg"></button>
-	<h3>Nápověda</h3>
-	<p>Na této stránce můžete spravovat přírodniny, které ve vaší třídě existují.</p>
-	<ul class="list">
-		<li>Název poznávačky musí být jedinečný. Název části musí být jedinečný v rámci dané poznávačky.</li>
-		<li>Odebráním části nebudou smazány žádné přírodniny ani obrázky k nim nahrané. Přírodniny, které jsou do takovýchto částí přiřazeny, zůstanou dostupné a budete je moci později přiřadit do jiných částí a poznávaček.</li>
-		<li>V jedné části se nesmí stejná přírodnina vyskytovat vícekrát. Může se ale vyskytovat vícekrát v různých částech nebo v různých poznávačkách.</li>
-		<li>Pokud do některé části přidáte přírodninu, která už se ve vaší třídě nachází, bude automaticky propojena s již existujícími obrázky, které k ní patří.</li>
-		<li>Pokud při úpravách uděláte chybu (například odeberete část, která obsahuje velké množství přírodnin), můžete poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy, dokud nekliknete na tlačítko Uložit v horní části stránky. Nezapomeňte si proto změny, o které nechcete přijít, průběžně ukládat.</li>
-	</ul>
+    <button id="hide-edit-info-button" class="btn icon" title="Zavřít"><img src="images/crossButtonBlack.svg"></button>
+    <h3>Nápověda</h3>
+    <p>Na této stránce můžete spravovat přírodniny, které ve vaší třídě existují.</p>
+    <ul class="list">
+        <li>Název poznávačky musí být jedinečný. Název části musí být jedinečný v rámci dané poznávačky.</li>
+        <li>Odebráním části nebudou smazány žádné přírodniny ani obrázky k nim nahrané. Přírodniny, které jsou do takovýchto částí přiřazeny, zůstanou dostupné a budete je moci později přiřadit do jiných částí a poznávaček.</li>
+        <li>V jedné části se nesmí stejná přírodnina vyskytovat vícekrát. Může se ale vyskytovat vícekrát v různých částech nebo v různých poznávačkách.</li>
+        <li>Pokud do některé části přidáte přírodninu, která už se ve vaší třídě nachází, bude automaticky propojena s již existujícími obrázky, které k ní patří.</li>
+        <li>Pokud při úpravách uděláte chybu (například odeberete část, která obsahuje velké množství přírodnin), můžete poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy, dokud nekliknete na tlačítko Uložit v horní části stránky. Nezapomeňte si proto změny, o které nechcete přijít, průběžně ukládat.</li>
+    </ul>
 </section>
 <button id="show-edit-info-button" class="btn icon" title="Nápověda"><img src="images/info.svg"></button>
 <div id="edit-group-wrapper">
-	<div id="group-name-container">
-		<div class="group-name-box">
-			<span class="group-name"><?= $groupName ?></span>
-			<button class="rename-group btn icon" title="Přejmenovat">
-				<img src='images/pencil.svg'/>
-			</button>
-		</div>
-		<div class="group-name-input-box" style="display:none;">
-			<input type="text" maxlength="31" size="1" class="text-field group-name-input" value="<?= $groupName ?>"/>
-			<button class="rename-group-confirm btn icon" title="Potvrdit">
-				<img src='images/tick.svg'/>
-			</button>
-			<button class="rename-group-cancel btn icon" title="Zrušit">
-				<img src='images/cross.svg'/>
-			</button>
-		</div>
-		<div class="group-name-url">V URL bude zobrazováno jako <?= $groupUrl ?></div>
-	</div>
-	<div id="parts-boxes-container">
-		<?php foreach ($parts as $part) : ?>
-		<div class="part-box">
-			<div class="part-info">
-				<button class="remove-part btn icon" title="Odebrat část">
-					<img src='images/cross.svg'/>
-				</button>
-				<div class="part-name-box">
-					<span class="part-name"><?= $part->getName() ?></span>
-					<button class="rename-part btn icon" title="Přejmenovat">
-						<img src='images/pencil.svg'/>
-					</button>
-				</div>
-				<div class="part-name-input-box" style="display:none;">
-					<input type="text" maxlength="31" size="1" class="text-field part-name-input" value="<?= $part->getName() ?>"/>
-					<button class="rename-part-confirm btn icon" title="Potvrdit">
-						<img src='images/tick.svg'/>
-					</button>
-					<button class="rename-part-cancel btn icon" title="Zrušit">
-						<img src='images/cross.svg'/>
-					</button>
-				</div>
-				<div class="part-name-url">V URL bude zobrazováno jako <?= $part->getUrl() ?></div>
-				<label>
-					<span>Přírodnina k přidání</span>
-					<input type="text" class="text-field new-natural-name-input"/>
-					<button class="new-natural-button btn border-btn non-transparent black">Přidat</button>
-				</label>
-			</div>
-			<ul class="naturals-in-part">
-				<?php foreach ($part->getNaturals() as $natural) : ?>
-				<li>
-					<div class="natural-name-box">
-						<span class="natural-name"><?= $natural->getName() ?></span>
-						<button class="remove-natural btn icon" title="Odebrat">
-							<img src='images/cross.svg'/>
-						</button>
-						<button class="rename-natural btn icon" title="Přejmenovat" style="display:none;">
-							<img src='images/pencil.svg'/>
-						</button>
-					</div>
-					<div class="natural-name-input-box" style="display:none;">
-						<input type="text" maxlength="31" class="text-field natural-name-input" value="<?= $natural->getName() ?>"/>
-						<button class="rename-natural-confirm btn icon" title="Potvrdit">
-							<img src='images/tick.svg'/>
-						</button>
-						<button class="rename-natural-cancel btn icon" title="Zrušit">
-							<img src='images/cross.svg'/>
-						</button>
-					</div>
-				</li>
-				<?php endforeach ?>
-			</ul>
-		</div>
-		<?php endforeach ?>
-	</div>
-	<button id="add-part-button" class="btn border-btn non-transparent black">Přidat novou část</button>
-	<div id="submit-wrapper">
-		<button id="submit-button" class="btn border-btn non-transparent black">Uložit změny</button>
-	</div>
+    <div id="group-name-container">
+        <div class="group-name-box">
+            <span class="group-name"><?= $groupName ?></span>
+            <button class="rename-group btn icon" title="Přejmenovat">
+                <img src='images/pencil.svg'/>
+            </button>
+        </div>
+        <div class="group-name-input-box" style="display:none;">
+            <input type="text" maxlength="31" size="1" class="text-field group-name-input" value="<?= $groupName ?>"/>
+            <button class="rename-group-confirm btn icon" title="Potvrdit">
+                <img src='images/tick.svg'/>
+            </button>
+            <button class="rename-group-cancel btn icon" title="Zrušit">
+                <img src='images/cross.svg'/>
+            </button>
+        </div>
+        <div class="group-name-url">V URL bude zobrazováno jako <?= $groupUrl ?></div>
+    </div>
+    <div id="parts-boxes-container">
+        <?php foreach ($parts as $part) : ?>
+        <div class="part-box">
+            <div class="part-info">
+                <button class="remove-part btn icon" title="Odebrat část">
+                    <img src='images/cross.svg'/>
+                </button>
+                <div class="part-name-box">
+                    <span class="part-name"><?= $part->getName() ?></span>
+                    <button class="rename-part btn icon" title="Přejmenovat">
+                        <img src='images/pencil.svg'/>
+                    </button>
+                </div>
+                <div class="part-name-input-box" style="display:none;">
+                    <input type="text" maxlength="31" size="1" class="text-field part-name-input" value="<?= $part->getName() ?>"/>
+                    <button class="rename-part-confirm btn icon" title="Potvrdit">
+                        <img src='images/tick.svg'/>
+                    </button>
+                    <button class="rename-part-cancel btn icon" title="Zrušit">
+                        <img src='images/cross.svg'/>
+                    </button>
+                </div>
+                <div class="part-name-url">V URL bude zobrazováno jako <?= $part->getUrl() ?></div>
+                <label>
+                    <span>Přírodnina k přidání</span>
+                    <input type="text" class="text-field new-natural-name-input"/>
+                    <button class="new-natural-button btn border-btn non-transparent black">Přidat</button>
+                </label>
+            </div>
+            <ul class="naturals-in-part">
+                <?php foreach ($part->getNaturals() as $natural) : ?>
+                <li>
+                    <div class="natural-name-box">
+                        <span class="natural-name"><?= $natural->getName() ?></span>
+                        <button class="remove-natural btn icon" title="Odebrat">
+                            <img src='images/cross.svg'/>
+                        </button>
+                        <button class="rename-natural btn icon" title="Přejmenovat" style="display:none;">
+                            <img src='images/pencil.svg'/>
+                        </button>
+                    </div>
+                    <div class="natural-name-input-box" style="display:none;">
+                        <input type="text" maxlength="31" class="text-field natural-name-input" value="<?= $natural->getName() ?>"/>
+                        <button class="rename-natural-confirm btn icon" title="Potvrdit">
+                            <img src='images/tick.svg'/>
+                        </button>
+                        <button class="rename-natural-cancel btn icon" title="Zrušit">
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </div>
+                </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+        <?php endforeach ?>
+    </div>
+    <button id="add-part-button" class="btn border-btn non-transparent black">Přidat novou část</button>
+    <div id="submit-wrapper">
+        <button id="submit-button" class="btn border-btn non-transparent black">Uložit změny</button>
+    </div>
 </div>
 
 
 <div id="part-box-template" style="display: none">
-	<div class="part-box">
-		<div class="part-info">
-			<button class="remove-part btn icon" title="Odebrat část">
-				<img src='images/cross.svg'/>
-			</button>
-			<div class="part-name-box" style="display: none">
-				<span class="part-name"></span>
-				<button class="rename-part btn icon" title="Přejmenovat">
-					<img src='images/pencil.svg'/>
-				</button>
-			</div>
-			<div class="part-name-input-box">
-				<input type="text" maxlength="31" size="1" class="text-field part-name-input" value=""/>
-				<button class="rename-part-confirm btn icon" title="Potvrdit">
-					<img src='images/tick.svg'/>
-				</button>
-				<button class="rename-part-cancel btn icon" title="Zrušit" style="display: none">
-					<img src='images/cross.svg'/>
-				</button>
-			</div>
-			<div class="part-name-url">V URL bude zobrazováno jako </div>
-			<label>
-				<span>Přírodnina k přidání</span>
-				<input type="text" class="text-field new-natural-name-input"/>
-				<button class="new-natural-button btn border-btn non-transparent black">Přidat</button>
-			</label>
-		</div>
-		<ul class="naturals-in-part">
-		</ul>
-	</div>
+    <div class="part-box">
+        <div class="part-info">
+            <button class="remove-part btn icon" title="Odebrat část">
+                <img src='images/cross.svg'/>
+            </button>
+            <div class="part-name-box" style="display: none">
+                <span class="part-name"></span>
+                <button class="rename-part btn icon" title="Přejmenovat">
+                    <img src='images/pencil.svg'/>
+                </button>
+            </div>
+            <div class="part-name-input-box">
+                <input type="text" maxlength="31" size="1" class="text-field part-name-input" value=""/>
+                <button class="rename-part-confirm btn icon" title="Potvrdit">
+                    <img src='images/tick.svg'/>
+                </button>
+                <button class="rename-part-cancel btn icon" title="Zrušit" style="display: none">
+                    <img src='images/cross.svg'/>
+                </button>
+            </div>
+            <div class="part-name-url">V URL bude zobrazováno jako </div>
+            <label>
+                <span>Přírodnina k přidání</span>
+                <input type="text" class="text-field new-natural-name-input"/>
+                <button class="new-natural-button btn border-btn non-transparent black">Přidat</button>
+            </label>
+        </div>
+        <ul class="naturals-in-part">
+        </ul>
+    </div>
 </div>
 
 
 <div id="natural-item-template" style="display: none">
-	<li>
-		<div class="natural-name-box">
-			<span class="natural-name"></span>
-			<button class="remove-natural btn icon" title="Odebrat">
-				<img src='images/cross.svg'/>
-			</button>
-			<button class="rename-natural btn icon" title="Přejmenovat">
-				<img src='images/pencil.svg'/>
-			</button>
-		</div>
-		<div class="natural-name-input-box" style="display:none;">
-			<input type="text" maxlength="31" class="text-field natural-name-input" value=""/>
-			<button class="rename-natural-confirm btn icon" title="Potvrdit">
-				<img src='images/tick.svg'/>
-			</button>
-			<button class="rename-natural-cancel btn icon" title="Zrušit">
-				<img src='images/cross.svg'/>
-			</button>
-		</div>
-	</li>
+    <li>
+        <div class="natural-name-box">
+            <span class="natural-name"></span>
+            <button class="remove-natural btn icon" title="Odebrat">
+                <img src='images/cross.svg'/>
+            </button>
+            <button class="rename-natural btn icon" title="Přejmenovat">
+                <img src='images/pencil.svg'/>
+            </button>
+        </div>
+        <div class="natural-name-input-box" style="display:none;">
+            <input type="text" maxlength="31" class="text-field natural-name-input" value=""/>
+            <button class="rename-natural-confirm btn icon" title="Potvrdit">
+                <img src='images/tick.svg'/>
+            </button>
+            <button class="rename-natural-cancel btn icon" title="Zrušit">
+                <img src='images/cross.svg'/>
+            </button>
+        </div>
+    </li>
 </div>

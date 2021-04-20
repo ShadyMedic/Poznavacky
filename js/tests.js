@@ -3,16 +3,16 @@ var ajaxUrl;
 
 $(function()
 {
-	//nastavení URL pro AJAX požadavky
-	ajaxUrl = window.location.href;
-	if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
-	ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //nahrazení neAJAX akci AJAX akcí
+    //nastavení URL pro AJAX požadavky
+    ajaxUrl = window.location.href;
+    if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
+    ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //nahrazení neAJAX akci AJAX akcí
   
-	//eventy listenery tlačítek
-	$(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
-	$("#new-test-button").click(function() {newTest()})
-	$("#new-test-confirm-button").click(function() {newTestConfirm()})
-	$("#new-test-cancel-button").click(function() {newTestCancel()})
+    //eventy listenery tlačítek
+    $(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
+    $("#new-test-button").click(function() {newTest()})
+    $("#new-test-confirm-button").click(function() {newTestConfirm()})
+    $("#new-test-cancel-button").click(function() {newTestCancel()})
 })
 
 /**
@@ -20,13 +20,13 @@ $(function()
  */
 function newTest()
 {
-	$("#new-test-button").hide();
-	$("#new-test").show();
-	$("#new-test-name").focus();
-	$("#new-test")[0].scrollIntoView({ 
-		behavior: 'smooth',
-		block: "start" 
-	});
+    $("#new-test-button").hide();
+    $("#new-test").show();
+    $("#new-test-name").focus();
+    $("#new-test")[0].scrollIntoView({ 
+        behavior: 'smooth',
+        block: "start" 
+    });
 }
 
 /**
@@ -34,9 +34,9 @@ function newTest()
  */
 function newTestCancel()
 {
-	$("#new-test-name").val("");
-	$("#new-test").hide();
-	$("#new-test-button").show();
+    $("#new-test-name").val("");
+    $("#new-test").hide();
+    $("#new-test-button").show();
 }
 
 /**
@@ -44,47 +44,47 @@ function newTestCancel()
  */
 function newTestConfirm()
 {
-	let testName = $("#new-test-name").val();
+    let testName = $("#new-test-name").val();
 
-	$.post(ajaxUrl,
-		{
-    		action: 'create test',
-			testName: testName
-		},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data) 
-				{
-					if (messageType === "error")
-					{
-						newMessage(message, "error");
-					}
-					else if (messageType === "success")
-					{
-						//zaískání informací z data.newGroupData a jejich zobrazení v tabulce v DOM
-						let groupData = data.newGroupData;
-						let groupDomItem = $('#test-data-item-template').html();
+    $.post(ajaxUrl,
+        {
+            action: 'create test',
+            testName: testName
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data) 
+                {
+                    if (messageType === "error")
+                    {
+                        newMessage(message, "error");
+                    }
+                    else if (messageType === "success")
+                    {
+                        //zaískání informací z data.newGroupData a jejich zobrazení v tabulce v DOM
+                        let groupData = data.newGroupData;
+                        let groupDomItem = $('#test-data-item-template').html();
 
-						groupDomItem = groupDomItem.replace(/{id}/g, groupData.id);
-						groupDomItem = groupDomItem.replace(/{name}/g, groupData.name);
-						groupDomItem = groupDomItem.replace(/{url}/g, groupData.url);
-						groupDomItem = groupDomItem.replace(/{parts}/g, groupData.parts);
+                        groupDomItem = groupDomItem.replace(/{id}/g, groupData.id);
+                        groupDomItem = groupDomItem.replace(/{name}/g, groupData.name);
+                        groupDomItem = groupDomItem.replace(/{url}/g, groupData.url);
+                        groupDomItem = groupDomItem.replace(/{parts}/g, groupData.parts);
 
-						$('.tests-data-section').append(groupDomItem);
+                        $('.tests-data-section').append(groupDomItem);
 
-						//doplň event listener na tlačítko pro odstranění poznávačky
-						$(".tests-data-section .test-action:last .delete-group-button").click(function(event) {deleteTest(event)})
+                        //doplň event listener na tlačítko pro odstranění poznávačky
+                        $(".tests-data-section .test-action:last .delete-group-button").click(function(event) {deleteTest(event)})
 
-						newMessage(response["message"], "success");
+                        newMessage(response["message"], "success");
 
-						newTestCancel();
-					}
-				}
-			);
-		},
-		"json"
-	);
+                        newTestCancel();
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
@@ -93,17 +93,17 @@ function newTestConfirm()
  */
 function deleteTest(event)
 {
-	let $test = $(event.target).closest(".tests-data-item");
-	let name = $test.attr('data-group-name');
+    let $test = $(event.target).closest(".tests-data-item");
+    let name = $test.attr('data-group-name');
 
-	let confirmMessage = "Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!";
-	newConfirm(confirmMessage, "Odstranit", "Zrušit", function(confirm) {
-		if (confirm) {
-			deleteTestFinal($test);
-			$test = undefined;
-		}
-		else return;
-	})
+    let confirmMessage = "Opravdu chcete trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!";
+    newConfirm(confirmMessage, "Odstranit", "Zrušit", function(confirm) {
+        if (confirm) {
+            deleteTestFinal($test);
+            $test = undefined;
+        }
+        else return;
+    })
 }
 
 /**
@@ -112,31 +112,31 @@ function deleteTest(event)
  */
 function deleteTestFinal($test)
 {
-	let testId = $test.attr('data-group-id');
-	
-	$.post(ajaxUrl,
-		{
-    		action: 'delete test',
-			testId: testId
-		},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (response["messageType"] === "error")
-					{
-						newMessage(response["message"], "error");
-					}
-					else if (response["messageType"] === "success")
-					{
-						$test.remove();
-						newMessage(response["message"], "success");
-					}
-					$test = undefined;
-				}
-			);
-		},
-		"json"
-	);
+    let testId = $test.attr('data-group-id');
+    
+    $.post(ajaxUrl,
+        {
+            action: 'delete test',
+            testId: testId
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (response["messageType"] === "error")
+                    {
+                        newMessage(response["message"], "error");
+                    }
+                    else if (response["messageType"] === "success")
+                    {
+                        $test.remove();
+                        newMessage(response["message"], "success");
+                    }
+                    $test = undefined;
+                }
+            );
+        },
+        "json"
+    );
 }

@@ -1,30 +1,30 @@
 <div id='members-wrapper'>
-	<section class="members-data-section">
-    	<?php foreach ($members as $member) : ?>
-    	<div class="member-data-item" data-member-id="<?= $member["id"] ?>">
+    <section class="members-data-section">
+        <?php foreach ($members as $member) : ?>
+        <div class="member-data-item" data-member-id="<?= $member["id"] ?>">
             <span class='member-name'><?= $member['name'] ?></span>
             <div class="member-action">
-            	<?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn inline black kick-user-button'>Odebrat uživatele</button><?php endif ?>
+                <?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn inline black kick-user-button'>Odebrat uživatele</button><?php endif ?>
             </div>
-			<div class="kick-user" style="display: none">
-				<span>Opravdu chcete odebrat tohoto uživatele ze třídy?</span>
-				<div class="buttons">
-					<button class='btn border-btn non-transparent black kick-user-confirm-button'>Ano</button>
-					<button class='btn border-btn transparent black kick-user-cancel-button'>Zrušit</button>
-				</div>
-			</div>
+            <div class="kick-user" style="display: none">
+                <span>Opravdu chcete odebrat tohoto uživatele ze třídy?</span>
+                <div class="buttons">
+                    <button class='btn border-btn non-transparent black kick-user-confirm-button'>Ano</button>
+                    <button class='btn border-btn transparent black kick-user-cancel-button'>Zrušit</button>
+                </div>
+            </div>
         </div>
         <?php endforeach ?>
-	</section>
-	<section class="invite-user-section">
-		<button id='invite-user-button' class="btn border-btn non-transparent black">Pozvat nového člena</button>
-		<div id='invite-user-form' style="display: none;">
-			<h3>Pozvat nového uživatele</h3>
-			<p>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</p>
-			<label for="invite-user-name">Jméno uživatele</label>
-			<input id='invite-user-name' class="text-field" type='text' maxlength=15>
-			<button class='btn border-btn non-transparent black' id="invite-user-confirm-button">Pozvat</button>
-			<button class='btn inline black' id="invite-user-cancel-button">Zrušit</button>
-		</div>
-	</section>
+    </section>
+    <section class="invite-user-section">
+        <button id='invite-user-button' class="btn border-btn non-transparent black">Pozvat nového člena</button>
+        <div id='invite-user-form' style="display: none;">
+            <h3>Pozvat nového uživatele</h3>
+            <p>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</p>
+            <label for="invite-user-name">Jméno uživatele</label>
+            <input id='invite-user-name' class="text-field" type='text' maxlength=15>
+            <button class='btn border-btn non-transparent black' id="invite-user-confirm-button">Pozvat</button>
+            <button class='btn inline black' id="invite-user-cancel-button">Zrušit</button>
+        </div>
+    </section>
 </div>

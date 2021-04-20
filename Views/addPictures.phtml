@@ -1,37 +1,37 @@
 <div id="add-pictures-form-wrapper">
-	<label for="add-natural-select">Zvolte přírodninu, jejíž obrázek chcete přidat:</label>
-	<div class="custom-select-wrapper" id="add-natural-select">
-		<div class="custom-select">
-			<div class="custom-select-main">
-				<span></span>
-				<img class="arrow" src="../images/arrowBlack.svg">
-			</div>
-			<ul class="custom-options">
-				<?php foreach ($naturals as $natural) :?>
+    <label for="add-natural-select">Zvolte přírodninu, jejíž obrázek chcete přidat:</label>
+    <div class="custom-select-wrapper" id="add-natural-select">
+        <div class="custom-select">
+            <div class="custom-select-main">
+                <span></span>
+                <img class="arrow" src="../images/arrowBlack.svg">
+            </div>
+            <ul class="custom-options">
+                <?php foreach ($naturals as $natural) :?>
                     <li class="custom-option">
-						<?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	</div>
-	<input type="hidden" name="naturalName" id="natural-name-hidden" value="" />
-	<fieldset class="url-fieldset" class="disabled">
-		<label for="url-input">Zadejte URL adresu obrázku:</label>
-		<input type=url name="url" id="url-input" class="text-field" value=""/>
-		<button id="url-confirm-button" class="btn border-btn black non-transparent">OK</button>
-	</fieldset>
-	<fieldset class="preview-buttons-fieldset" class="disabled">
-		<a id="duck-link" class="btn border-btn black non-transparent" target=_blank>
-			<span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duckLogo.png">       
-		</a>  
-		<a id="google-link" class="btn border-btn black non-transparent" target=_blank>
-			<span>Vyhledat na Google</span><img class="logo" src="images/googleLogo.png">       
-		</a>  
-		<button id="submit-button" class="btn border-btn black non-transparent">Přidat obrázek</button>
-	</fieldset>
-	<fieldset class="picture">
-		<img id="preview-img" class="img" src="images/blank.gif">
-		<img id="preview-img-hidden" style="display: none;" />
-	</fieldset>
+                        <?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+    <input type="hidden" name="naturalName" id="natural-name-hidden" value="" />
+    <fieldset class="url-fieldset" class="disabled">
+        <label for="url-input">Zadejte URL adresu obrázku:</label>
+        <input type=url name="url" id="url-input" class="text-field" value=""/>
+        <button id="url-confirm-button" class="btn border-btn black non-transparent">OK</button>
+    </fieldset>
+    <fieldset class="preview-buttons-fieldset" class="disabled">
+        <a id="duck-link" class="btn border-btn black non-transparent" target=_blank>
+            <span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duckLogo.png">       
+        </a>  
+        <a id="google-link" class="btn border-btn black non-transparent" target=_blank>
+            <span>Vyhledat na Google</span><img class="logo" src="images/googleLogo.png">       
+        </a>  
+        <button id="submit-button" class="btn border-btn black non-transparent">Přidat obrázek</button>
+    </fieldset>
+    <fieldset class="picture">
+        <img id="preview-img" class="img" src="images/blank.gif">
+        <img id="preview-img-hidden" style="display: none;" />
+    </fieldset>
 </div>

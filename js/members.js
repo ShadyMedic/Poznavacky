@@ -5,13 +5,13 @@ ajaxUrl = ajaxUrl.replace('/manage/members', '/class-update'); //Nahraď neAJAX 
 
 $(function()
 {
-	//event listenery tlačítek
-	$(".kick-user-button").click(function(event) {kickMember(event)})
-	$(".kick-user-confirm-button").click(function(event) {kickMemberConfirm(event)})
-	$(".kick-user-cancel-button").click(function(event) {kickMemberCancel(event)})
-	$("#invite-user-button").click(function() {inviteFormShow()})
-	$("#invite-user-confirm-button").click(function() {inviteUser()})
-	$("#invite-user-cancel-button").click(function() {inviteFormHide()})
+    //event listenery tlačítek
+    $(".kick-user-button").click(function(event) {kickMember(event)})
+    $(".kick-user-confirm-button").click(function(event) {kickMemberConfirm(event)})
+    $(".kick-user-cancel-button").click(function(event) {kickMemberCancel(event)})
+    $("#invite-user-button").click(function() {inviteFormShow()})
+    $("#invite-user-confirm-button").click(function() {inviteUser()})
+    $("#invite-user-cancel-button").click(function() {inviteFormHide()})
 })
 
 /**
@@ -20,10 +20,10 @@ $(function()
  */
 function kickMember(event)
 {
-	let $member = $(event.target).closest(".member-data-item");
+    let $member = $(event.target).closest(".member-data-item");
 
-	$member.find(".kick-user-button").hide();
-	$member.find(".kick-user").show();
+    $member.find(".kick-user-button").hide();
+    $member.find(".kick-user").show();
 } 
 
 /**
@@ -32,10 +32,10 @@ function kickMember(event)
  */
 function kickMemberCancel(event)
 {
-	let $member = $(event.target).closest(".member-data-item");
+    let $member = $(event.target).closest(".member-data-item");
 
-	$member.find(".kick-user-button").show();
-	$member.find(".kick-user").hide();
+    $member.find(".kick-user-button").show();
+    $member.find(".kick-user").hide();
 } 
 
 /**
@@ -44,33 +44,33 @@ function kickMemberCancel(event)
  */
 function kickMemberConfirm(event)
 {
-	let $member = $(event.target).closest(".member-data-item");
-	let memberId = $member.attr("data-member-id");
+    let $member = $(event.target).closest(".member-data-item");
+    let memberId = $member.attr("data-member-id");
 
     $.post(ajaxUrl,
-		{
-    		action: 'kick member',
-			memberId: memberId
-		},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (messageType === "error")
-					{
-						newMessage(message, "error");
-					}
-					else if (messageType === "success")
-					{
-						//odebrání uživatele z DOM
-						$member.remove();
-					}
-				}
-			);
-		},
-		"json"
-	);
+        {
+            action: 'kick member',
+            memberId: memberId
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "error")
+                    {
+                        newMessage(message, "error");
+                    }
+                    else if (messageType === "success")
+                    {
+                        //odebrání uživatele z DOM
+                        $member.remove();
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
@@ -80,11 +80,11 @@ function inviteFormShow()
 {
     $("#invite-user-button").hide();
     $("#invite-user-form").show();
-	$("#invite-user-form")[0].scrollIntoView({ 
-		behavior: 'smooth',
-		block: "start" 
-	});
-	$("#invite-user-name").focus();
+    $("#invite-user-form")[0].scrollIntoView({ 
+        behavior: 'smooth',
+        block: "start" 
+    });
+    $("#invite-user-name").focus();
 }
 
 /** 
@@ -105,28 +105,28 @@ function inviteUser()
     let userName = $("#invite-user-name").val();
 
     $.post(ajaxUrl,
-		{
+        {
       action: 'invite user',
-		  userName: userName
-		},
-		function (response, status)
-		{
-			ajaxCallback(response, status,
-				function (messageType, message, data)
-				{
-					if (messageType === "success")
-					{
-					    inviteFormHide();
-					    
-						newMessage(message,"success");
-					}
-					if (messageType === "error")
-					{
-						newMessage(message, "error");
-					}
-				}
-			);
-		},
-		"json"
-	);
+          userName: userName
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "success")
+                    {
+                        inviteFormHide();
+                        
+                        newMessage(message,"success");
+                    }
+                    if (messageType === "error")
+                    {
+                        newMessage(message, "error");
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }

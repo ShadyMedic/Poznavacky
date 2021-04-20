@@ -12,7 +12,7 @@ use Poznavacky\Models\AjaxResponse;
  */
 class TokenPasswordChangeController extends AjaxController
 {
-
+    
     /**
      * Kontroler přijímající data odeslaná formulářem a volající modely, které je zpracují.
      * Také nastavuje úspěchovou nebo chybové hlášky a přesměrovává zpět nebo nastavuje pohled pro zobrazení zprávy.
@@ -25,23 +25,21 @@ class TokenPasswordChangeController extends AjaxController
         $token = $_POST['token'];
         $pass = $_POST['pass'];
         $repass = $_POST['repass'];
-
-        try
-        {
+        
+        try {
             $passwordChanger = new TokenPasswordChanger($token, $pass, $repass);
             $passwordChanger->verifyToken();
             $passwordChanger->checkPasswords();
             $passwordChanger->changePassword();
             $passwordChanger->devalueToken();
-        }
-        catch (AccessDeniedException $e)
-        {
+        } catch (AccessDeniedException $e) {
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage());
             echo $response->getResponseString();
             return;
         }
-
-        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno. Za okamžik budete přesměrováni na domovskou stránku.');
+        
+        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
+            'Heslo bylo úspěšně změněno. Za okamžik budete přesměrováni na domovskou stránku.');
         echo $response->getResponseString();
     }
 }

@@ -3,48 +3,48 @@ var tablet = 768;
 
 $(function()
 {
-	//event listenery tlačítek
-	$("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
+    //event listenery tlačítek
+    $("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
 
-	//event listener custom select boxů
-	$(".custom-select-wrapper").each(function()
-	{
-		//automatické vybrání první položky v dropdownu při načtení stránky
-		//netýká se následujících custom select boxů:
-			//#add-natural-select - select box na výběr přírodniny při přidávání nového obrázku (pohled addPictures)
-			//#class-status-select - select box na výběr statutu třídy (pohled manage)
-			//#report-natural-select - select box na změnu přírodniny ve správě hlášení (pohled reportsTableManage)
-		if (this.id != "add-natural-select" && this.id != "class-status-select" && !$(this).hasClass("report-natural-select")) 
-		{
-			$(this).find(".custom-option").first().addClass("selected");
-		}
+    //event listener custom select boxů
+    $(".custom-select-wrapper").each(function()
+    {
+        //automatické vybrání první položky v dropdownu při načtení stránky
+        //netýká se následujících custom select boxů:
+            //#add-natural-select - select box na výběr přírodniny při přidávání nového obrázku (pohled addPictures)
+            //#class-status-select - select box na výběr statutu třídy (pohled manage)
+            //#report-natural-select - select box na změnu přírodniny ve správě hlášení (pohled reportsTableManage)
+        if (this.id != "add-natural-select" && this.id != "class-status-select" && !$(this).hasClass("report-natural-select")) 
+        {
+            $(this).find(".custom-option").first().addClass("selected");
+        }
 
-		$(this).click(function()
-		{
-			manageSelectBox($(this));
-		})
-	})
+        $(this).click(function()
+        {
+            manageSelectBox($(this));
+        })
+    })
 
-	//event listener kliknutí mimo select box
-	$(window).click(function(event) {
-		$(".custom-select").each(function()
-		{
-			if (!this.contains(event.target))
-			{
-				$(this).removeClass('open');
-			}
-		})
-	});
+    //event listener kliknutí mimo select box
+    $(window).click(function(event) {
+        $(".custom-select").each(function()
+        {
+            if (!this.contains(event.target))
+            {
+                $(this).removeClass('open');
+            }
+        })
+    });
 
-	//event listener přidávající třídu podle toho, jestli uživatel používá myš, nebo tabulátor
-	$(window).on("keydown", function(event)
-	{ 
-		if (event.keyCode === 9) $("body").addClass("tab");
-	})
-	$(window).on("mousedown", function()
-	{
-		$("body").removeClass("tab");	
-	})
+    //event listener přidávající třídu podle toho, jestli uživatel používá myš, nebo tabulátor
+    $(window).on("keydown", function(event)
+    { 
+        if (event.keyCode === 9) $("body").addClass("tab");
+    })
+    $(window).on("mousedown", function()
+    {
+        $("body").removeClass("tab");    
+    })
 })
 
 /**
@@ -53,7 +53,7 @@ $(function()
  */
 function closeMessage($button)
 {
-	$button.closest(".message-item").remove();
+    $button.closest(".message-item").remove();
 }
 
 /**
@@ -64,22 +64,22 @@ function closeMessage($button)
  */
 function getCookie(cname)
 {
-	var name = cname + "=";
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var ca = decodedCookie.split(';');
-	for(var i = 0; i <ca.length; i++)
-	{
-		var c = ca[i];
-		while (c.charAt(0) == ' ')
-		{
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0)
-		{
-			return c.substring(name.length, c.length);
-		}
-	}
-	return "";
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++)
+    {
+        var c = ca[i];
+        while (c.charAt(0) == ' ')
+        {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0)
+        {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
 /**
@@ -88,30 +88,30 @@ function getCookie(cname)
  */
 function manageSelectBox($selectBox)
 {
-	$selectBox.find(".custom-select").toggleClass("open");
+    $selectBox.find(".custom-select").toggleClass("open");
 
-	//pokud je nějaký element zvolený, posune se dropdown tak, aby byl zvolený element vidět
-	//netýká se #report-reason - select box na volbu důvodu nahlášení (pohled reportForm) - způsobovalo to divné poskočení
-	if ($selectBox.find(".custom-options .selected").length != 0 && $selectBox[0] != $("#report-reason")[0])
-	{
-		$selectBox.find(".custom-options .selected")[0].scrollIntoView({ 
-			block: 'start',
-			inline: 'start' 
-		});
-	}
+    //pokud je nějaký element zvolený, posune se dropdown tak, aby byl zvolený element vidět
+    //netýká se #report-reason - select box na volbu důvodu nahlášení (pohled reportForm) - způsobovalo to divné poskočení
+    if ($selectBox.find(".custom-options .selected").length != 0 && $selectBox[0] != $("#report-reason")[0])
+    {
+        $selectBox.find(".custom-options .selected")[0].scrollIntoView({ 
+            block: 'start',
+            inline: 'start' 
+        });
+    }
 
-	//změna zvolené položky
-	$(".custom-option").each(function()
-	{
-		$(this).click(function()
-		{
-			if (!$(this).hasClass('selected')) {
-				$(this).siblings().removeClass('selected');
-				$(this).addClass('selected');
-				$(this).closest('.custom-select').find(".custom-select-main span").text($(this).text());
-			}
-		})
-	})
+    //změna zvolené položky
+    $(".custom-option").each(function()
+    {
+        $(this).click(function()
+        {
+            if (!$(this).hasClass('selected')) {
+                $(this).siblings().removeClass('selected');
+                $(this).addClass('selected');
+                $(this).closest('.custom-select').find(".custom-select-main span").text($(this).text());
+            }
+        })
+    })
 }
 
 /**
@@ -122,11 +122,11 @@ function manageSelectBox($selectBox)
  */
 function newMessage(message, type, data)
 {
-	$("#messages").prepend($("#message-item-template").html());
-	$message = $("#messages .message-item:first-child");
-	$message.find(".message").text(message);
-	$message.find(".data").text(data);
-	$message.addClass(type + "-message");
+    $("#messages").prepend($("#message-item-template").html());
+    $message = $("#messages .message-item:first-child");
+    $message.find(".message").text(message);
+    $message.find(".data").text(data);
+    $message.addClass(type + "-message");
 }
 
 /**
@@ -139,24 +139,24 @@ function newMessage(message, type, data)
  */
 function newConfirm(message, confirmButtonText, cancelButtonText, callback)
 {
-	$("#overlay").addClass("show");
-	$("#popups").append($("#confirm-item-template").html());
-	$confirm = $("#popups .confirm-item:last-child");
-	$confirm.find(".message").text(message);
-	$confirm.find(".confirm-popup-button").text(confirmButtonText);
-	$confirm.find(".cancel-popup-button").text(cancelButtonText);
+    $("#overlay").addClass("show");
+    $("#popups").append($("#confirm-item-template").html());
+    $confirm = $("#popups .confirm-item:last-child");
+    $confirm.find(".message").text(message);
+    $confirm.find(".confirm-popup-button").text(confirmButtonText);
+    $confirm.find(".cancel-popup-button").text(cancelButtonText);
 
-	$confirm.on("click", ".confirm-popup-button", function()
-	{
-		$confirm.remove();
-		$("#overlay").removeClass("show");
-		callback(true);
-	})
-	$confirm.on("click", ".cancel-popup-button", function()
-	{
-		$confirm.remove();
-		$("#overlay").removeClass("show");
-		callback(false);
-	})
+    $confirm.on("click", ".confirm-popup-button", function()
+    {
+        $confirm.remove();
+        $("#overlay").removeClass("show");
+        callback(true);
+    })
+    $confirm.on("click", ".cancel-popup-button", function()
+    {
+        $confirm.remove();
+        $("#overlay").removeClass("show");
+        callback(false);
+    })
 }
 

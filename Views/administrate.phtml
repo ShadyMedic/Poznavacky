@@ -1,22 +1,22 @@
 <div id="overlay"></div>
 <div class="container">
-	<header>
-		<nav>
-			<a id="tab1-link" class="active-tab" onclick="firstTab()">Správa účtů</a>
-			<a id="tab2-link" onclick="secondTab()">Správa tříd</a>
-			<a id="tab3-link" onclick="thirdTab()">Správa hlášení</a>
-			<a id="tab4-link" onclick="fourthTab()">Správa změn jmen</a>
-			<a id="tab5-link" onclick="fifthTab()">Poslat e-mail</a>
-			<a id="tab6-link" onclick="sixthTab()">Ovládání databáze</a>
-			<a href="menu">Návrat</a>
-		</nav>
-	</header>
+    <header>
+        <nav>
+            <a id="tab1-link" class="active-tab" onclick="firstTab()">Správa účtů</a>
+            <a id="tab2-link" onclick="secondTab()">Správa tříd</a>
+            <a id="tab3-link" onclick="thirdTab()">Správa hlášení</a>
+            <a id="tab4-link" onclick="fourthTab()">Správa změn jmen</a>
+            <a id="tab5-link" onclick="fifthTab()">Poslat e-mail</a>
+            <a id="tab6-link" onclick="sixthTab()">Ovládání databáze</a>
+            <a href="menu">Návrat</a>
+        </nav>
+    </header>
     <main>
         <div id="tab1">
             <?php require 'Views/usersTable.phtml'; ?>
         </div>
         <div id="tab2">
-        	<?php require 'Views/classesTable.phtml'; ?>
+            <?php require 'Views/classesTable.phtml'; ?>
         </div>
         <div id="tab3">
             <?php require 'Views/reportsTableAdministrate.phtml'; ?>

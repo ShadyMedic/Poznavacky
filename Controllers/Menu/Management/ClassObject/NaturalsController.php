@@ -12,7 +12,7 @@ use Poznavacky\Models\Statics\UserManager;
  */
 class NaturalsController extends SynchronousController
 {
-
+    
     /**
      * Metoda nastavující hlavičku stránky, data pro pohled a pohled
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
@@ -21,15 +21,20 @@ class NaturalsController extends SynchronousController
      */
     function process(array $parameters): void
     {
-        (new Logger(true))->info('Přístup na stránku pro správu přírodnin třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}', array('classId' => $_SESSION['selection']['class']->getId(), 'userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-
+        (new Logger(true))->info('Přístup na stránku pro správu přírodnin třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
+            array(
+                'classId' => $_SESSION['selection']['class']->getId(),
+                'userId' => UserManager::getId(),
+                'ip' => $_SERVER['REMOTE_ADDR']
+            ));
+        
         self::$pageHeader['title'] = 'Správa přírodnin';
         self::$pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu přírodnin';
         self::$pageHeader['keywords'] = '';
         self::$pageHeader['cssFiles'] = array('css/css.css');
-        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/naturals.js');
+        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js', 'js/naturals.js');
         self::$pageHeader['bodyId'] = 'naturals';
-
+        
         self::$data['naturals'] = $_SESSION['selection']['class']->getNaturals();
     }
 }

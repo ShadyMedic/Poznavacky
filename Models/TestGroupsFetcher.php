@@ -10,7 +10,7 @@ use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
 
-/** 
+/**
  * Třída získávající seznamy tříd, skupin a částí
  * @author Jan Štěch
  */
@@ -19,7 +19,7 @@ class TestGroupsFetcher
     public const CLASS_STATUS_PUBLIC = 'public';
     public const CLASS_MANAGE_BUTTON_KEYWORD = 'admin';
     public const CLASS_LEAVE_BUTTON_KEYWORD = 'leave';
-
+    
     /**
      * Metoda pro získání seznamu všech tříd a vytvoření tabulky pro předání pohledu
      * @return array Dvourozměrné pole obsahující seznam tříd a další informace potřebné pro pohled
@@ -31,42 +31,51 @@ class TestGroupsFetcher
     {
         //Získej data
         $chekcer = new AccessChecker();
-        if ($chekcer->checkDemoAccount())
-        {
+        if ($chekcer->checkDemoAccount()) {
             //Nezahrnuj jiné než uzamčené třídy
-            $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "locked" AND '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
+            $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.
+                                      ClassObject::COLUMN_DICTIONARY['url'].','.
+                                      ClassObject::COLUMN_DICTIONARY['groupsCount'].','.
+                                      ClassObject::COLUMN_DICTIONARY['status'].','.
+                                      ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
+                                      ' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "locked" AND '.
+                                      ClassObject::COLUMN_DICTIONARY['id'].
+                                      ' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);',
+                array(UserManager::getId()), true);
+        } else {
+            $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.
+                                      ClassObject::COLUMN_DICTIONARY['url'].','.
+                                      ClassObject::COLUMN_DICTIONARY['groupsCount'].','.
+                                      ClassObject::COLUMN_DICTIONARY['status'].','.
+                                      ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
+                                      ' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.
+                                      ClassObject::COLUMN_DICTIONARY['id'].
+                                      ' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);',
+                array(UserManager::getId()), true);
         }
-        else
-        {
-            $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['groupsCount'].','.ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public" OR '.ClassObject::COLUMN_DICTIONARY['id'].' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);', array(UserManager::getId()), true);
-        }
-
-        if (!$classes)
-        {
+        
+        if (!$classes) {
             throw new NoDataException(NoDataException::NO_CLASSES, null, null);
         }
         
         //Vytvoř tabulku
         $table = array();
-        foreach ($classes as $dataRow)
-        {
+        foreach ($classes as $dataRow) {
             $tableRow = array();
-            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.$dataRow[ClassObject::COLUMN_DICTIONARY['url']];
+            $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.
+                                   $dataRow[ClassObject::COLUMN_DICTIONARY['url']];
             $tableRow[0] = $dataRow[ClassObject::COLUMN_DICTIONARY['name']];
             $tableRow[1] = $dataRow[ClassObject::COLUMN_DICTIONARY['groupsCount']];
             //Tlačítko pro správu třídy, pokud je přihlášený uživatel správcem třídy
-            if (UserManager::getId() === $dataRow[ClassObject::COLUMN_DICTIONARY['admin']])
-            {
+            if (UserManager::getId() === $dataRow[ClassObject::COLUMN_DICTIONARY['admin']]) {
                 $tableRow[2] = self::CLASS_MANAGE_BUTTON_KEYWORD;
-            }
-            //Tlačítko pro opuštění třídy, pokud není třída veřejná
-            else if ($dataRow[ClassObject::COLUMN_DICTIONARY['status']] !== self::CLASS_STATUS_PUBLIC)
-            {
-                $tableRow[2] = self::CLASS_LEAVE_BUTTON_KEYWORD;
-            }
-            else
-            {
-                $tableRow[2] = '';
+            } //Tlačítko pro opuštění třídy, pokud není třída veřejná
+            else {
+                if ($dataRow[ClassObject::COLUMN_DICTIONARY['status']] !== self::CLASS_STATUS_PUBLIC) {
+                    $tableRow[2] = self::CLASS_LEAVE_BUTTON_KEYWORD;
+                } else {
+                    $tableRow[2] = '';
+                }
             }
             
             array_push($table, $tableRow);
@@ -74,7 +83,7 @@ class TestGroupsFetcher
         
         return $table;
     }
-
+    
     /**
      * Metoda pro získání seznamu poznávaček v určité třídě a vytvoření tabulky pro předání pohledu
      * Předpokládá se, že již bylo zkontrolováno, zda má přihlášený uživatel přístup do dané třídy
@@ -87,15 +96,13 @@ class TestGroupsFetcher
     {
         //Získej data
         $groups = $class->getGroups();
-        if (empty($groups))
-        {
+        if (empty($groups)) {
             throw new NoDataException(NoDataException::NO_GROUPS, null, null);
         }
         
         //Vytvoř tabulku
         $table = array();
-        foreach ($groups as $group)
-        {
+        foreach ($groups as $group) {
             $tableRow = array();
             $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.$group->getUrl();
             $tableRow[0] = $group->getName();
@@ -106,10 +113,11 @@ class TestGroupsFetcher
         
         return $table;
     }
-
+    
     /**
      * Metoda pro získání seznamu částí určité poznávačky v určité třídě a vytvoření tabulky pro předání pohledu
-     * Předpokládá se, že již bylo zkontrolováno, zda má přihlášený uživatel přístup do třídy, ve které se nachází daná poznávačka
+     * Předpokládá se, že již bylo zkontrolováno, zda má přihlášený uživatel přístup do třídy, ve které se nachází daná
+     * poznávačka
      * @param Group $group Objekt poznávačky, ze které je potřeba získat seznam částí
      * @return array Dvourozměrné pole obsahující seznam částí a další informace potřebné pro pohled
      * @throws NoDataException Pokud ve zvolené poznávačce nejsou žádné části
@@ -119,8 +127,7 @@ class TestGroupsFetcher
     {
         //Získej data
         $parts = $group->getParts();
-        if (empty($parts))
-        {
+        if (empty($parts)) {
             throw new NoDataException(NoDataException::NO_PARTS, null, null);
         }
         
@@ -128,8 +135,7 @@ class TestGroupsFetcher
         $totalNaturals = 0;
         $totalPictures = 0;
         $table = array();
-        foreach ($parts as $part)
-        {
+        foreach ($parts as $part) {
             $tableRow = array();
             $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.urlencode($part->getUrl());
             $tableRow[0] = $part->getName();
@@ -142,8 +148,7 @@ class TestGroupsFetcher
             array_push($table, $tableRow);
         }
         //Přidej řádku pro výběr všech částí, pokud jich existuje více
-        if (count($parts) > 1)
-        {
+        if (count($parts) > 1) {
             $tableRow = array();
             $tableRow['rowLink'] = ltrim($_SERVER['REQUEST_URI'], '/');
             $tableRow[0] = 'Vše';

@@ -1,18 +1,18 @@
 <div id="menu-groups-table" class="folders">
-	<div class="table-title rows">
-		<span class="test-name">Název poznávačky</span>
-		<span class="test-parts-count">Části</span>
-	</div>
-	<ul class="rows">
-	<?php foreach ($table as $tableRow) : ?>
-		<button class="btn" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>		
-    		<h4 class="test-name">
-    			<?= $tableRow[0] ?>
-    		</h4>
-			<span class="test-parts-count">
-				<span><?= $tableRow[1] ?></span>
-			</span>	
-		</li></button>
-	<?php endforeach ?>
-	</ul>
+    <div class="table-title rows">
+        <span class="test-name">Název poznávačky</span>
+        <span class="test-parts-count">Části</span>
+    </div>
+    <ul class="rows">
+    <?php foreach ($table as $tableRow) : ?>
+        <button class="btn" onclick="window.location.href='<?= $tableRow['rowLink'] ?>'"><li>        
+            <h4 class="test-name">
+                <?= $tableRow[0] ?>
+            </h4>
+            <span class="test-parts-count">
+                <span><?= $tableRow[1] ?></span>
+            </span>    
+        </li></button>
+    <?php endforeach ?>
+    </ul>
 </div>

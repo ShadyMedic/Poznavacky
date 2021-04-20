@@ -4,7 +4,7 @@ namespace Poznavacky\Models\Emails;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
-/** 
+/**
  * Třída sloužící k odesílání e-mailových zpráv
  * @author Jan Štěch
  */
@@ -19,7 +19,7 @@ class EmailSender
     private const SMTP_PORT = '587';
     private const EMAIL_USERNAME = 'webexamlist@gmail.com';
     private const EMAIL_PASSWORD = 'SECRET';
-
+    
     /**
      * Metoda odesílající e-mailovou zprávu na specifikovanou adresu
      * @param string $to Adresát e-mailu
@@ -31,12 +31,13 @@ class EmailSender
      * @return boolean TRUE, pokud se odeslání e-mailu zdařilo, FALSE, pokud ne
      * @throws Exception Pokud se e-mail nepodaří odeslat
      */
-    public function sendMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true): bool
+    public function sendMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com',
+                             string $fromName = 'Poznávačky', bool $isHTML = true): bool
     {
         $mail = $this->setMail($to, $subject, $message, $fromAddress, $fromName, $isHTML);
         return $this->sendPreparedEmail($mail);
     }
-
+    
     /**
      * Metoda nastavující e-mailový objekt a navracející jeho instanci
      * @param string $to Adresát e-mailu
@@ -46,16 +47,20 @@ class EmailSender
      * @param string $fromName Jméno odesílatele e-mailu (defaultně Poznávačky)
      * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
      * @return PHPMailer Nastavený e-mailový objekt
-     * @throws Exception Pokud se nepodaří nastavit některou z e-mailových adres (odesílatel, adresát, adresa pro odpověď)
+     * @throws Exception Pokud se nepodaří nastavit některou z e-mailových adres (odesílatel, adresát, adresa pro
+     *     odpověď)
      */
-    public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com', string $fromName = 'Poznávačky', bool $isHTML = true): PHPMailer
+    public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com',
+                            string $fromName = 'Poznávačky', bool $isHTML = true): PHPMailer
     {
         $mail = new PHPMailer();
         
         $mail->CharSet = self::EMAIL_CHARSET;
         $mail->Encoding = self::EMAIL_ENCODING;
         
-        if (self::USE_SMTP){$mail->isSMTP();}
+        if (self::USE_SMTP) {
+            $mail->isSMTP();
+        }
         $mail->SMTPAuth = self::USE_SMTP_Auth;
         $mail->SMTPSecure = self::SMTP_SECURE;
         $mail->Host = self::SMTP_HOST;
@@ -63,7 +68,9 @@ class EmailSender
         $mail->Username = self::EMAIL_USERNAME;
         $mail->Password = self::EMAIL_PASSWORD;
         
-        if ($isHTML){$mail->isHTML();}
+        if ($isHTML) {
+            $mail->isHTML();
+        }
         $mail->SetFrom($fromAddress, $fromName, true);
         $mail->addReplyTo($fromAddress, $fromName);
         $mail->Subject = $subject;
@@ -72,7 +79,7 @@ class EmailSender
         
         return $mail;
     }
-
+    
     /**
      * Metoda odesílající přednastavený e-mailový objekt
      * @param PHPMailer $mail Nastavený e-mailový objekt
@@ -82,8 +89,7 @@ class EmailSender
     public function sendPreparedEmail(PHPMailer $mail): bool
     {
         $result = $mail->Send();
-        if(!$result)
-        {
+        if (!$result) {
             //throw new Exception('E-mail nemohl být odeslán. Zkuste to prosím znovu později: '.$mail->ErrorInfo);
             return false;
         }

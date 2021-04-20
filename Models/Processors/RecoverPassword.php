@@ -11,7 +11,7 @@ use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Logger;
 use \Exception;
 
-/** 
+/**
  * Třída generující kód pro obnovu hesla a odesílající jej na uživatelův e-mail
  * @author Jan Štěch
  */
@@ -21,7 +21,7 @@ class RecoverPassword
     private const CODE_BYTE_LENGTH = 16;   //16 bytů --> 128 bitů --> maximálně třicetidvoumístný kód
     private const EMAIL_SUBJECT = 'Žádost o obnovu hesla na Poznávačkách';
     private const CODE_EXPIRATION = 86400;   //86400 sekund --> 24 hodin
-
+    
     /**
      * Metoda starající se o celý proces obnový hesla
      * @param array $POSTdata Data obdržená z formuláře na index stránce
@@ -33,31 +33,37 @@ class RecoverPassword
     public function processRecovery(array $POSTdata): bool
     {
         $POSTdata['email'] = trim($POSTdata['email']); //Ořež mezery
-
-        if (mb_strlen($POSTdata['email']) === 0)
-        {
-            (new Logger(true))->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} selhal kvůli nevyplnění e-mailové adresy', array('ip' => $_SERVER['REMOTE_ADDR']));
+        
+        if (mb_strlen($POSTdata['email']) === 0) {
+            (new Logger(true))->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} selhal kvůli nevyplnění e-mailové adresy',
+                array('ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_EMAIL, null, null);
         }
         $email = $POSTdata['email'];
         
         $validator = new DataValidator();
-        try { $userId = $validator->getUserIdByEmail($email); }
-        catch (AccessDeniedException $e)
-        {
-            (new Logger(true))->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} na adresu {email} selhal, protože tato adresa nepatří žádnému zaregistrovanému uživateli', array('ip' => $_SERVER['REMOTE_ADDR'], 'email' => $email));
+        try {
+            $userId = $validator->getUserIdByEmail($email);
+        } catch (AccessDeniedException $e) {
+            (new Logger(true))->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} na adresu {email} selhal, protože tato adresa nepatří žádnému zaregistrovanému uživateli',
+                array('ip' => $_SERVER['REMOTE_ADDR'], 'email' => $email));
             throw $e;   //Výjimka je zachycena v kontroleru
         }
         
         $code = self::generateCode();
         self::saveCode($code, $userId);
         $result = self::sendCode($code, $email);
-
-        if ($result) { (new Logger(true))->info('E-mail s kódem pro obnovu hesla byl odeslán na e-mailovou adresu {email} na základě požadavku z IP adresy {ip}', array('email' => $email, 'ip' => $_SERVER['REMOTE_ADDR'])); }
-        else { (new Logger(true))->critical('E-mail s kódem pro obnovu hesla se na e-mailovou adresu {email} na základě požadavku z IP adresy {ip} nepodařilo z neznámého důvodu odeslat; je možné že není možné odesílat žádné e-maily', array('email' => $email, 'ip' => $_SERVER['REMOTE_ADDR'])); }
+        
+        if ($result) {
+            (new Logger(true))->info('E-mail s kódem pro obnovu hesla byl odeslán na e-mailovou adresu {email} na základě požadavku z IP adresy {ip}',
+                array('email' => $email, 'ip' => $_SERVER['REMOTE_ADDR']));
+        } else {
+            (new Logger(true))->critical('E-mail s kódem pro obnovu hesla se na e-mailovou adresu {email} na základě požadavku z IP adresy {ip} nepodařilo z neznámého důvodu odeslat; je možné že není možné odesílat žádné e-maily',
+                array('email' => $email, 'ip' => $_SERVER['REMOTE_ADDR']));
+        }
         return $result;
     }
-
+    
     /**
      * Metoda generující náhodný kód pro obnovu hesla.
      * Metoda zajišťuje, že je kód unikátní a ještě se v databázi nevyskytuje.
@@ -68,23 +74,22 @@ class RecoverPassword
     private function generateCode(): string
     {
         $done = false;
-        $code = NULL;
-        do
-        {
+        $code = null;
+        do {
             //Vygenerovat třicetidvoumístný kód pro obnovení hesla
             $code = bin2hex(random_bytes(self::CODE_BYTE_LENGTH));
             
             //Zkontrolovat, zda již hash kódů v databázi neexistuje
-            $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM obnoveni_hesel WHERE kod=?', array(md5($code)), FALSE);
+            $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM obnoveni_hesel WHERE kod=?', array(md5($code)),
+                false);
             //Kontrola případné potřeby opakování generování kódu
-            if ($result['cnt'] === 0)
-            {
+            if ($result['cnt'] === 0) {
                 $done = true;
             }
         } while ($done == false);
         return $code;
     }
-
+    
     /**
      * Metoda ukládající hash kódu pro obnovu hesla do databáze společně s ID uživatele, který jej může použít
      * @param string $code Nezašifrovaný kód pro obnovu hesla
@@ -97,9 +102,10 @@ class RecoverPassword
         Db::executeQuery('DELETE FROM obnoveni_hesel WHERE uzivatele_id = ?', array($userId));
         
         //Uložit kód do databáze
-        Db::executeQuery('INSERT INTO obnoveni_hesel (kod, uzivatele_id, expirace) VALUES (?,?,?)', array(md5($code), $userId, time() + self::CODE_EXPIRATION));
+        Db::executeQuery('INSERT INTO obnoveni_hesel (kod, uzivatele_id, expirace) VALUES (?,?,?)',
+            array(md5($code), $userId, time() + self::CODE_EXPIRATION));
     }
-
+    
     /**
      * Metoda odesílající uživateli e-mail s odkazem obsahujícím kód k obnovení hesla
      * @param string $code Kód pro obnovení hesla k odeslání
@@ -110,7 +116,8 @@ class RecoverPassword
     private function sendCode(string $code, string $email): bool
     {
         $message = new EmailComposer();
-        $message->composeMail(EmailComposer::EMAIL_TYPE_PASSWORD_RECOVERY, array('recoveryLink' => $_SERVER['SERVER_NAME'].'/recover-password/'.$code));
+        $message->composeMail(EmailComposer::EMAIL_TYPE_PASSWORD_RECOVERY,
+            array('recoveryLink' => $_SERVER['SERVER_NAME'].'/recover-password/'.$code));
         
         $sender = new EmailSender();
         return $sender->sendMail($email, self::EMAIL_SUBJECT, $message->getMail());

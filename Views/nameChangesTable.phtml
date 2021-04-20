@@ -12,24 +12,24 @@
     <?php endif ?>
     <?php foreach ($userNameChangeRequests as $request) : ?>
     <tr>
-    	<td><?= $request->getOldName(); ?></td>
-    	<td><?= $request->getNewName(); ?></td>
-    	<td>
-    		<button class='name-change-action active-btn' onclick='acceptNameChange(event, "user", <?= $request->getId() ?>)' title='Přijmout'>
-    			<img src='images/tick.svg'/>
-    		</button>
-    		<button class='name-change-action active-btn' onclick='declineNameChange(event, "user", <?= $request->getId() ?>)' title='Zamítnout'>
-    			<img src='images/cross.svg'/>
-    		</button>
-    		<?php if (empty($request->getRequestersEmail())) : ?>
-			<button class='name-change-action grayscale' disabled>
-    		<?php endif ?>
-    		<?php if (!empty($request->getRequestersEmail())) : ?>
-			<button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
-    		<?php endif ?>
-    			<img src='images/mail.svg'/>
-    		</button>
-    	</td>
+        <td><?= $request->getOldName(); ?></td>
+        <td><?= $request->getNewName(); ?></td>
+        <td>
+            <button class='name-change-action active-btn' onclick='acceptNameChange(event, "user", <?= $request->getId() ?>)' title='Přijmout'>
+                <img src='images/tick.svg'/>
+            </button>
+            <button class='name-change-action active-btn' onclick='declineNameChange(event, "user", <?= $request->getId() ?>)' title='Zamítnout'>
+                <img src='images/cross.svg'/>
+            </button>
+            <?php if (empty($request->getRequestersEmail())) : ?>
+            <button class='name-change-action grayscale' disabled>
+            <?php endif ?>
+            <?php if (!empty($request->getRequestersEmail())) : ?>
+            <button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
+            <?php endif ?>
+                <img src='images/mail.svg'/>
+            </button>
+        </td>
     </tr>
     <?php endforeach ?>
     
@@ -38,24 +38,24 @@
     <?php endif ?>
     <?php foreach ($classNameChangeRequests as $request) : ?>
     <tr>
-    	<td><?= $request->getOldName(); ?></td>
-    	<td><?= $request->getNewName(); ?></td>
-    	<td>
-    		<button class='name-change-action active-btn' onclick='acceptNameChange(event, "class", <?= $request->getId() ?>)' title='Přijmout'>
-    			<img src='images/tick.svg'/>
-    		</button>
-    		<button class='name-change-action active-btn' onclick='declineNameChange(event, "class", <?= $request->getId() ?>)' title='Zamítnout'>
-    			<img src='images/cross.svg'/>
-    		</button>
-    		<?php if (empty($request->getRequestersEmail())) : ?>
-			<button class='name-change-action grayscale' disabled>
-    		<?php endif ?>
-    		<?php if (!empty($request->getRequestersEmail())) : ?>
-			<button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
-    		<?php endif ?>
-    			<img src='images/mail.svg'/>
-    		</button>
-    	</td>
+        <td><?= $request->getOldName(); ?></td>
+        <td><?= $request->getNewName(); ?></td>
+        <td>
+            <button class='name-change-action active-btn' onclick='acceptNameChange(event, "class", <?= $request->getId() ?>)' title='Přijmout'>
+                <img src='images/tick.svg'/>
+            </button>
+            <button class='name-change-action active-btn' onclick='declineNameChange(event, "class", <?= $request->getId() ?>)' title='Zamítnout'>
+                <img src='images/cross.svg'/>
+            </button>
+            <?php if (empty($request->getRequestersEmail())) : ?>
+            <button class='name-change-action grayscale' disabled>
+            <?php endif ?>
+            <?php if (!empty($request->getRequestersEmail())) : ?>
+            <button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
+            <?php endif ?>
+                <img src='images/mail.svg'/>
+            </button>
+        </td>
     </tr>
     <?php endforeach ?>
 </table>

@@ -1,34 +1,34 @@
 <div id="learn-wrapper" tabindex="-1">
-	<section class="controllers">
+    <section class="controllers">
 
-		<div class="custom-select-wrapper" id="natural-select">
-			<div class="custom-select">
-				<div class="custom-select-main">
-					<span><?= $naturals[0]->getName() ?></span>
-					<img class="arrow" src="../images/arrowBlack.svg">
-				</div>
-				<ul class="custom-options">
-					<?php foreach ($naturals as $natural) :?>
-						<li class="custom-option"><?= $natural->getName() ?></li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-		</div>
+        <div class="custom-select-wrapper" id="natural-select">
+            <div class="custom-select">
+                <div class="custom-select-main">
+                    <span><?= $naturals[0]->getName() ?></span>
+                    <img class="arrow" src="../images/arrowBlack.svg">
+                </div>
+                <ul class="custom-options">
+                    <?php foreach ($naturals as $natural) :?>
+                        <li class="custom-option"><?= $natural->getName() ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
 
-		<button id="natural-back-button" class="btn border-btn non-transparent black">Předchozí přírodnina</button>
-		<button id="natural-forward-button" class="btn border-btn non-transparent black">Následující přírodnina</button>
-	</section>
-	<section class="picture">
-		<button id="picture-back-button" class="btn icon picture-control" title="Předchozí obrázek">
-			<img src="images/arrowWhite.svg" style="transform: rotate(180deg);" />
-		</button>
-		<img id="main-img" src="../images/blank.gif"> <!-- Adresa bude dodána JavaScriptem -->
-		<button id="picture-forward-button" class="btn icon picture-control" title="Následující obrázek">
-			<img src="images/arrowWhite.svg" />
-		</button>
-		<button class="btn report-button icon" title="Nahlásit"><img src="../images/report.svg"></button>
-		<div class="report-box">
-			<?php require 'Views/reportForm.phtml'; ?>
-		</div>
-	</section>
+        <button id="natural-back-button" class="btn border-btn non-transparent black">Předchozí přírodnina</button>
+        <button id="natural-forward-button" class="btn border-btn non-transparent black">Následující přírodnina</button>
+    </section>
+    <section class="picture">
+        <button id="picture-back-button" class="btn icon picture-control" title="Předchozí obrázek">
+            <img src="images/arrowWhite.svg" style="transform: rotate(180deg);" />
+        </button>
+        <img id="main-img" src="../images/blank.gif"> <!-- Adresa bude dodána JavaScriptem -->
+        <button id="picture-forward-button" class="btn icon picture-control" title="Následující obrázek">
+            <img src="images/arrowWhite.svg" />
+        </button>
+        <button class="btn report-button icon" title="Nahlásit"><img src="../images/report.svg"></button>
+        <div class="report-box">
+            <?php require 'Views/reportForm.phtml'; ?>
+        </div>
+    </section>
 </div>

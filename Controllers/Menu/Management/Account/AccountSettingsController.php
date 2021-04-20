@@ -12,7 +12,7 @@ use Poznavacky\Models\Logger;
  */
 class AccountSettingsController extends SynchronousController
 {
-
+    
     /**
      * Metoda nastavující hlavičku stránky a pohled
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
@@ -21,8 +21,9 @@ class AccountSettingsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        (new Logger(true))->info('Přístup na stránku pro správu účtu uživatelem s ID {userId} z IP adresy {ip}', array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-
+        (new Logger(true))->info('Přístup na stránku pro správu účtu uživatelem s ID {userId} z IP adresy {ip}',
+            array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+        
         self::$data['userId'] = UserManager::getId();
         self::$data['userName'] = UserManager::getName();
         self::$data['userEmail'] = UserManager::getEmail();
@@ -36,7 +37,12 @@ class AccountSettingsController extends SynchronousController
         self::$pageHeader['description'] = 'Přizpůsobte si poznávačky podle svého gusta a podívejte se na své statistiky';
         self::$pageHeader['keywords'] = '';
         self::$pageHeader['cssFiles'] = array('css/css.css');
-        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js','js/accountSettings.js');
+        self::$pageHeader['jsFiles'] = array(
+            'js/generic.js',
+            'js/menu.js',
+            'js/ajaxMediator.js',
+            'js/accountSettings.js'
+        );
         self::$pageHeader['bodyId'] = 'account-settings';
     }
 }

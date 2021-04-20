@@ -11,7 +11,7 @@ use \BadMethodCallException;
 use \DateTime;
 use \Exception;
 
-/** 
+/**
  * Třída uchovávající data o uživateli (ne nutně přihlášeném)
  * @author Jan Štěch
  */
@@ -30,8 +30,7 @@ class User extends DatabaseItem implements ArrayAccess
         'status' => 'status'
     );
     
-    protected const NON_PRIMITIVE_PROPERTIES = array(
-        /* Žádná z vlastností neukládá objekt */
+    protected const NON_PRIMITIVE_PROPERTIES = array(/* Žádná z vlastností neukládá objekt */
     );
     
     protected const DEFAULT_VALUES = array(
@@ -48,7 +47,7 @@ class User extends DatabaseItem implements ArrayAccess
     const STATUS_MEMBER = 'Member';
     const STATUS_CLASS_OWNER = 'Class Owner';
     const STATUS_ADMIN = 'Administrator';
-
+    
     public $name;
     protected $email;
     protected $lastLogin;
@@ -71,16 +70,31 @@ class User extends DatabaseItem implements ArrayAccess
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null, $guessedPictures = null, $karma = null, $status = null): void
+    public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null,
+                               $guessedPictures = null, $karma = null, $status = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
-        if ($name === null){ $name = $this->name; }
-        if ($email === null){ $email = $this->email; }
-        if ($lastLogin === null){ $lastLogin = $this->lastLogin; }
-        if ($addedPictures === null){ $addedPictures = $this->addedPictures; }
-        if ($guessedPictures === null){ $guessedPictures = $this->guessedPictures; }
-        if ($karma === null){ $karma = $this->karma; }
-        if ($status === null){ $status = $this->status; }
+        if ($name === null) {
+            $name = $this->name;
+        }
+        if ($email === null) {
+            $email = $this->email;
+        }
+        if ($lastLogin === null) {
+            $lastLogin = $this->lastLogin;
+        }
+        if ($addedPictures === null) {
+            $addedPictures = $this->addedPictures;
+        }
+        if ($guessedPictures === null) {
+            $guessedPictures = $this->guessedPictures;
+        }
+        if ($karma === null) {
+            $karma = $this->karma;
+        }
+        if ($status === null) {
+            $status = $this->status;
+        }
         
         $this->name = $name;
         $this->email = $email;
@@ -90,7 +104,7 @@ class User extends DatabaseItem implements ArrayAccess
         $this->karma = $karma;
         $this->status = $status;
     }
-
+    
     /**
      * Metoda načítající z databáze aktuální pozvánky pro tohoto uživatele a navracející je jako pole objektů
      * @return Invitation[] Pole aktivních pozvánek jako objekty
@@ -101,25 +115,29 @@ class User extends DatabaseItem implements ArrayAccess
     {
         $this->loadIfNotLoaded($this->id);
         
-        $invitationsData = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].','.Invitation::COLUMN_DICTIONARY['class'].','.Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.Invitation::TABLE_NAME.' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND expirace > NOW()', array($this->id), true);
-        if ($invitationsData === false)
-        {
+        $invitationsData = Db::fetchQuery('SELECT '.Invitation::COLUMN_DICTIONARY['id'].','.
+                                          Invitation::COLUMN_DICTIONARY['class'].','.
+                                          Invitation::COLUMN_DICTIONARY['expiration'].' FROM '.Invitation::TABLE_NAME.
+                                          ' WHERE '.Invitation::COLUMN_DICTIONARY['user'].' = ? AND expirace > NOW()',
+            array($this->id), true);
+        if ($invitationsData === false) {
             //Žádné pozvánky
             return array();
         }
         
         $invitations = array();
         
-        foreach ($invitationsData as $invitationData)
-        {
+        foreach ($invitationsData as $invitationData) {
             $invitation = new Invitation(false, $invitationData[Invitation::COLUMN_DICTIONARY['id']]);
-            $invitation->initialize($this, new ClassObject(false, $invitationData[Invitation::COLUMN_DICTIONARY['class']]), new DateTime($invitationData[Invitation::COLUMN_DICTIONARY['expiration']]));
+            $invitation->initialize($this,
+                new ClassObject(false, $invitationData[Invitation::COLUMN_DICTIONARY['class']]),
+                new DateTime($invitationData[Invitation::COLUMN_DICTIONARY['expiration']]));
             $invitations[] = $invitation;
         }
         
         return $invitations;
     }
-
+    
     /**
      * Metoda upravující některá data tohoto uživatele z rozhodnutí administrátora
      * @param int $addedPictures Nový počet přidaných obrázků
@@ -134,14 +152,14 @@ class User extends DatabaseItem implements ArrayAccess
     {
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         $aChecker = new AccessChecker();
-        if (!$aChecker->checkSystemAdmin())
-        {
+        if (!$aChecker->checkSystemAdmin()) {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
         
         //Kontrola platnosti dat
-        if ($addedPictures < 0 || $guessedPictures < 0 || !($status === self::STATUS_ADMIN || $status === self::STATUS_CLASS_OWNER || $status === self::STATUS_MEMBER || $status === self::STATUS_GUEST))
-        {
+        if ($addedPictures < 0 || $guessedPictures < 0 ||
+            !($status === self::STATUS_ADMIN || $status === self::STATUS_CLASS_OWNER ||
+              $status === self::STATUS_MEMBER || $status === self::STATUS_GUEST)) {
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_UPDATE_INVALID_DATA);
         }
         
@@ -156,13 +174,14 @@ class User extends DatabaseItem implements ArrayAccess
         
         return true;
     }
-
+    
     /**
      * Metoda odstraňující tento uživatelský účet na základě rozhodnutí administrátora
      * Před samotným odstraněním je provedena kontrola, zda je možné uživatele odstranit
      * @return boolean TRUE, pokud je uživatel úspěšně odstraněn z databáze
      * @throws DatabaseException
-     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel spravuje nějakou třídu
+     * @throws AccessDeniedException Pokud není přihlášený uživatel administrátorem nebo pokud odstraňovaný uživatel
+     *     spravuje nějakou třídu
      */
     public function deleteAccountAsAdmin(): bool
     {
@@ -170,15 +189,15 @@ class User extends DatabaseItem implements ArrayAccess
         
         //Kontrola, zda je právě přihlášený uživatelem administrátorem
         $aChecker = new AccessChecker();
-        if (!$aChecker->checkSystemAdmin())
-        {
+        if (!$aChecker->checkSystemAdmin()) {
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
         
         //Kontrola, zda uživatel není správcem žádné třídy
-        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1', array($this->id));
-        if ($administratedClasses['cnt'] > 0)
-        {
+        $administratedClasses = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME.' WHERE '.
+                                               ClassObject::COLUMN_DICTIONARY['admin'].' = ? LIMIT 1',
+            array($this->id));
+        if ($administratedClasses['cnt'] > 0) {
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_ACCOUNT_DELETION_ADMINISTRATOR);
         }
         
@@ -188,7 +207,7 @@ class User extends DatabaseItem implements ArrayAccess
         
         return true;
     }
-
+    
     /**
      * Metoda pro zjišťování existence některé vlastnosti uživatele
      * {@inheritDoc}
@@ -200,7 +219,7 @@ class User extends DatabaseItem implements ArrayAccess
         $this->loadIfNotLoaded($this->$offset);
         return (isset($this->$offset));
     }
-
+    
     /**
      * Metoda pro získání hodnoty nějaké z vlastností uživatele
      * {@inheritDoc}
@@ -215,31 +234,28 @@ class User extends DatabaseItem implements ArrayAccess
     
     /**
      * Metoda pro nastavení hodnoty nějaké z vlastností uživatele
-     * 
+     *
      * Nelze použít pro nastavení hodnoty id
      * {@inheritDoc}
-     * @see ArrayAccess::offsetSet()
      * @throws BadMethodCallException Při pokusu změnit ID
+     * @see ArrayAccess::offsetSet()
      */
     public function offsetSet($offset, $value): void
     {
-        if ($offset !== 'id')
-        {
+        if ($offset !== 'id') {
             $this->$offset = $value;
-        }
-        else
-        {
+        } else {
             throw new BadMethodCallException('It isn\'t allowed to edit user\'s ID.');
         }
     }
     
     /**
      * Metoda pro odebrání hodnoty nějaké z vlastností uživatele
-     * 
+     *
      * Nelze použít pro odebrání jakékoliv vlastnosti
      * {@inheritDoc}
-     * @see ArrayAccess::offsetUnset()
      * @throws BadMethodCallException Při pokusu odebrat jakoukoli vlastnost
+     * @see ArrayAccess::offsetUnset()
      */
     public function offsetUnset($offset): void
     {

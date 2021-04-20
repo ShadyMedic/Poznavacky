@@ -7,7 +7,7 @@ namespace Poznavacky\DataGetters;
  */
 interface DataGetter
 {
-
+    
     /**
      * Metoda získávající všechna potřebná data pro nedefinitivní pohled a navracející je jako asociativní pole
      * @return array Asociativní pole získaných hodnot

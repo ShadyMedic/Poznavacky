@@ -1,18 +1,18 @@
 <div id="menu-classes-table" class="folders">
-	<div class="table-title rows">
-		<span class="class-name">Název třídy</span>
-		<span class="class-tests-count">Poznávačky</span>
-		<span class="class-action">Akce</span>
-	</div>
-	<ul class="rows">
-		<?php foreach ($table as $tableRow) : ?>
-			<button class="btn class-item" data-class-url="<?= $tableRow['rowLink'] ?>" ><li>
-				<h4 class="class-name">
-					<?= $tableRow[0] ?>
-				</h4>
-				<span class="class-tests-count">
-					<span><?= $tableRow[1] ?></span>
-				</span>
+    <div class="table-title rows">
+        <span class="class-name">Název třídy</span>
+        <span class="class-tests-count">Poznávačky</span>
+        <span class="class-action">Akce</span>
+    </div>
+    <ul class="rows">
+        <?php foreach ($table as $tableRow) : ?>
+            <button class="btn class-item" data-class-url="<?= $tableRow['rowLink'] ?>" ><li>
+                <h4 class="class-name">
+                    <?= $tableRow[0] ?>
+                </h4>
+                <span class="class-tests-count">
+                    <span><?= $tableRow[1] ?></span>
+                </span>
                 <?php if (!$demoVersion): ?>
                     <?php if ($tableRow[2] === 'admin') : ?>
                     <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" class="btn inline black class-action">Správa třídy</a>
@@ -24,51 +24,51 @@
                     <?= $tableRow[2] ?>
                     <?php endif ?>
                 <?php endif ?>
-			</li></button>
-		<?php endforeach ?>
+            </li></button>
+        <?php endforeach ?>
 
-		<?php foreach ($invitations as $invitation) : ?>
-		<li class="invitation" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
-			<span class="invitation-info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
-			<h4 class="class-name"><?= $invitation->getClass()->getName(); ?></h4>
-			<span class="class-tests-count"><?= $invitation->getClass()->getGroupsCount() ?></span>
-			<div class="invitation-accept">
+        <?php foreach ($invitations as $invitation) : ?>
+        <li class="invitation" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
+            <span class="invitation-info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
+            <h4 class="class-name"><?= $invitation->getClass()->getName(); ?></h4>
+            <span class="class-tests-count"><?= $invitation->getClass()->getGroupsCount() ?></span>
+            <div class="invitation-accept">
                 <button class="btn icon accept-invitation-button" title="Přijmout pozvánku"><img src='images/tick.svg'/></button>
                 <button class="btn icon reject-invitation-button" title="Odmítnout pozvánku"><img src='images/cross.svg'/></button>
-			</div>
-		</li>
-		<?php endforeach ?>
+            </div>
+        </li>
+        <?php endforeach ?>
 
         <?php if (!$demoVersion): ?>
-		<li id="enter-code-wrapper">
-			<h5>Připojte se pomocí kódu</h5>
-			<span>Zadejte kód soukromé třídy, do které chcete vstoupit:</span>
-			<form id='class-code-form'>
-				<input id='class-code-input' class="text-field" type="number" min=0 max=9999 maxlength=4/>
-				<button class='btn border-btn non-transparent black'>OK</button>
-			</form>
-		</li>
-		<li id="request-class-wrapper">
-			<h5>Vytvořte novou třídu</h5>
-			<span>Vyplňte krátký formulář pro tvorbu třídy:</span>
-			<button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
-			<form method="POST" id="request-class-form" style="display:none;">
-				<label for="new-class-form-name">Požadovaný název třídy</label>
-				<input id='new-class-form-name' class="text-field" type=text maxlength=31 />
-				<?php if (!$specifiedEmail) : ?>
-					<label for="new-class-form-email">Kontaktní e-mailová adresa</label>
-					<input class='text-field' id='new-class-form-email' length=255 />
-				<?php endif ?>
-				<label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
-				<textarea class="text-field" id='new-class-form-info'></textarea>
-				<label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span id="antispam-question"> <?= $antispamCode ?> </span></label>
-				<input id='new-class-form-antispam' class="text-field" type="number" min=0 max=99 maxlength=2 />
-				<input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
-				<button id="request-class-cancel-button" class="btn inline black">Zrušit</button>
-			</form>
-		</li>
+        <li id="enter-code-wrapper">
+            <h5>Připojte se pomocí kódu</h5>
+            <span>Zadejte kód soukromé třídy, do které chcete vstoupit:</span>
+            <form id='class-code-form'>
+                <input id='class-code-input' class="text-field" type="number" min=0 max=9999 maxlength=4/>
+                <button class='btn border-btn non-transparent black'>OK</button>
+            </form>
+        </li>
+        <li id="request-class-wrapper">
+            <h5>Vytvořte novou třídu</h5>
+            <span>Vyplňte krátký formulář pro tvorbu třídy:</span>
+            <button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
+            <form method="POST" id="request-class-form" style="display:none;">
+                <label for="new-class-form-name">Požadovaný název třídy</label>
+                <input id='new-class-form-name' class="text-field" type=text maxlength=31 />
+                <?php if (!$specifiedEmail) : ?>
+                    <label for="new-class-form-email">Kontaktní e-mailová adresa</label>
+                    <input class='text-field' id='new-class-form-email' length=255 />
+                <?php endif ?>
+                <label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
+                <textarea class="text-field" id='new-class-form-info'></textarea>
+                <label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span id="antispam-question"> <?= $antispamCode ?> </span></label>
+                <input id='new-class-form-antispam' class="text-field" type="number" min=0 max=99 maxlength=2 />
+                <input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
+                <button id="request-class-cancel-button" class="btn inline black">Zrušit</button>
+            </form>
+        </li>
         <?php endif ?>
-	</ul>
+    </ul>
 </div>
 
 <div id="class-item-template" style="display: none;">

@@ -1,14 +1,14 @@
 <div id="email">
-	<div id="email-info">
-		<label for="email-sender">Odesílatel:</label></td>
-		<input id="email-sender" type=text maxlength=255 value="<?= $loggedAdminName ?>" onchange="emailModification()" />
-		<label for="email-sender-address">Adresa pro odpověď:</label></td>
-		<input id="email-sender-address" type=email maxlength=255 value="poznavacky@email.com" onchange="emailModification()" />
-		<label for="email-address">Adresát:</label></td>
-		<input id="email-address" type=email maxlength=255 onchange="emailModification()" />
-		<label for="email-subject">Předmět:</label></td>
-		<input id="email-subject" type=text maxlength=70 onchange="emailModification()" />
-	</div>
+    <div id="email-info">
+        <label for="email-sender">Odesílatel:</label></td>
+        <input id="email-sender" type=text maxlength=255 value="<?= $loggedAdminName ?>" onchange="emailModification()" />
+        <label for="email-sender-address">Adresa pro odpověď:</label></td>
+        <input id="email-sender-address" type=email maxlength=255 value="poznavacky@email.com" onchange="emailModification()" />
+        <label for="email-address">Adresát:</label></td>
+        <input id="email-address" type=email maxlength=255 onchange="emailModification()" />
+        <label for="email-subject">Předmět:</label></td>
+        <input id="email-subject" type=text maxlength=70 onchange="emailModification()" />
+    </div>
     <div id="email-editor">
         <textarea id="email-message" rows="20" cols="70" placeholder="Zpráva" onchange="emailModification()"></textarea>
         <textarea id="email-footer" rows="20" cols="70" placeholder="Patička" onchange="emailModification()">Tato zpráva nebyla vygenerována automaticky</textarea>

@@ -1,77 +1,77 @@
 $(function()
 {
-	resizeGrid();
+    resizeGrid();
 
-	//zobrazení cookies alertu
-	setTimeout(function() {
-		$("#cookies-alert").addClass("show");
-	}, 1000);
+    //zobrazení cookies alertu
+    setTimeout(function() {
+        $("#cookies-alert").addClass("show");
+    }, 1000);
 
-	//event listenery tlačítek
-	$("#hide-login-section-button").click(function() {hideLoginSection()})
-	$("#hide-cookies-alert-button").click(function() {hideCookiesAlert()})
-	$(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event) {showLoginSection(event)});
+    //event listenery tlačítek
+    $("#hide-login-section-button").click(function() {hideLoginSection()})
+    $("#hide-cookies-alert-button").click(function() {hideCookiesAlert()})
+    $(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event) {showLoginSection(event)});
     $("#demo-button").click(function() {demoLogin()})
-	$("#learn-more-button").click(function() {learnMore()})
-	$("#back-to-top-button").click(function() {backToTop()})
+    $("#learn-more-button").click(function() {learnMore()})
+    $("#back-to-top-button").click(function() {backToTop()})
 
-	//event listener kliknutí myši
-	$(document).mouseup(function(e) {mouseUpChecker(e)})
+    //event listener kliknutí myši
+    $(document).mouseup(function(e) {mouseUpChecker(e)})
 
-	//event listener scrollování
-	$(window).scroll(function(e) {showScrollButton(e)})
+    //event listener scrollování
+    $(window).scroll(function(e) {showScrollButton(e)})
 
-	//event listenery inputů
-	$("#login-name").on("input", function() {checkLoginName()})
-	$("#login-pass").on("input", function() {checkLoginPassword()})
-	$("#register-name").on("input", function() {checkRegisterName()})
-	$("#register-pass").on("input", function() {checkRegisterPassword()})
-	$("#register-repass").on("input", function() {checkRegisterRePassword()})
-	$("#register-email").on("input", function() {checkRegisterEmail()})
-	$("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
+    //event listenery inputů
+    $("#login-name").on("input", function() {checkLoginName()})
+    $("#login-pass").on("input", function() {checkLoginPassword()})
+    $("#register-name").on("input", function() {checkRegisterName()})
+    $("#register-pass").on("input", function() {checkRegisterPassword()})
+    $("#register-repass").on("input", function() {checkRegisterRePassword()})
+    $("#register-email").on("input", function() {checkRegisterEmail()})
+    $("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
   
-	//odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
-	$("#register-name").blur(function()
-	{
-		if (!($("#register-name").val() != "" && checkRegisterName())) return
-		enqueueAjaxRequest
-		(
-		new ajaxRequest
-		(
-			'index-forms',
-			{
-			text: $("#register-name").val(),
-			type: 'u'
-			},
-			function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-name")); }
-		)
-		);
-	});
+    //odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
+    $("#register-name").blur(function()
+    {
+        if (!($("#register-name").val() != "" && checkRegisterName())) return
+        enqueueAjaxRequest
+        (
+        new ajaxRequest
+        (
+            'index-forms',
+            {
+            text: $("#register-name").val(),
+            type: 'u'
+            },
+            function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-name")); }
+        )
+        );
+    });
 
-	//Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
-	$("#register-email").blur(function()
-	{
-		if (!($("#register-email").val() != "" && checkRegisterEmail())) return
-		enqueueAjaxRequest
-		(
-		new ajaxRequest
-		(
-			'index-forms',
-			{
-			text: $("#register-email").val(),
-			type: 'e'
-			},
-			function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-email")); }
-		)
-		);
-	});
+    //Odeslání AJAX poýadavku pro kontrolu neexistence e-mailu při registraci
+    $("#register-email").blur(function()
+    {
+        if (!($("#register-email").val() != "" && checkRegisterEmail())) return
+        enqueueAjaxRequest
+        (
+        new ajaxRequest
+        (
+            'index-forms',
+            {
+            text: $("#register-email").val(),
+            type: 'e'
+            },
+            function(messageType, message, data){ isStringUniqueCallback(messageType, message, data, true, $("#register-email")); }
+        )
+        );
+    });
 
-	$("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
+    $("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
 
 $(window).resize(function()
 {
-	resizeGrid();
+    resizeGrid();
 })
 
 /**
@@ -79,10 +79,10 @@ $(window).resize(function()
  */
 function learnMore()
 {
-	$("#index-info-section")[0].scrollIntoView({ 
-		behavior: 'smooth',
-		block: "start" 
-	});
+    $("#index-info-section")[0].scrollIntoView({ 
+        behavior: 'smooth',
+        block: "start" 
+    });
 }
 
 /**
@@ -90,10 +90,10 @@ function learnMore()
  */
 function backToTop()
 {
-	$("#index")[0].scrollIntoView({ 
-		behavior: 'smooth',
-		block: "start" 
-	});
+    $("#index")[0].scrollIntoView({ 
+        behavior: 'smooth',
+        block: "start" 
+    });
 }
 
 /**
@@ -101,13 +101,13 @@ function backToTop()
  */
 function resizeGrid()
 {
-	let newClassHeight = $("#new-class-info img").height();
-	let addPicturesHeight = $("#add-pictures-info img").height();
-	let learnHeight = $("#learn-info img").height();
-	let testHeight = $("#test-info img").height();
-	let maxHeight = Math.max(newClassHeight, addPicturesHeight, learnHeight, testHeight);
+    let newClassHeight = $("#new-class-info img").height();
+    let addPicturesHeight = $("#add-pictures-info img").height();
+    let learnHeight = $("#learn-info img").height();
+    let testHeight = $("#test-info img").height();
+    let maxHeight = Math.max(newClassHeight, addPicturesHeight, learnHeight, testHeight);
 
-	$("#info-icons .info-tile").css("grid-template-rows", maxHeight);
+    $("#info-icons .info-tile").css("grid-template-rows", maxHeight);
 }
 
 /**
@@ -115,16 +115,16 @@ function resizeGrid()
  */
 function checkLoginName()
 {
-	let loginNameMessage;
+    let loginNameMessage;
 
-	//přihlašovací jméno není vyplněno
-	if($("#login-name").val().length == 0) 
-	{
-		loginNameMessage = "Jméno musí být vyplněno.";
-	}
-	else loginNameMessage = "";
+    //přihlašovací jméno není vyplněno
+    if($("#login-name").val().length == 0) 
+    {
+        loginNameMessage = "Jméno musí být vyplněno.";
+    }
+    else loginNameMessage = "";
 
-	$("#login-name-message").text(loginNameMessage);
+    $("#login-name-message").text(loginNameMessage);
 }
 
 /**
@@ -132,16 +132,16 @@ function checkLoginName()
  */
 function checkLoginPassword()
 {
-	let loginPasswordMessage;
+    let loginPasswordMessage;
 
-	//heslo není vyplněno
-	if($("#login-pass").val().length == 0)
-	{
-		loginPasswordMessage = "Heslo musí být vyplněno.";
-	}
-	else loginPasswordMessage = "";
+    //heslo není vyplněno
+    if($("#login-pass").val().length == 0)
+    {
+        loginPasswordMessage = "Heslo musí být vyplněno.";
+    }
+    else loginPasswordMessage = "";
 
-	$("#login-pass-message").text(loginPasswordMessage);
+    $("#login-pass-message").text(loginPasswordMessage);
 }
 
 /**
@@ -150,44 +150,44 @@ function checkLoginPassword()
  */
 function checkRegisterName()
 {
-	let nameAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ";
-	let registerNameMessage;
+    let nameAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ ";
+    let registerNameMessage;
 
-	//jméno není vyplněno
-	if ($("#register-name").val().length == 0)
-	{
-		registerNameMessage = "Jméno musí být vyplněno.";
-	}
-	//jméno je kratší než 4 znaky
-	else if ($("#register-name").val().length < 4)
-	{
-		registerNameMessage = "Jméno musí být alespoň 4 znaky dlouhé.";
-	}
-	//jméno je delší než 15 znaků
-	else if ($("#register-name").val().length > 15)
-	{
-		registerNameMessage = "Jméno může být nejvíce 15 znaků dlouhé.";
-	}
+    //jméno není vyplněno
+    if ($("#register-name").val().length == 0)
+    {
+        registerNameMessage = "Jméno musí být vyplněno.";
+    }
+    //jméno je kratší než 4 znaky
+    else if ($("#register-name").val().length < 4)
+    {
+        registerNameMessage = "Jméno musí být alespoň 4 znaky dlouhé.";
+    }
+    //jméno je delší než 15 znaků
+    else if ($("#register-name").val().length > 15)
+    {
+        registerNameMessage = "Jméno může být nejvíce 15 znaků dlouhé.";
+    }
 
-	else registerNameMessage = "";
+    else registerNameMessage = "";
 
-	//některý ze znaků není povolený
-	for (let i = 0; i < $("#register-name").val().length; i++ )
-	{
-		if (!nameAllowedChars.includes($("#register-name").val()[i]))
-		{
-			registerNameMessage = "Jméno obsahuje nepovolené znaky.";
-		}
-	}
+    //některý ze znaků není povolený
+    for (let i = 0; i < $("#register-name").val().length; i++ )
+    {
+        if (!nameAllowedChars.includes($("#register-name").val()[i]))
+        {
+            registerNameMessage = "Jméno obsahuje nepovolené znaky.";
+        }
+    }
 
-	$("#register-name-message").text(registerNameMessage);
+    $("#register-name-message").text(registerNameMessage);
 
-	if (registerNameMessage == "") return true;
-	else
-	{
-		$("#register-name").removeClass("checked");
-		return false;
-	}
+    if (registerNameMessage == "") return true;
+    else
+    {
+        $("#register-name").removeClass("checked");
+        return false;
+    }
 }
 
 /**
@@ -195,45 +195,45 @@ function checkRegisterName()
  */
 function checkRegisterPassword()
 {
-	let passwordAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\''";
-	let registerPasswordMessage;
+    let passwordAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ {}()[]#:;^,.?!|_`~@$%/+-*=\"\''";
+    let registerPasswordMessage;
 
-	//heslo není vyplněno
-	if ($("#register-pass").val().length == 0)
-	{
-		registerPasswordMessage = "Heslo musí být vyplněno.";
-	}
-	//heslo je kratší než 6 znaků
-	else if ($("#register-pass").val().length < 6)
-	{
-		registerPasswordMessage = "Heslo musí být alespoň 6 znaků dlouhé.";
-	}
-	//heslo je delší než 31 znaků
-	else if ($("#register-pass").val().length > 31)
-	{
-		registerPasswordMessage = "Heslo může být nejvíce 31 znaků dlouhé.";
-	}
+    //heslo není vyplněno
+    if ($("#register-pass").val().length == 0)
+    {
+        registerPasswordMessage = "Heslo musí být vyplněno.";
+    }
+    //heslo je kratší než 6 znaků
+    else if ($("#register-pass").val().length < 6)
+    {
+        registerPasswordMessage = "Heslo musí být alespoň 6 znaků dlouhé.";
+    }
+    //heslo je delší než 31 znaků
+    else if ($("#register-pass").val().length > 31)
+    {
+        registerPasswordMessage = "Heslo může být nejvíce 31 znaků dlouhé.";
+    }
 
-	else registerPasswordMessage = "";
+    else registerPasswordMessage = "";
 
-	//některý ze znaků není povolený
-	for (let i = 0; i < $("#register-pass").val().length; i++ )
-	{
-		if (!passwordAllowedChars.includes($("#register-pass").val()[i]))
-		{
-			registerPasswordMessage = "Heslo obsahuje nepovolené znaky.";
-		}
-	}
+    //některý ze znaků není povolený
+    for (let i = 0; i < $("#register-pass").val().length; i++ )
+    {
+        if (!passwordAllowedChars.includes($("#register-pass").val()[i]))
+        {
+            registerPasswordMessage = "Heslo obsahuje nepovolené znaky.";
+        }
+    }
 
-	$("#register-pass-message").text(registerPasswordMessage);
+    $("#register-pass-message").text(registerPasswordMessage);
 
-	if (registerPasswordMessage == "")
-	{
-		$("#register-pass").addClass("checked");
-	}
-	else $("#register-pass").removeClass("checked");
+    if (registerPasswordMessage == "")
+    {
+        $("#register-pass").addClass("checked");
+    }
+    else $("#register-pass").removeClass("checked");
 
-	checkRegisterRePassword();
+    checkRegisterRePassword();
 }
 
 /**
@@ -241,28 +241,28 @@ function checkRegisterPassword()
  */
 function checkRegisterRePassword()
 {
-	let registerRePasswordMessage;
+    let registerRePasswordMessage;
 
-	//heslo znovu není vyplněno
-	if ($("#register-repass").val().length == 0)
-	{
-		registerRePasswordMessage = "Heslo znovu musí být vyplněno.";
-	}
-	//heslo znovu je jiné než heslo
-	else if ($("#register-repass").val() != $("#register-pass").val())
-	{
-		registerRePasswordMessage = "Zadaná hesla se neshodují.";
-	}
+    //heslo znovu není vyplněno
+    if ($("#register-repass").val().length == 0)
+    {
+        registerRePasswordMessage = "Heslo znovu musí být vyplněno.";
+    }
+    //heslo znovu je jiné než heslo
+    else if ($("#register-repass").val() != $("#register-pass").val())
+    {
+        registerRePasswordMessage = "Zadaná hesla se neshodují.";
+    }
 
-	else registerRePasswordMessage = "";
+    else registerRePasswordMessage = "";
 
-	if (registerRePasswordMessage == "")
-	{
-		$("#register-repass").addClass("checked");
-	}
-	else $("#register-repass").removeClass("checked");
+    if (registerRePasswordMessage == "")
+    {
+        $("#register-repass").addClass("checked");
+    }
+    else $("#register-repass").removeClass("checked");
 
-	$("#register-repass-message").text(registerRePasswordMessage);
+    $("#register-repass-message").text(registerRePasswordMessage);
 }
 
 /**
@@ -271,25 +271,25 @@ function checkRegisterRePassword()
  */
 function checkRegisterEmail()
 {
-	let registerEmailMessage;
-  	let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    let registerEmailMessage;
+      let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-	//tvar emailu se neshoduje s tvarem udaným regex výrazem
-	if ($("#register-email").val() != "" && !regex.test($("#register-email").val()))
-	{
-		registerEmailMessage = "Zadaný email má nesprávný tvar.";
-	}
+    //tvar emailu se neshoduje s tvarem udaným regex výrazem
+    if ($("#register-email").val() != "" && !regex.test($("#register-email").val()))
+    {
+        registerEmailMessage = "Zadaný email má nesprávný tvar.";
+    }
 
-	else registerEmailMessage= "";
+    else registerEmailMessage= "";
 
-	$("#register-email-message").text(registerEmailMessage);
+    $("#register-email-message").text(registerEmailMessage);
 
-	if (registerEmailMessage == "") return true;
-	else
-	{
-		$("#register-email").removeClass("checked");
-		return false;
-	}
+    if (registerEmailMessage == "") return true;
+    else
+    {
+        $("#register-email").removeClass("checked");
+        return false;
+    }
 }
 
 /**
@@ -297,23 +297,23 @@ function checkRegisterEmail()
  */
 function checkRecoveryEmail()
 {
-	let recoveryEmailMessage;
-  	let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	
-	//email není vyplněn
-	if ($("#password-recovery-email").val().length == 0)
-	{
-		recoveryEmailMessage = "Email musí být vyplněn.";
-	}
-	//tvar emailu se neshoduje s tvarem udaným regex výrazem
-	else if ($("#password-recovery-email").val() != "" && !regex.test($("#password-recovery-email").val()))
-	{
-		recoveryEmailMessage = "Zadaný email má nesprávný tvar.";
-	}
+    let recoveryEmailMessage;
+      let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    
+    //email není vyplněn
+    if ($("#password-recovery-email").val().length == 0)
+    {
+        recoveryEmailMessage = "Email musí být vyplněn.";
+    }
+    //tvar emailu se neshoduje s tvarem udaným regex výrazem
+    else if ($("#password-recovery-email").val() != "" && !regex.test($("#password-recovery-email").val()))
+    {
+        recoveryEmailMessage = "Zadaný email má nesprávný tvar.";
+    }
 
-	else recoveryEmailMessage= "";
+    else recoveryEmailMessage= "";
 
-	$("#password-recovery-email-message").text(recoveryEmailMessage);
+    $("#password-recovery-email-message").text(recoveryEmailMessage);
 }
 
 /**
@@ -321,7 +321,7 @@ function checkRecoveryEmail()
  */
 function hideCookiesAlert()
 {
-	$("#cookies-alert").removeClass("show");
+    $("#cookies-alert").removeClass("show");
 }
 
 var documentHeight = $(window).height();
@@ -331,16 +331,16 @@ var scrollOffset = 50;
  */
 function showScrollButton()
 {
-	let scrolled = $(window).scrollTop();
+    let scrolled = $(window).scrollTop();
 
-	if (scrolled > (documentHeight + scrollOffset))
-	{
-		$("#back-to-top-button").addClass("show");
-	}
-	else if (scrolled <= (documentHeight + scrollOffset))
-	{
-		$("#back-to-top-button").removeClass("show");
-	}
+    if (scrolled > (documentHeight + scrollOffset))
+    {
+        $("#back-to-top-button").addClass("show");
+    }
+    else if (scrolled <= (documentHeight + scrollOffset))
+    {
+        $("#back-to-top-button").removeClass("show");
+    }
 }
 
 /**
@@ -349,25 +349,25 @@ function showScrollButton()
  */
 function showLoginSection(event)
 {
-	if (!$("#index-login-section").hasClass("show"))
-	{
-		$("#index-login-section").addClass("show");
-		$("#overlay").addClass("show");
-		$("body").css("overflowY", "hidden");
-	}
+    if (!$("#index-login-section").hasClass("show"))
+    {
+        $("#index-login-section").addClass("show");
+        $("#overlay").addClass("show");
+        $("body").css("overflowY", "hidden");
+    }
 
-	if ($(event.target).hasClass("show-login-section-login-button"))
-	{
-		showLoginDiv($("#login"));
-	}
-	else if ($(event.target).hasClass("show-login-section-register-button"))
-	{
-		showLoginDiv($("#register"));
-	}
-	else if ($(event.target).hasClass("show-login-section-password-recovery-button"))
-	{
-		showLoginDiv($("#password-recovery"));
-	}
+    if ($(event.target).hasClass("show-login-section-login-button"))
+    {
+        showLoginDiv($("#login"));
+    }
+    else if ($(event.target).hasClass("show-login-section-register-button"))
+    {
+        showLoginDiv($("#register"));
+    }
+    else if ($(event.target).hasClass("show-login-section-password-recovery-button"))
+    {
+        showLoginDiv($("#password-recovery"));
+    }
 }
 
 /**
@@ -376,13 +376,13 @@ function showLoginSection(event)
  */
 function showLoginDiv($loginSectionDiv)
 {
-	$("#register").hide();
-	$("#login").hide();
-	$("#password-recovery").hide();
-	$loginSectionDiv.show();
-	$loginSectionDiv.find(".text-field").first().focus();
+    $("#register").hide();
+    $("#login").hide();
+    $("#password-recovery").hide();
+    $loginSectionDiv.show();
+    $loginSectionDiv.find(".text-field").first().focus();
 
-	emptyForms($(".user-data .text-field, .user-data .message"));
+    emptyForms($(".user-data .text-field, .user-data .message"));
 }
 
 /**
@@ -390,11 +390,11 @@ function showLoginDiv($loginSectionDiv)
  */
 function hideLoginSection()
 {
-	$("#index-login-section").removeClass("show");
-	$("#overlay").removeClass("show");
-	$("body").css("overflowY", "auto");
+    $("#index-login-section").removeClass("show");
+    $("#overlay").removeClass("show");
+    $("body").css("overflowY", "auto");
 
-	emptyForms($(".user-data .text-field, .user-data .message"));
+    emptyForms($(".user-data .text-field, .user-data .message"));
 }
 
 /**
@@ -414,8 +414,8 @@ function demoLogin()
  */
 function emptyForms($fields)
 {
-	$fields.val('');
-	$fields.text('');
+    $fields.val('');
+    $fields.text('');
 }
 
 /**
@@ -424,14 +424,14 @@ function emptyForms($fields)
  */
 function mouseUpChecker(event)
 {
-	let $container = $("#index-login-section");
-	let $cookiesAlert = $("#cookies-alert");
+    let $container = $("#index-login-section");
+    let $cookiesAlert = $("#cookies-alert");
 
-	//nebylo kliknuto na login sekci nebo na cookies alert
-	if (!$container.is(event.target) && !$cookiesAlert.is(event.target) && $container.has(event.target).length === 0 && $cookiesAlert.has(event.target).length === 0)
-	{
-		hideLoginSection();
-	}
+    //nebylo kliknuto na login sekci nebo na cookies alert
+    if (!$container.is(event.target) && !$cookiesAlert.is(event.target) && $container.has(event.target).length === 0 && $cookiesAlert.has(event.target).length === 0)
+    {
+        hideLoginSection();
+    }
 }
 
 /*--------------------------------------------------------------------------*/
@@ -442,9 +442,9 @@ var ajaxRequestsQueue = [];
 //Objekt obsahující data o AJAX požadavku k odeslání
 function ajaxRequest(url, data, callback)
 {
-	this.url = url;
-	this.data = data;
-	this.callback = callback;
+    this.url = url;
+    this.data = data;
+    this.callback = callback;
 }
 
 /**
@@ -453,11 +453,11 @@ function ajaxRequest(url, data, callback)
 */
 function enqueueAjaxRequest(request)
 {
-	ajaxRequestsQueue.push(request);
-	if (ajaxRequestsQueue.length === 1) //Ve frontě je pouze aktuální požadavek --> okamžitě jej odešli
-	{
-		sendAjaxRequest();
-	}
+    ajaxRequestsQueue.push(request);
+    if (ajaxRequestsQueue.length === 1) //Ve frontě je pouze aktuální požadavek --> okamžitě jej odešli
+    {
+        sendAjaxRequest();
+    }
 }
 
 /**
@@ -465,18 +465,18 @@ function enqueueAjaxRequest(request)
  */
 function sendAjaxRequest()
 {
-	let request = ajaxRequestsQueue[0]; //Načti údaje o požadavku
-	$.post(
-		request.url,
-		request.data,
-		function (response, status)
-		{
-			ajaxRequestsQueue.shift(); //Odstraň vyřešený požadavek z fronty
-			if (ajaxRequestsQueue.length > 0) { sendAjaxRequest(); } //Mezitím byl zařazen další požadavek
+    let request = ajaxRequestsQueue[0]; //Načti údaje o požadavku
+    $.post(
+        request.url,
+        request.data,
+        function (response, status)
+        {
+            ajaxRequestsQueue.shift(); //Odstraň vyřešený požadavek z fronty
+            if (ajaxRequestsQueue.length > 0) { sendAjaxRequest(); } //Mezitím byl zařazen další požadavek
 
-			ajaxCallback(response, status, request.callback);
-		}
-	);
+            ajaxCallback(response, status, request.callback);
+        }
+    );
 }
 
 /**
@@ -489,28 +489,28 @@ function sendAjaxRequest()
  */
 function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inputElement)
 {
-	if (messageType === "success")
-	{
-		if (!data.unique)
-		{
-			//zobrazení chybové hlášky
-			$inputElement.removeClass("checked");
+    if (messageType === "success")
+    {
+        if (!data.unique)
+        {
+            //zobrazení chybové hlášky
+            $inputElement.removeClass("checked");
 
-			if ($inputElement[0] === $("#register-name")[0])
-			{
-				$("#register-name-message").text("Toto jméno už používá jiný uživatel.");
-			}
-			else if ($inputElement[0] === $("#register-email")[0])
-			{
-				$("#register-email-message").text("Tento email už používá jiný uživatel.")
-			}
-		}
-		else
-		{
-			//zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
-			$inputElement.addClass("checked");
-		}
-	}
+            if ($inputElement[0] === $("#register-name")[0])
+            {
+                $("#register-name-message").text("Toto jméno už používá jiný uživatel.");
+            }
+            else if ($inputElement[0] === $("#register-email")[0])
+            {
+                $("#register-email-message").text("Tento email už používá jiný uživatel.")
+            }
+        }
+        else
+        {
+            //zobrazení potvrzovací ikony - jedinečný input splňující všechny podmínky (zkontrolováno předtím)
+            $inputElement.addClass("checked");
+        }
+    }
 }
 
 /**
@@ -519,54 +519,54 @@ function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inp
  */
 function formSubmitted(event)
 {
-	event.preventDefault();
+    event.preventDefault();
 
-	let formId = event.target.id;
-	let type = $("#"+formId).find('*').filter(':input:first').val();	//Hodnota prvního <input> prvku (identifikátor formuláře)
-	let name = "";
-	let pass = "";
-	let repass = "";
-	let email = "";
-	let stayLogged = "";
+    let formId = event.target.id;
+    let type = $("#"+formId).find('*').filter(':input:first').val();    //Hodnota prvního <input> prvku (identifikátor formuláře)
+    let name = "";
+    let pass = "";
+    let repass = "";
+    let email = "";
+    let stayLogged = "";
 
-	switch (type)
-	{
-		//přihlašovací formulář
-		case 'l':
-			name = $("#login-name").val();
-			pass = $("#login-pass").val();
-			stayLogged = $("#login-persist").is(":checked");
-			break;
-		//registrační formulář
-		case 'r':
-			name = $("#register-name").val();
-			pass = $("#register-pass").val();
-			repass = $("#register-repass").val();
-			email = $("#register-email").val();
-			break;
-		//formulář pro obnovu hesla
-		case 'p':
-			email = $("#password-recovery-email").val();
-			break;
-		default:
-			return;
-	}
+    switch (type)
+    {
+        //přihlašovací formulář
+        case 'l':
+            name = $("#login-name").val();
+            pass = $("#login-pass").val();
+            stayLogged = $("#login-persist").is(":checked");
+            break;
+        //registrační formulář
+        case 'r':
+            name = $("#register-name").val();
+            pass = $("#register-pass").val();
+            repass = $("#register-repass").val();
+            email = $("#register-email").val();
+            break;
+        //formulář pro obnovu hesla
+        case 'p':
+            email = $("#password-recovery-email").val();
+            break;
+        default:
+            return;
+    }
 
-	enqueueAjaxRequest(
-		new ajaxRequest
-		(
-			'index-forms',
-			{
-				type: type,
-				name: name,
-				pass: pass,
-				repass: repass,
-				email: email,
-				stayLogged: stayLogged
-			},
-			serverResponse
-		)
-	);
+    enqueueAjaxRequest(
+        new ajaxRequest
+        (
+            'index-forms',
+            {
+                type: type,
+                name: name,
+                pass: pass,
+                repass: repass,
+                email: email,
+                stayLogged: stayLogged
+            },
+            serverResponse
+        )
+    );
 }
 
 /**
@@ -577,23 +577,23 @@ function formSubmitted(event)
  */
 function serverResponse(messageType, message, data)
 {
-	let errors = message.replaceAll("|", ". ");
-	if (!errors.endsWith("."))
-	{
-		errors = errors.concat(".");
-	}
+    let errors = message.replaceAll("|", ". ");
+    if (!errors.endsWith("."))
+    {
+        errors = errors.concat(".");
+    }
 
-	switch(data.origin)
-	{
-		case "login":
-			$("#login-server-message").text(errors);
-			break;
-		case "register":
-			$("#register-server-message").text(errors);
-			break;
-		case "passRecovery":
-			$("#password-recovery-server-message").text(errors);
-			break;
-	}
+    switch(data.origin)
+    {
+        case "login":
+            $("#login-server-message").text(errors);
+            break;
+        case "register":
+            $("#register-server-message").text(errors);
+            break;
+        case "passRecovery":
+            $("#password-recovery-server-message").text(errors);
+            break;
+    }
 }
 

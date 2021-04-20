@@ -6,7 +6,7 @@ use Poznavacky\Models\Logger;
 use \PDO;
 use \PDOException;
 
-/** 
+/**
  * PDO databázový wrapper
  * @author Jan Štěch
  */
@@ -33,14 +33,14 @@ class Db
      * @param string $database Jméno databáze
      * @return PDO|null Připojení k databázi nebo NULL, pokud se nepodařilo navázat připojení
      */
-    public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME, string $password = self::DEFAULT_PASSWORD, string $database = self::DEFAULT_DATABASE): ?PDO
+    public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME,
+                                   string $password = self::DEFAULT_PASSWORD,
+                                   string $database = self::DEFAULT_DATABASE): ?PDO
     {
-        try
-        {
-            self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password, self::$settings);
-        }
-        catch (PDOException $e)
-        {
+        try {
+            self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password,
+                self::$settings);
+        } catch (PDOException $e) {
             (new Logger(true))->emergency('K databázi se nebylo možné připojit: {exception}', array('exception' => $e));
             return null;
         }
@@ -53,26 +53,27 @@ class Db
      * Vhodné pro dotazy jako INSERT, UPDATE a DELETE
      * @param string $query Dotaz pro provedení s otazníky místo parametrů
      * @param array $parameters Pole parametrů, které budou doplněny místo otazníků do dotazu
-     * @param bool $returnLastId TRUE, pokud má metoda navracet ID posledního vloženého řádku (vhodné pouze pro INSERT dotazy), defaultně FALSE (navrátí TRUE v případě, že dotaz neselže)
-     * @return bool|int TRUE, pokud dotaz neselhal a pokud je třetí parametr nastaven na FALSE, jinak ID posledního vloženého řádku
+     * @param bool $returnLastId TRUE, pokud má metoda navracet ID posledního vloženého řádku (vhodné pouze pro INSERT
+     *     dotazy), defaultně FALSE (navrátí TRUE v případě, že dotaz neselže)
+     * @return bool|int TRUE, pokud dotaz neselhal a pokud je třetí parametr nastaven na FALSE, jinak ID posledního
+     *     vloženého řádku
      * @throws DatabaseException V případě selhání dotazu
      */
     public static function executeQuery(string $query, array $parameters = array(), bool $returnLastId = false)
     {
-        if (!isset(self::$connection)) { self::connect(); }
-        try
-        {
+        if (!isset(self::$connection)) {
+            self::connect();
+        }
+        try {
             $statement = self::$connection->prepare($query);
             $result = $statement->execute($parameters);
             
-            if ($returnLastId)
-            {
+            if ($returnLastId) {
                 return self::$connection->lastInsertId();
             }
-        }
-        catch(PDOException $e)
-        {
-            throw new DatabaseException('Database query wasn\'t executed successfully.', null, $e, $query, $e->getCode(), $e->errorInfo[2]);
+        } catch (PDOException $e) {
+            throw new DatabaseException('Database query wasn\'t executed successfully.', null, $e, $query,
+                $e->getCode(), $e->errorInfo[2]);
         }
         return $result;
     }
@@ -84,32 +85,29 @@ class Db
      * @param string $query Dotaz pro provedení s otazníky místo parametrů
      * @param array $parameters Pole parametrů, které budou doplněny místo otazníků do dotazu
      * @param bool $all TRUE, pokud se mají navrátit všechny řádky, FALSE pokud pouze první řádek
-     * @return array|boolean Jednorozměrné nebo dvourozměrné pole obsahující výsledky dotazu, FALSE v případě prázdného výsledku
+     * @return array|boolean Jednorozměrné nebo dvourozměrné pole obsahující výsledky dotazu, FALSE v případě prázdného
+     *     výsledku
      * @throws DatabaseException V případě selhání dotazu
      */
     public static function fetchQuery(string $query, array $parameters = array(), bool $all = false)
     {
-        if (!isset(self::$connection)) { self::connect(); }
-        try
-        {
+        if (!isset(self::$connection)) {
+            self::connect();
+        }
+        try {
             $statement = self::$connection->prepare($query);
             $statement->execute($parameters);
-        }
-        catch(PDOException $e)
-        {
-            throw new DatabaseException('Database query wasn\'t executed successfully.', null, $e, $query, $e->getCode(), $e->errorInfo[2]);
+        } catch (PDOException $e) {
+            throw new DatabaseException('Database query wasn\'t executed successfully.', null, $e, $query,
+                $e->getCode(), $e->errorInfo[2]);
         }
         
-        if ($statement->rowCount() === 0)
-        {
+        if ($statement->rowCount() === 0) {
             return false;
         }
-        if ($all)
-        {
+        if ($all) {
             return $statement->fetchAll();
-        }
-        else
-        {
+        } else {
             return $statement->fetch();
         }
     }
@@ -117,30 +115,30 @@ class Db
     /**
      * Metoda provádějící nepřipravený SQL dotaz na databázi a navracející jeho výsledek
      * Pokud zatím nebylo vytvořeno spojení s databází, bude vytvořeno
-     * POZOR! Nesmí být využíváno při jakékoliv akci, kterou mohou vyvolat nepověření uživatelé - může dojít k SQL injekci
+     * POZOR! Nesmí být využíváno při jakékoliv akci, kterou mohou vyvolat nepověření uživatelé - může dojít k SQL
+     * injekci
      * @param string $query SQL dotaz k vykonání, s vloženými proměnnými
-     * @return boolean|array TRUE, v případě úspěšného vykonání dotazu bez navrácení výsledků; FALSE v případě selhání dotazu; Jednorozměrné nebo dvojrozměrné pole obsahující všechny výsledky dotazu, pokud nějaké navrátil
+     * @return boolean|array TRUE, v případě úspěšného vykonání dotazu bez navrácení výsledků; FALSE v případě selhání
+     *     dotazu; Jednorozměrné nebo dvojrozměrné pole obsahující všechny výsledky dotazu, pokud nějaké navrátil
      */
     public static function unpreparedQuery(string $query)
     {
-        if (!isset(self::$connection)) { self::connect(); }
-        try
-        {
-            $result = self::$connection->query($query);
-            if (!$result){ throw new PDOException('Failed to execute query.'); }
+        if (!isset(self::$connection)) {
+            self::connect();
         }
-        catch(PDOException $e)
-        {
+        try {
+            $result = self::$connection->query($query);
+            if (!$result) {
+                throw new PDOException('Failed to execute query.');
+            }
+        } catch (PDOException $e) {
             return false;
         }
         
         $returnedRows = $result->fetchAll();
-        if (count($returnedRows) === 0)
-        {
+        if (count($returnedRows) === 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return $returnedRows;
         }
     }

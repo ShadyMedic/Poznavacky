@@ -21,18 +21,18 @@ $purpleLight: #bd4ac2;
 $purpleDark: #6a106e;
 
 @mixin scrollbar($size, $foreground-color, $background-color) {
-	scrollbar-color: $foreground-color $background-color;
-	scrollbar-width: auto;
-	&::-webkit-scrollbar {
-		width:  $size;
-		height: $size;
-	}
+    scrollbar-color: $foreground-color $background-color;
+    scrollbar-width: auto;
+    &::-webkit-scrollbar {
+        width:  $size;
+        height: $size;
+    }
 
-	&::-webkit-scrollbar-thumb {
-		background: $foreground-color;
-	}
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+    }
 
-	&::-webkit-scrollbar-track {
-		background: $background-color;
-	}	
+    &::-webkit-scrollbar-track {
+        background: $background-color;
+    }    
 }

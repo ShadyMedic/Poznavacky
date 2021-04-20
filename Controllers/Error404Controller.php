@@ -9,7 +9,7 @@ use Poznavacky\Models\Logger;
  */
 class Error404Controller extends SynchronousController
 {
-
+    
     /**
      * Metoda nastavující hlavičku požadavku, titulek stránky a zobrazovaný pohled chybové stránky
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
@@ -17,8 +17,9 @@ class Error404Controller extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        (new Logger(true))->notice('Přístup na chybovou stránku 404 z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
-
+        (new Logger(true))->notice('Přístup na chybovou stránku 404 z IP adresy {ip}',
+            array('ip' => $_SERVER['REMOTE_ADDR']));
+        
         header('HTTP/1.0 404 Not Found');
         
         self::$pageHeader['title'] = 'Chyba 404';

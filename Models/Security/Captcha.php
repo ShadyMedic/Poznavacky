@@ -46,12 +46,9 @@ abstract class Captcha
         
         $this->unsetAnswer($index);
         
-        if ($result)
-        {
+        if ($result) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
