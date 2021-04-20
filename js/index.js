@@ -353,7 +353,7 @@ function showLoginSection(event)
 	{
 		$("#index-login-section").addClass("show");
 		$("#overlay").addClass("show");
-		$("body").css("overflow", "hidden");
+		$("body").css("overflowY", "hidden");
 	}
 
 	if ($(event.target).hasClass("show-login-section-login-button"))
@@ -392,7 +392,7 @@ function hideLoginSection()
 {
 	$("#index-login-section").removeClass("show");
 	$("#overlay").removeClass("show");
-	$("body").css("overflow", "auto");
+	$("body").css("overflowY", "auto");
 
 	emptyForms($(".user-data .text-field, .user-data .message"));
 }
