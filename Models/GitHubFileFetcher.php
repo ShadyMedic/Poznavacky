@@ -11,9 +11,9 @@ use \UnexpectedValueException;
 class GitHubFileFetcher
 {
     private const GITHUB_API_REPOSITORY_URL = 'https://api.github.com/repos/HonzaSTECH/Poznavacky/contents/';
-    private const TERMS_OF_SERVICE_PATH = 'documents/TERMS_OF_SERVICE.md';
-    private const PRIVACY_POLICY_PATH = 'documents/PRIVACY_POLICY.md';
-    private const COOKIES_INFO_PATH = 'documents/COOKIES_INFO.md';
+    private const TERMS_OF_SERVICE_PATH = 'docs/TERMS_OF_SERVICE.md';
+    private const PRIVACY_POLICY_PATH = 'docs/PRIVACY_POLICY.md';
+    private const COOKIES_INFO_PATH = 'docs/COOKIES_INFO.md';
     
     private string $termsOfServiceHtml;
     private string $privacyPolicyHtml;

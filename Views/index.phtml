@@ -11,7 +11,7 @@
             <p>Potřebuješ se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistruj se, vytvoř si seznam přírodnin, sdílej ho se svou třídou a uč se rychleji!</p>
             <button id="learn-more-button" class="btn arrow-btn black"><span>Zjisti více</span><img src="../images/arrowBlack.svg"></button>
         </div>
-        <img src="../images/leafGuyLight.svg">
+        <img <?php if ($ee) : ?>src="../images/leafGuyBlonde.svg"<?php endif ?><?php if (!$ee) : ?>src="../images/leafGuyDark.svg"<?php endif ?>>
     </section>
     <section id="index-buttons-section">
         <div class="content">
