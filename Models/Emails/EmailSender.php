@@ -75,6 +75,7 @@ class EmailSender
         $mail->addReplyTo($fromAddress, $fromName);
         $mail->Subject = $subject;
         $mail->Body = $message;
+		$mail->AddEmbeddedImage('images/apple-touch-icon.png', 'logo', 'apple-touch-icon.png', 'base64', 'image/svg+xml');
         $mail->AddAddress($to);
         
         return $mail;
