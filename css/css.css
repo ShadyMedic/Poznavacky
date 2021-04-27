@@ -4236,7 +4236,7 @@ label.required:after {
 }
 
 #index #index-text-section > .content {
-  padding: 3rem 1rem;
+  padding: 3rem 1.6rem;
   text-align: center;
 }
 
@@ -4373,7 +4373,7 @@ label.required:after {
 }
 
 #index #index-info-section {
-  padding: 3rem 1rem;
+  padding: 3rem 1.6rem;
 }
 
 @media screen and (min-width: 576px) {

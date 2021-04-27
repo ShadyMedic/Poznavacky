@@ -73,7 +73,7 @@
             grid-template-rows: 1fr 6fr 1fr;
         }
         > .content {
-            padding: 3rem 1rem;
+            padding: 3rem 1.6rem;
             text-align: center;
             @media screen and (min-width: $mobile) {
                 padding: 3rem 3rem;
@@ -152,7 +152,7 @@
     }
 
     #index-info-section {
-        padding: 3rem 1rem;
+        padding: 3rem 1.6rem;
         @media screen and (min-width: $mobile) {
             padding: 3rem 3rem;
         }
