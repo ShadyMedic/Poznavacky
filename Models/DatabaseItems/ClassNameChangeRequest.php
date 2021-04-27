@@ -101,7 +101,7 @@ class ClassNameChangeRequest extends NameChangeRequest
                 'oldName' => $this->getOldName(),
                 'newName' => $this->newName
             ));
-        $subject = 'Vaše žádost o změnu jména třídy '.$this->getOldName().' na '.$this->newName.' byla schválena';
+        $subject = 'Vaše žádost o změnu názvu třídy '.$this->getOldName().' na '.$this->newName.' byla schválena';
         
         return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
@@ -129,7 +129,7 @@ class ClassNameChangeRequest extends NameChangeRequest
                 'oldName' => $this->getOldName(),
                 'declineReason' => $reason
             ));
-        $subject = 'Vaše žádost o změnu jména třídy '.$this->getOldName().' byla zamítnuta';
+        $subject = 'Vaše žádost o změnu názvu třídy '.$this->getOldName().' byla zamítnuta';
         
         return $sender->sendMail($addressee, $subject, $composer->getMail());
     }
