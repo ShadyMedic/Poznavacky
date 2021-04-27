@@ -72,7 +72,7 @@ abstract class SynchronousController implements ControllerInterface
                 //Nahraď běžná lomítka (v adresářové struktuře) zpětnými lomítky (navigace jmenými prostory)
                 $path = str_replace('/', '\\', $path);
                 //Ořízni příponu zdrojového souboru
-                $path = mb_substr($path, 0, mb_strpos($path, '.')); //Odstřihnutí přípony
+                $path = mb_substr($path, 0, mb_strpos($path, '.', -6)); //Odstřihnutí přípony
                 return $path;
             } else {
                 if (is_dir($path)) //Složka
