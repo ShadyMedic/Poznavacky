@@ -97,6 +97,13 @@ abstract class NameChangeRequest extends DatabaseItem
         $this->loadIfNotLoaded($this->newName);
         $this->loadIfNotLoaded($this->subject);
         
+        //Načti staré jméno před jeho přepsáním novým
+        if ($this->subject instanceof User) {
+            $this->subject['name'];
+        } else {
+            $this->subject->getName();
+        }
+        
         //Změnit jméno
         Db::executeQuery('UPDATE '.$this::SUBJECT_TABLE_NAME.' SET '.$this::SUBJECT_NAME_DB_NAME.' = ? WHERE '.
                          $this::SUBJECT_TABLE_NAME.'_id = ?;', array($this->newName, $this->subject->getId()));
