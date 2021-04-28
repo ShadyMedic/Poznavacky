@@ -89,7 +89,6 @@
     }
     h3 {
         font-size: 1em;
-        font-weight: bold;
         line-height: 1.2em;
     }
     #delete-account1,
@@ -149,7 +148,7 @@
             margin: 0.6rem auto;
             font-size: 1.2rem;
             > span {
-                font-weight: bold;
+                font-weight: 500;
             }
         }
     }
@@ -262,7 +261,7 @@
                 padding: calc(0.2em + 4px) 0;
             }
             .test-name {
-                font-weight: bold;
+                font-weight: 500;
                 text-align: center;
                 overflow-wrap: break-word;
             }
@@ -575,7 +574,7 @@
     .group-name-box,
     .group-name-input-box {
         font-size: 1.36rem;
-        font-weight: bold;
+        font-weight: 500;
     }
     .part-name-box,
     .part-name-input-box {

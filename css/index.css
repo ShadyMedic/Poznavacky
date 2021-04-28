@@ -56,7 +56,7 @@ body.tab .btn.border-btn:focus {
 }
 
 body.tab .btn.inline:focus {
-  font-weight: bold;
+  font-weight: 500;
   color: #479911;
 }
 
@@ -281,7 +281,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-weight: bold;
+  font-weight: 500;
   line-height: 1.3em;
 }
 
