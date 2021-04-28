@@ -25,7 +25,7 @@ class LearnController extends SynchronousController
         self::$pageHeader['title'] = 'Učit se';
         self::$pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
             'js/ajaxMediator.js',

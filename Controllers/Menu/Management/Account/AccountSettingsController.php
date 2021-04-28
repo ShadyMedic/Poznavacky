@@ -36,7 +36,7 @@ class AccountSettingsController extends SynchronousController
         self::$pageHeader['title'] = 'Nastavení účtu';
         self::$pageHeader['description'] = 'Přizpůsobte si poznávačky podle svého gusta a podívejte se na své statistiky';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
             'js/menu.js',

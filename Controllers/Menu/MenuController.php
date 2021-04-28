@@ -33,7 +33,7 @@ class MenuController extends SynchronousController
         self::$pageHeader['title'] = 'Volba poznávačky';
         self::$pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
         self::$pageHeader['keywords'] = 'poznávačky, biologie, příroda';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
             'js/ajaxMediator.js',

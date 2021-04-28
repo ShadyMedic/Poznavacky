@@ -24,7 +24,7 @@ class TestController extends SynchronousController
         self::$pageHeader['title'] = 'Vyzkoušet se';
         self::$pageHeader['description'] = 'Vyzkoušejte si, jak dobře znáte přírodniny v poznávačce pomocí náhodného testování';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
             'js/ajaxMediator.js',

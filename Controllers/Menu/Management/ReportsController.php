@@ -34,7 +34,7 @@ class ReportsController extends SynchronousController
         self::$pageHeader['title'] = 'Správa hlášení';
         self::$pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
             'js/menu.js',

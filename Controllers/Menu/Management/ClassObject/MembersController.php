@@ -45,7 +45,7 @@ class MembersController extends SynchronousController
         self::$pageHeader['title'] = 'Správa členů';
         self::$pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu členů';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js', 'js/members.js');
         self::$pageHeader['bodyId'] = 'members';
         

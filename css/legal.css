@@ -792,35 +792,117 @@ label.required:after {
   background: #479911;
 }
 
-header .error-img {
-  width: 90vw;
-  max-width: 280px;
-  display: block;
-  margin: 1rem auto;
+#legal header {
+  background: #366e11;
 }
 
-header h1 {
-  font-size: 2rem;
-  margin: 1em 0;
-  text-align: center;
+#legal main nav {
+  background: white;
+  padding: 0.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-header h1 .error-code {
-  color: #a00;
+@media screen and (min-width: 576px) {
+  #legal main nav {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
 }
 
-main {
-  width: 95vw;
-  max-width: 800px;
-  margin: auto;
+#legal main nav.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-main h2 {
-  font-size: 1.2rem;
-  margin: 1em 0;
+#legal main nav .btn {
+  margin: 0.4rem 1rem;
 }
 
-main a {
+#legal main nav .btn.selected {
   font-weight: bold;
 }
-/*# sourceMappingURL=error.css.map */
+
+#legal main .content {
+  padding: 1rem 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  #legal main .content {
+    padding: 1rem 3rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #legal main .content {
+    padding: 1.2rem 6rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #legal main .content {
+    padding: 1.2rem 16vw;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #legal main .content {
+    padding: 1.2rem 20vw;
+  }
+}
+
+#legal main .content section {
+  margin: 1rem 0;
+}
+
+@media screen and (min-width: 768px) {
+  #legal main .content section {
+    margin: 1.2rem 0;
+  }
+}
+
+#legal main .content h1,
+#legal main .content h2,
+#legal main .content p {
+  margin-bottom: 0.4em;
+}
+
+#legal main .content h1 {
+  font-size: 1.6rem;
+}
+
+#legal main .content h2 {
+  font-size: 1.2rem;
+}
+
+#legal main .content h5 {
+  color: #444;
+  font-size: 0.88rem;
+}
+
+#legal main .content p {
+  text-align: justify;
+}
+
+#legal main .content li {
+  list-style-type: circle;
+  margin-left: 1.2rem;
+}
+
+#legal main .content ol {
+  margin-left: 2rem;
+}
+/*# sourceMappingURL=legal.css.map */
