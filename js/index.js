@@ -1,7 +1,5 @@
 $(function()
 {
-    resizeGrid();
-
     //zobrazení cookies alertu
     setTimeout(function() {
         $("#cookies-alert").addClass("show");
@@ -69,11 +67,6 @@ $(function()
     $("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
 })
 
-$(window).resize(function()
-{
-    resizeGrid();
-})
-
 /**
  * Funkce scrollující do info sekce
  */
@@ -94,20 +87,6 @@ function backToTop()
         behavior: 'smooth',
         block: "start" 
     });
-}
-
-/**
- * Funkce nastavující výšku vektorových obrázků v info sekci podle toho nejvyššího
- */
-function resizeGrid()
-{
-    let newClassHeight = $("#new-class-info img").height();
-    let addPicturesHeight = $("#add-pictures-info img").height();
-    let learnHeight = $("#learn-info img").height();
-    let testHeight = $("#test-info img").height();
-    let maxHeight = Math.max(newClassHeight, addPicturesHeight, learnHeight, testHeight);
-
-    $("#info-icons .info-tile").css("grid-template-rows", maxHeight);
 }
 
 /**

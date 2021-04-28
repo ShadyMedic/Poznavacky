@@ -75,6 +75,7 @@ class EmailSender
         $mail->addReplyTo($fromAddress, $fromName);
         $mail->Subject = $subject;
         $mail->Body = $message;
+		$mail->AddEmbeddedImage('images/emailIcon.png', 'logo', 'emailIcon.png');
         $mail->AddAddress($to);
         
         return $mail;
