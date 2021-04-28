@@ -1295,12 +1295,12 @@ label.required:after {
   width: 100%;
 }
 
-#index #index-login-section #terms {
+#index #index-login-section #register-terms {
   font-size: 0.8rem;
   margin-top: 0.4rem;
 }
 
-#index #index-login-section #terms .btn {
+#index #index-login-section #register-terms .btn {
   color: #366e11;
 }
 
