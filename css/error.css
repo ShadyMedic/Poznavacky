@@ -277,6 +277,11 @@ footer .content a:after {
   pointer-events: auto;
 }
 
+img {
+  height: auto;
+  width: auto;
+}
+
 h1,
 h2,
 h3,
