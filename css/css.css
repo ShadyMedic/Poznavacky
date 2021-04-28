@@ -276,6 +276,7 @@ h3,
 h4,
 h5 {
   font-weight: bold;
+  line-height: 1.3em;
 }
 
 ul.list li {
@@ -4428,7 +4429,7 @@ label.required:after {
 
 #index #index-info-section #info-icons .info-tile {
   max-width: 360px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 576px) {
