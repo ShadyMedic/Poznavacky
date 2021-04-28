@@ -4,7 +4,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url(//fonts.googleapis.com/css?family=Ubuntu);
 * {
   margin: 0;
   padding: 0;
@@ -28,6 +27,12 @@ ol, ul {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url(//fonts.googleapis.com/css?family=Ubuntu);
+  font-display: swap;
 }
 
 html {

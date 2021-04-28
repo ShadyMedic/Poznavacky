@@ -1,8 +1,12 @@
 //scss partial soubor, který má na starost styly vyskytující se všude
 
-@import url(//fonts.googleapis.com/css?family=Ubuntu);
 @import "_variables.scss";
 
+@font-face {
+    font-family: 'Ubuntu';
+    src: url(//fonts.googleapis.com/css?family=Ubuntu);
+    font-display: swap;
+}
 html {
     scroll-behavior: smooth;
 }
