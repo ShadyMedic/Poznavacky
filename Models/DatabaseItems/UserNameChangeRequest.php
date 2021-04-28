@@ -5,6 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Statics\Db;
 
 /**
  * Třída reprezenzující žádost o změnu jména uživatele
@@ -28,9 +29,6 @@ class UserNameChangeRequest extends NameChangeRequest
     
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
-    
-    protected const SUBJECT_TABLE_NAME = User::TABLE_NAME;
-    protected const SUBJECT_NAME_DB_NAME = User::COLUMN_DICTIONARY['name'];
     
     /**
      * Metoda navracející aktuální jméno uživatele
@@ -56,6 +54,26 @@ class UserNameChangeRequest extends NameChangeRequest
     {
         $this->loadIfNotLoaded($this->subject);
         return $this->subject[User::COLUMN_DICTIONARY['email']];
+    }
+    
+    /**
+     * Metoda schvalující tuto žádost
+     * Jméno uživatele je změněno a žadatel obdrží e-mail (pokud jej zadal)
+     * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
+     * @throws DatabaseException
+     */
+    public function approve(): bool
+    {
+        $this->loadIfNotLoaded($this->newName);
+        $this->loadIfNotLoaded($this->subject);
+        
+        $this->subject['name'];
+        
+        Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.User::COLUMN_DICTIONARY['name'].' = ? WHERE '.
+                         User::COLUMN_DICTIONARY['id'].'= ?;', array($this->newName, $this->subject->getId()));
+        
+        //Odeslat e-mail
+        return $this->sendApprovedEmail();
     }
     
     /**

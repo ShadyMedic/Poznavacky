@@ -4,6 +4,8 @@ namespace Poznavacky\Models\DatabaseItems;
 use PHPMailer\PHPMailer\Exception;
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 use \DateTime;
 
@@ -29,9 +31,6 @@ class ClassNameChangeRequest extends NameChangeRequest
     
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
-    
-    protected const SUBJECT_TABLE_NAME = ClassObject::TABLE_NAME;
-    protected const SUBJECT_NAME_DB_NAME = ClassObject::COLUMN_DICTIONARY['name'];
     
     protected $newUrl;
     
@@ -80,6 +79,29 @@ class ClassNameChangeRequest extends NameChangeRequest
     }
     
     /**
+     * Metoda schvalující tuto žádost
+     * Název třídy i její URL je změněno a její správce obdrží e-mail (pokud jej zadal)
+     * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
+     * @throws DatabaseException
+     */
+    public function approve(): bool
+    {
+        $this->loadIfNotLoaded($this->newName);
+        $this->loadIfNotLoaded($this->subject);
+        
+        //Načti staré jméno před jeho přepsáním novým
+        $this->subject->getName();
+        
+        //Změnit název
+        Db::executeQuery('UPDATE '.ClassObject::TABLE_NAME.' SET '.ClassObject::COLUMN_DICTIONARY['name'].' = ?, '.
+                         ClassObject::COLUMN_DICTIONARY['url'].' = ? WHERE '.ClassObject::COLUMN_DICTIONARY['id'].'= ?;',
+            array($this->newName, Folder::generateUrl($this->newName), $this->subject->getId()));
+        
+        //Odeslat e-mail
+        return $this->sendApprovedEmail();
+    }
+    
+    /**
      * Metoda odesílající správci třídy, které se tato žádost týká, e-mail o potvrzení změny jména (pokud uživatel
      * zadal svůj e-mail)
      * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
@@ -97,10 +119,10 @@ class ClassNameChangeRequest extends NameChangeRequest
         $sender = new EmailSender();
         
         $composer->composeMail(EmailComposer::EMAIL_TYPE_CLASS_NAME_CHANGE_APPROVED, array(
-                'websiteAddress' => $_SERVER['SERVER_NAME'],
-                'oldName' => $this->getOldName(),
-                'newName' => $this->newName
-            ));
+            'websiteAddress' => $_SERVER['SERVER_NAME'],
+            'oldName' => $this->getOldName(),
+            'newName' => $this->newName
+        ));
         $subject = 'Vaše žádost o změnu názvu třídy '.$this->getOldName().' na '.$this->newName.' byla schválena';
         
         return $sender->sendMail($addressee, $subject, $composer->getMail());
@@ -125,10 +147,10 @@ class ClassNameChangeRequest extends NameChangeRequest
         $sender = new EmailSender();
         
         $composer->composeMail(EmailComposer::EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED, array(
-                'websiteAddress' => $_SERVER['SERVER_NAME'],
-                'oldName' => $this->getOldName(),
-                'declineReason' => $reason
-            ));
+            'websiteAddress' => $_SERVER['SERVER_NAME'],
+            'oldName' => $this->getOldName(),
+            'declineReason' => $reason
+        ));
         $subject = 'Vaše žádost o změnu názvu třídy '.$this->getOldName().' byla zamítnuta';
         
         return $sender->sendMail($addressee, $subject, $composer->getMail());
