@@ -9,9 +9,9 @@
         <div class="content">
             <h1>Poznávačky</h1>
             <p>Potřebuješ se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistruj se, vytvoř si seznam přírodnin, sdílej ho se svou třídou a uč se rychleji!</p>
-            <button id="learn-more-button" class="btn arrow-btn black"><span>Zjisti více</span><img src="../images/arrowBlack.svg"></button>
+            <button id="learn-more-button" class="btn arrow-btn black"><span>Zjisti více</span><img src="../images/arrowBlack.svg" alt="Ikona šipky"></button>
         </div>
-        <img <?php if ($ee) : ?>src="../images/leafGuyBlonde.svg"<?php endif ?><?php if (!$ee) : ?>src="../images/leafGuyDark.svg"<?php endif ?>>
+        <img <?php if ($ee) : ?>src="../images/leafGuyBlonde.svg"<?php endif ?><?php if (!$ee) : ?>src="../images/leafGuyDark.svg"<?php endif ?> alt="Ikona postavy">
     </section>
     <section id="index-buttons-section">
         <div class="content">
@@ -52,25 +52,25 @@
                     <label for="register-name" class="required">Jméno</label>
                     <div class="input-wrapper"> 
                         <input id='register-name' class="text-field" type='text' name='registerName' maxlength=15>
-                        <div class="checkmark"><img src="../images/check.svg"></div>
+                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-name-message" class="message"></div>
                     <label for="register-pass" class="required">Heslo</label>
                     <div class="input-wrapper"> 
                         <input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31>    
-                        <div class="checkmark"><img src="../images/check.svg"></div>
+                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-pass-message" class="message"></div>
                     <label for="register-repass" class="required">Heslo znovu</label>
                     <div class="input-wrapper"> 
                         <input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31>
-                        <div class="checkmark"><img src="../images/check.svg"></div>
+                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-repass-message" class="message"></div>
                     <label for="register-email">E-mail</label>
                     <div class="input-wrapper"> 
                         <input id='register-email' class="text-field" type='text' name='registerEmail' maxlength=255>
-                        <div class="checkmark"><img src="../images/check.svg"></div>
+                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-email-message" class="message"></div>
                 </div>
@@ -106,6 +106,6 @@
         <p>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíte s ukládáním souborů cookie na vašem zařízení.</p>
         <a class="btn inline white" href="/legal?cookies">Další informace</a>
     </div>
-    <button id="hide-cookies-alert-button" class="btn icon" title="Zavřít"><img src="..\images\crossButtonWhite.svg"></button>
+    <button id="hide-cookies-alert-button" class="btn icon" title="Zavřít"><img src="..\images\crossButtonWhite.svg" alt="Zavřít"></button>
 </div>
-<button id="back-to-top-button" class="btn border-btn rounded non-transparent white"><img src="../images/arrowsUp.svg"></button>
+<button id="back-to-top-button" class="btn border-btn rounded non-transparent white" title="Nahoru"><img src="../images/arrowsUp.svg" alt="Nahoru"></button>
