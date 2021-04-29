@@ -900,9 +900,7 @@ label.required:after {
 #resolve-reports header,
 #naturals header {
   background: #366e11;
-  position: fixed;
   width: 100%;
-  top: 0;
   padding: 0.2rem 0.6rem;
   z-index: 5;
   display: -ms-grid;
@@ -951,7 +949,6 @@ label.required:after {
   #edit-group header,
   #resolve-reports header,
   #naturals header {
-    position: relative;
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
