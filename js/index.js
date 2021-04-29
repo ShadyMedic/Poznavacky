@@ -1,9 +1,12 @@
 $(function()
 {
     //zobrazení cookies alertu
-    setTimeout(function() {
-        $("#cookies-alert").addClass("show");
-    }, 1000);
+    if (!getCookie("cookiesAccepted"))
+    {
+        setTimeout(function() {
+            $("#cookies-alert").addClass("show");
+        }, 1000);
+    }
 
     //event listenery tlačítek
     $("#hide-login-section-button").click(function() {hideLoginSection()})
@@ -27,7 +30,7 @@ $(function()
     $("#register-repass").on("input", function() {checkRegisterRePassword()})
     $("#register-email").on("input", function() {checkRegisterEmail()})
     $("#password-recovery-email").on("input", function() {checkRecoveryEmail()})
-  
+
     //odeslání AJAX požadavku pro kontrolu neexistence uživatele při registraci
     $("#register-name").blur(function()
     {
@@ -72,9 +75,9 @@ $(function()
  */
 function learnMore()
 {
-    $("#index-info-section")[0].scrollIntoView({ 
+    $("#index-info-section")[0].scrollIntoView({
         behavior: 'smooth',
-        block: "start" 
+        block: "start"
     });
 }
 
@@ -83,9 +86,9 @@ function learnMore()
  */
 function backToTop()
 {
-    $("#index")[0].scrollIntoView({ 
+    $("#index")[0].scrollIntoView({
         behavior: 'smooth',
-        block: "start" 
+        block: "start"
     });
 }
 
@@ -97,7 +100,7 @@ function checkLoginName()
     let loginNameMessage;
 
     //přihlašovací jméno není vyplněno
-    if($("#login-name").val().length == 0) 
+    if($("#login-name").val().length == 0)
     {
         loginNameMessage = "Jméno musí být vyplněno.";
     }
@@ -278,7 +281,7 @@ function checkRecoveryEmail()
 {
     let recoveryEmailMessage;
       let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    
+
     //email není vyplněn
     if ($("#password-recovery-email").val().length == 0)
     {
@@ -301,6 +304,11 @@ function checkRecoveryEmail()
 function hideCookiesAlert()
 {
     $("#cookies-alert").removeClass("show");
+
+    let expiration = new Date();
+    expiration.setTime(expiration.getTime() + (365*24*60*60*1000)); //Expirace za jeden rok
+    let expiresString = "expires="+ expiration.toUTCString();
+    document.cookie = "cookiesAccepted=1" + ";" + expiresString + ";path=/";
 }
 
 var documentHeight = $(window).height();
@@ -324,7 +332,7 @@ function showScrollButton()
 
 /**
  * Funkce zobrazující login sekci
- * @param {event} event 
+ * @param {event} event
  */
 function showLoginSection(event)
 {
@@ -382,14 +390,14 @@ function hideLoginSection()
 function demoLogin()
 {
     $("#login-name").val("Demo");
-    $("#login-pass").val("6F{1NPL#/p[O-y25JkKeOp2N7MLN@p}"); 
+    $("#login-pass").val("6F{1NPL#/p[O-y25JkKeOp2N7MLN@p}");
     $("#login-persist").prop("checked", false);
     $("#login-form").submit();
 }
 
 /**
  * Funkce mazající obsah všech textových polí ve formuláři
- * @param {jQuery objekt} $fields 
+ * @param {jQuery objekt} $fields
  */
 function emptyForms($fields)
 {
@@ -399,7 +407,7 @@ function emptyForms($fields)
 
 /**
  * Funkce skrývající login sekci, pokud bylo kliknuto mimo
- * @param {event} event 
+ * @param {event} event
  */
 function mouseUpChecker(event)
 {
