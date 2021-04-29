@@ -274,6 +274,7 @@
                     justify-content: space-evenly;
                 }
                 .btn {
+                    text-align: center;
                     margin: 0.2rem 0.4rem;
                     @media screen and (min-width: $smallTablet) {
                         margin: auto 0.4rem;

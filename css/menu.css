@@ -3471,6 +3471,7 @@ label.required:after {
 }
 
 #tests .tests-data-section .tests-data-item .test-action .btn {
+  text-align: center;
   margin: 0.2rem 0.4rem;
 }
 
