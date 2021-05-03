@@ -200,8 +200,9 @@
             box-shadow: 0 3px 2px -1px rgba(black, 0.2);
         }
         &#menu-classes-table {
+            .table-title,
             li {
-                grid-template-columns: 1fr 6rem 5rem;
+                grid-template-columns: 1fr 5.6rem 4rem;
                 @media screen and (min-width: $smallMobile) {
                     grid-template-columns: 1fr 8rem 6rem;
                 }
@@ -285,7 +286,8 @@
             }
         }
         &#menu-groups-table {
-            .table-title {
+            .table-title,
+            li {
                 grid-template-columns: 1fr 5rem;
                 @media screen and (min-width: $smallMobile) {
                     grid-template-columns: 1fr 6rem;
@@ -294,25 +296,27 @@
                     grid-template-columns: 1fr 8rem;
                 }
             }
-            li {
-                grid-template-columns: 1fr 5rem;
-                @media screen and (min-width: $smallMobile) {
-                    grid-template-columns: 1fr 6rem;
-                }
-                @media screen and (min-width: $mobile) {
-                    grid-template-columns: 1fr 8rem;
-                }
-            } 
         }
         &#menu-parts-table {
+            .table-title {
+                grid-template-columns: 1fr 5.2rem 4.2rem;
+                @media screen and (min-width: $smallMobile) {
+                    grid-template-columns: 1fr 8rem 6rem;
+                }
+                @media screen and (min-width: $mobile) {
+                    grid-template-columns: 1fr 8rem 8rem;
+                }
+            }
             li {
-                grid-template-columns: auto 1fr 6rem 5rem;
+                grid-template-columns: auto 1fr 5.2rem 4.2rem;
                 @media screen and (min-width: $smallMobile) {
                     grid-template-columns: auto 1fr 8rem 6rem;
                 }
                 @media screen and (min-width: $mobile) {
                     grid-template-columns: auto 1fr 8rem 8rem;
                 }
+            }
+            li {
                 &.show {
                     .part-name {
                         display: none;
@@ -392,12 +396,8 @@
             max-width: 780px;
             padding: 0.4rem;
             display: grid;
-            grid-template-columns: 1fr 6rem 5rem;
-            @media screen and (min-width: $smallMobile) {
-                grid-template-columns: 1fr 8rem 6rem;
-            }
-            @media screen and (min-width: $mobile) {
-                grid-template-columns: 1fr 8rem 8rem;
+            span {
+                text-align: center;
             }
         }
         ul {
@@ -406,6 +406,10 @@
             width: 100%;
             max-width: 780px;
             position: relative;
+            span,
+            h4 {
+                text-align: center;
+            }
             button {
                 width: 100%;
                 margin: 0.4rem 0;
@@ -420,6 +424,7 @@
             .class-name, 
             .test-name,
             .part-name {
+                word-break: break-word;
                 font-size: 1rem;
                 @media screen and (min-width: $smallMobile) {
                     font-size: 1.2rem;

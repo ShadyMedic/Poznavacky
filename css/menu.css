@@ -1528,12 +1528,14 @@ label.required:after {
           box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
 }
 
+#menu .folders#menu-classes-table .table-title,
 #menu .folders#menu-classes-table li {
-  -ms-grid-columns: 1fr 6rem 5rem;
-      grid-template-columns: 1fr 6rem 5rem;
+  -ms-grid-columns: 1fr 5.6rem 4rem;
+      grid-template-columns: 1fr 5.6rem 4rem;
 }
 
 @media screen and (min-width: 360px) {
+  #menu .folders#menu-classes-table .table-title,
   #menu .folders#menu-classes-table li {
     -ms-grid-columns: 1fr 8rem 6rem;
         grid-template-columns: 1fr 8rem 6rem;
@@ -1541,6 +1543,7 @@ label.required:after {
 }
 
 @media screen and (min-width: 576px) {
+  #menu .folders#menu-classes-table .table-title,
   #menu .folders#menu-classes-table li {
     -ms-grid-columns: 1fr 8rem 8rem;
         grid-template-columns: 1fr 8rem 8rem;
@@ -1662,31 +1665,14 @@ label.required:after {
   max-height: 160px;
 }
 
-#menu .folders#menu-groups-table .table-title {
-  -ms-grid-columns: 1fr 5rem;
-      grid-template-columns: 1fr 5rem;
-}
-
-@media screen and (min-width: 360px) {
-  #menu .folders#menu-groups-table .table-title {
-    -ms-grid-columns: 1fr 6rem;
-        grid-template-columns: 1fr 6rem;
-  }
-}
-
-@media screen and (min-width: 576px) {
-  #menu .folders#menu-groups-table .table-title {
-    -ms-grid-columns: 1fr 8rem;
-        grid-template-columns: 1fr 8rem;
-  }
-}
-
+#menu .folders#menu-groups-table .table-title,
 #menu .folders#menu-groups-table li {
   -ms-grid-columns: 1fr 5rem;
       grid-template-columns: 1fr 5rem;
 }
 
 @media screen and (min-width: 360px) {
+  #menu .folders#menu-groups-table .table-title,
   #menu .folders#menu-groups-table li {
     -ms-grid-columns: 1fr 6rem;
         grid-template-columns: 1fr 6rem;
@@ -1694,15 +1680,35 @@ label.required:after {
 }
 
 @media screen and (min-width: 576px) {
+  #menu .folders#menu-groups-table .table-title,
   #menu .folders#menu-groups-table li {
     -ms-grid-columns: 1fr 8rem;
         grid-template-columns: 1fr 8rem;
   }
 }
 
+#menu .folders#menu-parts-table .table-title {
+  -ms-grid-columns: 1fr 5.2rem 4.2rem;
+      grid-template-columns: 1fr 5.2rem 4.2rem;
+}
+
+@media screen and (min-width: 360px) {
+  #menu .folders#menu-parts-table .table-title {
+    -ms-grid-columns: 1fr 8rem 6rem;
+        grid-template-columns: 1fr 8rem 6rem;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #menu .folders#menu-parts-table .table-title {
+    -ms-grid-columns: 1fr 8rem 8rem;
+        grid-template-columns: 1fr 8rem 8rem;
+  }
+}
+
 #menu .folders#menu-parts-table li {
-  -ms-grid-columns: auto 1fr 6rem 5rem;
-      grid-template-columns: auto 1fr 6rem 5rem;
+  -ms-grid-columns: auto 1fr 5.2rem 4.2rem;
+      grid-template-columns: auto 1fr 5.2rem 4.2rem;
 }
 
 @media screen and (min-width: 360px) {
@@ -1858,22 +1864,10 @@ label.required:after {
   padding: 0.4rem;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 6rem 5rem;
-      grid-template-columns: 1fr 6rem 5rem;
 }
 
-@media screen and (min-width: 360px) {
-  #menu .folders .table-title {
-    -ms-grid-columns: 1fr 8rem 6rem;
-        grid-template-columns: 1fr 8rem 6rem;
-  }
-}
-
-@media screen and (min-width: 576px) {
-  #menu .folders .table-title {
-    -ms-grid-columns: 1fr 8rem 8rem;
-        grid-template-columns: 1fr 8rem 8rem;
-  }
+#menu .folders .table-title span {
+  text-align: center;
 }
 
 #menu .folders ul {
@@ -1887,6 +1881,11 @@ label.required:after {
   width: 100%;
   max-width: 780px;
   position: relative;
+}
+
+#menu .folders ul span,
+#menu .folders ul h4 {
+  text-align: center;
 }
 
 #menu .folders ul button {
@@ -1906,6 +1905,7 @@ label.required:after {
 #menu .folders ul .class-name,
 #menu .folders ul .test-name,
 #menu .folders ul .part-name {
+  word-break: break-word;
   font-size: 1rem;
 }
 
