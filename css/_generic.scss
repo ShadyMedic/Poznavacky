@@ -86,6 +86,9 @@ header {
         justify-content: space-between;
         align-items: center;
         color: white;
+        &.newest {
+            font-weight: 500;
+        }
         .btn {
             margin-left: 1rem;
             flex-shrink: 0;

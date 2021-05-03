@@ -135,6 +135,10 @@ header .logo h1 {
   color: white;
 }
 
+#messages .message-item.newest {
+  font-weight: 500;
+}
+
 #messages .message-item .btn {
   margin-left: 1rem;
   -ms-flex-negative: 0;
