@@ -552,7 +552,7 @@ function save()
                     else if (messageType = "warning")
                     {
                         //chyba ukládání
-                        newMessage(message, "warning", data["json"]);
+                        newMessage(message, "warning", data["json"], 1000000);
                     }
                 }
             );
