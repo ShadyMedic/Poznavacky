@@ -332,7 +332,11 @@ class RooterController extends SynchronousController
                         break;
                     case 'classAccess':
                         if (!$_SESSION['selection']['class']->checkAccess(UserManager::getId(), true)) {
-                            unset($_SESSION['selection']);
+                            if (count($subChecks) === 1) {
+                                //Vymaž zvolené složky pouze v případě, že přístup do třídy je bezpodmínečně nutný
+                                //(nemůže být místo něj splněna jiná podmínka)
+                                unset($_SESSION['selection']);
+                            }
                             $subCheckResult = false;
                         }
                         break;
