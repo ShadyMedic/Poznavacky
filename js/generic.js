@@ -119,8 +119,9 @@ function manageSelectBox($selectBox)
  * @param {string} message Text hlášky
  * @param {string} type Typ hlášky (success / info / warning / error)
  * @param {string} data Další informace, pod data.origin je název akce, která vyvolala AJAX požadavek
+ * @param {int} timeout Doba, po níž zpráva zmizí
  */
-function newMessage(message, type, data)
+function newMessage(message, type, data, timeout)
 {
     //smazání nejstarší zprávy, jsou-li již minimálně tři
     if ($("#messages").children().length >= 3)
@@ -143,7 +144,7 @@ function newMessage(message, type, data)
                 $(this).remove();
             }
         );
-    }, 3000)
+    }, (timeout != undefined) ? timeout : 3000)
 }
 
 /**
