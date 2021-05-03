@@ -14,7 +14,7 @@ RewriteCond %{REQUEST_URI} !^/browserconfig\.xml$
 RewriteCond %{REQUEST_URI} !^/site\.webmanifest$
 
 # Povolení přímého přístupu k souborům s danými příponami
-RewriteRule !\.(css|js|ico|xml|svg|gif|png|jpg\.gz)$ index.php [L]
+RewriteRule !\.(css|js|txt|ico|xml|svg|gif|png|jpg\.gz)$ index.php [L]
 
 # Nastavení .phtml souborů jako .php soubory
 AddType application/x-httpd-php .php .phtml
