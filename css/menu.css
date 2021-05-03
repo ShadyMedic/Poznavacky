@@ -133,10 +133,29 @@ header .logo h1 {
       -ms-flex-align: center;
           align-items: center;
   color: white;
+  word-break: break-word;
 }
 
-#messages .message-item.newest {
-  font-weight: 500;
+#messages .message-item .text {
+  max-height: 24vh;
+  overflow: auto;
+  scrollbar-color: #222 none;
+  scrollbar-width: auto;
+  -webkit-animation: fontpop 0.4s;
+          animation: fontpop 0.4s;
+}
+
+#messages .message-item .text::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#messages .message-item .text::-webkit-scrollbar-thumb {
+  background: #222;
+}
+
+#messages .message-item .text::-webkit-scrollbar-track {
+  background: none;
 }
 
 #messages .message-item .btn {
@@ -794,6 +813,36 @@ label.required:after {
 .custom-select-wrapper .custom-options .custom-option.selected {
   color: #fff;
   background: #479911;
+}
+
+@-webkit-keyframes fontpop {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes fontpop {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
 #menu,

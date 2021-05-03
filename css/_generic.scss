@@ -86,8 +86,12 @@ header {
         justify-content: space-between;
         align-items: center;
         color: white;
-        &.newest {
-            font-weight: 500;
+        word-break: break-word;
+        .text {
+            max-height: 24vh;
+            overflow: auto;
+            @include scrollbar(12px, $gray1, none);
+            animation: fontpop 0.4s;
         }
         .btn {
             margin-left: 1rem;
@@ -584,4 +588,10 @@ label {
             }
         }
     }
+}
+
+@keyframes fontpop {
+    0%   {transform: scale(1)}
+    50%  {transform: scale(1.02)}
+    100% {transform: scale(1)}
 }

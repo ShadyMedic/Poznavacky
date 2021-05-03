@@ -124,19 +124,16 @@ function manageSelectBox($selectBox)
 function newMessage(message, type, data, timeout)
 {
     //smazání nejstarší zprávy, jsou-li již minimálně tři
-    if ($("#messages").children().length >= 3)
+    if ($("#messages").children().length >= 3 || $("#messages").outerHeight() >= $("main").outerHeight()/3)
     {
         $("#messages .message-item:last-child").remove();
     }
-
-    $("#messages .message-item.newest").removeClass("newest");
 
     $("#messages").prepend($("#message-item-template").html());
     let $message = $("#messages .message-item:first-child");
     $message.find(".message").text(message);
     $message.find(".data").text(data);
     $message.addClass(type + "-message");
-    $message.addClass("newest");
 
     setTimeout(function() {
         $message.slideUp(400, function()
