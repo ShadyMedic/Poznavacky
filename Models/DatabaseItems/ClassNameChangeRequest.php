@@ -90,13 +90,18 @@ class ClassNameChangeRequest extends NameChangeRequest
         $this->loadIfNotLoaded($this->subject);
         
         //Načti staré jméno před jeho přepsáním novým
-        $this->subject->getName();
+        $oldUrl = Folder::generateUrl($this->subject->getName());
         
         //Změnit název
         Db::executeQuery('UPDATE '.ClassObject::TABLE_NAME.' SET '.ClassObject::COLUMN_DICTIONARY['name'].' = ?, '.
                          ClassObject::COLUMN_DICTIONARY['url'].' = ? WHERE '.ClassObject::COLUMN_DICTIONARY['id'].'= ?;',
             array($this->newName, Folder::generateUrl($this->newName), $this->subject->getId()));
         
+        //Uprav adresy posledních navštívených složek
+        $newUrl = Folder::generateUrl($this->newName);
+        Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl'].
+                         ' = REPLACE('.LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl'].', ?, ?)',
+            array($oldUrl, $newUrl));
         //Odeslat e-mail
         return $this->sendApprovedEmail();
     }
