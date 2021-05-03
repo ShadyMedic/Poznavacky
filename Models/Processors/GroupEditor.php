@@ -3,8 +3,10 @@ namespace Poznavacky\Models\Processors;
 
 use Poznavacky\Models\DatabaseItems\Folder;
 use Poznavacky\Models\DatabaseItems\Group;
+use Poznavacky\Models\DatabaseItems\LoggedUser;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\DatabaseItems\Part;
+use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\DataValidator;
@@ -89,10 +91,18 @@ class GroupEditor
                                  Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].
                                  ' = ? LIMIT 2',
             array(Folder::generateUrl($newName), $this->group->getClass()->getId()), true);
+        
         if ($result === false) {
+            //Žádná poznávačka se stejným URL nebyla ve třídě nalezena - platné přejmenování
             $result = array(array(Group::COLUMN_DICTIONARY['id'] => $this->group->getId()));
-        } //Žádná poznávačka se stejným URL nebyla ve třídě nalezena - platné přejmenování
-        //if ($result[Group::COLUMN_DICTIONARY['id']] === $this->group->getId()) { /* Nalezena poznávačka se stejným URL i ID - poznávačka nebyla přejmenována */ }
+            $resetLastVisitedFolders = true;
+        } else {
+            if ($result[0][Group::COLUMN_DICTIONARY['id']] === $this->group->getId()) {
+                //Nalezena poznávačka se stejným URL i ID - poznávačka nebyla přejmenována
+                $resetLastVisitedFolders = false;
+            }
+        }
+        
         $ids = array();
         foreach ($result as $row) {
             $ids[] = $row[Group::COLUMN_DICTIONARY['id']];
@@ -126,7 +136,18 @@ class GroupEditor
                 null, $e);
         }
         
+        $oldUrl = $this->group->getUrl();
         $this->group->rename($newName);
+        
+        if ($resetLastVisitedFolders) {
+            //Uprav adresy posledních navštívených složek
+            $newUrl = $this->group->getUrl();
+            $classUrl = $this->group->getClass()->getUrl();
+            Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl'].
+                             ' = REPLACE('.LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl'].', ?, ?) WHERE '.
+                             LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl'].' LIKE ?',
+                array('/'.$oldUrl, '/'.$newUrl, $classUrl.'/%'));
+        }
     }
     
     /**
