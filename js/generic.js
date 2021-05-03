@@ -155,6 +155,8 @@ function newMessage(message, type, data, timeout)
 function newConfirm(message, confirmButtonText, cancelButtonText, callback)
 {
     $("#overlay").addClass("show");
+    $("body").css("overflow", "hidden");
+    $("main").css("overflow", "hidden");
     $("#popups").append($("#confirm-item-template").html());
     $confirm = $("#popups .confirm-item:last-child");
     $confirm.find(".message").text(message);
@@ -165,12 +167,16 @@ function newConfirm(message, confirmButtonText, cancelButtonText, callback)
     {
         $confirm.remove();
         $("#overlay").removeClass("show");
+        $("body").css("overflow", "auto");
+        $("main").css("overflow", "auto");
         callback(true);
     })
     $confirm.on("click", ".cancel-popup-button", function()
     {
         $confirm.remove();
         $("#overlay").removeClass("show");
+        $("body").css("overflow", "auto");
+        $("main").css("overflow", "auto");
         callback(false);
     })
 }
