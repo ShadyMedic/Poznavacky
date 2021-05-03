@@ -527,19 +527,20 @@ function save()
                         newConfirm(confirmMessage, "Aktualizovat", "Zrušit", function(confirm)
                         {
                             if (confirm) 
-              {
-                if (currentGroupUrl !== undefined)
-                              {
-                  //Jméno poznávačky bylo změněno
-                  let url = location.href;
-                  url = url.replace(/\/[a-z0-9-]+\/edit/, "/" + currentGroupUrl + "/edit");
-                  window.location.href = url;
-                }
-                else
-                {
-                  window.location.reload();
-                }
-              }
+                            {
+                                //jméno poznávačky bylo změněno
+                                if (currentGroupUrl !== undefined) 
+                                {
+                                    let url = location.href;
+                                    url = url.replace(/\/[a-z0-9-]+\/edit/, "/" + currentGroupUrl + "/edit");
+                                    window.location.href = url;
+                                }
+
+                                else
+                                {
+                                    window.location.reload();
+                                }
+                            }
                             else return;
                         })
                     }
