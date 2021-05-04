@@ -81,6 +81,9 @@ class ReportResolver
         
         $natural = new Natural(false, 0);
         $natural->initialize($newNaturalName, null, null, $this->class);
+    
+        //Změň https na http (funguje častěji)
+        $newUrl = preg_replace("/^https:\/\//", "http://", $newUrl);
         
         try {
             $picture->updatePicture($natural, $newUrl,

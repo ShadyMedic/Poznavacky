@@ -147,6 +147,9 @@ class PictureAdder
      */
     private function addPicture(Natural $natural, string $url): bool
     {
+        //Změň https na http (funguje častěji)
+        $url = preg_replace("/^https:\/\//", "http://", $url);
+        
         //Vložení obrázku do databáze
         try {
             $natural->addPicture($url);
