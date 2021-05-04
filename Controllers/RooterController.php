@@ -357,6 +357,13 @@ class RooterController extends SynchronousController
                             $subCheckResult = false;
                         }
                         break;
+                    case 'pictures':
+                        if (($aChecker->checkPart() && $_SESSION['selection']['part']->getPicturesCount() === 0) ||
+                            (!$aChecker->checkPart() &&
+                             count($_SESSION['selection']['group']->getPicturesCount()) === 0)) {
+                            $subCheckResult = false;
+                        }
+                        break;
                 }
                 if ($subCheckResult === true) {
                     $subCheckSuccessfulResults++;

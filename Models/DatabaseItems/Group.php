@@ -103,6 +103,20 @@ class Group extends Folder
     }
     
     /**
+     * Metoda navracející počet obrázků ve všech částech této poznávačky
+     * @return int Počet obrázků v poznávačce
+     */
+    public function getPicturesCount(): int
+    {
+        $naturals = $this->getNaturals();
+        $sum = 0;
+        foreach ($naturals as $natural) {
+            $sum += $natural->getPicturesCount();
+        }
+        return $sum;
+    }
+    
+    /**
      * Metoda navracející pole náhodně zvolených obrázků z nějaké části této poznávačky jako objekty
      * Šance na výběr části je přímo úměrná počtu přírodnin, které obsahuje
      * Všechny přírodniny této poznávačky tak mají stejnou šanci, že jejich obrázek bude vybrán
