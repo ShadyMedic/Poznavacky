@@ -257,13 +257,15 @@ class Natural extends DatabaseItem
         $result = $picture->save();
         if ($result) {
             $this->pictures[] = $picture;
-            $this->picturesCount++; //Zvyš počet obrázků u této přírodniny
-            $this->save();
-            $uses = $this->getUses(); //Zvyš počet obrázků u všech částí, ve kterých se tato přírodnina vyskytuje
-            foreach ($uses as $use) {
+            $this->picturesCount++; //Zvyš počet obrázků u této přírodniny v $_SESSION
+            $uses = $this->getUses();
+            foreach ($uses as $use) //Zvyš počet obrázků v této části v $_SESSION
+            {
                 $use->initialize(null, null, null, null, null, ($use->getPicturesCount() + 1));
-                $use->save();
             }
+            //Zvýšení počtu obrázků u přírodniny v databázi je uděláno v databázi pomocí spouště
+            //Zvýšení počtu obrázků u všech částí, ve kterých se tato přírodnina vyskytuje je uděláno v databázi pomocí spouště
+            
             return true;
         }
         return false;
