@@ -16,11 +16,8 @@ $(function()
     $("#learn-more-button").click(function() {learnMore()})
     $("#back-to-top-button").click(function() {backToTop()})
 
-    //event listener kliknutí myši
-    $(document).mouseup(function(e) {mouseUpChecker(e)})
-
     //event listener scrollování
-    $(window).scroll(function(e) {showScrollButton(e)})
+    $(window).scroll(function(event) {showScrollButton(event)})
 
     //event listenery inputů
     $("#login-name").on("input", function() {checkLoginName()})
@@ -403,22 +400,6 @@ function emptyForms($fields)
 {
     $fields.val('');
     $fields.text('');
-}
-
-/**
- * Funkce skrývající login sekci, pokud bylo kliknuto mimo
- * @param {event} event
- */
-function mouseUpChecker(event)
-{
-    let $container = $("#index-login-section");
-    let $cookiesAlert = $("#cookies-alert");
-
-    //nebylo kliknuto na login sekci nebo na cookies alert
-    if (!$container.is(event.target) && !$cookiesAlert.is(event.target) && $container.has(event.target).length === 0 && $cookiesAlert.has(event.target).length === 0)
-    {
-        hideLoginSection();
-    }
 }
 
 /*--------------------------------------------------------------------------*/
