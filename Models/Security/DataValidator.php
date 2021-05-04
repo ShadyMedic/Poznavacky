@@ -145,6 +145,7 @@ class DataValidator
     /**
      * Metoda ověřující, zda se již řetězec v adekvátní databázové tabulce nevyskytuje
      * Takto lze kontrolovat pouze uživatelské jméno, jméno třídy nebo uživatelský e-mail
+     * Při kontrole uživatelského jména není brán ohled na velikost písmen
      * @param string $subject Řetězec jehož unikátnost chceme zjistit
      * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - viz konstanty této třídy
      *     začínající na "TYPE_"
@@ -163,11 +164,12 @@ class DataValidator
             case self::TYPE_USER_NAME:
                 $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.
                                          User::COLUMN_DICTIONARY['name'].') AS "items" FROM '.User::TABLE_NAME.
-                                         ' WHERE '.User::COLUMN_DICTIONARY['name'].'= ? UNION ALL SELECT COUNT('.
+                                         ' WHERE UPPER('.User::COLUMN_DICTIONARY['name'].
+                                         ') = ? UNION ALL SELECT COUNT('.
                                          UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM '.
-                                         UserNameChangeRequest::TABLE_NAME.' WHERE '.
-                                         UserNameChangeRequest::COLUMN_DICTIONARY['newName'].'= ?) AS tmp',
-                    array($subject, $subject), false);
+                                         UserNameChangeRequest::TABLE_NAME.' WHERE UPPER('.
+                                         UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') = ?) AS tmp',
+                    array(strtoupper($subject), strtoupper($subject)), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }

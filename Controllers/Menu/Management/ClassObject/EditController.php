@@ -37,7 +37,7 @@ class EditController extends SynchronousController
         self::$pageHeader['title'] = 'Upravit poznávačku';
         self::$pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující snadnou úpravu poznávaček.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js', 'js/edit.js');
         self::$pageHeader['bodyId'] = 'edit-group';
         

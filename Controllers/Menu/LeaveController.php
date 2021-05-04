@@ -55,7 +55,7 @@ class LeaveController extends AjaxController
                 (new Logger(true))->notice('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak jelikož je její správce, nebylo mu toto umožněno',
                     array('userId' => $userId, 'classId' => $classId, 'ip' => $_SERVER['REMOTE_ADDR']));
                 $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
-                    'Jako správce třídy nemůžete třídu opustit');
+                    AccessDeniedException::REASON_LEAVE_CLASS_ADMIN);
                 echo $response->getResponseString();
                 return;
             }

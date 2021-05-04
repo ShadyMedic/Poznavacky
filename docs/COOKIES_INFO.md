@@ -38,6 +38,18 @@ Tento soubor cookie je automaticky odstraněn při zavření okna
 prohlížeče. Při každém novém požadavku na servery Poznávaček je obsah
 tohoto souboru automaticky přepsán jiným, náhodně vygenerovaným kódem.
 
+### cookiesAccepted
+
+Tento soubor cookie neobsahuje žádná data, jeho přítomnost slouží
+pouze k určení, zda uživatel zavřel oznámení o využívání souborů
+cookies. Pokud není tento soubor cookie přítomen, je při návštěvě
+úvodní stránky zpráva o jejich používání zobrazena. V opčném
+případě ne.
+
+Tento soubor cookie je automaticky odstraněn jeden rok po jeho
+vytvoření. Jeho předčasným odstraněním dojde k opakovanému zobrazování
+zprávy o využívání souborů cookies.
+
 ### instantLogin
 
 Tento soubor cookie umožňuje zůstat přihlášen i po zavření okna

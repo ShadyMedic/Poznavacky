@@ -25,7 +25,7 @@ class AddPicturesController extends SynchronousController
         self::$pageHeader['title'] = 'Přidat obrázky';
         self::$pageHeader['description'] = 'Přidávejte obrázky do své poznávačky, aby se z nich mohli učit všichni členové třídy';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/addPictures.js', 'js/menu.js');
         self::$pageHeader['bodyId'] = 'add-pictures';
         

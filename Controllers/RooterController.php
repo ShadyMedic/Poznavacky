@@ -332,7 +332,11 @@ class RooterController extends SynchronousController
                         break;
                     case 'classAccess':
                         if (!$_SESSION['selection']['class']->checkAccess(UserManager::getId(), true)) {
-                            unset($_SESSION['selection']);
+                            if (count($subChecks) === 1) {
+                                //Vymaž zvolené složky pouze v případě, že přístup do třídy je bezpodmínečně nutný
+                                //(nemůže být místo něj splněna jiná podmínka)
+                                unset($_SESSION['selection']);
+                            }
                             $subCheckResult = false;
                         }
                         break;
@@ -350,6 +354,13 @@ class RooterController extends SynchronousController
                     case 'naturals':
                         if (($aChecker->checkPart() && $_SESSION['selection']['part']->getNaturalsCount() === 0) ||
                             (!$aChecker->checkPart() && count($_SESSION['selection']['group']->getNaturals()) === 0)) {
+                            $subCheckResult = false;
+                        }
+                        break;
+                    case 'pictures':
+                        if (($aChecker->checkPart() && $_SESSION['selection']['part']->getPicturesCount() === 0) ||
+                            (!$aChecker->checkPart() &&
+                             count($_SESSION['selection']['group']->getPicturesCount()) === 0)) {
                             $subCheckResult = false;
                         }
                         break;

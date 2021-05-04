@@ -1,12 +1,12 @@
 <h3>Nahlásit obrázek</h3>
 <div id="report-img-preview">
-    <img src="" id="report-img-preview">
+    <img src="images/blank.gif" id="report-img-preview" alt="Náhled obrázku">
 </div>
 <div class="custom-select-wrapper" id="report-reason">
     <div class="custom-select">
         <div class="custom-select-main">
             <span><?= Poznavacky\Models\DatabaseItems\Report::REASON_NOT_DISPLAYING ?></span>
-            <img class="arrow" src="../images/arrowBlack.svg">
+            <img class="arrow" src="../images/arrowBlack.svg" alt="Ikona šipky">
         </div>
         <ul class="custom-options">
             <li class="custom-option" id="reason-not-displaying"><?= Poznavacky\Models\DatabaseItems\Report::REASON_NOT_DISPLAYING ?></li>
@@ -25,7 +25,7 @@
         <div class="custom-select">
             <div class="custom-select-main">
                 <span><?= Poznavacky\Models\DatabaseItems\Report::LONG_LOADING_AVAILABLE_DELAYS[0] ?></span>
-                <img class="arrow" src="../images/arrowBlack.svg">
+                <img class="arrow" src="../images/arrowBlack.svg" alt="Ikona šipky">
             </div>
             <ul class="custom-options">
                 <?php foreach (Poznavacky\Models\DatabaseItems\Report::LONG_LOADING_AVAILABLE_DELAYS as $delay) : ?>
@@ -49,4 +49,4 @@
     <div id="report-message" class="message server"></div>
 </div>
 <button id="submit-report-button" class="btn border-btn non-transparent black">Odeslat</button>
-<button id="cancel-report-button" class="btn icon" title="Zrušit"><img src="../images/crossButtonBlack.svg"></button>
+<button id="cancel-report-button" class="btn icon" title="Zrušit"><img src="../images/crossButtonBlack.svg" alt="Zrušit"></button>

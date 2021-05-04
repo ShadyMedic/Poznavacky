@@ -33,13 +33,12 @@ class MenuController extends SynchronousController
         self::$pageHeader['title'] = 'Volba poznávačky';
         self::$pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
         self::$pageHeader['keywords'] = 'poznávačky, biologie, příroda';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
             'js/ajaxMediator.js',
             'js/menu.js',
-            'js/folders.js',
-            'js/invitations.js'
+            'js/folders.js'
         );
         self::$pageHeader['bodyId'] = 'menu';
         
@@ -54,6 +53,7 @@ class MenuController extends SynchronousController
                 $lastVisitedFolderPath = '';
                 self::$data['table'] = $classes;
                 self::$data['invitations'] = UserManager::getUser()->getActiveInvitations();
+                self::$pageHeader['jsFiles'][] = 'js/invitations.js';
                 (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byl odeslán seznam dostupných tříd',
                     array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             } else {

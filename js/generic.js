@@ -119,14 +119,29 @@ function manageSelectBox($selectBox)
  * @param {string} message Text hlášky
  * @param {string} type Typ hlášky (success / info / warning / error)
  * @param {string} data Další informace, pod data.origin je název akce, která vyvolala AJAX požadavek
+ * @param {int} timeout Doba, po níž zpráva zmizí
  */
-function newMessage(message, type, data)
+function newMessage(message, type, data, timeout)
 {
+    //smazání nejstarší zprávy, jsou-li již minimálně tři
+    if ($("#messages").children().length >= 3 || $("#messages").outerHeight() >= $("main").outerHeight()/3)
+    {
+        $("#messages .message-item:last-child").remove();
+    }
+
     $("#messages").prepend($("#message-item-template").html());
-    $message = $("#messages .message-item:first-child");
+    let $message = $("#messages .message-item:first-child");
     $message.find(".message").text(message);
     $message.find(".data").text(data);
     $message.addClass(type + "-message");
+
+    setTimeout(function() {
+        $message.slideUp(400, function()
+            {
+                $(this).remove();
+            }
+        );
+    }, (timeout != undefined) ? timeout : 3000)
 }
 
 /**
@@ -140,6 +155,8 @@ function newMessage(message, type, data)
 function newConfirm(message, confirmButtonText, cancelButtonText, callback)
 {
     $("#overlay").addClass("show");
+    $("body").css("overflow", "hidden");
+    $("main").css("overflow", "hidden");
     $("#popups").append($("#confirm-item-template").html());
     $confirm = $("#popups .confirm-item:last-child");
     $confirm.find(".message").text(message);
@@ -150,12 +167,16 @@ function newConfirm(message, confirmButtonText, cancelButtonText, callback)
     {
         $confirm.remove();
         $("#overlay").removeClass("show");
+        $("body").css("overflow", "auto");
+        $("main").css("overflow", "auto");
         callback(true);
     })
     $confirm.on("click", ".cancel-popup-button", function()
     {
         $confirm.remove();
         $("#overlay").removeClass("show");
+        $("body").css("overflow", "auto");
+        $("main").css("overflow", "auto");
         callback(false);
     })
 }

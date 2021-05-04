@@ -549,8 +549,10 @@ class ClassObject extends Folder
                 ));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS);
         }
+    
+        $this->loadIfNotLoaded($this->admin);
         
-        if ($userId === UserManager::getId()) {
+        if ($userId === $this->admin->getId()) {
             //Správce třídy nemůže sám sebe vyhodit
             (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat sám sebe z IP adresy {ip}, což správce udělat nemůže',
                 array('userId' => UserManager::getId(), 'classId' => $this->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));

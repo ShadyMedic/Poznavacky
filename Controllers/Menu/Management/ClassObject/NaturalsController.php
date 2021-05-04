@@ -31,7 +31,7 @@ class NaturalsController extends SynchronousController
         self::$pageHeader['title'] = 'Správa přírodnin';
         self::$pageHeader['description'] = 'Nástroj pro správce tříd umožňující snadnou správu přírodnin';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js', 'js/naturals.js');
         self::$pageHeader['bodyId'] = 'naturals';
         

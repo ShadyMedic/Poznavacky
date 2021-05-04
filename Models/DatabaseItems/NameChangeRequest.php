@@ -2,7 +2,6 @@
 namespace Poznavacky\Models\DatabaseItems;
 
 use Poznavacky\Models\Exceptions\DatabaseException;
-use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\undefined;
 use \DateTime;
 
@@ -85,32 +84,6 @@ abstract class NameChangeRequest extends DatabaseItem
      * @return bool TRUE, pokud se e-mail podaří odeslat, FALSE, pokud ne
      */
     public abstract function sendDeclinedEmail(string $reason): bool;
-    
-    /**
-     * Metoda schvalující tuto žádost
-     * Jméno uživatele nebo třídy je změněno a žadatel obdrží e-mail (pokud jej zadal)
-     * @return TRUE, pokud se vše povedlo, FALSE, pokud se nepodařilo odeslat e-mail
-     * @throws DatabaseException
-     */
-    public function approve(): bool
-    {
-        $this->loadIfNotLoaded($this->newName);
-        $this->loadIfNotLoaded($this->subject);
-        
-        //Načti staré jméno před jeho přepsáním novým
-        if ($this->subject instanceof User) {
-            $this->subject['name'];
-        } else {
-            $this->subject->getName();
-        }
-        
-        //Změnit jméno
-        Db::executeQuery('UPDATE '.$this::SUBJECT_TABLE_NAME.' SET '.$this::SUBJECT_NAME_DB_NAME.' = ? WHERE '.
-                         $this::SUBJECT_TABLE_NAME.'_id = ?;', array($this->newName, $this->subject->getId()));
-        
-        //Odeslat e-mail
-        return $this->sendApprovedEmail();
-    }
     
     /**
      * Metoda zamítající tuto žádost

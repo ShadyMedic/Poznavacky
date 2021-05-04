@@ -59,11 +59,12 @@ class AccessDeniedException extends Exception
     public const REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL = 'Tento název třídy nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
     public const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód třídy nemá platný formát - musí to být čtyři číslice';
     public const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';
+    public const REASON_LEAVE_CLASS_ADMIN = 'Jako správce třídy nemůžete třídu opustit';
     public const REASON_NAME_CHANGE_NO_NAME = self::REASON_REGISTER_NO_NAME;
     public const REASON_NAME_CHANGE_NAME_TOO_LONG = self::REASON_REGISTER_NAME_TOO_LONG;
     public const REASON_NAME_CHANGE_NAME_TOO_SHORT = self::REASON_REGISTER_NAME_TOO_SHORT;
     public const REASON_NAME_CHANGE_INVALID_CHARACTERS = self::REASON_REGISTER_NAME_INVALID_CHARACTERS;
-    public  const REASON_NAME_CHANGE_DUPLICATE_NAME = 'Toto jméno již používá jiný uživatel nebo o změnu na něj zažádal';
+    public const REASON_NAME_CHANGE_DUPLICATE_NAME = 'Toto jméno již používá jiný uživatel nebo o změnu na něj zažádal';
     public const REASON_PASSWORD_CHANGE_NO_OLD_PASSWORD = 'Musíte vyplnit své staré heslo';
     public const REASON_PASSWORD_CHANGE_WRONG_PASSWORD = 'Vaše staré heslo je chybné';
     public const REASON_PASSWORD_CHANGE_NO_PASSWORD = 'Musíte vyplnit své nové heslo';

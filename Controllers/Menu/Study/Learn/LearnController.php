@@ -25,7 +25,7 @@ class LearnController extends SynchronousController
         self::$pageHeader['title'] = 'Učit se';
         self::$pageHeader['description'] = 'Učte se na poznávačku podle svého vlastního tempa';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/css.css');
+        self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
             'js/ajaxMediator.js',
@@ -37,7 +37,21 @@ class LearnController extends SynchronousController
         
         $aChecker = new AccessChecker();
         if (!$aChecker->checkPart()) {
-            self::$data['naturals'] = $_SESSION['selection']['group']->getNaturals();
+            $naturals = $_SESSION['selection']['group']->getNaturals();
+        } else {
+            $naturals = $_SESSION['selection']['part']->getNaturals();
+        }
+        
+        //Vyfiltruj přírodniny bez obrázků
+        $filteredNaturals = array();
+        foreach ($naturals as $natural) {
+            if ($natural->getPicturesCount() > 0) {
+                $filteredNaturals[] = $natural;
+            }
+        }
+        self::$data['naturals'] = $filteredNaturals;
+        
+        if (!$aChecker->checkPart()) {
             (new Logger(true))->info('Přístup na stránku pro učení všech částí poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
                 array(
                     'groupId' => $_SESSION['selection']['group']->getId(),
@@ -46,7 +60,6 @@ class LearnController extends SynchronousController
                     'ip' => $_SERVER['REMOTE_ADDR']
                 ));
         } else {
-            self::$data['naturals'] = $_SESSION['selection']['part']->getNaturals();
             (new Logger(true))->info('Přístup na stránku pro učení části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
                 array(
                     'partId' => $_SESSION['selection']['part']->getId(),
