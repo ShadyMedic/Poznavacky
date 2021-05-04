@@ -78,7 +78,12 @@ function pictureSelected(event)
 {
     event.preventDefault();
 
-    $("#preview-img-hidden").attr("src", $("#url-input").val());
+    //nahraď https na začátku http (funguje častěji)
+    let url = $("#url-input").val();
+    let re = /^https:\/\//;
+    url = url.replace(re, "http://")
+
+    $("#preview-img-hidden").attr("src", url);
 
     //kontrola správného načtení pomocí event listenerů v hlavní funkci
 }
