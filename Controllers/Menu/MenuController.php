@@ -49,7 +49,11 @@ class MenuController extends SynchronousController
         try {
             if (!$aChecker->checkClass()) {
                 $classesGetter = new TestGroupsFetcher();
-                $classes = $classesGetter->getClasses();
+                try {
+                    $classes = $classesGetter->getClasses();
+                } catch (NoDataException $e) {
+                    $classes = array();
+                }
                 $lastVisitedFolderPath = '';
                 self::$data['table'] = $classes;
                 self::$data['invitations'] = UserManager::getUser()->getActiveInvitations();
