@@ -528,6 +528,13 @@ ul.list li:not(:last-child) {
           transform: scale(0.96);
 }
 
+.info {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  vertical-align: middle;
+}
+
 .center {
   display: block;
   margin: auto;
