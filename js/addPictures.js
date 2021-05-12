@@ -84,6 +84,8 @@ function pictureSelected(event)
     url = url.replace(re, "http://")
 
     $("#preview-img-hidden").attr("src", url);
+    $("#preview-img").attr("src", "images/loading.svg");
+    $("#submit-button").addClass("disabled");
 
     //kontrola správného načtení pomocí event listenerů v hlavní funkci
 }
