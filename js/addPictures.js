@@ -13,6 +13,15 @@ $(function()
     $("#add-natural-select .custom-options .custom-option").click(function() {setTimeout(function() {naturalSelected()}), 0});
     $("#submit-button").click(function(event) {submitPicture(event)});
 
+    //event listener umožňující potvrzení URL adresy odenterováním
+    $("#url-input").on("keyup", function(event)
+    {
+        if (event.keyCode === 13)
+        {
+            $("#url-confirm-button").click();
+        }
+    });
+
     //event listenery kontrolující správné načtení obrázku po zadání url adresy
     //chyba při načítání obrázku
     $("#preview-img-hidden").on("error", function()
