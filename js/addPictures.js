@@ -121,6 +121,7 @@ function submitPicture(event)
                         //Reset HTML
                         $("#url-input").val("");
                         $("#preview-img").attr("src", "images/blank.gif");
+                        $("#submit-button").addClass("disabled");
                         
                         //Zvyš počet obrázků u přírodniny v select boxu
                         let optionText = $(".custom-select-main>span").text().trim();
