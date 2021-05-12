@@ -53,7 +53,7 @@
             <span>Vyplňte krátký formulář pro tvorbu třídy:</span>
             <button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
             <form method="POST" id="request-class-form" style="display:none;">
-                <label for="new-class-form-name">Požadovaný název třídy</label>
+                <label for="new-class-form-name">Požadovaný název třídy <img class="btn icon" style="display:inline-block" src="images/info.svg" alt="Poznámka" title="Pokuste se do názvu třídy zakomponovat i název školy, aby nedocházelo ke konfliktům v názvech mezi třídami různých škol"></label>
                 <input id='new-class-form-name' class="text-field" type=text maxlength=31 />
                 <?php if (!$specifiedEmail) : ?>
                     <label for="new-class-form-email">Kontaktní e-mailová adresa</label>
