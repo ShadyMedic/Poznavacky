@@ -620,7 +620,7 @@ textarea {
 }
 
 label {
-  line-height: 1.6em;
+  margin: 0.24rem 0;
   display: inline-block;
 }
 

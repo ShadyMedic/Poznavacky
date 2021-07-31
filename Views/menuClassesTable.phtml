@@ -52,11 +52,12 @@
         </li>
         <li id="request-class-wrapper">
             <h5>Vytvořte novou třídu</h5>
-            <span>Vyplňte krátký formulář pro tvorbu třídy:</span>
+            <span>Ve své třídě můžete vytvářet jednotlivé poznávačky a sdílet je se spolužáky. Pro tvorbu třídy vyplňte krátký formulář:</span>
             <button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
             <form method="POST" id="request-class-form" style="display:none;">
                 <label for="new-class-form-name">Požadovaný název třídy
-                    <img class="info" src="images/info.svg" alt="Poznámka" title="Pokuste se do názvu třídy zakomponovat i název školy, aby nedocházelo ke konfliktům v názvech mezi třídami různých škol">
+                    <!--<img class="info" src="images/info.svg" alt="Poznámka" title="Pokuste se do názvu třídy zakomponovat i název školy, aby nedocházelo ke konfliktům v názvech mezi třídami různých škol">-->
+                    <p class="additional-form-info">Pokuste se do názvu třídy zakomponovat i název školy, aby nedocházelo ke konfliktům v názvech mezi třídami různých škol. Vhodným názvem třídy je například <i>2.A ZŠ Jana Nerudy</i> nebo <i>Biologický kroužek GJVJ</i>.</p>
                 </label>
                 <input id='new-class-form-name' class="text-field" type=text maxlength=31 />
                 <?php if (!$specifiedEmail) : ?>
