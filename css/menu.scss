@@ -208,7 +208,7 @@
             background: white;
             border-radius: 4px;
             box-shadow: 0 3px 2px -1px rgba(black, 0.2);
-            &:not(#enter-code-wrapper):not(#request-class-wrapper) * {
+            &:not(#enter-code-wrapper):not(#request-class-wrapper):not(.show) * {
                 margin: auto;
             }
         }
@@ -339,8 +339,6 @@
                 @media screen and (min-width: $mobile) {
                     grid-template-columns: auto 1fr 8rem 8rem;
                 }
-            }
-            li {
                 &.show {
                     .part-name {
                         display: none;
@@ -348,7 +346,7 @@
                             display: block;
                             grid-column: 1/2;
                             font-size: 0.9rem;
-                            margin-left: 0.6rem;
+                            margin: auto 0 auto 0.6rem;
                             text-align: left;
                         } 
                     }
@@ -381,6 +379,7 @@
                         }
                     }
                     &.show {
+                        margin: auto;
                         width: 100%;
                         display: flex;
                         grid-column: 1/5;
@@ -402,7 +401,8 @@
                         display: block;
                         width: 100%;
                         text-align: center;
-                        padding: 0 0.4rem;
+                        margin: auto 0;
+                        padding: 0 0.6rem;
                         grid-column: 1/5;
                         @media screen and (min-width: $smallMobile) {
                             grid-column: 2/5;

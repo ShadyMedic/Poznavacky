@@ -1554,7 +1554,7 @@ label.required:after {
           box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
 }
 
-#menu .folders li:not(#enter-code-wrapper):not(#request-class-wrapper) * {
+#menu .folders li:not(#enter-code-wrapper):not(#request-class-wrapper):not(.show) * {
   margin: auto;
 }
 
@@ -1785,7 +1785,7 @@ label.required:after {
     -ms-grid-column-span: 1;
     grid-column: 1/2;
     font-size: 0.9rem;
-    margin-left: 0.6rem;
+    margin: auto 0 auto 0.6rem;
     text-align: left;
   }
 }
@@ -1834,6 +1834,7 @@ label.required:after {
 }
 
 #menu .folders#menu-parts-table li .buttons.show {
+  margin: auto;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1880,7 +1881,8 @@ label.required:after {
   display: block;
   width: 100%;
   text-align: center;
-  padding: 0 0.4rem;
+  margin: auto 0;
+  padding: 0 0.6rem;
   -ms-grid-column: 1;
   -ms-grid-column-span: 4;
   grid-column: 1/5;
