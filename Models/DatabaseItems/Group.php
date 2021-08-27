@@ -160,38 +160,26 @@ class Group extends Folder
     }
     
     /**
-     * Metoda načítající seznam přírodnin patřících do této poznávačky a ukládající jejich instance do vlastnosti
-     * $naturals jako pole
+     * Metoda načítající seznam přírodnin patřících do všech částí této poznávačky a ukládající jejich instance do
+     * vlastnosti $naturals jako pole
      * @throws DatabaseException
      */
     private function loadNaturals(): void
     {
-        $this->loadIfNotLoaded($this->id);
-        $this->loadIfNotLoaded($this->class);
+        $this->loadIfNotLoaded($this->parts);
         
-        $allNaturals = array();
-        $result = Db::fetchQuery('
-            SELECT '.Natural::COLUMN_DICTIONARY['id'].','.Natural::COLUMN_DICTIONARY['name'].','.
-                                 Natural::COLUMN_DICTIONARY['picturesCount'].'
-            FROM '.Natural::TABLE_NAME.'
-            WHERE '.Natural::COLUMN_DICTIONARY['id'].' IN (
-                SELECT prirodniny_id FROM prirodniny_casti
-                WHERE casti_id IN (
-                    SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.'
-                    WHERE '.Part::COLUMN_DICTIONARY['group'].' = ?
-                )
-            );
-        ', array($this->id), true);
-        if ($result === false) {
-            $result = array(); /*Žádné přírodniny nenalezeny*/
+        $naturals = array();
+        $naturalIds = array();
+        foreach ($this->parts as $part) { //Projeď přírodniny všech částí, jednu po druhé
+            $partNaturals = $part->getNaturals();
+            foreach ($partNaturals as $partNatural) { //Vyfiltruj duplicitní přírodniny (vyskytují se ve více částech)
+                if (!in_array($partNatural->getId(), $naturalIds)) {
+                    $naturalIds[] = $partNatural->getId();
+                    $naturals[] = $partNatural;
+                }
+            }
         }
-        foreach ($result as $naturalData) {
-            $natural = new Natural(false, $naturalData[Natural::COLUMN_DICTIONARY['id']]);
-            $natural->initialize($naturalData[Natural::COLUMN_DICTIONARY['name']], null,
-                $naturalData[Natural::COLUMN_DICTIONARY['picturesCount']], $this->class);
-            $allNaturals[] = $natural;
-        }
-        $this->naturals = $allNaturals;
+        $this->naturals = $naturals;
     }
     
     /**

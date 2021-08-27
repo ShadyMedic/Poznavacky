@@ -13,6 +13,15 @@ $(function()
     $("#add-natural-select .custom-options .custom-option").click(function() {setTimeout(function() {naturalSelected()}), 0});
     $("#submit-button").click(function(event) {submitPicture(event)});
 
+    //event listener umožňující potvrzení URL adresy odenterováním
+    $("#url-input").on("keyup", function(event)
+    {
+        if (event.keyCode === 13)
+        {
+            $("#url-confirm-button").click();
+        }
+    });
+
     //event listenery kontrolující správné načtení obrázku po zadání url adresy
     //chyba při načítání obrázku
     $("#preview-img-hidden").on("error", function()
@@ -84,6 +93,8 @@ function pictureSelected(event)
     url = url.replace(re, "http://")
 
     $("#preview-img-hidden").attr("src", url);
+    $("#preview-img").attr("src", "images/loading.svg");
+    $("#submit-button").addClass("disabled");
 
     //kontrola správného načtení pomocí event listenerů v hlavní funkci
 }
@@ -121,6 +132,7 @@ function submitPicture(event)
                         //Reset HTML
                         $("#url-input").val("");
                         $("#preview-img").attr("src", "images/blank.gif");
+                        $("#submit-button").addClass("disabled");
                         
                         //Zvyš počet obrázků u přírodniny v select boxu
                         let optionText = $(".custom-select-main>span").text().trim();

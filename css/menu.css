@@ -528,6 +528,13 @@ ul.list li:not(:last-child) {
           transform: scale(0.96);
 }
 
+.info {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  vertical-align: middle;
+}
+
 .center {
   display: block;
   margin: auto;
@@ -613,7 +620,7 @@ textarea {
 }
 
 label {
-  line-height: 1.6em;
+  margin: 0.24rem 0;
   display: inline-block;
 }
 
@@ -1385,6 +1392,24 @@ label.required:after {
   }
 }
 
+#menu .additional-form-info,
+#learn .additional-form-info,
+#test .additional-form-info,
+#add-pictures .additional-form-info,
+#account-settings .additional-form-info,
+#manage .additional-form-info,
+#members .additional-form-info,
+#tests .additional-form-info,
+#edit-group .additional-form-info,
+#resolve-reports .additional-form-info,
+#naturals .additional-form-info {
+  font-size: 0.72rem;
+  line-height: 1.2em;
+  margin-top: 0.2rem;
+  text-align: justify;
+  color: #444;
+}
+
 #menu h2,
 #learn h2,
 #test h2,
@@ -1512,12 +1537,13 @@ label.required:after {
   margin-bottom: 0.32rem;
 }
 
-#menu .folders * {
-  margin: auto;
-}
-
 #menu .folders a {
   display: block;
+}
+
+#menu .folders .table-title,
+#menu .folders ul {
+  margin: auto;
 }
 
 #menu .folders li {
@@ -1526,6 +1552,10 @@ label.required:after {
   border-radius: 4px;
   -webkit-box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
           box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
+}
+
+#menu .folders li:not(#enter-code-wrapper):not(#request-class-wrapper) * {
+  margin: auto;
 }
 
 #menu .folders#menu-classes-table .table-title,
@@ -1604,10 +1634,25 @@ label.required:after {
   margin: 0.2rem 0;
 }
 
+#menu .folders#menu-classes-table #enter-code-wrapper > h5,
+#menu .folders#menu-classes-table #request-class-wrapper > h5 {
+  font-size: 1.12rem;
+  margin-bottom: 0.2rem;
+}
+
+#menu .folders#menu-classes-table #enter-code-wrapper > span,
+#menu .folders#menu-classes-table #request-class-wrapper > span {
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+  margin-bottom: 0.4rem;
+}
+
 #menu .folders#menu-classes-table #class-code-form .btn {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  margin: 0;
 }
 
 #menu .folders#menu-classes-table #class-code-form .text-field {
@@ -1648,21 +1693,21 @@ label.required:after {
 }
 
 #menu .folders#menu-classes-table #request-class-form label,
-#menu .folders#menu-classes-table #request-class-form input.text-field {
-  margin: 0.12rem 0;
+#menu .folders#menu-classes-table #request-class-form .text-field {
+  margin: 0.24rem 0;
   text-align: left;
 }
 
 #menu .folders#menu-classes-table #request-class-form label:not(:nth-of-type(1)) {
-  margin-top: 0.54rem;
-}
-
-#menu .folders#menu-classes-table #request-class-form label > span {
-  font-weight: 500;
+  margin-top: 0.6rem;
 }
 
 #menu .folders#menu-classes-table #request-class-form textarea {
   max-height: 160px;
+}
+
+#menu .folders#menu-classes-table #request-class-form #antispam-question {
+  font-weight: 500;
 }
 
 #menu .folders#menu-groups-table .table-title,
@@ -3131,6 +3176,7 @@ label.required:after {
 #naturals h3 {
   font-size: 1em;
   line-height: 1.2em;
+  margin: 0.2rem 0 0.4rem 0;
 }
 
 #account-settings #delete-account1,

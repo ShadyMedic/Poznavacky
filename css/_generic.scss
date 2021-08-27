@@ -374,6 +374,13 @@ ul.list {
     }
 }
 
+.info {
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    vertical-align: middle;
+}
+
 .center {
     display: block;
     margin: auto;
@@ -443,7 +450,8 @@ textarea {
 }
 
 label {
-    line-height: 1.6em;
+    //line-height: 1.6em;
+    margin: 0.24rem 0;
     display: inline-block;
     &.disabled {
         pointer-events: none;

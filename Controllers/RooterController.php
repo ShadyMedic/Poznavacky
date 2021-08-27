@@ -360,7 +360,7 @@ class RooterController extends SynchronousController
                     case 'pictures':
                         if (($aChecker->checkPart() && $_SESSION['selection']['part']->getPicturesCount() === 0) ||
                             (!$aChecker->checkPart() &&
-                             count($_SESSION['selection']['group']->getPicturesCount()) === 0)) {
+                             $_SESSION['selection']['group']->getPicturesCount() === 0)) {
                             $subCheckResult = false;
                         }
                         break;
