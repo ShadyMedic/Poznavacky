@@ -6,6 +6,7 @@ use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Logger;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
@@ -153,8 +154,13 @@ class PictureAdder
         //Vložení obrázku do databáze
         try {
             $natural->addPicture($url);
-            $_SESSION['selection']['part']->initialize(null, null, null, null, null,
-                ($_SESSION['selection']['part']->getPicturesCount() + 1));
+			
+			//Zvyš počet obrázků ve složce uložené v $_SESSION
+			$aChecker = new AccessChecker();
+			if ($aChecker->checkPart()) {
+				$_SESSION['selection']['part']->initialize(null, null, null, null, null,
+					($_SESSION['selection']['part']->getPicturesCount() + 1));
+			}
         } catch (DatabaseException $e) {
             (new Logger(true))->alert('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak neznámá chyba zabránila uložení obrázku; pokud toto nebyla ojedinělá chyba, může být vážně narušeno fungování systému',
                 array(
