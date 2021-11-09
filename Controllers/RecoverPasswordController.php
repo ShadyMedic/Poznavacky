@@ -67,7 +67,7 @@ class RecoverPasswordController extends SynchronousController
         self::$pageHeader['title'] = 'Obnovit heslo';
         self::$pageHeader['description'] = 'Zapomněli jste heslo ke svému účtu? Na této stránce si jej můžete obnobit pomocí kódu, který obdržíte na e-mail.';
         self::$pageHeader['keywords'] = 'poznávačky, účet, heslo, obnova';
-        self::$pageHeader['cssFiles'] = array('css/recoverPassword.css');
+        self::$pageHeader['cssFiles'] = array('css/passwordRecovery.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/recoverPassword.js');
         self::$pageHeader['bodyId'] = 'recover-password';
         
