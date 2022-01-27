@@ -169,7 +169,7 @@ class DataValidator
                                          UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM '.
                                          UserNameChangeRequest::TABLE_NAME.' WHERE UPPER('.
                                          UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') = ?) AS tmp',
-                    array(strtoupper($subject), strtoupper($subject)), false);
+                    array(mb_strtoupper($subject), mb_strtoupper($subject)), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }
