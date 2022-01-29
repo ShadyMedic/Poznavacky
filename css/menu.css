@@ -1502,6 +1502,11 @@ label.required:after {
   margin: 0 0 0.2rem auto;
 }
 
+#menu #changelog #old-changelog-link-wrapper {
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
 #menu #changelog ul {
   overflow-y: auto;
   max-height: 60vh;
