@@ -44,8 +44,8 @@ class RooterController extends SynchronousController
     public function process(array $parameters): void
     {
         $url = $parameters[0];
-        $parsedURL = parse_url($url)['path'];               // Z http(s)://domena.net/abc/def/ghi získá /abc/def/ghi
-        $parsedURL = trim($parsedURL, '/');        // Odstranění prvního (a existuje i posledního) lomítka
+        $parsedURL = parse_url($url)['path'];               // Z http(s)://domena.net/abc/def/ghi?jk=l získá /abc/def/ghi
+        $parsedURL = trim($parsedURL, '/');        // Odstranění prvního (a existuje-li i posledního) lomítka
         $parsedURL = trim($parsedURL);                      // Odstranění mezer na začátku a na konci
         $urlArguments = explode('/', $parsedURL);  // Rozbití řetězce do pole podle lomítek
         
