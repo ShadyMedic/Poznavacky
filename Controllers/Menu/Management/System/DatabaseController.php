@@ -31,7 +31,7 @@ class DatabaseController extends SynchronousController
         self::$pageHeader['title'] = 'Ovládání databáze';
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující přímé ovládání databáze.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['cssFiles'] = array('css/administrate.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js', 'js/database.js');
         self::$pageHeader['bodyId'] = 'database';
     }

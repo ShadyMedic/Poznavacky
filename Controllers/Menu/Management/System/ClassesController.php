@@ -33,7 +33,7 @@ class ClassesController extends SynchronousController
         self::$pageHeader['title'] = 'Správa tříd';
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu tříd.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['cssFiles'] = array('css/administrate.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js', 'js/classes.js');
         self::$pageHeader['bodyId'] = 'classes';
     }

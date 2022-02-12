@@ -37,7 +37,7 @@ class AdministrateController extends SynchronousController
         self::$pageHeader['title'] = 'Správa služby';
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['cssFiles'] = array('css/administrate.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js');
         self::$pageHeader['bodyId'] = 'administrate';
     }

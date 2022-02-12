@@ -33,7 +33,7 @@ class MailsenderController extends SynchronousController
         self::$pageHeader['title'] = 'Odeslat e-mail';
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující odesílání e-mailů z doménové schránky.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['cssFiles'] = array('css/administrate.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js', 'js/mailsender.js');
         self::$pageHeader['bodyId'] = 'mailsender';
     }

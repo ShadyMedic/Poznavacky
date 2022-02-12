@@ -34,7 +34,7 @@ class NameChangeRequestsController extends SynchronousController
         self::$pageHeader['title'] = 'Správa změn jmen';
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu žádostí o změnu jména.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['cssFiles'] = array('css/administrate.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js', 'js/nameChangeRequests.js');
         self::$pageHeader['bodyId'] = 'name-change-requests';
     }
