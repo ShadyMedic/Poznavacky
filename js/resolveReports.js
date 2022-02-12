@@ -4,14 +4,16 @@ $(function()
 {
     ajaxUrl = window.location.href;
     if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
-    if (ajaxUrl.endsWith("/administrate"))
+
+    //správa hlášení administrátorem
+    if (ajaxUrl.endsWith("/admin-reports"))
     {
-        //správa hlášení administrátorem
-        ajaxUrl = ajaxUrl + "/report-action";
+        ajaxUrl = ajaxUrl.replace("admin-reports", "report-action");
     }
+
+    //správa hlášení správcem třídy
     else
     {
-        //správa hlášení správcem třídy
         ajaxUrl = ajaxUrl.replace("reports", "report-action");
     }
     
@@ -35,12 +37,23 @@ function showPicture(event)
     let $report = $(event.target).closest(".report-data-item");
     let url = $report.attr("data-report-url");
     
-    //skrytí ostatních zobrazených obrázků
-    $(".report-image").not($report.find(".report-image")).hide();
+    //class owner
+    if ($('body').attr("id") == "resolve-reports")
+    {
+        //skrytí ostatních zobrazených obrázků
+        $(".report-image").not($report.find(".report-image")).hide();
 
-    //doplnění url a zobrazení obrázku
-    $report.find(".report-image > img").attr("src", url);
-    $report.find(".report-image").show();
+        //doplnění url a zobrazení obrázku
+        $report.find(".report-image > img").attr("src", url);
+        $report.find(".report-image").show();
+    }
+
+    //admin
+    else {
+        $("#report-image > img").attr("src", url);
+        $("#report-image").show();
+        $("#overlay").show();
+    }
 }
 
 /**
@@ -49,9 +62,19 @@ function showPicture(event)
  */
 function hidePicture(event)
 {
-    let $report = $(event.target).closest(".report-data-item");
+    //class owner
+    if ($('body').attr("id") == "resolve-reports")
+    {
+        let $report = $(event.target).closest(".report-data-item");
 
-    $report.find(".report-image").hide();
+        $report.find(".report-image").hide();
+    }
+
+    //admin
+    else {
+        $("#report-image").hide();
+        $("#overlay").hide();
+    }
 }
 
 var currentName;
@@ -187,7 +210,7 @@ function editPictureConfirm(event)
  */
 function deletePicture(event)
 {
-      let pictureId = $(event.target).closest(".report-data-item").attr("data-picture-id");
+    let pictureId = $(event.target).closest(".report-data-item").attr("data-picture-id");
 
     $.post(ajaxUrl,
             {
@@ -201,7 +224,16 @@ function deletePicture(event)
                     {
                         if (messageType === "error")
                         {
-                            newMessage(message, "error");
+                            //class owner
+                            if ($('body').attr("id") == "resolve-reports")
+                            {
+                                newMessage(message, "error");
+                            }
+
+                            //admin
+                            else {
+                                alert(message);
+                            }
                         }
                         else
                         {
@@ -221,7 +253,7 @@ function deletePicture(event)
  */
 function deleteReport(event)
 {
-     let reportId = $(event.target).closest(".report-data-item").attr("data-report-id");
+    let reportId = $(event.target).closest(".report-data-item").attr("data-report-id");
     
     $.post(ajaxUrl,
         {
@@ -235,7 +267,16 @@ function deleteReport(event)
                 {
                     if (messageType === "error")
                     {
-                        newMessage(message, "error");
+                        //class owner
+                        if ($('body').attr("id") == "resolve-reports")
+                        {
+                            newMessage(message, "error");
+                        }
+
+                        //admin
+                        else {
+                            alert(message);
+                        }
                     }
                     else
                     {

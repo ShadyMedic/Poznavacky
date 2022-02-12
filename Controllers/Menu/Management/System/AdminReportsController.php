@@ -34,7 +34,7 @@ class AdminReportsController extends SynchronousController
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující řešení určitých typů hlášení.';
         self::$pageHeader['keywords'] = '';
         self::$pageHeader['cssFiles'] = array('css/administrate.css');
-        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js', 'js/adminReports.js');
+        self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js', 'js/resolveReports.js');
         self::$pageHeader['bodyId'] = 'admin-reports';
     }
 }
