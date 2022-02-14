@@ -12,7 +12,7 @@ $(function()
 
 function editUser(event)
 {
-    $user = $(event.target).closest(".user-data-item");
+    let $user = $(event.target).closest(".user-data-item");
 
     //dočasné znemožnění ostatních akcí u všech uživatelů
     $(".user-data-item").not($user).find(".user-action .btn").not(".disabled").addClass("temp");
@@ -31,7 +31,7 @@ function editUser(event)
 }
 function editUserCancel(event)
 {
-    $user = $(event.target).closest(".user-data-item");
+    let $user = $(event.target).closest(".user-data-item");
 
     //opětovné zapnutí ostatních tlačítek akcí
     $(".user-data-item").not($user).find(".user-action .btn.temp").removeClass("disabled");
@@ -50,8 +50,8 @@ function editUserCancel(event)
 }
 function editUserConfirm(event)
 {
-    $user = $(event.target).closest(".user-data-item");
-    userId = $user.attr("data-user-id")
+    let $user = $(event.target).closest(".user-data-item");
+    let userId = $user.attr("data-user-id")
 
     //uložení nových hodnot
     for (let i = 0; i <= 3; i++)
@@ -86,9 +86,9 @@ function editUserConfirm(event)
 
 function deleteUser(event)
 {
-    $user = $(event.target).closest(".user-data-item");
-    userId = $user.attr("data-user-id")
-    userName = $user.attr("data-user-name")
+    let $user = $(event.target).closest(".user-data-item");
+    let userId = $user.attr("data-user-id")
+    let userName = $user.attr("data-user-name")
 
     if (!confirm("Opravdu chcete odstranit uživatele " + userName + " ?\nTato akce je nevratná!"))
     {
