@@ -1,55 +1,62 @@
-$(function() { $("#tab1-link").addClass("active-tab"); }); //Nabarvi zvolenou záložku
-
 var currentUserValues = new Array(4);
+
+$(function()
+{
+    //event listenery tlačítek
+    $(".edit-button").click(function(event) {editUser(event)})
+    $(".edit-confirm-button").click(function(event) {editUserConfirm(event)})
+    $(".edit-cancel-button").click(function(event) {editUserCancel(event)})
+    $(".start-mail-button").click(function(event) {startMail(event)})
+    $(".delete-user-button").click(function(event) {deleteUser(event)});
+})
+
 function editUser(event)
 {
-    //Dočasné znemožnění ostatních akcí u všech uživatelů
-    $(".user-action:not(.grayscale)").addClass("grayscale-temp-user");
-    $(".user-action").addClass("grayscale");
-    $(".user-action").attr("disabled", "");
+    $user = $(event.target).closest(".user-data-item");
 
-    //Získat <tr> element upravované řádky
-    let row = $(event.target.parentNode.parentNode.parentNode);
-    row.attr("id", "editable-user-row");
+    //dočasné znemožnění ostatních akcí u všech uživatelů
+    $(".user-data-item").not($user).find(".user-action .btn").not(".disabled").addClass("temp");
+    $(".user-data-item").not($user).find(".user-action .btn").addClass("disabled");
 
-    //Uložení současných hodnot
+    //uložení současných hodnot
     for (let i = 0; i <= 3; i++)
     {
-        currentUserValues[i] = $("#editable-user-row .user-field:eq("+ i +")").val();
+        currentUserValues[i] = $user.find(".user-field:eq("+ i +")").val();
     }
 
-    $("#editable-user-row .user-action").hide();                    //Skrytí ostatních tlačítek akcí
-    $("#editable-user-row .user-edit-buttons").show();                //Zobrazení tlačítek pro uložení nebo zrušení editace
-    $("#editable-user-row .user-field").addClass("editable-field");    //Obarvení políček (//TODO)
-    $("#editable-user-row .user-field").removeAttr("readonly");    //Umožnění editace (pro <input>)
-    $("#editable-user-row .user-field").removeAttr("disabled");    //Umožnění editace (pro <select>)
+    $user.find(".user-action > .btn").hide();
+    $user.find(".user-edit-buttons").show();
+    $user.find(".user-field").removeAttr("readonly");    //umožnění editace pro <input>
+    $user.find(".user-field").removeAttr("disabled");    //umožnění editace pro <select>
 }
-function cancelUserEdit()
+function editUserCancel(event)
 {
-    //Opětovné zapnutí ostatních tlačítek akcí
-    $(".grayscale-temp-user").removeAttr("disabled");
-    $(".grayscale-temp-user").removeClass("grayscale grayscale-temp-user");
+    $user = $(event.target).closest(".user-data-item");
 
-    //Obnova hodnot vstupních polí
+    //opětovné zapnutí ostatních tlačítek akcí
+    $(".user-data-item").not($user).find(".user-action .btn.temp").removeClass("disabled");
+    $(".user-data-item").not($user).find(".user-action .btn.temp").removeClass("temp");
+
+    //obnova hodnot vstupních polí
     for (let i = 0; i <= 3; i++)
     {
-        $("#editable-user-row .user-field:eq("+ i +")").val(currentUserValues[i]);
+        $user.find(".user-field:eq("+ i +")").val(currentUserValues[i]);
     }
 
-    $("#editable-user-row .user-action").show();                        //Znovuzobrazení ostatních tlačítek akcí
-    $("#editable-user-row .user-edit-buttons").hide();                    //Skrytí tlačítek pro uložení nebo zrušení editace
-    $("#editable-user-row .user-field").removeClass("editable-field");    //Odbarvení políček
-    $("#editable-user-row input.user-field").attr("readonly", "");        //Znemožnění editace (pro <input>)
-    $("#editable-user-row select.user-field").attr("disabled", "");    //Znemožnění editace (pro <select>)
-
-    $("#editable-user-row").removeAttr("id");
+    $user.find(".user-action > .btn").show();
+    $user.find(".user-edit-buttons").hide();
+    $user.find(".user-field").attr("readonly", "");    //znemožnění editace pro <input>
+    $user.find(".user-field").attr("disabled", "");    //znemožnění editace pro <select>
 }
-function confirmUserEdit(userId)
+function editUserConfirm(event)
 {
-    //Uložení nových hodnot
+    $user = $(event.target).closest(".user-data-item");
+    userId = $user.attr("data-user-id")
+
+    //uložení nových hodnot
     for (let i = 0; i <= 3; i++)
     {
-        currentUserValues[i] = $("#editable-user-row .user-field:eq("+ i +")").val();
+        currentUserValues[i] = $user.find(".user-field:eq("+ i +")").val();
     }
 
     //Odeslat data na server
@@ -66,22 +73,24 @@ function confirmUserEdit(userId)
         {
             if (response["messageType"] === "success")
             {
-                //Reset DOM
-                cancelUserEdit();
-                //TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-                //alert(response["message"]);
+                //reset DOM
+                editUserCancel(event);
             }
             if (response["messageType"] === "error")
             {
-                //TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
                 alert(response["message"]);
             }
         }
     );
 }
-function deleteUser(userId, event)
+
+function deleteUser(event)
 {
-    if (!confirm("Opravdu chcete odstranit tohoto uživatele?\nTato akce je nevratná!"))
+    $user = $(event.target).closest(".user-data-item");
+    userId = $user.attr("data-user-id")
+    userName = $user.attr("data-user-name")
+
+    if (!confirm("Opravdu chcete odstranit uživatele " + userName + " ?\nTato akce je nevratná!"))
     {
         return;
     }
@@ -92,13 +101,12 @@ function deleteUser(userId, event)
         },
         function(response)
         {
-            //TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
             alert(response["message"]);
 
             if (response["messageType"] === "success")
             {
-                //Odebrání uživatele z DOM
-                event.target.parentNode.parentNode.parentNode.remove();
+                //odebrání uživatele z DOM
+                $user.remove();
             }
         }
     );
