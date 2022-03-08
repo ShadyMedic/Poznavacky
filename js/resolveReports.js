@@ -205,7 +205,7 @@ function editPictureConfirm(event)
 }
 
 /**
- * Funkce odesílající požadavek an odstranění obrázku
+ * Funkce odesílající požadavek na odstranění obrázku
  * @param {event} event 
  */
 function deletePicture(event)

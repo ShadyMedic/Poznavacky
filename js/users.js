@@ -90,7 +90,7 @@ function deleteUser(event)
     let userId = $user.attr("data-user-id")
     let userName = $user.attr("data-user-name")
 
-    if (!confirm("Opravdu chcete odstranit uživatele " + userName + " ?\nTato akce je nevratná!"))
+    if (!confirm("Opravdu chcete odstranit uživatele " + userName + "?\nTato akce je nevratná!"))
     {
         return;
     }
