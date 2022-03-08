@@ -1,82 +1,107 @@
-$(function() { $("#tab2-link").addClass("active-tab"); }); //Nabarvi zvolenou záložku
-
 var currentClassValues = new Array(2);
+
+$(function()
+{   
+    //event listenery tlačítek
+    $(".edit-class-button").click(function(event) {editClass(event)})
+    $(".edit-class-confirm-button").click(function(event) {editClassConfirm(event)})
+    $(".edit-class-cancel-button").click(function(event) {editClassCancel(event)})
+    $(".change-class-owner-button").click(function(event) {changeClassOwner(event)})
+    $(".change-class-owner-confirm-button").click(function(event) {changeClassOwnerConfirm(event)})
+    $(".change-class-owner-cancel-button").click(function(event) {changeClassOwnerCancel(event)})
+    $(".class-redirect-button").click(function(event) {classRedirect(event)})
+    $(".delete-class-button").click(function(event) {deleteClass(event)})
+
+    $(".class-owner-name").change(function(event) {classOwnerChanged(event, 0)})
+    $(".class-owner-id").change(function(event) {classOwnerChanged(event, 1)})
+    $(".class-status").change(function(event) {classStatusChanged(event)})
+  
+})
+
+/**
+ * Funkce přesměrovávající admina do správy konkrétní třídy
+ * @param {event} event 
+ */
+function classRedirect(event) 
+{
+    let classUrl = $(event.target).closest("class-data-item").attr("data-class-url") 
+
+    window.location.href='menu/'+ classUrl + '/manage';
+}
+
+
+/**
+ * Funkce zahajující úpravu třídy
+ * @param {event} event 
+ */
 function editClass(event)
 {
-    //Dočasné znemožnění ostatních akcí u všech tříd
-    $(".class-action:not(.grayscale)").addClass("grayscale-temp-class");
-    $(".class-action").addClass("grayscale");
-    $(".class-action").attr("disabled", "");
+    let $class = $(event.target).closest(".class-data-item")
 
-    //Získat <tr> element upravované řádky
-    let row = $(event.target.parentNode.parentNode.parentNode);
-    row.attr("id", "editable-class-row");
+    //dočasné znemožnění ostatních akcí u všech tříd
+    $(".class-data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
+    $(".class-data-item").not($class).find(".class-action .btn").addClass("disabled");
 
-    //Uložení současných hodnot
+    //uložení současných hodnot
     for (let i = 0; i <= 1; i++)
     {
-        currentClassValues[i] = $("#editable-class-row .class-field:eq("+ i +")").val();
+        currentClassValues[i] = $class.find(".class-field:eq("+ i +")").val();
     }
 
-    $("#editable-class-row .class-action").hide();                        //Skrytí ostatních tlačítek akcí
-    $("#editable-class-row .class-edit-buttons").show();                //Zobrazení tlačítek pro uložení nebo zrušení editace
-    $("#editable-class-row .class-field").addClass("editable-field");    //Obarvení políček (//TODO)
-    $("#editable-class-row .class-field").removeAttr("disabled");        //Umožnění editace (pro <select>)
-    classStatusEdited();        //Umožnění nastavení kódu třídy, pokud je současný stav nastaven na "private" a kód tak má smysl
+    $class.find(".class-action > .btn").hide();
+    $class.find(".class-edit-buttons").show();
+    $class.find(".class-field").removeAttr("disabled");        //umožnění editace pro <select>
+    classStatusChanged(event);        //umožnění nastavení kódu třídy, pokud je současný stav nastaven na "private" a kód tak má smysl
 }
-function classStatusEdited()
+
+/**
+ * Funkce ošeřtřující změnu statutu třídy
+ * @param {event} event 
+ */
+function classStatusChanged(event)
 {
-    let newStatus = $("#editable-class-row select.class-field").val();
+    let $class = $(event.target).closest(".class-data-item")
+    let newStatus = $class.find(".class-status").val();
+
     if (newStatus !== "private")
     {
-        //Kód nemá smysl --> vymazat jej
-        $("#editable-class-row input.class-field").val("");
-        $("#editable-class-row input.class-field").attr("readonly", "");
+        //kód nemá smysl --> vymazat jej
+        $class.find(".class-code").val("");
+        $class.find(".class-code").attr("readonly", "");
     }
     else
     {
-        //Je potřeba nastavit kód --> umožnit editaci
+        //je potřeba nastavit kód --> umožnit editaci
         if (currentClassValues[1] === "")
         {
-            $("#editable-class-row input.class-field").val("0000");
+            $class.find(".class-code").val("0000");
         }
         else
         {
-            $("#editable-class-row input.class-field").val(currentClassValues[1]);
+            $class.find(".class-code").val(currentClassValues[1]);
         }
 
-        $("#editable-class-row input.class-field").removeAttr("readonly");
+        $class.find(".class-code").removeAttr("readonly");
     }
 }
-function cancelClassEdit()
-{
-    //Opětovné zapnutí ostatních tlačítek akcí
-    $(".grayscale-temp-class").removeAttr("disabled");
-    $(".grayscale-temp-class").removeClass("grayscale grayscale-temp-class");
 
-    //Obnova hodnot vstupních polí
+/**
+ * Funkce odesílající požadavek na změnu vlastností třídy
+ * @param {event} event 
+ */
+function editClassConfirm(event)
+{
+    
+    let $class = $(event.target).closest(".class-data-item");
+    let classId = $class.attr("data-class-id");
+
+    //uložení nových hodnot
     for (let i = 0; i <= 1; i++)
     {
-        $("#editable-class-row .class-field:eq("+ i +")").val(currentClassValues[i]);
+        currentClassValues[i] = $class.find(".class-field:eq("+ i +")").val();
     }
 
-    $("#editable-class-row .class-action").show();                            //Znovuzobrazení ostatních tlačítek akcí
-    $("#editable-class-row .class-edit-buttons").hide();                    //Skrytí tlačítek pro uložení nebo zrušení editace
-    $("#editable-class-row .class-field").removeClass("editable-field");    //Odbarvení políček
-    $("#editable-class-row input.class-field").attr("readonly", "");        //Znemožnit editaci (pro <input>)
-    $("#editable-class-row select.class-field").attr("disabled", "");        //Znemožnit editaci (pro <select>)
-
-    $("#editable-class-row").removeAttr("id");
-}
-function confirmClassEdit(classId)
-{
-    //Uložení nových hodnot
-    for (let i = 0; i <= 1; i++)
-    {
-        currentClassValues[i] = $("#editable-class-row .class-field:eq("+ i +")").val();
-    }
-
-    //Odeslat data na server
+    //odeslat data na server
     $.post("administrate-action",
         {
             action: 'update class',
@@ -88,159 +113,196 @@ function confirmClassEdit(classId)
         {
             if (response["messageType"] === "success")
             {
-                //Reset DOM
-                cancelClassEdit();
-                //TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-                //alert(response["message"]);
+                //reset DOM
+                editClassCancel(event);
             }
-            if (response["messageType"] === "error")
-            {
-                //TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
-                alert(response["message"]);
+            else
+            {    
+                alert(response["messageType"]);
             }
         }
     );
 }
-var currentClassAdminValues = new Array(2);
-var changedIdentifier;
-function changeClassAdmin(event)
+
+/**
+ * Funkce rušící úpravu třídy
+ * @param {event} event 
+ */
+function editClassCancel(event)
 {
-    //Dočasné znemožnění ostatních akcí u všech tříd
-    $(".class-action:not(.grayscale)").addClass("grayscale-temp-class");
-    $(".class-action").addClass("grayscale");
-    $(".class-action").attr("disabled", "");
+    let $class = $(event.target).closest(".class-data-item");
 
-    //Získat <tr> element upravované řádky
-    let row = $(event.target.parentNode.parentNode.parentNode);
-    row.attr("id", "editable-class-admin-row");
+    //opětovné zapnutí ostatních tlačítek akcí
+    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
+    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
 
-    //Uložení současných hodnot
+    //obnova hodnot vstupních polí
     for (let i = 0; i <= 1; i++)
     {
-        currentClassAdminValues[i] = $("#editable-class-admin-row .class-admin-table .class-admin-field:eq("+ i +")").val();
+        $class.find(".class-field:eq("+ i +")").val(currentClassValues[i]);
     }
 
-    $("#editable-class-admin-row .class-action").hide();                                            //Skrytí ostatních tlačítek akcí
-    $("#editable-class-admin-row .class-edit-admin-buttons").show();                                    //Zobrazení tlačítek pro uložení nebo zrušení editace
-    $("#editable-class-admin-row .class-admin-table .class-admin-field").addClass("editable-field");    //Obarvení políček (//TODO)
-    $("#editable-class-admin-row .class-admin-field").removeAttr("readonly");                        //Umožnění editace
+    $class.find(".class-action > .btn").show();
+    $class.find(".class-edit-buttons").hide();
+    $class.find(".class-field").attr("readonly", "");       //znemožnění editace pro <input>
+    $class.find(".class-field").attr("disabled", "");       //znemožnění editace pro <select>
 }
-function adminNameChanged()
+
+var currentClassOwnerValues = new Array(2);
+var changedIdentifier;
+
+/**
+ * Funkce zahajující změnu vlastníka třídy
+ * @param {event} event 
+ */
+function changeClassOwner(event)
 {
-    changedIdentifier = "name";
-    if ($("#editable-class-admin-row .class-admin-field:eq(0)").val() === currentClassAdminValues[0])
+    let $class = $(event.target).closest(".class-data-item")
+
+    //dočasné znemožnění ostatních akcí u všech tříd
+    $(".class-data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
+    $(".class-data-item").not($class).find(".class-action .btn").addClass("disabled");
+
+    //uložení současných hodnot
+    for (let i = 0; i <= 1; i++)
     {
-        //Umožnit změnu ID - jméno je stejné jako na začátku
-        $("#editable-class-admin-row .class-admin-field:eq(1)").removeAttr("readonly");
+        currentClassOwnerValues[i] = $class.find(".class-owner-table .class-owner-field:eq("+ i +")").val();
     }
+
+    $class.find(".class-action > .btn").hide();
+    $class.find(".class-change-class-owner-buttons").show();
+    $class.find(".class-owner-field").removeAttr("readonly");        //umožnění editace pro <input>
+}
+
+/**
+ * Funkce aktualizující pole při změně některého z identifikátorů vlastníka třídy
+ * @param {event} event 
+ * @param {int} identifier 0 při změně jména vlastníka třídy, 1 při změně id vlastníka třídy
+ */
+function classOwnerChanged(event, identifier)
+{
+    let $class = $(event.target).closest(".class-data-item")
+
+    if (identifier == 0)
+    {
+        changedIdentifier = "name";
+    }
+    else if (identifier == 1)
+    {
+        changedIdentifier = "id";
+    }
+
+    //umožnit změnu ID - jméno je stejné jako na začátku
+    if ($class.find(".class-owner-field:eq("+ identifier + ")").val() === currentClassOwnerValues[identifier])
+    {
+        $class.find(".class-owner-field:eq("+ identifier + ")").removeAttr("readonly");
+    }
+    //znemožnit změnu ID - jméno se změnilo
     else
     {
-        //Znemožnit změnu ID - jméno se změnilo
-        $("#editable-class-admin-row .class-admin-field:eq(1)").attr("readonly", "");
+        $class.find(".class-owner-field:eq("+ identifier + ")").attr("readonly", "");
     }
 }
-function adminIdChanged()
+
+/**
+ * Funkce rušící změnu vlastníka třídy
+ * @param {event} event 
+ */
+function changeClassOwnerCancel(event)
 {
-    changedIdentifier = "id";
-    if ($("#editable-class-adminrow .class-admin-field:eq(1)").val() === currentClassAdminValues[1])
-    {
-        //Umožnit změnu ID - jméno je stejné jako na začátku
-        $("#editable-class-admin-row .class-admin-field:eq(0)").removeAttr("readonly");
-    }
-    else
-    {
-        //Znemožnit změnu ID - jméno se změnilo
-        $("#editable-class-admin-row .class-admin-field:eq(0)").attr("readonly", "");
-    }
-}
-function cancelClassAdminEdit()
-{
-    //Opětovné zapnutí ostatních tlačítek akcí
-    $(".grayscale-temp-class").removeAttr("disabled");
-    $(".grayscale-temp-class").removeClass("grayscale grayscale-temp-class");
+    let $class = $(event.target).closest(".class-data-item")
+
+    //opětovné zapnutí ostatních tlačítek akcí
+    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
+    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
 
     //Obnova hodnot vstupních polí
     for (let i = 0; i <= 1; i++)
     {
-        $("#editable-class-admin-row .class-admin-table .class-admin-field:eq("+ i +")").val(currentClassAdminValues[i]);
+        $class.find(".class-owner-table .class-owner-field:eq("+ i +")").val(currentClassOwnerValues[i]);
     }
 
-    $("#editable-class-admin-row .class-action").show();                                            //Znovuzobrazení ostatních tlačítek akcí
-    $("#editable-class-admin-row .class-edit-admin-buttons").hide();                                    //Skrytí tlačítek pro uložení nebo zrušení editace
-    $("#editable-class-admin-row .class-admin-table .class-admin-field").removeClass("editable-field");    //Odbarvení políček
-    $("#editable-class-admin-row .class-admin-field").attr("readonly", "");                            //Znemožnit editaci (pro <input>)
-
-    $("#editable-class-admin-row").removeAttr("id");
+    $class.find(".class-action > .btn").show();
+    $class.find(".class-change-class-owner-buttons").hide();
+    $class.find(".class-field").attr("readonly", "");       //znemožnění editace pro <input>
 }
-function confirmClassAdminEdit(classId)
-{
-    let newId = $("#editable-class-admin-row .class-admin-table .class-admin-field:eq(0)").val();
-    let newName = $("#editable-class-adminRow .class-admin-table .class-admin-field:eq(1)").val();
 
-    //Odeslat data na server
+/**
+ * Funkce odesílající požadavek na změnu vlastníka třídy
+ * @param {event} event 
+ */
+function changeClassOwnerConfirm(event)
+{
+    let $class = $(event.target).closest(".class-data-item");
+    let $classOwnerTable = $class.find(".class-owner-table");
+    let classId = $class.attr("data-class-id");
+    let newName = $classOwnerTable.find(".class-owner-field:eq(0)").val();
+    let newId = $classOwnerTable.find(".class-owner-field:eq(1)").val();
+
+    //odeslat data na server
     $.post("administrate-action",
         {
-            action: 'change class admin',
+            action: 'change class admin', //TODO předělat na change class admin, aby se nikde nic nerozbilo
             classId: classId,
             changedIdentifier: changedIdentifier,
-            adminId: $("#editable-class-admin-row .class-admin-table .class-admin-field:eq(1)").val(),
-            adminName: $("#editable-class-admin-row .class-admin-table .class-admin-field:eq(0)").val()
+            adminId: newId,
+            adminName: newName
         },
         function (response)
         {
             if (response["messageType"] === "success")
             {
-                //Aktualizace údajů o správci třídy v DOM
+                //aktualizace údajů o správci třídy v DOM
                 let newName = response["newName"];
                 let newId = response["newId"];
                 let newEmail = response["newEmail"];
                 let newKarma = response["newKarma"];
                 let newStatus = response["newStatus"];
 
-                currentClassAdminValues[0] = newName;
-                currentClassAdminValues[1] = newId;
-                $("#editable-class-admin-row .class-admin-table .class-admin-data:eq(0)").text(newEmail);
-                $("#editable-class-admin-row .class-admin-table .class-admin-data:eq(1)").text(newKarma);
-                $("#editable-class-admin-row .class-admin-table .class-admin-data:eq(2)").text(newStatus);
+                currentClassOwnerValues[0] = newName;
+                currentClassOwnerValues[1] = newId;
+                $classOwnerTable.find(".class-owner-data:eq(0)").text(newEmail);
+                $classOwnerTable.find(".class-owner-data:eq(1)").text(newKarma);
+                $classOwnerTable.find(".class-owner-data:eq(2)").text(newStatus);
 
-                //Vypnutí nebo zapnutí tlačítka pro kontaktování správce třídy a změna adresáta předávaného jako parametr
+                //vypnutí nebo zapnutí tlačítka pro kontaktování vlastníka třídy a změna adresáta předávaného jako parametr
                 if (newEmail === null)
                 {
-                    //Nový správce nemá e-mail --> vypnout tlačítko
-                    $("#editable-class-admin-row .class-admin-mail-btn").attr("disabled", "");
-                    $("#editable-class-admin-row .class-admin-mail-btn").addClass("grayscale");
-                    $("#editable-class-admin-row .class-admin-mail-btn").removeClass("grayscale-temp-class");    //Aby nebyla třída "grayscale" odebrána při zavolání metody cancelClassAdminEdit() níže
-                    $("#editable-class-admin-row .class-admin-mail-btn").removeClass("active-btn");
-                    $("#editable-class-admin-row .class-admin-mail-btn").removeAttr("onclick");
-                    $("#editable-class-admin-row .class-admin-mail-btn").removeAttr("title");
+                    //vypnutí tlačítka, pokud nový vlastník třídy nemá email
+                    $class.find(".class-admin-mail-btn").addClass("disabled");
+                    $class.find(".class-admin-mail-btn").removeClass("temp");    //aby nebyla třída "disabled" odebrána při zavolání metody editClassOwnerCancel() níže
                 }
                 else
                 {
-                    //Zapnutí tlačítka a aktualizace e-mailové adresy adresáta
-                    $("#editable-class-admin-row .class-admin-mail-btn").removeAttr("disabled");
-                    $("#editable-class-admin-row .class-admin-mail-btn").removeClass("grayscale");
-                    $("#editable-class-admin-row .class-admin-mail-btn").addClass("active-btn");
-                    $("#editable-class-admin-row .class-admin-mail-btn").attr("onclick", "startMail(\""+ newEmail +"\")");
-                    $("#editable-class-admin-row .class-admin-mail-btn").attr("title", "Kontaktovat správce");
+                    //zapnutí tlačítka, pokud nový vlastník třídy má email
+                    $class.find(".class-admin-mail-btn").removeClass("disabled");
+                    $class.find(".class-admin-mail-btn").attr("title", "Kontaktovat správce");
                 }
 
-                //Reset DOM
-                cancelClassAdminEdit();
-
-                //TODO - zobraz (možná) nějak úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
-                //alert(response["message"]);
+                //reset DOM
+                changeClassOwnerCancel(event);
             }
             if (response["messageType"] === "error")
             {
-                //TODO - zobraz nějak chybovou hlášku - ideálně ne jako alert() nebo jiný popup
                 alert(response["message"]);
             }
         }
     );
 }
-function deleteClass(classId, event)
+
+/**
+ * Funkce odesílající požadavek na smazání třídy
+ * @param {event} event 
+ * @returns 
+ */
+function deleteClass(event)
 {
-    if (!confirm("Opravdu chcete odstranit tuto třídu?\nTato akce je nevratná!"))
+
+    let $class = $(event.target).closest(".class-data-item");
+    let classId = $class.attr("data-class-id");
+    let className = $class.attr("data-class-name");
+
+    if (!confirm("Opravdu chcete odstranit třídu " + className + "?\nTato akce je nevratná!"))
     {
         return;
     }
@@ -251,13 +313,12 @@ function deleteClass(classId, event)
         },
         function(response)
         {
-            //TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
             alert(response["message"]);
 
             if (response["messageType"] === "success")
             {
-                //Odebrání třídy z DOM
-                event.target.parentNode.parentNode.parentNode.remove();
+                //odebrání třídy z DOM
+                $class.remove();
             }
         }
     );
