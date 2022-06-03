@@ -1,5 +1,18 @@
-/*-Funkce využívány více stránkami v administrační sekci-*/
-function startMail(addressee)
+$(function()
+{   
+    //event listenery tlačítek
+    $(".start-mail-button:not(.disabled)").click(function(event) {startMail(event)})
+})
+
+function startMail(event)
 {
-    window.location.href = "/administrate/mailsender?to=" + addressee;
+    if ($(event.target).closest("body").attr("id")=="name-change-requests")
+    {
+        mail = $(event.target).closest(".name-change-request-data-item").attr("data-request-email");
+    }
+    else if ($(event.target).closest("body").attr("id")=="classes")
+    {
+        mail = $(event.target).closest(".class-data-item").attr("data-class-owner-mail");
+    }
+    window.location.href = "/administrate/mailsender?to=" + mail;
 }

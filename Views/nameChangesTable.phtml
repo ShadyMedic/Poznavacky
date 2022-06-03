@@ -11,22 +11,24 @@
     <tr><td colspan=3>Požadavky na změnu uživatelského jména</td></tr>
     <?php endif ?>
     <?php foreach ($userNameChangeRequests as $request) : ?>
-    <tr>
-        <td><?= $request->getOldName(); ?></td>
-        <td><?= $request->getNewName(); ?></td>
+    <tr class="name-change-request-data-item"
+        data-request-id="<?= $request->getId() ?>"
+        data-request-email="<?= $request->getRequestersEmail() ?>"
+        data-object-type="user">
         <td>
-            <button class='name-change-action active-btn' onclick='acceptNameChange(event, "user", <?= $request->getId() ?>)' title='Přijmout'>
+            <?= $request->getOldName(); ?>
+        </td>
+        <td>
+            <?= $request->getNewName(); ?>
+        </td>
+        <td class="name-change-request-action">
+            <button class='btn icon accept-name-change-button' title='Přijmout'>
                 <img src='images/tick.svg'/>
             </button>
-            <button class='name-change-action active-btn' onclick='declineNameChange(event, "user", <?= $request->getId() ?>)' title='Zamítnout'>
+            <button class='btn icon decline-name-change-button' title='Zamítnout'>
                 <img src='images/cross.svg'/>
             </button>
-            <?php if (empty($request->getRequestersEmail())) : ?>
-            <button class='name-change-action grayscale' disabled>
-            <?php endif ?>
-            <?php if (!empty($request->getRequestersEmail())) : ?>
-            <button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
-            <?php endif ?>
+            <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail'>
                 <img src='images/mail.svg'/>
             </button>
         </td>
@@ -37,22 +39,24 @@
     <tr><td colspan=3>Požadavky na změnu jména třídy</td></tr>
     <?php endif ?>
     <?php foreach ($classNameChangeRequests as $request) : ?>
-    <tr>
-        <td><?= $request->getOldName(); ?></td>
-        <td><?= $request->getNewName(); ?></td>
+    <tr class="name-change-request-data-item"
+        data-request-id="<?= $request->getId() ?>"
+        data-request-email="<?= $request->getRequestersEmail() ?>"
+        data-object-type="class">
         <td>
-            <button class='name-change-action active-btn' onclick='acceptNameChange(event, "class", <?= $request->getId() ?>)' title='Přijmout'>
+            <?= $request->getOldName(); ?>
+        </td>
+        <td>
+            <?= $request->getNewName(); ?>
+        </td>
+        <td class="name-change-request-action">
+            <button class='btn icon accept-name-change-button' title='Přijmout'>
                 <img src='images/tick.svg'/>
             </button>
-            <button class='name-change-action active-btn' onclick='declineNameChange(event, "class", <?= $request->getId() ?>)' title='Zamítnout'>
+            <button class='btn icon decline-name-change-button' title='Zamítnout'>
                 <img src='images/cross.svg'/>
             </button>
-            <?php if (empty($request->getRequestersEmail())) : ?>
-            <button class='name-change-action grayscale' disabled>
-            <?php endif ?>
-            <?php if (!empty($request->getRequestersEmail())) : ?>
-            <button class='name-change-action active-btn' onclick='startMail("<?= $request->getRequestersEmail() ?>")' title='Poslat e-mail'>
-            <?php endif ?>
+            <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail'>
                 <img src='images/mail.svg'/>
             </button>
         </td>
