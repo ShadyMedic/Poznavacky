@@ -1,8 +1,16 @@
 $(function()
 {   
+    setActiveTab();
+
     //event listenery tlačítek
     $(".start-mail-button:not(.disabled)").click(function(event) {startMail(event)})
 })
+
+function setActiveTab()
+{
+    let activeTab = $("body").attr("id");
+    $("nav #" + activeTab + "-link").addClass("active-tab");
+}
 
 function startMail(event)
 {
