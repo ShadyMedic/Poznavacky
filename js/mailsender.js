@@ -1,19 +1,33 @@
-$(function() {
-    $("#tab5-link").addClass("active-tab"); //Nabarvi zvolenou záložku
-
+$(function()
+{    
+    //nastavení adresy příjemce (pokud má být předvyplněna)
     const urlParams = new URLSearchParams(new URL(window.location.href).search);
-    if (urlParams.has("to")) { $("#email-address").val(urlParams.get("to")); }  //Nastav adresu příjemce (pokud má být předvyplněna)
-});
+    if (urlParams.has("to"))
+    {
+        $("#email-address").val(urlParams.get("to"));
+    }
 
-var emailModified = true;    //Proměnná uchovávající informaci o tom, zda byl formulář pro odeslání e-mailu od posledního odeslání modifikován
-function emailModification()
+    //event listenery tlačítek
+    $("#preview-email-button").click(function() {previewEmail()})
+    $("#edit-email-button").click(function() {editEmail()})
+    $("#send-email-button").click(function() {sendMail()})
+
+    $("#email-info input").change(function() {emailModifiedCheck()})  
+    $("#email-editor textarea").change(function() {emailModifiedCheck()})  
+})
+
+var emailModified = true;    //proměnná uchovávající informaci o tom, zda byl formulář pro odeslání e-mailu od posledního odeslání modifikován
+
+function emailModifiedCheck()
 {
     emailModified = true;
 }
-function previewEmailMessage()
+
+function previewEmail()
 {
     let rawHTMLbody = $("#email-message").val();
     let rawHTMLfooter = $("#email-footer").val();
+
     $.post('administrate-action',
         {
             action:"preview email",
@@ -24,25 +38,27 @@ function previewEmailMessage()
         {
             let result = response['content'];
             $("#email-editor").hide();
-            $("#email-preview-btn").hide();
+            $("#preview-email-button").hide();
 
             $("#email-preview").html(result);
             $("#email-preview").show();
-            $("#email-edit-btn").show();
+            $("#edit-email-button").show();
         }
     );
 }
-function editEmailMessage()
+
+function editEmail()
 {
-    $("#email-edit-btn").hide();
+    $("#edit-email-button").hide();
     $("#email-preview").hide();
 
     $("#email-editor").show();
-    $("#email-preview-btn").show();
+    $("#preview-email-button").show();
 }
+
 function sendMail()
 {
-    //Ochrana před odesíláním duplicitních e-mailů
+    //ochrana před odesíláním duplicitních e-mailů
     if (!emailModified)
     {
         if (!confirm("Opravdu chcete odeslat ten samý e-mail znovu?"))
@@ -59,7 +75,7 @@ function sendMail()
     let rawHTMLfooter = $("#email-footer").val();
 
     $("#status-info").show();
-    $("#email-send-btn").attr("disabled", true);
+    $("#send-email-button").addClass("disabled");
 
     $.post('administrate-action',
         {
@@ -74,13 +90,12 @@ function sendMail()
         function(response)
         {
             $("#status-info").hide();
-            $("#email-send-btn").removeAttr("disabled");
+            $("#send-email-button").removeClass("disabled");
 
             emailModified = false;
 
             if (response["messageType"] === "error" || response["messageType"] === "success")
             {
-                //TODO - zobraz nějak chybovou nebo úspěchovou hlášku - ideálně ne jako alert() nebo jiný popup
                 alert(response["message"]);
             }
         }
