@@ -1,5 +1,6 @@
 <table>
     <tr>
+        <th>Typ</th>
         <th>Současné jméno</th>
         <th>Požadované jméno</th>
         <th>Akce</th>
@@ -7,58 +8,61 @@
     <?php if (count($userNameChangeRequests) + count($classNameChangeRequests) === 0) : ?>
     <tr><td colspan=3>Žádné žádosti k vyřízení</td></tr>
     <?php endif ?>
-    <?php if (count($userNameChangeRequests) > 0) : ?>
-    <tr><td colspan=3>Požadavky na změnu uživatelského jména</td></tr>
-    <?php endif ?>
     <?php foreach ($userNameChangeRequests as $request) : ?>
     <tr class="name-change-request-data-item"
         data-request-id="<?= $request->getId() ?>"
         data-request-email="<?= $request->getRequestersEmail() ?>"
         data-object-type="user">
         <td>
+            Uživatel
+        </td>
+        <td>
             <?= $request->getOldName(); ?>
         </td>
         <td>
             <?= $request->getNewName(); ?>
         </td>
         <td class="name-change-request-action">
-            <button class='btn icon accept-name-change-button' title='Přijmout'>
-                <img src='images/tick.svg'/>
-            </button>
-            <button class='btn icon decline-name-change-button' title='Zamítnout'>
-                <img src='images/cross.svg'/>
-            </button>
-            <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail'>
-                <img src='images/mail.svg'/>
-            </button>
+            <div>
+                <button class='btn icon accept-name-change-button' title='Přijmout'>
+                    <img src='images/tick.svg'/>
+                </button>
+                <button class='btn icon decline-name-change-button' title='Zamítnout'>
+                    <img src='images/cross.svg'/>
+                </button>
+                <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail uživateli'>
+                    <img src='images/mail.svg'/>
+                </button>
+            </div>
         </td>
     </tr>
     <?php endforeach ?>
-    
-    <?php if (count($classNameChangeRequests) > 0) : ?>
-    <tr><td colspan=3>Požadavky na změnu jména třídy</td></tr>
-    <?php endif ?>
     <?php foreach ($classNameChangeRequests as $request) : ?>
     <tr class="name-change-request-data-item"
         data-request-id="<?= $request->getId() ?>"
         data-request-email="<?= $request->getRequestersEmail() ?>"
         data-object-type="class">
         <td>
+            Třída
+        </td>
+        <td>
             <?= $request->getOldName(); ?>
         </td>
         <td>
             <?= $request->getNewName(); ?>
         </td>
         <td class="name-change-request-action">
-            <button class='btn icon accept-name-change-button' title='Přijmout'>
-                <img src='images/tick.svg'/>
-            </button>
-            <button class='btn icon decline-name-change-button' title='Zamítnout'>
-                <img src='images/cross.svg'/>
-            </button>
-            <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail'>
-                <img src='images/mail.svg'/>
-            </button>
+            <div>
+                <button class='btn icon accept-name-change-button' title='Přijmout'>
+                    <img src='images/tick.svg'/>
+                </button>
+                <button class='btn icon decline-name-change-button' title='Zamítnout'>
+                    <img src='images/cross.svg'/>
+                </button>
+                <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail správci'>
+                    <img src='images/mail.svg'/>
+                </button>
+            </div> 
         </td>
     </tr>
     <?php endforeach ?>

@@ -20,6 +20,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
 }
 #overlay {
     position: fixed;
@@ -42,6 +43,9 @@ header {
     margin: 1rem 1rem 0 1rem;
     font-size: 1.2rem;
     flex: 0 1 auto;
+}
+a {
+    color: black;
 }
 nav {
     display: flex;
@@ -70,6 +74,7 @@ footer {
 }
 table {
     border-collapse: collapse;
+    max-width: 100%;
 }
 input {
     padding-left: 0.2rem;
@@ -78,6 +83,10 @@ input {
     border: 1px solid gray;
     font-family: serif;
     font-size: 100%;
+    &:focus {
+        border: 1px solid darkred;
+        outline: 1px solid darkred;
+    }
 }
 td,
 th {
@@ -85,61 +94,112 @@ th {
     margin: 0;
     vertical-align: middle;
 }
+td {
+    word-break: break-word;
+}
+.class-owner-table td:nth-child(1) {
+    word-break: keep-all;
+}
 tr {
     height: 2rem;
 }
-#tab1
-{
-    display: block;
-}
-#tab2, #tab3, #tab4, #tab5, #tab6
-{
-    display: none;
-}
-button {
+.btn {
     background: transparent;
     &:hover {
         cursor: pointer;
     }
+    &.icon {
+        display: block;
+        height: 1em;
+        width: 1em;
+        img {
+            transition: transform 0.2s ease-out;
+            height: 100%;
+            width: 100%;
+        }
+        &.disabled {
+            filter: grayscale(100%);
+            pointer-events: none;
+            &:hover {
+                cursor: auto;
+            }
+        }
+    }
+    &.border-btn {
+        border: 1px solid black;
+        margin: 0 0.2rem 0 0;
+        padding: 0.16rem 0.32rem;
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 0.06);
+        }
+        &.disabled {
+            filter: grayscale(100%);
+            border: 1px solid #444;
+            color: #444;
+            pointer-events: none;
+            &:hover {
+                cursor: auto;
+            }
+        }
+    }
 }
-.border-btn {
+textarea {
     border: 1px solid gray;
-    padding: 0.26rem 0.4rem 0.2rem 0.4rem;
-    margin: 0.4rem auto;
-    &:hover {
-        background-color: rgba(black, 0.1);
+    padding: 0.2rem 0.4rem;
+    resize: vertical;
+    min-height: 3.8rem;
+    width: 100%;
+    margin: 0.2rem 0;
+    &:focus {
+        border: 1px solid darkred;
+        outline: 1px solid darkred;
     }
 }
-.active-btn,
-.grayscale {
-    height: 1.2rem;
-    width: 1.2rem;
-    padding: 0;
-    margin: 0 0.2rem;
-    vertical-align: middle;
-    img {
-        height: 1.2rem;
-        width: 1.2rem;
+
+#administrate {
+    #stats {
+        margin: auto;
+        width: 90%;
+        @media screen and (min-width: $mobile) {
+            width: 75%;
+        }
+        @media screen and (min-width: $tablet) {
+            width: 55%;
+        }
+        @media screen and (min-width: $smallDesktop) {
+            width: 35%;
+        }
     }
-}
-:focus {
-    outline: none;
-    border: 1px dotted black;
-    box-sizing: border-box;
-}
-.grayscale {
-    filter: grayscale(100%);
-    &:hover {
-        cursor: auto;
+    h1 {
+        text-align: center;
+        margin-top: 0.8rem;
+        line-height: 1em;
+    }
+    table {
+        width: 100%;
+        margin: 0.8rem 0;
+        border-top:solid 1px #444;
+        td {
+            &:nth-child(1) {
+                text-align: left;
+            }
+            &:nth-child(2) {
+                text-align: center;
+            }
+            &:nth-child(3) {
+                text-align: right;
+                word-break: keep-all;
+            }
+        }
     }
 }
 
 #users,
 #classes,
 #admin-reports,
-#name-change-requests {
+#name-change-requests,
+#database {
     table {
-        position: relative;
         margin: auto;
         text-align: center;
     }
@@ -148,18 +208,26 @@ button {
         top: 0;
         background: lightgray;
         padding: 0.1rem 0.4rem;
+        z-index: 5;
     }
     tr:nth-child(odd) {
         background: #eee;
-    }
-    .class-admin-table tr:nth-child(odd) {
-        background: transparent;
     }
     td {
         padding: 0.1rem 0.4rem;
         &:not(:last-child) {
             border-right: 1px solid lightgray;
         }
+    }
+}
+
+
+#users,
+#classes,
+#admin-reports,
+#name-change-requests {
+    .class-owner-table tr:nth-child(odd) {
+        background: transparent;
     }
     input {
         border: none;
@@ -173,8 +241,24 @@ button {
         border: none;
         background: transparent;
     }
+    .user-action > div,
+    .class-action > div,
+    .report-action > div,
+    .name-change-request-action > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        @media screen and (min-width: $tablet) {
+            flex-direction: row;
+        }
+        .btn {
+            margin: 0.16rem;
+        }
+    }
 }
-#image-preview {
+
+#report-image {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -194,19 +278,21 @@ button {
         width: 100%;
         border: 1px solid black;
     }
-    .border-btn {
-        display: block;
-        margin: auto;
-        background: white;
-        border: 1px solid black;
+    .btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: black;
+        height: 1.4em;
+        width: 1.4em;
     }
 }
 
 #mailsender {
     position: relative;
     #email {
-        margin: auto;
         width: 95%;
+        margin: auto;
         @media screen and (min-width: $mobile) {
             width: 85%;
         }
@@ -226,9 +312,6 @@ button {
             }
         }
     }
-    .border-btn {
-        margin: 0 0.2rem 0 0;
-    }
     #email-info {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -243,16 +326,14 @@ button {
         }
     }
     #email-editor {
-        margin: 0.4rem 0;
+        margin: 0.8rem 0;
         textarea {
-            border: 1px solid gray;
-            padding: 0.2rem 0.4rem;
-            resize: vertical;
             height: 16vh;
-            min-height: 3.8rem;
             max-height: 36vh;
-            width: 100%;
-            margin: 0.2rem 0;
+        }
+        label {
+            margin-top: 0.6rem;
+            display: block;
         }
     }
     #email-preview {
@@ -261,6 +342,11 @@ button {
         span {
             margin-bottom: 1rem;
         }
+    }
+    .info {
+        margin-top: 0.8rem;
+        font-size: 0.8rem;
+        color: #444;
     }
 }
 
@@ -288,15 +374,10 @@ button {
         margin: 0.4rem auto;
     }
     #sql-query {
-        margin: 0.4rem auto;
+        margin: 0.6rem auto;
         textarea {
-            border: 1px solid gray;
-            padding: 0.2rem 0.4rem;
-            resize: vertical;
-            min-height: 3.8rem;
             max-height: 24vh;
-            width: 100%;
-            margin: 0.2rem 0;
+            margin-bottom: 0.4rem;
         }
     }    
     #sql-result {
@@ -316,23 +397,6 @@ button {
         }
         table {
             position: relative;
-            margin: auto;
-            text-align: center;
-            th {
-                position: sticky;
-                top: 0;
-                background: lightgray;
-                padding: 0.1rem 0.4rem;
-            }
-            tr:nth-child(odd) {
-                background: #eee;
-            }
-            td {
-                padding: 0.1rem 0.4rem;
-                &:not(:last-child) {
-                    border-right: 1px solid lightgray;
-                }
-            }
         }
     }
 }

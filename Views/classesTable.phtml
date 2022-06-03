@@ -72,37 +72,39 @@
                 <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='class-field class-code'/>
             </td>
             <td class="class-action">
-                <button class='btn icon edit-class-button' title='Upravit status a kód'>
-                    <img src='images/pencil.svg'/>
-                </button>
-                <div class="class-edit-buttons" style="display:none;">
-                    <button class='btn icon edit-class-confirm-button' title='Uložit'>
-                        <img src='images/tick.svg'/>
+                <div>
+                    <button class='btn icon edit-class-button' title='Upravit status a kód'>
+                        <img src='images/pencil.svg'/>
                     </button>
-                    <button class='btn icon edit-class-cancel-button' title='Zrušit'>
+                    <div class="class-edit-buttons" style="display:none;">
+                        <button class='btn icon edit-class-confirm-button' title='Uložit'>
+                            <img src='images/tick.svg'/>
+                        </button>
+                        <button class='btn icon edit-class-cancel-button' title='Zrušit'>
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </div>
+                    <div class="class-change-class-owner-buttons" style="display:none;">
+                        <button class='btn icon edit-class-owner-action change-class-owner-confirm-button' title='Uložit'>
+                            <img src='images/tick.svg'/>
+                        </button>
+                        <button class='btn icon edit-class-owner-action change-class-owner-confirm-button' title='Zrušit'>
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </div>
+                    <button class='btn icon class-action change-class-owner-button' title='Změnit správce'>
+                        <img src='images/user-icon.svg'/>
+                    </button>
+                    <button class='class-action btn icon class-redirect-button' title='Spravovat'>
+                        <img src='images/management.svg'/>
+                    </button>
+                    <button class='class-action btn icon start-mail-button <?php if (empty($class->getAdmin()['email'])) : ?> disabled <?php endif ?>' title='Kontaktovat správce'>
+                        <img src='images/mail.svg'/>
+                    </button>
+                    <button class='class-action btn icon delete-class-button' title='Odstranit třídu'>
                         <img src='images/cross.svg'/>
                     </button>
                 </div>
-                <div class="class-change-class-owner-buttons" style="display:none;">
-                    <button class='btn icon edit-class-owner-action change-class-owner-confirm-button' title='Uložit'>
-                        <img src='images/tick.svg'/>
-                    </button>
-                    <button class='btn icon edit-class-owner-action change-class-owner-confirm-button' title='Zrušit'>
-                        <img src='images/cross.svg'/>
-                    </button>
-                </div>
-                <button class='btn icon class-action change-class-owner-button' title='Změnit správce'>
-                    <img src='images/dot.svg'/>
-                </button>
-                <button class='class-action btn icon class-redirect-button' title='Spravovat'>
-                    <img src='images/management.svg'/>
-                </button>
-                <button class='class-action btn icon start-mail-button <?php if (empty($class->getAdmin()['email'])) : ?> disabled <?php endif ?>' title='Kontaktovat správce'>
-                    <img src='images/mail.svg'/>
-                </button>
-                <button class='class-action btn icon delete-class-button' title='Odstranit třídu'>
-                    <img src='images/cross.svg'/>
-                </button>
             </td>
         </tr>
     <?php endforeach ?>

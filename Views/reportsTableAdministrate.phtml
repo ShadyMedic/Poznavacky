@@ -26,16 +26,18 @@
             <td><?= $report->getReason() ?></td>
             <td><?= $report->getAdditionalInformation() ?>
             <td><?= $report->getReportersCount() ?></td>
-            <td>
-                <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
-                    <img src='images/eye.svg'/>
-                </button>
-                <button class='btn icon delete-picture-button' title='Odstranit obrázek'>
-                    <img src='images/cross.svg'/>
-                </button>
-                <button class='btn icon delete-report-button' title='Odstranit hlášení'>
-                    <img src='images/minus.svg'/>
-                </button>
+            <td class="report-action">
+                <div>
+                    <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
+                        <img src='images/eye.svg'/>
+                    </button>
+                    <button class='btn icon delete-picture-button' title='Odstranit obrázek'>
+                        <img src='images/cross.svg'/>
+                    </button>
+                    <button class='btn icon delete-report-button' title='Odstranit hlášení'>
+                        <img src='images/minus.svg'/>
+                    </button>
+                </div>
             </td>
         </tr>
     <?php endforeach ?>

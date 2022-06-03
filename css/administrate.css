@@ -24,6 +24,7 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   height: 100%;
+  position: relative;
 }
 
 #overlay {
@@ -53,6 +54,10 @@ header {
   -webkit-box-flex: 0;
       -ms-flex: 0 1 auto;
           flex: 0 1 auto;
+}
+
+a {
+  color: black;
 }
 
 nav {
@@ -89,6 +94,7 @@ footer {
 
 table {
   border-collapse: collapse;
+  max-width: 100%;
 }
 
 input {
@@ -100,6 +106,11 @@ input {
   font-size: 100%;
 }
 
+input:focus {
+  border: 1px solid darkred;
+  outline: 1px solid darkred;
+}
+
 td,
 th {
   padding: 0 0.2rem;
@@ -107,72 +118,140 @@ th {
   vertical-align: middle;
 }
 
+td {
+  word-break: break-word;
+}
+
+.class-owner-table td:nth-child(1) {
+  word-break: keep-all;
+}
+
 tr {
   height: 2rem;
 }
 
-#tab1 {
-  display: block;
-}
-
-#tab2, #tab3, #tab4, #tab5, #tab6 {
-  display: none;
-}
-
-button {
+.btn {
   background: transparent;
 }
 
-button:hover {
+.btn:hover {
   cursor: pointer;
 }
 
-.border-btn {
-  border: 1px solid gray;
-  padding: 0.26rem 0.4rem 0.2rem 0.4rem;
-  margin: 0.4rem auto;
+.btn.icon {
+  display: block;
+  height: 1em;
+  width: 1em;
 }
 
-.border-btn:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.btn.icon img {
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+  height: 100%;
+  width: 100%;
 }
 
-.active-btn,
-.grayscale {
-  height: 1.2rem;
-  width: 1.2rem;
-  padding: 0;
-  margin: 0 0.2rem;
-  vertical-align: middle;
-}
-
-.active-btn img,
-.grayscale img {
-  height: 1.2rem;
-  width: 1.2rem;
-}
-
-:focus {
-  outline: none;
-  border: 1px dotted black;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.grayscale {
+.btn.icon.disabled {
   -webkit-filter: grayscale(100%);
           filter: grayscale(100%);
+  pointer-events: none;
 }
 
-.grayscale:hover {
+.btn.icon.disabled:hover {
   cursor: auto;
+}
+
+.btn.border-btn {
+  border: 1px solid black;
+  margin: 0 0.2rem 0 0;
+  padding: 0.16rem 0.32rem;
+}
+
+.btn.border-btn:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.btn.border-btn.disabled {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+  border: 1px solid #444;
+  color: #444;
+  pointer-events: none;
+}
+
+.btn.border-btn.disabled:hover {
+  cursor: auto;
+}
+
+textarea {
+  border: 1px solid gray;
+  padding: 0.2rem 0.4rem;
+  resize: vertical;
+  min-height: 3.8rem;
+  width: 100%;
+  margin: 0.2rem 0;
+}
+
+textarea:focus {
+  border: 1px solid darkred;
+  outline: 1px solid darkred;
+}
+
+#administrate #stats {
+  margin: auto;
+  width: 90%;
+}
+
+@media screen and (min-width: 576px) {
+  #administrate #stats {
+    width: 75%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #administrate #stats {
+    width: 55%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #administrate #stats {
+    width: 35%;
+  }
+}
+
+#administrate h1 {
+  text-align: center;
+  margin-top: 0.8rem;
+  line-height: 1em;
+}
+
+#administrate table {
+  width: 100%;
+  margin: 0.8rem 0;
+  border-top: solid 1px #444;
+}
+
+#administrate table td:nth-child(1) {
+  text-align: left;
+}
+
+#administrate table td:nth-child(2) {
+  text-align: center;
+}
+
+#administrate table td:nth-child(3) {
+  text-align: right;
+  word-break: keep-all;
 }
 
 #users table,
 #classes table,
 #admin-reports table,
-#name-change-requests table {
-  position: relative;
+#name-change-requests table,
+#database table {
   margin: auto;
   text-align: center;
 }
@@ -180,40 +259,45 @@ button:hover {
 #users th,
 #classes th,
 #admin-reports th,
-#name-change-requests th {
+#name-change-requests th,
+#database th {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   background: lightgray;
   padding: 0.1rem 0.4rem;
+  z-index: 5;
 }
 
 #users tr:nth-child(odd),
 #classes tr:nth-child(odd),
 #admin-reports tr:nth-child(odd),
-#name-change-requests tr:nth-child(odd) {
+#name-change-requests tr:nth-child(odd),
+#database tr:nth-child(odd) {
   background: #eee;
-}
-
-#users .class-admin-table tr:nth-child(odd),
-#classes .class-admin-table tr:nth-child(odd),
-#admin-reports .class-admin-table tr:nth-child(odd),
-#name-change-requests .class-admin-table tr:nth-child(odd) {
-  background: transparent;
 }
 
 #users td,
 #classes td,
 #admin-reports td,
-#name-change-requests td {
+#name-change-requests td,
+#database td {
   padding: 0.1rem 0.4rem;
 }
 
 #users td:not(:last-child),
 #classes td:not(:last-child),
 #admin-reports td:not(:last-child),
-#name-change-requests td:not(:last-child) {
+#name-change-requests td:not(:last-child),
+#database td:not(:last-child) {
   border-right: 1px solid lightgray;
+}
+
+#users .class-owner-table tr:nth-child(odd),
+#classes .class-owner-table tr:nth-child(odd),
+#admin-reports .class-owner-table tr:nth-child(odd),
+#name-change-requests .class-owner-table tr:nth-child(odd) {
+  background: transparent;
 }
 
 #users input,
@@ -240,7 +324,81 @@ button:hover {
   background: transparent;
 }
 
-#image-preview {
+#users .user-action > div,
+#users .class-action > div,
+#users .report-action > div,
+#users .name-change-request-action > div,
+#classes .user-action > div,
+#classes .class-action > div,
+#classes .report-action > div,
+#classes .name-change-request-action > div,
+#admin-reports .user-action > div,
+#admin-reports .class-action > div,
+#admin-reports .report-action > div,
+#admin-reports .name-change-request-action > div,
+#name-change-requests .user-action > div,
+#name-change-requests .class-action > div,
+#name-change-requests .report-action > div,
+#name-change-requests .name-change-request-action > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  #users .user-action > div,
+  #users .class-action > div,
+  #users .report-action > div,
+  #users .name-change-request-action > div,
+  #classes .user-action > div,
+  #classes .class-action > div,
+  #classes .report-action > div,
+  #classes .name-change-request-action > div,
+  #admin-reports .user-action > div,
+  #admin-reports .class-action > div,
+  #admin-reports .report-action > div,
+  #admin-reports .name-change-request-action > div,
+  #name-change-requests .user-action > div,
+  #name-change-requests .class-action > div,
+  #name-change-requests .report-action > div,
+  #name-change-requests .name-change-request-action > div {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+#users .user-action > div .btn,
+#users .class-action > div .btn,
+#users .report-action > div .btn,
+#users .name-change-request-action > div .btn,
+#classes .user-action > div .btn,
+#classes .class-action > div .btn,
+#classes .report-action > div .btn,
+#classes .name-change-request-action > div .btn,
+#admin-reports .user-action > div .btn,
+#admin-reports .class-action > div .btn,
+#admin-reports .report-action > div .btn,
+#admin-reports .name-change-request-action > div .btn,
+#name-change-requests .user-action > div .btn,
+#name-change-requests .class-action > div .btn,
+#name-change-requests .report-action > div .btn,
+#name-change-requests .name-change-request-action > div .btn {
+  margin: 0.16rem;
+}
+
+#report-image {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -251,33 +409,35 @@ button:hover {
 }
 
 @media screen and (min-width: 576px) {
-  #image-preview {
+  #report-image {
     width: 80%;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #image-preview {
+  #report-image {
     width: 65%;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #image-preview {
+  #report-image {
     width: 45%;
   }
 }
 
-#image-preview img {
+#report-image img {
   width: 100%;
   border: 1px solid black;
 }
 
-#image-preview .border-btn {
-  display: block;
-  margin: auto;
-  background: white;
-  border: 1px solid black;
+#report-image .btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: black;
+  height: 1.4em;
+  width: 1.4em;
 }
 
 #mailsender {
@@ -285,8 +445,8 @@ button:hover {
 }
 
 #mailsender #email {
-  margin: auto;
   width: 95%;
+  margin: auto;
 }
 
 @media screen and (min-width: 576px) {
@@ -321,10 +481,6 @@ button:hover {
   padding: 0.1rem 0.2rem 0.1rem 0;
 }
 
-#mailsender .border-btn {
-  margin: 0 0.2rem 0 0;
-}
-
 #mailsender #email-info {
   display: -ms-grid;
   display: grid;
@@ -346,18 +502,17 @@ button:hover {
 }
 
 #mailsender #email-editor {
-  margin: 0.4rem 0;
+  margin: 0.8rem 0;
 }
 
 #mailsender #email-editor textarea {
-  border: 1px solid gray;
-  padding: 0.2rem 0.4rem;
-  resize: vertical;
   height: 16vh;
-  min-height: 3.8rem;
   max-height: 36vh;
-  width: 100%;
-  margin: 0.2rem 0;
+}
+
+#mailsender #email-editor label {
+  margin-top: 0.6rem;
+  display: block;
 }
 
 #mailsender #email-preview {
@@ -367,6 +522,12 @@ button:hover {
 
 #mailsender #email-preview span {
   margin-bottom: 1rem;
+}
+
+#mailsender .info {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: #444;
 }
 
 #database {
@@ -407,17 +568,12 @@ button:hover {
 }
 
 #database #sql-query {
-  margin: 0.4rem auto;
+  margin: 0.6rem auto;
 }
 
 #database #sql-query textarea {
-  border: 1px solid gray;
-  padding: 0.2rem 0.4rem;
-  resize: vertical;
-  min-height: 3.8rem;
   max-height: 24vh;
-  width: 100%;
-  margin: 0.2rem 0;
+  margin-bottom: 0.4rem;
 }
 
 #database #sql-result p {
@@ -446,27 +602,5 @@ button:hover {
 
 #database #sql-result table {
   position: relative;
-  margin: auto;
-  text-align: center;
-}
-
-#database #sql-result table th {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  background: lightgray;
-  padding: 0.1rem 0.4rem;
-}
-
-#database #sql-result table tr:nth-child(odd) {
-  background: #eee;
-}
-
-#database #sql-result table td {
-  padding: 0.1rem 0.4rem;
-}
-
-#database #sql-result table td:not(:last-child) {
-  border-right: 1px solid lightgray;
 }
 /*# sourceMappingURL=administrate.css.map */
