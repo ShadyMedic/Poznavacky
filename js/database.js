@@ -1,8 +1,13 @@
-$(function() { $("#tab6-link").addClass("active-tab"); }); //Nabarvi zvolenou záložku
+$(function()
+{   
+    //event listenery tlačítek
+    $("#send-sql-query-button").click(function() {sendSqlQuery()})
+})
 
 function sendSqlQuery()
 {
     let query = $("#sql-query-input").val();
+    
     $.post('administrate-action',
         {
             action:"execute sql query",
