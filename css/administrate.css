@@ -140,8 +140,8 @@ tr {
 
 .btn.icon {
   display: block;
-  height: 1em;
-  width: 1em;
+  height: 1.2em;
+  width: 1.2em;
 }
 
 .btn.icon img {
@@ -436,8 +436,6 @@ textarea:focus {
   top: 0;
   right: 0;
   background: black;
-  height: 1.4em;
-  width: 1.4em;
 }
 
 #mailsender {

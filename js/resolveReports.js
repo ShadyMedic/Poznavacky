@@ -74,6 +74,7 @@ function hidePicture(event)
     else {
         $("#report-image").hide();
         $("#overlay").hide();
+        $("#report-image > img").attr("src", "");
     }
 }
 

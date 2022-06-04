@@ -110,8 +110,8 @@ tr {
     }
     &.icon {
         display: block;
-        height: 1em;
-        width: 1em;
+        height: 1.2em;
+        width: 1.2em;
         img {
             transition: transform 0.2s ease-out;
             height: 100%;
@@ -120,7 +120,7 @@ tr {
         &.disabled {
             filter: grayscale(100%);
             pointer-events: none;
-            &:hover {
+            &:hover { 
                 cursor: auto;
             }
         }
@@ -143,6 +143,7 @@ tr {
         }
     }
 }
+
 textarea {
     border: 1px solid gray;
     padding: 0.2rem 0.4rem;
@@ -283,8 +284,6 @@ textarea {
         top: 0;
         right: 0;
         background: black;
-        height: 1.4em;
-        width: 1.4em;
     }
 }
 
