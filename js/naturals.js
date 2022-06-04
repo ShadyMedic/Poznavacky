@@ -3,8 +3,18 @@ var ajaxUrl = window.location.href;
 if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
 ajaxUrl = ajaxUrl.replace('/naturals', '/update-naturals'); //Nahraď neAJAX akci AJAX akcí
 
+//pole objektů položek přírodnin
+var $naturals = [];
+//pole, v němž má každá přírodnina svoje vlastní pole obsahující id, název přírodniny, počet výskytů a počet obrázků
+var naturalParameters = [];
+
 $(function()
 {
+    $(".natural-data-item").each(function() {
+        $naturals.push($(this));
+        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural-name").text(), $(this).find(".natural-uses-count").text(), $(this).find(".natural-pictures-count").text()));
+    })
+
     //event listenery tlačítek
     $(".rename-natural-button").click(function(event) {rename(event)})
     $(".rename-confirm-button").click(function(event) {renameConfirm(event)})
@@ -12,10 +22,85 @@ $(function()
     $(".remove-natural-button").click(function(event) {remove(event)})
     $("#hide-naturals-info-button").click(function() {hideInfo()});
     $("#show-naturals-info-button").click(function() {showInfo()});
+    $("#remove-filters-button").click(function() {removeFilters()})
+    $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
+    $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
 
     //event listener zmáčknutí klávesy
     $(".natural-name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
+
+    $("#filter-name").on("input", function() {filterByName($("#filter-name").val())})
 })
+
+function sortNaturals(event, direction)
+{
+    let classType = $(event.target).closest(".sort-buttons").siblings().first().attr("class");
+    let sortBy;
+
+    switch (classType) {
+        case "natural-name":
+            sortBy = 1;
+            break;
+        case "natural-uses-count":
+            sortBy = 2;
+            break;
+        case "natural-pictures-count":
+            sortBy = 3;
+            break;
+    }
+
+    let unsorted = naturalParameters
+    naturalParameters.sort((a,b) => {
+        if (a[sortBy] === b[sortBy]) {
+            return 0;
+        }
+        else {
+            return a[sortBy].localeCompare(b[sortBy]);
+        }
+    });
+
+    if (direction == "down")
+    {
+        naturalParameters.reverse();
+    }
+
+    naturalParameters.forEach(function(element) {
+        let id = element[0];
+        $natural = $(".natural-data-item[data-natural-id='" + id + "']");
+        $("#naturals-data-section").append($natural.get(0).outerHTML);
+        $natural.first().remove();   
+    })
+    
+}
+
+function removeFilters()
+{
+    //zrušení filtrování podle jména
+    $("#filter-name").val("");
+    filterByName("");
+
+    $(".natural-data-item").remove();
+
+    $naturals.forEach(function($element) {
+        $("#naturals-data-section").append($element.get(0).outerHTML);
+    })
+}
+
+function filterByName(name)
+{
+    $(".natural-data-item").each(function() {
+        let naturalName = $(this).find(".natural-name").text().toLowerCase();
+        if (naturalName.startsWith(name.toLowerCase()))
+        {
+            $(this).show();
+        }
+        else
+        {
+            $(this).hide();
+        }
+    })
+}
+
 
 /**
  * Funkce zobrazující sekci s nápovědou

@@ -2835,6 +2835,7 @@ label.required:after {
 #account-settings #delete-class2,
 #account-settings #invite-user-form,
 #account-settings #new-test,
+#account-settings #filter-search,
 #manage .change-form,
 #manage #delete-account1,
 #manage #delete-account2,
@@ -2842,6 +2843,7 @@ label.required:after {
 #manage #delete-class2,
 #manage #invite-user-form,
 #manage #new-test,
+#manage #filter-search,
 #members .change-form,
 #members #delete-account1,
 #members #delete-account2,
@@ -2849,6 +2851,7 @@ label.required:after {
 #members #delete-class2,
 #members #invite-user-form,
 #members #new-test,
+#members #filter-search,
 #tests .change-form,
 #tests #delete-account1,
 #tests #delete-account2,
@@ -2856,13 +2859,15 @@ label.required:after {
 #tests #delete-class2,
 #tests #invite-user-form,
 #tests #new-test,
+#tests #filter-search,
 #naturals .change-form,
 #naturals #delete-account1,
 #naturals #delete-account2,
 #naturals #delete-class1,
 #naturals #delete-class2,
 #naturals #invite-user-form,
-#naturals #new-test {
+#naturals #new-test,
+#naturals #filter-search {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2879,6 +2884,7 @@ label.required:after {
 #account-settings #delete-class2 label,
 #account-settings #invite-user-form label,
 #account-settings #new-test label,
+#account-settings #filter-search label,
 #manage .change-form label,
 #manage #delete-account1 label,
 #manage #delete-account2 label,
@@ -2886,6 +2892,7 @@ label.required:after {
 #manage #delete-class2 label,
 #manage #invite-user-form label,
 #manage #new-test label,
+#manage #filter-search label,
 #members .change-form label,
 #members #delete-account1 label,
 #members #delete-account2 label,
@@ -2893,6 +2900,7 @@ label.required:after {
 #members #delete-class2 label,
 #members #invite-user-form label,
 #members #new-test label,
+#members #filter-search label,
 #tests .change-form label,
 #tests #delete-account1 label,
 #tests #delete-account2 label,
@@ -2900,13 +2908,15 @@ label.required:after {
 #tests #delete-class2 label,
 #tests #invite-user-form label,
 #tests #new-test label,
+#tests #filter-search label,
 #naturals .change-form label,
 #naturals #delete-account1 label,
 #naturals #delete-account2 label,
 #naturals #delete-class1 label,
 #naturals #delete-class2 label,
 #naturals #invite-user-form label,
-#naturals #new-test label {
+#naturals #new-test label,
+#naturals #filter-search label {
   font-size: 0.9rem;
 }
 
@@ -2931,6 +2941,9 @@ label.required:after {
 #account-settings #new-test label,
 #account-settings #new-test input.text-field,
 #account-settings #new-test .custom-select-wrapper,
+#account-settings #filter-search label,
+#account-settings #filter-search input.text-field,
+#account-settings #filter-search .custom-select-wrapper,
 #manage .change-form label,
 #manage .change-form input.text-field,
 #manage .change-form .custom-select-wrapper,
@@ -2952,6 +2965,9 @@ label.required:after {
 #manage #new-test label,
 #manage #new-test input.text-field,
 #manage #new-test .custom-select-wrapper,
+#manage #filter-search label,
+#manage #filter-search input.text-field,
+#manage #filter-search .custom-select-wrapper,
 #members .change-form label,
 #members .change-form input.text-field,
 #members .change-form .custom-select-wrapper,
@@ -2973,6 +2989,9 @@ label.required:after {
 #members #new-test label,
 #members #new-test input.text-field,
 #members #new-test .custom-select-wrapper,
+#members #filter-search label,
+#members #filter-search input.text-field,
+#members #filter-search .custom-select-wrapper,
 #tests .change-form label,
 #tests .change-form input.text-field,
 #tests .change-form .custom-select-wrapper,
@@ -2994,6 +3013,9 @@ label.required:after {
 #tests #new-test label,
 #tests #new-test input.text-field,
 #tests #new-test .custom-select-wrapper,
+#tests #filter-search label,
+#tests #filter-search input.text-field,
+#tests #filter-search .custom-select-wrapper,
 #naturals .change-form label,
 #naturals .change-form input.text-field,
 #naturals .change-form .custom-select-wrapper,
@@ -3014,7 +3036,10 @@ label.required:after {
 #naturals #invite-user-form .custom-select-wrapper,
 #naturals #new-test label,
 #naturals #new-test input.text-field,
-#naturals #new-test .custom-select-wrapper {
+#naturals #new-test .custom-select-wrapper,
+#naturals #filter-search label,
+#naturals #filter-search input.text-field,
+#naturals #filter-search .custom-select-wrapper {
   margin: 0.2rem 0;
 }
 
@@ -3025,6 +3050,7 @@ label.required:after {
 #account-settings #delete-class2 label:not(:nth-of-type(1)),
 #account-settings #invite-user-form label:not(:nth-of-type(1)),
 #account-settings #new-test label:not(:nth-of-type(1)),
+#account-settings #filter-search label:not(:nth-of-type(1)),
 #manage .change-form label:not(:nth-of-type(1)),
 #manage #delete-account1 label:not(:nth-of-type(1)),
 #manage #delete-account2 label:not(:nth-of-type(1)),
@@ -3032,6 +3058,7 @@ label.required:after {
 #manage #delete-class2 label:not(:nth-of-type(1)),
 #manage #invite-user-form label:not(:nth-of-type(1)),
 #manage #new-test label:not(:nth-of-type(1)),
+#manage #filter-search label:not(:nth-of-type(1)),
 #members .change-form label:not(:nth-of-type(1)),
 #members #delete-account1 label:not(:nth-of-type(1)),
 #members #delete-account2 label:not(:nth-of-type(1)),
@@ -3039,6 +3066,7 @@ label.required:after {
 #members #delete-class2 label:not(:nth-of-type(1)),
 #members #invite-user-form label:not(:nth-of-type(1)),
 #members #new-test label:not(:nth-of-type(1)),
+#members #filter-search label:not(:nth-of-type(1)),
 #tests .change-form label:not(:nth-of-type(1)),
 #tests #delete-account1 label:not(:nth-of-type(1)),
 #tests #delete-account2 label:not(:nth-of-type(1)),
@@ -3046,13 +3074,15 @@ label.required:after {
 #tests #delete-class2 label:not(:nth-of-type(1)),
 #tests #invite-user-form label:not(:nth-of-type(1)),
 #tests #new-test label:not(:nth-of-type(1)),
+#tests #filter-search label:not(:nth-of-type(1)),
 #naturals .change-form label:not(:nth-of-type(1)),
 #naturals #delete-account1 label:not(:nth-of-type(1)),
 #naturals #delete-account2 label:not(:nth-of-type(1)),
 #naturals #delete-class1 label:not(:nth-of-type(1)),
 #naturals #delete-class2 label:not(:nth-of-type(1)),
 #naturals #invite-user-form label:not(:nth-of-type(1)),
-#naturals #new-test label:not(:nth-of-type(1)) {
+#naturals #new-test label:not(:nth-of-type(1)),
+#naturals #filter-search label:not(:nth-of-type(1)) {
   margin-top: 0.54rem;
 }
 
@@ -3063,6 +3093,7 @@ label.required:after {
 #account-settings #delete-class2 p,
 #account-settings #invite-user-form p,
 #account-settings #new-test p,
+#account-settings #filter-search p,
 #manage .change-form p,
 #manage #delete-account1 p,
 #manage #delete-account2 p,
@@ -3070,6 +3101,7 @@ label.required:after {
 #manage #delete-class2 p,
 #manage #invite-user-form p,
 #manage #new-test p,
+#manage #filter-search p,
 #members .change-form p,
 #members #delete-account1 p,
 #members #delete-account2 p,
@@ -3077,6 +3109,7 @@ label.required:after {
 #members #delete-class2 p,
 #members #invite-user-form p,
 #members #new-test p,
+#members #filter-search p,
 #tests .change-form p,
 #tests #delete-account1 p,
 #tests #delete-account2 p,
@@ -3084,13 +3117,15 @@ label.required:after {
 #tests #delete-class2 p,
 #tests #invite-user-form p,
 #tests #new-test p,
+#tests #filter-search p,
 #naturals .change-form p,
 #naturals #delete-account1 p,
 #naturals #delete-account2 p,
 #naturals #delete-class1 p,
 #naturals #delete-class2 p,
 #naturals #invite-user-form p,
-#naturals #new-test p {
+#naturals #new-test p,
+#naturals #filter-search p {
   margin-bottom: 0.6rem;
   text-align: justify;
 }
@@ -3102,6 +3137,7 @@ label.required:after {
 #account-settings #delete-class2 .message,
 #account-settings #invite-user-form .message,
 #account-settings #new-test .message,
+#account-settings #filter-search .message,
 #manage .change-form .message,
 #manage #delete-account1 .message,
 #manage #delete-account2 .message,
@@ -3109,6 +3145,7 @@ label.required:after {
 #manage #delete-class2 .message,
 #manage #invite-user-form .message,
 #manage #new-test .message,
+#manage #filter-search .message,
 #members .change-form .message,
 #members #delete-account1 .message,
 #members #delete-account2 .message,
@@ -3116,6 +3153,7 @@ label.required:after {
 #members #delete-class2 .message,
 #members #invite-user-form .message,
 #members #new-test .message,
+#members #filter-search .message,
 #tests .change-form .message,
 #tests #delete-account1 .message,
 #tests #delete-account2 .message,
@@ -3123,13 +3161,15 @@ label.required:after {
 #tests #delete-class2 .message,
 #tests #invite-user-form .message,
 #tests #new-test .message,
+#tests #filter-search .message,
 #naturals .change-form .message,
 #naturals #delete-account1 .message,
 #naturals #delete-account2 .message,
 #naturals #delete-class1 .message,
 #naturals #delete-class2 .message,
 #naturals #invite-user-form .message,
-#naturals #new-test .message {
+#naturals #new-test .message,
+#naturals #filter-search .message {
   font-size: 0.72rem;
   line-height: 0.96rem;
   min-height: 0.96rem;
@@ -3143,6 +3183,7 @@ label.required:after {
 #account-settings #delete-class2 .message.server,
 #account-settings #invite-user-form .message.server,
 #account-settings #new-test .message.server,
+#account-settings #filter-search .message.server,
 #manage .change-form .message.server,
 #manage #delete-account1 .message.server,
 #manage #delete-account2 .message.server,
@@ -3150,6 +3191,7 @@ label.required:after {
 #manage #delete-class2 .message.server,
 #manage #invite-user-form .message.server,
 #manage #new-test .message.server,
+#manage #filter-search .message.server,
 #members .change-form .message.server,
 #members #delete-account1 .message.server,
 #members #delete-account2 .message.server,
@@ -3157,6 +3199,7 @@ label.required:after {
 #members #delete-class2 .message.server,
 #members #invite-user-form .message.server,
 #members #new-test .message.server,
+#members #filter-search .message.server,
 #tests .change-form .message.server,
 #tests #delete-account1 .message.server,
 #tests #delete-account2 .message.server,
@@ -3164,13 +3207,15 @@ label.required:after {
 #tests #delete-class2 .message.server,
 #tests #invite-user-form .message.server,
 #tests #new-test .message.server,
+#tests #filter-search .message.server,
 #naturals .change-form .message.server,
 #naturals #delete-account1 .message.server,
 #naturals #delete-account2 .message.server,
 #naturals #delete-class1 .message.server,
 #naturals #delete-class2 .message.server,
 #naturals #invite-user-form .message.server,
-#naturals #new-test .message.server {
+#naturals #new-test .message.server,
+#naturals #filter-search .message.server {
   margin-bottom: 0.2rem;
   min-height: 0;
 }
@@ -4122,6 +4167,29 @@ label.required:after {
   margin: 0 auto;
 }
 
+#naturals .naturals-filter-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0.4rem;
+  margin: 1.2rem 0 0.6rem 0;
+  border-left: 4px solid #366e11;
+}
+
+#naturals .naturals-filter-section .btn {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  width: 1.4em;
+  height: 1.4em;
+}
+
 #naturals .naturals-data-properties,
 #naturals .natural-data-item {
   min-width: -webkit-fit-content;
@@ -4150,24 +4218,24 @@ label.required:after {
 @media screen and (min-width: 768px) {
   #naturals .naturals-data-properties,
   #naturals .natural-data-item {
-    -ms-grid-columns: 12rem 8rem 8rem 1fr;
-        grid-template-columns: 12rem 8rem 8rem 1fr;
+    -ms-grid-columns: 12rem 8.8rem 8.8rem 1fr;
+        grid-template-columns: 12rem 8.8rem 8.8rem 1fr;
   }
 }
 
 @media screen and (min-width: 960px) {
   #naturals .naturals-data-properties,
   #naturals .natural-data-item {
-    -ms-grid-columns: 16rem 9.2rem 9.2rem 1fr;
-        grid-template-columns: 16rem 9.2rem 9.2rem 1fr;
+    -ms-grid-columns: 16rem 10rem 10rem 1fr;
+        grid-template-columns: 16rem 10rem 10rem 1fr;
   }
 }
 
 @media screen and (min-width: 1200px) {
   #naturals .naturals-data-properties,
   #naturals .natural-data-item {
-    -ms-grid-columns: 20rem 10rem 10rem 1fr;
-        grid-template-columns: 20rem 10rem 10rem 1fr;
+    -ms-grid-columns: 20rem 10.8rem 10.8rem 1fr;
+        grid-template-columns: 20rem 10.8rem 10.8rem 1fr;
   }
 }
 
@@ -4211,5 +4279,61 @@ label.required:after {
   #naturals .natural-data-item > * .rename-buttons .btn {
     margin: auto 0.8rem;
   }
+}
+
+#naturals .naturals-data-properties > * {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#naturals .naturals-data-properties > * span {
+  padding-left: 1.1em;
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .naturals-data-properties > * span {
+    padding-left: 1.8em;
+  }
+}
+
+#naturals .naturals-data-properties > * .sort-buttons {
+  margin-left: 0.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media screen and (min-width: 960px) {
+  #naturals .naturals-data-properties > * .sort-buttons {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+#naturals .naturals-data-properties > * .btn {
+  width: 0.72em;
+  height: 0.72em;
+  -webkit-filter: opacity(0.4);
+          filter: opacity(0.4);
+  position: relative;
+  top: 1px;
+}
+
+#naturals .naturals-data-properties > * .btn img {
+  position: relative;
+  bottom: 3px;
 }
 /*# sourceMappingURL=menu.css.map */

@@ -16,11 +16,50 @@
 </section>
 <button id="show-naturals-info-button" class="btn icon" title="Nápověda"><img src="images/info.svg" alt="Nápověda"></button>
 <div id='naturals-wrapper'>
+    <section class="naturals-filter-section">
+        <div id="filter-search">
+            <label for="filter-name">Vyhledat přírodninu: </label>
+            <input type="text" id="filter-name" class="text-field">
+        </div>
+        <button id="remove-filters-button" class="btn icon" title="Zrušit všechny filtry">
+            <img src="images/clear-filter.svg" alt="">
+        </button>
+    </section>
     <section id="naturals-data-section">
         <div class="naturals-data-properties">
-            <span class="natural-name">Název přírodniny</span>
-            <span class="natural-uses-count">Místa výskytu</span>
-            <span class="natural-pictures-count">Počet obrázků</span>
+            <div>
+                <span class="natural-name">Název přírodniny</span>
+                <div class="sort-buttons">
+                    <button class="btn icon sort-up-button" title="Seřadit vzestupně">
+                        <img src="images/triangle-up.svg" alt="">
+                    </button>
+                    <button class="btn icon sort-down-button" title="Seřadit sestupně">
+                        <img src="images/triangle-down.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <div>
+                <span class="natural-uses-count">Počet výskytů</span>
+                <div class="sort-buttons">
+                    <button class="btn icon sort-up-button" title="Seřadit vzestupně">
+                        <img src="images/triangle-up.svg" alt="">
+                    </button>
+                    <button class="btn icon sort-down-button" title="Seřadit sestupně">
+                        <img src="images/triangle-down.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <div>
+                <span class="natural-pictures-count">Počet obrázků</span>
+                <div class="sort-buttons">
+                    <button class="btn icon sort-up-button" title="Seřadit vzestupně">
+                        <img src="images/triangle-up.svg" alt="">
+                    </button>
+                    <button class="btn icon sort-down-button" title="Seřadit sestupně">
+                        <img src="images/triangle-down.svg" alt="">
+                    </button>
+                </div>
+            </div>
             <span class="natural-action">Akce</span>
         </div>
         <?php foreach ($naturals as $natural) : ?>
