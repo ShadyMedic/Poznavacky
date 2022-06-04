@@ -28,8 +28,8 @@ function editUser(event)
         currentUserValues[i] = $user.find(".user-field:eq("+ i +")").val();
     }
 
-    $user.find(".user-action > .btn").hide();
-    $user.find(".user-edit-buttons").show();
+    $user.find(".user-action > div > .btn").hide();
+    $user.find(".user-edit-buttons").show();             //TODO @eksyska zruš u tlačítek pro potvrzení nebo zrušení akce CSS pravidlo "display: block", aby se zobrazovaly vedle sebe a ne nad sebou
     $user.find(".user-field").removeAttr("readonly");    //umožnění editace pro <input>
     $user.find(".user-field").removeAttr("disabled");    //umožnění editace pro <select>
 }
@@ -52,7 +52,7 @@ function editUserCancel(event)
         $user.find(".user-field:eq("+ i +")").val(currentUserValues[i]);
     }
 
-    $user.find(".user-action > .btn").show();
+    $user.find(".user-action > div > .btn").show();
     $user.find(".user-edit-buttons").hide();
     $user.find(".user-field").attr("readonly", "");    //znemožnění editace pro <input>
     $user.find(".user-field").attr("disabled", "");    //znemožnění editace pro <select>

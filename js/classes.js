@@ -24,8 +24,8 @@ $(function()
  */
 function classRedirect(event) 
 {
-    let classUrl = $(event.target).closest("class-data-item").attr("data-class-url") 
-
+    let classUrl = $(event.target).closest(".class-data-item").attr("data-class-url") 
+    
     window.location.href='menu/'+ classUrl + '/manage';
 }
 
@@ -48,8 +48,8 @@ function editClass(event)
         currentClassValues[i] = $class.find(".class-field:eq("+ i +")").val();
     }
 
-    $class.find(".class-action > .btn").hide();
-    $class.find(".class-edit-buttons").show();
+    $class.find(".class-action > div > .btn").hide();
+    $class.find(".class-edit-buttons").show();                 //TODO @eksyska zruš u tlačítek pro potvrzení nebo zrušení akce CSS pravidlo "display: block", aby se zobrazovaly vedle sebe a ne nad sebou
     $class.find(".class-field").removeAttr("disabled");        //umožnění editace pro <select>
     classStatusChanged(event);        //umožnění nastavení kódu třídy, pokud je současný stav nastaven na "private" a kód tak má smysl
 }
@@ -142,7 +142,7 @@ function editClassCancel(event)
         $class.find(".class-field:eq("+ i +")").val(currentClassValues[i]);
     }
 
-    $class.find(".class-action > .btn").show();
+    $class.find(".class-action > div > .btn").show();
     $class.find(".class-edit-buttons").hide();
     $class.find(".class-field").attr("readonly", "");       //znemožnění editace pro <input>
     $class.find(".class-field").attr("disabled", "");       //znemožnění editace pro <select>
@@ -169,7 +169,7 @@ function changeClassOwner(event)
         currentClassOwnerValues[i] = $class.find(".class-owner-table .class-owner-field:eq("+ i +")").val();
     }
 
-    $class.find(".class-action > .btn").hide();
+    $class.find(".class-action > div > .btn").hide();
     $class.find(".class-change-class-owner-buttons").show();
     $class.find(".class-owner-field").removeAttr("readonly");        //umožnění editace pro <input>
 }
@@ -181,6 +181,7 @@ function changeClassOwner(event)
  */
 function classOwnerChanged(event, identifier)
 {
+	console.log(identifier);
     let $class = $(event.target).closest(".class-data-item")
 
     if (identifier == 0)
@@ -192,15 +193,15 @@ function classOwnerChanged(event, identifier)
         changedIdentifier = "id";
     }
 
-    //umožnit změnu ID - jméno je stejné jako na začátku
+    //umožnit změnu ID nebo jména - to druhé je stejné jako na začátku
     if ($class.find(".class-owner-field:eq("+ identifier + ")").val() === currentClassOwnerValues[identifier])
     {
-        $class.find(".class-owner-field:eq("+ identifier + ")").removeAttr("readonly");
+        $class.find(".class-owner-field:eq("+ (Number)(!identifier) + ")").removeAttr("readonly");
     }
-    //znemožnit změnu ID - jméno se změnilo
+    //znemožnit změnu ID nebo jména - to druhé se změnilo
     else
     {
-        $class.find(".class-owner-field:eq("+ identifier + ")").attr("readonly", "");
+        $class.find(".class-owner-field:eq("+ (Number)(!identifier) + ")").attr("readonly", "");
     }
 }
 
@@ -221,8 +222,7 @@ function changeClassOwnerCancel(event)
     {
         $class.find(".class-owner-table .class-owner-field:eq("+ i +")").val(currentClassOwnerValues[i]);
     }
-
-    $class.find(".class-action > .btn").show();
+    $class.find(".class-action > div > .btn").show();
     $class.find(".class-change-class-owner-buttons").hide();
     $class.find(".class-field").attr("readonly", "");       //znemožnění editace pro <input>
 }
@@ -235,10 +235,11 @@ function changeClassOwnerConfirm(event)
 {
     let $class = $(event.target).closest(".class-data-item");
     let $classOwnerTable = $class.find(".class-owner-table");
+    
     let classId = $class.attr("data-class-id");
     let newName = $classOwnerTable.find(".class-owner-field:eq(0)").val();
     let newId = $classOwnerTable.find(".class-owner-field:eq(1)").val();
-
+    
     //odeslat data na server
     $.post("administrate-action",
         {
