@@ -4,6 +4,10 @@ $(function()
     $("#send-sql-query-button").click(function() {sendSqlQuery()})
 })
 
+
+/**
+ * Funkce odesílající požadavek na databázi
+ */
 function sendSqlQuery()
 {
     let query = $("#sql-query-input").val();

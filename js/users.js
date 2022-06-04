@@ -10,6 +10,10 @@ $(function()
     $(".delete-user-button").click(function(event) {deleteUser(event)});
 })
 
+/**
+ * Funkce zahajující změnu dat u uživatele
+ * @param {event} event 
+ */
 function editUser(event)
 {
     let $user = $(event.target).closest(".user-data-item");
@@ -29,6 +33,11 @@ function editUser(event)
     $user.find(".user-field").removeAttr("readonly");    //umožnění editace pro <input>
     $user.find(".user-field").removeAttr("disabled");    //umožnění editace pro <select>
 }
+
+/**
+ * Funkce rušící změnu dat u uživatele
+ * @param {event} event 
+ */
 function editUserCancel(event)
 {
     let $user = $(event.target).closest(".user-data-item");
@@ -48,6 +57,11 @@ function editUserCancel(event)
     $user.find(".user-field").attr("readonly", "");    //znemožnění editace pro <input>
     $user.find(".user-field").attr("disabled", "");    //znemožnění editace pro <select>
 }
+
+/**
+ * Funkce potvrzující změnu dat u uživatele a ukládající je
+ * @param {event} event 
+ */
 function editUserConfirm(event)
 {
     let $user = $(event.target).closest(".user-data-item");
@@ -59,7 +73,7 @@ function editUserConfirm(event)
         currentUserValues[i] = $user.find(".user-field:eq("+ i +")").val();
     }
 
-    //Odeslat data na server
+    //odeslat data na server
     $.post("administrate-action",
         {
             action: 'update user',
@@ -84,6 +98,11 @@ function editUserConfirm(event)
     );
 }
 
+/**
+ * Funkce odstraňující uživatele
+ * @param {event} event 
+ * @returns
+ */
 function deleteUser(event)
 {
     let $user = $(event.target).closest(".user-data-item");
@@ -94,6 +113,7 @@ function deleteUser(event)
     {
         return;
     }
+    
     $.post('administrate-action',
         {
             action: 'delete user',

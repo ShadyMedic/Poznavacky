@@ -18,11 +18,18 @@ $(function()
 
 var emailModified = true;    //proměnná uchovávající informaci o tom, zda byl formulář pro odeslání e-mailu od posledního odeslání modifikován
 
+/**
+ * Funkce reagující na změnu emailu
+ */
 function emailModifiedCheck()
 {
     emailModified = true;
 }
 
+
+/**
+ * Funkce zobrazující náhled emailu
+ */
 function previewEmail()
 {
     let rawHTMLbody = $("#email-message").val();
@@ -47,6 +54,10 @@ function previewEmail()
     );
 }
 
+
+/**
+ * Funkce zobrazující rozhraní pro psaní emailu
+ */
 function editEmail()
 {
     $("#edit-email-button").hide();
@@ -56,6 +67,10 @@ function editEmail()
     $("#preview-email-button").show();
 }
 
+/**
+ * Funkce odesílající email
+ * @returns 
+ */
 function sendMail()
 {
     //ochrana před odesíláním duplicitních e-mailů

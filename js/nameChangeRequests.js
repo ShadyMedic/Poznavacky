@@ -5,6 +5,10 @@ $(function()
     $(".decline-name-change-button").click(function(event) {declineNameChange(event)})
 })
 
+/**
+ * Funkce potvrzující změnu jména uživatele/třídy
+ * @param {event} event 
+ */
 function acceptNameChange(event)
 {
     let $request = $(event.target).closest(".name-change-request-data-item");
@@ -30,6 +34,12 @@ function acceptNameChange(event)
         }
     );
 }
+
+/**
+ * Funkce zamítající změnu jména uživatele/třídy
+ * @param {event} event 
+ * @returns 
+ */
 function declineNameChange(event)
 {
     let reason = prompt("Zadejte prosím důvod zamítnutí žádosti (uživatel jej obdrží e-mailem, pokud jej zadal). Nevyplnění tohoto pole bude mít za následek zrušení zamítnutí.");
