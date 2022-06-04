@@ -253,6 +253,11 @@ textarea {
         @media screen and (min-width: $tablet) {
             flex-direction: row;
         }
+        .user-edit-buttons,
+        .class-edit-buttons {
+            display: flex;
+            justify-content: center;
+        }
         .btn {
             margin: 0.16rem;
         }

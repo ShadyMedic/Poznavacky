@@ -49,7 +49,7 @@ function editClass(event)
     }
 
     $class.find(".class-action > div > .btn").hide();
-    $class.find(".class-edit-buttons").show();                 //TODO @eksyska zruš u tlačítek pro potvrzení nebo zrušení akce CSS pravidlo "display: block", aby se zobrazovaly vedle sebe a ne nad sebou
+    $class.find(".class-edit-buttons").show();              
     $class.find(".class-field").removeAttr("disabled");        //umožnění editace pro <select>
     classStatusChanged(event);        //umožnění nastavení kódu třídy, pokud je současný stav nastaven na "private" a kód tak má smysl
 }
@@ -90,8 +90,7 @@ function classStatusChanged(event)
  * @param {event} event 
  */
 function editClassConfirm(event)
-{
-    
+{    
     let $class = $(event.target).closest(".class-data-item");
     let classId = $class.attr("data-class-id");
 
@@ -102,7 +101,7 @@ function editClassConfirm(event)
     }
 
     //odeslat data na server
-    $.post("administrate-action",
+    $.post("administrate-action", //TODO - pokud je třída nastavená jako locked nebo public, tak nefunguje změna
         {
             action: 'update class',
             classId: classId,

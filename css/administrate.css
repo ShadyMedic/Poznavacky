@@ -379,6 +379,46 @@ textarea:focus {
   }
 }
 
+#users .user-action > div .user-edit-buttons,
+#users .user-action > div .class-edit-buttons,
+#users .class-action > div .user-edit-buttons,
+#users .class-action > div .class-edit-buttons,
+#users .report-action > div .user-edit-buttons,
+#users .report-action > div .class-edit-buttons,
+#users .name-change-request-action > div .user-edit-buttons,
+#users .name-change-request-action > div .class-edit-buttons,
+#classes .user-action > div .user-edit-buttons,
+#classes .user-action > div .class-edit-buttons,
+#classes .class-action > div .user-edit-buttons,
+#classes .class-action > div .class-edit-buttons,
+#classes .report-action > div .user-edit-buttons,
+#classes .report-action > div .class-edit-buttons,
+#classes .name-change-request-action > div .user-edit-buttons,
+#classes .name-change-request-action > div .class-edit-buttons,
+#admin-reports .user-action > div .user-edit-buttons,
+#admin-reports .user-action > div .class-edit-buttons,
+#admin-reports .class-action > div .user-edit-buttons,
+#admin-reports .class-action > div .class-edit-buttons,
+#admin-reports .report-action > div .user-edit-buttons,
+#admin-reports .report-action > div .class-edit-buttons,
+#admin-reports .name-change-request-action > div .user-edit-buttons,
+#admin-reports .name-change-request-action > div .class-edit-buttons,
+#name-change-requests .user-action > div .user-edit-buttons,
+#name-change-requests .user-action > div .class-edit-buttons,
+#name-change-requests .class-action > div .user-edit-buttons,
+#name-change-requests .class-action > div .class-edit-buttons,
+#name-change-requests .report-action > div .user-edit-buttons,
+#name-change-requests .report-action > div .class-edit-buttons,
+#name-change-requests .name-change-request-action > div .user-edit-buttons,
+#name-change-requests .name-change-request-action > div .class-edit-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 #users .user-action > div .btn,
 #users .class-action > div .btn,
 #users .report-action > div .btn,

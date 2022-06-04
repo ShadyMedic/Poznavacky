@@ -29,7 +29,7 @@ function editUser(event)
     }
 
     $user.find(".user-action > div > .btn").hide();
-    $user.find(".user-edit-buttons").show();             //TODO @eksyska zruš u tlačítek pro potvrzení nebo zrušení akce CSS pravidlo "display: block", aby se zobrazovaly vedle sebe a ne nad sebou
+    $user.find(".user-edit-buttons").show();            
     $user.find(".user-field").removeAttr("readonly");    //umožnění editace pro <input>
     $user.find(".user-field").removeAttr("disabled");    //umožnění editace pro <select>
 }
