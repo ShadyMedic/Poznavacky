@@ -100,6 +100,17 @@ class Administration
     }
     
     /**
+     * Metoda navracející počet uživatelských účtů v databázi
+     * @return int Počet uživatelských účtů
+     * @throws DatabaseException
+     */
+    public function getUserCount(): int
+    {
+        $dbResult = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.User::TABLE_NAME);
+        return $dbResult['cnt'];
+    }
+
+    /**
      * Metoda navracející pole všech tříd uložených v databázi jako objekty
      * @return array Pole objektů tříd
      * @throws DatabaseException
@@ -127,6 +138,17 @@ class Administration
         return $classes;
     }
     
+    /**
+     * Metoda navracející počet tříd v databázi
+     * @return int Počet tříd
+     * @throws DatabaseException
+     */
+    public function getClassCount(): int
+    {
+        $dbResult = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassObject::TABLE_NAME);
+        return $dbResult['cnt'];
+    }
+
     /**
      * Metoda navracející informace o hlášeních obrázků, které byly nahlášeny z jednoho z důvodů, které musí řešit
      * správce celého systému Důvody, které musí být řešeny touto cestou jsou specifikovány v konstantách třídy Report
@@ -177,6 +199,21 @@ class Administration
     }
     
     /**
+     * Metoda navracející počet správcovských hlášení v databázi
+     * @return int Počet hlášení
+     * @throws DatabaseException
+     */
+    public function getAdminReportCount(): int
+    {
+        $in = str_repeat('?,', count(Report::ADMIN_REQUIRING_REASONS) - 1).'?';
+        $dbResult = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.
+            Report::TABLE_NAME.'
+            WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.');
+        ', Report::ADMIN_REQUIRING_REASONS);
+        return $dbResult['cnt'];
+    }
+
+    /**
      * Metoda získávající seznam všech žádostí o změnu uživatelského jména a navrací je jako objekty
      * @return UserNameChangeRequest[] Pole objektů se žádostmi
      * @throws DatabaseException
@@ -226,6 +263,17 @@ class Administration
         return $requests;
     }
     
+    /**
+     * Metoda navracející počet žádostí o změnu uživatelského jména v databázi
+     * @return int Počet uživatelských účtů
+     * @throws DatabaseException
+     */
+    public function getUserNameChangeRequestCount(): int
+    {
+        $dbResult = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.UserNameChangeRequest::TABLE_NAME);
+        return $dbResult['cnt'];
+    }
+
     /**
      * Metoda získávající seznam všech žádostí o změnu názvu třídy a navrací je jako objekty
      * @return ClassNameChangeRequest[] Pole objektů se žádostmi
@@ -290,6 +338,17 @@ class Administration
         return $requests;
     }
     
+    /**
+     * Metoda navracející počet žádostí o změnu uživatelského jména v databázi
+     * @return int Počet uživatelských účtů
+     * @throws DatabaseException
+     */
+    public function getClassNameChangeRequestCount(): int
+    {
+        $dbResult = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.ClassNameChangeRequest::TABLE_NAME);
+        return $dbResult['cnt'];
+    }
+
     /* Metody využívané AJAX kontrolerem AdministrateActionController */
     
     /**

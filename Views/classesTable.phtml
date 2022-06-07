@@ -9,7 +9,11 @@
         <th>Akce</th>
     </tr>
     <?php foreach($classes as $class) : ?>
-        <tr>
+        <tr class="class-data-item"
+            data-class-id="<?= $class->getId() ?>"
+            data-class-name="<?= $class->getName() ?>"
+            data-class-url="<?= $class->getUrl() ?>"
+            data-class-owner-mail="<?= $class->getAdmin()['email'] ?>">
             <td>
                 <?= $class->getId() ?>
             </td>
@@ -20,28 +24,28 @@
                 <?= $class->getGroupsCount() ?>
             </td>
             <td>
-                <table class='class-admin-table'>
+                <table class='class-owner-table'>
                     <tr>
                         <td>Jméno: </td>
-                        <td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" onchange='adminNameChanged()' class='class-admin-field class-admin-table-data'/></td>
+                        <td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" class='class-owner-name class-owner-field class-owner-table-data'/></td>
                     </tr>
                     <tr>
                         <td>ID: </td>
-                        <td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" onchange='adminIdChanged()' class='class-admin-field class-admin-table-data'/></td>
+                        <td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" class='class-owner-id class-owner-field class-owner-table-data'/></td>
                     </tr>
                     <tr>
-                        <td>E-mail: </td><td class='class-admin-data'><?= $class->getAdmin()['email'] ?></td>
+                        <td>E-mail: </td><td class='class-owner-data'><?= $class->getAdmin()['email'] ?></td>
                     </tr>
                     <tr>
-                        <td>Karma: </td><td class='class-admin-data'><?= $class->getAdmin()['karma'] ?></td>
+                        <td>Karma: </td><td class='class-owner-data'><?= $class->getAdmin()['karma'] ?></td>
                     </tr>
                     <tr>
-                        <td>Status: </td><td class='class-admin-data'><?= $class->getAdmin()['status'] ?></td>
+                        <td>Status: </td><td class='class-owner-data'><?= $class->getAdmin()['status'] ?></td>
                     </tr>
                 </table>
             </td>
             <td>
-                <select disabled class='class-field' onchange='classStatusEdited()'>
+                <select disabled class='class-field class-status'>
                     <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>
                     <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC ?></option>
                     <?php endif ?>
@@ -65,45 +69,42 @@
                 </select>
             </td>
             <td>
-                <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='class-field'/>
+                <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='class-field class-code'/>
             </td>
-            <td>
-                <button class='class-action active-btn edit-btn' onclick='editClass(event)' title='Upravit status a kód'>
-                    <img src='images/pencil.svg'/>
-                </button>
-                <div class="class-edit-buttons" style="display:none;">
-                    <button class='class-edit-action active-btn' onclick='confirmClassEdit(<?= $class->getId() ?>)' title='Uložit'>
-                        <img src='images/tick.svg'/>
+            <td class="class-action">
+                <div>
+                    <button class='btn icon edit-class-button' title='Upravit status a kód'>
+                        <img src='images/pencil.svg'/>
                     </button>
-                    <button class='class-edit-action active-btn' onclick='cancelClassEdit()' title='Zrušit'>
+                    <div class="class-edit-buttons" style="display:none;">
+                        <button class='btn icon edit-class-confirm-button' title='Uložit'>
+                            <img src='images/tick.svg'/>
+                        </button>
+                        <button class='btn icon edit-class-cancel-button' title='Zrušit'>
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </div>
+                    <div class="class-change-class-owner-buttons" style="display:none;">
+                        <button class='btn icon edit-class-owner-action change-class-owner-confirm-button' title='Uložit'>
+                            <img src='images/tick.svg'/>
+                        </button>
+                        <button class='btn icon edit-class-owner-action change-class-owner-cancel-button' title='Zrušit'>
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </div>
+                    <button class='btn icon class-action change-class-owner-button' title='Změnit správce'>
+                        <img src='images/user-icon.svg'/>
+                    </button>
+                    <button class='class-action btn icon class-redirect-button' title='Spravovat'>
+                        <img src='images/management.svg'/>
+                    </button>
+                    <button class='class-action btn icon start-mail-button <?php if (empty($class->getAdmin()['email'])) : ?> disabled <?php endif ?>' title='Kontaktovat správce'>
+                        <img src='images/mail.svg'/>
+                    </button>
+                    <button class='class-action btn icon delete-class-button' title='Odstranit třídu'>
                         <img src='images/cross.svg'/>
                     </button>
                 </div>
-                <div class="class-edit-admin-buttons" style="display:none;">
-                    <button class='class-edit-admin-action active-btn' onclick='confirmClassAdminEdit(<?= $class->getId() ?>)' title='Uložit'>
-                        <img src='images/tick.svg'/>
-                    </button>
-                    <button class='class-edit-admin-action active-btn' onclick='cancelClassAdminEdit()' title='Zrušit'>
-                        <img src='images/cross.svg'/>
-                    </button>
-                </div>
-                <button class='class-action active-btn edit-btn' onclick='changeClassAdmin(event)' title='Změnit správce'>
-                    <img src='images/dot.svg'/>
-                </button>
-                <button class='class-action active-btn' onclick="window.location.href='menu/<?= $class->getUrl() ?>/manage';" title='Spravovat'>
-                    <img src='images/management.svg'/>
-                </button>
-                <?php if (empty($class->getAdmin()['email'])) : ?>
-                <button class='class-action grayscale class-admin-mail-btn' disabled>
-                <?php endif ?>
-                <?php if (!empty($class->getAdmin()['email'])) : ?>
-                <button class='class-action active-btn class-admin-mail-btn' onclick='startMail("<?= $class->getAdmin()['email'] ?>")' title='Kontaktovat správce'>
-                <?php endif ?>
-                    <img src='images/mail.svg'/>
-                </button>
-                <button class='class-action active-btn' onclick='deleteClass(<?= $class->getId() ?>, event)' title='Odstranit'>
-                    <img src='images/cross.svg'/>
-                </button>
             </td>
         </tr>
     <?php endforeach ?>
