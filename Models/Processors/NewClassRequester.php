@@ -66,6 +66,17 @@ class NewClassRequester
             Db::executeQuery('INSERT INTO clenstvi(uzivatele_id,tridy_id) VALUES (?,?);',
                 array(UserManager::getId(), $newClassId));
 
+            if (UserManager::getOtherInformation()['status'] !== User::STATUS_ADMIN) {
+                //Změň správcův status (pokud není správcem systému)
+                Db::executeQuery('UPDATE '.User::TABLE_NAME.' 
+                    SET '.User::COLUMN_DICTIONARY['status'].' = ? 
+                    WHERE '.User::COLUMN_DICTIONARY['id'].' = ?;',
+                    array(User::STATUS_CLASS_OWNER, UserManager::getId()));
+                //Změň status uživatele i v sezení
+                $user = UserManager::getUser();
+                $user->initialize(null, null, null, null, null, null, User::STATUS_CLASS_OWNER);
+            }
+
             //Vytvoř žádost o změnu názvu třídy
             return Db::executeQuery('INSERT INTO '.ClassNameChangeRequest::TABLE_NAME.'(
                 '.ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['newUrl'].','.ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt'].'
