@@ -40,7 +40,7 @@ class DataValidator
     public const USER_EMAIL_MIN_LENGTH = 0;
     public const USER_EMAIL_MAX_LENGTH = 255;
     public const CLASS_NAME_MIN_LENGTH = 5;
-    public const CLASS_NAME_MAX_LENGTH = 31;
+    public const CLASS_NAME_MAX_LENGTH = 32;
     //Při změně následujících konstant je nutné změnit hodnoty i v souborech edit.js, edit.phtml a naturals.js
     public const GROUP_NAME_MIN_LENGTH = 3;
     public const GROUP_NAME_MAX_LENGTH = 31;

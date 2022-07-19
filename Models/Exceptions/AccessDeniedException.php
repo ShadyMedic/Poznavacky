@@ -47,7 +47,7 @@ class AccessDeniedException extends Exception
     public const REASON_PART_NOT_FOUND = 'Tato část nebyla nalezena';
     public const REASON_NATURAL_NOT_FOUND = 'Tato přírodnina nebyla nalezena';
     public const REASON_PICTURE_NOT_FOUND = 'Tento obrázek nebyl nalezen';
-    public const REASON_NEW_CLASS_REQUEST_NO_EMAIL = 'Musíte zadat svůj e-mail, abychom vás mohli kontaktovat';
+    public const REASON_NEW_CLASS_REQUEST_NO_EMAIL = 'Správci třídy musejí mít ve svém účtu vyplněnou e-mailovou adresu, nebo ji vyplnit při zakládání nové třídy';
     public const REASON_NEW_CLASS_REQUEST_NO_NAME = 'Musíte zadat název třídy';
     public const REASON_NEW_CLASS_REQUEST_NO_CODE = 'Musíte zadat přístupový kód nové třídy';
     public const REASON_NEW_CLASS_REQUEST_NO_ANTISPAM = 'Musíte vyplnit ochranu proti robotům';

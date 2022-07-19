@@ -27,14 +27,18 @@ class RequestNewClassController extends AjaxController
         $response = null;
         try {
             if ($requester->processFormData($_POST)) {
-                (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} žádost o založení nové třídy s názevem {className}',
+                (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} žádost o založení nové třídy s názevem {className}. Třída byla prozatím vytvořena se jménem {currentName}',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],
-                        'className' => $_POST['className']
+                        'className' => $_POST['className'],
+                        'currentName' => 'Třída uživatele '.UserManager::getName()
                     ));
                 $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                    'Žádost o založení nové třídy byla úspěšně odeslána. Sledujte prosím pravidelně svou e-mailovou schránku a očekávejte naši odpověď.');
+                    'Vaše třída byla okamžitě vytvořena s dočasným jménem "Třída uživatele '.UserManager::getName().'". 
+                    Zároveň byla vytvořena žádost o změnu názvu této třídy na "'.$_POST['className'].'". 
+                    Správce by tuto žádost měl vyřídit v následujících hodinách (výjimečně dnech). 
+                    V okamžiku schválení změny názvu obdržíte e-mail. Pro zobrazení vaší třídy aktualizujte tuto stránku.');
             } else {
                 throw new Exception();
             }

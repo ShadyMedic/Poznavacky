@@ -164,14 +164,12 @@ function processNewClassForm(event)
 
     let name = $("#new-class-form-name").val();
     let email = $("#new-class-form-email").val();    //pokud pole neexistuje, vrátí undefined
-    let info = $("#new-class-form-info").val();
     let antispam = $("#new-class-form-antispam").val();
 
     $.post('menu/request-new-class',
         {
             className: name,
             email: email,
-            text: info,
             antispam: antispam
         },
         function (response, status)
@@ -189,9 +187,9 @@ function processNewClassForm(event)
                     }
                     else if (messageType === "success")
                     {
-                        newMessage(message, "success");
-
                         hideNewClassForm();
+
+                        newMessage(message, "success", null, 20000); //dlouhá hláška se bude zobrazovat 20 s
                     }
                 }
             );
