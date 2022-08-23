@@ -11,7 +11,7 @@ use \Throwable;
 class DatabaseException extends Exception
 {
     private string $query;
-    private int $dbErrorCode;
+    private string $dbErrorCode;
     private string $dbErrorMessage;
     
     /**
@@ -20,11 +20,11 @@ class DatabaseException extends Exception
      * @param int $code Číslo chyby, které může být zobrazeno běžnému uživateli
      * @param Throwable $previous Předcházející podmínka (pro účely propagace podmínek)
      * @param string $query SQL dotaz, který selhal (nesmí být zobrazován běžnému uživateli)
-     * @param int $dbErrorCode Číslo dazabázové chyby (nesmí být zobrazené běžnému uživateli)
+     * @param string $dbErrorCode Kód dazabázové chyby (nesmí být zobrazené běžnému uživateli)
      * @param string $dbErrorMessage Text databázové chyby (nesmí být zobrazené běžnému uživateli)
      */
-    public function __construct(string $message = "", $code = 0, $previous = null, string $query = "",
-                                int $dbErrorCode = 0, string $dbErrorMessage = "")
+    public function __construct(string $message = '', $code = 0, $previous = null, string $query = '',
+                                string $dbErrorCode = '0', string $dbErrorMessage = '')
     {
         parent::__construct($message, $code, $previous);
         $this->query = $query;
