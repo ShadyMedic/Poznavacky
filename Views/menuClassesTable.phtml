@@ -56,7 +56,6 @@
             <button id="request-class-button" class='btn border-btn non-transparent black'>Zažádat o vytvoření nové třídy</button> <!-- TEMPORARY -->
             <form method="POST" id="request-class-form" style="display:none;">
                 <label for="new-class-form-name">Požadovaný název třídy
-                    <!--<img class="info" src="images/info.svg" alt="Poznámka" title="Pokuste se do názvu třídy zakomponovat i název školy, aby nedocházelo ke konfliktům v názvech mezi třídami různých škol">-->
                     <p class="additional-form-info">Pokuste se do názvu třídy zakomponovat i název školy, aby nedocházelo ke konfliktům v názvech mezi třídami různých škol. Vhodným názvem třídy je například <i>2.A ZŠ Jana Nerudy</i> nebo <i>Biologický kroužek GJVJ</i>.</p>
                 </label>
                 <input id='new-class-form-name' class="text-field" type=text maxlength=31 />
@@ -64,8 +63,6 @@
                     <label for="new-class-form-email">Kontaktní e-mailová adresa</label>
                     <input class='text-field' id='new-class-form-email' length=255 />
                 <?php endif ?>
-                <label for="new-class-form-info">Je ještě něco, co bychom měli vědět?</label>
-                <textarea class="text-field" id='new-class-form-info'></textarea>
                 <label for="new-class-form-antispam">Prokažte prosím, že nejste robot, opsáním následujícího čísla pomocí číslic: <span id="antispam-question"> <?= $antispamCode ?> </span></label>
                 <input id='new-class-form-antispam' class="text-field" type="number" min=0 max=99 maxlength=2 />
                 <input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
