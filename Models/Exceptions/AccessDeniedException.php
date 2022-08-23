@@ -56,6 +56,7 @@ class AccessDeniedException extends Exception
     public const REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG = 'Název třídy nesmí být více než 31 znaků dlouhý';
     public const REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS = 'Název třídy může obsahovat pouze písmena, číslice, mezeru a znaky . _ -';
     public const REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME = 'Třída s tímto nebo velmi podobným názvem již existuje';
+    public const REASON_NEW_CLASS_REQUEST_ALREADY_WAITING = 'Již vám byla založena třída s dočasným názvem. Požadovaný název musí schválit administrátor předtím, než budete moci požádat o založení další třídy.';
     public const REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL = 'Tento název třídy nelze z technických důvodů použít, pokuste se přidat nebo odebrat některé znaky';
     public const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód třídy nemá platný formát - musí to být čtyři číslice';
     public const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkuste to prosím znovu';

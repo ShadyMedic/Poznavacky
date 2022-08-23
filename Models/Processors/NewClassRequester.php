@@ -26,6 +26,7 @@ use RangeException;
 class NewClassRequester
 {
     private const WEBMASTER_EMAIL = 'honza.stech@gmail.com';
+    private const TEMP_CLASS_NAME_FORMAT = 'Třída uživatele {userName}';
 
     /**
      * Metoda zpracovávající data z formuláře a řídící odesílání e-mailu správci služby
@@ -39,9 +40,10 @@ class NewClassRequester
     {
         $email = trim(@$POSTdata['email']); //Ořež mezery
         $name = trim(@$POSTdata['className']); //Ořež mezery
+        $tempName = str_replace('{userName}', UserManager::getName(), self::TEMP_CLASS_NAME_FORMAT);
         $antispam = @$POSTdata['antispam'];
 
-        if ($this->validate($email, $name, $antispam)) {
+        if ($this->validate($email, $name, $tempName, $antispam)) {
             //Kontrola dat v pořádku (jinak by byla vyhozena podmínka)
 
             //Pokud uživatel nezadal e-mailovou adresu při registraci, doplň mu jí do účtu
@@ -57,7 +59,6 @@ class NewClassRequester
             }
 
             //Vytvoř novou třídu s automatickým názvem
-            $tempName = 'Třída uživatele '.UserManager::getName();
             $newClassId = Db::executeQuery('INSERT INTO '.ClassObject::TABLE_NAME.'(
                 '.ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.ClassObject::COLUMN_DICTIONARY['admin'].'
                 ) VALUES (?,?,?);', array($tempName, ClassObject::generateUrl($tempName), UserManager::getId()), true);
@@ -88,13 +89,14 @@ class NewClassRequester
     /**
      * Metoda ověřující, zda odeslaná data splňují podmínky
      * @param mixed $email E-mail uživatele, pokud byl zadán
-     * @param string $name Požadované jméno nové třídy
+     * @param string $name Požadovaný název nové třídy
+     * @param string $tempName Název, který bude třída mít před schválením požadovaného názvu administrátorem
      * @param mixed $antispam Odpověď na captchu
      * @return boolean TRUE, pokud jsou všechna data vyplněna správně
      * @throws DatabaseException
      * @throws AccessDeniedException Pokud jsou data vyplněna nesprávně
      */
-    private function validate($email, string $name, $antispam): bool
+    private function validate($email, string $name, string $tempName, $antispam): bool
     {
         //Kontrola, zda jsou všechna povinná pole vyplněna
         if (mb_strlen($email) === 0 && empty(UserManager::getEmail())) {
@@ -146,7 +148,7 @@ class NewClassRequester
                 null, $e);
         }
 
-        //Kontrola unikátnosti jména (konkrétně jeho URL reprezentace)
+        //Kontrola unikátnosti požadovaného názvu třídy (konkrétně jeho URL reprezentace)
         $url = Folder::generateUrl($name);
         try {
             $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
@@ -154,6 +156,16 @@ class NewClassRequester
             (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože třída s požadovaným názvem ({className}) již existuje',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'className' => $name));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e);
+        }
+
+        //Kontrola unikátnosti dočasného názvu třídy (konkrétně jeho URL reprezentace)
+        $tempUrl = Folder::generateUrl($tempName);
+        try {
+            $validator->checkUniqueness($tempUrl, DataValidator::TYPE_CLASS_URL);
+        } catch (InvalidArgumentException $e) {
+            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože třída s dočasným názvem pro tohoto uživatele již existuje',
+                array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
+            throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_ALREADY_WAITING, null, $e);
         }
 
         //Kontrola, zda URL třídy není rezervované pro žádný kontroler

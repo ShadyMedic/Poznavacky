@@ -146,7 +146,9 @@ function showNewClassForm()
  */
 function hideNewClassForm(event)
 {
-    event.preventDefault();
+    if (event !== undefined) { //If FALSE, the function has been called after successful form submission
+        event.preventDefault();
+    }
 
     $("#request-class-button").show();
     $("#request-class-wrapper > span").show();
