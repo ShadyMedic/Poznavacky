@@ -1,22 +1,24 @@
 <div id="email">
     <div id="email-info">
-        <label for="email-sender">Odesílatel:</label></td>
-        <input id="email-sender" type=text maxlength=255 value="<?= $loggedAdminName ?>" onchange="emailModification()" />
-        <label for="email-sender-address">Adresa pro odpověď:</label></td>
-        <input id="email-sender-address" type=email maxlength=255 value="poznavacky@email.com" onchange="emailModification()" />
-        <label for="email-address">Adresát:</label></td>
-        <input id="email-address" type=email maxlength=255 onchange="emailModification()" />
-        <label for="email-subject">Předmět:</label></td>
-        <input id="email-subject" type=text maxlength=70 onchange="emailModification()" />
+        <label for="email-sender">Odesílatel:</label>
+        <input id="email-sender" type=text maxlength=255 value="<?= $loggedAdminName ?>" />
+        <label for="email-sender-address">Adresa pro odpověď:</label>
+        <input id="email-sender-address" type=email maxlength=255 value="poznavacky@email.com" />
+        <label for="email-address">Adresát:</label>
+        <input id="email-address" type=email maxlength=255 />
+        <label for="email-subject">Předmět:</label>
+        <input id="email-subject" type=text maxlength=70 />
     </div>
     <div id="email-editor">
-        <textarea id="email-message" rows="20" cols="70" placeholder="Zpráva" onchange="emailModification()"></textarea>
-        <textarea id="email-footer" rows="20" cols="70" placeholder="Patička" onchange="emailModification()">Tato zpráva nebyla vygenerována automaticky</textarea>
+        <label for="email-message">Zpráva</label>
+        <textarea id="email-message"></textarea>
+        <label for="email-footer">Zápatí</label>
+        <textarea id="email-footer">Tato zpráva nebyla vygenerována automaticky.</textarea>
     </div>
     <div id="email-preview" style="display:none;"> <!-- Zde se zobrazí náhled e-mailu --> </div>
-    <button id="email-preview-btn" class="border-btn" onclick="previewEmailMessage()">Zobrazit náhled</button>
-    <button id="email-edit-btn" class="border-btn" onclick="editEmailMessage()" style="display:none;">Upravit zprávu</button>
-    <button id="email-send-btn" class="border-btn" onclick="sendMail()">Odeslat</button>
-    <span id="status-info" style="display:none;">E-mail se odesílá...</span>
-    <div>Obrázky se v náhledu nezobrazují správně</div>
+    <button id="preview-email-button" class="btn border-btn">Zobrazit náhled</button>
+    <button id="edit-email-button" class="btn border-btn" style="display:none">Upravit zprávu</button>
+    <button id="send-email-button" class="btn border-btn">Odeslat</button>
+    <span id="status-info" style="display: none">E-mail se odesílá...</span>
+    <div class="info">Obrázky se v náhledu nezobrazují správně.</div>
 </div>

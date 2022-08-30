@@ -312,6 +312,16 @@ class LoggedUser extends User
                 throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_INVALID_EMAIL);
             }
         }
+        else {
+            //Uživatel chce svůj e-mail odebrat, to však může pouze pokud není správcem žádné třídy, nebo administrátorem
+            $userStatus = UserManager::getOtherInformation()['status'];
+            if ($userStatus === User::STATUS_ADMIN) {
+                throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_REMOVAL_WHEN_ADMIN);
+            }
+            if ($userStatus === User::STATUS_CLASS_OWNER) {
+                throw new AccessDeniedException(AccessDeniedException::REASON_EMAIL_CHANGE_REMOVAL_WHEN_CLASS_OWNER);
+            }
+        }
         
         //Kontrola dat OK
         

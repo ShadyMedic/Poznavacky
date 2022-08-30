@@ -11,7 +11,10 @@
         <th>Akce</th>
     </tr>
     <?php foreach($users as $user) : ?>
-        <tr>
+        <tr class="user-data-item"
+            data-user-id="<?= $user['id'] ?>"
+            data-user-mail="<?= $user['email'] ?>"
+            data-user-name="<?= $user['name'] ?>">
             <td>
                 <?= $user['id'] ?>
             </td>
@@ -64,29 +67,31 @@
                     <?php endif ?>
                 </select>
             </td>
-            <td>
-                <button class='user-action active-btn edit-btn' onclick='editUser(event)' title='Upravit'>
-                    <img src='images/pencil.svg'/>
-                </button>
-                <div class="user-edit-buttons" style="display:none;">
-                    <button class='user-edit-action active-btn' onclick='confirmUserEdit(<?= $user['id'] ?>)' title='Uložit'>
-                        <img src='images/tick.svg'/>
+            <td class="user-action">
+                <div>
+                    <button class='btn icon edit-button' title='Upravit'>
+                        <img src='images/pencil.svg'/>
                     </button>
-                    <button class='user-edit-action active-btn' onclick='cancelUserEdit()' title='Zrušit'>
+                    <div class="user-edit-buttons" style="display: none">
+                        <button class='btn icon edit-confirm-button' title='Uložit'>
+                            <img src='images/tick.svg'/>
+                        </button>
+                        <button class='btn icon edit-cancel-button' title='Zrušit'>
+                            <img src='images/cross.svg'/>
+                        </button>
+                    </div>
+                    <?php if (empty($user['email'])) : ?>
+                    <button class='btn icon disabled'>
+                    <?php endif ?>
+                    <?php if (!empty($user['email'])) : ?>
+                    <button class='btn icon start-mail-button' title='Poslat e-mail'>
+                    <?php endif ?>
+                        <img src='images/mail.svg'/>
+                    </button>
+                    <button class='btn icon delete-user-button' title='Odstranit'>
                         <img src='images/cross.svg'/>
                     </button>
                 </div>
-                <?php if (empty($user['email'])) : ?>
-                <button class='user-action grayscale' disabled>
-                <?php endif ?>
-                <?php if (!empty($user['email'])) : ?>
-                <button class='user-action active-btn' onclick='startMail("<?= $user['email'] ?>")' title='Poslat e-mail'>
-                <?php endif ?>
-                    <img src='images/mail.svg'/>
-                </button>
-                <button class='user-action active-btn' onclick='deleteUser(<?= $user['id'] ?>, event)' title='Odstranit'>
-                    <img src='images/cross.svg'/>
-                </button>
             </td>
         </tr>
     <?php endforeach ?>

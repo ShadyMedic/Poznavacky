@@ -175,6 +175,10 @@
         #close-changelog-button {
             margin: 0 0 0.2rem auto;
         }
+        #old-changelog-link-wrapper {
+            text-align: center;
+            margin-top: 0.8rem;
+        }
         ul {
             overflow-y: auto;
             max-height: 60vh;
@@ -238,9 +242,9 @@
                 .invitation-accept {
                     display: flex;
                     flex-direction: row;
-                    justify-content: space-evenly;
+                    justify-content: center;
                     .btn {
-                        margin: 0 0.4rem
+                        margin: 0 0.4rem !important 
                     }
                 }
             }
@@ -435,7 +439,6 @@
                 text-align: center;
             }
             button {
-                width: 100%;
                 margin: 0.4rem 0;
             }
             li {

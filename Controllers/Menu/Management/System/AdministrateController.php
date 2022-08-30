@@ -9,7 +9,7 @@ use Poznavacky\Models\Administration;
 use Poznavacky\Models\Logger;
 
 /**
- * Kontroler starající se o výpis administrační stránky správcům služby
+ * Kontroler starající se o výpis domovské administrační stránky správcům služby
  * @author Jan Štěch
  */
 class AdministrateController extends SynchronousController
@@ -28,18 +28,16 @@ class AdministrateController extends SynchronousController
         (new Logger(true))->info('Přístup na stránku pro správu systému systémovým administrátorem s ID {userId} z IP adresy {ip}',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         
-        self::$data['loggedAdminName'] = UserManager::getName();
-        
-        self::$data['users'] = $administration->getAllUsers(false);
-        self::$data['classes'] = $administration->getAllClasses();
-        self::$data['reports'] = $administration->getAdminReports();
-        self::$data['userNameChangeRequests'] = $administration->getUserNameChangeRequests();
-        self::$data['classNameChangeRequests'] = $administration->getClassNameChangeRequests();
-        
+        self::$data['userCount'] = $administration->getUserCount();
+        self::$data['classesCount'] = $administration->getClassCount();
+        self::$data['reportCount'] = $administration->getAdminReportCount();
+        self::$data['userNameChangeRequestsCount'] = $administration->getUserNameChangeRequestCount();
+        self::$data['classNameChangeRequestsCount'] = $administration->getClassNameChangeRequestCount();
+
         self::$pageHeader['title'] = 'Správa služby';
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadnou správu různých součástí systému.';
         self::$pageHeader['keywords'] = '';
-        self::$pageHeader['cssFiles'] = array('css/private.css');
+        self::$pageHeader['cssFiles'] = array('css/administrate.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/ajaxMediator.js', 'js/administrate.js');
         self::$pageHeader['bodyId'] = 'administrate';
     }

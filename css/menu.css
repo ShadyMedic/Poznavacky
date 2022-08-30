@@ -1502,6 +1502,11 @@ label.required:after {
   margin: 0 0 0.2rem auto;
 }
 
+#menu #changelog #old-changelog-link-wrapper {
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
 #menu #changelog ul {
   overflow-y: auto;
   max-height: 60vh;
@@ -1607,13 +1612,13 @@ label.required:after {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #menu .folders#menu-classes-table .invitation .invitation-accept .btn {
-  margin: 0 0.4rem;
+  margin: 0 0.4rem !important;
 }
 
 #menu .folders#menu-classes-table #enter-code-wrapper,
@@ -1936,7 +1941,6 @@ label.required:after {
 }
 
 #menu .folders ul button {
-  width: 100%;
   margin: 0.4rem 0;
 }
 
