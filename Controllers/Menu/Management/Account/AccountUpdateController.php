@@ -71,17 +71,17 @@ class AccountUpdateController extends AjaxController
                 case 'verify password':
                     $password = urldecode($_POST['password']);
                     if (mb_strlen($password) === 0) {
-                        (new Logger(true))->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, avšak žádné heslo ke kontrole nebylo odesláno',
+                        (new Logger())->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, avšak žádné heslo ke kontrole nebylo odesláno',
                             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                         throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
                     }
                     $aChecker = new AccessChecker();
                     if (!$aChecker->recheckPassword($password)) {
-                        (new Logger(true))->info('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako nesprávné',
+                        (new Logger())->info('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako nesprávné',
                             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }
-                    (new Logger(true))->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako správné',
+                    (new Logger())->notice('Prohlížeč uživatele s ID {userId} se odeslal požadavek na ověření hesla z IP adresy {ip}, které bylo vyhodnoceno jako správné',
                         array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('verified' => true));
                     echo $response->getResponseString();

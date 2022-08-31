@@ -47,7 +47,7 @@ class TokenPasswordChanger
         $codeVerificator = new PasswordRecoveryCodeVerificator();
         $this->userId = $codeVerificator->verifyCode($this->token);
         if (empty($this->userId)) {
-            (new Logger(true))->warning('Uživatel s přístupem na stránku pro obnovení hesla se pokusil změnit heslo z IP adresy {ip}, avšak jeho kód (hash {hash}) je neplatný',
+            (new Logger())->warning('Uživatel s přístupem na stránku pro obnovení hesla se pokusil změnit heslo z IP adresy {ip}, avšak jeho kód (hash {hash}) je neplatný',
                 array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => md5($this->token)));
             throw new AccessDeniedException(AccessDeniedException::REASON_RECOVER_INVALID_TOKEN);
         }
@@ -62,7 +62,7 @@ class TokenPasswordChanger
     {
         $codeVerificator = new PasswordRecoveryCodeVerificator();
         $codeVerificator->deleteCode($this->token);
-        (new Logger(true))->info('Použitý kód pro obnovu hesla (hash {hash}) byl odstraněn z databáze',
+        (new Logger())->info('Použitý kód pro obnovu hesla (hash {hash}) byl odstraněn z databáze',
             array('hash' => md5($this->token)));
     }
     
@@ -80,26 +80,26 @@ class TokenPasswordChanger
                 DataValidator::TYPE_USER_PASSWORD);
         } catch (RangeException $e) {
             if ($e->getMessage() === 'long') {
-                (new Logger(true))->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) k uživatelskému účtu s ID {userId} z IP adresy {ip} selhal kvůli nepřijatelné délce hesla',
+                (new Logger())->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) k uživatelskému účtu s ID {userId} z IP adresy {ip} selhal kvůli nepřijatelné délce hesla',
                     array('hash' => md5($this->token), 'userId' => $this->userId, 'ip' => $_SERVER['REMOTE_ADDR']));
                 throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG, null, null);
             } else {
                 if ($e->getMessage() === 'short') {
-                    (new Logger(true))->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) k uživatelskému účtu s ID {userId} z IP adresy {ip} selhal kvůli nepřijatelné délce hesla',
+                    (new Logger())->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) k uživatelskému účtu s ID {userId} z IP adresy {ip} selhal kvůli nepřijatelné délce hesla',
                         array('hash' => md5($this->token), 'userId' => $this->userId, 'ip' => $_SERVER['REMOTE_ADDR']));
                     throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_SHORT, null,
                         null);
                 }
             }
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) k uživatelskému účtu s ID {id} z IP adresy {ip} selhal kvůli přitomnosti nepovolených znaků',
+            (new Logger())->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) k uživatelskému účtu s ID {id} z IP adresy {ip} selhal kvůli přitomnosti nepovolených znaků',
                 array('hash' => md5($this->token), 'userId' => $this->userId, 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS, null,
                 null);
         }
         
         if ($this->pass !== $this->repass) {
-            (new Logger(true))->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) z IP adresy {ip} selhal kvůli neshodě mezi zadanými hesly',
+            (new Logger())->notice('Pokus o změnu hesla pomocí kódu pro obnovení (hash {hash}) z IP adresy {ip} selhal kvůli neshodě mezi zadanými hesly',
                 array('hash' => md5($this->token), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS, null, null);
         }
@@ -120,7 +120,7 @@ class TokenPasswordChanger
         Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['hash'].' = ? WHERE '.
                          LoggedUser::COLUMN_DICTIONARY['id'].' = ?',
             array(password_hash($this->pass, PASSWORD_DEFAULT), $this->userId));
-        (new Logger(true))->info('Pomocí kódu pro obnovení hesla (hash {hash}) bylo z IP adresy {ip} změněno heslo k uživatelskému účtu s ID {userId}',
+        (new Logger())->info('Pomocí kódu pro obnovení hesla (hash {hash}) bylo z IP adresy {ip} změněno heslo k uživatelskému účtu s ID {userId}',
             array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => md5($this->token), 'userId' => $this->userId));
         return true;
     }

@@ -17,7 +17,7 @@ class Error404Controller extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        (new Logger(true))->notice('Přístup na chybovou stránku 404 z IP adresy {ip}',
+        (new Logger())->notice('Přístup na chybovou stránku 404 z IP adresy {ip}',
             array('ip' => $_SERVER['REMOTE_ADDR']));
         
         header('HTTP/1.0 404 Not Found');

@@ -36,7 +36,7 @@ class TestController extends SynchronousController
         
         $aChecker = new AccessChecker();
         if (!$aChecker->checkPart()) {
-            (new Logger(true))->info('Přístup na stránku pro zkoušení ze všech částí poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
+            (new Logger())->info('Přístup na stránku pro zkoušení ze všech částí poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
                 array(
                     'groupId' => $_SESSION['selection']['group']->getId(),
                     'classId' => $_SESSION['selection']['class']->getId(),
@@ -44,7 +44,7 @@ class TestController extends SynchronousController
                     'ip' => $_SERVER['REMOTE_ADDR']
                 ));
         } else {
-            (new Logger(true))->info('Přístup na stránku pro zkoušení z části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
+            (new Logger())->info('Přístup na stránku pro zkoušení z části s ID {partId} patřící do poznávačky s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
                 array(
                     'partId' => $_SESSION['selection']['part']->getId(),
                     'groupId' => $_SESSION['selection']['group']->getId(),

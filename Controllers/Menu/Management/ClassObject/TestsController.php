@@ -22,7 +22,7 @@ class TestsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        (new Logger(true))->info('Přístup na stránku pro správu poznávaček třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
+        (new Logger())->info('Přístup na stránku pro správu poznávaček třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
             array(
                 'classId' => $_SESSION['selection']['class']->getId(),
                 'userId' => UserManager::getId(),
