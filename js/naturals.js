@@ -50,19 +50,38 @@ function sortNaturals(event, direction)
     }
 
     let unsorted = naturalParameters
+    
     naturalParameters.sort((a,b) => {
         if (a[sortBy] === b[sortBy]) {
             return 0;
         }
-        else {
-            return a[sortBy].localeCompare(b[sortBy]);
-        }
-    });
 
-    if (direction == "down")
-    {
-        naturalParameters.reverse();
-    }
+        // řazení stringů
+        if (sortBy == 1)
+        {
+            if (direction == "up")
+            {
+                return a[sortBy].localeCompare(b[sortBy]); 
+            }
+            else if (direction == "down")
+            {
+                return (-1)*a[sortBy].localeCompare(b[sortBy]); 
+            }
+        }
+        // řazení čísel
+        else
+        {
+            if (direction == "up")
+            {
+                return a[sortBy] - b[sortBy]; 
+            }
+            else if (direction == "down")
+            {
+                return b[sortBy] - a[sortBy]; 
+            }
+        }
+          
+    });
 
     naturalParameters.forEach(function(element) {
         let id = element[0];
