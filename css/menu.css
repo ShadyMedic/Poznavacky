@@ -4325,8 +4325,6 @@ label.required:after {
 #naturals .naturals-data-properties > * .btn {
   width: 0.72em;
   height: 0.72em;
-  -webkit-filter: opacity(0.4);
-          filter: opacity(0.4);
   position: relative;
   top: 1px;
 }

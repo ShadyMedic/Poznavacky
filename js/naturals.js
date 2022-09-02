@@ -32,6 +32,20 @@ $(function()
     $("#filter-name").on("input", function() {filterByName($("#filter-name").val())})
 })
 
+function inactivateSortButton()
+{
+    let $buttonImgActiveOld = $(".sort-buttons .active").find("img");
+
+    // existuje aktivní řazení (kdyby neexistovalo, tak $buttonImgActiveOld.length == 0)
+    if ($buttonImgActiveOld.length != 0)
+    {
+        let buttonImgActiveOldSrc = $buttonImgActiveOld.attr("src");
+        let buttonImgSrcNormal = buttonImgActiveOldSrc.slice(0, buttonImgActiveOldSrc.length - 11) + buttonImgActiveOldSrc.slice(buttonImgActiveOldSrc.length - 4);
+        $buttonImgActiveOld.attr("src", buttonImgSrcNormal);
+        $buttonImgActiveOld.closest(".btn").removeClass("active");
+    }
+}
+
 function sortNaturals(event, direction)
 {
     let classType = $(event.target).closest(".sort-buttons").siblings().first().attr("class");
@@ -48,6 +62,16 @@ function sortNaturals(event, direction)
             sortBy = 3;
             break;
     }
+
+
+    inactivateSortButton();
+
+    let $buttonImg = $(event.target).closest(".btn").find("img");
+    let buttonImgSrc = $buttonImg.attr("src");
+    let buttonImgSrcActive = buttonImgSrc.slice(0, buttonImgSrc.length - 4) + "-active" + buttonImgSrc.slice(buttonImgSrc.length - 4);
+    $buttonImg.attr("src", buttonImgSrcActive);
+    $buttonImg.closest(".btn").addClass("active");  
+
 
     let unsorted = naturalParameters
     
@@ -103,6 +127,8 @@ function removeFilters()
     $naturals.forEach(function($element) {
         $("#naturals-data-section").append($element.get(0).outerHTML);
     })
+
+    inactivateSortButton();
 }
 
 function filterByName(name)
