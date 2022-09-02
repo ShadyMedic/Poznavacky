@@ -32,6 +32,9 @@ $(function()
     $("#filter-name").on("input", function() {filterByName($("#filter-name").val())})
 })
 
+/**
+ * Funkce, která zruší grafické zvýraznění šipky pro řazení přírodnin
+ */
 function inactivateSortButton()
 {
     let $buttonImgActiveOld = $(".sort-buttons .active").find("img");
@@ -46,6 +49,11 @@ function inactivateSortButton()
     }
 }
 
+/**
+ * Funkce, která seřadí vzestupně/sestupně přírodniny podle zvoleného parametru
+ * @param {event} event 
+ * @param {string} direction možnosti "up" a "down"
+ */
 function sortNaturals(event, direction)
 {
     let classType = $(event.target).closest(".sort-buttons").siblings().first().attr("class");
@@ -66,14 +74,13 @@ function sortNaturals(event, direction)
 
     inactivateSortButton();
 
+    // grafické zvýraznění šipky pro aktivní řazení
     let $buttonImg = $(event.target).closest(".btn").find("img");
     let buttonImgSrc = $buttonImg.attr("src");
     let buttonImgSrcActive = buttonImgSrc.slice(0, buttonImgSrc.length - 4) + "-active" + buttonImgSrc.slice(buttonImgSrc.length - 4);
     $buttonImg.attr("src", buttonImgSrcActive);
     $buttonImg.closest(".btn").addClass("active");  
 
-
-    let unsorted = naturalParameters
     
     naturalParameters.sort((a,b) => {
         if (a[sortBy] === b[sortBy]) {
@@ -116,6 +123,9 @@ function sortNaturals(event, direction)
     
 }
 
+/**
+ * Funkce rušící všechny filtry
+ */
 function removeFilters()
 {
     //zrušení filtrování podle jména
@@ -131,6 +141,11 @@ function removeFilters()
     inactivateSortButton();
 }
 
+
+/**
+ * Funkce, která zobrazuje pouze přírodniny začínající na zadaný substring
+ * @param {string} name substring, který má obsahovat hledaná přírodnina
+ */
 function filterByName(name)
 {
     $(".natural-data-item").each(function() {
@@ -145,7 +160,6 @@ function filterByName(name)
         }
     })
 }
-
 
 /**
  * Funkce zobrazující sekci s nápovědou
