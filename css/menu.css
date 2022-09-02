@@ -4179,8 +4179,7 @@ label.required:after {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 0.4rem;
-  margin: 1.2rem 0 0.6rem 0;
-  border-left: 4px solid #366e11;
+  margin: 1.2rem 0 1.8rem 0;
 }
 
 #naturals .naturals-filter-section .btn {
