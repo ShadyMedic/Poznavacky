@@ -57,11 +57,11 @@
                     </button>
                 </div>
                 <div class="part-name-url">V URL bude zobrazováno jako <?= $part->getUrl() ?></div>
-                <label>
-                    <span>Přírodnina k přidání</span>
+                <div class="add-natural">
+                    <label>Přírodnina k přidání</label>
                     <input type="text" class="text-field new-natural-name-input"/>
                     <button class="new-natural-button btn border-btn non-transparent black">Přidat</button>
-                </label>
+                </div>
             </div>
             <ul class="naturals-in-part">
                 <?php foreach ($part->getNaturals() as $natural) : ?>

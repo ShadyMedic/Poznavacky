@@ -643,6 +643,7 @@ label.required:after {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  line-height: 1.6rem;
 }
 
 .custom-checkbox-wrapper input[type="checkbox"] {
@@ -1324,6 +1325,11 @@ label.required:after {
   background: #eee;
   padding-top: 0.6em;
   padding-bottom: 0.6em;
+}
+
+#index #index-login-section .user-data label.custom-checkbox-wrapper {
+  margin-top: 0.72rem;
+  margin-bottom: 0.54rem;
 }
 
 #index #index-login-section .message {

@@ -643,6 +643,7 @@ label.required:after {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  line-height: 1.6rem;
 }
 
 .custom-checkbox-wrapper input[type="checkbox"] {
