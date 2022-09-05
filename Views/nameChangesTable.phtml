@@ -6,7 +6,7 @@
         <th>Akce</th>
     </tr>
     <?php if (count($userNameChangeRequests) + count($classNameChangeRequests) === 0) : ?>
-    <tr><td colspan=3>Žádné žádosti k vyřízení</td></tr>
+    <tr><td colspan=4>Žádné žádosti k vyřízení</td></tr>
     <?php endif ?>
     <?php foreach ($userNameChangeRequests as $request) : ?>
     <tr class="name-change-request-data-item"
