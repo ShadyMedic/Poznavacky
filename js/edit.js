@@ -460,7 +460,7 @@ function removeNatural(event)
  */
 function removePart(event)
 {
-    let confirmMessage = "Opravdu si přejete odebrat tuto část? Změny se neprojeví, dokud nebude úprava poznávačky uložena. Touto akcí nebudou odstraněny žádné existující přírodniny, ani jejich obrázky.";
+    let confirmMessage = "Opravdu si přeješ odebrat tuto část? Změny se neprojeví, dokud nebude úprava poznávačky uložena. Touto akcí nebudou odstraněny žádné existující přírodniny ani jejich obrázky.";
 
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm)
@@ -523,7 +523,7 @@ function save()
                         //odemčení stránky
                         unlock();
                         
-                        let confirmMessage = "Změny byly úspěšně uloženy Přejete si aktualizovat stránku pro ověření změn?";
+                        let confirmMessage = "Změny byly úspěšně uloženy. Přeješ si aktualizovat stránku pro ověření změn?";
                         newConfirm(confirmMessage, "Aktualizovat", "Zrušit", function(confirm)
                         {
                             if (confirm) 

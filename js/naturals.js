@@ -249,7 +249,7 @@ function renameConfirm(event)
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
-            let confirmMessage = "Přírodnina s tímto názvem již existuje. Chcete tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna. Tato akce je nevratná.";
+            let confirmMessage = "Přírodnina s tímto názvem již existuje. Chceš tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna. Tato akce je nevratná.";
             newConfirm(confirmMessage, "Sloučit", "Zrušit", function(confirm) {
                 if (confirm) {
                     let fromNaturalId = $natural.attr("data-natural-id");
@@ -355,7 +355,7 @@ function mergeNaturals(fromNaturalId, toNaturalId)
 function remove(event)
 {
     let $natural = $(event.target).closest('.natural-data-item');
-    let confirmMessage = 'Skutečně chcete odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
+    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm) removeFinal($natural)
         else return;

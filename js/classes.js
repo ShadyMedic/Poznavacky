@@ -302,7 +302,7 @@ function deleteClass(event)
     let classId = $class.attr("data-class-id");
     let className = $class.attr("data-class-name");
 
-    if (!confirm("Opravdu chcete odstranit třídu " + className + "?\nTato akce je nevratná!"))
+    if (!confirm("Opravdu chceš odstranit třídu " + className + "?\nTato akce je nevratná!"))
     {
         return;
     }

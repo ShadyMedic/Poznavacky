@@ -145,7 +145,7 @@ function submitReport()
     //kontrola vyplnění informací pro obecná hlášení
     if (($reason[0] == $reasonOther[0] || $reason[0] == $reasonOtherAdmin[0]) && reasonInfo.length === 0)
     {
-        $("#report-message").text("Musíte vyplnit důvod hlášení");
+        $("#report-message").text("Musíš vyplnit důvod hlášení");
         return;
     }
 
@@ -155,13 +155,13 @@ function submitReport()
         //obrázek se načítá a je zvolen jiný důvod než dlouhé načítání obrázku
         if ($reason[0] != $reasonLongLoading[0])
         {
-            $("#report-message").text("Z tohoto důvodu nemůžete nahlásit zatím nenačtený obrázek");
+            $("#report-message").text("Z tohoto důvodu nemůžeš nahlásit zatím nenačtený obrázek");
             return;
         }
         //obrázek se nenačítá
         else if ($("#loading").is(":hidden"))
         {
-            $("#report-message").text("Tento obrázek nemůžete nahlásit");
+            $("#report-message").text("Tento obrázek nemůžeš nahlásit");
             return;
         }
         //TODO - při reportu obrázku blank.gif (důvodem pomalé načítání) vrátí server zprávu Neznámý obrázek

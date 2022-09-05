@@ -76,7 +76,7 @@ function sendMail()
     //ochrana před odesíláním duplicitních e-mailů
     if (!emailModified)
     {
-        if (!confirm("Opravdu chcete odeslat ten samý e-mail znovu?"))
+        if (!confirm("Opravdu chceš odeslat ten samý e-mail znovu?"))
         {
             return;
         }
