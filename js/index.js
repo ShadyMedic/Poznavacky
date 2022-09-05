@@ -99,7 +99,7 @@ function checkLoginName()
     //přihlašovací jméno není vyplněno
     if($("#login-name").val().length == 0)
     {
-        loginNameMessage = "Jméno musí být vyplněno.";
+        loginNameMessage = "Uživatelské jméno musí být vyplněno.";
     }
     else loginNameMessage = "";
 
@@ -135,17 +135,17 @@ function checkRegisterName()
     //jméno není vyplněno
     if ($("#register-name").val().length == 0)
     {
-        registerNameMessage = "Jméno musí být vyplněno.";
+        registerNameMessage = "Uživatelské jméno musí být vyplněno.";
     }
     //jméno je kratší než 4 znaky
     else if ($("#register-name").val().length < 4)
     {
-        registerNameMessage = "Jméno musí být alespoň 4 znaky dlouhé.";
+        registerNameMessage = "Uživatelské jméno musí být alespoň 4 znaky dlouhé.";
     }
     //jméno je delší než 15 znaků
     else if ($("#register-name").val().length > 15)
     {
-        registerNameMessage = "Jméno může být nejvíce 15 znaků dlouhé.";
+        registerNameMessage = "Uživatelské jméno může být nejvíce 15 znaků dlouhé.";
     }
 
     else registerNameMessage = "";
@@ -155,7 +155,7 @@ function checkRegisterName()
     {
         if (!nameAllowedChars.includes($("#register-name").val()[i]))
         {
-            registerNameMessage = "Jméno obsahuje nepovolené znaky.";
+            registerNameMessage = "Uživatelské jméno obsahuje nepovolené znaky.";
         }
     }
 
@@ -466,7 +466,7 @@ function isStringUniqueCallback(messageType, message, data, shouldBeUnique, $inp
 
             if ($inputElement[0] === $("#register-name")[0])
             {
-                $("#register-name-message").text("Toto jméno už používá jiný uživatel.");
+                $("#register-name-message").text("Toto uživatelské jméno už používá jiný uživatel.");
             }
             else if ($inputElement[0] === $("#register-email")[0])
             {

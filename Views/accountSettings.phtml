@@ -9,15 +9,15 @@
             <span class='user-property-value'><?= $userId ?></span>
         </div>    
         <div class="user-data-item">
-            <span class='user-property-name'>Jméno</span>
+            <span class='user-property-name'>Uživatelské jméno</span>
             <span class='user-property-value' id="username"><?= $userName ?></span>
             <div class='user-property-action'>
                 <button class="btn border-btn non-transparent black" id="change-name-button">Změnit</button>
             </div>
             <div id="change-name" class="change-form" style="display: none;">
-                <h3>Žádost o změnu jména</h3>
-                <p class="additional-form-info">Tvoje nové jméno musí být nejprve schváleno administrátorem. Jeho změna v systému proto může chvíli trvat.</p>
-                <label for="change-name-new">Nové jméno</label>
+                <h3>Žádost o změnu uživatelského jména</h3>
+                <p class="additional-form-info">Tvoje nové uživatelské jméno musí být nejprve schváleno administrátorem. Jeho změna v systému proto může chvíli trvat.</p>
+                <label for="change-name-new">Nové uživatelské jméno</label>
                 <input class="text-field" id="change-name-new" type=text maxlength=15 />
                 <button class="btn border-btn non-transparent black" id="change-name-confirm-button">Potvrdit</button>
                 <button class="btn inline black" id="change-name-cancel-button">Zrušit</button>

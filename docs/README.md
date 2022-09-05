@@ -23,9 +23,9 @@ Zde můžete zjistit, jak dobře dokážete organismy poznat. Aplikace generuje 
 
 ## Uživatelský účet
 
-Když webovou aplikaci *Poznávačky* otevřete poprvé, budete se muset zaregistrovat. Poté už se se svým jménem a heslem můžete přihlašovat, kdykoliv se vám zachce. 
+Když webovou aplikaci *Poznávačky* otevřete poprvé, budete se muset zaregistrovat. Poté už se se svým uživatelským jménem a heslem můžete přihlašovat, kdykoliv se vám zachce. 
 
-Pokud si budete chtít změnit jméno, heslo nebo e-mail, je to možné pod záložkou *Nástavení účtu*. Tam také uvidíte svůj status, počet vámi přidaných obrázků, uhodnutých obrázků a karmu, kterou můžete obdržet za kroky vedoucí ke zlepšení služby.
+Pokud si budete chtít změnit uživatelské jméno, heslo nebo e-mail, je to možné pod záložkou *Nástavení účtu*. Tam také uvidíte svůj status, počet vámi přidaných obrázků, uhodnutých obrázků a karmu, kterou můžete obdržet za kroky vedoucí ke zlepšení služby.
 
 ## Vlastní poznávačky
 Pokud chcete vytvořit svůj vlastní seznam přírodnin, které se chcete naučit prostřednictvím této aplikace, podívejte se prosím do GitHub wiki projektu [zde](https://github.com/HonzaSTECH/Poznavacky/wiki/Vyu%C5%BE%C3%ADv%C3%A1n%C3%AD-slu%C5%BEby). Děkujeme za zájem!
