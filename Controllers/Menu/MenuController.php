@@ -30,6 +30,8 @@ class MenuController extends SynchronousController
      */
     public function process(array $parameters): void
     {
+        self::$data['userName'] = UserManager::getName();
+        
         self::$pageHeader['title'] = 'Volba poznávačky';
         self::$pageHeader['description'] = 'Zvolte si poznávačku, na kterou se chcete učit.';
         self::$pageHeader['keywords'] = 'poznávačky, biologie, příroda';
