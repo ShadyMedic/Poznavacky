@@ -11,9 +11,11 @@ use Poznavacky\Models\Statics\UserManager;
  */
 class ChangelogManager
 {
-    public const LATEST_VERSION = '4.0';
+    public const LATEST_VERSION = '4.1.1';
     private const GITHUB_API_RELEASES_URL = 'https://api.github.com/repos/ShadyMedic/Poznavacky/releases/';
     private const RELEASE_IDS = array(
+        '4.1.1' => 75769088,
+        '4.0.1' => 48583462,
         '4.0' => 41734877,
         '3.2' => 22530404,
         '3.1' => 22501973,
