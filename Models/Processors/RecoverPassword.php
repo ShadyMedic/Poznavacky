@@ -35,7 +35,7 @@ class RecoverPassword
         $POSTdata['email'] = trim($POSTdata['email']); //Ořež mezery
         
         if (mb_strlen($POSTdata['email']) === 0) {
-            (new Logger(true))->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} selhal kvůli nevyplnění e-mailové adresy',
+            (new Logger())->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} selhal kvůli nevyplnění e-mailové adresy',
                 array('ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_PASSWORD_RECOVERY_NO_EMAIL, null, null);
         }
@@ -45,7 +45,7 @@ class RecoverPassword
         try {
             $userId = $validator->getUserIdByEmail($email);
         } catch (AccessDeniedException $e) {
-            (new Logger(true))->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} na adresu {email} selhal, protože tato adresa nepatří žádnému zaregistrovanému uživateli',
+            (new Logger())->notice('Pokus o odeslání e-mailu pro obnovu hesla z IP adresy {ip} na adresu {email} selhal, protože tato adresa nepatří žádnému zaregistrovanému uživateli',
                 array('ip' => $_SERVER['REMOTE_ADDR'], 'email' => $email));
             throw $e;   //Výjimka je zachycena v kontroleru
         }
@@ -55,10 +55,10 @@ class RecoverPassword
         $result = self::sendCode($code, $email);
         
         if ($result) {
-            (new Logger(true))->info('E-mail s kódem pro obnovu hesla byl odeslán na e-mailovou adresu {email} na základě požadavku z IP adresy {ip}',
+            (new Logger())->info('E-mail s kódem pro obnovu hesla byl odeslán na e-mailovou adresu {email} na základě požadavku z IP adresy {ip}',
                 array('email' => $email, 'ip' => $_SERVER['REMOTE_ADDR']));
         } else {
-            (new Logger(true))->critical('E-mail s kódem pro obnovu hesla se na e-mailovou adresu {email} na základě požadavku z IP adresy {ip} nepodařilo z neznámého důvodu odeslat; je možné že není možné odesílat žádné e-maily',
+            (new Logger())->critical('E-mail s kódem pro obnovu hesla se na e-mailovou adresu {email} na základě požadavku z IP adresy {ip} nepodařilo z neznámého důvodu odeslat; je možné že není možné odesílat žádné e-maily',
                 array('email' => $email, 'ip' => $_SERVER['REMOTE_ADDR']));
         }
         return $result;

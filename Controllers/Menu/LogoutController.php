@@ -50,7 +50,7 @@ class LogoutController extends AjaxController
         /*session_start();
         session_regenerate_id();*/
         
-        (new Logger(true))->info('Uživatel s ID {userId} se z IP adresy {ip} odhlásil',
+        (new Logger())->info('Uživatel s ID {userId} se z IP adresy {ip} odhlásil',
             array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR']));
         
         //Přesměrování na index

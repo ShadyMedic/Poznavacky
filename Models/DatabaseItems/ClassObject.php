@@ -296,7 +296,7 @@ class ClassObject extends Folder
         }
 
         if ($i === count($this->groups)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odstranit poznávačku s ID {groupId} z IP adresy {ip}, avšak daná poznávačka nebyla v dané třídě nalezena',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odstranit poznávačku s ID {groupId} z IP adresy {ip}, avšak daná poznávačka nebyla v dané třídě nalezena',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -311,7 +311,7 @@ class ClassObject extends Folder
 
         //Odstranění poznávačky z databáze
         $result = $group->delete();
-        (new Logger(true))->info('Uživatel s ID {userId} odstranil ze třídy s ID {classId} poznávačku s ID {groupId} z IP adresy {ip}',
+        (new Logger())->info('Uživatel s ID {userId} odstranil ze třídy s ID {classId} poznávačku s ID {groupId} z IP adresy {ip}',
             array(
                 'userId' => UserManager::getId(),
                 'classId' => $this->getId(),
@@ -401,7 +401,7 @@ class ClassObject extends Folder
 
         //Zkontroluj, zda tato třída není veřejná
         if ($this->status === self::CLASS_STATUS_PUBLIC) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele se jménem {invitedUserName}, avšak daná třída je nastavena jako veřejná',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele se jménem {invitedUserName}, avšak daná třída je nastavena jako veřejná',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -419,7 +419,7 @@ class ClassObject extends Folder
             User::COLUMN_DICTIONARY['status'].' FROM '.User::TABLE_NAME.' WHERE '.
             User::COLUMN_DICTIONARY['name'].' = ? LIMIT 1', array($userName));
         if (empty($result)) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele se jménem {invitedUserName}, avšak uživatel s tímto jménem nebyl nalezen',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele se jménem {invitedUserName}, avšak uživatel s tímto jménem nebyl nalezen',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -438,7 +438,7 @@ class ClassObject extends Folder
         for ($i = 0; $i < count($this->members) && $user->getId() !== $this->members[$i]->getId(); $i++) {
         }
         if ($i !== count($this->members)) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}, avšak daný uživatel již je členem dané třídy',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}, avšak daný uživatel již je členem dané třídy',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -450,7 +450,7 @@ class ClassObject extends Folder
 
         //Zkontroluj, zda uživatel nepředstavuje demo účet
         if ($user['status'] === User::STATUS_GUEST) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}, avšak daný uživatel je demo účet',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}, avšak daný uživatel je demo účet',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -467,7 +467,7 @@ class ClassObject extends Folder
             array($user->getId(), $this->id));
         if (empty($result)) {
             //Nová pozvánka
-            (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}',
+            (new Logger())->info('Uživatel s ID {userId} odeslal z IP adresy {ip} pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -477,7 +477,7 @@ class ClassObject extends Folder
             $invitation = new Invitation(true);
         } else {
             //Prodloužit životnost existující pozvánky
-            (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}, čímž prodloužil platnost již existující pozvánky',
+            (new Logger())->info('Uživatel s ID {userId} odeslal z IP adresy {ip} pozvánku do třídy s ID {classId} pro uživatele s ID {invitedUserId}, čímž prodloužil platnost již existující pozvánky',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -541,7 +541,7 @@ class ClassObject extends Folder
 
         if ($this->status == self::CLASS_STATUS_PUBLIC) {
             //Nelze odstranit člena z veřejné třídy
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak tato třída je nastavena jako veřejná',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak tato třída je nastavena jako veřejná',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -555,7 +555,7 @@ class ClassObject extends Folder
 
         if ($userId === $this->admin->getId()) {
             //Správce třídy nemůže sám sebe vyhodit
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat sám sebe z IP adresy {ip}, což správce udělat nemůže',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat sám sebe z IP adresy {ip}, což správce udělat nemůže',
                 array('userId' => UserManager::getId(), 'classId' => $this->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_CANT_SELF);
         }
@@ -573,7 +573,7 @@ class ClassObject extends Folder
             }
         }
         if ($i === count($this->members)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak daný uživatel není členem dané třídy',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak daný uživatel není členem dané třídy',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -586,7 +586,7 @@ class ClassObject extends Folder
         //Odstranit členství z databáze
         if (Db::executeQuery('DELETE FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1',
             array($this->id, $userId))) {
-            (new Logger(true))->info('Uživatel s ID {userId} odebral ze třídy s ID {classId} uživatele s ID {kickedUserId} z IP adresy {ip}',
+            (new Logger())->info('Uživatel s ID {userId} odebral ze třídy s ID {classId} uživatele s ID {kickedUserId} z IP adresy {ip}',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -595,7 +595,7 @@ class ClassObject extends Folder
                 ));
             return true;
         } else {
-            (new Logger(true))->error('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak zabránila mu v tom nečekaná chyba databáze',
+            (new Logger())->error('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak zabránila mu v tom nečekaná chyba databáze',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -680,7 +680,7 @@ class ClassObject extends Folder
     public function requestNameChange(string $newName): bool
     {
         if (mb_strlen($newName) === 0) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} z IP adresy {ip}, avšak nevyplnil požadovaný název',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} z IP adresy {ip}, avšak nevyplnil požadovaný název',
                 array('userId' => UserManager::getId(), 'classId' => $this->getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NAME_CHANGE_NO_NAME);
         }
@@ -691,7 +691,7 @@ class ClassObject extends Folder
             $validator->checkLength($newName, DataValidator::CLASS_NAME_MIN_LENGTH,
                 DataValidator::CLASS_NAME_MAX_LENGTH, DataValidator::TYPE_CLASS_NAME);
         } catch (RangeException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli nepřijatelné délce požadovaného názvu',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli nepřijatelné délce požadovaného názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -715,7 +715,7 @@ class ClassObject extends Folder
                 DataValidator::TYPE_CLASS_NAME);
         } catch (InvalidArgumentException $e) {
 
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli přítomnosti nepovolených znaků v požadovaném názvu',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli přítomnosti nepovolených znaků v požadovaném názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -732,7 +732,7 @@ class ClassObject extends Folder
             $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         } catch (InvalidArgumentException $e) {
 
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak třída se stejnou URL reprezentací názvu již existuje',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak třída se stejnou URL reprezentací názvu již existuje',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -747,7 +747,7 @@ class ClassObject extends Folder
         try {
             $validator->checkForbiddenUrls($url, DataValidator::TYPE_CLASS_URL);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak URL reprezentace požadovaného názvu je rezervována',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak URL reprezentace požadovaného názvu je rezervována',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -773,7 +773,7 @@ class ClassObject extends Folder
                 $applications[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
             $request->initialize($this, $newName, new DateTime('@'.time()), $this->generateUrl($newName));
             $request->save();
-            (new Logger(true))->info('Uživatel s ID {userId} se zažádal o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, tímto přepsal již existující žádost o změnu',
+            (new Logger())->info('Uživatel s ID {userId} se zažádal o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, tímto přepsal již existující žádost o změnu',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -785,7 +785,7 @@ class ClassObject extends Folder
             $request = new ClassNameChangeRequest(true);
             $request->initialize($this, $newName, new DateTime('@'.time()), $this->generateUrl($newName));
             $request->save();
-            (new Logger(true))->info('Uživatel s ID {userId} se zažádal o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}',
+            (new Logger())->info('Uživatel s ID {userId} se zažádal o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -861,7 +861,7 @@ class ClassObject extends Folder
         if (!($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_PRIVATE ||
             $status === self::CLASS_STATUS_LOCKED)) {
 
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil změnit stav třídy s ID {classId} z IP adresy {ip}, avšak ten nebyl rozpoznán',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil změnit stav třídy s ID {classId} z IP adresy {ip}, avšak ten nebyl rozpoznán',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -871,7 +871,7 @@ class ClassObject extends Folder
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_ACCESS_CHANGE_INVALID_STATUS);
         }
         if ($code !== null && !($validator->validateClassCode($code))) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil změnit přístupový kód třídy s ID {classId} na {newCode} z IP adresy {ip}, avšak kód neměl správný formát',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil změnit přístupový kód třídy s ID {classId} na {newCode} z IP adresy {ip}, avšak kód neměl správný formát',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->getId(),
@@ -891,7 +891,7 @@ class ClassObject extends Folder
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['status'].' = ?, '.
             self::COLUMN_DICTIONARY['code'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;',
             array($status, $code, $this->id), false);
-        (new Logger(true))->info('Uživatel s ID {userId} změnil stav třídy s ID {classId} na {newStatus} a její kód nastavil na {newCode} z IP adresy {ip}',
+        (new Logger())->info('Uživatel s ID {userId} změnil stav třídy s ID {classId} na {newStatus} a její kód nastavil na {newCode} z IP adresy {ip}',
             array(
                 'userId' => UserManager::getId(),
                 'classId' => $this->getId(),
@@ -964,20 +964,20 @@ class ClassObject extends Folder
 
         //Kontrola, zda je přihlášený uživatel správcem této třídy
         if (!$this->checkAdmin(UserManager::getId())) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odstranit třídu s ID {classId}, avšak selhal, protože není jejím správcem',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odstranit třídu s ID {classId}, avšak selhal, protože není jejím správcem',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $classId));
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
 
         //Kontrola hesla
         if (mb_strlen($password) === 0) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odstranit třídu s ID {classId}, avšak selhal, protože dodatečná kontrola jeho hesla zjistila jeho nevyplnění',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odstranit třídu s ID {classId}, avšak selhal, protože dodatečná kontrola jeho hesla zjistila jeho nevyplnění',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $classId));
             throw new AccessDeniedException(AccessDeniedException::REASON_NO_PASSWORD_GENERAL);
         }
         $aChecker = new AccessChecker();
         if (!$aChecker->recheckPassword($password)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odstranit třídu s ID {classId}, avšak selhal, protože dodatečná kontrola jeho hesla neprošla',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odstranit třídu s ID {classId}, avšak selhal, protože dodatečná kontrola jeho hesla neprošla',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $classId));
             throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
         }
@@ -1007,7 +1007,7 @@ class ClassObject extends Folder
             $user->initialize(null, null, null, null, null, null, User::STATUS_MEMBER);
         }
 
-        (new Logger(true))->info('Uživatel s ID {userId} odstranil z IP adresy {ip} třídu s ID {classId}',
+        (new Logger())->info('Uživatel s ID {userId} odstranil z IP adresy {ip} třídu s ID {classId}',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classId' => $classId));
         return $result;
     }

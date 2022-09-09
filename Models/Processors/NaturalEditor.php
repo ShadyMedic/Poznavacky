@@ -56,7 +56,7 @@ class NaturalEditor
             $validator->checkCharacters($newName, DataValidator::NATURAL_NAME_ALLOWED_CHARS,
                 DataValidator::TYPE_NATURAL_NAME);
         } catch (RangeException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli nepřijatelné délce názvu',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli nepřijatelné délce názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -73,7 +73,7 @@ class NaturalEditor
                         null, $e);
             }
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli přítomnosti nepovolených znaků v názvu',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli přítomnosti nepovolených znaků v názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -88,7 +88,7 @@ class NaturalEditor
         try {
             $validator->checkUniqueness($newName, DataValidator::TYPE_NATURAL_NAME, $this->class);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli neunikátnímu názvu',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli neunikátnímu názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -100,7 +100,7 @@ class NaturalEditor
         }
         
         if (!in_array($natural->getId(), $this->idsOfNaturalsInClass)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak přejmenovávaná přírodnina nepatří do spravované třídy',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak přejmenovávaná přírodnina nepatří do spravované třídy',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -127,7 +127,7 @@ class NaturalEditor
     public function merge(Natural $from, Natural $to): array
     {
         if (!in_array($from->getId(), $this->idsOfNaturalsInClass)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} sloučit přírodninu s ID {naturalId} do jiné přírodniny z IP adresy {ip}, avšak slučovaná přírodnina nepatří do spravované třídy',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} sloučit přírodninu s ID {naturalId} do jiné přírodniny z IP adresy {ip}, avšak slučovaná přírodnina nepatří do spravované třídy',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -137,7 +137,7 @@ class NaturalEditor
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_NATURALS_MERGE_FROM_FOREIGN_NATURAL);
         }
         if (!in_array($to->getId(), $this->idsOfNaturalsInClass)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} sloučit jinou přírodninu do přírodniny s ID {naturalId} z IP adresy {ip}, avšak přírodnina, do které má být jiná přírodnina sloučena nepatří do spravované třídy',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} sloučit jinou přírodninu do přírodniny s ID {naturalId} z IP adresy {ip}, avšak přírodnina, do které má být jiná přírodnina sloučena nepatří do spravované třídy',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -160,7 +160,7 @@ class NaturalEditor
     public function delete(Natural $natural): bool
     {
         if (!in_array($natural->getId(), $this->idsOfNaturalsInClass)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil odstranit ze třídy s ID {classId} přírodninu s ID {naturalId} z IP adresy {ip}, což mu nebylo umožněno, jelikož daná přírodnina nepatří do spravované třídy',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil odstranit ze třídy s ID {classId} přírodninu s ID {naturalId} z IP adresy {ip}, což mu nebylo umožněno, jelikož daná přírodnina nepatří do spravované třídy',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),

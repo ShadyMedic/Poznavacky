@@ -34,7 +34,7 @@ class LearnPicturesController extends AjaxController
         try {
             $pictures = $natural->getPictures();
         } catch (DatabaseException $e) {
-            (new Logger(true))->alert('Uživatel s ID {userId} zažádal o obrázky přírodniny s ID {naturalId} pro učební stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
+            (new Logger())->alert('Uživatel s ID {userId} zažádal o obrázky přírodniny s ID {naturalId} pro učební stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
                 array(
                     'userId' => UserManager::getId(),
                     'naturalId' => $natural->getId(),
@@ -52,7 +52,7 @@ class LearnPicturesController extends AjaxController
             $picturesArr[] = $picture->getSrc();
         }
         
-        (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byly odeslány obrázky přírodniny s ID {naturalId} pro učební stránku',
+        (new Logger())->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byly odeslány obrázky přírodniny s ID {naturalId} pro učební stránku',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'naturalId' => $natural->getId()));
         header('Content-Type: application/json');
         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('pictures' => $picturesArr));

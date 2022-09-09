@@ -31,13 +31,13 @@ class LeaveController extends AjaxController
             $class->load();
             $classId = $class->getId();
         } catch (BadMethodCallException $e) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil opustit třídu s URL {classUrl} z IP adresy {ip}, avšak taková třída nebyla v databázi nalezena',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil opustit třídu s URL {classUrl} z IP adresy {ip}, avšak taková třída nebyla v databázi nalezena',
                 array('userId' => UserManager::getId(), 'classUrl' => $parameters[0], 'ip' => $_SERVER['REMOTE_ADDR']));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Třída se zadaným URL nebyla nalezena');
             echo $response->getResponseString();
             return;
         } catch (DatabaseException $e) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil opustit třídu s URL {classUrl} z IP adresy {ip}, avšak zabránila mu v tom nečekaná chyba databáze (hláška {exception})',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil opustit třídu s URL {classUrl} z IP adresy {ip}, avšak zabránila mu v tom nečekaná chyba databáze (hláška {exception})',
                 array(
                     'userId' => UserManager::getId(),
                     'classUrl' => $parameters[0],
@@ -52,7 +52,7 @@ class LeaveController extends AjaxController
         try {
             if ($class->checkAdmin($userId)) {
                 //Správce třídy jí nemůže opustit
-                (new Logger(true))->notice('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak jelikož je její správce, nebylo mu toto umožněno',
+                (new Logger())->notice('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak jelikož je její správce, nebylo mu toto umožněno',
                     array('userId' => $userId, 'classId' => $classId, 'ip' => $_SERVER['REMOTE_ADDR']));
                 $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
                     AccessDeniedException::REASON_LEAVE_CLASS_ADMIN);
@@ -62,7 +62,7 @@ class LeaveController extends AjaxController
             
             $class->removeMember($userId);
         } catch (AccessDeniedException $e) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak zabránila mu v tom chyba: {exception}',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak zabránila mu v tom chyba: {exception}',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $classId,
@@ -73,7 +73,7 @@ class LeaveController extends AjaxController
             echo $response->getResponseString();
             return;
         } catch (DatabaseException $e) {
-            (new Logger(true))->error('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak zabránila mu v tom nečekaná chyba databáze (hláška {exception})',
+            (new Logger())->error('Uživatel s ID {userId} se pokusil opustit třídu s ID {classId} z IP adresy {ip}, avšak zabránila mu v tom nečekaná chyba databáze (hláška {exception})',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $classId,
@@ -85,7 +85,7 @@ class LeaveController extends AjaxController
             return;
         }
         
-        (new Logger(true))->info('Uživatel s ID {userId} opustil třídu s ID {classId} z IP adresy {ip}',
+        (new Logger())->info('Uživatel s ID {userId} opustil třídu s ID {classId} z IP adresy {ip}',
             array('userId' => $userId, 'classId' => $classId, 'ip' => $_SERVER['REMOTE_ADDR']));
         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Třída úspěšně opuštěna');
         echo $response->getResponseString();

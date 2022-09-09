@@ -53,7 +53,7 @@ class Administration
     {
         $aChecker = new AccessChecker();
         if (!$aChecker->checkSystemAdmin()) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} přistoupit na stránku pro správu systému nebo odeslat požadavek na provedení akce související se správou systému, ačkoliv se nejedná o systémového administrátora',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} přistoupit na stránku pro správu systému nebo odeslat požadavek na provedení akce související se správou systému, ačkoliv se nejedná o systémového administrátora',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }

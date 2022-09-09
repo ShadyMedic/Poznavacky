@@ -19,7 +19,7 @@ class ReportsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        (new Logger(true))->info('Přístup na stránku pro správu hlášení v poznávačce s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
+        (new Logger())->info('Přístup na stránku pro správu hlášení v poznávačce s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
             array(
                 'groupId' => $_SESSION['selection']['group']->getId(),
                 'classId' => $_SESSION['selection']['class']->getId(),

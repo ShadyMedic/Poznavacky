@@ -24,14 +24,14 @@ abstract class AjaxController implements ControllerInterface
             strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
             $aChecker = new AccessChecker();
             if ($aChecker->checkUser()) {
-                (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přistoupit k AJAX kontroleru {controllerName} z IP adresy {ip} jinak než pomocí AJAX požadavku',
+                (new Logger())->warning('Uživatel s ID {userId} se pokusil přistoupit k AJAX kontroleru {controllerName} z IP adresy {ip} jinak než pomocí AJAX požadavku',
                     array(
                         'userId' => UserManager::getId(),
                         'controllerName' => get_class($this),
                         'ip' => $_SERVER['REMOTE_ADDR']
                     ));
             } else {
-                (new Logger(true))->warning('Nepřihlášený uživatel se pokusil přistoupit k AJAX kontroleru {controllerName} z IP adresy {ip} jinak než pomocí AJAX požadavku',
+                (new Logger())->warning('Nepřihlášený uživatel se pokusil přistoupit k AJAX kontroleru {controllerName} z IP adresy {ip} jinak než pomocí AJAX požadavku',
                     array('controllerName' => get_class($this), 'ip' => $_SERVER['REMOTE_ADDR']));
             }
             

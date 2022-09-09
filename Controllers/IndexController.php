@@ -33,7 +33,7 @@ class IndexController extends SynchronousController
             } else {
                 $url = 'menu/'.$lastFolderUrl;
             }
-            (new Logger(true))->info('Přesměrovávání uživatele s ID {userId} do systému z index stránky, jelikož již je přihlášen (IP: {ip})',
+            (new Logger())->info('Přesměrovávání uživatele s ID {userId} do systému z index stránky, jelikož již je přihlášen (IP: {ip})',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $this->redirect($url);
         }
@@ -45,12 +45,12 @@ class IndexController extends SynchronousController
                 $userLogger->processCookieLogin($_COOKIE['instantLogin']);
                 
                 //Přihlášení proběhlo úspěšně
-                (new Logger(true))->info('Přesměrování uživatele s ID {userId} do systému z index stránky díky úspěšnému oveření kódu pro okamžité přihlášení (IP: {ip})',
+                (new Logger())->info('Přesměrování uživatele s ID {userId} do systému z index stránky díky úspěšnému oveření kódu pro okamžité přihlášení (IP: {ip})',
                     array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
                 $this->redirect('menu');
             } catch (AccessDeniedException $e) {
                 //Kód nebyl platný
-                (new Logger(true))->warning('Okamžité přihlášení uživatele z IP adresy {ip} selhalo, protože poskytnutý kód pro okamžité přihlášení nebyl platný',
+                (new Logger())->warning('Okamžité přihlášení uživatele z IP adresy {ip} selhalo, protože poskytnutý kód pro okamžité přihlášení nebyl platný',
                     array('ip' => $_SERVER['REMOTE_ADDR']));
                 $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, $e->getMessage());
                 
@@ -59,12 +59,12 @@ class IndexController extends SynchronousController
                 unset($_COOKIE['instantLogin']);
             } catch (DatabaseException $e) {
                 //Kód se nepodařilo ověřit kvůli chybě při práci s databází
-                (new Logger(true))->critical('Kód pro okamžité přihlášení (hash {hash}) uživatele přihlašujícího se z IP adresy {ip} se nepodařilo ověřit kvůli chybě při přáci s databází; je možné že se není možné vůbec připojit k databázi',
+                (new Logger())->critical('Kód pro okamžité přihlášení (hash {hash}) uživatele přihlašujícího se z IP adresy {ip} se nepodařilo ověřit kvůli chybě při přáci s databází; je možné že se není možné vůbec připojit k databázi',
                     array('hash' => $_COOKIE['instantLogin'], 'ip' => $_SERVER['REMOTE_ADDR']));
             }
         }
         
-        (new Logger(true))->info('Přístup na stránku index z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
+        (new Logger())->info('Přístup na stránku index z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
         
         self::$pageHeader['title'] = 'Poznávačky';
         self::$pageHeader['description'] = 'Čeká vás poznávačka z biologie? Není lepší způsob, jak se na ni naučit, než použitím této webové aplikace. Vytvořte si vlastní poznávačku, společně do ní přidávejte obrázky, učte se z nich a nechte si generovat náhodné testy.';

@@ -25,7 +25,6 @@ use RangeException;
  */
 class NewClassRequester
 {
-    private const WEBMASTER_EMAIL = 'honza.stech@gmail.com';
     private const TEMP_CLASS_NAME_FORMAT = 'Třída uživatele {userName}';
 
     /**
@@ -100,24 +99,24 @@ class NewClassRequester
     {
         //Kontrola, zda jsou všechna povinná pole vyplněna
         if (mb_strlen($email) === 0 && empty(UserManager::getEmail())) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože nebyla vyplněna e-mailová adresa',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože nebyla vyplněna e-mailová adresa',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_EMAIL, null, null);
         }
         if (mb_strlen($name) === 0) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože nebyl vyplněn název pro třídu',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože nebyl vyplněn název pro třídu',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_NAME, null, null);
         }
         if (mb_strlen($antispam) === 0) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože nebyla vyplněna ochrana proti robotům',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože nebyla vyplněna ochrana proti robotům',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NO_ANTISPAM, null, null);
         }
 
         //Kontrola formátu e-mailu
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože zadaná e-mailová adresa ({email}) neměla platný formát',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože zadaná e-mailová adresa ({email}) neměla platný formát',
                 array('userId' => UserManager::getId(), 'email' => $email, 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_INVALID_EMAIL, null, null);
         }
@@ -130,7 +129,7 @@ class NewClassRequester
                 DataValidator::TYPE_CLASS_NAME);
             $validator->checkCharacters($name, DataValidator::CLASS_NAME_ALLOWED_CHARS, DataValidator::TYPE_CLASS_NAME);
         } catch (RangeException $e) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože název pro třídu ({className}) má nepřijatelnou délku',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože název pro třídu ({className}) má nepřijatelnou délku',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'className' => $name));
             if ($e->getMessage() === 'long') {
                 throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_TOO_LONG, null,
@@ -142,7 +141,7 @@ class NewClassRequester
                 }
             }
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože název pro třídu ({className}) obsahoval nepovolené znaky',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože název pro třídu ({className}) obsahoval nepovolené znaky',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'className' => $name));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_NAME_INVALID_CHARACTERS,
                 null, $e);
@@ -153,7 +152,7 @@ class NewClassRequester
         try {
             $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože třída s požadovaným názvem ({className}) již existuje',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože třída s požadovaným názvem ({className}) již existuje',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'className' => $name));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_DUPLICATE_NAME, null, $e);
         }
@@ -163,7 +162,7 @@ class NewClassRequester
         try {
             $validator->checkUniqueness($tempUrl, DataValidator::TYPE_CLASS_URL);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože třída s dočasným názvem pro tohoto uživatele již existuje',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože třída s dočasným názvem pro tohoto uživatele již existuje',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_ALREADY_WAITING, null, $e);
         }
@@ -172,7 +171,7 @@ class NewClassRequester
         try {
             $validator->checkForbiddenUrls($url, DataValidator::TYPE_CLASS_URL);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože URL reprezentace názvu pro třídu ({classUrl}) je rezervovaná pro kontroler',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože URL reprezentace názvu pro třídu ({classUrl}) je rezervovaná pro kontroler',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'classUrl' => $url));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL, null, $e);
         }
@@ -180,7 +179,7 @@ class NewClassRequester
         //Kontrola antispamu
         $captchaChecker = new NumberAsWordCaptcha();
         if (!$captchaChecker->checkAnswer($antispam, NumberAsWordCaptcha::SESSION_INDEX)) {
-            (new Logger(true))->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože ochrana proti robotům nebyla vyplněna správně',
+            (new Logger())->notice('Pokus o odeslání formuláře pro založení nové třídy uživatelem s ID {userId} z IP adresy {ip} selhal, protože ochrana proti robotům nebyla vyplněna správně',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(AccessDeniedException::REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED, null, null);
         }
