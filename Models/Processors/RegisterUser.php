@@ -43,7 +43,7 @@ class RegisterUser
         if (self::validateData($name, $pass, $repass, $email))  //Pokud nejsou data v pořádku, je vyhozena výjimka
         {
             if (!self::register($name, $pass, $email)) {
-                (new Logger(true))->critical('Neznámá chyba při registraci uživatelského účtu {userName} z IP adresy {ip}',
+                (new Logger())->critical('Neznámá chyba při registraci uživatelského účtu {userName} z IP adresy {ip}',
                     array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
                 throw new RuntimeException('Uživatele se nepovedlo zaregistrovat. Zkuste to prosím znovu později', null,
                     null);
@@ -79,7 +79,7 @@ class RegisterUser
         
         //Pokud není něco vyplněné, nemá smysl pokračovat
         if (!empty($errors)) {
-            (new Logger(true))->notice('Pokus or registraci z IP adresy {ip} selhal kvůli nevyplnění některého z údajů',
+            (new Logger())->notice('Pokus or registraci z IP adresy {ip} selhal kvůli nevyplnění některého z údajů',
                 array('ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(implode('|', $errors));
         }
@@ -89,7 +89,7 @@ class RegisterUser
             $validator->checkLength($name, DataValidator::USER_NAME_MIN_LENGTH, DataValidator::USER_NAME_MAX_LENGTH,
                 DataValidator::TYPE_USER_NAME);
         } catch (RangeException $e) {
-            (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli nepřijatelné délce jména',
+            (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli nepřijatelné délce jména',
                 array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
             if ($e->getMessage() === 'long') {
                 $errors[] = AccessDeniedException::REASON_REGISTER_NAME_TOO_LONG;
@@ -103,7 +103,7 @@ class RegisterUser
             $validator->checkLength($pass, DataValidator::USER_PASSWORD_MIN_LENGTH,
                 DataValidator::USER_PASSWORD_MAX_LENGTH, DataValidator::TYPE_USER_PASSWORD);
         } catch (RangeException $e) {
-            (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli nepřijatelné délce hesla',
+            (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli nepřijatelné délce hesla',
                 array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
             if ($e->getMessage() === 'long') {
                 $errors[] = AccessDeniedException::REASON_REGISTER_PASSWORD_TOO_LONG;
@@ -119,7 +119,7 @@ class RegisterUser
                 $validator->checkLength($email, DataValidator::USER_EMAIL_MIN_LENGTH,
                     DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAIL);
             } catch (RangeException $e) {
-                (new Logger(true))->info('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli nepřijatelné délce e-mailové adresy',
+                (new Logger())->info('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli nepřijatelné délce e-mailové adresy',
                     array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
                 if ($e->getMessage() === 'long') {
                     $errors[] = AccessDeniedException::REASON_REGISTER_EMAIL_TOO_LONG;
@@ -135,12 +135,12 @@ class RegisterUser
         } catch (InvalidArgumentException $e) {
             switch ($e->getCode()) {
                 case 0:
-                    (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli přítomnosti nepovolených znaků ve jméně',
+                    (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli přítomnosti nepovolených znaků ve jméně',
                         array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
                     $errors[] = AccessDeniedException::REASON_REGISTER_NAME_INVALID_CHARACTERS;
                     break;
                 case 1:
-                    (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli přítomnosti nepovolených znaků v hesle',
+                    (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli přítomnosti nepovolených znaků v hesle',
                         array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
                     $errors[] = AccessDeniedException::REASON_REGISTER_PASSWORD_INVALID_CHARACTERS;
                     break;
@@ -161,12 +161,12 @@ class RegisterUser
         } catch (InvalidArgumentException $e) {
             switch ($e->getCode()) {
                 case 0:
-                    (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli duplicitnímu jménu',
+                    (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli duplicitnímu jménu',
                         array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
                     $errors[] = AccessDeniedException::REASON_REGISTER_DUPLICATE_NAME;
                     break;
                 case 2:
-                    (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli duplicitní e-mailové adrese',
+                    (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli duplicitní e-mailové adrese',
                         array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
                     $errors[] = AccessDeniedException::REASON_REGISTER_DUPLICATE_EMAIL;
                     break;
@@ -175,14 +175,14 @@ class RegisterUser
         
         //Kontrola platnosti e-mailu
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) {
-            (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli neplatnému formátu zadané e-mailové adresy',
+            (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli neplatnému formátu zadané e-mailové adresy',
                 array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
             $errors[] = AccessDeniedException::REASON_REGISTER_INVALID_EMAIL;
         }
         
         //Kontrola shodnosti hesel
         if ($pass !== $repass) {
-            (new Logger(true))->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli neshodě mezi zadanými hesly',
+            (new Logger())->notice('Pokus o registraci uživatelského účtu {userName} z IP adresy {ip} selhal kvůli neshodě mezi zadanými hesly',
                 array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR']));
             $errors[] = AccessDeniedException::REASON_REGISTER_DIFFERENT_PASSWORDS;
         }
@@ -213,13 +213,13 @@ class RegisterUser
             $password);
         $user->save();
         
-        (new Logger(true))->info('Uživatel {userName} se úspěšně zaregistroval z IP adresy {ip} a bylo mu přiděleno ID {userId}',
+        (new Logger())->info('Uživatel {userName} se úspěšně zaregistroval z IP adresy {ip} a bylo mu přiděleno ID {userId}',
             array('userName' => $name, 'ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $user->getId()));
         
         //Přihlášení
         $_SESSION['user'] = $user;
         
-        (new Logger(true))->info('Z IP adresy {ip} se přihlásil uživatel k účtu s ID {userId}',
+        (new Logger())->info('Z IP adresy {ip} se přihlásil uživatel k účtu s ID {userId}',
             array('ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $user->getId()));
         
         return true;

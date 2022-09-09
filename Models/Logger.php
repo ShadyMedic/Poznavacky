@@ -2,11 +2,13 @@
 
 namespace Poznavacky\Models;
 
+use Poznavacky\Models\Emails\EmailComposer;
+use Poznavacky\Models\Emails\EmailSender;
 use Psr\Log\InvalidArgumentException as LoggerInvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use \DateTime;
-use \Exception;
+use DateTime;
+use Exception;
 
 /**
  * Třída sloužící k zaznamenání všech příchozích akcí při přijetí HTTP požadavku
@@ -14,39 +16,25 @@ use \Exception;
  */
 class Logger implements LoggerInterface
 {
-    private const LOG_FILE = 'poznavacky.log';
+    private const EMERGENCY_LOG_FILE = 'log/errors.log';
+    private const ALERT_LOG_FILE = 'log/errors.log';
+    private const CRITICAL_LOG_FILE = 'log/errors.log';
+    private const ERROR_LOG_FILE = 'log/errors.log';
+    private const WARNING_LOG_FILE = 'log/warnings.log';
+    private const NOTICE_LOG_FILE = 'log/info.log';
+    private const INFO_LOG_FILE = 'log/info.log';
+    private const DEBUG_LOG_FILE = 'log/debug.log';
+
     private const TIME_FORMAT = 'Y-m-d H:i:s';
-    
-    private $handle;
-    private bool $oneUse;
-    
-    /**
-     * Konstruktor třídy otevírající logovací soubor pro připojování dalšího zápisu na konec
-     * @param bool $isOneUse TRUE, pokud má být po zalogování první zprávy automaticky logovací soubor zavřen a tato
-     *     instance tak znepoužitelněna
-     */
-    public function __construct(bool $isOneUse)
-    {
-        $this->handle = fopen(self::LOG_FILE, 'a');
-        $this->oneUse = $isOneUse;
-    }
-    
-    /**
-     * Destruktor třídy zavírající logovací soubor a umožňující tak jeho používání jinými procesy
-     */
-    public function __destruct()
-    {
-        if (get_resource_type($this->handle) === 'stream') {
-            fclose($this->handle);
-        }
-    }
+
+    private const WEBMASTER_EMAIL = 'honza.stech@gmail.com';
     
     /**
      * Metoda pro zapsání manuálně nastavené zprávy do logovacího souboru
      * Před zprávu je jako u automatického logování vložen datum a čas zápisu a na konec je vložen konec řádku
      * @param string $level Typ zprávy, musí být jedna z konstant třídy Psr\Log\LogLevel
      * @param string $message Zpráva pro zapsání do logovacího souboru
-     * @param mixed[] $context Kontextová data pro doplnění do zprávy
+     * @param array $context Kontextová data pro doplnění do zprávy
      * @throws LoggerInvalidArgumentException Pokud první argument není jednou z konstant třídy Psr\Log\LogLevel
      */
     public function log($level, $message, array $context = array()): void
@@ -91,7 +79,8 @@ class Logger implements LoggerInterface
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('EMERGENCY ', $message);
-        $this->writeMessage($finalMessage);
+        file_put_contents(self::EMERGENCY_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('EMERGENCY na poznavacky.com', 'Chyba úrovně EMERGENCY', 'a80337', $finalMessage);
     }
     
     /**
@@ -104,7 +93,8 @@ class Logger implements LoggerInterface
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('ALERT     ', $message);
-        $this->writeMessage($finalMessage);
+        file_put_contents(self::ALERT_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('ALERT na poznavacky.com', 'Chyba úrovně ALERT', 'dd0000', $finalMessage);
     }
     
     /**
@@ -117,20 +107,22 @@ class Logger implements LoggerInterface
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('CRITICAL  ', $message);
-        $this->writeMessage($finalMessage);
+        file_put_contents(self::CRITICAL_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('CRITICAL na poznavacky.com', 'Chyba úrovně CRITICAL', 'ff0000', $finalMessage);
     }
     
     /**
      * Chyba, která nevyžaduje bezprostřední akci
      * @param string $message Zpráva k zalogování
      * @param array $context Kontextové pole pro doplnění proměnných do zprávy
-     * @see LoggerInterface::ërror()
+     * @see LoggerInterface::error()
      */
     public function error($message, array $context = array())
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('ERROR     ', $message);
-        $this->writeMessage($finalMessage);
+        file_put_contents(self::ERROR_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('ERROR na poznavacky.com', 'Chyba úrovně ERROR', 'fc7005', $finalMessage);
     }
     
     /**
@@ -143,7 +135,7 @@ class Logger implements LoggerInterface
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('WARNING   ', $message);
-        $this->writeMessage($finalMessage);
+        file_put_contents(self::WARNING_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
     }
     
     /**
@@ -156,7 +148,7 @@ class Logger implements LoggerInterface
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('NOTICE    ', $message);
-        $this->writeMessage($finalMessage);
+        file_put_contents(self::NOTICE_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
     }
     
     /**
@@ -169,7 +161,7 @@ class Logger implements LoggerInterface
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('INFO      ', $message);
-        $this->writeMessage($finalMessage);
+        file_put_contents(self::INFO_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
     }
     
     /**
@@ -180,7 +172,6 @@ class Logger implements LoggerInterface
      */
     public function debug($message, array $context = array())
     {
-        $debugHandle = fopen('debug.log', 'a');
         if (gettype($message) === 'array' || gettype($message) === 'object') {
             ob_start();
             print_r($message);
@@ -188,10 +179,9 @@ class Logger implements LoggerInterface
             ob_end_clean();
         } else {
             $message = $this->fillInContext($message, $context);
-            $finalMessage = $this->constructMessage('', $message);
+            $finalMessage = $this->constructMessage('DEBUG     ', $message);
         }
-        fwrite($debugHandle, $finalMessage);
-        fclose($debugHandle);
+        file_put_contents(self::DEBUG_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
     }
     
     /**
@@ -219,23 +209,32 @@ class Logger implements LoggerInterface
      * @param string $suffix Přípona zprávy, základně znak konce řádky, nepovinné
      * @return string Řetězec vzniklý poskládáním jednotlivých částí zprávy
      */
-    private function constructMessage($prefix = '', string $message = '', $suffix = PHP_EOL): string
+    private function constructMessage(string $prefix = '', string $message = '', string $suffix = PHP_EOL): string
     {
         $date = (new DateTime())->format(self::TIME_FORMAT);
         return '['.$date.'] '.$prefix.$message.$suffix;
     }
-    
+
     /**
-     * Metoda zapisující finální poskládaný řetězec do logovacího souboru bez jakýchkoliv dalších úprav
-     * Pokud je tato instance nastavena jako na jedno použití, je po zapsání zprávy soubor zavřen
-     * @param string $text Řetězec k zapsání
+     * Metoda odesílající chybovou hlášku webmasterovy e-mailem
+     * @param string $subject Předmět e-mailu
+	 * @param string $title Nadpis e-mailu
+	 * @param string $barColor Barva pro barevný proužek pod nadpisem (viz e-mailový pohled errorReport.phtml)
+     * @param string $message Obsah zprávy
+     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
+     * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function writeMessage(string $text): void
+    private function mailWebmaster(string $subject, string $title, string $barColor, string $message) : bool
     {
-        fwrite($this->handle, $text);
-        if ($this->oneUse) {
-            $this->__destruct();
-        }
+        $composer = new EmailComposer();
+        $sender = new EmailSender();
+
+        $composer->composeMail(EmailComposer::EMAIL_TYPE_ERROR_REPORT, array(
+			'title' => $title,
+			'barColor' => $barColor,
+            'content' => $message,
+        ));
+        return $sender->sendMail(self::WEBMASTER_EMAIL, $subject, $composer->getMail(), 'poznavacky@email.com', 'Poznávačky', true, false);
     }
 }
 

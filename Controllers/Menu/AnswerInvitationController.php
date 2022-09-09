@@ -33,7 +33,7 @@ class AnswerInvitationController extends AjaxController
         //Validace odeslaných dat
         if (!isset($parameters) || count($parameters) !== 2 || !in_array($parameters[1], array('accept', 'reject'))) {
             //Jsou odeslána neplatná data v důsledku manipulace s HTML dokumentem
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal požadavek na stránku pro zpracování odpovědi na pozvánku z IP adresy {ip}, avšak odeslaná data nebyla ve správném formátu',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal požadavek na stránku pro zpracování odpovědi na pozvánku z IP adresy {ip}, avšak odeslaná data nebyla ve správném formátu',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Neplatná odpověď nebo neplatná pozvánka');
             echo $response->getResponseString();
@@ -55,7 +55,7 @@ class AnswerInvitationController extends AjaxController
             array($classUrl, UserManager::getId()));
         if (empty($invitationData)) {
             //Pozvánka buďto neexistuje nebo vyexpirovala nebo není určena pro přihlášeného uživatele
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil odpovědět na pozvánku do třídy s URL {classUrl} z IP adresy {ip}, avšak daná pozvánka nebyla v databázi nalezena nebo nebyla určena pro tohoto uživatele',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil odpovědět na pozvánku do třídy s URL {classUrl} z IP adresy {ip}, avšak daná pozvánka nebyla v databázi nalezena nebo nebyla určena pro tohoto uživatele',
                 array('userId' => UserManager::getId(), 'classUrl' => $classUrl, 'ip' => $_SERVER['REMOTE_ADDR']));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
                 'Tato pozvánka neexistuje, není určená pro vás nebo již vypršela její platnost');
@@ -73,7 +73,7 @@ class AnswerInvitationController extends AjaxController
             //Přijmout pozvánku
             $invitation->accept();
             $invitation->delete();
-            (new Logger(true))->info('Uživatel s ID {userId} přijal pozvánku s ID {invitationId} do třídy s ID {classId} z IP adresy {ip}',
+            (new Logger())->info('Uživatel s ID {userId} přijal pozvánku s ID {invitationId} do třídy s ID {classId} z IP adresy {ip}',
                 array(
                     'userId' => UserManager::getId(),
                     'invitationId' => $invitationId,
@@ -85,7 +85,7 @@ class AnswerInvitationController extends AjaxController
         } else {
             //Odmítnout pozvánku (pouze smazat)
             $invitation->delete();
-            (new Logger(true))->info('Uživatel s ID {userId} odmítl pozvánku s ID {invitationId} do třídy s ID {classId} z IP adresy {ip}',
+            (new Logger())->info('Uživatel s ID {userId} odmítl pozvánku s ID {invitationId} do třídy s ID {classId} z IP adresy {ip}',
                 array(
                     'userId' => UserManager::getId(),
                     'invitationId' => $invitationId,

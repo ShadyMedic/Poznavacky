@@ -41,7 +41,7 @@ class Db
             self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password,
                 self::$settings);
         } catch (PDOException $e) {
-            (new Logger(true))->emergency('K databázi se nebylo možné připojit: {exception}', array('exception' => $e));
+            (new Logger())->emergency('K databázi se nebylo možné připojit: {exception}', array('exception' => $e));
             return null;
         }
         return self::$connection;

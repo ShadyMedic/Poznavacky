@@ -33,7 +33,7 @@ class CheckTestAnswerController extends AjaxController
             $result = $checker->verify($answer, $questionNum);
         } catch (AccessDeniedException $e) {
             //Neplatné číslo otázky nebo jiná chyba při ověřování odpovědi
-            (new Logger(true))->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal svou odpověď na obrázek číslo {questionNum} na zkoušecí stránce části/í poznávačky s ID {groupId}, avšak správná odpověď nebyla v úložišti sezení nalezena',
+            (new Logger())->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal svou odpověď na obrázek číslo {questionNum} na zkoušecí stránce části/í poznávačky s ID {groupId}, avšak správná odpověď nebyla v úložišti sezení nalezena',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -46,7 +46,7 @@ class CheckTestAnswerController extends AjaxController
         }
         
         if ($result) {
-            (new Logger(true))->info('Odpověď uživatele s ID {userId} přistupujícího do systému z IP adresy {ip} na otázku číslo {questionNum} na zkoušecí stránce části/í poznávačky s ID {groupId} byla vyhodnocena jako správná',
+            (new Logger())->info('Odpověď uživatele s ID {userId} přistupujícího do systému z IP adresy {ip} na otázku číslo {questionNum} na zkoušecí stránce části/í poznávačky s ID {groupId} byla vyhodnocena jako správná',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -58,7 +58,7 @@ class CheckTestAnswerController extends AjaxController
                 array('answer' => $checker->lastSavedAnswer));
             echo $response->getResponseString();
         } else {
-            (new Logger(true))->info('Odpověď uživatele s ID {userId} přistupujícího do systému z IP adresy {ip} na otázku číslo {questionNum} na zkoušecí stránce části/í poznávačky s ID {groupId} byla vyhodnocena jako nesprávná',
+            (new Logger())->info('Odpověď uživatele s ID {userId} přistupujícího do systému z IP adresy {ip} na otázku číslo {questionNum} na zkoušecí stránce části/í poznávačky s ID {groupId} byla vyhodnocena jako nesprávná',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],

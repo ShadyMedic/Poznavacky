@@ -46,11 +46,11 @@ class IndexFormsController extends AjaxController
                     try {
                         $validator->checkUniqueness($string, $stringType);
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('unique' => true));
-                        (new Logger(true))->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} prošla',
+                        (new Logger())->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} prošla',
                             array('string' => $string, 'ip' => $_SERVER['REMOTE_ADDR']));
                     } catch (InvalidArgumentException $e) {
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('unique' => false));
-                        (new Logger(true))->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} neprošla',
+                        (new Logger())->info('Kontrola unikátnosti řetězce {string} z IP adresy {ip} neprošla',
                             array('string' => $string, 'ip' => $_SERVER['REMOTE_ADDR']));
                     }
                     echo $response->getResponseString();
@@ -99,7 +99,7 @@ class IndexFormsController extends AjaxController
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array('origin' => $form));
             echo $response->getResponseString();
         } catch (DatabaseException $e) {
-            (new Logger(true))->emergency('Po odeslání dat z formuláře na index stránce uživatelem na IP adrese {ip} se vyskytla chyba databáze; je možné, že se k databázi není možné vůbec připojit a celý systém je tak nepoužitelný! Text výjimky: {exception}',
+            (new Logger())->emergency('Po odeslání dat z formuláře na index stránce uživatelem na IP adrese {ip} se vyskytla chyba databáze; je možné, že se k databázi není možné vůbec připojit a celý systém je tak nepoužitelný! Text výjimky: {exception}',
                 array('ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, AccessDeniedException::REASON_UNEXPECTED,
                 array('origin' => $form));

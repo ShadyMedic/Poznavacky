@@ -35,7 +35,7 @@ class NewReportController extends AjaxController
             echo $response->getResponseString();
         } catch (DatabaseException $e) {
             try {
-                (new Logger(true))->alert('Uživatel s ID {userId} se pokusil nahlásit obrázek s URL {picUrl} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
+                (new Logger())->alert('Uživatel s ID {userId} se pokusil nahlásit obrázek s URL {picUrl} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
                     array(
                         'userId' => UserManager::getId(),
                         'picUrl' => $_POST['picUrl'],
@@ -43,7 +43,7 @@ class NewReportController extends AjaxController
                         'exception' => $e
                     ));
             } catch (AccessDeniedException $e) {
-                (new Logger(true))->alert('Nepřihlášený uživatel se pokusil z IP adresy {ip} nahlásit obrázek s URL {picUrl} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
+                (new Logger())->alert('Nepřihlášený uživatel se pokusil z IP adresy {ip} nahlásit obrázek s URL {picUrl} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
                     array(
                         'ip' => $_SERVER['REMOTE_ADDR'],
                         'picUrl' => $_POST['picUrl'],

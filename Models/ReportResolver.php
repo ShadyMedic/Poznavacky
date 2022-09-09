@@ -74,7 +74,7 @@ class ReportResolver
         
         //Kontrola, zda je upravovaný obrázek součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
         if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($picture))) {
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu nahlášeného obrázku s ID {pictureId}, avšak tento obrázek není přiřazen k přírodnině, která patří do spravované třídy',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu nahlášeného obrázku s ID {pictureId}, avšak tento obrázek není přiřazen k přírodnině, která patří do spravované třídy',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureId' => $pictureId));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
@@ -99,7 +99,7 @@ class ReportResolver
         }
         
         $picture->save();
-        (new Logger(true))->info('Uživatel s ID {userId} upravil z IP adresy {ip} obrázek s ID {pictureId} a to tak, že jeho URL adresu nastavil na {newUrl} a přiřadil ho k přírodnině s názvem {newNatural}',
+        (new Logger())->info('Uživatel s ID {userId} upravil z IP adresy {ip} obrázek s ID {pictureId} a to tak, že jeho URL adresu nastavil na {newUrl} a přiřadil ho k přírodnině s názvem {newNatural}',
             array(
                 'userId' => UserManager::getId(),
                 'ip' => $_SERVER['REMOTE_ADDR'],
@@ -120,12 +120,12 @@ class ReportResolver
         $picture = new Picture(false, $pictureId);
         //Kontrola, zda je odstraňovaný obrázek součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
         if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($picture))) {
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na odstranění nahlášeného obrázku s ID {pictureId}, avšak tento obrázek není přiřazen k přírodnině, která patří do spravované třídy',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na odstranění nahlášeného obrázku s ID {pictureId}, avšak tento obrázek není přiřazen k přírodnině, která patří do spravované třídy',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureId' => $pictureId));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
         $picture->delete();
-        (new Logger(true))->info('Uživatel s ID {userId} odstranil z IP adresy {ip} obrázek s ID {pictureId}',
+        (new Logger())->info('Uživatel s ID {userId} odstranil z IP adresy {ip} obrázek s ID {pictureId}',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'pictureId' => $pictureId));
     }
     
@@ -141,12 +141,12 @@ class ReportResolver
         $report = new Report(false, $reportId);
         //Kontrola, zda se odstraňované hlášení vztahuje k obrázku, který je součástí nějaké přírodniny patřící do spravované třídy, nebo zda je přihlíšen systémový administrátor
         if (!($this->adminIsLogged || $this->checkPictureBelongsToClass($report->getPicture()))) {
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na odstranění hlášení s ID {reportId}, avšak toto hlášení se vztahuje k obrázku, který není přiřazen k přírodnině, která patří do spravované třídy',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na odstranění hlášení s ID {reportId}, avšak toto hlášení se vztahuje k obrázku, který není přiřazen k přírodnině, která patří do spravované třídy',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'reportId' => $reportId));
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
         $report->delete();
-        (new Logger(true))->info('Uživatel s ID {userId} odstranil z IP adresy {ip} hlášení s ID {reportId}',
+        (new Logger())->info('Uživatel s ID {userId} odstranil z IP adresy {ip} hlášení s ID {reportId}',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR'], 'reportId' => $reportId));
     }
     

@@ -19,7 +19,7 @@ class LegalController extends SynchronousController
      */
     function process(array $parameters): void
     {
-        (new Logger(true))->info('Přístup na stránku legal z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
+        (new Logger())->info('Přístup na stránku legal z IP adresy {ip}', array('ip' => $_SERVER['REMOTE_ADDR']));
         
         self::$pageHeader['title'] = 'Právní informace';
         self::$pageHeader['description'] = 'Zde si můžete přečíst, co od vás za používání naší služby vyžadujeme, jaké jsou naše povinnosti vůči vám, jak nakládáme s vašemi údaji, jaké údaje přesně ukládáme a z jakého důvodu a také jaké soubory cookie ukládáme na vaše zařízení a proč tak činíme.';

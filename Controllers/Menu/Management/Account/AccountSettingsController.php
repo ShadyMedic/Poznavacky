@@ -21,7 +21,7 @@ class AccountSettingsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        (new Logger(true))->info('Přístup na stránku pro správu účtu uživatelem s ID {userId} z IP adresy {ip}',
+        (new Logger())->info('Přístup na stránku pro správu účtu uživatelem s ID {userId} z IP adresy {ip}',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
         
         self::$data['userId'] = UserManager::getId();

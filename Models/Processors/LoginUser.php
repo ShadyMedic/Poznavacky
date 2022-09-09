@@ -41,7 +41,7 @@ class LoginUser
         
         //Pokud není něco vyplněné, nemá smysl pokračovat
         if (!empty($errors)) {
-            (new Logger(true))->notice('Pokus o přihlášení z IP adresy {ip} selhal kvůli nevyplnění některého z údajů',
+            (new Logger())->notice('Pokus o přihlášení z IP adresy {ip} selhal kvůli nevyplnění některého z údajů',
                 array('ip' => $_SERVER['REMOTE_ADDR']));
             throw new AccessDeniedException(implode('|', $errors));
         }
@@ -51,12 +51,12 @@ class LoginUser
         try {
             $userData = self::authenticate($POSTdata['name'], $POSTdata['pass']);
         } catch (AccessDeniedException $e) {
-            (new Logger(true))->notice('Pokus o přihlášení z IP adresy {ip} k uživatelskému účtu {userName} selhal kvůli neshodě mezi zadanými údaji',
+            (new Logger())->notice('Pokus o přihlášení z IP adresy {ip} k uživatelskému účtu {userName} selhal kvůli neshodě mezi zadanými údaji',
                 array('ip' => $_SERVER['REMOTE_ADDR'], 'userName' => $POSTdata['name']));
             $errors[] = $e->getMessage();
         } catch (Exception $e) {
             //Přihlášení se nepovedlo kvůli neznámé chybě
-            (new Logger(true))->alert('Nebylo možné přihlásit uživatele na IP adresa {ip}, ačkoliv zřejmě zadal správné údaje! Chybová hláška: {exception}',
+            (new Logger())->alert('Nebylo možné přihlásit uživatele na IP adresa {ip}, ačkoliv zřejmě zadal správné údaje! Chybová hláška: {exception}',
                 array('ip' => $_SERVER['REMOTE_ADDR'], 'exception' => $e));
             $errors[] = AccessDeniedException::REASON_UNEXPECTED;
         }
@@ -66,7 +66,7 @@ class LoginUser
             //Uložit data do $_SESSION
             self::login($userData);
             
-            (new Logger(true))->info('Z IP adresy {ip} se přihlásil uživatel k účtu s ID {userId}',
+            (new Logger())->info('Z IP adresy {ip} se přihlásil uživatel k účtu s ID {userId}',
                 array('ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $userData[LoggedUser::COLUMN_DICTIONARY['id']]));
             
             //Vygenerovat a uložit token pro trvalé přihlášení
@@ -74,18 +74,18 @@ class LoginUser
                 try {
                     self::setLoginCookie($userData[User::COLUMN_DICTIONARY['id']]);
                 } catch (Exception $e) {
-                    (new Logger(true))->error('Nepodařilo se vygenerovat kód pro trvalé přihlášení pro uživatele s ID {userId} přihlašujícího se z IP adresy {ip}',
+                    (new Logger())->error('Nepodařilo se vygenerovat kód pro trvalé přihlášení pro uživatele s ID {userId} přihlašujícího se z IP adresy {ip}',
                         array(
                             'userId' => $userData[LoggedUser::COLUMN_DICTIONARY['id']],
                             'ip' => $_SERVER['REMOTE_ADDR']
                         ));
                 }
-                (new Logger(true))->info('Kód pro trvalé přihlášení byl vygenerován na základě požadavku z IP adresy {ip} a byl přidružen k uživatelskému účtu s ID {userId}',
+                (new Logger())->info('Kód pro trvalé přihlášení byl vygenerován na základě požadavku z IP adresy {ip} a byl přidružen k uživatelskému účtu s ID {userId}',
                     array('ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $userData[User::COLUMN_DICTIONARY['id']]));
             }
         } else {
             if (empty($errors)) {
-                (new Logger(true))->error('Neznámá chyba při přihlašování uživatele - nebylo možné načíst uživatelská data při požadavku z IP adresy {ip}',
+                (new Logger())->error('Neznámá chyba při přihlašování uživatele - nebylo možné načíst uživatelská data při požadavku z IP adresy {ip}',
                     array('ip' => $_SERVER['REMOTE_ADDR']));
             }
             throw new AccessDeniedException(implode('|', $errors));
