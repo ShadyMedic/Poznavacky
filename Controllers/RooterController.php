@@ -79,14 +79,14 @@ class RooterController extends SynchronousController
             //Cesta nenalezena
             $aChecker = new AccessChecker();
             if ($aChecker->checkUser()) {
-                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na URL adresu {requestUrl}, avšak daná cesta nebyla v konfiguraci nalezena',
+                (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na URL adresu {requestUrl}, avšak daná cesta nebyla v konfiguraci nalezena',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],
                         'requestUrl' => $_SERVER['REQUEST_URI']
                     ));
             } else {
-                (new Logger(true))->warning('Nepřihlášený uživatel odeslal z IP adresy {ip} požadavek na URL adresu {requestUrl}, avšak daná cesta nebyla v konfiguraci nalezena',
+                (new Logger())->warning('Nepřihlášený uživatel odeslal z IP adresy {ip} požadavek na URL adresu {requestUrl}, avšak daná cesta nebyla v konfiguraci nalezena',
                     array('ip' => $_SERVER['REMOTE_ADDR'], 'requestUrl' => $_SERVER['REQUEST_URI']));
             }
             header('HTTP/1.0 404 Not Found');
@@ -270,7 +270,7 @@ class RooterController extends SynchronousController
                 //Třída/poznávačka/část splňující daná kritéria neexistuje
                 # if ($aChecker->checkUser()) //Uživatel je zde vždy přihlášen - jinak by ho AntiCsrfMiddleware nepustil na adresu vedoucí na menu stránku
                 # {
-                (new Logger(true))->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} se pokusil vstoupit do třídy, poznávačky, nebo části, která nebyla v databázi nalezena (URL reprezentace {folderUrl}, název úrovně {folderLevel})',
+                (new Logger())->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} se pokusil vstoupit do třídy, poznávačky, nebo části, která nebyla v databázi nalezena (URL reprezentace {folderUrl}, název úrovně {folderLevel})',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],
@@ -372,7 +372,7 @@ class RooterController extends SynchronousController
             if ($subCheckSuccessfulResults === 0) {
                 # if ($aChecker->checkUser()) //Uživatel je zde vždy přihlášen - jinak by ho AntiCsrfMiddleware nepustil na adresu vedoucí na menu stránku
                 # {
-                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na adresu {requestUrl}, avšak přístup mu byl odepřen kvůli selhání kontroly typu {check}',
+                (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na adresu {requestUrl}, avšak přístup mu byl odepřen kvůli selhání kontroly typu {check}',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],

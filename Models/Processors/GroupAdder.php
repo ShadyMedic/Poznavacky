@@ -64,7 +64,7 @@ class GroupAdder
         try {
             $validator->checkUniqueness($url, DataValidator::TYPE_GROUP_URL, $this->class);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak poznávačka se stejnou URL reprezentací se v dané třídě již nachází',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak poznávačka se stejnou URL reprezentací se v dané třídě již nachází',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -79,7 +79,7 @@ class GroupAdder
         try {
             $validator->checkForbiddenUrls($url, DataValidator::TYPE_GROUP_URL);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak URL reprezentace názvu je rezervována',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak URL reprezentace názvu je rezervována',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -96,7 +96,7 @@ class GroupAdder
             $validator->checkCharacters($groupName, DataValidator::GROUP_NAME_ALLOWED_CHARS,
                 DataValidator::TYPE_GROUP_NAME);
         } catch (RangeException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak název má nepřijatelnou délku',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak název má nepřijatelnou délku',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -113,7 +113,7 @@ class GroupAdder
                 }
             }
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak název obsahuje nepovolené znaky',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak název obsahuje nepovolené znaky',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -139,7 +139,7 @@ class GroupAdder
         //Vložení poznávačky do databáze
         $newGroup = $this->class->addGroup($groupName);
         if ($newGroup === false) {
-            (new Logger(true))->error('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak zabránila mu v tom neznámá chyba databáze',
+            (new Logger())->error('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak zabránila mu v tom neznámá chyba databáze',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
@@ -154,7 +154,7 @@ class GroupAdder
         $part->initialize(self::DEFAULT_PART_NAME, Folder::generateUrl(self::DEFAULT_PART_NAME), $newGroup, array(), 0,
             0);
         $newGroup->replaceParts(array($part));
-        (new Logger(true))->info('Uživatel s ID {userId} přidal do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}',
+        (new Logger())->info('Uživatel s ID {userId} přidal do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}',
             array(
                 'userId' => UserManager::getId(),
                 'classId' => $this->class->getId(),

@@ -65,10 +65,10 @@ class AntiCsrfMiddleware
             } catch (Exception $e) {
                 $failedCodeGenerationAttempts++;
                 if ($failedCodeGenerationAttempts < self::TOKEN_GENERATION_ATTEMPTS) {
-                    (new Logger(true))->error('Při generování nového CSRF tokenu pro uživatele přistupujícího do systému z IP adresy {ip} se vyskytla chyba, zkouším to znovu',
+                    (new Logger())->error('Při generování nového CSRF tokenu pro uživatele přistupujícího do systému z IP adresy {ip} se vyskytla chyba, zkouším to znovu',
                         array('ip' => $_SERVER['REMOTE_ADDR']));
                 } else {
-                    (new Logger(true))->emergency('Pětkrát po sobě se nepodařilo vygenerovat CSRF token pro uživatele přistupujícího do systému z IP adresy {ip}; s největší pravděpodobností je celý systém nepřístupný!',
+                    (new Logger())->emergency('Pětkrát po sobě se nepodařilo vygenerovat CSRF token pro uživatele přistupujícího do systému z IP adresy {ip}; s největší pravděpodobností je celý systém nepřístupný!',
                         array('ip' => $_SERVER['REMOTE_ADDR']));
                 }
             }
@@ -108,7 +108,7 @@ class AntiCsrfMiddleware
                     $userLogger = new LoginUser();
                     $userLogger->processCookieLogin($_COOKIE['instantLogin']);
                     //Přihlášení obnoveno
-                    (new Logger(true))->info('Přihlášení uživatele s ID {userId} přistupujícího do systému z IP adresy {ip} vypršelo, ale bylo obnoveno díky kódu pro okamžité přihlášení (hash {hash})',
+                    (new Logger())->info('Přihlášení uživatele s ID {userId} přistupujícího do systému z IP adresy {ip} vypršelo, ale bylo obnoveno díky kódu pro okamžité přihlášení (hash {hash})',
                         array(
                             'userId' => UserManager::getId(),
                             'ip' => $_SERVER['REMOTE_ADDR'],
@@ -121,16 +121,16 @@ class AntiCsrfMiddleware
                     $hash = md5($_COOKIE['instantLogin']);
                     setcookie('instantLogin', null, -1, '/');
                     unset($_COOKIE['instantLogin']);
-                    (new Logger(true))->warning('Přihlášení uživatele přistupujícího do systému z IP adresy {ip} vypršelo a kód pro okamžité přihlášení (hash {hash}) nebyl platný a byl proto vymazán',
+                    (new Logger())->warning('Přihlášení uživatele přistupujícího do systému z IP adresy {ip} vypršelo a kód pro okamžité přihlášení (hash {hash}) nebyl platný a byl proto vymazán',
                         array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => $hash));
                     return false;
                 } catch (DatabaseException $e) {
-                    (new Logger(true))->alert('Přihlášení uživatele přistupujícího do systému z IP adresy {ip} vypršelo a kód pro okamžité přihlášení (hash {hash}) se nepodařilo ověřit kvůli chybě při práci s databází; je možné, že se nelze připojit k databázi a celý systém je tak nefunkční',
+                    (new Logger())->alert('Přihlášení uživatele přistupujícího do systému z IP adresy {ip} vypršelo a kód pro okamžité přihlášení (hash {hash}) se nepodařilo ověřit kvůli chybě při práci s databází; je možné, že se nelze připojit k databázi a celý systém je tak nefunkční',
                         array('ip' => $_SERVER['REMOTE_ADDR'], 'hash' => md5($_COOKIE['instantLogin'])));
                     return false;
                 }
             } else {
-                (new Logger(true))->notice('Přihlášení uživatele přistupujícího do systému z IP adresy {ip} vypršelo',
+                (new Logger())->notice('Přihlášení uživatele přistupujícího do systému z IP adresy {ip} vypršelo',
                     array('ip' => $_SERVER['REMOTE_ADDR']));
                 return false;
             }

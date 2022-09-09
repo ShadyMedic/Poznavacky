@@ -3,8 +3,18 @@ var ajaxUrl = window.location.href;
 if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //Odstraň trailing slash (pokud je přítomen)
 ajaxUrl = ajaxUrl.replace('/naturals', '/update-naturals'); //Nahraď neAJAX akci AJAX akcí
 
+//pole objektů položek přírodnin
+var $naturals = [];
+//pole, v němž má každá přírodnina svoje vlastní pole obsahující id, název přírodniny, počet výskytů a počet obrázků
+var naturalParameters = [];
+
 $(function()
 {
+    $(".natural-data-item").each(function() {
+        $naturals.push($(this));
+        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural-name").text(), $(this).find(".natural-uses-count").text(), $(this).find(".natural-pictures-count").text()));
+    })
+
     //event listenery tlačítek
     $(".rename-natural-button").click(function(event) {rename(event)})
     $(".rename-confirm-button").click(function(event) {renameConfirm(event)})
@@ -12,10 +22,144 @@ $(function()
     $(".remove-natural-button").click(function(event) {remove(event)})
     $("#hide-naturals-info-button").click(function() {hideInfo()});
     $("#show-naturals-info-button").click(function() {showInfo()});
+    $("#remove-filters-button").click(function() {removeFilters()})
+    $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
+    $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
 
     //event listener zmáčknutí klávesy
     $(".natural-name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
+
+    $("#filter-name").on("input", function() {filterByName($("#filter-name").val())})
 })
+
+/**
+ * Funkce, která zruší grafické zvýraznění šipky pro řazení přírodnin
+ */
+function inactivateSortButton()
+{
+    let $buttonImgActiveOld = $(".sort-buttons .active").find("img");
+
+    // existuje aktivní řazení (kdyby neexistovalo, tak $buttonImgActiveOld.length == 0)
+    if ($buttonImgActiveOld.length != 0)
+    {
+        let buttonImgActiveOldSrc = $buttonImgActiveOld.attr("src");
+        let buttonImgSrcNormal = buttonImgActiveOldSrc.slice(0, buttonImgActiveOldSrc.length - 11) + buttonImgActiveOldSrc.slice(buttonImgActiveOldSrc.length - 4);
+        $buttonImgActiveOld.attr("src", buttonImgSrcNormal);
+        $buttonImgActiveOld.closest(".btn").removeClass("active");
+    }
+}
+
+/**
+ * Funkce, která seřadí vzestupně/sestupně přírodniny podle zvoleného parametru
+ * @param {event} event 
+ * @param {string} direction možnosti "up" a "down"
+ */
+function sortNaturals(event, direction)
+{
+    let classType = $(event.target).closest(".sort-buttons").siblings().first().attr("class");
+    let sortBy;
+
+    switch (classType) {
+        case "natural-name":
+            sortBy = 1;
+            break;
+        case "natural-uses-count":
+            sortBy = 2;
+            break;
+        case "natural-pictures-count":
+            sortBy = 3;
+            break;
+    }
+
+
+    inactivateSortButton();
+
+    // grafické zvýraznění šipky pro aktivní řazení
+    let $buttonImg = $(event.target).closest(".btn").find("img");
+    let buttonImgSrc = $buttonImg.attr("src");
+    let buttonImgSrcActive = buttonImgSrc.slice(0, buttonImgSrc.length - 4) + "-active" + buttonImgSrc.slice(buttonImgSrc.length - 4);
+    $buttonImg.attr("src", buttonImgSrcActive);
+    $buttonImg.closest(".btn").addClass("active");  
+
+    
+    naturalParameters.sort((a,b) => {
+        if (a[sortBy] === b[sortBy]) {
+            return 0;
+        }
+
+        // řazení stringů
+        if (sortBy == 1)
+        {
+            if (direction == "up")
+            {
+                return a[sortBy].localeCompare(b[sortBy]); 
+            }
+            else if (direction == "down")
+            {
+                return (-1)*a[sortBy].localeCompare(b[sortBy]); 
+            }
+        }
+        // řazení čísel
+        else
+        {
+            if (direction == "up")
+            {
+                return a[sortBy] - b[sortBy]; 
+            }
+            else if (direction == "down")
+            {
+                return b[sortBy] - a[sortBy]; 
+            }
+        }
+          
+    });
+
+    naturalParameters.forEach(function(element) {
+        let id = element[0];
+        $natural = $(".natural-data-item[data-natural-id='" + id + "']");
+        $("#naturals-data-section").append($natural.get(0).outerHTML);
+        $natural.first().remove();   
+    })
+    
+}
+
+/**
+ * Funkce rušící všechny filtry
+ */
+function removeFilters()
+{
+    //zrušení filtrování podle jména
+    $("#filter-name").val("");
+    filterByName("");
+
+    $(".natural-data-item").remove();
+
+    $naturals.forEach(function($element) {
+        $("#naturals-data-section").append($element.get(0).outerHTML);
+    })
+
+    inactivateSortButton();
+}
+
+
+/**
+ * Funkce, která zobrazuje pouze přírodniny začínající na zadaný substring
+ * @param {string} name substring, který má obsahovat hledaná přírodnina
+ */
+function filterByName(name)
+{
+    $(".natural-data-item").each(function() {
+        let naturalName = $(this).find(".natural-name").text().toLowerCase();
+        if (naturalName.startsWith(name.toLowerCase()))
+        {
+            $(this).show();
+        }
+        else
+        {
+            $(this).hide();
+        }
+    })
+}
 
 /**
  * Funkce zobrazující sekci s nápovědou

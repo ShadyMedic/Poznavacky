@@ -5,6 +5,5 @@ desktop.ini
 .idea/
 vendor/
 local/
+log/
 external/
-debug.log
-poznavacky.log

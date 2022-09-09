@@ -27,7 +27,7 @@ class RequestNewClassController extends AjaxController
         $response = null;
         try {
             if ($requester->processFormData($_POST)) {
-                (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} žádost o založení nové třídy s názevem {className}. Třída byla prozatím vytvořena se jménem {currentName}',
+                (new Logger())->info('Uživatel s ID {userId} odeslal z IP adresy {ip} žádost o založení nové třídy s názevem {className}. Třída byla prozatím vytvořena se jménem {currentName}',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],
@@ -48,7 +48,7 @@ class RequestNewClassController extends AjaxController
                 array('newCaptcha' => $this->renewCaptcha()));
         } catch (Exception $e) {
             //E-mail se nepodařilo odeslat
-            (new Logger(true))->critical('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal žádost o založení nové třídy se všemi náležitostmi, avšak e-mail se žádostí se webmasterovi se nepodařilo z neznámého důvodu odeslat; je možné že není možné odesílat žádné e-maily',
+            (new Logger())->critical('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal žádost o založení nové třídy se všemi náležitostmi, avšak e-mail se žádostí se webmasterovi se nepodařilo z neznámého důvodu odeslat; je možné že není možné odesílat žádné e-maily',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
                 'E-mail se nepodařilo odeslat. Zkuste to prosím později, nebo pošlete svou žádost jako issue na GitHub (viz odkaz "Nalezli jste problém" v patičce stránky)',

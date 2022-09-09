@@ -25,7 +25,7 @@ class UsersController extends SynchronousController
     function process(array $parameters): void
     {
         $administration = new Administration();
-        (new Logger(true))->info('Přístup na stránku pro správu uživatelů systémovým administrátorem s ID {userId} z IP adresy {ip}',
+        (new Logger())->info('Přístup na stránku pro správu uživatelů systémovým administrátorem s ID {userId} z IP adresy {ip}',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
 
         self::$data['users'] = $administration->getAllUsers(false);
