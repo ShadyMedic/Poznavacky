@@ -25,7 +25,6 @@ use RangeException;
  */
 class NewClassRequester
 {
-    private const WEBMASTER_EMAIL = 'honza.stech@gmail.com';
     private const TEMP_CLASS_NAME_FORMAT = 'Třída uživatele {userName}';
 
     /**

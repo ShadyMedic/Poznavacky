@@ -2,6 +2,8 @@
 
 namespace Poznavacky\Models;
 
+use Poznavacky\Models\Emails\EmailComposer;
+use Poznavacky\Models\Emails\EmailSender;
 use Psr\Log\InvalidArgumentException as LoggerInvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -22,7 +24,10 @@ class Logger implements LoggerInterface
     private const NOTICE_LOG_FILE = 'log/info.log';
     private const INFO_LOG_FILE = 'log/info.log';
     private const DEBUG_LOG_FILE = 'log/debug.log';
+
     private const TIME_FORMAT = 'Y-m-d H:i:s';
+
+    private const WEBMASTER_EMAIL = 'honza.stech@gmail.com';
     
     /**
      * Metoda pro zapsání manuálně nastavené zprávy do logovacího souboru
@@ -75,6 +80,7 @@ class Logger implements LoggerInterface
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('EMERGENCY ', $message);
         file_put_contents(self::EMERGENCY_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('EMERGENCY na poznavacky.com', 'Chyba úrovně EMERGENCY', 'a80337', $finalMessage);
     }
     
     /**
@@ -88,6 +94,7 @@ class Logger implements LoggerInterface
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('ALERT     ', $message);
         file_put_contents(self::ALERT_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('ALERT na poznavacky.com', 'Chyba úrovně ALERT', 'dd0000', $finalMessage);
     }
     
     /**
@@ -101,19 +108,21 @@ class Logger implements LoggerInterface
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('CRITICAL  ', $message);
         file_put_contents(self::CRITICAL_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('CRITICAL na poznavacky.com', 'Chyba úrovně CRITICAL', 'ff0000', $finalMessage);
     }
     
     /**
      * Chyba, která nevyžaduje bezprostřední akci
      * @param string $message Zpráva k zalogování
      * @param array $context Kontextové pole pro doplnění proměnných do zprávy
-     * @see LoggerInterface::ërror()
+     * @see LoggerInterface::error()
      */
     public function error($message, array $context = array())
     {
         $message = $this->fillInContext($message, $context);
         $finalMessage = $this->constructMessage('ERROR     ', $message);
         file_put_contents(self::ERROR_LOG_FILE, $finalMessage, FILE_APPEND | LOCK_EX);
+        $this->mailWebmaster('ERROR na poznavacky.com', 'Chyba úrovně ERROR', 'fc7005', $finalMessage);
     }
     
     /**
@@ -204,6 +213,28 @@ class Logger implements LoggerInterface
     {
         $date = (new DateTime())->format(self::TIME_FORMAT);
         return '['.$date.'] '.$prefix.$message.$suffix;
+    }
+
+    /**
+     * Metoda odesílající chybovou hlášku webmasterovy e-mailem
+     * @param string $subject Předmět e-mailu
+	 * @param string $title Nadpis e-mailu
+	 * @param string $barColor Barva pro barevný proužek pod nadpisem (viz e-mailový pohled errorReport.phtml)
+     * @param string $message Obsah zprávy
+     * @return bool TRUE, pokud se e-mail podařilo odeslat, FALSE, pokud ne
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+    private function mailWebmaster(string $subject, string $title, string $barColor, string $message) : bool
+    {
+        $composer = new EmailComposer();
+        $sender = new EmailSender();
+
+        $composer->composeMail(EmailComposer::EMAIL_TYPE_ERROR_REPORT, array(
+			'title' => $title,
+			'barColor' => $barColor,
+            'content' => $message,
+        ));
+        return $sender->sendMail(self::WEBMASTER_EMAIL, $subject, $composer->getMail(), 'poznavacky@email.com', 'Poznávačky', true, false);
     }
 }
 

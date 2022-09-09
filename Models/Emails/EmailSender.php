@@ -28,13 +28,14 @@ class EmailSender
      * @param string $fromAddress Adresa odesílatele e-maulu (defaultně poznavacky@email.com)
      * @param string $fromName Jméno odesílatele e-mailu (defaultně Poznávačky)
      * @param boolean $isHTML TRUE, pokud e-mail obsahuje HTML
+     * @param boolean $appendIcon TRUE, pokud má být k e-mailu připojena ikona poznávaček (čili zda se odesílá pohled využívající ikonu)
      * @return boolean TRUE, pokud se odeslání e-mailu zdařilo, FALSE, pokud ne
      * @throws Exception Pokud se e-mail nepodaří odeslat
      */
     public function sendMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com',
-                             string $fromName = 'Poznávačky', bool $isHTML = true): bool
+                             string $fromName = 'Poznávačky', bool $isHTML = true, bool $appendIcon = true): bool
     {
-        $mail = $this->setMail($to, $subject, $message, $fromAddress, $fromName, $isHTML);
+        $mail = $this->setMail($to, $subject, $message, $fromAddress, $fromName, $isHTML, $appendIcon);
         return $this->sendPreparedEmail($mail);
     }
     
@@ -51,7 +52,7 @@ class EmailSender
      *     odpověď)
      */
     public function setMail(string $to, string $subject, string $message, string $fromAddress = 'poznavacky@email.com',
-                            string $fromName = 'Poznávačky', bool $isHTML = true): PHPMailer
+                            string $fromName = 'Poznávačky', bool $isHTML = true, bool $appendIcon = true): PHPMailer
     {
         $mail = new PHPMailer();
         
@@ -75,7 +76,9 @@ class EmailSender
         $mail->addReplyTo($fromAddress, $fromName);
         $mail->Subject = $subject;
         $mail->Body = $message;
-		$mail->AddEmbeddedImage('images/emailIcon.png', 'logo', 'emailIcon.png');
+        if ($appendIcon) {
+            $mail->AddEmbeddedImage('images/emailIcon.png', 'logo', 'emailIcon.png');
+        }
         $mail->AddAddress($to);
         
         return $mail;
