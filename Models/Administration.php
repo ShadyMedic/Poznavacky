@@ -2,6 +2,7 @@
 namespace Poznavacky\Models;
 
 use PHPMailer\PHPMailer\Exception;
+use Poznavacky\Models\DatabaseItems\Alert;
 use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Natural;
@@ -13,6 +14,7 @@ use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Processors\AlertImporter;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
@@ -548,7 +550,19 @@ class Administration
         $emailSender = new EmailSender();
         return $emailSender->sendMail($addressee, $subject, $emailBody, $fromAddress, $sender);
     }
-    
+
+    public function importErrors(): ?int
+    {
+        $importer = new AlertImporter();
+        return $importer->importAlerts();
+    }
+
+    public function resolveAlert($alertId) : void
+    {
+        $alert = new Alert(false, $alertId);
+        $alert->resolve();
+    }
+
     /**
      * Metoda vykonávající zadané SQL dotazy a navracející jeho výsledky jako HTML
      * @param string $queries SQL dotaz/y, v případě více dotazů musí být ukončeny středníky
