@@ -1,1 +1,38 @@
-<p>Zde bude seznam chybových hlášení</p>
+<button class='btn icon import-alerts-button' title='Načte nové chyby z logu'>Načíst nové chyby</button>
+<small>Tlačítko "Načíst nové chyby" nemačkejte prosím zbytečně. Spouští na serveru prostředkově náročnou operaci.</small>
+<br>
+<br>
+<br>
+<!-- Dočasná testovací data -->
+<?php $alerts = array(['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'EMERGENCY','content' => 'Generic error',],['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'ALERT','content' => 'Generic error',],['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'CRITICAL','content' => 'Generic error',],['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'ERROR','content' => 'Generic error',]); ?>
+<table>
+    <tr>
+        <th>Datum a čas</th>
+        <th>Závažnost</th>
+        <th>Zpráva</th>
+        <th>Vyřešit</th>
+    </tr>
+    <?php foreach ($alerts as $alert) : ?>
+        <tr class="user-data-item" data-alert-id="<?= $alert['id'] ?>" style="background-color: #<?=
+        ($alert['level'] === 'EMERGENCY') ? 'e9497b' :
+            (($alert['level'] === 'ALERT') ? 'ff6666' :
+                (($alert['level'] === 'CRITICAL') ? 'ff8080' :
+                    (($alert['level'] === 'ERROR') ? 'ffa25b' : '999999')))
+        ?>;">
+            <td>
+                <?= $alert['datetime'] ?>
+            </td>
+            <td>
+                <?= $alert['level'] ?>
+            </td>
+            <td>
+                <?= $alert['content'] ?>
+            </td>
+            <td>
+                <button class='btn icon resolve-alert-button' title='Označit jako vyřešené'>
+                    <img src='images/tick.svg' style="filter: sepia(1) brightness(1.5);"/>
+                </button>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>
