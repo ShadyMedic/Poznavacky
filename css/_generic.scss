@@ -351,6 +351,9 @@ ul.list {
         &.black {
             color: $black1;
         }
+        &.green {
+            color: $greenDark; 
+        }
     }
     &.icon {
         display: block;
