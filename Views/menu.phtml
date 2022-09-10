@@ -28,6 +28,8 @@
             <?php endif ?>
             <?php if ($i == count($navigationBar) - 1) : ?>
                 <span><?= $navigationBar[$i]['text'] ?></span>
+                <button class="btn icon show-info-button" title="Nápověda" style="display: none"><img src="images/info.svg" alt="Nápověda"></button>
+                <button class="btn icon hide-info-button" title="Skrýt nápovědu" style="display: none"><img src="images/hide-info.svg" alt="Zavřít"></button>
             <?php endif ?>
         <?php endfor ?>
         </nav>

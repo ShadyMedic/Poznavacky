@@ -2,8 +2,7 @@
     <pre id="group-urls-json"><?= json_encode($groupList); ?></pre>
     <pre id="natural-names-json"><?= json_encode($naturalList); ?></pre>
 </div>
-<section id="edit-info-section">
-    <button id="hide-edit-info-button" class="btn icon" title="Zavřít"><img src="images/crossButtonBlack.svg" alt="Zavřít"></button>
+<section class="info-section" style="display: none">
     <h3>Nápověda</h3>
     <p>Na této stránce můžeš spravovat přírodniny, které ve tvé třídě existují.</p>
     <ul class="list">
@@ -14,7 +13,6 @@
         <li>Pokud při úpravách uděláš chybu (například odebereš část, která obsahuje velké množství přírodnin), můžeš poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy, dokud neklikneš na tlačítko Uložit v horní části stránky. Nezapomeň si proto změny, o které nechceš přijít, průběžně ukládat.</li>
     </ul>
 </section>
-<button id="show-edit-info-button" class="btn icon" title="Nápověda"><img src="images/info.svg" alt="info"></button>
 <div id="edit-group-wrapper">
     <div id="group-name-container">
         <div class="group-name-box">

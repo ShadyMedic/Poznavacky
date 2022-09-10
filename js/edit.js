@@ -7,6 +7,8 @@ var $nameInputBox; //všechny name input boxy (obsahují textové pole a tlačí
 
 $(function()
 {
+    $(".show-info-button").show();
+
     //načtení dočasných dat do proměnných a jejich odstranění z DOM
     groupUrls = JSON.parse($("#group-urls-json").text());
     naturalNames = JSON.parse($("#natural-names-json").text());
@@ -30,8 +32,6 @@ $(function()
     $("#edit-group-wrapper").on("click", ".rename-group-cancel", function(event) {renameCancel(event)})
     $("#add-part-button").click(function(){addPart()});
     $("#submit-button").click(save);
-    $("#hide-edit-info-button").click(function() {hideInfo()});
-    $("#show-edit-info-button").click(function() {showInfo()});
     $(window).click(function(event) {renameCancelAll(event)})
 
     //event listenery stisknutí klávesy
@@ -43,26 +43,6 @@ $(function()
     $(".group-name-input").keyup(function(event) {nameTyped(event, "group")});
 
 })
-
-/**
- * Funkce zobrazující sekci s nápovědou
- */
-function showInfo()
-{
-    $("#edit-info-section").show();
-    $("#overlay").addClass("show");    
-    $("body").css("overflow", "hidden");
-}
-
-/**
- * Funkce skrývající sekci s nápovědou
- */
-function hideInfo()
-{
-    $("#edit-info-section").hide();
-    $("#overlay").removeClass("show");
-    $("body").css("overflow", "auto");
-}
 
 /**
  * Funkce zaplňující proměnné $nameBox a $nameInput box příslušnými elementy

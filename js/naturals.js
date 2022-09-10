@@ -10,6 +10,8 @@ var naturalParameters = [];
 
 $(function()
 {
+    $(".show-info-button").show();
+
     $(".natural-data-item").each(function() {
         $naturals.push($(this));
         naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural-name").text(), $(this).find(".natural-uses-count").text(), $(this).find(".natural-pictures-count").text()));
@@ -20,8 +22,6 @@ $(function()
     $(".rename-confirm-button").click(function(event) {renameConfirm(event)})
     $(".rename-cancel-button").click(function(event) {renameCancel($(event.target))})
     $(".remove-natural-button").click(function(event) {remove(event)})
-    $("#hide-naturals-info-button").click(function() {hideInfo()});
-    $("#show-naturals-info-button").click(function() {showInfo()});
     $("#remove-filters-button").click(function() {removeFilters()})
     $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
     $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
@@ -161,25 +161,6 @@ function filterByName(name)
     })
 }
 
-/**
- * Funkce zobrazující sekci s nápovědou
- */
-function showInfo()
-{
-    $("#naturals-info-section").show();
-    $("#overlay").addClass("show");    
-    $("body").css("overflow", "hidden");
-}
-
-/**
- * Funkce skrývající sekci s nápovědou
- */
-function hideInfo()
-{
-    $("#naturals-info-section").hide();
-    $("#overlay").removeClass("show");
-    $("body").css("overflow", "auto");
-}
 
 /**
  * Funkce zobrazující vstupní pole pro přejmenování přírodniny
