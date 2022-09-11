@@ -321,7 +321,7 @@ function nameTyped(event, type, addAsNew = false)
         {
             //vygenerování a zobrazení URL verze nového názvu
             let url = generateUrl($(event.target).val());
-            let $selectedNameContainer = $(event.target).closest(".group-name-container, .part-info");
+            let $selectedNameContainer = $(event.target).closest("#group-name-container, .part-info");
             $selectedNameContainer.find("." + className + "-name-url").text("V URL bude zobrazováno jako " + url);
         }
     }
