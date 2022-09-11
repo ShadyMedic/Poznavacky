@@ -22,11 +22,12 @@ function importAlerts()
     );
 }
 
-function resolveAlerts(event) {
+function resolveAlerts(event)
+{
     if (!confirm('Opravdu odebrat toto chybové hlášení?')) { return; }
 
-    let alertId = $(event.target).closest('tr').attr('data-alert-id');
     let $alert = $(event.target).closest(".alert-data-item");
+    let alertId = $alert.attr('data-alert-id');
 
     $.post('administrate-action',
         {
