@@ -388,6 +388,9 @@ textarea {
         }
     }
     .alert-data-item {
+        .alert-level {
+            word-break: keep-all;
+        }
         &.emergency {
             td.alert-level {
                 background: #ec52bb;

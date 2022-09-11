@@ -667,6 +667,10 @@ textarea:focus {
   }
 }
 
+#alerts .alert-data-item .alert-level {
+  word-break: keep-all;
+}
+
 #alerts .alert-data-item.emergency td.alert-level {
   background: #ec52bb;
 }
