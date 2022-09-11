@@ -202,15 +202,15 @@ function renameConfirm(event, type)
             errorString = "poznávačky";
             minChars = 3;
             maxChars = 31;
-            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-";
-            allowedSpecialChars = ". _ -";
+            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.,-";
+            allowedSpecialChars = ". , _ -";
             break;
         case "part":
             errorString = "části";
             minChars = 1;
             maxChars = 31;
-            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-";
-            allowedSpecialChars = ". _ -";
+            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.,-";
+            allowedSpecialChars = ". , _ -";
             break;
         case "natural":
             errorString = "přírodniny";
