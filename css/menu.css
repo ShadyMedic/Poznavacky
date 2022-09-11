@@ -3892,6 +3892,15 @@ label.required:after {
     display: grid;
     -ms-grid-rows: auto auto auto;
         grid-template-rows: auto auto auto;
+    -ms-grid-columns: 8fr 3fr;
+        grid-template-columns: 8fr 3fr;
+    -webkit-column-gap: 2rem;
+            column-gap: 2rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #edit-group-wrapper {
     -ms-grid-columns: 1fr auto;
         grid-template-columns: 1fr auto;
   }
@@ -3957,6 +3966,16 @@ label.required:after {
   }
 }
 
+#edit-group .part-box:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group .part-box:not(:last-child) {
+    margin-bottom: 0;
+  }
+}
+
 #edit-group .part-box .naturals-in-part {
   overflow-y: auto;
   scrollbar-color: #444 none;
@@ -3991,6 +4010,7 @@ label.required:after {
 #edit-group .part-info .remove-part {
   margin-left: auto;
   display: block;
+  margin-bottom: 0.8rem;
 }
 
 #edit-group .part-info .add-natural {
@@ -4064,21 +4084,85 @@ label.required:after {
   }
 }
 
-#edit-group #submit-wrapper {
+#edit-group #submit-buttons-wrapper {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 1.2rem;
 }
 
 @media screen and (min-width: 672px) {
-  #edit-group #submit-wrapper {
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
+  #edit-group #submit-buttons-wrapper {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2/3;
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
     grid-row: 1/2;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-top: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #submit-buttons-wrapper {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+
+#edit-group #submit-buttons-wrapper .btn {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #submit-buttons-wrapper .btn {
+    -webkit-box-flex: initial;
+        -ms-flex-positive: initial;
+            flex-grow: initial;
+    -ms-flex-preferred-size: initial;
+        flex-basis: initial;
+    margin-bottom: 0.4rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #submit-buttons-wrapper .btn {
+    margin-bottom: 0;
+  }
+}
+
+#edit-group #submit-buttons-wrapper .btn:not(:first-child) {
+  margin-left: 0.4rem;
+}
+
+@media screen and (min-width: 672px) {
+  #edit-group #submit-buttons-wrapper .btn:not(:first-child) {
+    margin-bottom: 1.2rem;
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #edit-group #submit-buttons-wrapper .btn:not(:first-child) {
+    margin-bottom: 0;
+    margin-left: 0.4rem;
   }
 }
 
@@ -4088,7 +4172,7 @@ label.required:after {
 #edit-group .part-name-input-box,
 #edit-group .natural-name-box,
 #edit-group .natural-name-input-box {
-  line-height: 1.6em;
+  min-height: 1.6em;
 }
 
 #edit-group .group-name-box .text-field,
@@ -4100,6 +4184,19 @@ label.required:after {
   height: 1.6em;
   padding: 0.48em 0.4em;
   background: #f8f8f8;
+}
+
+#edit-group .group-name-box,
+#edit-group .part-name-box,
+#edit-group .natural-name-box {
+  word-break: break-word;
+}
+
+#edit-group .group-name-box .btn,
+#edit-group .part-name-box .btn,
+#edit-group .natural-name-box .btn {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
 }
 
 #edit-group .part-name-input-box .text-field {
@@ -4135,7 +4232,7 @@ label.required:after {
 #edit-group .group-name-input-box .btn,
 #edit-group .part-name-box .btn,
 #edit-group .part-name-input-box .btn {
-  margin: 0 0.4rem;
+  margin-left: 0.4rem;
 }
 
 #edit-group .group-name-box,

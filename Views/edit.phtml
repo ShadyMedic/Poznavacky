@@ -10,7 +10,7 @@
         <li>Odebráním části nebudou smazány žádné přírodniny ani obrázky k nim nahrané. Přírodniny, které jsou do takovýchto částí přiřazeny, zůstanou dostupné a budete je moci později přiřadit do jiných částí a poznávaček.</li>
         <li>V jedné části se nesmí stejná přírodnina vyskytovat vícekrát. Může se ale vyskytovat vícekrát v různých částech nebo v různých poznávačkách.</li>
         <li>Pokud do některé části přidáš přírodninu, která už se ve tvé třídě nachází, bude automaticky propojena s již existujícími obrázky, které k ní patří.</li>
-        <li>Pokud při úpravách uděláš chybu (například odebereš část, která obsahuje velké množství přírodnin), můžeš poznávačku navrátit do původního stavu aktualizací stránky. Žádné změny nebudou trvale uloženy, dokud neklikneš na tlačítko Uložit v horní části stránky. Nezapomeň si proto změny, o které nechceš přijít, průběžně ukládat.</li>
+        <li>Pokud při úpravách uděláš chybu (například odebereš část, která obsahuje velké množství přírodnin), můžeš poznávačku navrátit do původního stavu kliknutím na tlačítko <i>Zahodit změny</i>. Žádné změny nebudou trvale uloženy, dokud neklikneš na tlačítko <i>Uložit</i>. Nezapomeň si proto změny, o které nechceš přijít, průběžně ukládat.</li>
     </ul>
 </section>
 <div id="edit-group-wrapper">
@@ -89,8 +89,9 @@
         <?php endforeach ?>
     </div>
     <button id="add-part-button" class="btn border-btn non-transparent black">Přidat novou část</button>
-    <div id="submit-wrapper">
-        <button id="submit-button" class="btn border-btn non-transparent black">Uložit změny</button>
+    <div id="submit-buttons-wrapper">
+        <button id="edit-cancel-button" class="btn border-btn transparent black">Zahodit změny</button>
+        <button id="edit-submit-button" class="btn border-btn non-transparent black">Uložit změny</button>
     </div>
 </div>
 
@@ -117,11 +118,11 @@
                 </button>
             </div>
             <div class="part-name-url">V URL bude zobrazováno jako </div>
-            <label>
-                <span>Přírodnina k přidání</span>
+            <div class="add-natural">
+                <label>Přírodnina k přidání</label>
                 <input type="text" class="text-field new-natural-name-input"/>
                 <button class="new-natural-button btn border-btn non-transparent black">Přidat</button>
-            </label>
+            </div>
         </div>
         <ul class="naturals-in-part">
         </ul>

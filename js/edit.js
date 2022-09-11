@@ -31,7 +31,8 @@ $(function()
     $("#edit-group-wrapper").on("click", ".rename-part-cancel", function(event) {renameCancel(event)})
     $("#edit-group-wrapper").on("click", ".rename-group-cancel", function(event) {renameCancel(event)})
     $("#add-part-button").click(function(){addPart()});
-    $("#submit-button").click(save);
+    $("#edit-submit-button").click(function() {editSave()});
+    $("#edit-cancel-button").click(function() {editCancel()});
     $(window).click(function(event) {renameCancelAll(event)})
 
     //event listenery stisknutí klávesy
@@ -457,7 +458,7 @@ function removePart(event)
 /**
  * Funkce volaná po kliknutí na tlačítko "Uložit", která poskládá JSON objekt obsahující všechna data poznávačky a odešle ho na backend
  */
-function save()
+function editSave()
 {
     let data;
 
@@ -539,6 +540,29 @@ function save()
         },
         "json"
     );
+}
+
+/**
+ * Funkce na zahození změn (pomocí refreshnutí stránky) při úpravě poznávačky
+ */
+function editCancel()
+{
+    unlock(); // nezobrazí se prohlížečový confirm
+
+    let confirmMessage = "Opravdu chceš zahodit všechny změny? Tuto akci nelze vzít zpět. Potvrzením akce bude stránka znovu načtena."
+
+    newConfirm(confirmMessage, "Zahodit", "Zrušit", function(confirm)
+        {
+            if (confirm) 
+            {
+                location.reload();
+            }
+            else
+            {
+                lock();
+                return;
+            }
+        });  
 }
 
 /**
