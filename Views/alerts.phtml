@@ -11,13 +11,13 @@
     </tr>
     <?php foreach ($alerts as $alert) : ?>
         <tr class="alert-data-item <?=strtolower($alert->getLevel())?>" data-alert-id="<?= $alert->getId() ?>">
-            <td>
+            <td class="alert-date">
                 <?= $alert->getTime() ?>
             </td>
             <td class="alert-level">
                 <?= $alert->getLevel() ?>
             </td>
-            <td>
+            <td class="alert-content">
                 <?= $alert->getContent() ?>
             </td>
             <td class="alert-action">

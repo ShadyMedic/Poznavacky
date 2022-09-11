@@ -388,8 +388,18 @@ textarea {
         }
     }
     .alert-data-item {
+        
+        .alert-date {
+            word-break: keep-all;
+            @media screen and (min-width: $tablet) {
+                white-space: nowrap;
+            }
+        }
         .alert-level {
             word-break: keep-all;
+        }
+        .alert-content {
+            text-align: left;
         }
         &.emergency {
             td.alert-level {

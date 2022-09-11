@@ -667,8 +667,22 @@ textarea:focus {
   }
 }
 
+#alerts .alert-data-item .alert-date {
+  word-break: keep-all;
+}
+
+@media screen and (min-width: 768px) {
+  #alerts .alert-data-item .alert-date {
+    white-space: nowrap;
+  }
+}
+
 #alerts .alert-data-item .alert-level {
   word-break: keep-all;
+}
+
+#alerts .alert-data-item .alert-content {
+  text-align: left;
 }
 
 #alerts .alert-data-item.emergency td.alert-level {
