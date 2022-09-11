@@ -2,6 +2,14 @@
 
 namespace Poznavacky\Models\DatabaseItems;
 
+use DateTime;
+use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\undefined;
+
+/**
+ * Třída reprezentující objekt chybového hlášení naimportovaný z logovacího souboru do databáze
+ * @author Jan Štěch
+ */
 class Alert extends DatabaseItem
 {
 
@@ -31,7 +39,14 @@ class Alert extends DatabaseItem
     protected $resolved;
 
     /**
-     * @inheritDoc
+     * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
+     * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
+     * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
+     * @param DateTime|undefined|null $time
+     * @param string|undefined|null $level
+     * @param string|undefined|null $content
+     * @param bool|undefined|null $resolved
+     * @return void
      */
     public function initialize($time = null, $level = null, $content = null, $resolved = null): void
     {
@@ -55,9 +70,46 @@ class Alert extends DatabaseItem
         $this->resolved = $resolved;
     }
 
-    public function resolve()
+    /**
+     * Metoda označující toto chybové hlášení jako vyřešené (pro uložení do databáze je následně nutné zavolat save())
+     * @return void
+     */
+    public function resolve(): void
     {
-        //TODO
+        $this->resolved = true;
+    }
+
+    /**
+     * Metoda navracející uložený čas vzniku tohoto chybového hlášení.
+     * @return string Čas vzniku jako řetězec ve formátu YYYY-MM-DD hh:mm:ss
+     * @throws DatabaseException
+     */
+    public function getTime() : string
+    {
+        $this->loadIfNotLoaded($this->time);
+        return $this->time->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * Metoda navracející uloženou úroveň tohoto chybového hlášení
+     * @return string Úroveň hlášení jako řezězec velkými písmeny (@see Logger)
+     * @throws DatabaseException
+     */
+    public function getLevel()
+    {
+        $this->loadIfNotLoaded($this->level);
+        return $this->level;
+    }
+
+    /**
+     * Metoda navracející obsah tohoto chybového hlášení
+     * @return string Plný obsah chybového hlášení
+     * @throws DatabaseException
+     */
+    public function getContent()
+    {
+        $this->loadIfNotLoaded($this->content);
+        return $this->content;
     }
 
 }

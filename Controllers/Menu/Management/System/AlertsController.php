@@ -3,14 +3,24 @@
 namespace Poznavacky\Controllers\Menu\Management\System;
 
 use Poznavacky\Models\Administration;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Logger;
+use Poznavacky\Models\Processors\AlertImporter;
 use Poznavacky\Models\Statics\UserManager;
 
+/**
+ * Kontroler starající se o výpis stránky pro prohlížení chybových hlášení správcům služby
+ * @author Jan Štěch
+ */
 class AlertsController extends \Poznavacky\Controllers\SynchronousController
 {
 
     /**
-     * @inheritDoc
+     * Metoda nastavující hlavičku stránky a pohled
+     * @param array $parameters Pole parametrů pro zpracování kontrolerem (nevyužíváno)
+     * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
+     * @see SynchronousController::process()
      */
     function process(array $parameters): void
     {
@@ -18,7 +28,8 @@ class AlertsController extends \Poznavacky\Controllers\SynchronousController
         (new Logger())->info('Přístup na stránku pro prohlížení chybových hlášení systémovým administrátorem s ID {userId} z IP adresy {ip}',
             array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
 
-        // TODO: Získej data pro pohled
+        $alertManager = new AlertImporter();
+        self::$data['alerts'] = $administration->getAlerts();
 
         self::$pageHeader['title'] = 'Chybová hlášení';
         self::$pageHeader['description'] = 'Nástroj pro administrátory služby umožňující snadné prohlížení chybových hlášení.';

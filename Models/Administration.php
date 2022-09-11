@@ -114,7 +114,7 @@ class Administration
 
     /**
      * Metoda navracející pole všech tříd uložených v databázi jako objekty
-     * @return array Pole objektů tříd
+     * @return ClassObject[] Pole objektů tříd
      * @throws DatabaseException
      */
     public function getAllClasses(): array
@@ -551,6 +551,31 @@ class Administration
         return $emailSender->sendMail($addressee, $subject, $emailBody, $fromAddress, $sender);
     }
 
+    /**
+     * Metoda načítající uložená chybová hlášení z databáze a vracející je jako pole objektů
+     * @return Alert[]
+     */
+    public function getAlerts(): array
+    {
+        $dbResult = Db::fetchQuery('SELECT '.Alert::COLUMN_DICTIONARY['id'].','.
+            Alert::COLUMN_DICTIONARY['time'].','.Alert::COLUMN_DICTIONARY['level'].','.
+            Alert::COLUMN_DICTIONARY['content'].','.Alert::COLUMN_DICTIONARY['resolved'].
+            ' FROM '.Alert::TABLE_NAME.
+            ' ORDER BY '.Alert::COLUMN_DICTIONARY['time'].' DESC;',
+            array(), true);
+
+        $alerts = array();
+        foreach ($dbResult as $dbRow) {
+            $alert = new Alert(false, $dbRow[Alert::COLUMN_DICTIONARY['id']]);
+            $alert->initialize(new DateTime($dbRow[Alert::COLUMN_DICTIONARY['time']]),
+                $dbRow[Alert::COLUMN_DICTIONARY['level']], $dbRow[Alert::COLUMN_DICTIONARY['content']],
+                $dbRow[Alert::COLUMN_DICTIONARY['resolved']]);
+            $alerts[] = $alert;
+        }
+
+        return $alerts;
+    }
+
     public function importErrors(): ?int
     {
         $importer = new AlertImporter();
@@ -561,6 +586,7 @@ class Administration
     {
         $alert = new Alert(false, $alertId);
         $alert->resolve();
+        $alert->save();
     }
 
     /**

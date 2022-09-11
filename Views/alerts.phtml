@@ -3,8 +3,6 @@
 <br>
 <br>
 <br>
-<!-- Dočasná testovací data -->
-<?php $alerts = array(['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'EMERGENCY','content' => 'Generic error',],['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'ALERT','content' => 'Generic error',],['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'CRITICAL','content' => 'Generic error',],['id' => 0,'datetime' => '2022-09-10 22:58','level' => 'ERROR','content' => 'Generic error',]); ?>
 <table>
     <tr>
         <th>Datum a čas</th>
@@ -13,20 +11,20 @@
         <th>Vyřešit</th>
     </tr>
     <?php foreach ($alerts as $alert) : ?>
-        <tr class="alert-data-item" data-alert-id="<?= $alert['id'] ?>" style="background-color: #<?=
-        ($alert['level'] === 'EMERGENCY') ? 'e9497b' :
-            (($alert['level'] === 'ALERT') ? 'ff6666' :
-                (($alert['level'] === 'CRITICAL') ? 'ff8080' :
-                    (($alert['level'] === 'ERROR') ? 'ffa25b' : '999999')))
+        <tr class="alert-data-item" data-alert-id="<?= $alert->getId() ?>" style="background-color: #<?=
+        ($alert->getLevel() === 'EMERGENCY') ? 'e9497b' :
+            (($alert->getLevel() === 'ALERT') ? 'ff6666' :
+                (($alert->getLevel() === 'CRITICAL') ? 'ff8080' :
+                    (($alert->getLevel() === 'ERROR') ? 'ffa25b' : '999999')))
         ?>;">
             <td>
-                <?= $alert['datetime'] ?>
+                <?= $alert->getTime() ?>
             </td>
             <td>
-                <?= $alert['level'] ?>
+                <?= $alert->getLevel() ?>
             </td>
             <td>
-                <?= $alert['content'] ?>
+                <?= $alert->getContent() ?>
             </td>
             <td>
                 <button class='btn icon resolve-alert-button' title='Označit jako vyřešené'>
