@@ -564,6 +564,10 @@ class Administration
             ' ORDER BY '.Alert::COLUMN_DICTIONARY['time'].' DESC;',
             array(), true);
 
+        if ($dbResult === false) {
+            return array();
+        }
+
         $alerts = array();
         foreach ($dbResult as $dbRow) {
             $alert = new Alert(false, $dbRow[Alert::COLUMN_DICTIONARY['id']]);

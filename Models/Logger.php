@@ -16,14 +16,14 @@ use Exception;
  */
 class Logger implements LoggerInterface
 {
-    private const EMERGENCY_LOG_FILE = 'log/errors.log';
-    private const ALERT_LOG_FILE = 'log/errors.log';
-    private const CRITICAL_LOG_FILE = 'log/errors.log';
-    private const ERROR_LOG_FILE = 'log/errors.log';
-    private const WARNING_LOG_FILE = 'log/warnings.log';
-    private const NOTICE_LOG_FILE = 'log/info.log';
-    private const INFO_LOG_FILE = 'log/info.log';
-    private const DEBUG_LOG_FILE = 'log/debug.log';
+    public const EMERGENCY_LOG_FILE = 'log/errors.log';
+    public const ALERT_LOG_FILE = 'log/errors.log';
+    public const CRITICAL_LOG_FILE = 'log/errors.log';
+    public const ERROR_LOG_FILE = 'log/errors.log';
+    public const WARNING_LOG_FILE = 'log/warnings.log';
+    public const NOTICE_LOG_FILE = 'log/info.log';
+    public const INFO_LOG_FILE = 'log/info.log';
+    public const DEBUG_LOG_FILE = 'log/debug.log';
 
     private const TIME_FORMAT = 'Y-m-d H:i:s';
 
