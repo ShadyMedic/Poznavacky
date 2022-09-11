@@ -4,6 +4,8 @@ namespace Poznavacky\Models\Processors;
 
 use DateTime;
 use Poznavacky\Models\DatabaseItems\Alert;
+use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
@@ -29,7 +31,8 @@ class AlertImporter
     /**
      * Metoda importující nová chybová hlášení z logovacího souboru do databáze
      * @return int|null Počet naimportovaných chybových hlášení, nebo NULL v případě neúspěchu
-     * @throws \Exception
+     * @throws AccessDeniedException
+     * @throws DatabaseException
      */
     public function importAlerts(): ?int
     {
@@ -74,7 +77,7 @@ class AlertImporter
             $result = Db::fetchQuery(
                 'SELECT '.Alert::COLUMN_DICTIONARY['time'].
                 ' FROM '.Alert::TABLE_NAME.
-                ' ORDER BY '.Alert::COLUMN_DICTIONARY['time'].
+                ' ORDER BY '.Alert::COLUMN_DICTIONARY['time']. ' DESC'.
                 ' LIMIT 1', array());
             if ($result === false) {
                 //Zatím žádné záznamy
@@ -122,14 +125,16 @@ class AlertImporter
                 );
 
                 //Extrahuj obsah
-                $content = mb_substr($alert, $levelClosingCharacterPosition + 2);
+                $content = mb_substr($alert, $levelClosingCharacterPosition);
 
                 //Připrav proměnné pro úpravu databáze
-                $parsedAlerts[] = $time;
-                $parsedAlerts[] = $level;
-                $parsedAlerts[] = $content;
+                $parsedAlerts[] = trim($time);
+                $parsedAlerts[] = trim($level);
+                $parsedAlerts[] = trim($content);
                 $query .= '(?,?,?),';
             }
+
+            fclose($file);
 
             //Odstraň kopii logu, se kterou jsme pracovali
             if (unlink($logFile) === false) {
@@ -143,16 +148,26 @@ class AlertImporter
                 throw new RuntimeException('Nepodařilo se odstranit dočasný soubor '.$logFile);
             }
         }
-        $query = substr($query, 0, strlen($query) - 1).';'; //Nahraď poslední čárku středníkem
-        Db::executeQuery($query, $parsedAlerts);
 
-        (new Logger())->info('Správce systému s ID {id} naimportoval {count} nových chybových hlášení z logovacích souborů do databáze z IP adresy {ip}',
-            array(
-                'id' => UserManager::getId(),
-                'count' => count($parsedAlerts) / 3,
-                'ip' => $_SERVER['REMOTE_ADDR']
-            )
-        );
+        if (count($parsedAlerts) > 0) {
+            $query = substr($query, 0, strlen($query) - 1).';'; //Nahraď poslední čárku středníkem
+            Db::executeQuery($query, $parsedAlerts);
+
+            (new Logger())->info('Správce systému s ID {id} naimportoval {count} nových chybových hlášení z logovacích souborů do databáze z IP adresy {ip}',
+                array(
+                    'id' => UserManager::getId(),
+                    'count' => count($parsedAlerts) / 3,
+                    'ip' => $_SERVER['REMOTE_ADDR']
+                )
+            );
+        } else {
+            (new Logger())->notice('Správce systému s ID {id} spustil import nových chybových hlášení do databáze z IP adresy {ip}, avšak žádné hlášení k importu nebylo nalezeno',
+                array(
+                    'id' => UserManager::getId(),
+                    'ip' => $_SERVER['REMOTE_ADDR']
+                )
+            );
+        }
 
         return count($parsedAlerts) / 3;
     }

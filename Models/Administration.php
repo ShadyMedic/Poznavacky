@@ -552,7 +552,7 @@ class Administration
     }
 
     /**
-     * Metoda načítající uložená chybová hlášení z databáze a vracející je jako pole objektů
+     * Metoda načítající uložená a nevyřešená chybová hlášení z databáze a vracející je jako pole objektů
      * @return Alert[]
      */
     public function getAlerts(): array
@@ -561,6 +561,7 @@ class Administration
             Alert::COLUMN_DICTIONARY['time'].','.Alert::COLUMN_DICTIONARY['level'].','.
             Alert::COLUMN_DICTIONARY['content'].','.Alert::COLUMN_DICTIONARY['resolved'].
             ' FROM '.Alert::TABLE_NAME.
+            ' WHERE '.Alert::COLUMN_DICTIONARY['resolved'].' = 0'.
             ' ORDER BY '.Alert::COLUMN_DICTIONARY['time'].' DESC;',
             array(), true);
 
@@ -580,12 +581,23 @@ class Administration
         return $alerts;
     }
 
-    public function importErrors(): ?int
+    /**
+     * Metoda spouštějící import nových chyb z logovacích souborů do databáze
+     * @return int Počet naimportovaných hlášení
+     * @throws \Exception
+     */
+    public function importErrors(): int
     {
         $importer = new AlertImporter();
         return $importer->importAlerts();
     }
 
+    /**
+     * Metoda označující dané chybové hlášení jako vyřešené
+     * @param int $alertId ID chybového hlášení
+     * @return void
+     * @throws DatabaseException
+     */
     public function resolveAlert($alertId) : void
     {
         $alert = new Alert(false, $alertId);
