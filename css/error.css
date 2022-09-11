@@ -643,6 +643,7 @@ label.required:after {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  line-height: 1.6rem;
 }
 
 .custom-checkbox-wrapper input[type="checkbox"] {
@@ -820,6 +821,11 @@ label.required:after {
 .custom-select-wrapper .custom-options .custom-option.selected {
   color: #fff;
   background: #479911;
+}
+
+.code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.08em;
 }
 
 @-webkit-keyframes fontpop {

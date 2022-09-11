@@ -823,6 +823,11 @@ label.required:after {
   background: #479911;
 }
 
+.code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.08em;
+}
+
 @-webkit-keyframes fontpop {
   0% {
     -webkit-transform: scale(1);
