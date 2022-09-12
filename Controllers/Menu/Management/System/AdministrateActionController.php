@@ -155,6 +155,19 @@ class AdministrateActionController extends AjaxController
                         echo json_encode(array('messageType' => 'error', 'message' => 'E-mail nemohl být odeslán'));
                     }
                     break;
+                case 'import alerts':
+                    $result = $administration->importErrors();
+                    if (is_numeric($result)) {
+                        echo json_encode(array('messageType' => 'success', 'message' => 'Nově načtených chybových hlášení: ' . $result));
+                    } else {
+                        echo json_encode(array('messageType' => 'error', 'message' => 'Došlo k chybě při pokusu importovat nová chybová hlášení'));
+                    }
+                    break;
+                case 'resolve alert':
+                    $alertId = $_POST['alertId'];
+                    $administration->resolveAlert($alertId);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Chybové hlášení úspěšně označeno jako vyřešené'));
+                    break;
                 case 'execute sql query':
                     $query = $_POST['query'];
                     $result = $administration->executeSqlQueries($query);
