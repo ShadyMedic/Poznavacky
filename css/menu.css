@@ -447,6 +447,16 @@ ul.list li:not(:last-child) {
           transform: scale(0.98);
 }
 
+.btn.border-btn.img {
+  padding: 0.44em;
+}
+
+.btn.border-btn.img img {
+  height: 1.32em;
+  width: 1.32em;
+  vertical-align: bottom;
+}
+
 .btn.arrow-btn {
   font-size: 1.2rem;
   -webkit-transition: -webkit-transform 0.2s ease-out;
@@ -3498,6 +3508,21 @@ label.required:after {
 
 #account-settings .user-image-section > div > span {
   font-weight: 500;
+}
+
+@media screen and (min-width: 672px) {
+  #account-settings .user-property-action {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+  }
+  #account-settings .user-property-action > *:not(:last-child) {
+    margin-left: 0.4rem;
+  }
 }
 
 #account-settings .delete-account-section {

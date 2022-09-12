@@ -154,6 +154,15 @@
             }
         }
     }
+    .user-property-action {
+        @media screen and (min-width: $smallTablet) {
+            display: flex;
+            flex-direction: row-reverse;
+            > *:not(:last-child) {
+                margin-left: 0.4rem;
+            }
+        }
+    }
     .delete-account-section {
         grid-column: 2/3;
         margin: 0.6rem;
