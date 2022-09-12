@@ -146,7 +146,7 @@
         @media screen and (min-width: $smallDesktop) {
             padding:  2rem 3rem 0 3rem;
         }
-        span:last-child {
+        span:nth-last-child(3) {
             font-weight: 500;
         }
         .show-info-button,

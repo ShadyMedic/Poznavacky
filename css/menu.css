@@ -1466,17 +1466,17 @@ label.required:after {
   }
 }
 
-#menu h2 span:last-child,
-#learn h2 span:last-child,
-#test h2 span:last-child,
-#add-pictures h2 span:last-child,
-#account-settings h2 span:last-child,
-#manage h2 span:last-child,
-#members h2 span:last-child,
-#tests h2 span:last-child,
-#edit-group h2 span:last-child,
-#resolve-reports h2 span:last-child,
-#naturals h2 span:last-child {
+#menu h2 span:nth-last-child(3),
+#learn h2 span:nth-last-child(3),
+#test h2 span:nth-last-child(3),
+#add-pictures h2 span:nth-last-child(3),
+#account-settings h2 span:nth-last-child(3),
+#manage h2 span:nth-last-child(3),
+#members h2 span:nth-last-child(3),
+#tests h2 span:nth-last-child(3),
+#edit-group h2 span:nth-last-child(3),
+#resolve-reports h2 span:nth-last-child(3),
+#naturals h2 span:nth-last-child(3) {
   font-weight: 500;
 }
 
