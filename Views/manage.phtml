@@ -10,12 +10,12 @@
             <div class='class-property-action'>
                 <button id="change-class-name-button" class="btn border-btn non-transparent black">Změnit</button>
             </div>
-            <div id="change-class-name" class="change-form" style="display: none;">
+            <div id="change-class-name" class="form change-form" style="display: none;">
                 <h3>Změna názvu třídy</h3>
                 <p class="additional-form-info">Nový název třídy musí být nejprve schválen administrátorem. Jeho změna v systému proto může chvíli trvat.</p>
                 <label for="change-class-name-new">Nový název třídy</label>
                 <input class="text-field" id="change-class-name-new" type=text maxlength=31 />
-                <button class="btn border-btn non-transparent black" id="change-class-name-confirm-button">Potvrdit</button>
+                <button class="btn border-btn non-transparent black submit-button" id="change-class-name-confirm-button">Potvrdit</button>
                 <div id="change-class-name-message" class="message server"></div>
                 <button class="btn inline black" id="change-class-name-cancel-button">Zrušit</button>
             </div>
@@ -30,7 +30,7 @@
             <div class='class-property-action'>
                 <button id="change-class-status-button" class="btn border-btn non-transparent black">Změnit</button>
             </div>
-            <div id="change-class-status" class="change-form" style="display: none">
+            <div id="change-class-status" class="form change-form" style="display: none">
                 <h3>Změna stavu třídy</h3>
                 <label for="class-status-select">Status třídy</label>
                 <div class="custom-select-wrapper" id="class-status-select">
@@ -52,7 +52,7 @@
                 </div>
                 <label for="change-class-status-code">Vstupní kód</label>
                 <input id='change-class-status-code' type="number" maxlength=4 value="<?= $classCode ?>" class="text-field"/>
-                <button id="change-class-status-confirm-button" class="btn border-btn non-transparent black">Aktualizovat</button>
+                <button id="change-class-status-confirm-button submit-button" class="btn border-btn non-transparent black">Aktualizovat</button>
                 <button id="change-class-status-cancel-button" class="btn inline black">Zrušit</button>
             </div>
         </div>
@@ -66,10 +66,10 @@
         <button class="btn border-btn non-transparent black" id="delete-class-button">Odstranit třídu</button>
         <div id="delete-class" style="display: none;">
             <h3>Odstranění třídy</h3>
-            <div id="delete-class1" style="display: none;">
+            <div id="delete-class1" class="form" style="display: none;">
                 <label for="delete-class-password">Heslo</label>
                 <input class="text-field" id="delete-class-password" type=password maxlength=31 />
-                <button class="btn border-btn non-transparent black" id="delete-class-confirm-button">OK</button>
+                <button class="btn border-btn non-transparent black submit-button" id="delete-class-confirm-button">OK</button>
                 <div id="delete-class-message" class="message server"></div>
                 <button class="btn inline black" id="delete-class-cancel-button">Zrušit</button>
             </div>

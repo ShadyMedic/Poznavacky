@@ -6,6 +6,9 @@ $(function()
     //event listenery tlačítek
     $("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
 
+    //event listenery zmáčknutí klávesy
+    $(".form").keyup(function(event) {enterSubmit(event)})
+
     //event listener custom select boxů
     $(".custom-select-wrapper").each(function()
     {
@@ -46,6 +49,25 @@ $(function()
         $("body").removeClass("tab");    
     })
 })
+
+/**
+ * Funkce, která odešle formulář stiskem klávesy Enter
+ * Formulář je libovolný prvek s třídou "form", tlačítko na jeho odeslání musí mít třídu "submit-button"
+ * @param {event} event 
+ * @returns 
+ */
+function enterSubmit(event)
+{
+    //byla stisknuta jiná klávesa
+    if (event.code != "Enter")
+    {
+        return;
+    }
+
+    //byl stisknut Enter
+    let $form = $(':focus').closest(".form");
+    $form.find(".submit-button").click();
+}
 
 /**
  * Funkce zavírající zobrazenou hlášku
