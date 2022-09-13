@@ -58,11 +58,11 @@
         </div>
     </section>
     <section class="class-buttons-section">
-        <div id="manage-buttons">
-            <a class="btn border-btn non-transparent black" id="members-management-button" href="<?= $baseUrl ?>/members" <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>style="display:none"<?php endif ?>>Spravovat členy třídy</a>
-            <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/tests">Spravovat poznávačky</a>
-            <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/naturals">Spravovat přírodniny</a>
-        </div>
+        <a class="btn border-btn non-transparent black" id="members-management-button" href="<?= $baseUrl ?>/members" <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>style="display:none"<?php endif ?>>Spravovat členy třídy</a>
+        <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/tests">Spravovat poznávačky</a>
+        <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/naturals">Spravovat přírodniny</a>
+    </section>
+    <section class="delete-class-section">
         <button class="btn border-btn non-transparent black" id="delete-class-button">Odstranit třídu</button>
         <div id="delete-class" style="display: none;">
             <h3>Odstranění třídy</h3>
