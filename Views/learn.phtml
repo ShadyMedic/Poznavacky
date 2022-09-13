@@ -12,7 +12,7 @@
             <div class="custom-select">
                 <div class="custom-select-main">
                     <span><?= $naturals[0]->getName() ?></span>
-                    <img class="arrow" src="../images/arrowBlack.svg" alt="Ikona šipky">
+                    <img class="arrow" src="images/arrow-black.svg" alt="Ikona šipky">
                 </div>
                 <ul class="custom-options">
                     <?php foreach ($naturals as $natural) :?>
@@ -27,13 +27,13 @@
     </section>
     <section class="picture">
         <button id="picture-back-button" class="btn icon picture-control" title="Předchozí obrázek">
-            <img src="images/arrowWhite.svg" style="transform: rotate(180deg);" alt="Předchozí obrázek">
+            <img src="images/arrow-white.svg" style="transform: rotate(180deg);" alt="Předchozí obrázek">
         </button>
-        <img id="main-img" src="../images/blank.gif" alt="Obrázek přírodniny"> <!-- Adresa bude dodána JavaScriptem -->
+        <img id="main-img" src="images/blank.gif" alt="Obrázek přírodniny"> <!-- Adresa bude dodána JavaScriptem -->
         <button id="picture-forward-button" class="btn icon picture-control" title="Následující obrázek">
-            <img src="images/arrowWhite.svg" alt="Následující obrázek">
+            <img src="images/arrow-white.svg" alt="Následující obrázek">
         </button>
-        <button class="btn report-button icon" title="Nahlásit"><img src="../images/report.svg" alt="Nahlásit"></button>
+        <button class="btn report-button icon" title="Nahlásit"><img src="images/report.svg" alt="Nahlásit"></button>
         <div class="report-box">
             <?php require 'Views/reportForm.phtml'; ?>
         </div>
