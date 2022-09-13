@@ -16,6 +16,7 @@ class EmailComposer
     public const EMAIL_TYPE_CLASS_NAME_CHANGE_APPROVED = 4;
     public const EMAIL_TYPE_CLASS_NAME_CHANGE_DECLINED = 5;
     public const EMAIL_TYPE_NEW_CLASS_REQUEST = 6;
+    public const EMAIL_TYPE_ERROR_REPORT = 7;
     
     private string $message;
     
@@ -51,6 +52,9 @@ class EmailComposer
                 break;
             case self::EMAIL_TYPE_NEW_CLASS_REQUEST:
                 require 'Views/EmailTemplates/newClassRequest.phtml';
+                break;
+            case self::EMAIL_TYPE_ERROR_REPORT:
+                require 'Views/EmailTemplates/errorReport.phtml';
                 break;
             default:
                 ob_end_clean();

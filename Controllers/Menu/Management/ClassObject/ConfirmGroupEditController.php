@@ -26,7 +26,7 @@ class ConfirmGroupEditController extends AjaxController
     public function process(array $parameters): void
     {
         if (!isset($_POST['data'])) {
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak nebyla v něm odeslány žádné informace o úpravách',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak nebyla v něm odeslány žádné informace o úpravách',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -51,7 +51,7 @@ class ConfirmGroupEditController extends AjaxController
             
             $editor->commit();
             
-            (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId} a úpravy popsal následujícím JSON řetězcem: {json}',
+            (new Logger())->info('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId} a úpravy popsal následujícím JSON řetězcem: {json}',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -69,7 +69,7 @@ class ConfirmGroupEditController extends AjaxController
         } catch (AccessDeniedException $e) {
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage(), array());
         } catch (DatabaseException | Exception $e) {
-            (new Logger(true))->error('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, ale uložení změn zabránila neočekávaná chyba: {exception}; úpravy byly popsány následujícím JSON řetězcem: {json}',
+            (new Logger())->error('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, ale uložení změn zabránila neočekávaná chyba: {exception}; úpravy byly popsány následujícím JSON řetězcem: {json}',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],

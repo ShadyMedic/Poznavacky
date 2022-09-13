@@ -199,7 +199,8 @@ textarea {
 #classes,
 #admin-reports,
 #name-change-requests,
-#database {
+#database,
+#alerts {
     table {
         margin: auto;
         text-align: center;
@@ -226,7 +227,8 @@ textarea {
 #users,
 #classes,
 #admin-reports,
-#name-change-requests {
+#name-change-requests,
+#alerts {
     .class-owner-table tr:nth-child(odd) {
         background: transparent;
     }
@@ -245,8 +247,9 @@ textarea {
     .user-action > div,
     .class-action > div,
     .report-action > div,
-    .name-change-request-action > div {
-        display: flex;
+    .name-change-request-action > div,
+    .alert-action > div {
+        display: flex; 
         justify-content: center;
         align-items: center;
         flex-direction: column;
@@ -351,6 +354,73 @@ textarea {
         margin-top: 0.8rem;
         font-size: 0.8rem;
         color: #444;
+    }
+}
+
+#alerts {
+    .center {
+        display: block;
+        margin: auto;
+        width: 96%;
+        @media screen and (min-width: $mobile) {
+            width: 88%;
+        }
+        @media screen and (min-width: $tablet) {
+            width: 72%;
+        }
+        @media screen and (min-width: $smallDesktop) {
+            width: 56%;
+        }
+    }
+    #import-alerts-wrapper {
+        padding: 1rem 0;
+        .btn {
+            margin: auto;
+            display: block;
+        }
+        p {
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+            text-align: justify;
+            @media screen and (min-width: 1172px) {
+                text-align: center;
+            }
+        }
+    }
+    .alert-data-item {
+        
+        .alert-date {
+            word-break: keep-all;
+            @media screen and (min-width: $tablet) {
+                white-space: nowrap;
+            }
+        }
+        .alert-level {
+            word-break: keep-all;
+        }
+        .alert-content {
+            text-align: left;
+        }
+        &.emergency {
+            td.alert-level {
+                background: #ec52bb;
+            }
+        }
+        &.alert {
+            td.alert-level {
+                background: #ff6868;
+            }
+        }
+        &.critical {
+            td.alert-level {
+                background: #ffae70;
+            }
+        }
+        &.error {
+            td.alert-level {
+                background: #ffe76f;
+            }
+        }
     }
 }
 

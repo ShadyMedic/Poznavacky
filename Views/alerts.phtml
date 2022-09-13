@@ -1,0 +1,32 @@
+<div id="import-alerts-wrapper" class="center">
+    <button class='btn border-btn import-alerts-button' title='Načte nové chyby z logu'>Načíst nové chyby</button>
+    <p>Tlačítko "Načíst nové chyby" nemačkejte prosím zbytečně. Spouští na serveru prostředkově náročnou operaci.</p>
+</div>
+<table>
+    <tr>
+        <th>Datum a čas</th>
+        <th>Závažnost</th>
+        <th>Zpráva</th>
+        <th>Akce</th>
+    </tr>
+    <?php foreach ($alerts as $alert) : ?>
+        <tr class="alert-data-item <?=strtolower($alert->getLevel())?>" data-alert-id="<?= $alert->getId() ?>">
+            <td class="alert-date">
+                <?= $alert->getTime() ?>
+            </td>
+            <td class="alert-level">
+                <?= $alert->getLevel() ?>
+            </td>
+            <td class="alert-content">
+                <?= $alert->getContent() ?>
+            </td>
+            <td class="alert-action">
+                <div>
+                    <button class='btn icon resolve-alert-button' title='Označit jako vyřešené'>
+                        <img src='images/tick.svg' />
+                    </button>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>

@@ -42,7 +42,7 @@ class UpdateNaturalsController extends AjaxController
                     $newName = trim($_POST['newName']); //Ořež mezery
                     $natural = new Natural(false, $naturalId);
                     $editor->rename($natural, $newName);
-                    (new Logger(true))->info('Uživatel s ID {userId} přejmenoval ve třídě s ID {classId} přírodninu s ID {naturalId} na {newName} z IP adresy {ip}',
+                    (new Logger())->info('Uživatel s ID {userId} přejmenoval ve třídě s ID {classId} přírodninu s ID {naturalId} na {newName} z IP adresy {ip}',
                         array(
                             'userId' => UserManager::getId(),
                             'classId' => $_SESSION['selection']['class']->getId(),
@@ -59,7 +59,7 @@ class UpdateNaturalsController extends AjaxController
                     $fromNatural = new Natural(false, $fromNaturalId);
                     $toNatural = new Natural(false, $toNaturalId);
                     $mergeResult = $editor->merge($fromNatural, $toNatural);
-                    (new Logger(true))->info('Uživatel s ID {userId} sloučil ve třídě s ID {classId} přírodninu s ID {fromNaturalId} do přírodniny s ID {toNaturalId} z IP adresy {ip}',
+                    (new Logger())->info('Uživatel s ID {userId} sloučil ve třídě s ID {classId} přírodninu s ID {fromNaturalId} do přírodniny s ID {toNaturalId} z IP adresy {ip}',
                         array(
                             'userId' => UserManager::getId(),
                             'classId' => $_SESSION['selection']['class']->getId(),
@@ -78,7 +78,7 @@ class UpdateNaturalsController extends AjaxController
                     $naturalId = $_POST['naturalId'];
                     $natural = new Natural(false, $naturalId);
                     $editor->delete($natural);
-                    (new Logger(true))->info('Uživatel s ID {userId} odstranil ze třídy s ID {classId} přírodninu s ID {naturalId} z IP adresy {ip}',
+                    (new Logger())->info('Uživatel s ID {userId} odstranil ze třídy s ID {classId} přírodninu s ID {naturalId} z IP adresy {ip}',
                         array(
                             'userId' => UserManager::getId(),
                             'classId' => $_SESSION['selection']['class']->getId(),

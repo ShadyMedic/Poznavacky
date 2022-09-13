@@ -37,7 +37,7 @@ class TestPicturesController extends AjaxController
                 $pictures = $_SESSION['selection']['group']->getRandomPictures(self::PICTURES_SENT_PER_REQUEST);
             }
         } catch (DatabaseException $e) {
-            (new Logger(true))->alert('Uživatel s ID {userId} zažádal o náhodné obrázky pro zkoušecí stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
+            (new Logger())->alert('Uživatel s ID {userId} zažádal o náhodné obrázky pro zkoušecí stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
                 array(
                     'userId' => UserManager::getId(),
                     'groupId' => $_SESSION['selection']['group']->getId(),
@@ -57,7 +57,7 @@ class TestPicturesController extends AjaxController
         }
         
         //Odeslání dvourozměrného pole s čísly otázek a adresami obrázků
-        (new Logger(true))->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byly odeslány náhodné obrázky pro zkoušecí stránku části/částí poznávačky s ID {groupId} patřící do třídy s ID {classId}',
+        (new Logger())->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byly odeslány náhodné obrázky pro zkoušecí stránku části/částí poznávačky s ID {groupId} patřící do třídy s ID {classId}',
             array(
                 'userId' => UserManager::getId(),
                 'ip' => $_SERVER['REMOTE_ADDR'],

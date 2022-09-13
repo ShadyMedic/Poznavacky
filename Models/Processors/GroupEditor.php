@@ -56,7 +56,7 @@ class GroupEditor
             $validator->checkCharacters($newName, DataValidator::GROUP_NAME_ALLOWED_CHARS,
                 DataValidator::TYPE_GROUP_NAME);
         } catch (RangeException $e) {
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli nepřijatelné délce nového názvu',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli nepřijatelné délce nového názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -73,7 +73,7 @@ class GroupEditor
                         null, $e);
             }
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli přítomnosti nepovolených znaků',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli přítomnosti nepovolených znaků',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -109,7 +109,7 @@ class GroupEditor
         }
         if (!(in_array($this->group->getId(), $ids) && count($ids) === 1)) {
             //Nalezena poznávačka se stejným URL a rozdílným ID - přejmenování na název příliš podobný jiné poznávačce
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli neunikátnímu názvu',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli neunikátnímu názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -124,7 +124,7 @@ class GroupEditor
         try {
             $validator->checkForbiddenUrls(Folder::generateUrl($newName), DataValidator::TYPE_GROUP_URL);
         } catch (InvalidArgumentException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli rezervované URL reprezentaci nového názvu',
+            (new Logger())->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při přejmenovávání poznávačky na {newName} kvůli rezervované URL reprezentaci nového názvu',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -177,7 +177,7 @@ class GroupEditor
                 $naturalName = trim($naturalName); //Ořež mezery
                 //Kontrola, zda již přírodnina v této části neexistuje
                 if (in_array(mb_strtoupper($naturalName), $naturalNamesUppercaseArray)) {
-                    (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole přírodnin v některé z částí kvůli neunikátnímu názvu',
+                    (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole přírodnin v některé z částí kvůli neunikátnímu názvu',
                         array(
                             'userId' => UserManager::getId(),
                             'ip' => $_SERVER['REMOTE_ADDR'],
@@ -226,7 +226,7 @@ class GroupEditor
                             $validator->checkCharacters($naturalName, DataValidator::NATURAL_NAME_ALLOWED_CHARS,
                                 DataValidator::TYPE_NATURAL_NAME);
                         } catch (RangeException $e) {
-                            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů přírodnin - u názvu {newName} - kvůli nepřijatelné délce nového názvu',
+                            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů přírodnin - u názvu {newName} - kvůli nepřijatelné délce nového názvu',
                                 array(
                                     'userId' => UserManager::getId(),
                                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -243,7 +243,7 @@ class GroupEditor
                                         null, $e);
                             }
                         } catch (InvalidArgumentException $e) {
-                            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů přírodnin - u názvu {newName} - kvůli přítomnosti nepovolených znaků',
+                            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů přírodnin - u názvu {newName} - kvůli přítomnosti nepovolených znaků',
                                 array(
                                     'userId' => UserManager::getId(),
                                     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -270,7 +270,7 @@ class GroupEditor
                 $validator->checkCharacters($partName, DataValidator::PART_NAME_ALLOWED_CHARS,
                     DataValidator::TYPE_PART_NAME);
             } catch (RangeException $e) {
-                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli nepřijatelné délce nového názvu',
+                (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli nepřijatelné délce nového názvu',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],
@@ -287,7 +287,7 @@ class GroupEditor
                             null, $e);
                 }
             } catch (InvalidArgumentException $e) {
-                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli přítomnosti nepovolených znaků',
+                (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli přítomnosti nepovolených znaků',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],
@@ -302,7 +302,7 @@ class GroupEditor
             //Zkontroluj unikátnost (pouze vůči již rozbaleným částem - všechny části uložené v databázi budou smazány a nahrazeny při potvrzování změn)
             $partUrl = Folder::generateUrl($partName);
             if (in_array($partUrl, $partUrls)) {
-                (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli neunikátnímu názvu',
+                (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli neunikátnímu názvu',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],
@@ -318,7 +318,7 @@ class GroupEditor
             try {
                 $validator->checkForbiddenUrls($partUrl, DataValidator::TYPE_PART_URL);
             } catch (InvalidArgumentException $e) {
-                (new Logger(true))->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli zarezervované URL reprezentace názvu',
+                (new Logger())->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na úpravu poznávačky s ID {groupId} patřící do třídy s ID {classId}, avšak žádost selhala při kontrole názvů částí - u názvu {newName} - kvůli zarezervované URL reprezentace názvu',
                     array(
                         'userId' => UserManager::getId(),
                         'ip' => $_SERVER['REMOTE_ADDR'],

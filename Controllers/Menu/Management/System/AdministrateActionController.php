@@ -26,7 +26,7 @@ class AdministrateActionController extends AjaxController
     public function process(array $parameters): void
     {
         if (!isset($_POST['action'])) {
-            (new Logger(true))->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému, avšak nespecifikoval typ akce',
+            (new Logger())->warning('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému, avšak nespecifikoval typ akce',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
             header('HTTP/1.0 400 Bad Request');
             return;
@@ -155,6 +155,19 @@ class AdministrateActionController extends AjaxController
                         echo json_encode(array('messageType' => 'error', 'message' => 'E-mail nemohl být odeslán'));
                     }
                     break;
+                case 'import alerts':
+                    $result = $administration->importErrors();
+                    if (is_numeric($result)) {
+                        echo json_encode(array('messageType' => 'success', 'message' => 'Nově načtených chybových hlášení: ' . $result));
+                    } else {
+                        echo json_encode(array('messageType' => 'error', 'message' => 'Došlo k chybě při pokusu importovat nová chybová hlášení'));
+                    }
+                    break;
+                case 'resolve alert':
+                    $alertId = $_POST['alertId'];
+                    $administration->resolveAlert($alertId);
+                    echo json_encode(array('messageType' => 'success', 'message' => 'Chybové hlášení úspěšně označeno jako vyřešené'));
+                    break;
                 case 'execute sql query':
                     $query = $_POST['query'];
                     $result = $administration->executeSqlQueries($query);
@@ -164,14 +177,14 @@ class AdministrateActionController extends AjaxController
                     header('HTTP/1.0 400 Bad Request');
                     return;
             }
-            (new Logger(true))->info('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému; odeslané údaje byly:{postData}',
+            (new Logger())->info('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému; odeslané údaje byly:{postData}',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'postData' => $postDataForLog
                 ));
         } catch (AccessDeniedException $e) {
-            (new Logger(true))->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému, avšak neuspěl kvůli následující chybě: {exception}; odeslané údaje byly:{postData}',
+            (new Logger())->notice('Uživatel s ID {userId} odeslal z IP adresy {ip} požadavek na provedení akce související se správou systému, avšak neuspěl kvůli následující chybě: {exception}; odeslané údaje byly:{postData}',
                 array(
                     'userId' => UserManager::getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],

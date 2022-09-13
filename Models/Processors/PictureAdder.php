@@ -71,7 +71,7 @@ class PictureAdder
         
         //Přírodnina s tímto názvem ve zvolené poznávačce neexistuje
         if ($i === count($naturals)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})',
                 array(
                     'userId' => UserManager::getId(),
                     'groupId' => $this->group->getId(),
@@ -100,7 +100,7 @@ class PictureAdder
         }
         
         if (is_null($typeCheck)) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek nemohl být načten (zadaná URL adresa: {url})',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek nemohl být načten (zadaná URL adresa: {url})',
                 array(
                     'userId' => UserManager::getId(),
                     'groupId' => $this->group->getId(),
@@ -111,7 +111,7 @@ class PictureAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_URL, null, null);
         }
         if ($typeCheck === false) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek byl v neakceptovaném formátu ({imageFormat})',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek byl v neakceptovaném formátu ({imageFormat})',
                 array(
                     'userId' => UserManager::getId(),
                     'groupId' => $this->group->getId(),
@@ -124,7 +124,7 @@ class PictureAdder
         
         //Ověření, zda již obrázek u stejné přírodniny není nahrán
         if ($natural->pictureExists($url)) {
-            (new Logger(true))->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})',
                 array(
                     'userId' => UserManager::getId(),
                     'groupId' => $this->group->getId(),
@@ -162,7 +162,7 @@ class PictureAdder
 					($_SESSION['selection']['part']->getPicturesCount() + 1));
 			}
         } catch (DatabaseException $e) {
-            (new Logger(true))->alert('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak neznámá chyba zabránila uložení obrázku; pokud toto nebyla ojedinělá chyba, může být vážně narušeno fungování systému',
+            (new Logger())->alert('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak neznámá chyba zabránila uložení obrázku; pokud toto nebyla ojedinělá chyba, může být vážně narušeno fungování systému',
                 array(
                     'userId' => UserManager::getId(),
                     'groupId' => $this->group->getId(),
@@ -175,7 +175,7 @@ class PictureAdder
         //Zvýšení počtu přidaných obrázků u uživatele
         UserManager::getUser()->incrementAddedPictures();
         
-        (new Logger(true))->info('Uživatel s ID {userId} přidal obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}',
+        (new Logger())->info('Uživatel s ID {userId} přidal obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}',
             array(
                 'userId' => UserManager::getId(),
                 'groupId' => $this->group->getId(),

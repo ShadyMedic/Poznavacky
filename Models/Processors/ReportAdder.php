@@ -49,7 +49,7 @@ class ReportAdder
         $availableReasons = Report::ALL_REASONS;
         
         if (!in_array($reason, $availableReasons, true)) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId}, avšak nespecifikoval platný důvod',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId}, avšak nespecifikoval platný důvod',
                 array('userId' => UserManager::getId(), 'picUrl' => $url, 'groupId' => $this->group->getId()));
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_REASON, null, null);
         }
@@ -69,7 +69,7 @@ class ReportAdder
         }
         
         if ($insufficientAdditionalInformation) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}, avšak nevyplnil správně dodatečné informace',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}, avšak nevyplnil správně dodatečné informace',
                 array(
                     'userId' => UserManager::getId(),
                     'picUrl' => $url,
@@ -109,7 +109,7 @@ class ReportAdder
         
         //Obrázek nebyl v databázi podle zdroje nalezen
         if ($dbResult === false) {
-            (new Logger(true))->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}, avšak obrázek nemohl být v databázi nalezen',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}, avšak obrázek nemohl být v databázi nalezen',
                 array(
                     'userId' => UserManager::getId(),
                     'picUrl' => $url,
@@ -131,7 +131,7 @@ class ReportAdder
             $report->load();    //Pokud hlášení zatím v databázi neexistuje, je vyvolána výjimka typu BadMethodCallException
             $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1
             $result = $report->save();    //Uložení hlášení do databáze
-            (new Logger(true))->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason} (hlášení tohoto typu již existuje a tak byl pouze zvýšen počet nahlašovatelů)',
+            (new Logger())->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason} (hlášení tohoto typu již existuje a tak byl pouze zvýšen počet nahlašovatelů)',
                 array(
                     'userId' => UserManager::getId(),
                     'picUrl' => $url,
@@ -142,7 +142,7 @@ class ReportAdder
             $report = new Report(true); //Tvorba nového hlášení
             $report->initialize($picture, $reason, $additionalInformation, 1);
             $result = $report->save();    //Uložení hlášení do databáze
-            (new Logger(true))->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}',
+            (new Logger())->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}',
                 array(
                     'userId' => UserManager::getId(),
                     'picUrl' => $url,

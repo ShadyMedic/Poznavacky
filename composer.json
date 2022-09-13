@@ -15,7 +15,7 @@
 	"require" : {
 		"phpmailer/phpmailer" : "^6.1",
 		"league/commonmark": "2.0.x-dev",
-		"psr/log": "1.1.x-dev",
+		"psr/log": "^1.1",
 		"ext-mbstring": "*",
 		"ext-json": "*",
 		"ext-intl": "*",

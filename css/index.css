@@ -513,6 +513,10 @@ ul.list li:not(:last-child) {
   color: #101010;
 }
 
+.btn.inline.green {
+  color: #366e11;
+}
+
 .btn.icon {
   display: block;
   height: 1em;

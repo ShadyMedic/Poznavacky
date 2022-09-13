@@ -104,7 +104,7 @@ class ClassUpdateController extends AjaxController
                 case 'verify password':
                     $password = urldecode($_POST['password']);
                     if (mb_strlen($password) === 0) {
-                        (new Logger(true))->notice('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} selhalo, protože žádné heslo nebylo vyplněno',
+                        (new Logger())->notice('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} selhalo, protože žádné heslo nebylo vyplněno',
                             array(
                                 'userId' => UserManager::getId(),
                                 'classId' => $_SESSION['selection']['class']->getId(),
@@ -114,7 +114,7 @@ class ClassUpdateController extends AjaxController
                     }
                     $aChecker = new AccessChecker();
                     if (!$aChecker->recheckPassword($password)) {
-                        (new Logger(true))->notice('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} selhalo, protože zadané heslo nebylo správné',
+                        (new Logger())->notice('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} selhalo, protože zadané heslo nebylo správné',
                             array(
                                 'userId' => UserManager::getId(),
                                 'classId' => $_SESSION['selection']['class']->getId(),
@@ -123,7 +123,7 @@ class ClassUpdateController extends AjaxController
                         throw new AccessDeniedException(AccessDeniedException::REASON_WRONG_PASSWORD_GENERAL);
                     }
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, '', array('verified' => true));
-                    (new Logger(true))->info('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} bylo úspěšné',
+                    (new Logger())->info('Ověření hesla uživatele s ID {userId} na stránce pro správu třídy s ID {classId}, přistupujícího do systému z IP adresy {ip} bylo úspěšné',
                         array(
                             'userId' => UserManager::getId(),
                             'classId' => $_SESSION['selection']['class']->getId(),
