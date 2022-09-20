@@ -10,6 +10,8 @@ var naturalParameters = [];
 
 $(function()
 {
+    $(".show-info-button").show();
+
     $(".natural-data-item").each(function() {
         $naturals.push($(this));
         naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural-name").text(), $(this).find(".natural-uses-count").text(), $(this).find(".natural-pictures-count").text()));
@@ -20,8 +22,6 @@ $(function()
     $(".rename-confirm-button").click(function(event) {renameConfirm(event)})
     $(".rename-cancel-button").click(function(event) {renameCancel($(event.target))})
     $(".remove-natural-button").click(function(event) {remove(event)})
-    $("#hide-naturals-info-button").click(function() {hideInfo()});
-    $("#show-naturals-info-button").click(function() {showInfo()});
     $("#remove-filters-button").click(function() {removeFilters()})
     $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
     $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
@@ -43,7 +43,7 @@ function inactivateSortButton()
     if ($buttonImgActiveOld.length != 0)
     {
         let buttonImgActiveOldSrc = $buttonImgActiveOld.attr("src");
-        let buttonImgSrcNormal = buttonImgActiveOldSrc.slice(0, buttonImgActiveOldSrc.length - 11) + buttonImgActiveOldSrc.slice(buttonImgActiveOldSrc.length - 4);
+        let buttonImgSrcNormal = buttonImgActiveOldSrc.slice(0, buttonImgActiveOldSrc.length - 9) + "black" + buttonImgActiveOldSrc.slice(buttonImgActiveOldSrc.length - 4);
         $buttonImgActiveOld.attr("src", buttonImgSrcNormal);
         $buttonImgActiveOld.closest(".btn").removeClass("active");
     }
@@ -77,7 +77,7 @@ function sortNaturals(event, direction)
     // grafické zvýraznění šipky pro aktivní řazení
     let $buttonImg = $(event.target).closest(".btn").find("img");
     let buttonImgSrc = $buttonImg.attr("src");
-    let buttonImgSrcActive = buttonImgSrc.slice(0, buttonImgSrc.length - 4) + "-active" + buttonImgSrc.slice(buttonImgSrc.length - 4);
+    let buttonImgSrcActive = buttonImgSrc.slice(0, buttonImgSrc.length - 9) + "green" + buttonImgSrc.slice(buttonImgSrc.length - 4);
     $buttonImg.attr("src", buttonImgSrcActive);
     $buttonImg.closest(".btn").addClass("active");  
 
@@ -161,25 +161,6 @@ function filterByName(name)
     })
 }
 
-/**
- * Funkce zobrazující sekci s nápovědou
- */
-function showInfo()
-{
-    $("#naturals-info-section").show();
-    $("#overlay").addClass("show");    
-    $("body").css("overflow", "hidden");
-}
-
-/**
- * Funkce skrývající sekci s nápovědou
- */
-function hideInfo()
-{
-    $("#naturals-info-section").hide();
-    $("#overlay").removeClass("show");
-    $("body").css("overflow", "auto");
-}
 
 /**
  * Funkce zobrazující vstupní pole pro přejmenování přírodniny
@@ -249,7 +230,7 @@ function renameConfirm(event)
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
-            let confirmMessage = "Přírodnina s tímto názvem již existuje. Chcete tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna. Tato akce je nevratná.";
+            let confirmMessage = "Přírodnina s tímto názvem již existuje. Chceš tyto dvě přírodniny sloučit? Všechny obrázky zvolené přírodniny a hlášení k nim se vztahující budou přesunuty k existující přírodnině s tímto názvem a zvolená přírodnina bude odstraněna. Tato akce je nevratná.";
             newConfirm(confirmMessage, "Sloučit", "Zrušit", function(confirm) {
                 if (confirm) {
                     let fromNaturalId = $natural.attr("data-natural-id");
@@ -355,7 +336,7 @@ function mergeNaturals(fromNaturalId, toNaturalId)
 function remove(event)
 {
     let $natural = $(event.target).closest('.natural-data-item');
-    let confirmMessage = 'Skutečně chcete odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
+    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm) removeFinal($natural)
         else return;

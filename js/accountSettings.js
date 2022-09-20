@@ -7,7 +7,8 @@ $(function()
     $("#change-password-button").click(function() {changePassword()})
     $("#change-password-confirm-button").click(function() {changePasswordConfirm()})
     $("#change-password-cancel-button").click(function() {changePasswordCancel()})
-    $("#change-email-button").click(function() {changeEmail()})
+    $("#change-email-button").click(function() {changeEmail('change')})
+    $("#remove-email-button").click(function() {changeEmail('remove')})
     $("#change-email-confirm-button").click(function() {changeEmailConfirm()})
     $("#change-email-cancel-button").click(function() {changeEmailCancel()})
     $("#delete-account-button").click(function() {deleteAccount()})
@@ -43,10 +44,13 @@ function changePasswordCancel()
  */
 function changeEmailCancel()
 {
-    $("#change-email-button").show()
+    $("#change-email-button").show();
+    $("#remove-email-button").show();
     $("#change-email").closest(".user-data-item").find(".user-property-value").show();
     $("#change-email").hide();
     $("#change-email .text-field").val("");
+    $("#change-email-new").show();
+    $("label[for='change-email-new']").show();
 }
 
 /**
@@ -157,9 +161,15 @@ function changePasswordConfirm()
 /**
  * Funkce zahajující změnu emailu
  */
-function changeEmail()
+function changeEmail(action)
 {
-    $("#change-email-button").hide()
+    if (action == 'remove')
+    {
+        $("#change-email-new").hide();
+        $("label[for='change-email-new']").hide();
+    }
+    $("#change-email-button").hide();
+    $("#remove-email-button").hide();
     $("#change-email").closest(".user-data-item").find(".user-property-value").hide();
     $("#change-email").show();
     $("#change-email-password").focus();
@@ -179,7 +189,7 @@ function changeEmailConfirm()
     
     if (newEmail.length == 0)
     {
-        let confirmMessage = "Opravdu chcete ze svého účtu odebrat e-mailovou adresu? Nebudete tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.";
+        let confirmMessage = "Opravdu chceš ze svého účtu odebrat e-mailovou adresu? Nebudeš tak moci dostávat důležitá upozornění nebo obnovit zapomenuté heslo.";
         newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm)
         {
             if (confirm) changeEmailFinal(password, newEmail);

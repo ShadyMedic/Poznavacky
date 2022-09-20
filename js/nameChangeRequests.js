@@ -42,7 +42,7 @@ function acceptNameChange(event)
  */
 function declineNameChange(event)
 {
-    let reason = prompt("Zadejte prosím důvod zamítnutí žádosti (uživatel jej obdrží e-mailem, pokud jej zadal). Nevyplnění tohoto pole bude mít za následek zrušení zamítnutí.");
+    let reason = prompt("Zadej prosím důvod zamítnutí žádosti (uživatel jej obdrží e-mailem, pokud jej zadal). Nevyplnění tohoto pole bude mít za následek zrušení zamítnutí.");
     if (reason === false || reason.length === 0)
     {
         return;

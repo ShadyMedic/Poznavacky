@@ -1,10 +1,10 @@
 <div id="add-pictures-form-wrapper">
-    <label for="add-natural-select">Zvolte přírodninu, jejíž obrázek chcete přidat:</label>
+    <label for="add-natural-select">Zvol přírodninu, jejíž obrázek chceš přidat:</label>
     <div class="custom-select-wrapper" id="add-natural-select">
         <div class="custom-select">
             <div class="custom-select-main">
                 <span></span>
-                <img class="arrow" src="../images/arrowBlack.svg" alt="Ikona šipky">
+                <img class="arrow" src="images/arrow-black.svg" alt="Ikona šipky">
             </div>
             <ul class="custom-options">
                 <?php foreach ($naturals as $natural) :?>
@@ -16,22 +16,22 @@
         </div>
     </div>
     <input type="hidden" name="naturalName" id="natural-name-hidden" value="" />
-    <fieldset class="url-fieldset" class="disabled">
-        <label for="url-input">Zadejte URL adresu obrázku:</label>
+    <div class="form add-pictures-url disabled">
+        <label for="url-input">Zadej URL adresu obrázku:</label>
         <input type=url name="url" id="url-input" class="text-field" value=""/>
-        <button id="url-confirm-button" class="btn border-btn black non-transparent">OK</button>
-    </fieldset>
-    <fieldset class="preview-buttons-fieldset" class="disabled">
+        <button id="url-confirm-button" class="btn border-btn black non-transparent submit-button">OK</button>
+    </div>
+    <div class="add-pictures-preview disabled">
         <a id="duck-link" class="btn border-btn black non-transparent" target=_blank rel="noopener">
-            <span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duckLogo.png" alt="Logo DuckDuckGo">       
+            <span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duck-logo.png" alt="Logo DuckDuckGo">       
         </a>  
         <a id="google-link" class="btn border-btn black non-transparent" target=_blank rel="noopener">
-            <span>Vyhledat na Google</span><img class="logo" src="images/googleLogo.png" alt="Logo Google">       
+            <span>Vyhledat na Google</span><img class="logo" src="images/google-logo.png" alt="Logo Google">       
         </a>  
-        <button id="submit-button" class="btn border-btn black non-transparent">Přidat obrázek</button>
-    </fieldset>
-    <fieldset class="picture">
+        <button id="submit-picture-button" class="btn border-btn black non-transparent">Přidat obrázek</button>
+    </div>
+    <div class="add-pictures-picture">
         <img id="preview-img" class="img" src="images/blank.gif" alt="Nenačtený obrázek">
         <img id="preview-img-hidden" style="display: none;" alt="Nenačtený obrázek">
-    </fieldset>
+    </div>
 </div>

@@ -1,17 +1,17 @@
 <header>
-    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="../images/user.svg" alt="Správa účtu"></a><?php endif ?>
-    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="../images/settings.svg" alt="Správa služby"></a><?php endif ?>
+    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="images/user-profile.svg" alt="Správa účtu"></a><?php endif ?>
+    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="images/settings.svg" alt="Správa služby"></a><?php endif ?>
     <div class="logo">
-         <img src="../images/iconWhite1.svg" alt="Logo Poznávaček">
+         <img src="images/icon-white.svg" alt="Logo Poznávaček">
         <h1>Poznávačky</h1>
     </div>
-    <button class="btn icon logout-button" title="Odhlásit se"><img src="../images/logout.svg" alt="Odhlásit se"></button>
+    <button class="btn icon logout-button" title="Odhlásit se"><img src="images/logout.svg" alt="Odhlásit se"></button>
 </header>
 <aside>
-    <a class="btn icon" href="menu" title="Hlavní stránka"><img src="../images/home.svg" alt="Hlavní stránka"></a>
-    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="../images/user.svg" alt="Správa účtu"></a><?php endif ?>
-    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="../images/settings.svg" alt="Správa služby"></a><?php endif ?>
-    <button class="btn icon logout-button" title="Odhlásit se"><img src="../images/logout.svg" alt="Odhlásit se"></button>
+    <a class="btn icon" href="menu" title="Hlavní stránka"><img src="images/home.svg" alt="Hlavní stránka"></a>
+    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="images/user-profile.svg" alt="Správa účtu"></a><?php endif ?>
+    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="images/settings.svg" alt="Správa služby"></a><?php endif ?>
+    <button class="btn icon logout-button" title="Odhlásit se"><img src="images/logout.svg" alt="Odhlásit se"></button>
 </aside>
 <main class="menu">
     <h2 id="level-nav">
@@ -28,6 +28,8 @@
             <?php endif ?>
             <?php if ($i == count($navigationBar) - 1) : ?>
                 <span><?= $navigationBar[$i]['text'] ?></span>
+                <button class="btn icon show-info-button" title="Nápověda" style="display: none"><img src="images/info-show.svg" alt="Nápověda"></button>
+                <button class="btn icon hide-info-button" title="Skrýt nápovědu" style="display: none"><img src="images/info-hide.svg" alt="Zavřít"></button>
             <?php endif ?>
         <?php endfor ?>
         </nav>
@@ -38,7 +40,7 @@
 </main>
 <?php if (isset($staticTitle)) : ?>
     <div id="changelog">
-        <button class="btn icon" id="close-changelog-button" title="Zavřít"><img src="../images/crossButtonBlack.svg" alt="Zavřít"></button>
+        <button class="btn icon" id="close-changelog-button" title="Zavřít"><img src="images/cross-thin-black.svg" alt="Zavřít"></button>
         <h3>Novinky</h3>
         <?php require 'staticArticle.phtml' ?>
         <div id="old-changelog-link-wrapper">

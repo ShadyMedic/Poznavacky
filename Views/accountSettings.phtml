@@ -1,7 +1,7 @@
 <div id="account-settings-wrapper">
     <section class="user-image-section"> 
-        <img src="../images/user.svg" alt="Ikona uživatele">
-        <div>Přihlášen: <span><?= $userName ?></span></div>
+        <img src="images/user-profile.svg" alt="Ikona uživatele">
+        <div>Přihlášen*a: <span><?= $userName ?></span></div>
     </section>
     <section class="user-data-section">    
         <div class="user-data-item">
@@ -9,17 +9,17 @@
             <span class='user-property-value'><?= $userId ?></span>
         </div>    
         <div class="user-data-item">
-            <span class='user-property-name'>Jméno</span>
+            <span class='user-property-name'>Uživatelské jméno</span>
             <span class='user-property-value' id="username"><?= $userName ?></span>
             <div class='user-property-action'>
                 <button class="btn border-btn non-transparent black" id="change-name-button">Změnit</button>
             </div>
-            <div id="change-name" class="change-form" style="display: none;">
-                <h3>Žádost o změnu jména</h3>
-                <p class="additional-form-info">Vaše nové jméno musí být nejprve schváleno administrátorem. Jeho změna v systému proto může chvíli trvat.</p>
-                <label for="change-name-new">Nové jméno</label>
+            <div id="change-name" class="form change-form" style="display: none;">
+                <h3>Žádost o změnu uživatelského jména</h3>
+                <p class="additional-form-info">Tvoje nové uživatelské jméno musí být nejprve schváleno administrátorem. Jeho změna v systému proto může chvíli trvat.</p>
+                <label for="change-name-new">Nové uživatelské jméno</label>
                 <input class="text-field" id="change-name-new" type=text maxlength=15 />
-                <button class="btn border-btn non-transparent black" id="change-name-confirm-button">Potvrdit</button>
+                <button class="btn border-btn non-transparent black submit-button" id="change-name-confirm-button">Potvrdit</button>
                 <button class="btn inline black" id="change-name-cancel-button">Zrušit</button>
             </div>
         </div>
@@ -29,7 +29,7 @@
             <div class='user-property-action'>
                 <button class="btn border-btn non-transparent black" id="change-password-button">Změnit</button>
             </div>
-            <div id="change-password" class="change-form" style="display: none;">
+            <div id="change-password" class="form change-form" style="display: none;">
                 <h3>Změna hesla</h3>
                 <label for="change-password-old">Staré heslo</label>
                 <input class="text-field" id="change-password-old" type=password maxlength=31 />
@@ -37,7 +37,7 @@
                 <input class="text-field" id="change-password-new" type=password maxlength=31 />
                 <label for="change-password-re-new">Nové heslo znovu</label>
                 <input class="text-field" id="change-password-re-new" type=password maxlength=31 />
-                <button class="btn border-btn non-transparent black" id="change-password-confirm-button">Potvrdit</button>
+                <button class="btn border-btn non-transparent black submit-button" id="change-password-confirm-button">Potvrdit</button>
                 <button class="btn inline black" id="change-password-cancel-button">Zrušit</button>
             </div>
         </div>
@@ -46,14 +46,15 @@
             <span class='user-property-value' id="email-address"><?= $userEmail ?></span>
             <div class='user-property-action'>
                 <button class="btn border-btn non-transparent black" id="change-email-button">Změnit</button>
+                <button class="btn border-btn non-transparent black img" id="remove-email-button" title="Odebrat"><img src="images/trash-white.svg" alt="Odstranit"></button>
             </div>
-            <div id="change-email" class="change-form" style="display: none;">
+            <div id="change-email" class="form change-form" style="display: none;">
                 <h3>Změna emailu</h3>
                 <label for="change-email-password">Heslo</label>
                 <input class="text-field" id="change-email-password" type=password maxlength=31 />
                 <label for="change-email-new">Nový email</label>
                 <input class="text-field" id="change-email-new" type=text maxlength=255 />
-                <button class="btn border-btn non-transparent black" id="change-email-confirm-button">Potvrdit</button>
+                <button class="btn border-btn non-transparent black submit-button" id="change-email-confirm-button">Potvrdit</button>
                 <button class="btn inline black" id="change-email-cancel-button">Zrušit</button>
             </div>
         </div>
@@ -78,15 +79,15 @@
         <button class="btn border-btn non-transparent black" id="delete-account-button">Odstranit účet</button>
         <div id="delete-account" style="display: none;">
             <h3>Zrušení účtu</h3>
-            <div id="delete-account1" style="display: none;">
+            <div id="delete-account1" class="form" style="display: none;">
                 <label for="delete-account-password">Heslo</label>
                 <input class="text-field" id="delete-account-password" type=password maxlength=31 />
-                <button class="btn border-btn non-transparent black" id="delete-account-confirm-button">OK</button>
+                <button class="btn border-btn non-transparent black submit-button" id="delete-account-confirm-button">OK</button>
                 <div id="delete-account-message" class="message server"></div>
                 <button class="btn inline black" id="delete-account-cancel-button">Zrušit</button>
             </div>
             <div id="delete-account2" style="display: none;">
-                <span>Tato akce je nevratná. Opravdu si přejete trvale odstranit svůj účet?</span>
+                <span>Tato akce je nevratná. Opravdu si přeješ trvale odstranit svůj účet?</span>
                 <div class="buttons">
                     <button class="btn border-btn non-transparent black" id="delete-account-final-confirm-button">Ano, odstranit účet</button>
                     <button class="btn border-btn non-transparent black" id="delete-account-final-cancel-button">Ne, zrušit odstranění účtu</button>

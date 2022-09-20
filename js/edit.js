@@ -7,6 +7,8 @@ var $nameInputBox; //všechny name input boxy (obsahují textové pole a tlačí
 
 $(function()
 {
+    $(".show-info-button").show();
+
     //načtení dočasných dat do proměnných a jejich odstranění z DOM
     groupUrls = JSON.parse($("#group-urls-json").text());
     naturalNames = JSON.parse($("#natural-names-json").text());
@@ -29,9 +31,8 @@ $(function()
     $("#edit-group-wrapper").on("click", ".rename-part-cancel", function(event) {renameCancel(event)})
     $("#edit-group-wrapper").on("click", ".rename-group-cancel", function(event) {renameCancel(event)})
     $("#add-part-button").click(function(){addPart()});
-    $("#submit-button").click(save);
-    $("#hide-edit-info-button").click(function() {hideInfo()});
-    $("#show-edit-info-button").click(function() {showInfo()});
+    $("#edit-submit-button").click(function() {editSave()});
+    $("#edit-cancel-button").click(function() {editCancel()});
     $(window).click(function(event) {renameCancelAll(event)})
 
     //event listenery stisknutí klávesy
@@ -43,26 +44,6 @@ $(function()
     $(".group-name-input").keyup(function(event) {nameTyped(event, "group")});
 
 })
-
-/**
- * Funkce zobrazující sekci s nápovědou
- */
-function showInfo()
-{
-    $("#edit-info-section").show();
-    $("#overlay").addClass("show");    
-    $("body").css("overflow", "hidden");
-}
-
-/**
- * Funkce skrývající sekci s nápovědou
- */
-function hideInfo()
-{
-    $("#edit-info-section").hide();
-    $("#overlay").removeClass("show");
-    $("body").css("overflow", "auto");
-}
 
 /**
  * Funkce zaplňující proměnné $nameBox a $nameInput box příslušnými elementy
@@ -221,15 +202,15 @@ function renameConfirm(event, type)
             errorString = "poznávačky";
             minChars = 3;
             maxChars = 31;
-            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-";
-            allowedSpecialChars = ". _ -";
+            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.,-";
+            allowedSpecialChars = ". , _ -";
             break;
         case "part":
             errorString = "části";
             minChars = 1;
             maxChars = 31;
-            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.-";
-            allowedSpecialChars = ". _ -";
+            allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.,-";
+            allowedSpecialChars = ". , _ -";
             break;
         case "natural":
             errorString = "přírodniny";
@@ -340,7 +321,7 @@ function nameTyped(event, type, addAsNew = false)
         {
             //vygenerování a zobrazení URL verze nového názvu
             let url = generateUrl($(event.target).val());
-            let $selectedNameContainer = $(event.target).closest(".group-name-container, .part-info");
+            let $selectedNameContainer = $(event.target).closest("#group-name-container, .part-info");
             $selectedNameContainer.find("." + className + "-name-url").text("V URL bude zobrazováno jako " + url);
         }
     }
@@ -460,7 +441,7 @@ function removeNatural(event)
  */
 function removePart(event)
 {
-    let confirmMessage = "Opravdu si přejete odebrat tuto část? Změny se neprojeví, dokud nebude úprava poznávačky uložena. Touto akcí nebudou odstraněny žádné existující přírodniny, ani jejich obrázky.";
+    let confirmMessage = "Opravdu si přeješ odebrat tuto část? Změny se neprojeví, dokud nebude úprava poznávačky uložena. Touto akcí nebudou odstraněny žádné existující přírodniny ani jejich obrázky.";
 
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm)
@@ -477,7 +458,7 @@ function removePart(event)
 /**
  * Funkce volaná po kliknutí na tlačítko "Uložit", která poskládá JSON objekt obsahující všechna data poznávačky a odešle ho na backend
  */
-function save()
+function editSave()
 {
     let data;
 
@@ -523,7 +504,7 @@ function save()
                         //odemčení stránky
                         unlock();
                         
-                        let confirmMessage = "Změny byly úspěšně uloženy Přejete si aktualizovat stránku pro ověření změn?";
+                        let confirmMessage = "Změny byly úspěšně uloženy. Přeješ si aktualizovat stránku pro ověření změn?";
                         newConfirm(confirmMessage, "Aktualizovat", "Zrušit", function(confirm)
                         {
                             if (confirm) 
@@ -559,6 +540,29 @@ function save()
         },
         "json"
     );
+}
+
+/**
+ * Funkce na zahození změn (pomocí refreshnutí stránky) při úpravě poznávačky
+ */
+function editCancel()
+{
+    unlock(); // nezobrazí se prohlížečový confirm
+
+    let confirmMessage = "Opravdu chceš zahodit všechny změny? Tuto akci nelze vzít zpět. Potvrzením akce bude stránka znovu načtena."
+
+    newConfirm(confirmMessage, "Zahodit", "Zrušit", function(confirm)
+        {
+            if (confirm) 
+            {
+                location.reload();
+            }
+            else
+            {
+                lock();
+                return;
+            }
+        });  
 }
 
 /**

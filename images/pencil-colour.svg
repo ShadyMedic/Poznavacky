@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 32.08 31.95"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="pencil-colour.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs16" />
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="25.477308"
+     inkscape:cx="13.855467"
+     inkscape:cy="15.994626"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="pencil2" />
+  <title
+     id="title2">pencil2_1</title>
+  <g
+     id="Vrstva_2"
+     data-name="Vrstva 2">
+    <g
+       id="pencil2">
+      <polygon
+         points="13.5,26.45 5.5,18.45 0,31.95 "
+         id="polygon4"
+         style="fill:#decd87"
+         transform="matrix(0.99987145,0,0,1.0000001,0,-2.3100212e-6)" />
+      <path
+         d="M 30.921224,9.1295255 A 4.0701118,4 45 0 0 30.87162,3.4199217 L 28.613146,1.2114476 a 4.0701118,4 45 0 0 -5.699517,-0.049517 l -1.049825,1.0701752 8.007946,8.0079462 z"
+         id="path6"
+         style="fill:#800000;stroke-width:1.00873" />
+      <polygon
+         points="5.5,18.45 0,31.95 13.5,26.45 "
+         id="polygon4-7"
+         style="fill:#000000"
+         transform="matrix(0.6172229,0,0,0.6172229,0,12.229728)" />
+      <rect
+         x="-9.1311712"
+         y="16.939072"
+         width="21.580412"
+         height="11.325086"
+         transform="matrix(0.70791169,-0.70630096,0.70626998,0.70794259,0,0)"
+         id="rect8"
+         style="fill:#d4aa00;fill-opacity:1;stroke-width:1.12729" />
+    </g>
+  </g>
+</svg>
