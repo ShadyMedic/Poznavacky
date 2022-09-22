@@ -97,12 +97,13 @@ function partData(partName)
  */
 function addPart()
 {
-    $("#parts-boxes-container").append($("#part-box-template").html());
+    console.log($("#parts-boxes-container .part-box:nth-last-child(2)"));
+    $("#parts-boxes-container .part-box:nth-last-child(2)").after($("#part-box-template").html());
     $(".part-box:last-child")[0].scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
-    $(".part-box:last-child .part-name-input").focus();
+    $(".part-box:nth-last-child(2) .part-name-input").focus();
 }
 
 /**
