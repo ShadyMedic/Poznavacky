@@ -434,7 +434,8 @@
             grid-column: 1/3;
         }
     }    
-    .part-box {
+    .part-box,
+    #add-part-button {
         overflow-y: hidden;
         height: 480px;
         min-width: 256px;
@@ -443,18 +444,36 @@
         }
         border: 1px solid #ccc;
         border-radius: 0.2rem;
-        padding: 1rem;
-        display: grid;
-        grid-template-rows: auto 1fr;
+        padding: 1rem;  
         &:not(:last-child) {
             margin-bottom: 1rem;
             @media screen and (min-width: $smallTablet) {
                 margin-bottom: 0;
             }
-        }
+        }  
+    }
+    .part-box {
+        display: grid;
+        grid-template-rows: auto 1fr;
         .naturals-in-part {
             overflow-y: auto;
             @include scrollbar(12px, $gray3, none);
+        }
+    }
+    #add-part-button {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.4rem;
+        &:active {
+            transform: scale(0.96);
+        }
+        img {
+            height: 180px;
+            width: 180px;
+            opacity: 0.12;
+            margin-bottom: 2rem;
         }
     }
     .part-info {
@@ -491,19 +510,10 @@
             }
         }
     }
-    #add-part-button,
     #submit-button {
         width: 100%;
         @media screen and (min-width: $smallTablet) {
             width: fit-content;
-        }
-    }
-    #add-part-button {
-        margin-bottom: 0.8rem;
-        @media screen and (min-width: $smallTablet) {
-            grid-row: 3/4;
-            grid-column: 1/3;
-            margin-bottom: 0;
         }
     }
     #submit-buttons-wrapper {
