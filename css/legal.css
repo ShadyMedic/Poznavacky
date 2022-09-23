@@ -277,6 +277,10 @@ footer .content a:after {
   background: white;
 }
 
+footer .content #donate-button {
+  color: #79cf40;
+}
+
 #overlay {
   position: fixed;
   z-index: 9;
