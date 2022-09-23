@@ -1,6 +1,7 @@
 var groupUrls; //pole url poznávaček, které jsou v tétož třídě již obsaženy (včetně upravované)
 var naturalNames; //pole názvů přírodnin, které patří do této třídy
-var currentGroupUrl //nové URL poznávačky, pokud je přejmenována
+var currentGroupUrl; //nové URL poznávačky, pokud je přejmenována
+var locked; //jestli je stránka zamčená
 
 var $nameBox; //všechny name boxy (obsahují název a tlačítko na přejmenování)
 var $nameInputBox; //všechny name input boxy (obsahují textové pole a tlačítka na potvrzení a zrušení přejmenování)
@@ -13,6 +14,8 @@ $(function()
     groupUrls = JSON.parse($("#group-urls-json").text());
     naturalNames = JSON.parse($("#natural-names-json").text());
     $("#temp-data").remove();
+
+    locked = false;
 
     findNameBoxes();
     
@@ -548,6 +551,8 @@ function editSave()
  */
 function editCancel()
 {
+    let wasLocked = locked;
+
     unlock(); // nezobrazí se prohlížečový confirm
 
     let confirmMessage = "Opravdu chceš zahodit všechny změny? Tuto akci nelze vzít zpět. Potvrzením akce bude stránka znovu načtena."
@@ -560,7 +565,7 @@ function editCancel()
             }
             else
             {
-                lock();
+                if (wasLocked) { lock() }
                 return;
             }
         });  
@@ -576,6 +581,7 @@ function lock()
         event.preventDefault();
         return "";
     })
+    locked = true;
 }
 
 /**
@@ -585,4 +591,5 @@ function lock()
 function unlock()
 {
     $(window).off("beforeunload")
+    locked = false;
 }
