@@ -362,7 +362,7 @@ class GroupEditor
                 )); //Tohle se provede pro každou přírodninu, ale asi se nedá nic dělat
             }
             //Aktualizuj počet obrázků u části
-            Db::executeQuery('UPDATE casti SET obrazky = (SELECT SUM(prirodniny.obrazky) FROM prirodniny WHERE prirodniny.prirodniny_id IN (SELECT prirodniny_casti.prirodniny_id FROM prirodniny_casti WHERE prirodniny_casti.casti_id = ?)) WHERE casti.casti_id = ?',
+            Db::executeQuery('UPDATE casti SET obrazky = COALESCE((SELECT SUM(prirodniny.obrazky) FROM prirodniny WHERE prirodniny.prirodniny_id IN (SELECT prirodniny_casti.prirodniny_id FROM prirodniny_casti WHERE prirodniny_casti.casti_id = ?)), 0) WHERE casti.casti_id = ?',
                 array($part->getId(), $part->getId()));
         }
         
