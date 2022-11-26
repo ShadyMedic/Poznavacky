@@ -12,6 +12,8 @@ $(function()
     //event listenery tlačítek
     $(".logout-button").click(function() {logout()});
     $("#close-changelog-button").click(function() {closeChangelog()})
+    $(".hide-info-button").click(function() {hideInfo()});
+    $(".show-info-button").click(function() {showInfo()});
 });
 
 /**
@@ -30,4 +32,24 @@ function closeChangelog()
     $("#changelog").remove();
     $("#overlay").removeClass("show");
     $("body").css("overflow", "auto");
+}
+
+/**
+ * Funkce zobrazující sekci s nápovědou
+ */
+function showInfo()
+{
+    $(".info-section").slideDown();
+    $(".show-info-button").hide();
+    $(".hide-info-button").show();
+}
+
+/**
+ * Funkce skrývající sekci s nápovědou
+ */
+function hideInfo()
+{
+    $(".info-section").slideUp();
+    $(".hide-info-button").hide();
+    $(".show-info-button").show();
 }

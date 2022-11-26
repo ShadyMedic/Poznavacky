@@ -189,7 +189,7 @@ function changeClassStatusConfirm()
             break;
         case "Uzamčená":
             newCode = "";
-            confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?";
+            confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy, do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?";
             break;
         default:
             return;

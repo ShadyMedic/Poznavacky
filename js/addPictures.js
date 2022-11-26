@@ -3,62 +3,29 @@ var smallTablet = 672;
 $(function()
 {
     //přidání třídy disabled tlačítkům a inputům, které nelze zpočátku využít
-    $(".url-fieldset label, #url-input, #url-confirm-button, .preview-buttons-fieldset .btn").addClass("disabled");
-
-    resizeMainImg();
+    $(".add-pictures-url label, #url-input, #url-confirm-button, .add-pictures-preview .btn").addClass("disabled");
 
     //event listenery tlačítek
     $("#url-confirm-button").click(function(event) {pictureSelected(event)});
     //nastaven setTimeout s intervalem 0 na změnu pořadí volaných funkcí (tato se nyní správně volá později než funkce spravující custom select box ze souboru generic.js)
     $("#add-natural-select .custom-options .custom-option").click(function() {setTimeout(function() {naturalSelected()}), 0});
-    $("#submit-button").click(function(event) {submitPicture(event)});
-
-    //event listener umožňující potvrzení URL adresy odenterováním
-    $("#url-input").on("keyup", function(event)
-    {
-        if (event.keyCode === 13)
-        {
-            $("#url-confirm-button").click();
-        }
-    });
+    $("#submit-picture-button").click(function(event) {submitPicture(event)});
 
     //event listenery kontrolující správné načtení obrázku po zadání url adresy
     //chyba při načítání obrázku
     $("#preview-img-hidden").on("error", function()
     {
         $("#preview-img").attr("src", "images/blank.gif");
-        $("#submit-button").addClass("disabled");
+        $("#submit-picture-button").addClass("disabled");
     });
     //obrázek načten úspěšně
     $("#preview-img-hidden").on("load", function()
     {
         $("#preview-img").attr("src", $("#preview-img-hidden").attr("src"));
-        $("#submit-button").removeClass("disabled");
+        $("#submit-picture-button").removeClass("disabled");
+        $("#submit-picture-button").focus(); //aby šlo odenterovat
     });
 })
-
-$(window).resize(function()
-{
-    resizeMainImg();
-})
-
-/**
- * Funkce nastavující výšku #preview-img a .preview-buttons-fieldset tak, aby byla shodná s šířkou #preview-img
- */
-function resizeMainImg(){
-    let imageWidth = $("#add-pictures-form-wrapper #preview-img").outerWidth()
-    $("#add-pictures-form-wrapper #preview-img").css("height", imageWidth);
-
-    //nastavení výšky .preview-buttons-fieldset pouze v případě, že se zobrazuje vedle #preview-img a ne pod ním
-    if ($(window).width() >= smallTablet)
-    {
-        $(".preview-buttons-fieldset").css("height", $("#add-pictures-form-wrapper #preview-img").height());
-    }
-    else 
-    {
-        $(".preview-buttons-fieldset").css("height", "auto");
-    }
-}
 
 /**
  * Funkce nastavující název vybrané přírodniny
@@ -76,7 +43,7 @@ function naturalSelected()
     $("#google-link").attr("href", "https://www.google.com/search?q=" + selectedNatural + "&tbm=isch");
     $("#natural-name-hidden").val(selectedNatural);
 
-    $(".url-fieldset label, #url-input, #url-confirm-button, #duck-link, #google-link").removeClass("disabled");
+    $(".add-pictures-url label, #url-input, #url-confirm-button, #duck-link, #google-link").removeClass("disabled");
 }
 
 /**
@@ -94,7 +61,7 @@ function pictureSelected(event)
 
     $("#preview-img-hidden").attr("src", url);
     $("#preview-img").attr("src", "images/loading.svg");
-    $("#submit-button").addClass("disabled");
+    $("#submit-picture-button").addClass("disabled");
 
     //kontrola správného načtení pomocí event listenerů v hlavní funkci
 }
@@ -132,7 +99,7 @@ function submitPicture(event)
                         //Reset HTML
                         $("#url-input").val("");
                         $("#preview-img").attr("src", "images/blank.gif");
-                        $("#submit-button").addClass("disabled");
+                        $("#submit-picture-button").addClass("disabled");
                         
                         //Zvyš počet obrázků u přírodniny v select boxu
                         let optionText = $(".custom-select-main>span").text().trim();

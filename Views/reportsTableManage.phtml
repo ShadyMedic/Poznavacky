@@ -21,7 +21,7 @@
                 <div class="custom-select">
                     <div class="custom-select-main">
                         <span><?= $report->getNaturalName() ?></span>
-                        <img class="arrow" src="../images/arrowBlack.svg" alt="Ikona šipky">
+                        <img class="arrow" src="images/arrow-black.svg" alt="Ikona šipky">
                     </div>
                     <ul class="custom-options">
                         <?php foreach ($naturalsInGroup as $natural) :?>
@@ -41,32 +41,32 @@
         <span class="report-number"><?= $report->getReportersCount() ?></span>
         <div class="report-action">
               <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
-                <img src='images/eye.svg' alt="Zobrazit obrázek">
+                <img src='images/eye-black.svg' alt="Zobrazit obrázek">
              </button>
              <button class="btn icon edit-picture-button" title='Upravit údaje obrázku'>
-                <img src='images/pencil.svg' alt="Upravit údaje obrázku">
+                <img src='images/pencil-black.svg' alt="Upravit údaje obrázku">
               </button>
             <button class='btn icon delete-picture-button' title='Odstranit obrázek'>
-                <img src='images/cross.svg' alt="Odstranit obrázek">
+                <img src='images/trash-black.svg' alt="Odstranit obrázek">
             </button>
             <button class='btn icon delete-report-button' title='Odstranit hlášení'>
-                <img src='images/minus.svg' alt="Odstranit hlášení">
+                <img src='images/minus-black.svg' alt="Odstranit hlášení">
             </button>
             <div class="report-edit-buttons" style="display: none;">
                 <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
-                    <img src='images/eye.svg' alt="Zobrazit obrázek">
+                    <img src='images/eye-black.svg' alt="Zobrazit obrázek">
                 </button>
                 <button class='btn icon edit-picture-confirm-button' title='Uložit'>
                     <img src='images/tick.svg' alt="Uložit">
                 </button>
                 <button class='btn icon edit-picture-cancel-button'title='Zrušit'>
-                    <img src='images/cross.svg' alt="Zrušit">
+                    <img src='images/cross-thick-black.svg' alt="Zrušit">
                 </button>
             </div>
         </div>
         <div class="report-image" style="display: none">
-            <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img src="../images/crossButtonWhite.svg" alt="Skrýt obrázek"></button>
-            <img src="../images/blank.gif" alt="Náhled obrázku">
+            <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img src="images/cross-thin-white.svg" alt="Skrýt obrázek"></button>
+            <img src="images/blank.gif" alt="Náhled obrázku">
             </div>
         </div>
     <?php endforeach ?>

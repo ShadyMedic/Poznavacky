@@ -140,11 +140,11 @@ header {
         text-align: justify;
     }
     .buttons {
-        margin-top: 0.6rem;
+        margin-top: 1rem;
         display: flex;
         justify-content: flex-end;
         > * {
-            margin-left: 1rem;
+            margin-left: 0.4rem;
         }
     }
 }
@@ -235,6 +235,7 @@ ul.list {
         padding: 0.44em 1em;
         border-radius: 3.2px;
         line-height: 1.32em;
+        
         &.non-transparent {
             &.white {
                 background: white;
@@ -313,6 +314,15 @@ ul.list {
         &:active {
             transform: scale(0.98);
         }
+        &.img {
+            padding: 0.44em;
+            img {
+                height: 1.32em;
+                width: 1.32em;
+                vertical-align: bottom;
+            }    
+        }
+        
     }
     &.arrow-btn {
         font-size: 1.2rem;
@@ -474,6 +484,7 @@ label {
     padding-left: 2rem;
     cursor: pointer;
     user-select: none;
+    line-height: 1.6rem;
     input[type="checkbox"] {
         position: absolute;
         opacity: 0;
@@ -599,6 +610,11 @@ label {
             }
         }
     }
+}
+
+.code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.08em;
 }
 
 @keyframes fontpop {

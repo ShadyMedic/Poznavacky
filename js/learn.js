@@ -3,6 +3,8 @@ var tablet = 768;
 
 $(function()
 {
+    $(".show-info-button").show();
+
     loadNaturals();
     resizeMainImg();
 
@@ -13,7 +15,7 @@ $(function()
     $("#picture-forward-button").click(function() {updatePicture(1)});
 
     //event listener stisknutí klávesy
-    $("#learn-wrapper").keypress(function(event) {keyPressed(event)});
+    $("body").keydown(function(event) {keyPressed(event)});
 
     //event listener změny select boxu přírodnin
     $("#natural-select span").on('DOMSubtreeModified', function() {sel()});
@@ -160,7 +162,9 @@ function keyPressed(event)
         return;
     }
     
-    let charCode = event.code || event.which;
+    $("#learn-wrapper").focus();
+
+    let charCode = event.code;
     switch (charCode)
     {
         case "KeyW":

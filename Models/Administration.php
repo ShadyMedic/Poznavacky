@@ -2,6 +2,7 @@
 namespace Poznavacky\Models;
 
 use PHPMailer\PHPMailer\Exception;
+use Poznavacky\Models\DatabaseItems\Alert;
 use Poznavacky\Models\DatabaseItems\ClassNameChangeRequest;
 use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Natural;
@@ -13,6 +14,7 @@ use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Processors\AlertImporter;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Statics\UserManager;
@@ -112,7 +114,7 @@ class Administration
 
     /**
      * Metoda navracející pole všech tříd uložených v databázi jako objekty
-     * @return array Pole objektů tříd
+     * @return ClassObject[] Pole objektů tříd
      * @throws DatabaseException
      */
     public function getAllClasses(): array
@@ -548,7 +550,61 @@ class Administration
         $emailSender = new EmailSender();
         return $emailSender->sendMail($addressee, $subject, $emailBody, $fromAddress, $sender);
     }
-    
+
+    /**
+     * Metoda načítající uložená a nevyřešená chybová hlášení z databáze a vracející je jako pole objektů
+     * @return Alert[]
+     */
+    public function getAlerts(): array
+    {
+        $dbResult = Db::fetchQuery('SELECT '.Alert::COLUMN_DICTIONARY['id'].','.
+            Alert::COLUMN_DICTIONARY['time'].','.Alert::COLUMN_DICTIONARY['level'].','.
+            Alert::COLUMN_DICTIONARY['content'].','.Alert::COLUMN_DICTIONARY['resolved'].
+            ' FROM '.Alert::TABLE_NAME.
+            ' WHERE '.Alert::COLUMN_DICTIONARY['resolved'].' = 0'.
+            ' ORDER BY '.Alert::COLUMN_DICTIONARY['time'].' DESC;',
+            array(), true);
+
+        if ($dbResult === false) {
+            return array();
+        }
+
+        $alerts = array();
+        foreach ($dbResult as $dbRow) {
+            $alert = new Alert(false, $dbRow[Alert::COLUMN_DICTIONARY['id']]);
+            $alert->initialize(new DateTime($dbRow[Alert::COLUMN_DICTIONARY['time']]),
+                $dbRow[Alert::COLUMN_DICTIONARY['level']], $dbRow[Alert::COLUMN_DICTIONARY['content']],
+                $dbRow[Alert::COLUMN_DICTIONARY['resolved']]);
+            $alerts[] = $alert;
+        }
+
+        return $alerts;
+    }
+
+    /**
+     * Metoda spouštějící import nových chyb z logovacích souborů do databáze
+     * @return int Počet naimportovaných hlášení
+     * @throws \Exception
+     */
+    public function importErrors(): int
+    {
+        $importer = new AlertImporter();
+        return $importer->importAlerts();
+    }
+
+    /**
+     * Metoda označující dané chybové hlášení jako vyřešené
+     * @param int $alertId ID chybového hlášení
+     * @return void
+     * @throws DatabaseException
+     */
+    public function resolveAlert($alertId) : void
+    {
+        $alert = new Alert(false, $alertId);
+        $alert->resolve();
+        $alert->save();
+    }
+
     /**
      * Metoda vykonávající zadané SQL dotazy a navracející jeho výsledky jako HTML
      * @param string $queries SQL dotaz/y, v případě více dotazů musí být ukončeny středníky

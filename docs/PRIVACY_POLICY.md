@@ -19,7 +19,7 @@ tajnosti.
 ### V databázi jsou ukládány následující informace:
 
 1.  Seznam všech uživatelských účtů obsahující pro každý účet
-    přihlašovací jméno, heslo v zašifrované formě, e-mailovou adresu
+    uživatelské jméno, heslo v zašifrované formě, e-mailovou adresu
     (pokud byla poskytnuta), datum a čas posledního přihlášení,
     informaci o poslední navštívené složce (třídě nebo poznávačce),
     informaci o posledním zobrazeném seznamu změn, počet přidaných
@@ -27,7 +27,7 @@ tajnosti.
     získávané za chování ve službě) a status (host/člen/správce)
 
 2.  Přihlašovací jména uživatelů, kteří zažádali o změnu jména a jejich
-    žádost nebyla dosud vyřešena, jméno které požadují a časový údaj
+    žádost nebyla dosud vyřešena, uživatelské jméno, které požadují, a časový údaj
     podání žádosti
 
 3.  ID tříd, jejichž správci zažádali o změnu názvu a jejichž žádost

@@ -9,9 +9,9 @@
         <div class="content">
             <h1>Poznávačky</h1>
             <p>Potřebuješ se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistruj se, vytvoř si seznam přírodnin, sdílej ho se svou třídou a uč se rychleji!</p>
-            <button id="learn-more-button" class="btn arrow-btn black"><span>Zjisti více</span><img src="../images/arrowBlack.svg" alt="Ikona šipky"></button>
+            <button id="learn-more-button" class="btn arrow-btn black"><span>Zjisti více</span><img src="images/arrow-black.svg" alt="Ikona šipky"></button>
         </div>
-        <img <?php if ($ee) : ?>src="../images/leafGuyBlonde.svg"<?php endif ?><?php if (!$ee) : ?>src="../images/leafGuyDark.svg"<?php endif ?> alt="Ikona postavy">
+        <img <?php if ($ee) : ?>src="images/leaf-guy-blonde.svg"<?php endif ?><?php if (!$ee) : ?>src="images/leaf-guy-dark.svg"<?php endif ?> alt="Ikona postavy">
     </section>
     <section id="index-buttons-section">
         <div class="content">
@@ -21,13 +21,13 @@
         </div>
     </section>
     <section id="index-login-section">
-        <button id="hide-login-section-button" class="btn icon" title="Zavřít"><img src="../images/crossButtonBlack.svg" alt="Zavřít"></button>
+        <button id="hide-login-section-button" class="btn icon" title="Zavřít"><img src="images/cross-thin-black.svg" alt="Zavřít"></button>
         <div id="login">
-            <h2>Přihlašte se</h2>
+            <h2>Přihlaš se</h2>
             <form id="login-form">
                 <div class="user-data">
                     <input id='login-hidden' type='hidden' name='type' value='l'>
-                    <label for='login-name'>Jméno nebo e-mail</label>
+                    <label for='login-name'>Uživatelské jméno nebo e-mail</label>
                     <input id='login-name' class="text-field" type='text' name='loginName' maxlength=255>
                     <div id="login-name-message" class="message"></div>
                     <label for='login-pass'>Heslo</label>
@@ -41,48 +41,48 @@
                 <button id='login-submit' class="btn border-btn center non-transparent black">Přihlásit se</button>
                 <div id="login-server-message" class="message server"></div>
             </form>
-            <p><button class="btn inline black show-login-section-password-recovery-button">Zapomněli jste heslo?</button></p>
-            <p>Ještě nemáte účet? <button class="btn inline black show-login-section-register-button">Zaregistrujte se</button>.</p>
+            <p><button class="btn inline black show-login-section-password-recovery-button">Zapomněl*a jsi heslo?</button></p>
+            <p>Ještě nemáš účet? <button class="btn inline black show-login-section-register-button">Zaregistruj se</button>.</p>
         </div>
         <div id="register">
-            <h2>Zaregistrujte se</h2>
+            <h2>Zaregistruj se</h2>
             <form id="register-form">
                 <div class="user-data">
                     <input id='register-hidden' type='hidden' name='type' value='r'>
-                    <label for="register-name" class="required">Jméno</label>
+                    <label for="register-name" class="required">Uživatelské jméno</label>
                     <div class="input-wrapper"> 
                         <input id='register-name' class="text-field" type='text' name='registerName' maxlength=15>
-                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-name-message" class="message"></div>
                     <label for="register-pass" class="required">Heslo</label>
                     <div class="input-wrapper"> 
                         <input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31>    
-                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-pass-message" class="message"></div>
                     <label for="register-repass" class="required">Heslo znovu</label>
                     <div class="input-wrapper"> 
                         <input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31>
-                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-repass-message" class="message"></div>
                     <label for="register-email">E-mail</label>
                     <div class="input-wrapper"> 
                         <input id='register-email' class="text-field" type='text' name='registerEmail' maxlength=255>
-                        <div class="checkmark"><img src="../images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-email-message" class="message"></div>
                 </div>
-                <p id="register-terms">Registrací souhlasíte s <a class="btn inline black" target='_blank' rel="noopener" href='/legal?tos'>podmínkami služby</a>.</p>
+                <p id="register-terms">Registrací souhlasíš s <a class="btn inline black" target='_blank' rel="noopener" href='/legal?tos'>podmínkami služby</a>.</p>
                 <button id='register-submit' class="btn border-btn center non-transparent black">Vytvořit účet</button>
                 <div id="register-server-message" class="message server"></div>
             </form>
-            <p>Již máte účet? <button class="btn inline black show-login-section-login-button" onclick="showLoginDiv('login')">Přihlašte se</button>.</p>
+            <p>Máš už účet? <button class="btn inline black show-login-section-login-button" onclick="showLoginDiv('login')">Přihlaš se</button>.</p>
         </div>
         <div id="password-recovery">
             <h2>Obnova hesla</h2>
-            <p>Zadejte svoji e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</p>
+            <p>Zadej svoji e-mailovou adresu. Pokud existuje účet s takovou přidruženou adresou, pošleme na něj e-mail s instrukcemi k obnově hesla.</p>
             <form id="pass-recovery-form">
                 <div class="user-data">
                     <input id='password-recovery-hidden' type='hidden' name='type' value='p'>
@@ -93,7 +93,7 @@
                 <button id='password-recovery-submit' class="btn border-btn center non-transparent black">Odeslat</button>
                 <div id="password-recovery-server-message" class="message server"></div>
             </form>
-            <p>Nepamatujete si, jakou jste zadávali při registraci e-mailovou adresu, nebo jste žádnou nezadávali? Napište nám na <i style="font-style: italic;">poznavacky@email.com</i> a my vám pomůžeme obnovit heslo jinou metodou.</p>
+            <p>Nepamatuješ si, jakou e-mailovou adresu jsi při registraci zadával*a, nebo jsi žádnou nezadával*a? Napiš nám na <i style="font-style: italic;">poznavacky@email.com</i> a my ti pomůžeme obnovit heslo jinou metodou.</p>
             <button class="btn inline black show-login-section-login-button">Zpět</button>
         </div>
     </section>
@@ -102,10 +102,11 @@
     </section>
 </main>
 <div id="cookies-alert">
+    <img src="images/cookie-white.svg" id="cookie" alt="Cookie">
     <div class="wrapper">
-        <p>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíte s ukládáním souborů cookie na vašem zařízení.</p>
+        <p>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíš s ukládáním souborů cookie na tvém zařízení.</p>
         <a class="btn inline white" href="/legal?cookies">Další informace</a>
     </div>
-    <button id="hide-cookies-alert-button" class="btn icon" title="Zavřít"><img src="..\images\crossButtonWhite.svg" alt="Zavřít"></button>
+    <button id="hide-cookies-alert-button" class="btn icon" title="Zavřít"><img src="images/cross-thin-white.svg" alt="Zavřít"></button>
 </div>
-<button id="back-to-top-button" class="btn border-btn rounded non-transparent white" title="Nahoru"><img src="../images/arrowsUp.svg" alt="Nahoru"></button>
+<button id="back-to-top-button" class="btn border-btn rounded non-transparent white" title="Nahoru"><img src="images/arrows-up-black.svg" alt="Nahoru"></button>

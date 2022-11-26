@@ -6,7 +6,7 @@
         <th>Akce</th>
     </tr>
     <?php if (count($userNameChangeRequests) + count($classNameChangeRequests) === 0) : ?>
-    <tr><td colspan=3>Žádné žádosti k vyřízení</td></tr>
+    <tr><td colspan=4>Žádné žádosti k vyřízení</td></tr>
     <?php endif ?>
     <?php foreach ($userNameChangeRequests as $request) : ?>
     <tr class="name-change-request-data-item"
@@ -28,10 +28,10 @@
                     <img src='images/tick.svg'/>
                 </button>
                 <button class='btn icon decline-name-change-button' title='Zamítnout'>
-                    <img src='images/cross.svg'/>
+                    <img src='images/cross-thick-black.svg'/>
                 </button>
                 <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail uživateli'>
-                    <img src='images/mail.svg'/>
+                    <img src='images/mail-colour.svg'/>
                 </button>
             </div>
         </td>
@@ -57,10 +57,10 @@
                     <img src='images/tick.svg'/>
                 </button>
                 <button class='btn icon decline-name-change-button' title='Zamítnout'>
-                    <img src='images/cross.svg'/>
+                    <img src='images/cross-thick-black.svg'/>
                 </button>
                 <button class='btn icon start-mail-button <?php if (empty($request->getRequestersEmail())) : ?>disabled<?php endif ?>' title='Poslat e-mail správci'>
-                    <img src='images/mail.svg'/>
+                    <img src='images/mail-colour.svg'/>
                 </button>
             </div> 
         </td>

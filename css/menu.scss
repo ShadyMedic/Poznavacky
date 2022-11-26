@@ -146,8 +146,29 @@
         @media screen and (min-width: $smallDesktop) {
             padding:  2rem 3rem 0 3rem;
         }
-        span:last-child {
+        span:nth-last-child(3) {
             font-weight: 500;
+        }
+        .show-info-button,
+        .hide-info-button {
+            display: inline-block;
+            height: 1.2rem;
+            width: 1.2rem;
+            position: relative;
+            bottom: -0.2rem;
+            margin-left: 0.2rem;
+        }
+    }
+    .info-section {
+        text-align: justify;
+        font-size: 0.92rem;
+        padding: 0.4rem 0;
+        margin-bottom: 2rem;
+        h3 {
+            margin-bottom: 0.8rem;
+        }
+        ul {
+            margin: 0.8rem 0;
         }
     }
 }
@@ -272,7 +293,7 @@
             #class-code-form {
                 .btn {
                     width: fit-content;
-                    margin: 0;
+                    margin-left: 0.2rem;
                 }
                 .text-field {
                     width: 8rem;

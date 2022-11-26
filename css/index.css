@@ -222,7 +222,7 @@ header .logo h1 {
 }
 
 .confirm-item .buttons {
-  margin-top: 0.6rem;
+  margin-top: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -232,7 +232,7 @@ header .logo h1 {
 }
 
 .confirm-item .buttons > * {
-  margin-left: 1rem;
+  margin-left: 0.4rem;
 }
 
 footer {
@@ -447,6 +447,16 @@ ul.list li:not(:last-child) {
           transform: scale(0.98);
 }
 
+.btn.border-btn.img {
+  padding: 0.44em;
+}
+
+.btn.border-btn.img img {
+  height: 1.32em;
+  width: 1.32em;
+  vertical-align: bottom;
+}
+
 .btn.arrow-btn {
   font-size: 1.2rem;
   -webkit-transition: -webkit-transform 0.2s ease-out;
@@ -647,6 +657,7 @@ label.required:after {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  line-height: 1.6rem;
 }
 
 .custom-checkbox-wrapper input[type="checkbox"] {
@@ -824,6 +835,11 @@ label.required:after {
 .custom-select-wrapper .custom-options .custom-option.selected {
   color: #fff;
   background: #479911;
+}
+
+.code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.08em;
 }
 
 @-webkit-keyframes fontpop {
@@ -1330,6 +1346,11 @@ label.required:after {
   padding-bottom: 0.6em;
 }
 
+#index #index-login-section .user-data label.custom-checkbox-wrapper {
+  margin-top: 0.72rem;
+  margin-bottom: 0.54rem;
+}
+
 #index #index-login-section .message {
   font-size: 0.72rem;
   line-height: 0.96rem;
@@ -1388,11 +1409,12 @@ label.required:after {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -ms-flex-line-pack: center;
-      align-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-transition: -webkit-transform 0.6s ease-in-out;
   transition: -webkit-transform 0.6s ease-in-out;
   transition: transform 0.6s ease-in-out;
@@ -1423,17 +1445,53 @@ label.required:after {
 }
 
 #index #cookies-alert .wrapper {
-  padding-right: 6rem;
+  padding-right: 2rem;
+}
+
+@media screen and (min-width: 576px) {
+  #index #cookies-alert .wrapper {
+    padding-right: 3rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #index #cookies-alert .wrapper {
+    padding-right: 4.8rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #index #cookies-alert .wrapper {
+    padding-right: 6rem;
+  }
 }
 
 #index #cookies-alert .wrapper p {
   margin-bottom: 0.6rem;
 }
 
+#index #cookies-alert #cookie {
+  position: relative;
+  max-height: 8rem;
+  margin-right: 0.8rem;
+}
+
+@media screen and (min-width: 576px) {
+  #index #cookies-alert #cookie {
+    margin-right: 1.6rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #index #cookies-alert #cookie {
+    margin-right: 2.4rem;
+  }
+}
+
 #index #cookies-alert .btn {
   -ms-flex-negative: 0;
       flex-shrink: 0;
-  margin: auto 0;
+  margin: auto 0 auto auto;
 }
 
 #index #back-to-top-button {
