@@ -167,6 +167,11 @@ function changeEmail(action)
     {
         $("#change-email-new").hide();
         $("label[for='change-email-new']").hide();
+        $("#change-email h3").val("Odebrání e-mailu");
+    }
+    else
+    {
+        $("#change-email h3").val("Změna e-mailu");
     }
     $("#change-email-button").hide();
     $("#remove-email-button").hide();
