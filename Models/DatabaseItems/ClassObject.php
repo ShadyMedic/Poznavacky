@@ -675,6 +675,19 @@ class ClassObject extends Folder
     }
 
     /**
+     * Metoda kontrolující, zda je uživatel se zadaným ID členem v této třídě (tedy zda do ní získal přístup na základě
+     * pozvánky, nebo zadáním vstupního kódu).
+     * @param int $userId ID uživatele ke kontrole
+     * @return bool TRUE, pokud je uživatel členem této třídy, FALSE, pokud ne
+     */
+    public function isMember(int $userId): bool
+    {
+        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ?;',
+            array($this->id, $userId), false);
+        return ($result['cnt'] === 1);
+    }
+
+    /**
      * Metoda kontrolující, zda je určitý uživatel správcem této třídy
      * Pokud zatím nebyl načten správce této třídy, bude načten z databáze
      * @param int $userId ID ověřovaného uživatele
