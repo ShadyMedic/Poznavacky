@@ -194,6 +194,8 @@ function changeClassStatusConfirm()
     })
 }
 
+//TODO - zpřístupnit správu členů v backendu!! (tlačítko se zobrazuje, ale háže to serverovou chybu)
+
 /**
  * Funkce odesílající požadavek na změnu statutu třídy
  * @param {string} newStatus Nový status třídy (veřejná/soukromá/uzamčená)
@@ -223,17 +225,6 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
                         $("#status").text(newStatus);
                         $("#class-status-select .custom-option").removeClass("selected");
                         $("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
-                        
-                        //skrytí nastavení členů, pokud byla třída změněna na veřejnou
-                        if (newStatus === "Veřejná")
-                        {
-                            $("#members-management-button").hide();
-                        }
-                        else
-                        {
-                            $("#members-management-button").show();
-                        }
-                        
                         
                         //reset HTML
                         $("#change-class-status-button").show();
