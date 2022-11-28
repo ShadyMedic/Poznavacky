@@ -1,6 +1,7 @@
 var $initialStatus;        //ukládá zvolenou položku v custom select elementu statutu třídy uloženého v databázi
 var initialStatus;      //ukládá status třídy uložený v databázi
 var initialCode;        //ukládá vstupní kód třídy uložený v databázi
+var initialReadOnly;     //ukládá, zda je třída nastavena jako jenom pro čtení
 
 //nastavení URL pro AJAX požadavky
 var ajaxUrl = window.location.href;
@@ -200,7 +201,7 @@ function changeClassStatusConfirm()
  * Funkce odesílající požadavek na změnu statutu třídy
  * @param {string} newStatus Nový status třídy (veřejná/soukromá/uzamčená)
  * @param {int} newCode Nový kód třídy
- * @param {bool} newReadonly Nové nastavení readonly
+ * @param {bool} newReadonly Nové nastavení readonly (zda mohou obrázky přidávat i nečlenové třídy)
  */
 function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReadonly
 {
@@ -208,7 +209,8 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
         {
             action: 'update access',
             newStatus: newStatus,
-            newCode: newCode
+            newCode: newCode,
+            newReadonly: newReadonly
         },
         function (response, status)
         {
