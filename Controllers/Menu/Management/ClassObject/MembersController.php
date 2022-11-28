@@ -23,18 +23,6 @@ class MembersController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        //Kontrola, zda třída není veřejná
-        if ($_SESSION['selection']['class']->getStatus() === ClassObject::CLASS_STATUS_PUBLIC) {
-            (new Logger())->warning('Zablokován pokus o přístup na stránku pro správu členů veřejné třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
-                array(
-                    'classId' => $_SESSION['selection']['class']->getId(),
-                    'userId' => UserManager::getId(),
-                    'ip' => $_SERVER['REMOTE_ADDR']
-                ));
-            $this->addMessage(MessageBox::MESSAGE_TYPE_ERROR, "Správa členů není u veřejných tříd dostupná");
-            $this->redirect("menu/".$_SESSION['selection']['class']->getUrl().'/manage');
-        }
-        
         (new Logger())->info('Přístup na stránku pro správu členů třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
             array(
                 'classId' => $_SESSION['selection']['class']->getId(),
