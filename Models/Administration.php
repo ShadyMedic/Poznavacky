@@ -46,7 +46,7 @@ class Administration
         'REPLICATION ',
         'USER '
     );
-    
+
     /**
      * Konstruktor zajišťující, že instanci této třídy lze vytvořit pouze pokud je přihlášen administrátor
      * @throws AccessDeniedException V případě, že není přihlášen administrátor
@@ -60,7 +60,7 @@ class Administration
             throw new AccessDeniedException(AccessDeniedException::REASON_INSUFFICIENT_PERMISSION);
         }
     }
-    
+
     /**
      * Metoda navracející většinu informací o všech uživatelích v databázi
      * @param bool $includeLogged TRUE, pokud má být navrácen i záznam přihlášeného uživatele
@@ -97,10 +97,10 @@ class Administration
                 $dbRow[User::COLUMN_DICTIONARY['status']]);
             $users[] = $user;
         }
-        
+
         return $users;
     }
-    
+
     /**
      * Metoda navracející počet uživatelských účtů v databázi
      * @return int Počet uživatelských účtů
@@ -123,7 +123,8 @@ class Administration
                                    ClassObject::COLUMN_DICTIONARY['name'].','.ClassObject::COLUMN_DICTIONARY['url'].','.
                                    ClassObject::COLUMN_DICTIONARY['groupsCount'].','.
                                    ClassObject::COLUMN_DICTIONARY['status'].','.ClassObject::COLUMN_DICTIONARY['code'].
-                                   ','.ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME,
+                                   ','.ClassObject::COLUMN_DICTIONARY['readonly'].','.ClassObject::COLUMN_DICTIONARY['admin'].
+                                   ' FROM '.ClassObject::TABLE_NAME,
             array(), true);
         
         $classes = array();
@@ -131,15 +132,15 @@ class Administration
             $class = new ClassObject(false, $dbRow[ClassObject::COLUMN_DICTIONARY['id']]);
             $class->initialize($dbRow[ClassObject::COLUMN_DICTIONARY['name']],
                 $dbRow[ClassObject::COLUMN_DICTIONARY['url']], $dbRow[ClassObject::COLUMN_DICTIONARY['status']],
-                $dbRow[ClassObject::COLUMN_DICTIONARY['code']], null,
-                $dbRow[ClassObject::COLUMN_DICTIONARY['groupsCount']], null,
+                $dbRow[ClassObject::COLUMN_DICTIONARY['code']], $dbRow[ClassObject::COLUMN_DICTIONARY['readonly']],
+                null, $dbRow[ClassObject::COLUMN_DICTIONARY['groupsCount']], null,
                 new User(false, $dbRow[ClassObject::COLUMN_DICTIONARY['admin']]));
             $classes[] = $class;
         }
         
         return $classes;
     }
-    
+
     /**
      * Metoda navracející počet tříd v databázi
      * @return int Počet tříd
@@ -179,12 +180,12 @@ class Administration
                                  Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
             WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.');
         ', Report::ADMIN_REQUIRING_REASONS, true);
-        
+
         if ($result === false) {
             //Žádná hlášení nenalezena
             return array();
         }
-        
+
         $reports = array();
         foreach ($result as $reportInfo) {
             $natural = new Natural(false, $reportInfo['prirodniny_id']);
@@ -196,10 +197,10 @@ class Administration
                 $reportInfo['hlaseni_pocet']);
             $reports[] = $report;
         }
-        
+
         return $reports;
     }
-    
+
     /**
      * Metoda navracející počet správcovských hlášení v databázi
      * @return int Počet hlášení
@@ -242,12 +243,12 @@ class Administration
                                  UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' = '.User::TABLE_NAME.'.'.
                                  User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
-        
+
         //Kontrola, zda byly navráceny nějaké výsledky
         if ($result === false) {
             return array();
         }
-        
+
         $requests = array();
         foreach ($result as $requestInfo) {
             $user = new User(false, $requestInfo[User::COLUMN_DICTIONARY['id']]);
@@ -264,7 +265,7 @@ class Administration
         }
         return $requests;
     }
-    
+
     /**
      * Metoda navracející počet žádostí o změnu uživatelského jména v databázi
      * @return int Počet uživatelských účtů
@@ -298,7 +299,8 @@ class Administration
                                  ClassObject::COLUMN_DICTIONARY['url'].', '.ClassObject::TABLE_NAME.'.'.
                                  ClassObject::COLUMN_DICTIONARY['status'].' AS "c_status", '.ClassObject::TABLE_NAME.
                                  '.'.ClassObject::COLUMN_DICTIONARY['groupsCount'].', '.ClassObject::TABLE_NAME.'.'.
-                                 ClassObject::COLUMN_DICTIONARY['code'].',
+                                 ClassObject::COLUMN_DICTIONARY['code'].', '.ClassObject::TABLE_NAME.'.'.
+                                 ClassObject::COLUMN_DICTIONARY['readonly'].',
         '.ClassNameChangeRequest::TABLE_NAME.'.'.ClassNameChangeRequest::COLUMN_DICTIONARY['id'].', '.
                                  ClassNameChangeRequest::TABLE_NAME.'.'.
                                  ClassNameChangeRequest::COLUMN_DICTIONARY['newName'].', '.
@@ -311,12 +313,12 @@ class Administration
         JOIN '.User::TABLE_NAME.' ON '.ClassObject::TABLE_NAME.'.'.ClassObject::COLUMN_DICTIONARY['admin'].' = '.
                                  User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].';
         ', array(), true);
-        
+
         //Kontrola, zda byly navráceny nějaké výsledky
         if ($result === false) {
             return array();
         }
-        
+
         $requests = array();
         foreach ($result as $requestInfo) {
             $admin = new User(false, $requestInfo[User::COLUMN_DICTIONARY['id']]);
@@ -329,17 +331,17 @@ class Administration
             $class = new ClassObject(false, $requestInfo[ClassObject::COLUMN_DICTIONARY['id']]);
             $class->initialize($requestInfo[ClassObject::COLUMN_DICTIONARY['name']],
                 $requestInfo[ClassObject::COLUMN_DICTIONARY['url']], $requestInfo['c_status'],
-                $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], null,
-                $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
+                $requestInfo[ClassObject::COLUMN_DICTIONARY['code']], $requestInfo[ClassObject::COLUMN_DICTIONARY['readonly']],
+                null, $requestInfo[ClassObject::COLUMN_DICTIONARY['groupsCount']], null, $admin);
             $request = new ClassNameChangeRequest(false, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['id']]);
             $request->initialize($class, $requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['newName']],
                 new DateTime($requestInfo[ClassNameChangeRequest::COLUMN_DICTIONARY['requestedAt']]));
-            
+
             $requests[] = $request;
         }
         return $requests;
     }
-    
+
     /**
      * Metoda navracející počet žádostí o změnu uživatelského jména v databázi
      * @return int Počet uživatelských účtů
@@ -352,7 +354,7 @@ class Administration
     }
 
     /* Metody využívané AJAX kontrolerem AdministrateActionController */
-    
+
     /**
      * Metoda upravující uživatelova data v databázi po jejich změně administrátorem
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
@@ -368,7 +370,7 @@ class Administration
         $user->updateAccount($values['addedPics'], $values['guessedPics'], $values[User::COLUMN_DICTIONARY['karma']],
             $values['status']);
     }
-    
+
     /**
      * Metoda odstraňující uživatelský účet a všechna jeho data z rozhodnutí administrátora
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda může být daný uživatel odstraněn
@@ -382,7 +384,7 @@ class Administration
         $user = new User(false, $userId);
         $user->deleteAccountAsAdmin();
     }
-    
+
     /**
      * Metoda upravující přístupová data třídy v databázi po jejich změně administrátorem
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
@@ -397,7 +399,7 @@ class Administration
         $class = new ClassObject(false, $classId);
         $class->updateAccessDataAsAdmin($values['status'], $values['code']);
     }
-    
+
     /**
      * Metoda měnící správce třídy v databázi po jeho změně administrátorem
      * Je ověřeno, zda je přihlášený uživatel administrátorem a zda jsou zadané hodnoty platné
@@ -442,18 +444,18 @@ class Administration
             //Uživatel nenalezen
             throw new AccessDeniedException(AccessDeniedException::REASON_ADMINISTRATION_CLASS_ADMIN_UPDATE_UNKNOWN_USER);
         }
-        
+
         $admin = new User(false, $result[User::COLUMN_DICTIONARY['id']]);
         $admin->initialize($result[User::COLUMN_DICTIONARY['name']], $result[User::COLUMN_DICTIONARY['email']],
             new DateTime($result[User::COLUMN_DICTIONARY['lastLogin']]),
             $result[User::COLUMN_DICTIONARY['addedPictures']], $result[User::COLUMN_DICTIONARY['guessedPictures']],
             $result[User::COLUMN_DICTIONARY['karma']], $result[User::COLUMN_DICTIONARY['status']]);
-        
+
         $class = new ClassObject(false, $classId);
         $class->changeClassAdminAsAdmin($admin);
         return $admin;
     }
-    
+
     /**
      * Metoda odstraňující třídu z databáze společně se všemi jejími poznávačkami, skupinami, přírodninami, obrázky a
      * hlášeními
@@ -467,7 +469,7 @@ class Administration
         $class->deleteAsAdmin();
         unset($class);
     }
-    
+
     /**
      * Metoda řešící vyřízení žádosti o změnu jména uživatele nebo třídy
      * V případě schválení je jméno uživatele nebo třídy změněno
@@ -494,7 +496,7 @@ class Administration
         $request->delete();
         return $result;
     }
-    
+
     /**
      * Metoda vkládající HTML e-mailovou zprávu z formuláře v záložce "Poslat e-mail" do připravené šablony a navrací
      * výsledné HTML
@@ -507,13 +509,13 @@ class Administration
         //Převod konců řádků na zobrazitelné <br> tagy
         $rawMessage = nl2br($rawMessage);
         $rawFooter = nl2br($rawFooter);
-        
+
         $emailComposer = new EmailComposer();
         $emailComposer->composeMail($emailComposer::EMAIL_TYPE_EMPTY_LAYOUT,
             array('content' => $rawMessage, 'footer' => $rawFooter));
         return $emailComposer->getMail();
     }
-    
+
     /**
      * Metoda odesílající e-mail s daty z formuláře na správcovské stránce
      * @param string $addressee E-mailová adresa adresáta e-mailu
@@ -540,12 +542,12 @@ class Administration
             throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS, null,
                 null);
         }
-        
+
         //Kontrola vyplněnosti ostatních polí
         if (mb_strlen($subject) === 0 || mb_strlen($rawMessage) === 0 || mb_strlen($sender) === 0) {
             throw new AccessDeniedException(AccessDeniedException::REASON_SEND_EMAIL_EMPTY_FIELDS, null, null);
         }
-        
+
         $emailBody = $this->previewEmail($rawMessage, $rawFooter);
         $emailSender = new EmailSender();
         return $emailSender->sendMail($addressee, $subject, $emailBody, $fromAddress, $sender);
@@ -621,15 +623,15 @@ class Administration
                 return "<p>Váš příkaz obsahuje nebezpečné klíčové slovo (<b>$word</b>). Z toho důvodu byl příkaz zablokován.</p>";
             }
         }
-        
+
         //Kontrola OK
-        
+
         ob_start();
-        
+
         $queries = rtrim($queries,
             ';'); //Odebrání posledního střeníku (pokud exisutje), aby následující příkaz vygeneroval čisté pole jednotlivých dotazů
         $queries = explode(';', $queries); //Pro případ, že je zadáno více příkazů.
-        
+
         $cnt = count($queries);
         if (empty($cnt) && !empty($queries)) {
             $cnt++;
@@ -648,7 +650,7 @@ class Administration
                 //Výsledek je tabulka
                 echo "Dotaz <i>$queries[$i]</i> byl úspěšně proveden, byly navráceny následující výsledky:";
                 echo '<table>';
-                
+
                 //Vypsání hlavičky tabulky
                 $returnedRow = $queryResult[0];
                 echo '<tr>';
@@ -657,13 +659,13 @@ class Administration
                     if (gettype($returnedColumnName) === 'integer') {
                         continue;
                     }
-                    
+
                     echo '<th>';
                     echo $returnedColumnName;
                     echo '</th>';
                 }
                 echo '</tr>';
-                
+
                 //Vypsání těla tabulky
                 foreach ($queryResult as $returnedRow) {
                     echo '<tr>';
@@ -672,7 +674,7 @@ class Administration
                         if (gettype($returnedColumnName) === 'integer') {
                             continue;
                         }
-                        
+
                         echo '<td>';
                         echo $returnedCell;
                         echo '</td>';
@@ -683,7 +685,7 @@ class Administration
             }
             echo '</p>';
         }
-        
+
         $output = ob_get_contents();
         ob_end_clean();
         return $output;

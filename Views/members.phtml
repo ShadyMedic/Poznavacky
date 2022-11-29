@@ -1,3 +1,12 @@
+<section class="info-section" style="display: none">
+    <h3>Správa členů třídy</h3>
+    <p>Na této stránce můžeš spravovat členy tvé třídy.</p>
+    <ul class="list">
+        <li>Pokud je tvá třída nastavena jako soukromá nebo uzavřená, mohou třídu používat pouze její členové.</li>
+        <li>Pokud je tvá třída nastavena jako veřejná, je viditelná pro všechny. Můžeš ale nastavit, jestli přidávat obrázky můžou pouze její členové, nebo jakýkoliv uživatel.</li>
+        <li>Uživatel se může stát členem této třídy na základě přijetí pozvánky, kterou můžeš z této stránky odeslat. Pokud je třída nastavena jako soukromá, může se uživatel stát členem také zadáním vstupního kódu.</li>
+    </ul>
+</section>
 <div id='members-wrapper'>
     <section class="members-data-section">
         <?php foreach ($members as $member) : ?>
@@ -20,7 +29,7 @@
         <button id='invite-user-button' class="btn border-btn non-transparent black">Pozvat nového člena</button>
         <div id='invite-user-form' style="display: none;">
             <h3>Pozvat nového uživatele</h3>
-            <p>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</p>
+            <p class="additional-form-info">Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</p>
             <label for="invite-user-name">Jméno uživatele</label>
             <input id='invite-user-name' class="text-field" type='text' maxlength=15>
             <button class='btn border-btn non-transparent black' id="invite-user-confirm-button">Pozvat</button>
