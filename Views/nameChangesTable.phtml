@@ -9,7 +9,7 @@
     <tr><td colspan=4>Žádné žádosti k vyřízení</td></tr>
     <?php endif ?>
     <?php foreach ($userNameChangeRequests as $request) : ?>
-    <tr class="name-change-request-data-item"
+    <tr class="name-change-request data-item"
         data-request-id="<?= $request->getId() ?>"
         data-request-email="<?= $request->getRequestersEmail() ?>"
         data-object-type="user">
@@ -38,7 +38,7 @@
     </tr>
     <?php endforeach ?>
     <?php foreach ($classNameChangeRequests as $request) : ?>
-    <tr class="name-change-request-data-item"
+    <tr class="name-change-request data-item"
         data-request-id="<?= $request->getId() ?>"
         data-request-email="<?= $request->getRequestersEmail() ?>"
         data-object-type="class">

@@ -11,7 +11,7 @@ $(function()
  */
 function acceptNameChange(event)
 {
-    let $request = $(event.target).closest(".name-change-request-data-item");
+    let $request = $(event.target).closest(".name-change-request.data-item");
 
     let action = $request.attr("data-object-type") == "user" ? "accept user name change" : "accept class name change";
     let requestId = $request.attr("data-request-id");
@@ -48,7 +48,7 @@ function declineNameChange(event)
         return;
     }
 
-    let $request = $(event.target).closest(".name-change-request-data-item");
+    let $request = $(event.target).closest(".name-change-request.data-item");
 
     let action = $request.attr("data-object-type") == "user" ? "decline user name change" : "decline class name change";
     let requestId = $request.attr("data-request-id");

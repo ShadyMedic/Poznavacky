@@ -1,5 +1,5 @@
 <div id="resolve-reports-wrapper">
-    <div class="reports-data-properties" <?php if (count($reports) === 0) : ?>style="display: none"<?php endif ?>>
+    <div class="reports data-properties" <?php if (count($reports) === 0) : ?>style="display: none"<?php endif ?>>
         <span class="report-name">Přírodnina</span>
         <span class="report-url">Zdroj</span>
         <span class="report-reason">Důvod</span>
@@ -11,7 +11,7 @@
     <p>Žádná hlášení k vyřízení</p>
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
-    <div class="report-data-item"
+    <div class="report data-item"
             data-picture-id="<?= $report->getPictureId() ?>"
             data-report-id="<?= $report->getId() ?>"
             data-report-url="<?= $report->getUrl() ?>">

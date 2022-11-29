@@ -12,7 +12,7 @@ $(function()
 {
     $(".show-info-button").show();
 
-    $(".natural-data-item").each(function() {
+    $(".natural.data-item").each(function() {
         $naturals.push($(this));
         naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural-name").text(), $(this).find(".natural-uses-count").text(), $(this).find(".natural-pictures-count").text()));
     })
@@ -116,7 +116,7 @@ function sortNaturals(event, direction)
 
     naturalParameters.forEach(function(element) {
         let id = element[0];
-        $natural = $(".natural-data-item[data-natural-id='" + id + "']");
+        $natural = $(".natural.data-item[data-natural-id='" + id + "']");
         $("#naturals-data-section").append($natural.get(0).outerHTML);
         $natural.first().remove();   
     })
@@ -132,7 +132,7 @@ function removeFilters()
     $("#filter-name").val("");
     filterByName("");
 
-    $(".natural-data-item").remove();
+    $(".natural.data-item").remove();
 
     $naturals.forEach(function($element) {
         $("#naturals-data-section").append($element.get(0).outerHTML);
@@ -148,7 +148,7 @@ function removeFilters()
  */
 function filterByName(name)
 {
-    $(".natural-data-item").each(function() {
+    $(".natural.data-item").each(function() {
         let naturalName = $(this).find(".natural-name").text().toLowerCase();
         if (naturalName.startsWith(name.toLowerCase()))
         {
@@ -168,7 +168,7 @@ function filterByName(name)
  */
 function rename(event)
 {
-    let $natural = $(event.target).closest('.natural-data-item');
+    let $natural = $(event.target).closest('.natural.data-item');
 
     $natural.find('.normal-buttons').hide();
     $natural.find('.natural-name-box').hide();
@@ -188,7 +188,7 @@ function renameConfirm(event)
     let maxChars = 31;
     let allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci"
 
-    let $natural = $(event.target).closest('.natural-data-item');
+    let $natural = $(event.target).closest('.natural.data-item');
     let newName;
     let oldName;
 
@@ -226,7 +226,7 @@ function renameConfirm(event)
         //kontrola unikátnosti
 
         //Získání seznamu přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
-        let presentNaturals = $(".natural-data-item .natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
+        let presentNaturals = $(".natural.data-item .natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
@@ -234,7 +234,7 @@ function renameConfirm(event)
             newConfirm(confirmMessage, "Sloučit", "Zrušit", function(confirm) {
                 if (confirm) {
                     let fromNaturalId = $natural.attr("data-natural-id");
-                    let toNaturalId = $(".natural-data-item:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
+                    let toNaturalId = $(".natural.data-item:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
                     mergeNaturals(fromNaturalId, toNaturalId);
                 }
                 else return;
@@ -280,7 +280,7 @@ function renameConfirm(event)
  */
 function renameCancel($clickedButton)
 {
-    let $natural = $clickedButton.closest(".natural-data-item");
+    let $natural = $clickedButton.closest(".natural.data-item");
 
     $natural.find('.rename-buttons').hide();
     $natural.find('.natural-name-input-box').hide();
@@ -335,7 +335,7 @@ function mergeNaturals(fromNaturalId, toNaturalId)
  */
 function remove(event)
 {
-    let $natural = $(event.target).closest('.natural-data-item');
+    let $natural = $(event.target).closest('.natural.data-item');
     let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm) removeFinal($natural)

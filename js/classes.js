@@ -24,7 +24,7 @@ $(function()
  */
 function classRedirect(event) 
 {
-    let classUrl = $(event.target).closest(".class-data-item").attr("data-class-url") 
+    let classUrl = $(event.target).closest(".class.data-item").attr("data-class-url") 
     
     window.location.href='menu/'+ classUrl + '/manage';
 }
@@ -36,11 +36,11 @@ function classRedirect(event)
  */
 function editClass(event)
 {
-    let $class = $(event.target).closest(".class-data-item")
+    let $class = $(event.target).closest(".class.data-item")
 
     //dočasné znemožnění ostatních akcí u všech tříd
-    $(".class-data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
-    $(".class-data-item").not($class).find(".class-action .btn").addClass("disabled");
+    $(".class.data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
+    $(".class.data-item").not($class).find(".class-action .btn").addClass("disabled");
 
     //uložení současných hodnot
     for (let i = 0; i <= 1; i++)
@@ -60,7 +60,7 @@ function editClass(event)
  */
 function classStatusChanged(event)
 {
-    let $class = $(event.target).closest(".class-data-item")
+    let $class = $(event.target).closest(".class.data-item")
     let newStatus = $class.find(".class-status").val();
 
     if (newStatus !== "private")
@@ -91,7 +91,7 @@ function classStatusChanged(event)
  */
 function editClassConfirm(event)
 {    
-    let $class = $(event.target).closest(".class-data-item");
+    let $class = $(event.target).closest(".class.data-item");
     let classId = $class.attr("data-class-id");
 
     //uložení nových hodnot
@@ -129,11 +129,11 @@ function editClassConfirm(event)
  */
 function editClassCancel(event)
 {
-    let $class = $(event.target).closest(".class-data-item");
+    let $class = $(event.target).closest(".class.data-item");
 
     //opětovné zapnutí ostatních tlačítek akcí
-    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
-    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
+    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
+    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
 
     //obnova hodnot vstupních polí
     for (let i = 0; i <= 1; i++)
@@ -156,11 +156,11 @@ var changedIdentifier;
  */
 function changeClassOwner(event)
 {
-    let $class = $(event.target).closest(".class-data-item")
+    let $class = $(event.target).closest(".class.data-item")
 
     //dočasné znemožnění ostatních akcí u všech tříd
-    $(".class-data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
-    $(".class-data-item").not($class).find(".class-action .btn").addClass("disabled");
+    $(".class.data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
+    $(".class.data-item").not($class).find(".class-action .btn").addClass("disabled");
 
     //uložení současných hodnot
     for (let i = 0; i <= 1; i++)
@@ -181,7 +181,7 @@ function changeClassOwner(event)
 function classOwnerChanged(event, identifier)
 {
 	console.log(identifier);
-    let $class = $(event.target).closest(".class-data-item")
+    let $class = $(event.target).closest(".class.data-item")
 
     if (identifier == 0)
     {
@@ -210,11 +210,11 @@ function classOwnerChanged(event, identifier)
  */
 function changeClassOwnerCancel(event)
 {
-    let $class = $(event.target).closest(".class-data-item")
+    let $class = $(event.target).closest(".class.data-item")
 
     //opětovné zapnutí ostatních tlačítek akcí
-    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
-    $(".class-data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
+    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
+    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
 
     //Obnova hodnot vstupních polí
     for (let i = 0; i <= 1; i++)
@@ -232,7 +232,7 @@ function changeClassOwnerCancel(event)
  */
 function changeClassOwnerConfirm(event)
 {
-    let $class = $(event.target).closest(".class-data-item");
+    let $class = $(event.target).closest(".class.data-item");
     let $classOwnerTable = $class.find(".class-owner-table");
     
     let classId = $class.attr("data-class-id");
@@ -298,7 +298,7 @@ function changeClassOwnerConfirm(event)
 function deleteClass(event)
 {
 
-    let $class = $(event.target).closest(".class-data-item");
+    let $class = $(event.target).closest(".class.data-item");
     let classId = $class.attr("data-class-id");
     let className = $class.attr("data-class-name");
 

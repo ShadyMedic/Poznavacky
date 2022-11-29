@@ -23,7 +23,7 @@ $(function()
 function changeNameCancel()
 {
     $("#change-name-button").show()
-    $("#change-name").closest(".user-data-item").find(".user-property-value").show();
+    $("#change-name").closest(".user.data-item").find(".user-property-value").show();
     $("#change-name").hide();
     $("#change-name .text-field").val("");
 }
@@ -34,7 +34,7 @@ function changeNameCancel()
 function changePasswordCancel()
 {
     $("#change-password-button").show()
-    $("#change-password").closest(".user-data-item").find(".user-property-value").show();
+    $("#change-password").closest(".user.data-item").find(".user-property-value").show();
     $("#change-password").hide();
     $("#change-password .text-field").val("");
 }
@@ -46,7 +46,7 @@ function changeEmailCancel()
 {
     $("#change-email-button").show();
     $("#remove-email-button").show();
-    $("#change-email").closest(".user-data-item").find(".user-property-value").show();
+    $("#change-email").closest(".user.data-item").find(".user-property-value").show();
     $("#change-email").hide();
     $("#change-email .text-field").val("");
     $("#change-email-new").show();
@@ -59,7 +59,7 @@ function changeEmailCancel()
 function changeName()
 {
     $("#change-name-button").hide()
-    $("#change-name").closest(".user-data-item").find(".user-property-value").hide();
+    $("#change-name").closest(".user.data-item").find(".user-property-value").hide();
     $("#change-name").show();
     $("#change-name-new").focus();
 
@@ -105,7 +105,7 @@ function changeNameConfirm()
 function changePassword()
 {
     $("#change-password-button").hide()
-    $("#change-password").closest(".user-data-item").find(".user-property-value").hide();
+    $("#change-password").closest(".user.data-item").find(".user-property-value").hide();
     $("#change-password").show();
     $("#change-password-old").focus();
 
@@ -175,7 +175,7 @@ function changeEmail(action)
     }
     $("#change-email-button").hide();
     $("#remove-email-button").hide();
-    $("#change-email").closest(".user-data-item").find(".user-property-value").hide();
+    $("#change-email").closest(".user.data-item").find(".user-property-value").hide();
     $("#change-email").show();
     $("#change-email-password").focus();
 

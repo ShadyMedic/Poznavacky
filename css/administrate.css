@@ -667,37 +667,37 @@ textarea:focus {
   }
 }
 
-#alerts .alert-data-item .alert-date {
+#alerts data-item .alert-date {
   word-break: keep-all;
 }
 
 @media screen and (min-width: 768px) {
-  #alerts .alert-data-item .alert-date {
+  #alerts data-item .alert-date {
     white-space: nowrap;
   }
 }
 
-#alerts .alert-data-item .alert-level {
+#alerts data-item .alert-level {
   word-break: keep-all;
 }
 
-#alerts .alert-data-item .alert-content {
+#alerts data-item .alert-content {
   text-align: left;
 }
 
-#alerts .alert-data-item.emergency td.alert-level {
+#alerts data-item.emergency td.alert-level {
   background: #ec52bb;
 }
 
-#alerts .alert-data-item.alert td.alert-level {
+#alerts data-item.alert td.alert-level {
   background: #ff6868;
 }
 
-#alerts .alert-data-item.critical td.alert-level {
+#alerts data-item.critical td.alert-level {
   background: #ffae70;
 }
 
-#alerts .alert-data-item.error td.alert-level {
+#alerts data-item.error td.alert-level {
   background: #ffe76f;
 }
 

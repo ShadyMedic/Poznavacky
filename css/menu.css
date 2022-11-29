@@ -2707,26 +2707,11 @@ label.required:after {
   margin: 0.6rem 0;
 }
 
-#account-settings .user-data-item,
-#account-settings .class-data-item,
-#account-settings .natural-data-item,
-#account-settings .member-data-item,
-#manage .user-data-item,
-#manage .class-data-item,
-#manage .natural-data-item,
-#manage .member-data-item,
-#members .user-data-item,
-#members .class-data-item,
-#members .natural-data-item,
-#members .member-data-item,
-#tests .user-data-item,
-#tests .class-data-item,
-#tests .natural-data-item,
-#tests .member-data-item,
-#naturals .user-data-item,
-#naturals .class-data-item,
-#naturals .natural-data-item,
-#naturals .member-data-item {
+#account-settings .data-item,
+#manage .data-item,
+#members .data-item,
+#tests .data-item,
+#naturals .data-item {
   margin: 0.6rem;
   padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
@@ -2736,65 +2721,35 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #account-settings .user-data-item,
-  #account-settings .class-data-item,
-  #account-settings .natural-data-item,
-  #account-settings .member-data-item,
-  #manage .user-data-item,
-  #manage .class-data-item,
-  #manage .natural-data-item,
-  #manage .member-data-item,
-  #members .user-data-item,
-  #members .class-data-item,
-  #members .natural-data-item,
-  #members .member-data-item,
-  #tests .user-data-item,
-  #tests .class-data-item,
-  #tests .natural-data-item,
-  #tests .member-data-item,
-  #naturals .user-data-item,
-  #naturals .class-data-item,
-  #naturals .natural-data-item,
-  #naturals .member-data-item {
+  #account-settings .data-item,
+  #manage .data-item,
+  #members .data-item,
+  #tests .data-item,
+  #naturals .data-item {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
   }
 }
 
-#account-settings .user-data-item > span,
-#account-settings .class-data-item > span,
-#account-settings .natural-data-item > span,
-#account-settings .member-data-item > span,
-#manage .user-data-item > span,
-#manage .class-data-item > span,
-#manage .natural-data-item > span,
-#manage .member-data-item > span,
-#members .user-data-item > span,
-#members .class-data-item > span,
-#members .natural-data-item > span,
-#members .member-data-item > span,
-#tests .user-data-item > span,
-#tests .class-data-item > span,
-#tests .natural-data-item > span,
-#tests .member-data-item > span,
-#naturals .user-data-item > span,
-#naturals .class-data-item > span,
-#naturals .natural-data-item > span,
-#naturals .member-data-item > span {
+#account-settings .data-item > span,
+#manage .data-item > span,
+#members .data-item > span,
+#tests .data-item > span,
+#naturals .data-item > span {
   padding: calc(0.4em + 4px) 0;
 }
 
-#account-settings .user-data-item,
-#account-settings .class-data-item,
-#manage .user-data-item,
-#manage .class-data-item,
-#members .user-data-item,
-#members .class-data-item,
-#tests .user-data-item,
-#tests .class-data-item,
-#naturals .user-data-item,
-#naturals .class-data-item {
+#account-settings .data-item.class,
+#account-settings .data-item.user,
+#manage .data-item.class,
+#manage .data-item.user,
+#members .data-item.class,
+#members .data-item.user,
+#tests .data-item.class,
+#tests .data-item.user,
+#naturals .data-item.class,
+#naturals .data-item.user {
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
   -ms-grid-rows: auto auto;
@@ -2802,16 +2757,16 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #account-settings .user-data-item,
-  #account-settings .class-data-item,
-  #manage .user-data-item,
-  #manage .class-data-item,
-  #members .user-data-item,
-  #members .class-data-item,
-  #tests .user-data-item,
-  #tests .class-data-item,
-  #naturals .user-data-item,
-  #naturals .class-data-item {
+  #account-settings .data-item.class,
+  #account-settings .data-item.user,
+  #manage .data-item.class,
+  #manage .data-item.user,
+  #members .data-item.class,
+  #members .data-item.user,
+  #tests .data-item.class,
+  #tests .data-item.user,
+  #naturals .data-item.class,
+  #naturals .data-item.user {
     -ms-grid-columns: 11.2rem 13rem 1fr;
         grid-template-columns: 11.2rem 13rem 1fr;
     -ms-grid-rows: auto 1fr;
@@ -2819,52 +2774,52 @@ label.required:after {
   }
 }
 
-#account-settings .user-data-item .user-property-action,
-#account-settings .user-data-item .class-property-action,
-#account-settings .class-data-item .user-property-action,
-#account-settings .class-data-item .class-property-action,
-#manage .user-data-item .user-property-action,
-#manage .user-data-item .class-property-action,
-#manage .class-data-item .user-property-action,
-#manage .class-data-item .class-property-action,
-#members .user-data-item .user-property-action,
-#members .user-data-item .class-property-action,
-#members .class-data-item .user-property-action,
-#members .class-data-item .class-property-action,
-#tests .user-data-item .user-property-action,
-#tests .user-data-item .class-property-action,
-#tests .class-data-item .user-property-action,
-#tests .class-data-item .class-property-action,
-#naturals .user-data-item .user-property-action,
-#naturals .user-data-item .class-property-action,
-#naturals .class-data-item .user-property-action,
-#naturals .class-data-item .class-property-action {
+#account-settings .data-item.class .user-property-action,
+#account-settings .data-item.class .class-property-action,
+#account-settings .data-item.user .user-property-action,
+#account-settings .data-item.user .class-property-action,
+#manage .data-item.class .user-property-action,
+#manage .data-item.class .class-property-action,
+#manage .data-item.user .user-property-action,
+#manage .data-item.user .class-property-action,
+#members .data-item.class .user-property-action,
+#members .data-item.class .class-property-action,
+#members .data-item.user .user-property-action,
+#members .data-item.user .class-property-action,
+#tests .data-item.class .user-property-action,
+#tests .data-item.class .class-property-action,
+#tests .data-item.user .user-property-action,
+#tests .data-item.user .class-property-action,
+#naturals .data-item.class .user-property-action,
+#naturals .data-item.class .class-property-action,
+#naturals .data-item.user .user-property-action,
+#naturals .data-item.user .class-property-action {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
 }
 
 @media screen and (min-width: 672px) {
-  #account-settings .user-data-item .user-property-action,
-  #account-settings .user-data-item .class-property-action,
-  #account-settings .class-data-item .user-property-action,
-  #account-settings .class-data-item .class-property-action,
-  #manage .user-data-item .user-property-action,
-  #manage .user-data-item .class-property-action,
-  #manage .class-data-item .user-property-action,
-  #manage .class-data-item .class-property-action,
-  #members .user-data-item .user-property-action,
-  #members .user-data-item .class-property-action,
-  #members .class-data-item .user-property-action,
-  #members .class-data-item .class-property-action,
-  #tests .user-data-item .user-property-action,
-  #tests .user-data-item .class-property-action,
-  #tests .class-data-item .user-property-action,
-  #tests .class-data-item .class-property-action,
-  #naturals .user-data-item .user-property-action,
-  #naturals .user-data-item .class-property-action,
-  #naturals .class-data-item .user-property-action,
-  #naturals .class-data-item .class-property-action {
+  #account-settings .data-item.class .user-property-action,
+  #account-settings .data-item.class .class-property-action,
+  #account-settings .data-item.user .user-property-action,
+  #account-settings .data-item.user .class-property-action,
+  #manage .data-item.class .user-property-action,
+  #manage .data-item.class .class-property-action,
+  #manage .data-item.user .user-property-action,
+  #manage .data-item.user .class-property-action,
+  #members .data-item.class .user-property-action,
+  #members .data-item.class .class-property-action,
+  #members .data-item.user .user-property-action,
+  #members .data-item.user .class-property-action,
+  #tests .data-item.class .user-property-action,
+  #tests .data-item.class .class-property-action,
+  #tests .data-item.user .user-property-action,
+  #tests .data-item.user .class-property-action,
+  #naturals .data-item.class .user-property-action,
+  #naturals .data-item.class .class-property-action,
+  #naturals .data-item.user .user-property-action,
+  #naturals .data-item.user .class-property-action {
     -ms-grid-column: 3;
     -ms-grid-column-span: 1;
     grid-column: 3/4;
@@ -3591,7 +3546,7 @@ label.required:after {
   max-width: 800px;
 }
 
-#members .members-data-section .member-data-item {
+#members .members-data-section .data-item.member {
   -ms-grid-columns: 10rem 1fr;
       grid-template-columns: 10rem 1fr;
   -ms-grid-rows: auto auto;
@@ -3599,13 +3554,13 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #members .members-data-section .member-data-item {
+  #members .members-data-section .data-item.member {
     -ms-grid-rows: auto 1fr;
         grid-template-rows: auto 1fr;
   }
 }
 
-#members .members-data-section .member-data-item .member-action {
+#members .members-data-section .data-item.member .member-action {
   text-align: right;
   display: -ms-grid;
   display: grid;
@@ -3615,7 +3570,7 @@ label.required:after {
   justify-items: right;
 }
 
-#members .members-data-section .member-data-item .kick-user {
+#members .members-data-section .data-item.member .kick-user {
   -ms-grid-row: 1;
   -ms-grid-row-span: 2;
   grid-row: 1/3;
@@ -3625,7 +3580,7 @@ label.required:after {
   padding: calc(0.2em + 4px) 0;
 }
 
-#members .members-data-section .member-data-item .kick-user span {
+#members .members-data-section .data-item.member .kick-user span {
   margin-bottom: 0.4rem;
 }
 
@@ -3642,8 +3597,8 @@ label.required:after {
   width: 100%;
 }
 
-#tests .tests-data-section .tests-data-properties,
-#tests .tests-data-section .tests-data-item {
+#tests .tests-data-section .data-properties.test,
+#tests .tests-data-section .data-item.test {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 6rem 3rem 1fr;
@@ -3657,58 +3612,58 @@ label.required:after {
 }
 
 @media screen and (min-width: 360px) {
-  #tests .tests-data-section .tests-data-properties,
-  #tests .tests-data-section .tests-data-item {
+  #tests .tests-data-section .data-properties.test,
+  #tests .tests-data-section .data-item.test {
     -ms-grid-columns: 9.6rem 4rem 1fr;
         grid-template-columns: 9.6rem 4rem 1fr;
   }
 }
 
 @media screen and (min-width: 576px) {
-  #tests .tests-data-section .tests-data-properties,
-  #tests .tests-data-section .tests-data-item {
+  #tests .tests-data-section .data-properties.test,
+  #tests .tests-data-section .data-item.test {
     -ms-grid-columns: 15rem 4rem 1fr;
         grid-template-columns: 15rem 4rem 1fr;
   }
 }
 
 @media screen and (min-width: 672px) {
-  #tests .tests-data-section .tests-data-properties,
-  #tests .tests-data-section .tests-data-item {
+  #tests .tests-data-section .data-properties.test,
+  #tests .tests-data-section .data-item.test {
     -ms-grid-columns: 13rem 3rem 1fr;
         grid-template-columns: 13rem 3rem 1fr;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #tests .tests-data-section .tests-data-properties,
-  #tests .tests-data-section .tests-data-item {
+  #tests .tests-data-section .data-properties.test,
+  #tests .tests-data-section .data-item.test {
     -ms-grid-columns: 16rem 4rem 1fr;
         grid-template-columns: 16rem 4rem 1fr;
   }
 }
 
-#tests .tests-data-section .tests-data-properties > *,
-#tests .tests-data-section .tests-data-item > * {
+#tests .tests-data-section .data-properties.test > *,
+#tests .tests-data-section .data-item.test > * {
   margin: auto;
 }
 
-#tests .tests-data-section .tests-data-item {
+#tests .tests-data-section .data-item.test {
   border: 1px solid #ccc;
   border-radius: 0.2rem;
 }
 
-#tests .tests-data-section .tests-data-item > span {
+#tests .tests-data-section .data-item.test > span {
   padding: calc(0.2em + 4px) 0;
 }
 
-#tests .tests-data-section .tests-data-item .test-name {
+#tests .tests-data-section .data-item.test .test-name {
   font-weight: 500;
   text-align: center;
   overflow-wrap: break-word;
 }
 
-#tests .tests-data-section .tests-data-item .test-action {
+#tests .tests-data-section .data-item.test .test-action {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3720,7 +3675,7 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #tests .tests-data-section .tests-data-item .test-action {
+  #tests .tests-data-section .data-item.test .test-action {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
@@ -3731,13 +3686,13 @@ label.required:after {
   }
 }
 
-#tests .tests-data-section .tests-data-item .test-action .btn {
+#tests .tests-data-section .data-item.test .test-action .btn {
   text-align: center;
   margin: 0.2rem 0.4rem;
 }
 
 @media screen and (min-width: 672px) {
-  #tests .tests-data-section .tests-data-item .test-action .btn {
+  #tests .tests-data-section .data-item.test .test-action .btn {
     margin: auto 0.4rem;
   }
 }
@@ -3750,8 +3705,8 @@ label.required:after {
   width: 100%;
 }
 
-#resolve-reports .reports-data-properties,
-#resolve-reports .report-data-item {
+#resolve-reports .data-properties,
+#resolve-reports .data-item {
   width: 100%;
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
@@ -3770,20 +3725,20 @@ label.required:after {
   padding: 0.2rem 0.8rem;
 }
 
-#resolve-reports .reports-data-properties > span,
-#resolve-reports .report-data-item > span {
+#resolve-reports .data-properties > span,
+#resolve-reports .data-item > span {
   padding: calc(0.2em + 4px) 0;
 }
 
-#resolve-reports .report-data-item {
+#resolve-reports .data-item {
   -ms-grid-rows: auto auto;
       grid-template-rows: auto auto;
   border: 1px solid #ccc;
   border-radius: 0.2rem;
 }
 
-#resolve-reports .report-data-item .report-name,
-#resolve-reports .report-data-item .report-name-edit {
+#resolve-reports .data-item .report-name,
+#resolve-reports .data-item .report-name-edit {
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1/2;
@@ -3792,13 +3747,13 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .report-data-item .report-name-edit {
+#resolve-reports .data-item .report-name-edit {
   width: 100%;
   font-size: 0.8rem;
 }
 
-#resolve-reports .report-data-item .report-url,
-#resolve-reports .report-data-item .report-url-edit {
+#resolve-reports .data-item .report-url,
+#resolve-reports .data-item .report-url-edit {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
@@ -3808,16 +3763,16 @@ label.required:after {
   font-size: 0.8rem;
 }
 
-#resolve-reports .report-data-item .report-url {
+#resolve-reports .data-item .report-url {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 
-#resolve-reports .report-data-item .report-url-edit {
+#resolve-reports .data-item .report-url-edit {
   width: 100%;
 }
 
-#resolve-reports .report-data-item .report-reason {
+#resolve-reports .data-item .report-reason {
   -ms-grid-column: 3;
   -ms-grid-column-span: 1;
   grid-column: 3/4;
@@ -3826,7 +3781,7 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .report-data-item .report-additional-info {
+#resolve-reports .data-item .report-additional-info {
   -ms-grid-column: 4;
   -ms-grid-column-span: 1;
   grid-column: 4/5;
@@ -3835,7 +3790,7 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .report-data-item .report-number {
+#resolve-reports .data-item .report-number {
   -ms-grid-column: 5;
   -ms-grid-column-span: 1;
   grid-column: 5/6;
@@ -3844,7 +3799,7 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .report-data-item .report-action {
+#resolve-reports .data-item .report-action {
   -ms-grid-column: 6;
   -ms-grid-column-span: 1;
   grid-column: 6/7;
@@ -3853,8 +3808,8 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .report-data-item .report-action,
-#resolve-reports .report-data-item .report-edit-buttons {
+#resolve-reports .data-item .report-action,
+#resolve-reports .data-item .report-edit-buttons {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3868,7 +3823,7 @@ label.required:after {
           justify-content: space-evenly;
 }
 
-#resolve-reports .report-data-item .report-image {
+#resolve-reports .data-item .report-image {
   -ms-grid-column: 1;
   -ms-grid-column-span: 6;
   grid-column: 1/7;
@@ -3880,23 +3835,23 @@ label.required:after {
   position: relative;
 }
 
-#resolve-reports .report-data-item .report-image .btn {
+#resolve-reports .data-item .report-image .btn {
   margin: 1rem;
   position: absolute;
   top: 0;
   right: 0;
 }
 
-#resolve-reports .report-data-item .report-image .btn > img {
+#resolve-reports .data-item .report-image .btn > img {
   -webkit-filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
           filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
 }
 
-#resolve-reports .report-data-item .report-image > img {
+#resolve-reports .data-item .report-image > img {
   height: 100%;
 }
 
-#resolve-reports .report-data-item .text-field {
+#resolve-reports .data-item .text-field {
   max-width: 100%;
   width: 100%;
   resize: none;
@@ -3906,18 +3861,18 @@ label.required:after {
   padding: 0.32em 0.4em;
 }
 
-#resolve-reports .report-data-item .custom-select-wrapper .custom-select-main {
+#resolve-reports .data-item .custom-select-wrapper .custom-select-main {
   height: 1.96em;
   padding: 0.32em 0.4em;
 }
 
-#resolve-reports .report-data-item .custom-select-wrapper .custom-options {
+#resolve-reports .data-item .custom-select-wrapper .custom-options {
   max-height: 200px;
   padding: 0.3em 0.32em;
 }
 
-#resolve-reports .reports-data-properties > *,
-#resolve-reports .report-data-item > *:not(.report-image) {
+#resolve-reports .data-properties > *,
+#resolve-reports .data-item > *:not(.report-image) {
   text-align: center;
 }
 
@@ -4363,8 +4318,8 @@ label.required:after {
   height: 1.4em;
 }
 
-#naturals .naturals-data-properties,
-#naturals .natural-data-item {
+#naturals .data-properties,
+#naturals .data-item {
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
@@ -4381,52 +4336,52 @@ label.required:after {
 }
 
 @media screen and (min-width: 672px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
+  #naturals .data-properties,
+  #naturals .data-item {
     -ms-grid-columns: 10.2rem 7.2rem 7.2rem 1fr;
         grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
   }
 }
 
 @media screen and (min-width: 768px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
+  #naturals .data-properties,
+  #naturals .data-item {
     -ms-grid-columns: 12rem 8.8rem 8.8rem 1fr;
         grid-template-columns: 12rem 8.8rem 8.8rem 1fr;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
+  #naturals .data-properties,
+  #naturals .data-item {
     -ms-grid-columns: 16rem 10rem 10rem 1fr;
         grid-template-columns: 16rem 10rem 10rem 1fr;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  #naturals .naturals-data-properties,
-  #naturals .natural-data-item {
+  #naturals .data-properties,
+  #naturals .data-item {
     -ms-grid-columns: 20rem 10.8rem 10.8rem 1fr;
         grid-template-columns: 20rem 10.8rem 10.8rem 1fr;
   }
 }
 
-#naturals .naturals-data-properties > *,
-#naturals .natural-data-item > * {
+#naturals .data-properties > *,
+#naturals .data-item > * {
   width: 100%;
   text-align: center;
 }
 
-#naturals .naturals-data-properties > * .text-field,
-#naturals .natural-data-item > * .text-field {
+#naturals .data-properties > * .text-field,
+#naturals .data-item > * .text-field {
   max-width: 100%;
 }
 
-#naturals .naturals-data-properties > * .normal-buttons,
-#naturals .naturals-data-properties > * .rename-buttons,
-#naturals .natural-data-item > * .normal-buttons,
-#naturals .natural-data-item > * .rename-buttons {
+#naturals .data-properties > * .normal-buttons,
+#naturals .data-properties > * .rename-buttons,
+#naturals .data-item > * .normal-buttons,
+#naturals .data-item > * .rename-buttons {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4438,23 +4393,23 @@ label.required:after {
           justify-content: center;
 }
 
-#naturals .naturals-data-properties > * .normal-buttons .btn,
-#naturals .naturals-data-properties > * .rename-buttons .btn,
-#naturals .natural-data-item > * .normal-buttons .btn,
-#naturals .natural-data-item > * .rename-buttons .btn {
+#naturals .data-properties > * .normal-buttons .btn,
+#naturals .data-properties > * .rename-buttons .btn,
+#naturals .data-item > * .normal-buttons .btn,
+#naturals .data-item > * .rename-buttons .btn {
   margin: auto 0.4rem;
 }
 
 @media screen and (min-width: 960px) {
-  #naturals .naturals-data-properties > * .normal-buttons .btn,
-  #naturals .naturals-data-properties > * .rename-buttons .btn,
-  #naturals .natural-data-item > * .normal-buttons .btn,
-  #naturals .natural-data-item > * .rename-buttons .btn {
+  #naturals .data-properties > * .normal-buttons .btn,
+  #naturals .data-properties > * .rename-buttons .btn,
+  #naturals .data-item > * .normal-buttons .btn,
+  #naturals .data-item > * .rename-buttons .btn {
     margin: auto 0.8rem;
   }
 }
 
-#naturals .naturals-data-properties > * {
+#naturals .data-properties > * {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4466,17 +4421,17 @@ label.required:after {
           align-items: center;
 }
 
-#naturals .naturals-data-properties > * span {
+#naturals .data-properties > * span {
   padding-left: 1.1em;
 }
 
 @media screen and (min-width: 960px) {
-  #naturals .naturals-data-properties > * span {
+  #naturals .data-properties > * span {
     padding-left: 1.8em;
   }
 }
 
-#naturals .naturals-data-properties > * .sort-buttons {
+#naturals .data-properties > * .sort-buttons {
   margin-left: 0.2rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4488,7 +4443,7 @@ label.required:after {
 }
 
 @media screen and (min-width: 960px) {
-  #naturals .naturals-data-properties > * .sort-buttons {
+  #naturals .data-properties > * .sort-buttons {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
@@ -4496,14 +4451,14 @@ label.required:after {
   }
 }
 
-#naturals .naturals-data-properties > * .btn {
+#naturals .data-properties > * .btn {
   width: 0.72em;
   height: 0.72em;
   position: relative;
   top: 1px;
 }
 
-#naturals .naturals-data-properties > * .btn img {
+#naturals .data-properties > * .btn img {
   position: relative;
   bottom: 3px;
 }

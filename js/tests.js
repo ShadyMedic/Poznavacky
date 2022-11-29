@@ -64,7 +64,7 @@ function newTestConfirm()
                     {
                         //zaískání informací z data.newGroupData a jejich zobrazení v tabulce v DOM
                         let groupData = data.newGroupData;
-                        let groupDomItem = $('#test-data-item-template').html();
+                        let groupDomItem = $('#test.data-item-template').html();
 
                         groupDomItem = groupDomItem.replace(/{id}/g, groupData.id);
                         groupDomItem = groupDomItem.replace(/{name}/g, groupData.name);
@@ -93,7 +93,7 @@ function newTestConfirm()
  */
 function deleteTest(event)
 {
-    let $test = $(event.target).closest(".tests-data-item");
+    let $test = $(event.target).closest(".test.data-item");
     let name = $test.attr('data-group-name');
 
     let confirmMessage = "Opravdu chceš trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje, ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!";

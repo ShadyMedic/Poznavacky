@@ -3,10 +3,7 @@
 #members,
 #tests,
 #naturals {
-    .user-data-item,
-    .class-data-item,
-    .natural-data-item,
-    .member-data-item {
+    .data-item {
         margin: 0.6rem;
         padding: 0.4rem 0.8rem;
         border: 1px solid #ccc;
@@ -19,8 +16,8 @@
             padding: calc(0.4em + 4px) 0;
         }
     }
-    .user-data-item,
-    .class-data-item {
+    .data-item.class,
+    .data-item.user {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto;
         @media screen and (min-width: $smallTablet) {
@@ -213,7 +210,7 @@
     .members-data-section {
         margin: auto;
         max-width: 800px;
-        .member-data-item {
+        .data-item.member {
             grid-template-columns: 10rem 1fr;
             grid-template-rows: auto auto;
             @media screen and (min-width: $smallTablet) {
@@ -247,8 +244,8 @@
     }
     .tests-data-section {
         width: 100%;
-        .tests-data-properties,
-        .tests-data-item {
+        .data-properties.test,
+        .data-item.test {
             display: grid;
             grid-template-columns: 6rem 3rem 1fr;
             @media screen and (min-width: $smallMobile) {
@@ -271,7 +268,7 @@
                 margin: auto;
             }
         }
-        .tests-data-item {
+        .data-item.test {
             border: 1px solid #ccc;
             border-radius: 0.2rem;
             > span {
@@ -306,8 +303,8 @@
 }
 #resolve-reports {
     width: 100%;
-    .reports-data-properties,
-    .report-data-item {
+    .data-properties,
+    .data-item {
         width: 100%;
         min-width: fit-content;
         display: grid;
@@ -321,7 +318,7 @@
             padding: calc(0.2em + 4px) 0;
         }
     }
-    .report-data-item {
+    .data-item {
         grid-template-rows: auto auto;
         border: 1px solid #ccc;
         border-radius: 0.2rem;
@@ -407,8 +404,8 @@
             }
         }
     }
-    .reports-data-properties > *,
-    .report-data-item > *:not(.report-image) {
+    .data-properties > *,
+    .data-item > *:not(.report-image) {
         text-align: center;
     }
 }
@@ -662,8 +659,8 @@
             height: 1.4em;
         }
     }
-    .naturals-data-properties,
-    .natural-data-item {
+    .data-properties,
+    .data-item {
         min-width: fit-content;
         align-items: center;
         justify-items: center;
@@ -684,8 +681,8 @@
             grid-template-columns: 20rem 10.8rem 10.8rem 1fr;
         }
     }
-    .naturals-data-properties > *,
-    .natural-data-item > * {
+    .data-properties > *,
+    .data-item > * {
         width: 100%;
         text-align: center;
         .text-field {
@@ -705,7 +702,7 @@
             }
         }
     }
-    .naturals-data-properties > * {
+    .data-properties > * {
         display: flex;
         justify-content: center;
         align-items: center;

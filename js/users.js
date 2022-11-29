@@ -16,11 +16,11 @@ $(function()
  */
 function editUser(event)
 {
-    let $user = $(event.target).closest(".user-data-item");
+    let $user = $(event.target).closest(".user.data-item");
 
     //dočasné znemožnění ostatních akcí u všech uživatelů
-    $(".user-data-item").not($user).find(".user-action .btn").not(".disabled").addClass("temp");
-    $(".user-data-item").not($user).find(".user-action .btn").addClass("disabled");
+    $(".user.data-item").not($user).find(".user-action .btn").not(".disabled").addClass("temp");
+    $(".user.data-item").not($user).find(".user-action .btn").addClass("disabled");
 
     //uložení současných hodnot
     for (let i = 0; i <= 3; i++)
@@ -40,11 +40,11 @@ function editUser(event)
  */
 function editUserCancel(event)
 {
-    let $user = $(event.target).closest(".user-data-item");
+    let $user = $(event.target).closest(".user.data-item");
 
     //opětovné zapnutí ostatních tlačítek akcí
-    $(".user-data-item").not($user).find(".user-action .btn.temp").removeClass("disabled");
-    $(".user-data-item").not($user).find(".user-action .btn.temp").removeClass("temp");
+    $(".user.data-item").not($user).find(".user-action .btn.temp").removeClass("disabled");
+    $(".user.data-item").not($user).find(".user-action .btn.temp").removeClass("temp");
 
     //obnova hodnot vstupních polí
     for (let i = 0; i <= 3; i++)
@@ -64,7 +64,7 @@ function editUserCancel(event)
  */
 function editUserConfirm(event)
 {
-    let $user = $(event.target).closest(".user-data-item");
+    let $user = $(event.target).closest(".user.data-item");
     let userId = $user.attr("data-user-id")
 
     //uložení nových hodnot
@@ -105,7 +105,7 @@ function editUserConfirm(event)
  */
 function deleteUser(event)
 {
-    let $user = $(event.target).closest(".user-data-item");
+    let $user = $(event.target).closest(".user.data-item");
     let userId = $user.attr("data-user-id")
     let userName = $user.attr("data-user-name")
 

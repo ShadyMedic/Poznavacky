@@ -1,10 +1,10 @@
 <div id="manage-wrapper">
     <section class="class-data-section">
-        <div class="class-data-item">
+        <div class="class data-item">
             <span class='class-property-name'>ID třídy</span>
             <span class='class-property-value' id="id"><?= $classId ?></span>
         </div>
-        <div class="class-data-item">
+        <div class="class data-item">
             <span class='class-property-name'>Název třídy</span>
             <span class='class-property-value' id="name"><?= $className ?></span>
             <div class='class-property-action'>
@@ -20,7 +20,7 @@
                 <button class="btn inline black" id="change-class-name-cancel-button">Zrušit</button>
             </div>
         </div>
-        <div class="class-data-item">
+        <div class="class data-item">
             <span class='class-property-name'>Stav třídy</span>
             <span class='class-property-value' id="status">
                 <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>Veřejná<?php endif ?>

@@ -1,12 +1,12 @@
 <div id="tests-wrapper">
     <section class="tests-data-section">
-        <div class="tests-data-properties">
+        <div class="test data-properties">
             <span class='test-name'>Název</span>
             <span class='test-parts'>Části</span>
             <span class='test-action'>Akce</span>
         </div>
         <?php foreach ($groups as $group) : ?>
-        <div class='tests-data-item' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>
+        <div class='test data-item' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>
             <span class='test-name'><?= $group->getName() ?></span>
             <span class='test-parts'><?= $group->getPartsCount() ?></span>
             <div class='test-action'>
@@ -30,8 +30,8 @@
     </section>
 </div>
 
-<div id="test-data-item-template" style="display: none">
-    <div class='tests-data-item'  data-group-id='{id}' data-group-name='{name}'>
+<div id="test data-item-template" style="display: none">
+    <div class='test data-item'  data-group-id='{id}' data-group-name='{name}'>
         <span class='test-name'>{name}</span>
         <span class='test-parts'>{parts}</span>
         <div class='test-action'>
