@@ -3562,11 +3562,28 @@ label.required:after {
   }
 }
 
+#manage .custom-checkbox-wrapper .checkmark {
+  background-color: #fff;
+}
+
+#manage .custom-checkbox-wrapper:hover input ~ .checkmark {
+  background-color: #d8d8d8;
+}
+
+#manage .custom-checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark {
+  background-color: #366e11;
+}
+
 #manage .delete-class-section {
   padding: 0.6rem;
 }
 
 #members #members-wrapper {
+  margin: auto;
+  max-width: 800px;
+}
+
+#members .members-data-section {
   margin: auto;
   max-width: 800px;
 }

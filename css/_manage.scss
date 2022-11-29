@@ -211,6 +211,8 @@
         max-width: 800px;
     }
     .members-data-section {
+        margin: auto;
+        max-width: 800px;
         .member-data-item {
             grid-template-columns: 10rem 1fr;
             grid-template-rows: auto auto;

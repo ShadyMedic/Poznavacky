@@ -1,15 +1,13 @@
+<section class="info-section" style="display: none">
+    <h3>Správa členů třídy</h3>
+    <p>Na této stránce můžeš spravovat členy tvé třídy.</p>
+    <ul class="list">
+        <li>Pokud je tvá třída nastavena jako soukromá nebo uzavřená, mohou třídu používat pouze její členové.</li>
+        <li>Pokud je tvá třída nastavena jako veřejná, je viditelná pro všechny. Můžeš ale nastavit, jestli přidávat obrázky můžou pouze její členové, nebo jakýkoliv uživatel.</li>
+        <li>Uživatel se může stát členem této třídy na základě přijetí pozvánky, kterou můžeš z této stránky odeslat. Pokud je třída nastavena jako soukromá, může se uživatel stát členem také zadáním vstupního kódu.</li>
+    </ul>
+</section>
 <div id='members-wrapper'>
-    <section class="info-section">
-        <h3>Správa členů třídy</h3>
-        <p>Na této stránce můžeš spravovat členy tvé třídy.</p>
-        <p>Pokud je tvá třída není nastavena jako veřejná, pouze tito uživatelé mohou tvou třídu používat.</p>
-        <p>Pokud je tvá třída nastavena jako veřejná, mohou pouze tito uživatelé přidávat do poznávaček obrázky, za
-        předpokladu, že jsi tuto funkci pro ostatní uživatele vypnul při nastavování třídy jako veřejné.</p>
-        <p>Uživatel se může stát členem této třídy zadáním vstupního kódu (pokud jsi jej nastavil), nebo na základě
-        přijetí pozvánky, kterou můžeš z této stránky odeslat.</p>
-        <p>Pokud tuto třídu někdy v budoucnu nastavíš jako soukromou nebo uzamčenou, všichni uživatelé, kteří nejsou
-        na tomto seznamu, k ní ztratí přístup.</p>
-    </section>
     <section class="members-data-section">
         <?php foreach ($members as $member) : ?>
         <div class="member-data-item" data-member-id="<?= $member["id"] ?>">
