@@ -418,18 +418,6 @@ class ClassObject extends Folder
     {
         $this->loadIfNotLoaded($this->id);
 
-        //Zkontroluj, zda tato třída není veřejná
-        if ($this->status === self::CLASS_STATUS_PUBLIC) {
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele se jménem {invitedUserName}, avšak daná třída je nastavena jako veřejná',
-                array(
-                    'userId' => UserManager::getId(),
-                    'ip' => $_SERVER['REMOTE_ADDR'],
-                    'classId' => $this->getId(),
-                    'invitedUserName' => $userName
-                ));
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS);
-        }
-
         //Konstrukce objektu uživatele
         $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.
             User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.
