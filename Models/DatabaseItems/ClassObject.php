@@ -418,18 +418,6 @@ class ClassObject extends Folder
     {
         $this->loadIfNotLoaded($this->id);
 
-        //Zkontroluj, zda tato třída není veřejná
-        if ($this->status === self::CLASS_STATUS_PUBLIC) {
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil z IP adresy {ip} odeslat pozvánku do třídy s ID {classId} pro uživatele se jménem {invitedUserName}, avšak daná třída je nastavena jako veřejná',
-                array(
-                    'userId' => UserManager::getId(),
-                    'ip' => $_SERVER['REMOTE_ADDR'],
-                    'classId' => $this->getId(),
-                    'invitedUserName' => $userName
-                ));
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_INVITE_USER_PUBLIC_CLASS);
-        }
-
         //Konstrukce objektu uživatele
         $result = Db::fetchQuery('SELECT '.User::COLUMN_DICTIONARY['id'].','.User::COLUMN_DICTIONARY['name'].','.
             User::COLUMN_DICTIONARY['email'].','.User::COLUMN_DICTIONARY['lastLogin'].','.
@@ -557,18 +545,6 @@ class ClassObject extends Folder
     public function removeMember(int $userId): bool
     {
         $this->loadIfNotLoaded($this->status);
-
-        if ($this->status == self::CLASS_STATUS_PUBLIC) {
-            //Nelze odstranit člena z veřejné třídy
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak tato třída je nastavena jako veřejná',
-                array(
-                    'userId' => UserManager::getId(),
-                    'classId' => $this->getId(),
-                    'kickedUserId' => $userId,
-                    'ip' => $_SERVER['REMOTE_ADDR']
-                ));
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS);
-        }
 
         $this->loadIfNotLoaded($this->admin);
 
