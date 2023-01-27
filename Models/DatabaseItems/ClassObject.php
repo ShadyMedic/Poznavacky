@@ -558,18 +558,6 @@ class ClassObject extends Folder
     {
         $this->loadIfNotLoaded($this->status);
 
-        if ($this->status == self::CLASS_STATUS_PUBLIC) {
-            //Nelze odstranit člena z veřejné třídy
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil ze třídy s ID {classId} odebrat uživatele s ID {kickedUserId} z IP adresy {ip}, avšak tato třída je nastavena jako veřejná',
-                array(
-                    'userId' => UserManager::getId(),
-                    'classId' => $this->getId(),
-                    'kickedUserId' => $userId,
-                    'ip' => $_SERVER['REMOTE_ADDR']
-                ));
-            throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_KICK_USER_PUBLIC_CLASS);
-        }
-
         $this->loadIfNotLoaded($this->admin);
 
         if ($userId === $this->admin->getId()) {
