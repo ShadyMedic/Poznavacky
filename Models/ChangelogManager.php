@@ -48,6 +48,11 @@ class ChangelogManager
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, self::GITHUB_API_RELEASES_URL.self::RELEASE_IDS[self::LATEST_VERSION]);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        // fix chyby s SSL certifikátem - pouze pro vývoj stránek
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
         curl_setopt($curl, CURLOPT_HTTPGET, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('User-Agent: Poznavacky'));
         

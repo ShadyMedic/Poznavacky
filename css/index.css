@@ -1317,7 +1317,7 @@ label.required:after {
   margin: 0 0 0.8rem 0;
 }
 
-#index #index-login-section .user-data {
+#index #index-login-section .user.data {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1327,21 +1327,21 @@ label.required:after {
           flex-direction: column;
 }
 
-#index #index-login-section .user-data label {
+#index #index-login-section .user.data label {
   font-size: 0.9rem;
 }
 
-#index #index-login-section .user-data label,
-#index #index-login-section .user-data input.text-field {
+#index #index-login-section .user.data label,
+#index #index-login-section .user.data input.text-field {
   margin: 0.12rem 0;
 }
 
-#index #index-login-section .user-data label:not(:nth-of-type(1)),
-#index #index-login-section .user-data .checkbox {
+#index #index-login-section .user.data label:not(:nth-of-type(1)),
+#index #index-login-section .user.data .checkbox {
   margin-top: 0.54rem;
 }
 
-#index #index-login-section .user-data input.text-field {
+#index #index-login-section .user.data input.text-field {
   color: #222;
   font-family: 'Ubuntu', sans-serif;
   background: #eee;
@@ -1349,7 +1349,7 @@ label.required:after {
   padding-bottom: 0.6em;
 }
 
-#index #index-login-section .user-data label.custom-checkbox-wrapper {
+#index #index-login-section .user.data label.custom-checkbox-wrapper {
   margin-top: 0.72rem;
   margin-bottom: 0.54rem;
 }

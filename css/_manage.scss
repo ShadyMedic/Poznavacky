@@ -17,14 +17,14 @@
         }
     }
     .data-item.class,
-    .data-item.user {
+    .data-item.user-property {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto;
         @media screen and (min-width: $smallTablet) {
             grid-template-columns: 11.2rem 13rem 1fr;
             grid-template-rows: auto 1fr;
         }
-        .user-property-action,
+        .user-property.action,
         .class-property-action {
             grid-column: 2/3;
             @media screen and (min-width: $smallTablet) {
@@ -133,7 +133,7 @@
             grid-column-gap: 2rem;
         }
     }
-    .user-image-section {
+    .user.image-section {
         padding: 0.6rem;
         margin: 0 auto;
         width: 90%;
@@ -151,7 +151,7 @@
             }
         }
     }
-    .user-property-action {
+    .user-property.action {
         @media screen and (min-width: $smallTablet) {
             display: flex;
             flex-direction: row-reverse;
@@ -216,7 +216,7 @@
             @media screen and (min-width: $smallTablet) {
                 grid-template-rows: auto 1fr;
             }
-            .member-action {
+            .member.action {
                 text-align: right;
                 display: grid;
                 align-items: center;
