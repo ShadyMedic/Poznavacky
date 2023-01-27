@@ -1,6 +1,7 @@
 var $initialStatus;        //ukládá zvolenou položku v custom select elementu statutu třídy uloženého v databázi
 var initialStatus;      //ukládá status třídy uložený v databázi
 var initialCode;        //ukládá vstupní kód třídy uložený v databázi
+var initialReadOnly;     //ukládá, zda je třída nastavena jako jenom pro čtení
 
 //nastavení URL pro AJAX požadavky
 var ajaxUrl = window.location.href;
@@ -13,6 +14,7 @@ $(function()
     $initialStatus = $("#class-status-select .selected");
     initialStatus = $("#class-status-select .selected").text();
     initialCode = $("#change-class-status-code").val();
+    initialReadonly = $("#public-readonly").is(':checked');
 
     statusChange();
 
@@ -32,7 +34,9 @@ $(function()
     $("#change-class-status-code").on("input", function() {statusChange()})
 
     //event listener změny select boxu stavu třídy
-    $("#class-status-select span").on('DOMSubtreeModified',function(){statusChange()});
+    $("#class-status-select span").on('DOMSubtreeModified',function() {statusChange()});
+
+    $("#public-readonly").on('change',function() {statusChange()});
 })
 
 /**
@@ -116,56 +120,45 @@ function changeClassStatus()
  */
 function statusChange()
 {
-    //status třídy se nezměnil
-    if ($("#class-status-select .selected").text() === initialStatus)
+    if (!changeWasMade())
     {
-        //třída není jako soukromá
-        if ($("#class-status-select .selected").text() !== "Soukromá")
-        {
-            //není možné změnit vstupní kód -> skrytí
-            $("#change-class-status-confirm-button").addClass("disabled");
-            hideClassStatusCode();
-            return;
-        }
-    }
-
-    //status třídy se změnil
-    else
-    {
-        //třída není nastavena jako soukromá
-        if ($("#class-status-select .selected").text() !== "Soukromá")
-        {
-            //není možné nastavit vstupní kód -> skrytí
-            $("#change-class-status-confirm-button").removeClass("disabled");
-            hideClassStatusCode();
-            return;
-        }
-    }
-
-    //sem se program dostane, pouze pokud je třída nastavována jako soukromá -> zobrazení vstupního kódu
-    showClassStatusCode();
-
-    //kód není dlouhý 4 znaky nebo obsahuje písmena    
-    if ($("#change-class-status-code").val().length !== 4 || parseInt($("#change-class-status-code").val()) != $("#change-class-status-code").val())
-    {
-        //kód není platný -> skrytí tlačítka pro uložení
         $("#change-class-status-confirm-button").addClass("disabled");
     }
+    else 
+    {
+        $("#change-class-status-confirm-button").removeClass("disabled");
+    }
 
-    //kód je platný
+    //třída není jako soukromá
+    if ($("#class-status-select .selected").text() !== "Soukromá")
+    {
+        //není možné změnit vstupní kód -> skrytí
+        hideClassStatusCode();
+    }
+    //třída je jako soukromá
     else
     {
-        //kód se změnil
-        if ($("#change-class-status-code").val() !== initialCode)
+        showClassStatusCode();
+
+        //kód není dlouhý 4 znaky nebo obsahuje písmena    
+        if ($("#change-class-status-code").val().length !== 4 || parseInt($("#change-class-status-code").val()) != $("#change-class-status-code").val())
         {
-            $("#change-class-status-confirm-button").removeClass("disabled");
-        }
-        //kód se nezměnil a status také ne
-        else if ($("#class-status-select .selected").text() === initialStatus)
-        {
+            //kód není platný -> skrytí tlačítka pro uložení
             $("#change-class-status-confirm-button").addClass("disabled");
         }
     }
+
+    //třída není jako veřejná
+    if ($("#class-status-select .selected").text() !== "Veřejná")
+    {
+        //není možné nastavit readonly -> skrytí
+        hidePublicReadonlyCheckbox();
+    }
+    //třída je jako veřejná
+    else
+    {
+        showPublicReadonlyCheckbox();
+    }    
 }
 
 /**
@@ -176,6 +169,7 @@ function changeClassStatusConfirm()
 {
     let newStatus = $("#class-status-select .selected").text();
     let newCode = $("#change-class-status-code").val();
+    let newReadonly = $("#public-readonly").is(':checked');
 
     let confirmMessage;
     switch (newStatus)
@@ -196,23 +190,27 @@ function changeClassStatusConfirm()
     }
     
     newConfirm(confirmMessage, "Potvrdit", "Zrušit", function(confirm) {
-        if (confirm) changeClassStatusFinal(newStatus, newCode);
+        if (confirm) changeClassStatusFinal(newStatus, newCode, newReadonly);
         else return;
     })
 }
+
+//TODO - zpřístupnit správu členů v backendu!! (tlačítko se zobrazuje, ale háže to serverovou chybu)
 
 /**
  * Funkce odesílající požadavek na změnu statutu třídy
  * @param {string} newStatus Nový status třídy (veřejná/soukromá/uzamčená)
  * @param {int} newCode Nový kód třídy
+ * @param {bool} newReadonly Nové nastavení readonly (zda mohou obrázky přidávat i nečlenové třídy)
  */
-function changeClassStatusFinal(newStatus, newCode)
+function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReadonly
 {
     $.post(ajaxUrl,
         {
             action: 'update access',
             newStatus: newStatus,
-            newCode: newCode
+            newCode: newCode,
+            newReadonly: newReadonly
         },
         function (response, status)
         {
@@ -223,21 +221,12 @@ function changeClassStatusFinal(newStatus, newCode)
                     {
                         initialStatus = newStatus;
                         initialCode = newCode;
+                        initialReadonly = newReadonly;
 
                         //aktualizace zobrazovaných údajů
                         $("#status").text(newStatus);
                         $("#class-status-select .custom-option").removeClass("selected");
                         $("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
-                        
-                        //skrytí nastavení členů, pokud byla třída změněna na veřejnou
-                        if (newStatus === "Veřejná")
-                        {
-                            $("#members-management-button").hide();
-                        }
-                        else
-                        {
-                            $("#members-management-button").show();
-                        }
                         
                         //reset HTML
                         $("#change-class-status-button").show();
@@ -269,8 +258,27 @@ function changeClassStatusCancel()
     $initialStatus.addClass("selected");
     $("#class-status-select .custom-select-main span").text(initialStatus);
     $("#change-class-status-code").val(initialCode);
+    $("#public-readonly").prop('checked', initialReadonly);
 
     statusChange();
+}
+
+/**
+ * Funkce zjišťující, jestli se změnilo něco ohledně statutu třídy
+ * @returns TRUE, pokud se změnilo něco ohledně statutu třídy
+ */
+function changeWasMade()
+{
+    let changeWasMade = false;
+
+    if ($("#class-status-select .selected").text() != initialStatus ||
+        $("#change-class-status-code").val() != initialCode ||
+        $("#public-readonly").is(":checked") != initialReadonly)
+    {
+        changeWasMade = true
+    }
+
+    return changeWasMade;
 }
 
 /**
@@ -282,11 +290,27 @@ function hideClassStatusCode()
 }
 
 /**
+ * Funkce skrývající readonly checkbox
+ */
+function hidePublicReadonlyCheckbox()
+{
+    $("#public-readonly").parent().hide();
+}
+
+/**
  * Funkce zobrazující pole pro zadání kódu třídy
  */
 function showClassStatusCode()
 {
     $("#change-class-status-code, label[for='change-class-status-code']").show();
+}
+
+/**
+ * Funkce zobrazující readonly checkbox
+ */
+function showPublicReadonlyCheckbox()
+{
+    $("#public-readonly").parent().show();
 }
 
 /**

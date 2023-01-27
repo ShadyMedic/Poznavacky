@@ -5,6 +5,8 @@ ajaxUrl = ajaxUrl.replace('/manage/members', '/class-update'); //Nahraď neAJAX 
 
 $(function()
 {
+    $(".show-info-button").show();
+
     //event listenery tlačítek
     $(".kick-user-button").click(function(event) {kickMember(event)})
     $(".kick-user-confirm-button").click(function(event) {kickMemberConfirm(event)})

@@ -39,6 +39,7 @@ class ManageController extends SynchronousController
         self::$data['className'] = $_SESSION['selection']['class']->getName();
         self::$data['classStatus'] = $_SESSION['selection']['class']->getStatus();
         self::$data['classCode'] = $_SESSION['selection']['class']->getCode();
+        self::$data['classReadOnly'] = $_SESSION['selection']['class']->isReadOnly();
     }
 }
 

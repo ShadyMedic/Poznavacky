@@ -52,13 +52,17 @@
                 </div>
                 <label for="change-class-status-code">Vstupní kód</label>
                 <input id='change-class-status-code' type="number" maxlength=4 value="<?= $classCode ?>" class="text-field"/>
+                <label class="custom-checkbox-wrapper">Pouze členové třídy mohou přidávat obrázky <!-- TODO na tento checkbox to navázat -->
+                    <input id="public-readonly" type="checkbox" name='public_readonly' <?php if ($classReadOnly) :?>checked <?php endif ?>/>
+                    <div class="checkmark"></div>
+                </label>
                 <button id="change-class-status-confirm-button" class="btn border-btn non-transparent black submit-button">Aktualizovat</button>
                 <button id="change-class-status-cancel-button" class="btn inline black">Zrušit</button>
             </div>
         </div>
     </section>
     <section class="class-buttons-section">
-        <a class="btn border-btn non-transparent black" id="members-management-button" href="<?= $baseUrl ?>/members" <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>style="display:none"<?php endif ?>>Spravovat členy třídy</a>
+        <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/members">Spravovat členy třídy</a>
         <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/tests">Spravovat poznávačky</a>
         <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/naturals">Spravovat přírodniny</a>
     </section>

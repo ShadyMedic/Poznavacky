@@ -340,6 +340,16 @@ class RooterController extends SynchronousController
                             $subCheckResult = false;
                         }
                         break;
+                    case 'classWritable':
+                        if (!($aChecker->checkClass() && !$_SESSION['selection']['class']->isReadOnly())) {
+                            $subCheckResult = false;
+                        }
+                        break;
+                    case 'classMember':
+                        if (!($aChecker->checkClass() && $_SESSION['selection']['class']->isMember(UserManager::getId()))) {
+                            $subCheckResult = false;
+                        }
+                        break;
                     case 'classAdmin':
                         if (!($aChecker->checkClass() &&
                               $_SESSION['selection']['class']->checkAdmin(UserManager::getId()))) {

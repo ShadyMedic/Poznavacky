@@ -31,6 +31,7 @@ class ClassObject extends Folder
         'status' => 'status',
         'code' => 'kod',
         'groupsCount' => 'poznavacky',
+        'readonly' => 'pouze_pro_cteni',
         'admin' => 'spravce'
     );
 
@@ -41,6 +42,7 @@ class ClassObject extends Folder
     protected const DEFAULT_VALUES = array(
         'status' => self::CLASS_STATUS_PRIVATE,
         'code' => 0,
+        'readonly' => 0,
         'groups' => array(),
         'groupsCount' => 0,
         'members' => array()//,
@@ -62,6 +64,7 @@ class ClassObject extends Folder
 
     protected $status;
     protected $code;
+    protected $readonly;
     protected $groupsCount;
     protected $admin;
 
@@ -80,6 +83,7 @@ class ClassObject extends Folder
      * @param string|undefined|null $status Status přístupnosti třídy (musí být jedna z konstant této třídy začínající
      *     na CLASS_STATUS_)
      * @param int|undefined|null $code Přístupový kód třídy
+     * @param bool|undefined|null $readonly Zda mohou do třídy přidávat obrázky i její nečlenové (TRUE, pokud ne)
      * @param Group[]|undefined|null $groups Pole poznávaček patřících do této třídy jako objekty
      * @param int|undefined|null $groupsCount Počet poznávaček patřících do této třídy (při vyplnění parametru $groups
      *     je ignorováno a je použita délka poskytnutého pole)
@@ -88,7 +92,7 @@ class ClassObject extends Folder
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($name = null, $url = null, $status = null, $code = null, $groups = null,
+    public function initialize($name = null, $url = null, $status = null, $code = null, $readonly = null, $groups = null,
                                $groupsCount = null, $members = null, $admin = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
@@ -103,6 +107,9 @@ class ClassObject extends Folder
         }
         if ($code === null) {
             $code = $this->code;
+        }
+        if ($readonly === null) {
+            $readonly = $this->readonly;
         }
         if ($groups === null) {
             $groups = $this->groups;
@@ -123,6 +130,7 @@ class ClassObject extends Folder
         $this->url = $url;
         $this->status = $status;
         $this->code = $code;
+        $this->readonly = $readonly;
         $this->groups = $groups;
         $this->groupsCount = $groupsCount;
         $this->members = $members;
@@ -160,6 +168,17 @@ class ClassObject extends Folder
     {
         $this->loadIfNotLoaded($this->code);
         return $this->code;
+    }
+
+    /**
+     * Metoda navracející, zda je třída nastavená pouze pro čtení a zda tak do ní mohou přidávat obrázky pouze členové
+     * (čili uživatelé, kteří mají záznam v tabulce "clenstvi" v důsledku pozvání nebo zadání vstupního kódu).
+     * @return bool|null TRUE, pokud je třída nastavena jako pouze pro čtení
+     */
+    public function isReadOnly(): ?bool
+    {
+        $this->loadIfNotLoaded($this->readonly);
+        return $this->readonly;
     }
 
     /**
@@ -656,6 +675,19 @@ class ClassObject extends Folder
     }
 
     /**
+     * Metoda kontrolující, zda je uživatel se zadaným ID členem v této třídě (tedy zda do ní získal přístup na základě
+     * pozvánky, nebo zadáním vstupního kódu).
+     * @param int $userId ID uživatele ke kontrole
+     * @return bool TRUE, pokud je uživatel členem této třídy, FALSE, pokud ne
+     */
+    public function isMember(int $userId): bool
+    {
+        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM clenstvi WHERE tridy_id = ? AND uzivatele_id = ?;',
+            array($this->id, $userId), false);
+        return ($result['cnt'] === 1);
+    }
+
+    /**
      * Metoda kontrolující, zda je určitý uživatel správcem této třídy
      * Pokud zatím nebyl načten správce této třídy, bude načten z databáze
      * @param int $userId ID ověřovaného uživatele
@@ -842,14 +874,16 @@ class ClassObject extends Folder
     /**
      * Metoda upravující přístupová data této třídy po jejich změně správcem třídy
      * @param string $status Nový status třídy (musí být jedna z konstant této třídy)
-     * @param int|NULL $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked"),
+     * @param int|null $code Nový přístupový kód třídy (nepovinné, pokud je status nastaven na "public" nebo "locked"),
      *     v případě že není typu int nebo NULL, bude vyhozena výjimka signalizující uživatelskou chybu - neplatný
      *     formát vstupního kódu
-     * @return boolean TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
+     * @param bool $readonly Nové nastavené "jen pro čtení" (true, pokud pouze členové třídy, kteří dříve zadali
+     *     vstupní kód třídy, nebo byli pozváni, mohou přidávat obrázky)
+     * @return bool TRUE, pokud jsou přístupová data třídy úspěšně aktualizována
      * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      * @throws DatabaseException
      */
-    public function updateAccessData(string $status, $code): bool
+    public function updateAccessData(string $status, ?int $code, bool $readonly): bool
     {
         //Nastavení kódu na NULL, pokud je třída nastavená na status, ve kterém by neměl smysl
         if ($status === self::CLASS_STATUS_PUBLIC || $status === self::CLASS_STATUS_LOCKED) {
@@ -887,16 +921,19 @@ class ClassObject extends Folder
 
         $this->status = $status;
         $this->code = $code;
+        $this->readonly = $readonly;
 
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['status'].' = ?, '.
-            self::COLUMN_DICTIONARY['code'].' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;',
-            array($status, $code, $this->id), false);
-        (new Logger())->info('Uživatel s ID {userId} změnil stav třídy s ID {classId} na {newStatus} a její kód nastavil na {newCode} z IP adresy {ip}',
+            self::COLUMN_DICTIONARY['code'].' = ?, '.self::COLUMN_DICTIONARY['readonly'].' = ? '.
+            'WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;',
+            array($status, $code, $readonly, $this->id), false);
+        (new Logger())->info('Uživatel s ID {userId} změnil stav třídy s ID {classId} na {newStatus}, její kód nastavil na {newCode} a třídu nastavil jako {readonly} pouze pro čtení z IP adresy {ip}',
             array(
                 'userId' => UserManager::getId(),
                 'classId' => $this->getId(),
                 'newStatus' => $status,
                 'newCode' => $code,
+                'readonly' => ($readonly) ? '' : 'ne',
                 'ip' => $_SERVER['REMOTE_ADDR']
             ));
 

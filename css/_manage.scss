@@ -189,6 +189,17 @@
             }
         }
     }
+    .custom-checkbox-wrapper {
+        .checkmark {
+            background-color: #fff;
+        }
+        &:hover input ~ .checkmark {
+            background-color: #d8d8d8;
+        }
+        input[type="checkbox"]:checked ~ .checkmark {
+            background-color: $greenDark;
+        }
+    }
     .delete-class-section {
         padding: 0.6rem;
     }
@@ -200,6 +211,8 @@
         max-width: 800px;
     }
     .members-data-section {
+        margin: auto;
+        max-width: 800px;
         .member-data-item {
             grid-template-columns: 10rem 1fr;
             grid-template-rows: auto auto;
