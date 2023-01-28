@@ -89,8 +89,6 @@ body .text-field:focus {
   height: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: auto auto 1fr auto;
-      grid-template-rows: auto auto 1fr auto;
 }
 
 header {
@@ -236,19 +234,18 @@ header .logo h1 {
 }
 
 footer {
-  color: white;
-  padding: 0.2rem 1rem;
+  padding: 0.12rem 1rem;
   background: #222;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }
 
 footer .content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -269,8 +266,16 @@ footer .content {
   }
 }
 
+@media screen and (min-width: 672px) {
+  footer .content {
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: end;
+  }
+}
+
 footer .content a, footer .content span {
-  margin: 0.2rem 0.4rem;
+  margin: 0.2rem 0.8rem;
 }
 
 footer .content a:after {

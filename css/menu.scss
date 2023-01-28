@@ -20,16 +20,15 @@
         overflow: hidden;
     }
     .container {
+        grid-template-rows: auto auto auto 1fr auto;
         @media screen and (min-width: $smallTablet) {
             grid-template-columns: auto 1fr;
             grid-template-rows: auto auto 1fr auto auto;
         }
     }
     header {    
-        background: $greenDark;
-        //position: fixed;
+        background: linear-gradient(90deg, $greenDark, $gradientDark);
         width: 100%;
-        //top: 0;
         padding: 0.2rem 0.6rem;
         z-index: 5;
         display: grid;
@@ -42,8 +41,7 @@
             justify-content: start;
         }
         @media screen and (min-width: $smallTablet) {
-            //position: relative;
-            grid-column: 1/3;
+            display: none;
         }
         .logo {
             grid-row: 2/3;
@@ -69,13 +67,35 @@
             }
         }
     }
+    #logo-standalone {
+        display:none; 
+        @media screen and (min-width: $smallTablet) {
+            display: block;
+        }
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        height: 112px;
+        width: 112px;
+        border-radius: 100px;
+        background: linear-gradient(135deg, $greenDark, $gradientDark);
+        img {
+            position: relative;
+            top: 32px;
+            left: 32px;
+            height: 50%;
+            width: 50%;
+            margin: auto;
+        }
+    }
     aside {
         display: none;
         width: 64px;
-        grid-row: 2/5;
+        grid-row: 1/6;
         grid-column: 1/2;
         color: white;
         background: $gray3;
+        padding-top: 104px;
         @media screen and (min-width: $smallTablet) {
             display: flex;
             flex-direction: column;
@@ -89,18 +109,49 @@
             }
         }
     }
+    nav {
+        font-size: 0.8rem;
+        font-weight: normal;
+        padding: 1.2rem 1rem 0.4rem 1rem;
+        margin: 0;
+        @media screen and (min-width: $smallTablet) {
+            padding:  1rem 3rem 1.2rem 0em;
+            grid-row: 1/2;
+            grid-column: 2/3;
+        }
+        > div {
+            background-color: #e0e0e0;
+            padding: 0.6rem 1.2rem;
+            @media screen and (min-width: $smallTablet) {
+                padding: 0.6rem 0.6rem 0.6rem 4rem;
+            }
+            border-radius: 0.6rem;
+        }
+        span:nth-last-child(3) {
+            font-weight: 500;
+        }
+        .show-info-button,
+        .hide-info-button {
+            display: inline-block;
+            height: 1.2rem;
+            width: 1.2rem;
+            position: relative;
+            bottom: -0.2rem;
+            margin-left: 0.2rem;
+        }
+    }
     .wrapper {
         min-width: fit-content;
         padding: 1rem 1rem;
         @media screen and (min-width: $mobile) {
-            padding: 1.6rem 2rem;
+            padding: 1.2rem 2rem;
         }
         @media screen and (min-width: $smallDesktop) {
-            padding:  2.4rem 3rem;
+            padding:  1.6rem 3rem;
         }
     }
     main {
-        grid-row: 2/4;
+        grid-row: 3/5;
         @media screen and (min-width: $smallTablet) {
             grid-column: 2/3;
             overflow-y: auto;
@@ -121,9 +172,10 @@
 
     }
     footer {
-        grid-row: 4/5;
+        @include text-color(white);
+        grid-row: 5/6;
         @media screen and (min-width: $smallTablet) {
-            grid-column: 1/3;
+            grid-column: 2/3;
             grid-row: 5/6;
         }
     }
@@ -133,31 +185,6 @@
         margin-top: 0.2rem;
         text-align: justify;
         color: $gray3;
-    }
-    h2 {
-        font-size: 1.2rem;
-        font-weight: normal;
-        padding: 1.2rem 1rem 0.4rem 1rem;
-        display: block;
-        margin: 0;
-        @media screen and (min-width: $mobile) {
-            padding: 1.6rem 2rem 0 2rem;
-        }
-        @media screen and (min-width: $smallDesktop) {
-            padding:  2rem 3rem 0 3rem;
-        }
-        span:nth-last-child(3) {
-            font-weight: 500;
-        }
-        .show-info-button,
-        .hide-info-button {
-            display: inline-block;
-            height: 1.2rem;
-            width: 1.2rem;
-            position: relative;
-            bottom: -0.2rem;
-            margin-left: 0.2rem;
-        }
     }
     .info-section {
         text-align: justify;

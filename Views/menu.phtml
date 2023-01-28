@@ -2,20 +2,22 @@
     <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="images/user-profile.svg" alt="Správa účtu"></a><?php endif ?>
     <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="images/settings.svg" alt="Správa služby"></a><?php endif ?>
     <div class="logo">
-         <img src="images/icon-white.svg" alt="Logo Poznávaček">
+        <img src="images/icon-white.svg" alt="Logo Poznávaček">
         <h1>Poznávačky</h1>
     </div>
     <button class="btn icon logout-button" title="Odhlásit se"><img src="images/logout.svg" alt="Odhlásit se"></button>
 </header>
+<div id="logo-standalone">
+    <img src="images/icon-white.svg" alt="Logo Poznávaček">
+</div>
 <aside>
     <a class="btn icon" href="menu" title="Hlavní stránka"><img src="images/home.svg" alt="Hlavní stránka"></a>
     <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="images/user-profile.svg" alt="Správa účtu"></a><?php endif ?>
     <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="images/settings.svg" alt="Správa služby"></a><?php endif ?>
     <button class="btn icon logout-button" title="Odhlásit se"><img src="images/logout.svg" alt="Odhlásit se"></button>
 </aside>
-<main class="menu">
-    <h2 id="level-nav">
-        <nav>
+<nav id="level-nav">
+    <div>
         <?php for ($i = 0; $i < count($navigationBar); $i++) : ?>
             <?php if ($i < count($navigationBar) - 1) : ?>
                 <?php if ($navigationBar[$i]['link'] !== '#') : ?>
@@ -32,8 +34,9 @@
                 <button class="btn icon hide-info-button" title="Skrýt nápovědu" style="display: none"><img src="images/info-hide.svg" alt="Zavřít"></button>
             <?php endif ?>
         <?php endfor ?>
-        </nav>
-    </h2>
+    </div>
+</nav>
+<main class="menu">
     <div class="wrapper">
         <?php require $this->getNextView(); ?> <!-- HLAVNÍ OBSAH STRÁNKY -->
     </div>

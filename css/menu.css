@@ -89,8 +89,6 @@ body .text-field:focus {
   height: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: auto auto 1fr auto;
-      grid-template-rows: auto auto 1fr auto;
 }
 
 header {
@@ -236,19 +234,18 @@ header .logo h1 {
 }
 
 footer {
-  color: white;
-  padding: 0.2rem 1rem;
+  padding: 0.12rem 1rem;
   background: #222;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }
 
 footer .content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -269,8 +266,16 @@ footer .content {
   }
 }
 
+@media screen and (min-width: 672px) {
+  footer .content {
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: end;
+  }
+}
+
 footer .content a, footer .content span {
-  margin: 0.2rem 0.4rem;
+  margin: 0.2rem 0.8rem;
 }
 
 footer .content a:after {
@@ -952,6 +957,21 @@ label.required:after {
   }
 }
 
+#menu .container,
+#learn .container,
+#test .container,
+#add-pictures .container,
+#account-settings .container,
+#manage .container,
+#members .container,
+#tests .container,
+#edit-group .container,
+#resolve-reports .container,
+#naturals .container {
+  -ms-grid-rows: auto auto auto 1fr auto;
+      grid-template-rows: auto auto auto 1fr auto;
+}
+
 @media screen and (min-width: 672px) {
   #menu .container,
   #learn .container,
@@ -982,7 +1002,8 @@ label.required:after {
 #edit-group header,
 #resolve-reports header,
 #naturals header {
-  background: #366e11;
+  background: -webkit-gradient(linear, left top, right top, from(#366e11), to(#007F44));
+  background: linear-gradient(90deg, #366e11, #007F44);
   width: 100%;
   padding: 0.2rem 0.6rem;
   z-index: 5;
@@ -1032,9 +1053,7 @@ label.required:after {
   #edit-group header,
   #resolve-reports header,
   #naturals header {
-    -ms-grid-column: 1;
-    -ms-grid-column-span: 2;
-    grid-column: 1/3;
+    display: none;
   }
 }
 
@@ -1137,6 +1156,62 @@ label.required:after {
   margin-right: 0;
 }
 
+#menu #logo-standalone,
+#learn #logo-standalone,
+#test #logo-standalone,
+#add-pictures #logo-standalone,
+#account-settings #logo-standalone,
+#manage #logo-standalone,
+#members #logo-standalone,
+#tests #logo-standalone,
+#edit-group #logo-standalone,
+#resolve-reports #logo-standalone,
+#naturals #logo-standalone {
+  display: none;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  height: 112px;
+  width: 112px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #366e11, #007F44);
+}
+
+@media screen and (min-width: 672px) {
+  #menu #logo-standalone,
+  #learn #logo-standalone,
+  #test #logo-standalone,
+  #add-pictures #logo-standalone,
+  #account-settings #logo-standalone,
+  #manage #logo-standalone,
+  #members #logo-standalone,
+  #tests #logo-standalone,
+  #edit-group #logo-standalone,
+  #resolve-reports #logo-standalone,
+  #naturals #logo-standalone {
+    display: block;
+  }
+}
+
+#menu #logo-standalone img,
+#learn #logo-standalone img,
+#test #logo-standalone img,
+#add-pictures #logo-standalone img,
+#account-settings #logo-standalone img,
+#manage #logo-standalone img,
+#members #logo-standalone img,
+#tests #logo-standalone img,
+#edit-group #logo-standalone img,
+#resolve-reports #logo-standalone img,
+#naturals #logo-standalone img {
+  position: relative;
+  top: 32px;
+  left: 32px;
+  height: 50%;
+  width: 50%;
+  margin: auto;
+}
+
 #menu aside,
 #learn aside,
 #test aside,
@@ -1150,14 +1225,15 @@ label.required:after {
 #naturals aside {
   display: none;
   width: 64px;
-  -ms-grid-row: 2;
-  -ms-grid-row-span: 3;
-  grid-row: 2/5;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 5;
+  grid-row: 1/6;
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1/2;
   color: white;
   background: #444;
+  padding-top: 104px;
 }
 
 @media screen and (min-width: 672px) {
@@ -1212,6 +1288,121 @@ label.required:after {
   margin-top: auto;
 }
 
+#menu nav,
+#learn nav,
+#test nav,
+#add-pictures nav,
+#account-settings nav,
+#manage nav,
+#members nav,
+#tests nav,
+#edit-group nav,
+#resolve-reports nav,
+#naturals nav {
+  font-size: 0.8rem;
+  font-weight: normal;
+  padding: 1.2rem 1rem 0.4rem 1rem;
+  margin: 0;
+}
+
+@media screen and (min-width: 672px) {
+  #menu nav,
+  #learn nav,
+  #test nav,
+  #add-pictures nav,
+  #account-settings nav,
+  #manage nav,
+  #members nav,
+  #tests nav,
+  #edit-group nav,
+  #resolve-reports nav,
+  #naturals nav {
+    padding: 1rem 3rem 1.2rem 0em;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1/2;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
+  }
+}
+
+#menu nav > div,
+#learn nav > div,
+#test nav > div,
+#add-pictures nav > div,
+#account-settings nav > div,
+#manage nav > div,
+#members nav > div,
+#tests nav > div,
+#edit-group nav > div,
+#resolve-reports nav > div,
+#naturals nav > div {
+  background-color: #e0e0e0;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.6rem;
+}
+
+@media screen and (min-width: 672px) {
+  #menu nav > div,
+  #learn nav > div,
+  #test nav > div,
+  #add-pictures nav > div,
+  #account-settings nav > div,
+  #manage nav > div,
+  #members nav > div,
+  #tests nav > div,
+  #edit-group nav > div,
+  #resolve-reports nav > div,
+  #naturals nav > div {
+    padding: 0.6rem 0.6rem 0.6rem 4rem;
+  }
+}
+
+#menu nav span:nth-last-child(3),
+#learn nav span:nth-last-child(3),
+#test nav span:nth-last-child(3),
+#add-pictures nav span:nth-last-child(3),
+#account-settings nav span:nth-last-child(3),
+#manage nav span:nth-last-child(3),
+#members nav span:nth-last-child(3),
+#tests nav span:nth-last-child(3),
+#edit-group nav span:nth-last-child(3),
+#resolve-reports nav span:nth-last-child(3),
+#naturals nav span:nth-last-child(3) {
+  font-weight: 500;
+}
+
+#menu nav .show-info-button,
+#menu nav .hide-info-button,
+#learn nav .show-info-button,
+#learn nav .hide-info-button,
+#test nav .show-info-button,
+#test nav .hide-info-button,
+#add-pictures nav .show-info-button,
+#add-pictures nav .hide-info-button,
+#account-settings nav .show-info-button,
+#account-settings nav .hide-info-button,
+#manage nav .show-info-button,
+#manage nav .hide-info-button,
+#members nav .show-info-button,
+#members nav .hide-info-button,
+#tests nav .show-info-button,
+#tests nav .hide-info-button,
+#edit-group nav .show-info-button,
+#edit-group nav .hide-info-button,
+#resolve-reports nav .show-info-button,
+#resolve-reports nav .hide-info-button,
+#naturals nav .show-info-button,
+#naturals nav .hide-info-button {
+  display: inline-block;
+  height: 1.2rem;
+  width: 1.2rem;
+  position: relative;
+  bottom: -0.2rem;
+  margin-left: 0.2rem;
+}
+
 #menu .wrapper,
 #learn .wrapper,
 #test .wrapper,
@@ -1241,7 +1432,7 @@ label.required:after {
   #edit-group .wrapper,
   #resolve-reports .wrapper,
   #naturals .wrapper {
-    padding: 1.6rem 2rem;
+    padding: 1.2rem 2rem;
   }
 }
 
@@ -1257,7 +1448,7 @@ label.required:after {
   #edit-group .wrapper,
   #resolve-reports .wrapper,
   #naturals .wrapper {
-    padding: 2.4rem 3rem;
+    padding: 1.6rem 3rem;
   }
 }
 
@@ -1272,9 +1463,9 @@ label.required:after {
 #edit-group main,
 #resolve-reports main,
 #naturals main {
-  -ms-grid-row: 2;
+  -ms-grid-row: 3;
   -ms-grid-row-span: 2;
-  grid-row: 2/4;
+  grid-row: 3/5;
 }
 
 @media screen and (min-width: 672px) {
@@ -1389,9 +1580,24 @@ label.required:after {
 #edit-group footer,
 #resolve-reports footer,
 #naturals footer {
-  -ms-grid-row: 4;
+  color: white;
+  -ms-grid-row: 5;
   -ms-grid-row-span: 1;
-  grid-row: 4/5;
+  grid-row: 5/6;
+}
+
+#menu footer a,
+#learn footer a,
+#test footer a,
+#add-pictures footer a,
+#account-settings footer a,
+#manage footer a,
+#members footer a,
+#tests footer a,
+#edit-group footer a,
+#resolve-reports footer a,
+#naturals footer a {
+  color: white;
 }
 
 @media screen and (min-width: 672px) {
@@ -1406,9 +1612,9 @@ label.required:after {
   #edit-group footer,
   #resolve-reports footer,
   #naturals footer {
-    -ms-grid-column: 1;
-    -ms-grid-column-span: 2;
-    grid-column: 1/3;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
     -ms-grid-row: 5;
     -ms-grid-row-span: 1;
     grid-row: 5/6;
@@ -1431,100 +1637,6 @@ label.required:after {
   margin-top: 0.2rem;
   text-align: justify;
   color: #444;
-}
-
-#menu h2,
-#learn h2,
-#test h2,
-#add-pictures h2,
-#account-settings h2,
-#manage h2,
-#members h2,
-#tests h2,
-#edit-group h2,
-#resolve-reports h2,
-#naturals h2 {
-  font-size: 1.2rem;
-  font-weight: normal;
-  padding: 1.2rem 1rem 0.4rem 1rem;
-  display: block;
-  margin: 0;
-}
-
-@media screen and (min-width: 576px) {
-  #menu h2,
-  #learn h2,
-  #test h2,
-  #add-pictures h2,
-  #account-settings h2,
-  #manage h2,
-  #members h2,
-  #tests h2,
-  #edit-group h2,
-  #resolve-reports h2,
-  #naturals h2 {
-    padding: 1.6rem 2rem 0 2rem;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  #menu h2,
-  #learn h2,
-  #test h2,
-  #add-pictures h2,
-  #account-settings h2,
-  #manage h2,
-  #members h2,
-  #tests h2,
-  #edit-group h2,
-  #resolve-reports h2,
-  #naturals h2 {
-    padding: 2rem 3rem 0 3rem;
-  }
-}
-
-#menu h2 span:nth-last-child(3),
-#learn h2 span:nth-last-child(3),
-#test h2 span:nth-last-child(3),
-#add-pictures h2 span:nth-last-child(3),
-#account-settings h2 span:nth-last-child(3),
-#manage h2 span:nth-last-child(3),
-#members h2 span:nth-last-child(3),
-#tests h2 span:nth-last-child(3),
-#edit-group h2 span:nth-last-child(3),
-#resolve-reports h2 span:nth-last-child(3),
-#naturals h2 span:nth-last-child(3) {
-  font-weight: 500;
-}
-
-#menu h2 .show-info-button,
-#menu h2 .hide-info-button,
-#learn h2 .show-info-button,
-#learn h2 .hide-info-button,
-#test h2 .show-info-button,
-#test h2 .hide-info-button,
-#add-pictures h2 .show-info-button,
-#add-pictures h2 .hide-info-button,
-#account-settings h2 .show-info-button,
-#account-settings h2 .hide-info-button,
-#manage h2 .show-info-button,
-#manage h2 .hide-info-button,
-#members h2 .show-info-button,
-#members h2 .hide-info-button,
-#tests h2 .show-info-button,
-#tests h2 .hide-info-button,
-#edit-group h2 .show-info-button,
-#edit-group h2 .hide-info-button,
-#resolve-reports h2 .show-info-button,
-#resolve-reports h2 .hide-info-button,
-#naturals h2 .show-info-button,
-#naturals h2 .hide-info-button {
-  display: inline-block;
-  height: 1.2rem;
-  width: 1.2rem;
-  position: relative;
-  bottom: -0.2rem;
-  margin-left: 0.2rem;
 }
 
 #menu .info-section,

@@ -55,7 +55,6 @@ body {
     min-height: 100vh;
     height: 100%;
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
 }
 
 header {
@@ -150,21 +149,23 @@ header {
 }
 
 footer {
-    color: white;
-    padding: 0.2rem 1rem;
+    padding: 0.12rem 1rem;
     background: $gray1;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     .content {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
         flex-direction: column;
         @media screen and (min-width: $mobile) {
             flex-direction: row;
             flex-wrap: wrap;
         }
+        @media screen and (min-width: $smallTablet) {
+            justify-content: end;
+        }
         a, span {
-            margin: 0.2rem 0.4rem;
+            margin: 0.2rem 0.8rem;
         }
         a {
             &:after {
