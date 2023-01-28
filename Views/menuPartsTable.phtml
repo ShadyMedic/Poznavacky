@@ -8,17 +8,15 @@
     <?php foreach ($table as $tableRow) : ?>
         <button class="btn display-buttons-button"><li <?php if ($tableRow[1] === '0') : ?>class="empty"<?php endif ?>>
             <h4 class="part-name"><?= $tableRow[0] ?></h4>
-                <span class="part-naturals-count">
-                    <span><?= $tableRow[1] ?></span>
-                </span>
-                <span class="part-pictures-count">
-                    <span><?= $tableRow[2] ?></span>
-                </span>
+                <span class="part-naturals-count"> <?= $tableRow[1] ?> </span>
+                <span class="part-pictures-count"> <?= $tableRow[2] ?> </span>
             <?php if ($tableRow[1] > 0) : ?>
-            <div class="buttons">
-                <a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn transparent black border-btn<?php if ($demoVersion || !$displayAddPicturesButton) : ?> disabled<?php endif ?>">Přidat obrázky</a>
-                <a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Učit se</a>
-                <a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Vyzkoušet se</a>
+            <div class="buttons-wrapper">
+                <div class="buttons">
+                    <a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn transparent black border-btn<?php if ($demoVersion || !$displayAddPicturesButton) : ?> disabled<?php endif ?>">Přidat obrázky</a>
+                    <a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Učit se</a>
+                    <a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Vyzkoušet se</a>
+                </div>
             </div>
             <?php endif ?>
             <?php if ($tableRow[1] === '0') : ?>

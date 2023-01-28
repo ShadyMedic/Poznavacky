@@ -208,8 +208,7 @@ function displayButtons($button)
 {
     if (!$($button).hasClass("show"))
     {
-        $($button).find(".part-naturals-count, .part-pictures-count").hide();
-        $($button).find(".buttons, .part-info").addClass("show");
+        $($button).find(".buttons-wrapper, .part-info").slideDown();
         $($button).find("li").addClass("show");
     }
 }
@@ -227,8 +226,7 @@ function hideButtons(event)
         {
             if ($(this).find("li").hasClass("show"))
             {
-                $(this).find(".part-naturals-count, .part-pictures-count").show();
-                $(this).find(".buttons, .part-info").removeClass("show");
+                $(this).find(".buttons-wrapper, .part-info").slideUp();
                 $(this).find("li").removeClass("show");
             }
         }
