@@ -2166,6 +2166,12 @@ label.required:after {
   }
 }
 
+#learn label,
+#test label,
+#add-pictures label {
+  font-size: 0.9rem;
+}
+
 #learn #learn-wrapper,
 #learn #test-wrapper,
 #test #learn-wrapper,
@@ -2569,8 +2575,8 @@ label.required:after {
 
 @media screen and (min-width: 960px) {
   #add-pictures #add-pictures-form-wrapper {
-    -webkit-column-gap: 6rem;
-            column-gap: 6rem;
+    -webkit-column-gap: 8rem;
+            column-gap: 8rem;
   }
 }
 
