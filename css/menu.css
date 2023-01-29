@@ -1300,6 +1300,7 @@ label.required:after {
 #resolve-reports nav,
 #naturals nav {
   font-size: 0.8rem;
+  line-height: 1.8rem;
   font-weight: normal;
   padding: 1.2rem 1rem 0.4rem 1rem;
   margin: 0;
@@ -1355,7 +1356,7 @@ label.required:after {
   #edit-group nav > div,
   #resolve-reports nav > div,
   #naturals nav > div {
-    padding: 0.6rem 0.6rem 0.6rem 4rem;
+    padding: 0.24rem 0.6rem 0.24rem 4rem;
   }
 }
 
@@ -1396,11 +1397,11 @@ label.required:after {
 #naturals nav .show-info-button,
 #naturals nav .hide-info-button {
   display: inline-block;
-  height: 1.2rem;
-  width: 1.2rem;
+  height: 1.12rem;
+  width: 1.12rem;
   position: relative;
-  bottom: -0.2rem;
-  margin-left: 0.2rem;
+  bottom: -0.3rem;
+  margin-left: 0.32rem;
 }
 
 #menu .wrapper,
