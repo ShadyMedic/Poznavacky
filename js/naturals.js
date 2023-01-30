@@ -14,7 +14,7 @@ $(function()
 
     $(".natural.data-item").each(function() {
         $naturals.push($(this));
-        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural-name").text(), $(this).find(".natural-uses-count").text(), $(this).find(".natural-pictures-count").text()));
+        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural.name").text(), $(this).find(".natural.uses-count").text(), $(this).find(".natural.pictures-count").text()));
     })
 
     //event listenery tlačítek
@@ -27,7 +27,7 @@ $(function()
     $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
 
     //event listener zmáčknutí klávesy
-    $(".natural-name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
+    $(".natural.name.input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
 
     $("#filter-name").on("input", function() {filterByName($("#filter-name").val())})
 })
@@ -59,16 +59,17 @@ function sortNaturals(event, direction)
     let classType = $(event.target).closest(".sort-buttons").siblings().first().attr("class");
     let sortBy;
 
-    switch (classType) {
-        case "natural-name":
-            sortBy = 1;
-            break;
-        case "natural-uses-count":
-            sortBy = 2;
-            break;
-        case "natural-pictures-count":
-            sortBy = 3;
-            break;
+    if (classType.includes("name"))
+    {
+        sortBy = 1;
+    }
+    else if (classType.includes("uses-count"))
+    {
+        sortBy = 2;
+    }
+    else if (classType.includes("pictures-count"))
+    {
+        sortBy = 3;
     }
 
 
@@ -128,15 +129,15 @@ function sortNaturals(event, direction)
  */
 function removeFilters()
 {
-    //zrušení filtrování podle jména
-    $("#filter-name").val("");
-    filterByName("");
-
     $(".natural.data-item").remove();
 
     $naturals.forEach(function($element) {
         $("#naturals-data-section").append($element.get(0).outerHTML);
     })
+
+    //zrušení filtrování podle jména
+    $("#filter-name").val("");
+    $(".natural.data-item").show();
 
     inactivateSortButton();
 }
@@ -149,8 +150,8 @@ function removeFilters()
 function filterByName(name)
 {
     $(".natural.data-item").each(function() {
-        let naturalName = $(this).find(".natural-name").text().toLowerCase();
-        if (naturalName.startsWith(name.toLowerCase()))
+        let naturalName = $(this).find(".natural.name").text().trim().toLowerCase();
+        if (naturalName.startsWith(name.trim().toLowerCase()))
         {
             $(this).show();
         }
@@ -171,10 +172,10 @@ function rename(event)
     let $natural = $(event.target).closest('.natural.data-item');
 
     $natural.find('.normal-buttons').hide();
-    $natural.find('.natural-name-box').hide();
+    $natural.find('.natural.name.box').hide();
     $natural.find('.rename-buttons').show();
-    $natural.find('.natural-name-input-box').show();
-    $natural.find('.natural-name-input').select();
+    $natural.find('.natural.name.input-box').show();
+    $natural.find('.natural.name.input').select();
 }
 
 /**
@@ -195,14 +196,14 @@ function renameConfirm(event)
     //potvrzení tlačítkem
     if ($(event.target).prop("tagName") !== "INPUT")
     {
-        newName = $natural.find(".natural-name-input").val();
-        oldName = $natural.find(".natural-name").text();
+        newName = $natural.find(".natural.name.input").val();
+        oldName = $natural.find(".natural.name").text();
     }
     //potvrzení Enterem
     else
     {
         newName = $(event.target).val();
-        oldName = $natural.find(".natural-name").text();
+        oldName = $natural.find(".natural.name").text();
     }
 
     //nový a starý název přírodniny se liší (odlišná velikost písma nevadí)
@@ -226,7 +227,7 @@ function renameConfirm(event)
         //kontrola unikátnosti
 
         //Získání seznamu přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
-        let presentNaturals = $(".natural.data-item .natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
+        let presentNaturals = $(".natural.data-item .natural.name").map(function() {return $(this).text().toUpperCase(); }).get();
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
@@ -263,7 +264,7 @@ function renameConfirm(event)
                     else if (messageType === "success")
                     {
                         //nastavení nového názvu přírodniny a reset DOM
-                        $natural.find(".natural-name").text($natural.find(".natural-name-input").val())
+                        $natural.find(".natural.name").text($natural.find(".natural.name.input").val())
 
                         renameCancel($(event.target))
                     }
@@ -283,11 +284,11 @@ function renameCancel($clickedButton)
     let $natural = $clickedButton.closest(".natural.data-item");
 
     $natural.find('.rename-buttons').hide();
-    $natural.find('.natural-name-input-box').hide();
+    $natural.find('.natural.name.input-box').hide();
     $natural.find('.normal-buttons').show();
-    $natural.find('.natural-name-box').show();
+    $natural.find('.natural.name.box').show();
 
-    $natural.find('.natural-name-input').val($natural.find('.natural-name').text());
+    $natural.find('.natural.name.input').val($natural.find('.natural.name').text());
 }
 
 /**
@@ -319,8 +320,8 @@ function mergeNaturals(fromNaturalId, toNaturalId)
                     {
                         //odebrání sloučené přírodniny z DOM a přičtení jejích statistik k přírodnině, do které byla sloučena
                         $deletedNatural.remove();
-                        $mergedNatural.find('.natural-uses-count').text(Number($mergedNatural.find('.natural-uses-count').text()) + data.newUsesCount);
-                        $mergedNatural.find('.natural-pictures-count').text(Number($mergedNatural.find('.natural-pictures-count').text()) + data.newPicturesCount);
+                        $mergedNatural.find('.natural.uses-count').text(Number($mergedNatural.find('.natural.uses-count').text()) + data.newUsesCount);
+                        $mergedNatural.find('.natural.pictures-count').text(Number($mergedNatural.find('.natural.pictures-count').text()) + data.newPicturesCount);
                     }
                 }
             );
@@ -336,7 +337,7 @@ function mergeNaturals(fromNaturalId, toNaturalId)
 function remove(event)
 {
     let $natural = $(event.target).closest('.natural.data-item');
-    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
+    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural.name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm) removeFinal($natural)
         else return;

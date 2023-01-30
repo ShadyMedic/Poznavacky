@@ -1404,17 +1404,17 @@ label.required:after {
   margin-left: 0.32rem;
 }
 
-#menu .wrapper,
-#learn .wrapper,
-#test .wrapper,
-#add-pictures .wrapper,
-#account-settings .wrapper,
-#manage .wrapper,
-#members .wrapper,
-#tests .wrapper,
-#edit-group .wrapper,
-#resolve-reports .wrapper,
-#naturals .wrapper {
+#menu .content-wrapper,
+#learn .content-wrapper,
+#test .content-wrapper,
+#add-pictures .content-wrapper,
+#account-settings .content-wrapper,
+#manage .content-wrapper,
+#members .content-wrapper,
+#tests .content-wrapper,
+#edit-group .content-wrapper,
+#resolve-reports .content-wrapper,
+#naturals .content-wrapper {
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
@@ -1422,33 +1422,33 @@ label.required:after {
 }
 
 @media screen and (min-width: 576px) {
-  #menu .wrapper,
-  #learn .wrapper,
-  #test .wrapper,
-  #add-pictures .wrapper,
-  #account-settings .wrapper,
-  #manage .wrapper,
-  #members .wrapper,
-  #tests .wrapper,
-  #edit-group .wrapper,
-  #resolve-reports .wrapper,
-  #naturals .wrapper {
+  #menu .content-wrapper,
+  #learn .content-wrapper,
+  #test .content-wrapper,
+  #add-pictures .content-wrapper,
+  #account-settings .content-wrapper,
+  #manage .content-wrapper,
+  #members .content-wrapper,
+  #tests .content-wrapper,
+  #edit-group .content-wrapper,
+  #resolve-reports .content-wrapper,
+  #naturals .content-wrapper {
     padding: 1.2rem 2rem;
   }
 }
 
 @media screen and (min-width: 960px) {
-  #menu .wrapper,
-  #learn .wrapper,
-  #test .wrapper,
-  #add-pictures .wrapper,
-  #account-settings .wrapper,
-  #manage .wrapper,
-  #members .wrapper,
-  #tests .wrapper,
-  #edit-group .wrapper,
-  #resolve-reports .wrapper,
-  #naturals .wrapper {
+  #menu .content-wrapper,
+  #learn .content-wrapper,
+  #test .content-wrapper,
+  #add-pictures .content-wrapper,
+  #account-settings .content-wrapper,
+  #manage .content-wrapper,
+  #members .content-wrapper,
+  #tests .content-wrapper,
+  #edit-group .content-wrapper,
+  #resolve-reports .content-wrapper,
+  #naturals .content-wrapper {
     padding: 1.6rem 3rem;
   }
 }
