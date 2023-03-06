@@ -35,10 +35,10 @@ $(function()
 function showPicture(event)
 {
     let $report = $(event.target).closest(".report-data-item");
-    let url = $report.attr("data-report-url");
+    let url = $report.attr("data-picture-url");
     
     //class owner
-    if ($('body').attr("id") == "resolve-reports")
+    if ($('body').attr("id") === "resolve-reports")
     {
         //skrytí ostatních zobrazených obrázků
         $(".report-image").not($report.find(".report-image")).hide();
@@ -63,7 +63,7 @@ function showPicture(event)
 function hidePicture(event)
 {
     //class owner
-    if ($('body').attr("id") == "resolve-reports")
+    if ($('body').attr("id") === "resolve-reports")
     {
         let $report = $(event.target).closest(".report-data-item");
 
@@ -226,7 +226,7 @@ function deletePicture(event)
                         if (messageType === "error")
                         {
                             //class owner
-                            if ($('body').attr("id") == "resolve-reports")
+                            if ($('body').attr("id") === "resolve-reports")
                             {
                                 newMessage(message, "error");
                             }
@@ -269,7 +269,7 @@ function deleteReport(event)
                     if (messageType === "error")
                     {
                         //class owner
-                        if ($('body').attr("id") == "resolve-reports")
+                        if ($('body').attr("id") === "resolve-reports")
                         {
                             newMessage(message, "error");
                         }
