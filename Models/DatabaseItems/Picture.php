@@ -12,7 +12,7 @@ use \RuntimeException;
  * Třída reprezentující objekt obrázku
  * @author Jan Štěch
  */
-class Picture extends DatabaseItem
+class Picture extends DatabaseItem implements DisplayableInReportsTable
 {
     public const TABLE_NAME = 'obrazky';
     
@@ -93,6 +93,16 @@ class Picture extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->natural);
         return $this->natural;
+    }
+
+    /**
+     * Metoda navracející název přírodniny, kterou zachycuje tento obrázek
+     * @return string Název přírodniny na obrázku
+     * @throws DatabaseException
+     */
+    public function getNaturalName(): string
+    {
+        return $this->getNatural()->getName();
     }
     
     /**

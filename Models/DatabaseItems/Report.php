@@ -10,7 +10,7 @@ use Poznavacky\Models\undefined;
  * Třída reprezentující hlášení obrázku
  * @author Jan Štěch
  */
-class Report extends DatabaseItem
+class Report extends DatabaseItem implements DisplayableInReportsTable
 {
     public const TABLE_NAME = 'hlaseni';
     
