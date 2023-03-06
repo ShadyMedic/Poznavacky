@@ -18,7 +18,7 @@ class Picture extends DatabaseItem
     
     public const COLUMN_DICTIONARY = array(
         'id' => 'obrazky_id',
-        'src' => 'zdroj',
+        'url' => 'zdroj',
         'natural' => 'prirodniny_id',
         'enabled' => 'povoleno'
     );
@@ -34,7 +34,7 @@ class Picture extends DatabaseItem
     protected const CAN_BE_CREATED = true;
     protected const CAN_BE_UPDATED = true;
     
-    protected $src;
+    protected $url;
     protected $natural;
     protected $enabled;
     
@@ -44,18 +44,18 @@ class Picture extends DatabaseItem
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
      * Při nastavení některého z argumentů na undefined, je hodnota dané vlastnosti také nastavena na undefined
      * Při nastavení některého z argumentů na null, není hodnota dané vlastnosti nijak pozměněna
-     * @param string|undefined|null $src Adresa, pod kterou lze obrázek najít
+     * @param string|undefined|null $url Adresa, pod kterou lze obrázek najít
      * @param Natural|undefined|null $natural Odkaz na objekt přírodniny, kterou tento obrázek zobrazuje
      * @param bool|undefined|null $enabled TRUE, pokud je obrázek povolen, FALSE, pokud je skryt
      * @param Report[]|undefined|null $reports Pole hlášení tohoto obrázku, jako objekty
      * {@inheritDoc}
      * @see DatabaseItem::initialize()
      */
-    public function initialize($src = null, $natural = null, $enabled = null, $reports = null): void
+    public function initialize($url = null, $natural = null, $enabled = null, $reports = null): void
     {
         //Kontrola nespecifikovaných hodnot (pro zamezení přepsání známých hodnot)
-        if ($src === null) {
-            $src = $this->src;
+        if ($url === null) {
+            $url = $this->url;
         }
         if ($natural === null) {
             $natural = $this->natural;
@@ -67,7 +67,7 @@ class Picture extends DatabaseItem
             $reports = $this->reports;
         }
         
-        $this->src = $src;
+        $this->url = $url;
         $this->natural = $natural;
         $this->enabled = $enabled;
         $this->reports = $reports;
@@ -78,10 +78,10 @@ class Picture extends DatabaseItem
      * @return string Zdroj (URL) obrázku
      * @throws DatabaseException
      */
-    public function getSrc(): string
+    public function getUrl(): string
     {
-        $this->loadIfNotLoaded($this->src);
-        return $this->src;
+        $this->loadIfNotLoaded($this->url);
+        return $this->url;
     }
     
     /**
@@ -127,7 +127,7 @@ class Picture extends DatabaseItem
         
         //Aktualizovat údaje ve vlastnostech této instance
         $this->natural = $newNatural;
-        $this->src = $newUrl;
+        $this->url = $newUrl;
         
         return true;
     }
@@ -143,7 +143,7 @@ class Picture extends DatabaseItem
      */
     public function transfer(Natural $newNatural): void
     {
-        if ($newNatural->pictureExists($this->getSrc())) {
+        if ($newNatural->pictureExists($this->getUrl())) {
             throw new RuntimeException('Picture with this URL is already added to the new natural.');
         }
         $this->natural = $newNatural;

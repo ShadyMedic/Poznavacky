@@ -52,7 +52,7 @@ class TestPicturesController extends AjaxController
         //Uložení nových odpovědí do $_SESSION a stavba dvourozměrného pole k odeslání
         $picturesArr = array();
         for ($i = 0; $i < count($pictures); $i++) {
-            $picturesArr[] = array('num' => $i, 'url' => $pictures[$i]->getSrc());
+            $picturesArr[] = array('num' => $i, 'url' => $pictures[$i]->getUrl());
             $_SESSION['testAnswers'][$i] = $pictures[$i]->getNatural()->getName();
         }
         

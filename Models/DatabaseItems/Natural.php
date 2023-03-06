@@ -165,7 +165,7 @@ class Natural extends DatabaseItem
     {
         $this->loadIfNotLoaded($this->id);
         
-        $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['id'].','.Picture::COLUMN_DICTIONARY['src'].','.
+        $result = Db::fetchQuery('SELECT '.Picture::COLUMN_DICTIONARY['id'].','.Picture::COLUMN_DICTIONARY['url'].','.
                                  Picture::COLUMN_DICTIONARY['enabled'].' FROM '.Picture::TABLE_NAME.' WHERE '.
                                  Picture::COLUMN_DICTIONARY['natural'].' = ?', array($this->id), true);
         if ($result === false || count($result) === 0) {
@@ -177,7 +177,7 @@ class Natural extends DatabaseItem
             foreach ($result as $pictureData) {
                 $status = $pictureData[Picture::COLUMN_DICTIONARY['enabled']] === 1;
                 $picture = new Picture(false, $pictureData[Picture::COLUMN_DICTIONARY['id']]);
-                $picture->initialize($pictureData[Picture::COLUMN_DICTIONARY['src']], $this, $status);
+                $picture->initialize($pictureData[Picture::COLUMN_DICTIONARY['url']], $this, $status);
                 $this->pictures[] = $picture;
             }
         }
@@ -285,7 +285,7 @@ class Natural extends DatabaseItem
         }
         
         foreach ($this->pictures as $picture) {
-            if ($picture->getSrc() === $url) {
+            if ($picture->getUrl() === $url) {
                 return true;
             }
         }

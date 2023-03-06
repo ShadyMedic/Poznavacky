@@ -93,12 +93,12 @@ class ReportAdder
                                    Natural::COLUMN_DICTIONARY['picturesCount'].',
         '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].', '.Picture::TABLE_NAME.'.'.
                                    Picture::COLUMN_DICTIONARY['natural'].', '.Picture::TABLE_NAME.'.'.
-                                   Picture::COLUMN_DICTIONARY['src'].', '.Picture::TABLE_NAME.'.'.
+                                   Picture::COLUMN_DICTIONARY['url'].', '.Picture::TABLE_NAME.'.'.
                                    Picture::COLUMN_DICTIONARY['enabled'].'
         FROM '.Picture::TABLE_NAME.'
         JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.
                                    Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
-        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.
+        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['url'].' = ? AND '.Natural::TABLE_NAME.'.'.
                                    Natural::COLUMN_DICTIONARY['id'].' IN (
             SELECT prirodniny_id FROM prirodniny_casti WHERE casti_id IN (
                 SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.' WHERE '.

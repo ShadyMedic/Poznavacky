@@ -127,7 +127,7 @@ class Report extends DatabaseItem
     public function getUrl(): string
     {
         $this->loadIfNotLoaded($this->picture);
-        return $this->picture->getSrc();
+        return $this->picture->getUrl();
     }
     
     /**

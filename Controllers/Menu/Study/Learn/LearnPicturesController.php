@@ -49,7 +49,7 @@ class LearnPicturesController extends AjaxController
         
         $picturesArr = array();
         foreach ($pictures as $picture) {
-            $picturesArr[] = $picture->getSrc();
+            $picturesArr[] = $picture->getUrl();
         }
         
         (new Logger())->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byly odeslány obrázky přírodniny s ID {naturalId} pro učební stránku',
