@@ -92,6 +92,7 @@ class DataValidator
         "edit",
         "confirm-group-edit",
         "reports",
+        "pictures",
         "report-action",
         "account-settings",
         "account-update"

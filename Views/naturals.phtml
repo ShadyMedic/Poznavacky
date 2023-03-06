@@ -70,6 +70,9 @@
             <span class="natural-pictures-count"><?= $natural->getPicturesCount() ?></span>
             <div class="natural-action">
                 <div class="normal-buttons">
+                    <a href="<?= $baseUrl ?>/<?= $natural->getId() ?>/pictures">
+                        <button title="Spravovat obrázky" class="manage-pictures-button btn inline black">Spravovat obrázky</button>
+                    </a>
                     <button title="Přejmenovat" class="rename-natural-button btn inline black">Přejmenovat</button>
                     <button title="Odebrat" class="remove-natural-button btn inline black">Odebrat</button>
                 </div>

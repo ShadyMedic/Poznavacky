@@ -28,8 +28,9 @@ class ReportsController extends SynchronousController
             ));
         
         $group = $_SESSION['selection']['group'];
-        self::$data['reports'] = $group->getReports();
-        self::$data['naturalsInGroup'] = $group->getNaturals();
+        self::$data['records'] = $group->getReports();
+        self::$data['availableNaturals'] = $group->getNaturals();
+        self::$data['reportView'] = true;
         
         self::$pageHeader['title'] = 'Správa hlášení';
         self::$pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';

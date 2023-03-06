@@ -34,7 +34,8 @@ class NaturalsController extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array('js/generic.js', 'js/menu.js', 'js/ajaxMediator.js', 'js/naturals.js');
         self::$pageHeader['bodyId'] = 'naturals';
-        
+
+        self::$data['baseUrl'] = 'menu/'.$_SESSION['selection']['class']->getUrl().'/manage/naturals';
         self::$data['naturals'] = $_SESSION['selection']['class']->getNaturals();
     }
 }
