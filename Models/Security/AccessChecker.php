@@ -82,5 +82,14 @@ class AccessChecker
     {
         return (isset($_SESSION['selection']['part']));
     }
+
+    /**
+     * Metoda kontrolující, zda je zvolena nějaká přírodnina (má efekt pouze u stránky pro správu obrázků)
+     * @return bool TRUE, pokud je nějaká platná přírodnina zvolena, FALSE, pokud ne
+     */
+    public function checkNatural(): bool
+    {
+        return (isset($_SESSION['selection']['natural']));
+    }
 }
 

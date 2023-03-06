@@ -255,6 +255,20 @@ class RooterController extends SynchronousController
                         }
                     }
                     break;
+                case 'natural':
+                    $parentFolder = $_SESSION['selection']['class'];
+                    $alreadySet = ($aChecker->checkNatural() && $_SESSION['selection']['natural']->getId() === $currentUrl);
+                    if (!$alreadySet) {
+                        $naturals = $parentFolder->getNaturals();
+                        for ($j = 0; $j < count($naturals) && (string)($naturals[$j]->getId()) !== $currentUrl; $j++) {
+                        }
+                        if ($j === count($naturals)) {
+                            $folderNotFound = true;
+                        } else {
+                            $folder = $naturals[$j];
+                        }
+                    }
+                    break;
             }
             
             //Kontrola, zda není složka se stejným URL již náhodou zvolena
@@ -267,7 +281,7 @@ class RooterController extends SynchronousController
                 }
                 $folder->load();
             } catch (BadMethodCallException $e) {
-                //Třída/poznávačka/část splňující daná kritéria neexistuje
+                //Třída/poznávačka/část/přírodnina splňující daná kritéria neexistuje
                 # if ($aChecker->checkUser()) //Uživatel je zde vždy přihlášen - jinak by ho AntiCsrfMiddleware nepustil na adresu vedoucí na menu stránku
                 # {
                 (new Logger())->warning('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} se pokusil vstoupit do třídy, poznávačky, nebo části, která nebyla v databázi nalezena (URL reprezentace {folderUrl}, název úrovně {folderLevel})',
@@ -358,6 +372,11 @@ class RooterController extends SynchronousController
                         break;
                     case 'group':
                         if (!$aChecker->checkGroup()) {
+                            $subCheckResult = false;
+                        }
+                        break;
+                    case 'natural':
+                        if (!$aChecker->checkNatural()) {
                             $subCheckResult = false;
                         }
                         break;
