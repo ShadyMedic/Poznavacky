@@ -463,7 +463,7 @@
         grid-template-rows: auto 1fr;
         .naturals-in-part {
             overflow-y: auto;
-            @include scrollbar(12px, $gray3, none);
+            @include scrollbar(12px, $gray3, $gray2);
         }
     }
     #add-part-button {

@@ -156,7 +156,7 @@
         @media screen and (min-width: $smallTablet) {
             grid-column: 2/3;
             overflow-y: auto;
-            @include scrollbar(12px, $gray3, none);
+            @include scrollbar(12px, $gray3, $gray2);
         }
     }
     #messages {

@@ -643,6 +643,7 @@ textarea {
 
 label {
   margin: 0.24rem 0;
+  font-size: 0.9rem;
   display: inline-block;
 }
 
