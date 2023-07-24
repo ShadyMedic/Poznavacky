@@ -64,7 +64,7 @@ function newTestConfirm()
                     {
                         //zaískání informací z data.newGroupData a jejich zobrazení v tabulce v DOM
                         let groupData = data.newGroupData;
-                        let groupDomItem = $('#test.data-item-template').html();
+                        let groupDomItem = $('#test-template').html();
 
                         groupDomItem = groupDomItem.replace(/{id}/g, groupData.id);
                         groupDomItem = groupDomItem.replace(/{name}/g, groupData.name);

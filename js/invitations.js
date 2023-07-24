@@ -37,7 +37,7 @@ function answerInvitation(event, answer)
                         {
                             console.log(className);
                             //přidání nové třídy na konec seznamu
-                            let classDomItem = $('#class-item-template').html();
+                            let classDomItem = $('#class-template').html();
                             classDomItem = classDomItem.replace(/{name}/g, className);
                             classDomItem = classDomItem.replace(/{url}/g, classUrl);
                             classDomItem = classDomItem.replace(/{groups}/g, classGroupsCount);

@@ -8,7 +8,7 @@
     <?php endif ?>
     <ul class="rows">
         <?php foreach ($table as $tableRow) : ?>
-            <button class="btn class-item" data-class-url="<?= $tableRow['rowLink'] ?>" ><li>
+            <button class="btn class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" ><li>
                 <h4 class="class-name">
                     <?= $tableRow[0] ?>
                 </h4>
@@ -74,8 +74,8 @@
     </ul>
 </div>
 
-<div id="class-item-template" style="display: none;">
-    <button class="btn class-item" onclick="window.location.href='/menu/{url}'"><li> <!--TODO ať tu není onclick -->
+<div id="class-template" class="data-item-template" style="display: none;">
+    <button class="btn class data-item" onclick="window.location.href='/menu/{url}'"><li> <!--TODO ať tu není onclick -->
         <h4 class="class-name">{name}</h4>
         <span class="class-test-count">{groups}</span>
         <a href="javascript:;" data-leave-url="/menu/{url}/leave" class="btn inline black col3 leave-link">Opustit třídu</a>

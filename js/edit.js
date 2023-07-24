@@ -416,7 +416,7 @@ function addNatural(event)
     
     let $naturalList = $(event.target).closest(".part-box").find(".naturals-in-part");
 
-    $naturalList.prepend($("#natural-item-template").html());
+    $naturalList.prepend($(".data-item-template").html());
     $naturalList.children().first().find(".natural-name").text(naturalName);
     $naturalList.children().first().find(".natural-name-input").attr("value", naturalName);
     
