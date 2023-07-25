@@ -29,19 +29,27 @@
     header {    
         background: linear-gradient(90deg, $greenDark, $gradientDark);
         width: 100%;
-        padding: 0.2rem 0.6rem;
         z-index: 5;
-        display: grid;
-        grid-template-columns: auto auto 1fr;
-        grid-template-rows: auto auto;
-        @media screen and (min-width: 420px) {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: start;
-        }
+        inset: 0;
+        mask:
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, //nevím jak to funguje
+            linear-gradient(#fff,#fff);
+        mask-composite: exclude;  
+        -webkit-mask-composite: destination-out;
         @media screen and (min-width: $smallTablet) {
             display: none;
+        }
+        > .wrapper {
+            padding-left: 72px;
+            display: grid;
+            grid-template-columns: auto auto 1fr;
+            grid-template-rows: auto auto;
+            @media screen and (min-width: 420px) {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                justify-content: start;
+            }
         }
         .logo {
             grid-row: 2/3;
@@ -68,21 +76,29 @@
         }
     }
     #logo-standalone {
-        display:none; 
+        display: block; 
+        top: -12px;
+        left: -12px;
+        height: 72px;
+        width: 72px;
         @media screen and (min-width: $smallTablet) {
-            display: block;
+            top: -20px;
+            left: -20px;
+            height: 112px;
+            width: 112px;
         }
         position: absolute;
-        top: -20px;
-        left: -20px;
-        height: 112px;
-        width: 112px;
+        z-index: 10;
         border-radius: 100px;
         background: linear-gradient(135deg, $greenDark, $gradientDark);
         img {
             position: relative;
-            top: 32px;
-            left: 32px;
+            top: 20px;
+            left: 20px;
+            @media screen and (min-width: $smallTablet) {
+                top: 32px;
+                left: 32px;
+            }
             height: 50%;
             width: 50%;
             margin: auto;
@@ -464,7 +480,7 @@
             .part-name {
                 word-break: break-word;
                 font-size: 1rem;
-                @media screen and (min-width: $smallMobile) {
+                @media screen and (min-width: $mobile) {
                     font-size: 1.2rem;
                 }
                 @media screen and (min-width: 820px) {

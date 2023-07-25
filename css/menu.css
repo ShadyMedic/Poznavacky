@@ -1006,40 +1006,14 @@ label.required:after {
   background: -webkit-gradient(linear, left top, right top, from(#366e11), to(#007F44));
   background: linear-gradient(90deg, #366e11, #007F44);
   width: 100%;
-  padding: 0.2rem 0.6rem;
   z-index: 5;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: auto auto 1fr;
-      grid-template-columns: auto auto 1fr;
-  -ms-grid-rows: auto auto;
-      grid-template-rows: auto auto;
-}
-
-@media screen and (min-width: 420px) {
-  #menu header,
-  #learn header,
-  #test header,
-  #add-pictures header,
-  #account-settings header,
-  #manage header,
-  #members header,
-  #tests header,
-  #edit-group header,
-  #resolve-reports header,
-  #naturals header {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: start;
-  }
+  inset: 0;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff));
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
+          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff));
+          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
 }
 
 @media screen and (min-width: 672px) {
@@ -1055,6 +1029,52 @@ label.required:after {
   #resolve-reports header,
   #naturals header {
     display: none;
+  }
+}
+
+#menu header > .wrapper,
+#learn header > .wrapper,
+#test header > .wrapper,
+#add-pictures header > .wrapper,
+#account-settings header > .wrapper,
+#manage header > .wrapper,
+#members header > .wrapper,
+#tests header > .wrapper,
+#edit-group header > .wrapper,
+#resolve-reports header > .wrapper,
+#naturals header > .wrapper {
+  padding-left: 72px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto 1fr;
+      grid-template-columns: auto auto 1fr;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+}
+
+@media screen and (min-width: 420px) {
+  #menu header > .wrapper,
+  #learn header > .wrapper,
+  #test header > .wrapper,
+  #add-pictures header > .wrapper,
+  #account-settings header > .wrapper,
+  #manage header > .wrapper,
+  #members header > .wrapper,
+  #tests header > .wrapper,
+  #edit-group header > .wrapper,
+  #resolve-reports header > .wrapper,
+  #naturals header > .wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
   }
 }
 
@@ -1168,12 +1188,13 @@ label.required:after {
 #edit-group #logo-standalone,
 #resolve-reports #logo-standalone,
 #naturals #logo-standalone {
-  display: none;
+  display: block;
+  top: -12px;
+  left: -12px;
+  height: 72px;
+  width: 72px;
   position: absolute;
-  top: -20px;
-  left: -20px;
-  height: 112px;
-  width: 112px;
+  z-index: 10;
   border-radius: 100px;
   background: linear-gradient(135deg, #366e11, #007F44);
 }
@@ -1190,7 +1211,10 @@ label.required:after {
   #edit-group #logo-standalone,
   #resolve-reports #logo-standalone,
   #naturals #logo-standalone {
-    display: block;
+    top: -20px;
+    left: -20px;
+    height: 112px;
+    width: 112px;
   }
 }
 
@@ -1206,11 +1230,28 @@ label.required:after {
 #resolve-reports #logo-standalone img,
 #naturals #logo-standalone img {
   position: relative;
-  top: 32px;
-  left: 32px;
+  top: 20px;
+  left: 20px;
   height: 50%;
   width: 50%;
   margin: auto;
+}
+
+@media screen and (min-width: 672px) {
+  #menu #logo-standalone img,
+  #learn #logo-standalone img,
+  #test #logo-standalone img,
+  #add-pictures #logo-standalone img,
+  #account-settings #logo-standalone img,
+  #manage #logo-standalone img,
+  #members #logo-standalone img,
+  #tests #logo-standalone img,
+  #edit-group #logo-standalone img,
+  #resolve-reports #logo-standalone img,
+  #naturals #logo-standalone img {
+    top: 32px;
+    left: 32px;
+  }
 }
 
 #menu aside,
@@ -2100,7 +2141,7 @@ label.required:after {
   font-size: 1rem;
 }
 
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 576px) {
   #menu .folders ul .class-name,
   #menu .folders ul .test-name,
   #menu .folders ul .part-name {
