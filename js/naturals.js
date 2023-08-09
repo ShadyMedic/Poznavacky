@@ -14,7 +14,7 @@ $(function()
 
     $(".natural.data-item").each(function() {
         $naturals.push($(this));
-        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural.name").text(), $(this).find(".natural.uses-count").text(), $(this).find(".natural.pictures-count").text()));
+        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find("span.natural.name").text(), $(this).find(".natural.uses-count").text(), $(this).find(".natural.pictures-count").text()));
     })
 
     //event listenery tlačítek
@@ -150,7 +150,7 @@ function removeFilters()
 function filterByName(name)
 {
     $(".natural.data-item").each(function() {
-        let naturalName = $(this).find(".natural.name").text().trim().toLowerCase();
+        let naturalName = $(this).find("span.natural.name").text().trim().toLowerCase();
         if (naturalName.startsWith(name.trim().toLowerCase()))
         {
             $(this).show();
@@ -197,13 +197,13 @@ function renameConfirm(event)
     if ($(event.target).prop("tagName") !== "INPUT")
     {
         newName = $natural.find(".natural.name.input").val();
-        oldName = $natural.find(".natural.name").text();
+        oldName = $natural.find("span.natural.name").text();
     }
     //potvrzení Enterem
     else
     {
         newName = $(event.target).val();
-        oldName = $natural.find(".natural.name").text();
+        oldName = $natural.find("span.natural.name").text();
     }
 
     //nový a starý název přírodniny se liší (odlišná velikost písma nevadí)
@@ -227,7 +227,7 @@ function renameConfirm(event)
         //kontrola unikátnosti
 
         //Získání seznamu přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
-        let presentNaturals = $(".natural.data-item .natural.name").map(function() {return $(this).text().toUpperCase(); }).get();
+        let presentNaturals = $(".natural.data-item span.natural.name").map(function() {return $(this).text().toUpperCase(); }).get();
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
@@ -264,9 +264,9 @@ function renameConfirm(event)
                     else if (messageType === "success")
                     {
                         //nastavení nového názvu přírodniny a reset DOM
-                        $natural.find(".natural.name").text($natural.find(".natural.name.input").val())
+                        $natural.find("span.natural.name").text(newName);
 
-                        renameCancel($(event.target))
+                        renameCancel($natural.find(".rename-cancel-button"));
                     }
                 }
             );
@@ -288,7 +288,7 @@ function renameCancel($clickedButton)
     $natural.find('.normal-buttons').show();
     $natural.find('.natural.name.box').show();
 
-    $natural.find('.natural.name.input').val($natural.find('.natural.name').text());
+    $natural.find('.natural.name.input').val($natural.find('span.natural.name').text());
 }
 
 /**
@@ -337,7 +337,7 @@ function mergeNaturals(fromNaturalId, toNaturalId)
 function remove(event)
 {
     let $natural = $(event.target).closest('.natural.data-item');
-    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural.name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
+    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('span.natural.name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm) removeFinal($natural)
         else return;

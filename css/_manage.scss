@@ -247,18 +247,18 @@
         .data-properties.test,
         .data-item.test {
             display: grid;
-            grid-template-columns: 6rem 3rem 1fr;
+            grid-template-columns: 1fr 3rem 6rem;
             @media screen and (min-width: $smallMobile) {
-                grid-template-columns: 9.6rem 4rem 1fr;
+                grid-template-columns: 1fr 4rem 6rem;
             }
             @media screen and (min-width: $mobile) {
-                grid-template-columns: 15rem 4rem 1fr;
+                grid-template-columns: 1fr 4rem 6rem;
             }
             @media screen and (min-width: $smallTablet) {
-                grid-template-columns: 13rem 3rem 1fr;
+                grid-template-columns: 1fr 6rem 8rem;
             }
             @media screen and (min-width: $tablet) {
-                grid-template-columns: 16rem 4rem 1fr;
+                grid-template-columns: 1fr 10rem 10rem;
             }
             align-items: center;
             justify-items: center;
@@ -282,14 +282,11 @@
             .test-action {
                 width: 100%;
                 display: flex;
-                flex-direction: column;
-                @media screen and (min-width: $smallTablet) {
-                    flex-direction: row;
-                    justify-content: space-evenly;
-                }
+                flex-direction: row;
+                justify-content: center;
                 .btn {
                     text-align: center;
-                    margin: 0.2rem 0.4rem;
+                    margin: 0.2rem;
                     @media screen and (min-width: $smallTablet) {
                         margin: auto 0.4rem;
                     }
@@ -301,6 +298,7 @@
         padding: 0.4rem;
     }
 }
+
 #resolve-reports {
     width: 100%;
     .data-properties,
@@ -308,7 +306,7 @@
         width: 100%;
         min-width: fit-content;
         display: grid;
-        grid-template-columns: minmax(9rem, 2fr) minmax(11rem, 6fr) minmax(16rem, 3fr) 12rem 8rem 7rem;
+        grid-template-columns: minmax(9rem, 3fr) minmax(6rem, 3fr) minmax(12rem, 3fr) 12rem 8.2rem 9rem;
         column-gap: 0.6rem;
         justify-items: stretch;
         align-items: center;
@@ -359,6 +357,9 @@
         .report-action {
             grid-column: 6/7;
             grid-row: 1/2;
+            > * {
+                margin: auto 0.4rem;
+            }
         }
         .report-action,
         .report-edit-buttons {
@@ -657,18 +658,18 @@
         margin: 0.4rem;
         padding: 0.2rem 0.8rem;
         display: grid;
-        grid-template-columns: 7.2rem 6rem 6rem 1fr;
+        grid-template-columns: 1fr 6rem 6rem 6rem;
         @media screen and (min-width: $smallTablet) {
-            grid-template-columns: 10.2rem 7.2rem 7.2rem 1fr;
+            grid-template-columns: 1fr 7.2rem 7.2rem 7.2rem;
         }
         @media screen and (min-width: $tablet) {
-            grid-template-columns: 12rem 8.8rem 8.8rem 1fr;
+            grid-template-columns: 1fr 8.8rem 8.8rem 8.8rem;
         }
         @media screen and (min-width: $smallDesktop) {
-            grid-template-columns: 16rem 10rem 10rem 1fr;
+            grid-template-columns: 1fr 10rem 10rem 10rem;
         }
         @media screen and (min-width: $desktop) {
-            grid-template-columns: 20rem 10.8rem 10.8rem 1fr;
+            grid-template-columns: 1fr 12rem 12rem 14rem;
         }
     }
     .data-properties > *,
@@ -686,9 +687,6 @@
             justify-content: center;
             .btn {
                 margin: auto 0.4rem;
-                @media screen and (min-width: $smallDesktop) {
-                    margin: auto 0.8rem;
-                }
             }
         }
     }

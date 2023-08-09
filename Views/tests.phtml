@@ -10,9 +10,9 @@
             <span class='test-name'><?= $group->getName() ?></span>
             <span class='test-parts'><?= $group->getPartsCount() ?></span>
             <div class='test-action'>
-                <a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports'>Správa hlášení</a>
-                <a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit'>Upravit</a>
-                <a class='btn inline black delete-group-button'>Odstranit</a>
+                <a class='btn icon' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports' title="Spravovat hlášení"><img src="images/list-filled-black.svg"></a>
+                <a class='btn icon' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit' title="Upravit poznávačku"><img src="images/pencil-black.svg"></a>
+                <a class='btn icon delete-group-button' title="Odstranit poznávačku"><img src="images/trash-black.svg"></a>
             </div>
         </div>
         <?php endforeach ?>

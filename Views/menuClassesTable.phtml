@@ -17,10 +17,10 @@
                 </span>
                 <?php if (!$demoVersion): ?>
                     <?php if ($tableRow[2] === 'admin') : ?>
-                    <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" class="btn inline black class-action">Správa třídy</a>
+                    <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class-action"><img src="images/settings-filled-black.svg"></a>
                     <?php endif ?>
                     <?php if ($tableRow[2] === 'leave') : ?>
-                    <a href="javascript:;" data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" class="btn inline black class-action leave-link">Opustit třídu</a>
+                    <a href="javascript:;" data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class-action leave-link"><img src="images/logout-filled-black.svg"></a>
                     <?php endif ?>
                     <?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
                     <?= $tableRow[2] ?>

@@ -284,12 +284,12 @@
         &#menu-classes-table {
             .table-title,
             li {
-                grid-template-columns: 1fr 5.6rem 4rem;
+                grid-template-columns: 1fr 5.6rem 3.2rem;
                 @media screen and (min-width: $smallMobile) {
-                    grid-template-columns: 1fr 8rem 6rem;
+                    grid-template-columns: 1fr 8rem 4rem;
                 }
                 @media screen and (min-width: $mobile) {
-                    grid-template-columns: 1fr 8rem 8rem;
+                    grid-template-columns: 1fr 8rem 5.4rem;
                 }
             }
             .invitation {
@@ -450,7 +450,7 @@
         .table-title {
             width: 100%;
             max-width: 780px;
-            padding: 0.4rem;
+            padding: 0.6rem;
             display: grid;
             span {
                 text-align: center;
@@ -497,3 +497,10 @@
 @import "_study.scss" ;
 
 @import "_manage.scss" ;
+
+.data-item {
+    .icon {
+        height: 1.4rem;
+        width: 1.4rem;
+    } 
+}

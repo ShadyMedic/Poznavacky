@@ -100,7 +100,6 @@ function partData(partName)
  */
 function addPart()
 {
-    console.log($("#parts-boxes-container .part.box:nth-last-child(2)"));
     $("#parts-boxes-container .part.box:nth-last-child(2)").after($("#part-box-template").html());
     $(".part.box:last-child")[0].scrollIntoView({
         behavior: "smooth",
@@ -294,9 +293,9 @@ function renameConfirm(event, type)
     
 
     //skrytí inputu, zobrazení textu
-    $selectedNameInputBox.siblings().find("." + className + "-name").text(newName);
+    $selectedNameInputBox.siblings().find("." + className + ".name").text(newName);
     $selectedNameInputBox.hide();
-    $selectedNameInputBox.siblings().filter("." + className + "-name-box").show();
+    $selectedNameInputBox.siblings().filter("." + className + ".name-box").show();
     
     //byly provedeny změny -> zamkni stránku
     lock();
