@@ -24,28 +24,28 @@
                 <?= $class->getGroupsCount() ?>
             </td>
             <td>
-                <table class='class-owner-table'>
+                <table class='class-owner table'>
                     <tr>
                         <td>Jméno: </td>
-                        <td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" class='class-owner-name class-owner-field class-owner-table-data'/></td>
+                        <td><input type=text readonly value="<?= $class->getAdmin()['name'] ?>" class='class-owner name field table-data'/></td>
                     </tr>
                     <tr>
                         <td>ID: </td>
-                        <td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" class='class-owner-id class-owner-field class-owner-table-data'/></td>
+                        <td><input type=number readonly value="<?= $class->getAdmin()['id'] ?>" class='class-owner id field table-data'/></td>
                     </tr>
                     <tr>
-                        <td>E-mail: </td><td class='class-owner-data'><?= $class->getAdmin()['email'] ?></td>
+                        <td>E-mail: </td><td class='class-owner data'><?= $class->getAdmin()['email'] ?></td>
                     </tr>
                     <tr>
-                        <td>Karma: </td><td class='class-owner-data'><?= $class->getAdmin()['karma'] ?></td>
+                        <td>Karma: </td><td class='class-owner data'><?= $class->getAdmin()['karma'] ?></td>
                     </tr>
                     <tr>
-                        <td>Status: </td><td class='class-owner-data'><?= $class->getAdmin()['status'] ?></td>
+                        <td>Status: </td><td class='class-owner data'><?= $class->getAdmin()['status'] ?></td>
                     </tr>
                 </table>
             </td>
             <td>
-                <select disabled class='class-field class-status'>
+                <select disabled class='class field status'>
                     <?php if ($class->getStatus() === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>
                     <option selected><?= Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC ?></option>
                     <?php endif ?>
@@ -69,14 +69,14 @@
                 </select>
             </td>
             <td>
-                <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='class-field class-code'/>
+                <input type=number min=0 max=9999 maxlength=4 readonly value="<?= $class->getCode() ?>" class='class field code'/>
             </td>
-            <td class="class-action">
+            <td class="class action">
                 <div>
                     <button class='btn icon edit-class-button' title='Upravit status a kód'>
                         <img src='images/pencil-colour.svg'/>
                     </button>
-                    <div class="class-edit-buttons" style="display:none;">
+                    <div class="edit-buttons" style="display:none;">
                         <button class='btn icon edit-class-confirm-button' title='Uložit'>
                             <img src='images/tick.svg'/>
                         </button>
@@ -84,7 +84,7 @@
                             <img src='images/cross-thick-black.svg'/>
                         </button>
                     </div>
-                    <div class="class-change-class-owner-buttons" style="display:none;">
+                    <div class="change-class-owner-buttons" style="display:none;">
                         <button class='btn icon edit-class-owner-action change-class-owner-confirm-button' title='Uložit'>
                             <img src='images/tick.svg'/>
                         </button>
@@ -92,16 +92,16 @@
                             <img src='images/cross-thick-black.svg'/>
                         </button>
                     </div>
-                    <button class='btn icon class-action change-class-owner-button' title='Změnit správce'>
+                    <button class='btn icon class action change-class-owner-button' title='Změnit správce'>
                         <img src='images/user-purple.svg'/>
                     </button>
-                    <button class='class-action btn icon class-redirect-button' title='Spravovat'>
+                    <button class='class action btn icon class-redirect-button' title='Spravovat'>
                         <img src='images/gear-grey.svg'/>
                     </button>
-                    <button class='class-action btn icon start-mail-button <?php if (empty($class->getAdmin()['email'])) : ?> disabled <?php endif ?>' title='Kontaktovat správce'>
+                    <button class='class action btn icon start-mail-button <?php if (empty($class->getAdmin()['email'])) : ?> disabled <?php endif ?>' title='Kontaktovat správce'>
                         <img src='images/mail-colour.svg'/>
                     </button>
-                    <button class='class-action btn icon delete-class-button' title='Odstranit třídu'>
+                    <button class='class action btn icon delete-class-button' title='Odstranit třídu'>
                         <img src='images/trash-black.svg'/>
                     </button>
                 </div>

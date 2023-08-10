@@ -122,7 +122,7 @@ td {
   word-break: break-word;
 }
 
-.class-owner-table td:nth-child(1) {
+.class-owner.table td:nth-child(1) {
   word-break: keep-all;
 }
 
@@ -298,11 +298,11 @@ textarea:focus {
   border-right: 1px solid lightgray;
 }
 
-#users .class-owner-table tr:nth-child(odd),
-#classes .class-owner-table tr:nth-child(odd),
-#admin-reports .class-owner-table tr:nth-child(odd),
-#name-change-requests .class-owner-table tr:nth-child(odd),
-#alerts .class-owner-table tr:nth-child(odd) {
+#users .class-owner.table tr:nth-child(odd),
+#classes .class-owner.table tr:nth-child(odd),
+#admin-reports .class-owner.table tr:nth-child(odd),
+#name-change-requests .class-owner.table tr:nth-child(odd),
+#alerts .class-owner.table tr:nth-child(odd) {
   background: transparent;
 }
 
@@ -333,31 +333,11 @@ textarea:focus {
   background: transparent;
 }
 
-#users .user-action > div,
-#users .class-action > div,
-#users .report-action > div,
-#users .name-change-request-action > div,
-#users .alert-action > div,
-#classes .user-action > div,
-#classes .class-action > div,
-#classes .report-action > div,
-#classes .name-change-request-action > div,
-#classes .alert-action > div,
-#admin-reports .user-action > div,
-#admin-reports .class-action > div,
-#admin-reports .report-action > div,
-#admin-reports .name-change-request-action > div,
-#admin-reports .alert-action > div,
-#name-change-requests .user-action > div,
-#name-change-requests .class-action > div,
-#name-change-requests .report-action > div,
-#name-change-requests .name-change-request-action > div,
-#name-change-requests .alert-action > div,
-#alerts .user-action > div,
-#alerts .class-action > div,
-#alerts .report-action > div,
-#alerts .name-change-request-action > div,
-#alerts .alert-action > div {
+#users .action > div,
+#classes .action > div,
+#admin-reports .action > div,
+#name-change-requests .action > div,
+#alerts .action > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -374,31 +354,11 @@ textarea:focus {
 }
 
 @media screen and (min-width: 768px) {
-  #users .user-action > div,
-  #users .class-action > div,
-  #users .report-action > div,
-  #users .name-change-request-action > div,
-  #users .alert-action > div,
-  #classes .user-action > div,
-  #classes .class-action > div,
-  #classes .report-action > div,
-  #classes .name-change-request-action > div,
-  #classes .alert-action > div,
-  #admin-reports .user-action > div,
-  #admin-reports .class-action > div,
-  #admin-reports .report-action > div,
-  #admin-reports .name-change-request-action > div,
-  #admin-reports .alert-action > div,
-  #name-change-requests .user-action > div,
-  #name-change-requests .class-action > div,
-  #name-change-requests .report-action > div,
-  #name-change-requests .name-change-request-action > div,
-  #name-change-requests .alert-action > div,
-  #alerts .user-action > div,
-  #alerts .class-action > div,
-  #alerts .report-action > div,
-  #alerts .name-change-request-action > div,
-  #alerts .alert-action > div {
+  #users .action > div,
+  #classes .action > div,
+  #admin-reports .action > div,
+  #name-change-requests .action > div,
+  #alerts .action > div {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
@@ -406,90 +366,44 @@ textarea:focus {
   }
 }
 
-#users .user-action > div .user-edit-buttons,
-#users .user-action > div .class-edit-buttons,
-#users .class-action > div .user-edit-buttons,
-#users .class-action > div .class-edit-buttons,
-#users .report-action > div .user-edit-buttons,
-#users .report-action > div .class-edit-buttons,
-#users .name-change-request-action > div .user-edit-buttons,
-#users .name-change-request-action > div .class-edit-buttons,
-#users .alert-action > div .user-edit-buttons,
-#users .alert-action > div .class-edit-buttons,
-#classes .user-action > div .user-edit-buttons,
-#classes .user-action > div .class-edit-buttons,
-#classes .class-action > div .user-edit-buttons,
-#classes .class-action > div .class-edit-buttons,
-#classes .report-action > div .user-edit-buttons,
-#classes .report-action > div .class-edit-buttons,
-#classes .name-change-request-action > div .user-edit-buttons,
-#classes .name-change-request-action > div .class-edit-buttons,
-#classes .alert-action > div .user-edit-buttons,
-#classes .alert-action > div .class-edit-buttons,
-#admin-reports .user-action > div .user-edit-buttons,
-#admin-reports .user-action > div .class-edit-buttons,
-#admin-reports .class-action > div .user-edit-buttons,
-#admin-reports .class-action > div .class-edit-buttons,
-#admin-reports .report-action > div .user-edit-buttons,
-#admin-reports .report-action > div .class-edit-buttons,
-#admin-reports .name-change-request-action > div .user-edit-buttons,
-#admin-reports .name-change-request-action > div .class-edit-buttons,
-#admin-reports .alert-action > div .user-edit-buttons,
-#admin-reports .alert-action > div .class-edit-buttons,
-#name-change-requests .user-action > div .user-edit-buttons,
-#name-change-requests .user-action > div .class-edit-buttons,
-#name-change-requests .class-action > div .user-edit-buttons,
-#name-change-requests .class-action > div .class-edit-buttons,
-#name-change-requests .report-action > div .user-edit-buttons,
-#name-change-requests .report-action > div .class-edit-buttons,
-#name-change-requests .name-change-request-action > div .user-edit-buttons,
-#name-change-requests .name-change-request-action > div .class-edit-buttons,
-#name-change-requests .alert-action > div .user-edit-buttons,
-#name-change-requests .alert-action > div .class-edit-buttons,
-#alerts .user-action > div .user-edit-buttons,
-#alerts .user-action > div .class-edit-buttons,
-#alerts .class-action > div .user-edit-buttons,
-#alerts .class-action > div .class-edit-buttons,
-#alerts .report-action > div .user-edit-buttons,
-#alerts .report-action > div .class-edit-buttons,
-#alerts .name-change-request-action > div .user-edit-buttons,
-#alerts .name-change-request-action > div .class-edit-buttons,
-#alerts .alert-action > div .user-edit-buttons,
-#alerts .alert-action > div .class-edit-buttons {
+#users .action > div .btn,
+#classes .action > div .btn,
+#admin-reports .action > div .btn,
+#name-change-requests .action > div .btn,
+#alerts .action > div .btn {
+  margin: 0.16rem;
+}
+
+#users .user.action > div .edit-buttons,
+#users .user.action > div .change-class-owner-buttons,
+#users .class.action > div .edit-buttons,
+#users .class.action > div .change-class-owner-buttons,
+#classes .user.action > div .edit-buttons,
+#classes .user.action > div .change-class-owner-buttons,
+#classes .class.action > div .edit-buttons,
+#classes .class.action > div .change-class-owner-buttons,
+#admin-reports .user.action > div .edit-buttons,
+#admin-reports .user.action > div .change-class-owner-buttons,
+#admin-reports .class.action > div .edit-buttons,
+#admin-reports .class.action > div .change-class-owner-buttons,
+#name-change-requests .user.action > div .edit-buttons,
+#name-change-requests .user.action > div .change-class-owner-buttons,
+#name-change-requests .class.action > div .edit-buttons,
+#name-change-requests .class.action > div .change-class-owner-buttons,
+#alerts .user.action > div .edit-buttons,
+#alerts .user.action > div .change-class-owner-buttons,
+#alerts .class.action > div .edit-buttons,
+#alerts .class.action > div .change-class-owner-buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-}
-
-#users .user-action > div .btn,
-#users .class-action > div .btn,
-#users .report-action > div .btn,
-#users .name-change-request-action > div .btn,
-#users .alert-action > div .btn,
-#classes .user-action > div .btn,
-#classes .class-action > div .btn,
-#classes .report-action > div .btn,
-#classes .name-change-request-action > div .btn,
-#classes .alert-action > div .btn,
-#admin-reports .user-action > div .btn,
-#admin-reports .class-action > div .btn,
-#admin-reports .report-action > div .btn,
-#admin-reports .name-change-request-action > div .btn,
-#admin-reports .alert-action > div .btn,
-#name-change-requests .user-action > div .btn,
-#name-change-requests .class-action > div .btn,
-#name-change-requests .report-action > div .btn,
-#name-change-requests .name-change-request-action > div .btn,
-#name-change-requests .alert-action > div .btn,
-#alerts .user-action > div .btn,
-#alerts .class-action > div .btn,
-#alerts .report-action > div .btn,
-#alerts .name-change-request-action > div .btn,
-#alerts .alert-action > div .btn {
-  margin: 0.16rem;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 #report-image {
@@ -499,28 +413,14 @@ textarea:focus {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   z-index: 10;
-  width: 90%;
-}
-
-@media screen and (min-width: 576px) {
-  #report-image {
-    width: 80%;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  #report-image {
-    width: 65%;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  #report-image {
-    width: 45%;
-  }
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 500px;
+  max-height: 80vh;
 }
 
 #report-image img {
+  height: 100%;
   width: 100%;
   border: 1px solid black;
 }

@@ -3816,8 +3816,8 @@ label.required:after {
   border-radius: 0.2rem;
 }
 
-#resolve-reports .data-item .report-name,
-#resolve-reports .data-item .report-name-edit {
+#resolve-reports .data-item .name,
+#resolve-reports .data-item .name-edit {
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1/2;
@@ -3826,13 +3826,13 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .data-item .report-name-edit {
+#resolve-reports .data-item .name-edit {
   width: 100%;
   font-size: 0.8rem;
 }
 
-#resolve-reports .data-item .report-url,
-#resolve-reports .data-item .report-url-edit {
+#resolve-reports .data-item .url,
+#resolve-reports .data-item .url-edit {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2/3;
@@ -3842,16 +3842,16 @@ label.required:after {
   font-size: 0.8rem;
 }
 
-#resolve-reports .data-item .report-url {
+#resolve-reports .data-item .url {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 
-#resolve-reports .data-item .report-url-edit {
+#resolve-reports .data-item .url-edit {
   width: 100%;
 }
 
-#resolve-reports .data-item .report-reason {
+#resolve-reports .data-item .reason {
   -ms-grid-column: 3;
   -ms-grid-column-span: 1;
   grid-column: 3/4;
@@ -3860,7 +3860,7 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .data-item .report-additional-info {
+#resolve-reports .data-item .additional-info {
   -ms-grid-column: 4;
   -ms-grid-column-span: 1;
   grid-column: 4/5;
@@ -3869,7 +3869,7 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .data-item .report-number {
+#resolve-reports .data-item .number {
   -ms-grid-column: 5;
   -ms-grid-column-span: 1;
   grid-column: 5/6;
@@ -3878,7 +3878,7 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .data-item .report-action {
+#resolve-reports .data-item .action {
   -ms-grid-column: 6;
   -ms-grid-column-span: 1;
   grid-column: 6/7;
@@ -3887,12 +3887,12 @@ label.required:after {
   grid-row: 1/2;
 }
 
-#resolve-reports .data-item .report-action > * {
+#resolve-reports .data-item .action > * {
   margin: auto 0.4rem;
 }
 
-#resolve-reports .data-item .report-action,
-#resolve-reports .data-item .report-edit-buttons {
+#resolve-reports .data-item .action,
+#resolve-reports .data-item .edit-buttons {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3906,7 +3906,7 @@ label.required:after {
           justify-content: space-evenly;
 }
 
-#resolve-reports .data-item .report-image {
+#resolve-reports .data-item .image {
   -ms-grid-column: 1;
   -ms-grid-column-span: 6;
   grid-column: 1/7;
@@ -3918,19 +3918,19 @@ label.required:after {
   position: relative;
 }
 
-#resolve-reports .data-item .report-image .btn {
+#resolve-reports .data-item .image .btn {
   margin: 1rem;
   position: absolute;
   top: 0;
   right: 0;
 }
 
-#resolve-reports .data-item .report-image .btn > img {
+#resolve-reports .data-item .image .btn > img {
   -webkit-filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
           filter: drop-shadow(0 0 0.16rem rgba(0, 0, 0, 0.6));
 }
 
-#resolve-reports .data-item .report-image > img {
+#resolve-reports .data-item .image > img {
   height: 100%;
 }
 
@@ -3955,7 +3955,7 @@ label.required:after {
 }
 
 #resolve-reports .data-properties > *,
-#resolve-reports .data-item > *:not(.report-image) {
+#resolve-reports .data-item > *:not(.report.image) {
   text-align: center;
 }
 

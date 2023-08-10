@@ -19,19 +19,19 @@ function editUser(event)
     let $user = $(event.target).closest(".user.data-item");
 
     //dočasné znemožnění ostatních akcí u všech uživatelů
-    $(".user.data-item").not($user).find(".user-action .btn").not(".disabled").addClass("temp");
-    $(".user.data-item").not($user).find(".user-action .btn").addClass("disabled");
+    $(".user.data-item").not($user).find(".user.action .btn").not(".disabled").addClass("temp");
+    $(".user.data-item").not($user).find(".user.action .btn").addClass("disabled");
 
     //uložení současných hodnot
     for (let i = 0; i <= 3; i++)
     {
-        currentUserValues[i] = $user.find(".user-field:eq("+ i +")").val();
+        currentUserValues[i] = $user.find(".user.field:eq("+ i +")").val();
     }
 
-    $user.find(".user-action > div > .btn").hide();
-    $user.find(".user-edit-buttons").show();            
-    $user.find(".user-field").removeAttr("readonly");    //umožnění editace pro <input>
-    $user.find(".user-field").removeAttr("disabled");    //umožnění editace pro <select>
+    $user.find(".user.action > div > .btn").hide();
+    $user.find(".edit-buttons").show();            
+    $user.find(".user.field").removeAttr("readonly");    //umožnění editace pro <input>
+    $user.find(".user.field").removeAttr("disabled");    //umožnění editace pro <select>
 }
 
 /**
@@ -43,19 +43,19 @@ function editUserCancel(event)
     let $user = $(event.target).closest(".user.data-item");
 
     //opětovné zapnutí ostatních tlačítek akcí
-    $(".user.data-item").not($user).find(".user-action .btn.temp").removeClass("disabled");
-    $(".user.data-item").not($user).find(".user-action .btn.temp").removeClass("temp");
+    $(".user.data-item").not($user).find(".user.action .btn.temp").removeClass("disabled");
+    $(".user.data-item").not($user).find(".user.action .btn.temp").removeClass("temp");
 
     //obnova hodnot vstupních polí
     for (let i = 0; i <= 3; i++)
     {
-        $user.find(".user-field:eq("+ i +")").val(currentUserValues[i]);
+        $user.find(".user.field:eq("+ i +")").val(currentUserValues[i]);
     }
 
-    $user.find(".user-action > div > .btn").show();
-    $user.find(".user-edit-buttons").hide();
-    $user.find(".user-field").attr("readonly", "");    //znemožnění editace pro <input>
-    $user.find(".user-field").attr("disabled", "");    //znemožnění editace pro <select>
+    $user.find(".user.action > div > .btn").show();
+    $user.find(".edit-buttons").hide();
+    $user.find(".user.field").attr("readonly", "");    //znemožnění editace pro <input>
+    $user.find(".user.field").attr("disabled", "");    //znemožnění editace pro <select>
 }
 
 /**
@@ -70,7 +70,7 @@ function editUserConfirm(event)
     //uložení nových hodnot
     for (let i = 0; i <= 3; i++)
     {
-        currentUserValues[i] = $user.find(".user-field:eq("+ i +")").val();
+        currentUserValues[i] = $user.find(".user.field:eq("+ i +")").val();
     }
 
     //odeslat data na server

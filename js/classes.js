@@ -12,9 +12,9 @@ $(function()
     $(".class-redirect-button").click(function(event) {classRedirect(event)})
     $(".delete-class-button").click(function(event) {deleteClass(event)})
 
-    $(".class-owner-name").change(function(event) {classOwnerChanged(event, 0)})
-    $(".class-owner-id").change(function(event) {classOwnerChanged(event, 1)})
-    $(".class-status").change(function(event) {classStatusChanged(event)})
+    $(".class-owner.name").change(function(event) {classOwnerChanged(event, 0)})
+    $(".class-owner.id").change(function(event) {classOwnerChanged(event, 1)})
+    $(".class.status").change(function(event) {classStatusChanged(event)})
   
 })
 
@@ -39,18 +39,18 @@ function editClass(event)
     let $class = $(event.target).closest(".class.data-item")
 
     //dočasné znemožnění ostatních akcí u všech tříd
-    $(".class.data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
-    $(".class.data-item").not($class).find(".class-action .btn").addClass("disabled");
+    $(".class.data-item").not($class).find(".class.action .btn").not(".disabled").addClass("temp");
+    $(".class.data-item").not($class).find(".class.action .btn").addClass("disabled");
 
     //uložení současných hodnot
     for (let i = 0; i <= 1; i++)
     {
-        currentClassValues[i] = $class.find(".class-field:eq("+ i +")").val();
+        currentClassValues[i] = $class.find(".class.field:eq("+ i +")").val();
     }
 
-    $class.find(".class-action > div > .btn").hide();
-    $class.find(".class-edit-buttons").show();              
-    $class.find(".class-field").removeAttr("disabled");        //umožnění editace pro <select>
+    $class.find(".class.action > div > .btn").hide();
+    $class.find(".edit-buttons").show();              
+    $class.find(".class.field").removeAttr("disabled");        //umožnění editace pro <select>
     classStatusChanged(event);        //umožnění nastavení kódu třídy, pokud je současný stav nastaven na "private" a kód tak má smysl
 }
 
@@ -66,22 +66,22 @@ function classStatusChanged(event)
     if (newStatus !== "private")
     {
         //kód nemá smysl --> vymazat jej
-        $class.find(".class-code").val("");
-        $class.find(".class-code").attr("readonly", "");
+        $class.find(".class.code").val("");
+        $class.find(".class.code").attr("readonly", "");
     }
     else
     {
         //je potřeba nastavit kód --> umožnit editaci
         if (currentClassValues[1] === "")
         {
-            $class.find(".class-code").val("0000");
+            $class.find(".class.code").val("0000");
         }
         else
         {
-            $class.find(".class-code").val(currentClassValues[1]);
+            $class.find(".class.code").val(currentClassValues[1]);
         }
 
-        $class.find(".class-code").removeAttr("readonly");
+        $class.find(".class.code").removeAttr("readonly");
     }
 }
 
@@ -97,7 +97,7 @@ function editClassConfirm(event)
     //uložení nových hodnot
     for (let i = 0; i <= 1; i++)
     {
-        currentClassValues[i] = $class.find(".class-field:eq("+ i +")").val();
+        currentClassValues[i] = $class.find(".class.field:eq("+ i +")").val();
     }
 
     //odeslat data na server
@@ -132,19 +132,19 @@ function editClassCancel(event)
     let $class = $(event.target).closest(".class.data-item");
 
     //opětovné zapnutí ostatních tlačítek akcí
-    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
-    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
+    $(".class.data-item").not($class).find(".class.action .btn.temp").removeClass("disabled");
+    $(".class.data-item").not($class).find(".class.action .btn.temp").removeClass("temp");
 
     //obnova hodnot vstupních polí
     for (let i = 0; i <= 1; i++)
     {
-        $class.find(".class-field:eq("+ i +")").val(currentClassValues[i]);
+        $class.find(".class.field:eq("+ i +")").val(currentClassValues[i]);
     }
 
-    $class.find(".class-action > div > .btn").show();
-    $class.find(".class-edit-buttons").hide();
-    $class.find(".class-field").attr("readonly", "");       //znemožnění editace pro <input>
-    $class.find(".class-field").attr("disabled", "");       //znemožnění editace pro <select>
+    $class.find(".class.action > div > .btn").show();
+    $class.find(".edit-buttons").hide();
+    $class.find(".class.field").attr("readonly", "");       //znemožnění editace pro <input>
+    $class.find(".class.field").attr("disabled", "");       //znemožnění editace pro <select>
 }
 
 var currentClassOwnerValues = new Array(2);
@@ -159,18 +159,18 @@ function changeClassOwner(event)
     let $class = $(event.target).closest(".class.data-item")
 
     //dočasné znemožnění ostatních akcí u všech tříd
-    $(".class.data-item").not($class).find(".class-action .btn").not(".disabled").addClass("temp");
-    $(".class.data-item").not($class).find(".class-action .btn").addClass("disabled");
+    $(".class.data-item").not($class).find(".class.action .btn").not(".disabled").addClass("temp");
+    $(".class.data-item").not($class).find(".class.action .btn").addClass("disabled");
 
     //uložení současných hodnot
     for (let i = 0; i <= 1; i++)
     {
-        currentClassOwnerValues[i] = $class.find(".class-owner-table .class-owner-field:eq("+ i +")").val();
+        currentClassOwnerValues[i] = $class.find(".class-owner.table .class-owner.field:eq("+ i +")").val();
     }
 
-    $class.find(".class-action > div > .btn").hide();
-    $class.find(".class-change-class-owner-buttons").show();
-    $class.find(".class-owner-field").removeAttr("readonly");        //umožnění editace pro <input>
+    $class.find(".class.action > div > .btn").hide();
+    $class.find(".change-class-owner-buttons").show();
+    $class.find(".class-owner.field").removeAttr("readonly");        //umožnění editace pro <input>
 }
 
 /**
@@ -193,14 +193,14 @@ function classOwnerChanged(event, identifier)
     }
 
     //umožnit změnu ID nebo jména - to druhé je stejné jako na začátku
-    if ($class.find(".class-owner-field:eq("+ identifier + ")").val() === currentClassOwnerValues[identifier])
+    if ($class.find(".class-owner.field:eq("+ identifier + ")").val() === currentClassOwnerValues[identifier])
     {
-        $class.find(".class-owner-field:eq("+ (Number)(!identifier) + ")").removeAttr("readonly");
+        $class.find(".class-owner.field:eq("+ (Number)(!identifier) + ")").removeAttr("readonly");
     }
     //znemožnit změnu ID nebo jména - to druhé se změnilo
     else
     {
-        $class.find(".class-owner-field:eq("+ (Number)(!identifier) + ")").attr("readonly", "");
+        $class.find(".class-owner.field:eq("+ (Number)(!identifier) + ")").attr("readonly", "");
     }
 }
 
@@ -213,17 +213,17 @@ function changeClassOwnerCancel(event)
     let $class = $(event.target).closest(".class.data-item")
 
     //opětovné zapnutí ostatních tlačítek akcí
-    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("disabled");
-    $(".class.data-item").not($class).find(".class-action .btn.temp").removeClass("temp");
+    $(".class.data-item").not($class).find(".class.action .btn.temp").removeClass("disabled");
+    $(".class.data-item").not($class).find(".class.action .btn.temp").removeClass("temp");
 
     //Obnova hodnot vstupních polí
     for (let i = 0; i <= 1; i++)
     {
-        $class.find(".class-owner-table .class-owner-field:eq("+ i +")").val(currentClassOwnerValues[i]);
+        $class.find(".class-owner.table .class-owner.field:eq("+ i +")").val(currentClassOwnerValues[i]);
     }
-    $class.find(".class-action > div > .btn").show();
-    $class.find(".class-change-class-owner-buttons").hide();
-    $class.find(".class-field").attr("readonly", "");       //znemožnění editace pro <input>
+    $class.find(".class.action > div > .btn").show();
+    $class.find(".change-class-owner-buttons").hide();
+    $class.find(".class.field").attr("readonly", "");       //znemožnění editace pro <input>
 }
 
 /**
@@ -233,11 +233,11 @@ function changeClassOwnerCancel(event)
 function changeClassOwnerConfirm(event)
 {
     let $class = $(event.target).closest(".class.data-item");
-    let $classOwnerTable = $class.find(".class-owner-table");
+    let $classOwnerTable = $class.find(".class-owner.table");
     
     let classId = $class.attr("data-class-id");
-    let newName = $classOwnerTable.find(".class-owner-field:eq(0)").val();
-    let newId = $classOwnerTable.find(".class-owner-field:eq(1)").val();
+    let newName = $classOwnerTable.find(".class-owner.field:eq(0)").val();
+    let newId = $classOwnerTable.find(".class-owner.field:eq(1)").val();
     
     //odeslat data na server
     $.post("administrate-action",
@@ -261,9 +261,9 @@ function changeClassOwnerConfirm(event)
 
                 currentClassOwnerValues[0] = newName;
                 currentClassOwnerValues[1] = newId;
-                $classOwnerTable.find(".class-owner-data:eq(0)").text(newEmail);
-                $classOwnerTable.find(".class-owner-data:eq(1)").text(newKarma);
-                $classOwnerTable.find(".class-owner-data:eq(2)").text(newStatus);
+                $classOwnerTable.find(".class-owner.data:eq(0)").text(newEmail);
+                $classOwnerTable.find(".class-owner.data:eq(1)").text(newKarma);
+                $classOwnerTable.find(".class-owner.data:eq(2)").text(newStatus);
 
                 //vypnutí nebo zapnutí tlačítka pro kontaktování vlastníka třídy a změna adresáta předávaného jako parametr
                 if (newEmail === null)

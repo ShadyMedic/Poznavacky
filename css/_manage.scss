@@ -320,55 +320,55 @@
         grid-template-rows: auto auto;
         border: 1px solid #ccc;
         border-radius: 0.2rem;
-        .report-name,
-        .report-name-edit {
+        .name,
+        .name-edit {
             grid-column: 1/2;
             grid-row: 1/2;
         }
-        .report-name-edit {
+        .name-edit {
             width: 100%;
             font-size: 0.8rem;
         }
-        .report-url,
-        .report-url-edit {
+        .url,
+        .url-edit {
             grid-column: 2/3;
             grid-row: 1/2;
             font-size: 0.8rem;
         }
-        .report-url {
+        .url {
             overflow-wrap: break-word;
             word-wrap: break-word;
         }
-        .report-url-edit {
+        .url-edit {
             width: 100%;
         }
-        .report-reason {
+        .reason {
             grid-column: 3/4;
             grid-row: 1/2;
         }
-        .report-additional-info {
+        .additional-info {
             grid-column: 4/5;
             grid-row: 1/2;
         }
-        .report-number {
+        .number {
             grid-column: 5/6;
             grid-row: 1/2;
         }
-        .report-action {
+        .action {
             grid-column: 6/7;
             grid-row: 1/2;
             > * {
                 margin: auto 0.4rem;
             }
         }
-        .report-action,
-        .report-edit-buttons {
+        .action,
+        .edit-buttons {
             width: 100%;
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
         }
-        .report-image {
+        .image {
             grid-column: 1/7;
             grid-row: 2/3;
             height: 300px;
@@ -406,7 +406,7 @@
         }
     }
     .data-properties > *,
-    .data-item > *:not(.report-image) {
+    .data-item > *:not(.report.image) {
         text-align: center;
     }
 }

@@ -97,7 +97,7 @@ th {
 td {
     word-break: break-word;
 }
-.class-owner-table td:nth-child(1) {
+.class-owner.table td:nth-child(1) {
     word-break: keep-all;
 }
 tr {
@@ -229,7 +229,7 @@ textarea {
 #admin-reports,
 #name-change-requests,
 #alerts {
-    .class-owner-table tr:nth-child(odd) {
+    .class-owner.table tr:nth-child(odd) {
         background: transparent;
     }
     input {
@@ -244,11 +244,7 @@ textarea {
         border: none;
         background: transparent;
     }
-    .user-action > div,
-    .class-action > div,
-    .report-action > div,
-    .name-change-request-action > div,
-    .alert-action > div {
+    .action > div {
         display: flex; 
         justify-content: center;
         align-items: center;
@@ -256,13 +252,17 @@ textarea {
         @media screen and (min-width: $tablet) {
             flex-direction: row;
         }
-        .user-edit-buttons,
-        .class-edit-buttons {
-            display: flex;
-            justify-content: center;
-        }
         .btn {
             margin: 0.16rem;
+        }
+    }
+    .user.action > div,
+    .class.action > div {
+        .edit-buttons,
+        .change-class-owner-buttons {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
         }
     }
 }
@@ -273,17 +273,12 @@ textarea {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    width: 90%;
-    @media screen and (min-width: $mobile) {
-        width: 80%;
-    }
-    @media screen and (min-width: $tablet) {
-        width: 65%;
-    }
-    @media screen and (min-width: $smallDesktop) {
-        width: 45%;
-    }
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 500px;
+    max-height: 80vh;
     img {
+        height: 100%;
         width: 100%;
         border: 1px solid black;
     }
