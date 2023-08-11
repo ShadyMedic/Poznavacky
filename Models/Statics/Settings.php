@@ -16,6 +16,12 @@ class Settings
     public const PRODUCTION_ENVIRONMENT = false;
 
     /**
+     * Aktuální verze aplikace
+     * Při vydání nové verze je nutné nezapomenout přidat ID nového GitHub release do konstanty ChangelogManager::RELEASE_IDS
+     */
+    public const VERSION = '4.1.2';
+
+    /**
      * Server hostující MySQL databázi pro aplikaci
      */
     public const DB_HOST = 'localhost';

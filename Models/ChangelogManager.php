@@ -12,7 +12,6 @@ use Poznavacky\Models\Statics\UserManager;
  */
 class ChangelogManager
 {
-    public const LATEST_VERSION = '4.1.2';
     private const GITHUB_API_RELEASES_URL = 'https://api.github.com/repos/ShadyMedic/Poznavacky/releases/';
     private const RELEASE_IDS = array(
         '4.1.2' => 84261860,
@@ -38,7 +37,7 @@ class ChangelogManager
     public function checkLatestChangelogRead(): bool
     {
         $lastReadChangelog = UserManager::getUser()['lastChangelog'];
-        return !($lastReadChangelog < self::LATEST_VERSION);
+        return !($lastReadChangelog < Settings::VERSION);
     }
     
     /**
@@ -47,7 +46,7 @@ class ChangelogManager
     private function loadChangelog(): void
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, self::GITHUB_API_RELEASES_URL.self::RELEASE_IDS[self::LATEST_VERSION]);
+        curl_setopt($curl, CURLOPT_URL, self::GITHUB_API_RELEASES_URL.self::RELEASE_IDS[Settings::VERSION]);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         if (!Settings::PRODUCTION_ENVIRONMENT) {
