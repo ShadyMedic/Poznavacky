@@ -77,5 +77,10 @@ class Settings
      */
     public const ANSWER_TOLERANCE = 0.34;
 
+    /**
+     * E-mailová adresa, na kterou jsou odesílána upozornění o chybách aplikace
+     */
+    public const ERROR_ALERT_EMAIL = 'errors@poznavacky.com';
+
 }
 
