@@ -16,11 +16,32 @@ class Settings
     public const PRODUCTION_ENVIRONMENT = false;
 
     /**
+     * Server hostující MySQL databázi pro aplikaci
+     */
+    public const DB_HOST = 'localhost';
+
+    /**
+     * Uživatelské jméno pro přístup do databáze aplikace
+     */
+    public const DB_USERNAME = 'root';
+
+    /**
+     * Heslo pro přístup do databáze aplikace
+     */
+    public const DB_PASSWORD = '';
+
+    /**
+     * Jméno databáze pro aplikaci
+     */
+    public const DB_NAME = 'poznavacky';
+
+    /**
      * Pokud je aplikace ve vývojovém režimu, všechny odchozí e-maily jsou odesílány na tuto e-mailovou adresu.
      * Toto zamezí spamování skutečných uživatelů
      */
     public const DEVELOPMENT_EMAIL_COLLECTOR = 'dummy@poznavacky.com';
 
     /* E-mail settings can be found in Poznavacky\Models\Emails\EmailSender */
+
 }
 
