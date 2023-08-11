@@ -41,7 +41,25 @@ class Settings
      */
     public const DEVELOPMENT_EMAIL_COLLECTOR = 'dummy@poznavacky.com';
 
-    /* E-mail settings can be found in Poznavacky\Models\Emails\EmailSender */
+    /**
+     * Server pro odchozí e-maily
+     */
+    public const SMTP_HOST = 'smtp.poznavacky.com';
+
+    /**
+     * Port pro odchozí e-maily
+     */
+    public const SMTP_PORT = '587';
+
+    /**
+     * Uživatelské jméno pro odesílání e-mailů
+     */
+    public const EMAIL_USERNAME = 'info@poznavacky.com';
+
+    /**
+     * Heslo k účtu pro odesílání e-mailů
+     */
+    public const EMAIL_PASSWORD = 'SECRET';
 
 }
 
