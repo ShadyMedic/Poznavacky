@@ -3,6 +3,7 @@ namespace Poznavacky\Models;
 
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Statics\Settings;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
@@ -49,9 +50,11 @@ class ChangelogManager
         curl_setopt($curl, CURLOPT_URL, self::GITHUB_API_RELEASES_URL.self::RELEASE_IDS[self::LATEST_VERSION]);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-        // fix chyby s SSL certifikátem - pouze pro vývoj stránek
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        if (!Settings::PRODUCTION_ENVIRONMENT) {
+            // fix chyby s SSL certifikátem - pouze pro vývoj stránek
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        }
 
         curl_setopt($curl, CURLOPT_HTTPGET, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('User-Agent: Poznavacky'));

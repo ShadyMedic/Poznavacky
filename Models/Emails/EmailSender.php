@@ -3,6 +3,7 @@ namespace Poznavacky\Models\Emails;
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use Poznavacky\Models\Statics\Settings;
 
 /**
  * Třída sloužící k odesílání e-mailových zpráv
@@ -15,9 +16,9 @@ class EmailSender
     private const USE_SMTP = true;
     private const USE_SMTP_Auth = true;
     private const SMTP_SECURE = 'tls';
-    private const SMTP_HOST = 'smtp.gmail.com';
+    private const SMTP_HOST = 'smtp.poznavacky.com';
     private const SMTP_PORT = '587';
-    private const EMAIL_USERNAME = 'webexamlist@gmail.com';
+    private const EMAIL_USERNAME = 'info@poznavacky.com';
     private const EMAIL_PASSWORD = 'SECRET';
     
     /**
@@ -92,6 +93,11 @@ class EmailSender
      */
     public function sendPreparedEmail(PHPMailer $mail): bool
     {
+        if (!Settings::PRODUCTION_ENVIRONMENT) {
+            $mail->clearAddresses();
+            $mail->addAddress(Settings::DEVELOPMENT_EMAIL_COLLECTOR);
+        }
+
         $result = $mail->Send();
         if (!$result) {
             //throw new Exception('E-mail nemohl být odeslán. Zkuste to prosím znovu později: '.$mail->ErrorInfo);
