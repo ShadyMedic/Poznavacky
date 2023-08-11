@@ -87,5 +87,10 @@ class Settings
      */
     public const INVITATION_LIFETIME = 604800;  //7 dní;
 
+    /**
+     * Platnost cookie pro zapamatování hesla
+     */
+    public const INSTALOGIN_COOKIE_LIFETIME = 2592000; // 30 dní;
+
 }
 
