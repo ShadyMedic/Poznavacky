@@ -82,5 +82,10 @@ class Settings
      */
     public const ERROR_ALERT_EMAIL = 'errors@poznavacky.com';
 
+    /**
+     * Platnost pozvánek do tříd v sekundách
+     */
+    public const INVITATION_LIFETIME = 604800;  //7 dní;
+
 }
 
