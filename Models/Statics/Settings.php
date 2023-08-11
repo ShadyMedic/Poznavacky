@@ -67,5 +67,10 @@ class Settings
      */
     public const EMAIL_PASSWORD = 'SECRET';
 
+    /**
+     * Počet URL adres k obrázkům pro testovací stránku odeslaný v jednom požadavku
+     */
+    public const TEST_PICTURES_SENT_PER_REQUEST = 20;
+
 }
 
