@@ -2162,6 +2162,17 @@ label.required:after {
   background: #eee;
 }
 
+#menu .folders #demo-info {
+  width: 100%;
+  max-width: 780px;
+  margin-top: 1.6rem;
+  margin-bottom: 1.2rem;
+}
+
+#menu .folders #demo-info p {
+  text-align: center;
+}
+
 #learn #learn-wrapper,
 #learn #test-wrapper,
 #learn #add-pictures-form-wrapper,

@@ -491,6 +491,15 @@
                 background: #eee;
             }
         }
+        #demo-info {
+            width: 100%;
+            max-width: 780px;
+            margin-top: 1.6rem;
+            margin-bottom: 1.2rem;
+            p {
+                text-align: center;
+            }
+        }
     }
 }
 
