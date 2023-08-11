@@ -72,5 +72,10 @@ class Settings
      */
     public const TEST_PICTURES_SENT_PER_REQUEST = 20;
 
+    /**
+     * Maximální povolený poměr (špatné znaky / všechny znaky), aby byla odpověď na testovou otázku uznána
+     */
+    public const ANSWER_TOLERANCE = 0.34;
+
 }
 
