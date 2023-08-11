@@ -97,5 +97,19 @@ class Settings
      */
     public const RECOVER_PASSWORD_CODE_LIFETIME = 86400; // 24 hodin
 
+    /**
+     * Povolené typy souborů pro přidání jako obrázky
+     */
+    public const ALLOWED_IMAGE_TYPES = array(
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+        'image/jpe',
+        'image/gif',
+        'image/tif',
+        'image/tiff',
+        'image/svg'
+    );
+
 }
 
