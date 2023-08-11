@@ -85,12 +85,17 @@ class Settings
     /**
      * Platnost pozvánek do tříd v sekundách
      */
-    public const INVITATION_LIFETIME = 604800;  //7 dní;
+    public const INVITATION_LIFETIME = 604800;  // 7 dní
 
     /**
      * Platnost cookie pro zapamatování hesla
      */
-    public const INSTALOGIN_COOKIE_LIFETIME = 2592000; // 30 dní;
+    public const INSTALOGIN_COOKIE_LIFETIME = 2592000; // 30 dní
+
+    /**
+     * Platnost kódu pro obnovu hesla
+     */
+    public const RECOVER_PASSWORD_CODE_LIFETIME = 86400; // 24 hodin
 
 }
 
