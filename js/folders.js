@@ -209,7 +209,7 @@ function displayButtons($button)
 {
     if (!$($button).hasClass("show"))
     {
-        $($button).find(".buttons-wrapper, .part-info").slideDown();
+        $($button).find(".buttons-wrapper, .info").slideDown();
         $($button).find("li").addClass("show");
     }
 }
@@ -227,7 +227,7 @@ function hideButtons(event)
         {
             if ($(this).find("li").hasClass("show"))
             {
-                $(this).find(".buttons-wrapper, .part-info").slideUp();
+                $(this).find(".buttons-wrapper, .info").slideUp();
                 $(this).find("li").removeClass("show");
             }
         }
