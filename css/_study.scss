@@ -17,6 +17,9 @@
             max-width: 900px;
         }
     }
+    label {
+        font-size: 0.9rem;
+    }
 }
 
 #learn, 
@@ -154,7 +157,7 @@
                     width: 100%;
                     resize: none;
                     height: 54px;
-                    @media screen and(min-width: $smallDesktop) {
+                    @media screen and (min-width: $smallDesktop) {
                         height: 120px;
                     }
                 }    
@@ -262,7 +265,7 @@
             grid-template-rows: auto auto auto auto;
         }
         @media screen and (min-width: $smallDesktop) {
-            column-gap: 6rem;
+            column-gap: 8rem;
         }
         #add-natural-select {
             @media screen and (min-width: $smallTablet) {

@@ -1,6 +1,6 @@
 <section class="info-section" style="display: none">
     <h3>Správa členů třídy</h3>
-    <p>Na této stránce můžeš spravovat členy tvé třídy.</p>
+    <p>Na této stránce můžeš spravovat členy své třídy.</p>
     <ul class="list">
         <li>Pokud je tvá třída nastavena jako soukromá nebo uzavřená, mohou třídu používat pouze její členové.</li>
         <li>Pokud je tvá třída nastavena jako veřejná, je viditelná pro všechny. Můžeš ale nastavit, jestli přidávat obrázky můžou pouze její členové, nebo jakýkoliv uživatel.</li>
@@ -10,10 +10,10 @@
 <div id='members-wrapper'>
     <section class="members-data-section">
         <?php foreach ($members as $member) : ?>
-        <div class="member-data-item" data-member-id="<?= $member["id"] ?>">
-            <span class='member-name'><?= $member['name'] ?></span>
-            <div class="member-action">
-                <?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn inline black kick-user-button'>Odebrat uživatele</button><?php endif ?>
+        <div class="member data-item" data-member-id="<?= $member["id"] ?>">
+            <span class='member name'><?= $member['name'] ?></span>
+            <div class="member action">
+                <?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn icon kick-user-button' title="Odebrat uživatele"><img src="images/cross-thin-black.svg"></button><?php endif ?>
             </div>
             <div class="kick-user" style="display: none">
                 <span>Opravdu chceš odebrat tohoto uživatele ze třídy?</span>

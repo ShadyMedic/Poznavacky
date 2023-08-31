@@ -3,6 +3,7 @@ namespace Poznavacky\Models\Emails;
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use Poznavacky\Models\Statics\Settings;
 
 /**
  * Třída sloužící k odesílání e-mailových zpráv
@@ -15,10 +16,6 @@ class EmailSender
     private const USE_SMTP = true;
     private const USE_SMTP_Auth = true;
     private const SMTP_SECURE = 'tls';
-    private const SMTP_HOST = 'smtp.gmail.com';
-    private const SMTP_PORT = '587';
-    private const EMAIL_USERNAME = 'webexamlist@gmail.com';
-    private const EMAIL_PASSWORD = 'SECRET';
     
     /**
      * Metoda odesílající e-mailovou zprávu na specifikovanou adresu
@@ -64,10 +61,10 @@ class EmailSender
         }
         $mail->SMTPAuth = self::USE_SMTP_Auth;
         $mail->SMTPSecure = self::SMTP_SECURE;
-        $mail->Host = self::SMTP_HOST;
-        $mail->Port = self::SMTP_PORT;
-        $mail->Username = self::EMAIL_USERNAME;
-        $mail->Password = self::EMAIL_PASSWORD;
+        $mail->Host = Settings::SMTP_HOST;
+        $mail->Port = Settings::SMTP_PORT;
+        $mail->Username = Settings::EMAIL_USERNAME;
+        $mail->Password = Settings::EMAIL_PASSWORD;
         
         if ($isHTML) {
             $mail->isHTML();
@@ -92,6 +89,11 @@ class EmailSender
      */
     public function sendPreparedEmail(PHPMailer $mail): bool
     {
+        if (!Settings::PRODUCTION_ENVIRONMENT) {
+            $mail->clearAddresses();
+            $mail->addAddress(Settings::DEVELOPMENT_EMAIL_COLLECTOR);
+        }
+
         $result = $mail->Send();
         if (!$result) {
             //throw new Exception('E-mail nemohl být odeslán. Zkuste to prosím znovu později: '.$mail->ErrorInfo);

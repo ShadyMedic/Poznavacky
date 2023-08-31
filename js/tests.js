@@ -9,7 +9,7 @@ $(function()
     ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //nahrazení neAJAX akci AJAX akcí
   
     //eventy listenery tlačítek
-    $(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
+    $(".test.action .delete-group-button").click(function(event) {deleteTest(event)})
     $("#new-test-button").click(function() {newTest()})
     $("#new-test-confirm-button").click(function() {newTestConfirm()})
     $("#new-test-cancel-button").click(function() {newTestCancel()})
@@ -64,7 +64,7 @@ function newTestConfirm()
                     {
                         //zaískání informací z data.newGroupData a jejich zobrazení v tabulce v DOM
                         let groupData = data.newGroupData;
-                        let groupDomItem = $('#test-data-item-template').html();
+                        let groupDomItem = $('#test-template').html();
 
                         groupDomItem = groupDomItem.replace(/{id}/g, groupData.id);
                         groupDomItem = groupDomItem.replace(/{name}/g, groupData.name);
@@ -74,7 +74,7 @@ function newTestConfirm()
                         $('.tests-data-section').append(groupDomItem);
 
                         //doplň event listener na tlačítko pro odstranění poznávačky
-                        $(".tests-data-section .test-action:last .delete-group-button").click(function(event) {deleteTest(event)})
+                        $(".tests-data-section .test.action:last .delete-group-button").click(function(event) {deleteTest(event)})
 
                         newMessage(response["message"], "success");
 
@@ -93,7 +93,7 @@ function newTestConfirm()
  */
 function deleteTest(event)
 {
-    let $test = $(event.target).closest(".tests-data-item");
+    let $test = $(event.target).closest(".test.data-item");
     let name = $test.attr('data-group-name');
 
     let confirmMessage = "Opravdu chceš trvale odstranit poznávačku " + name + "? Přírodniny, které tato poznávačka obsahuje, ani jejich obrázky nebudou odstraněny. Tato akce je nevratná!";

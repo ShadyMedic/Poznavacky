@@ -25,15 +25,15 @@ function startMail(event)
 	
 	if ($(event.target).closest("body").attr("id")=="users")
     {
-        mail = $(event.target).closest(".user-data-item").attr("data-user-mail");
+        mail = $(event.target).closest(".user.data-item").attr("data-user-mail");
     }
     else if ($(event.target).closest("body").attr("id")=="name-change-requests")
     {
-        mail = $(event.target).closest(".name-change-request-data-item").attr("data-request-email");
+        mail = $(event.target).closest(".name-change-request.data-item").attr("data-request-email");
     }
     else if ($(event.target).closest("body").attr("id")=="classes")
     {
-        mail = $(event.target).closest(".class-data-item").attr("data-class-owner-mail");
+        mail = $(event.target).closest(".class.data-item").attr("data-class-owner-mail");
     }
     
     window.location.href = "/administrate/mailsender?to=" + mail;

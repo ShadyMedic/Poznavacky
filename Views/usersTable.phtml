@@ -11,7 +11,7 @@
         <th>Akce</th>
     </tr>
     <?php foreach($users as $user) : ?>
-        <tr class="user-data-item"
+        <tr class="user data-item"
             data-user-id="<?= $user['id'] ?>"
             data-user-mail="<?= $user['email'] ?>"
             data-user-name="<?= $user['name'] ?>">
@@ -28,16 +28,16 @@
                 <?= $user['lastLogin']->format('Y-m-d H:i:s') ?>
             </td>
             <td>
-                <input type=number readonly value="<?= $user['addedPictures'] ?>" class='user-field'/>
+                <input type=number readonly value="<?= $user['addedPictures'] ?>" class='user field'/>
             </td>
             <td>
-                <input type=number readonly value="<?= $user['guessedPictures'] ?>" class='user-field'/>
+                <input type=number readonly value="<?= $user['guessedPictures'] ?>" class='user field'/>
             </td>
             <td>
-                <input type=number readonly value="<?= $user['karma'] ?>" class='user-field'/>
+                <input type=number readonly value="<?= $user['karma'] ?>" class='user field'/>
             </td>
             <td>
-                <select disabled class='user-field'>
+                <select disabled class='user field'>
                     <?php if ($user['status'] === Poznavacky\Models\DatabaseItems\User::STATUS_ADMIN) : ?>
                     <option selected><?= Poznavacky\Models\DatabaseItems\User::STATUS_ADMIN ?></option>
                     <?php endif ?>
@@ -67,12 +67,12 @@
                     <?php endif ?>
                 </select>
             </td>
-            <td class="user-action">
+            <td class="user action">
                 <div>
                     <button class='btn icon edit-button' title='Upravit'>
                         <img src='images/pencil-colour.svg'/>
                     </button>
-                    <div class="user-edit-buttons" style="display: none">
+                    <div class="edit-buttons" style="display: none">
                         <button class='btn icon edit-confirm-button' title='Uložit'>
                             <img src='images/tick.svg'/>
                         </button>

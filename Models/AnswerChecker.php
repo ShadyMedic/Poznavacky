@@ -2,6 +2,7 @@
 namespace Poznavacky\Models;
 
 use Poznavacky\Models\Exceptions\AccessDeniedException;
+use Poznavacky\Models\Statics\Settings;
 use \Transliterator;
 
 /**
@@ -10,7 +11,6 @@ use \Transliterator;
  */
 class AnswerChecker
 {
-    private const TOLERANCE = 0.34;    //Maximální povolený poměr (špatné znaky / všechny znaky), aby byla odpověď uznána
     
     public string $lastSavedAnswer;
     
@@ -96,7 +96,7 @@ class AnswerChecker
         }
         
         //Výpočet poměru chyb k počtu znaků (- 2, aby nebyly počítány uměle přidané znaky na konec - viz výše)
-        if (($errors / (mb_strlen($correct) - 2)) > self::TOLERANCE) {
+        if (($errors / (mb_strlen($correct) - 2)) > Settings::ANSWER_TOLERANCE) {
             //Vyší poměr, než je dovoleno
             return false;
         }

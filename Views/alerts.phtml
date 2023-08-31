@@ -10,7 +10,7 @@
         <th>Akce</th>
     </tr>
     <?php foreach ($alerts as $alert) : ?>
-        <tr class="alert-data-item <?=strtolower($alert->getLevel())?>" data-alert-id="<?= $alert->getId() ?>">
+        <tr class="alert data-item <?=strtolower($alert->getLevel())?>" data-alert-id="<?= $alert->getId() ?>">
             <td class="alert-date">
                 <?= $alert->getTime() ?>
             </td>

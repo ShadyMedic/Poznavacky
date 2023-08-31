@@ -43,16 +43,16 @@
       <polygon
          points="13.5,26.45 5.5,18.45 0,31.95 "
          id="polygon4"
-         style="fill:#000000;fill-opacity:1"
+         style="fill:#101010;fill-opacity:1"
          transform="matrix(0.99987145,0,0,1.0000001,0,-2.3100212e-6)" />
       <path
          d="M 30.921224,9.1295255 A 4.0701118,4 45 0 0 30.87162,3.4199217 L 28.613146,1.2114476 a 4.0701118,4 45 0 0 -5.699517,-0.049517 l -1.049825,1.0701752 8.007946,8.0079462 z"
          id="path6"
-         style="fill:#000000;stroke-width:1.00873;fill-opacity:1" />
+         style="fill:#101010;stroke-width:1.00873;fill-opacity:1" />
       <polygon
          points="0,31.95 13.5,26.45 5.5,18.45 "
          id="polygon4-7"
-         style="display:none;fill:#000000;fill-opacity:1"
+         style="display:none;fill:#101010;fill-opacity:1"
          transform="matrix(0.6172229,0,0,0.6172229,0,12.229728)" />
       <rect
          x="-6.9207864"
@@ -61,7 +61,7 @@
          height="11.325085"
          transform="matrix(0.71254606,-0.70162534,0.70179481,0.71237914,0,0)"
          id="rect8"
-         style="fill:#000000;fill-opacity:1;stroke-width:1.06103" />
+         style="fill:#101010;fill-opacity:1;stroke-width:1.06103" />
     </g>
   </g>
   <metadata
