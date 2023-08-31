@@ -20,9 +20,9 @@
         </button>
     </section>
     <section id="naturals-data-section">
-        <div class="naturals-data-properties">
+        <div class="natural data-properties">
             <div>
-                <span class="natural-name">Název přírodniny</span>
+                <span class="natural name">Název přírodniny</span>
                 <div class="sort-buttons">
                     <button class="btn icon sort-up-button" title="Seřadit vzestupně">
                         <img src="images/triangle-up-black.svg" alt="">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div>
-                <span class="natural-uses-count">Počet výskytů</span>
+                <span class="natural uses-count">Počet výskytů</span>
                 <div class="sort-buttons">
                     <button class="btn icon sort-up-button" title="Seřadit vzestupně">
                         <img src="images/triangle-up-black.svg" alt="">
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div>
-                <span class="natural-pictures-count">Počet obrázků</span>
+                <span class="natural pictures-count">Počet obrázků</span>
                 <div class="sort-buttons">
                     <button class="btn icon sort-up-button" title="Seřadit vzestupně">
                         <img src="images/triangle-up-black.svg" alt="">
@@ -54,28 +54,28 @@
                     </button>
                 </div>
             </div>
-            <span class="natural-action">Akce</span>
+            <span class="natural action">Akce</span>
         </div>
         <?php foreach ($naturals as $natural) : ?>
-        <div class="natural-data-item" data-natural-id="<?= $natural->getId() ?>">
-            <div class="natural-name-wrapper">
-                <div class="natural-name-box">
-                    <span class="natural-name"><?= $natural->getName() ?></span>
+        <div class="natural data-item" data-natural-id="<?= $natural->getId() ?>">
+            <div class="natural name-wrapper">
+                <div class="natural name-box">
+                    <span class="natural name"><?= $natural->getName() ?></span>
                 </div>
-                <div class="natural-name-input-box" style="display:none;">
-                    <input type="text" maxlength="31" class="text-field natural-name-input" value="<?= $natural->getName() ?>"/>
+                <div class="natural name-input-box" style="display:none;">
+                    <input type="text" maxlength="31" class="text-field natural name-input" value="<?= $natural->getName() ?>"/>
                 </div>
             </div>
-            <span class="natural-uses-count"><?= $natural->getUsesCount() ?></span>
-            <span class="natural-pictures-count"><?= $natural->getPicturesCount() ?></span>
-            <div class="natural-action">
+            <span class="natural uses-count"><?= $natural->getUsesCount() ?></span>
+            <span class="natural pictures-count"><?= $natural->getPicturesCount() ?></span>
+            <div class="natural action">
                 <div class="normal-buttons">
-                    <button title="Přejmenovat" class="rename-natural-button btn inline black">Přejmenovat</button>
-                    <button title="Odebrat" class="remove-natural-button btn inline black">Odebrat</button>
+                    <button class="rename-natural-button btn icon" title="Přejmenovat"><img src="images/pencil-black.svg"></button>
+                    <button class="remove-natural-button btn icon" title="Odebrat"><img src="images/cross-thin-black.svg"></button>
                 </div>
                 <div class="rename-buttons" style="display:none;">
-                    <button class="rename-confirm-button btn inline black">Potvrdit</button>
-                    <button class="rename-cancel-button btn inline black">Zrušit</button>
+                    <button class="rename-confirm-button btn icon" title="Potvrdit"><img src="images/tick.svg"></button>
+                    <button class="rename-cancel-button btn icon" title="Zrušit"><img src="images/cross-thick-black.svg" alt=""></button>
                 </div>
             </div>
         </div>

@@ -1,8 +1,9 @@
 <?php
 namespace Poznavacky;
 
-use Poznavacky\Models\Logger;
 use Poznavacky\Models\Security\AntiCsrfMiddleware;
+use Poznavacky\Models\Statics\Settings;
+use Poznavacky\Models\Logger;
 use Poznavacky\Controllers\RooterController;
 use \ErrorException;
 
@@ -31,12 +32,14 @@ session_start();
 mb_internal_encoding('UTF-8');
 
 //Zkontroluj, zda je navázáno zabezpečné připojení a případně přesměruj
-if (!(isset($_SERVER["HTTP_X_FORWARDED_PROTO"]) && $_SERVER["HTTP_X_FORWARDED_PROTO"] === "https")) {
-    (new Logger(true))->notice('Uživatel se pokusil odeslat požadavek na adresu {uri} z IP adresy {ip}, avšak nepoužil zabezpečené SSL připojení',
-        array('uri' => $_SERVER['REQUEST_URI'], 'ip' => $_SERVER['REMOTE_ADDR']));
-    header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-    header('Connection: close');
-    exit();
+if (Settings::PRODUCTION_ENVIRONMENT) {
+    if (!(isset($_SERVER["HTTP_X_FORWARDED_PROTO"]) && $_SERVER["HTTP_X_FORWARDED_PROTO"] === "https")) {
+        (new Logger(true))->notice('Uživatel se pokusil odeslat požadavek na adresu {uri} z IP adresy {ip}, avšak nepoužil zabezpečené SSL připojení',
+            array('uri' => $_SERVER['REQUEST_URI'], 'ip' => $_SERVER['REMOTE_ADDR']));
+        header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+        header('Connection: close');
+        exit();
+    }
 }
 
 //Zkontroluj a obnov CSRF token (toto také přesměruje nepřihlášené uživatele pokoušející se přistoupit na nějakou menu stránku na index)

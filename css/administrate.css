@@ -2,8 +2,7 @@
   margin: 0;
   padding: 0;
   border: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
@@ -16,13 +15,8 @@ body {
 }
 
 .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   height: 100%;
   position: relative;
 }
@@ -40,9 +34,7 @@ body {
 
 main {
   margin: 1rem;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   border: 1px solid #000;
   overflow-y: auto;
 }
@@ -51,9 +43,7 @@ header {
   border: 1px solid #000;
   margin: 1rem 1rem 0 1rem;
   font-size: 1.2rem;
-  -webkit-box-flex: 0;
-      -ms-flex: 0 1 auto;
-          flex: 0 1 auto;
+  flex: 0 1 auto;
 }
 
 a {
@@ -61,28 +51,21 @@ a {
 }
 
 nav {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
 }
-
 nav a {
   text-decoration: none;
   padding: 0.6rem;
   height: 2.4rem;
 }
-
 nav a:last-child {
   color: gray;
 }
-
 nav .active-tab {
   background: lightgray;
   cursor: default;
 }
-
 nav :not(.active-tab):hover {
   cursor: pointer;
   background: #eee;
@@ -105,7 +88,6 @@ input {
   font-family: serif;
   font-size: 100%;
 }
-
 input:focus {
   border: 1px solid darkred;
   outline: 1px solid darkred;
@@ -122,7 +104,7 @@ td {
   word-break: break-word;
 }
 
-.class-owner-table td:nth-child(1) {
+.class-owner.table td:nth-child(1) {
   word-break: keep-all;
 }
 
@@ -133,54 +115,40 @@ tr {
 .btn {
   background: transparent;
 }
-
 .btn:hover {
   cursor: pointer;
 }
-
 .btn.icon {
   display: block;
   height: 1.2em;
   width: 1.2em;
 }
-
 .btn.icon img {
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  transition: -webkit-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
-  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
   height: 100%;
   width: 100%;
 }
-
 .btn.icon.disabled {
-  -webkit-filter: grayscale(100%);
-          filter: grayscale(100%);
+  filter: grayscale(100%);
   pointer-events: none;
 }
-
 .btn.icon.disabled:hover {
   cursor: auto;
 }
-
 .btn.border-btn {
   border: 1px solid black;
   margin: 0 0.2rem 0 0;
   padding: 0.16rem 0.32rem;
 }
-
 .btn.border-btn:hover {
   background-color: rgba(0, 0, 0, 0.06);
 }
-
 .btn.border-btn.disabled {
-  -webkit-filter: grayscale(100%);
-          filter: grayscale(100%);
+  filter: grayscale(100%);
   border: 1px solid #444;
   color: #444;
   pointer-events: none;
 }
-
 .btn.border-btn.disabled:hover {
   cursor: auto;
 }
@@ -193,7 +161,6 @@ textarea {
   width: 100%;
   margin: 0.2rem 0;
 }
-
 textarea:focus {
   border: 1px solid darkred;
   outline: 1px solid darkred;
@@ -203,45 +170,37 @@ textarea:focus {
   margin: auto;
   width: 90%;
 }
-
 @media screen and (min-width: 576px) {
   #administrate #stats {
     width: 75%;
   }
 }
-
 @media screen and (min-width: 768px) {
   #administrate #stats {
     width: 55%;
   }
 }
-
 @media screen and (min-width: 960px) {
   #administrate #stats {
     width: 35%;
   }
 }
-
 #administrate h1 {
   text-align: center;
   margin-top: 0.8rem;
   line-height: 1em;
 }
-
 #administrate table {
   width: 100%;
   margin: 0.8rem 0;
   border-top: solid 1px #444;
 }
-
 #administrate table td:nth-child(1) {
   text-align: left;
 }
-
 #administrate table td:nth-child(2) {
   text-align: center;
 }
-
 #administrate table td:nth-child(3) {
   text-align: right;
   word-break: keep-all;
@@ -256,21 +215,18 @@ textarea:focus {
   margin: auto;
   text-align: center;
 }
-
 #users th,
 #classes th,
 #admin-reports th,
 #name-change-requests th,
 #database th,
 #alerts th {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   background: lightgray;
   padding: 0.1rem 0.4rem;
   z-index: 5;
 }
-
 #users tr:nth-child(odd),
 #classes tr:nth-child(odd),
 #admin-reports tr:nth-child(odd),
@@ -279,7 +235,6 @@ textarea:focus {
 #alerts tr:nth-child(odd) {
   background: #eee;
 }
-
 #users td,
 #classes td,
 #admin-reports td,
@@ -288,7 +243,6 @@ textarea:focus {
 #alerts td {
   padding: 0.1rem 0.4rem;
 }
-
 #users td:not(:last-child),
 #classes td:not(:last-child),
 #admin-reports td:not(:last-child),
@@ -298,14 +252,13 @@ textarea:focus {
   border-right: 1px solid lightgray;
 }
 
-#users .class-owner-table tr:nth-child(odd),
-#classes .class-owner-table tr:nth-child(odd),
-#admin-reports .class-owner-table tr:nth-child(odd),
-#name-change-requests .class-owner-table tr:nth-child(odd),
-#alerts .class-owner-table tr:nth-child(odd) {
+#users .class-owner.table tr:nth-child(odd),
+#classes .class-owner.table tr:nth-child(odd),
+#admin-reports .class-owner.table tr:nth-child(odd),
+#name-change-requests .class-owner.table tr:nth-child(odd),
+#alerts .class-owner.table tr:nth-child(odd) {
   background: transparent;
 }
-
 #users input,
 #classes input,
 #admin-reports input,
@@ -314,16 +267,14 @@ textarea:focus {
   border: none;
   text-align: center;
 }
-
-#users input[type='number'],
-#classes input[type='number'],
-#admin-reports input[type='number'],
-#name-change-requests input[type='number'],
-#alerts input[type='number'] {
+#users input[type=number],
+#classes input[type=number],
+#admin-reports input[type=number],
+#name-change-requests input[type=number],
+#alerts input[type=number] {
   width: 5.4rem;
   padding-left: 1.2rem;
 }
-
 #users select,
 #classes select,
 #admin-reports select,
@@ -332,199 +283,73 @@ textarea:focus {
   border: none;
   background: transparent;
 }
-
-#users .user-action > div,
-#users .class-action > div,
-#users .report-action > div,
-#users .name-change-request-action > div,
-#users .alert-action > div,
-#classes .user-action > div,
-#classes .class-action > div,
-#classes .report-action > div,
-#classes .name-change-request-action > div,
-#classes .alert-action > div,
-#admin-reports .user-action > div,
-#admin-reports .class-action > div,
-#admin-reports .report-action > div,
-#admin-reports .name-change-request-action > div,
-#admin-reports .alert-action > div,
-#name-change-requests .user-action > div,
-#name-change-requests .class-action > div,
-#name-change-requests .report-action > div,
-#name-change-requests .name-change-request-action > div,
-#name-change-requests .alert-action > div,
-#alerts .user-action > div,
-#alerts .class-action > div,
-#alerts .report-action > div,
-#alerts .name-change-request-action > div,
-#alerts .alert-action > div {
-  display: -webkit-box;
-  display: -ms-flexbox;
+#users .action > div,
+#classes .action > div,
+#admin-reports .action > div,
+#name-change-requests .action > div,
+#alerts .action > div {
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-
 @media screen and (min-width: 768px) {
-  #users .user-action > div,
-  #users .class-action > div,
-  #users .report-action > div,
-  #users .name-change-request-action > div,
-  #users .alert-action > div,
-  #classes .user-action > div,
-  #classes .class-action > div,
-  #classes .report-action > div,
-  #classes .name-change-request-action > div,
-  #classes .alert-action > div,
-  #admin-reports .user-action > div,
-  #admin-reports .class-action > div,
-  #admin-reports .report-action > div,
-  #admin-reports .name-change-request-action > div,
-  #admin-reports .alert-action > div,
-  #name-change-requests .user-action > div,
-  #name-change-requests .class-action > div,
-  #name-change-requests .report-action > div,
-  #name-change-requests .name-change-request-action > div,
-  #name-change-requests .alert-action > div,
-  #alerts .user-action > div,
-  #alerts .class-action > div,
-  #alerts .report-action > div,
-  #alerts .name-change-request-action > div,
-  #alerts .alert-action > div {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
+  #users .action > div,
+  #classes .action > div,
+  #admin-reports .action > div,
+  #name-change-requests .action > div,
+  #alerts .action > div {
+    flex-direction: row;
   }
 }
-
-#users .user-action > div .user-edit-buttons,
-#users .user-action > div .class-edit-buttons,
-#users .class-action > div .user-edit-buttons,
-#users .class-action > div .class-edit-buttons,
-#users .report-action > div .user-edit-buttons,
-#users .report-action > div .class-edit-buttons,
-#users .name-change-request-action > div .user-edit-buttons,
-#users .name-change-request-action > div .class-edit-buttons,
-#users .alert-action > div .user-edit-buttons,
-#users .alert-action > div .class-edit-buttons,
-#classes .user-action > div .user-edit-buttons,
-#classes .user-action > div .class-edit-buttons,
-#classes .class-action > div .user-edit-buttons,
-#classes .class-action > div .class-edit-buttons,
-#classes .report-action > div .user-edit-buttons,
-#classes .report-action > div .class-edit-buttons,
-#classes .name-change-request-action > div .user-edit-buttons,
-#classes .name-change-request-action > div .class-edit-buttons,
-#classes .alert-action > div .user-edit-buttons,
-#classes .alert-action > div .class-edit-buttons,
-#admin-reports .user-action > div .user-edit-buttons,
-#admin-reports .user-action > div .class-edit-buttons,
-#admin-reports .class-action > div .user-edit-buttons,
-#admin-reports .class-action > div .class-edit-buttons,
-#admin-reports .report-action > div .user-edit-buttons,
-#admin-reports .report-action > div .class-edit-buttons,
-#admin-reports .name-change-request-action > div .user-edit-buttons,
-#admin-reports .name-change-request-action > div .class-edit-buttons,
-#admin-reports .alert-action > div .user-edit-buttons,
-#admin-reports .alert-action > div .class-edit-buttons,
-#name-change-requests .user-action > div .user-edit-buttons,
-#name-change-requests .user-action > div .class-edit-buttons,
-#name-change-requests .class-action > div .user-edit-buttons,
-#name-change-requests .class-action > div .class-edit-buttons,
-#name-change-requests .report-action > div .user-edit-buttons,
-#name-change-requests .report-action > div .class-edit-buttons,
-#name-change-requests .name-change-request-action > div .user-edit-buttons,
-#name-change-requests .name-change-request-action > div .class-edit-buttons,
-#name-change-requests .alert-action > div .user-edit-buttons,
-#name-change-requests .alert-action > div .class-edit-buttons,
-#alerts .user-action > div .user-edit-buttons,
-#alerts .user-action > div .class-edit-buttons,
-#alerts .class-action > div .user-edit-buttons,
-#alerts .class-action > div .class-edit-buttons,
-#alerts .report-action > div .user-edit-buttons,
-#alerts .report-action > div .class-edit-buttons,
-#alerts .name-change-request-action > div .user-edit-buttons,
-#alerts .name-change-request-action > div .class-edit-buttons,
-#alerts .alert-action > div .user-edit-buttons,
-#alerts .alert-action > div .class-edit-buttons {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-#users .user-action > div .btn,
-#users .class-action > div .btn,
-#users .report-action > div .btn,
-#users .name-change-request-action > div .btn,
-#users .alert-action > div .btn,
-#classes .user-action > div .btn,
-#classes .class-action > div .btn,
-#classes .report-action > div .btn,
-#classes .name-change-request-action > div .btn,
-#classes .alert-action > div .btn,
-#admin-reports .user-action > div .btn,
-#admin-reports .class-action > div .btn,
-#admin-reports .report-action > div .btn,
-#admin-reports .name-change-request-action > div .btn,
-#admin-reports .alert-action > div .btn,
-#name-change-requests .user-action > div .btn,
-#name-change-requests .class-action > div .btn,
-#name-change-requests .report-action > div .btn,
-#name-change-requests .name-change-request-action > div .btn,
-#name-change-requests .alert-action > div .btn,
-#alerts .user-action > div .btn,
-#alerts .class-action > div .btn,
-#alerts .report-action > div .btn,
-#alerts .name-change-request-action > div .btn,
-#alerts .alert-action > div .btn {
+#users .action > div .btn,
+#classes .action > div .btn,
+#admin-reports .action > div .btn,
+#name-change-requests .action > div .btn,
+#alerts .action > div .btn {
   margin: 0.16rem;
+}
+#users .user.action > div .edit-buttons,
+#users .user.action > div .change-class-owner-buttons,
+#users .class.action > div .edit-buttons,
+#users .class.action > div .change-class-owner-buttons,
+#classes .user.action > div .edit-buttons,
+#classes .user.action > div .change-class-owner-buttons,
+#classes .class.action > div .edit-buttons,
+#classes .class.action > div .change-class-owner-buttons,
+#admin-reports .user.action > div .edit-buttons,
+#admin-reports .user.action > div .change-class-owner-buttons,
+#admin-reports .class.action > div .edit-buttons,
+#admin-reports .class.action > div .change-class-owner-buttons,
+#name-change-requests .user.action > div .edit-buttons,
+#name-change-requests .user.action > div .change-class-owner-buttons,
+#name-change-requests .class.action > div .edit-buttons,
+#name-change-requests .class.action > div .change-class-owner-buttons,
+#alerts .user.action > div .edit-buttons,
+#alerts .user.action > div .change-class-owner-buttons,
+#alerts .class.action > div .edit-buttons,
+#alerts .class.action > div .change-class-owner-buttons {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }
 
 #report-image {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   z-index: 10;
-  width: 90%;
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 500px;
+  max-height: 80vh;
 }
-
-@media screen and (min-width: 576px) {
-  #report-image {
-    width: 80%;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  #report-image {
-    width: 65%;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  #report-image {
-    width: 45%;
-  }
-}
-
 #report-image img {
+  height: 100%;
   width: 100%;
   border: 1px solid black;
 }
-
 #report-image .btn {
   position: absolute;
   top: 0;
@@ -535,87 +360,66 @@ textarea:focus {
 #mailsender {
   position: relative;
 }
-
 #mailsender #email {
   width: 95%;
   margin: auto;
 }
-
 @media screen and (min-width: 576px) {
   #mailsender #email {
     width: 85%;
   }
 }
-
 @media screen and (min-width: 768px) {
   #mailsender #email {
     width: 65%;
   }
 }
-
 @media screen and (min-width: 960px) {
   #mailsender #email {
     width: 45%;
   }
 }
-
 #mailsender table {
   margin: 0.2rem 0;
 }
-
 #mailsender table tr {
-  height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
 }
-
 #mailsender table tr td {
   padding: 0.1rem 0.2rem 0.1rem 0;
 }
-
 #mailsender #email-info {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: auto 1fr;
-      grid-template-columns: auto 1fr;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: start;
+  grid-template-columns: auto 1fr;
+  justify-content: start;
   margin: 0.4rem 0;
 }
-
 #mailsender #email-info * {
   margin: 0.2rem 0;
   padding: 0.2rem 0.4rem;
 }
-
 #mailsender #email-info label {
   margin-right: 0.2rem;
 }
-
 #mailsender #email-editor {
   margin: 0.8rem 0;
 }
-
 #mailsender #email-editor textarea {
   height: 16vh;
   max-height: 36vh;
 }
-
 #mailsender #email-editor label {
   margin-top: 0.6rem;
   display: block;
 }
-
 #mailsender #email-preview {
   width: 100%;
   margin: 1rem auto;
 }
-
 #mailsender #email-preview span {
   margin-bottom: 1rem;
 }
-
 #mailsender .info {
   margin-top: 0.8rem;
   font-size: 0.8rem;
@@ -627,151 +431,122 @@ textarea:focus {
   margin: auto;
   width: 96%;
 }
-
 @media screen and (min-width: 576px) {
   #alerts .center {
     width: 88%;
   }
 }
-
 @media screen and (min-width: 768px) {
   #alerts .center {
     width: 72%;
   }
 }
-
 @media screen and (min-width: 960px) {
   #alerts .center {
     width: 56%;
   }
 }
-
 #alerts #import-alerts-wrapper {
   padding: 1rem 0;
 }
-
 #alerts #import-alerts-wrapper .btn {
   margin: auto;
   display: block;
 }
-
 #alerts #import-alerts-wrapper p {
   margin: 0.8rem 0;
   font-size: 0.9rem;
   text-align: justify;
 }
-
 @media screen and (min-width: 1172px) {
   #alerts #import-alerts-wrapper p {
     text-align: center;
   }
 }
-
-#alerts .alert-data-item .alert-date {
+#alerts data-item .alert-date {
   word-break: keep-all;
 }
-
 @media screen and (min-width: 768px) {
-  #alerts .alert-data-item .alert-date {
+  #alerts data-item .alert-date {
     white-space: nowrap;
   }
 }
-
-#alerts .alert-data-item .alert-level {
+#alerts data-item .alert-level {
   word-break: keep-all;
 }
-
-#alerts .alert-data-item .alert-content {
+#alerts data-item .alert-content {
   text-align: left;
 }
-
-#alerts .alert-data-item.emergency td.alert-level {
+#alerts data-item.emergency td.alert-level {
   background: #ec52bb;
 }
-
-#alerts .alert-data-item.alert td.alert-level {
+#alerts data-item.alert td.alert-level {
   background: #ff6868;
 }
-
-#alerts .alert-data-item.critical td.alert-level {
+#alerts data-item.critical td.alert-level {
   background: #ffae70;
 }
-
-#alerts .alert-data-item.error td.alert-level {
+#alerts data-item.error td.alert-level {
   background: #ffe76f;
 }
 
 #database {
   position: relative;
 }
-
 #database #sql {
   width: 100%;
 }
-
 #database .sql-center {
   display: block;
   margin: auto;
   text-align: justify;
   width: 96%;
 }
-
 @media screen and (min-width: 576px) {
   #database .sql-center {
     width: 88%;
   }
 }
-
 @media screen and (min-width: 768px) {
   #database .sql-center {
     width: 72%;
   }
 }
-
 @media screen and (min-width: 960px) {
   #database .sql-center {
     width: 56%;
   }
 }
-
 #database #sql-warning {
   margin: 0.4rem auto;
 }
-
 #database #sql-query {
   margin: 0.6rem auto;
 }
-
 #database #sql-query textarea {
   max-height: 24vh;
   margin-bottom: 0.4rem;
 }
-
 #database #sql-result p {
   display: block;
   margin: 0 auto 0.4rem auto;
   width: 96%;
 }
-
 @media screen and (min-width: 576px) {
   #database #sql-result p {
     width: 88%;
   }
 }
-
 @media screen and (min-width: 768px) {
   #database #sql-result p {
     width: 72%;
   }
 }
-
 @media screen and (min-width: 960px) {
   #database #sql-result p {
     width: 56%;
   }
 }
-
 #database #sql-result table {
   position: relative;
-}
-/*# sourceMappingURL=administrate.css.map */
+}/*# sourceMappingURL=administrate.css.map */

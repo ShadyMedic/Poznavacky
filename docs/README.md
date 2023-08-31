@@ -28,11 +28,11 @@ Když webovou aplikaci *Poznávačky* otevřete poprvé, budete se muset zaregis
 Pokud si budete chtít změnit uživatelské jméno, heslo nebo e-mail, je to možné pod záložkou *Nástavení účtu*. Tam také uvidíte svůj status, počet vámi přidaných obrázků, uhodnutých obrázků a karmu, kterou můžete obdržet za kroky vedoucí ke zlepšení služby.
 
 ## Vlastní poznávačky
-Pokud chcete vytvořit svůj vlastní seznam přírodnin, které se chcete naučit prostřednictvím této aplikace, podívejte se prosím do GitHub wiki projektu [zde](https://github.com/HonzaSTECH/Poznavacky/wiki/Vyu%C5%BE%C3%ADv%C3%A1n%C3%AD-slu%C5%BEby). Děkujeme za zájem!
+Pokud chcete vytvořit svůj vlastní seznam přírodnin, které se chcete naučit prostřednictvím této aplikace, podívejte se prosím do GitHub wiki projektu [zde](https://github.com/ShadyMedic/Poznavacky/wiki/Vyu%C5%BE%C3%ADv%C3%A1n%C3%AD-slu%C5%BEby). Děkujeme za zájem!
 
 ## Vaše návrhy
 
-Máte návrh na zlepšení? Může jít o nahlášení chyby, nápad na novou funkci nebo se jen chcete na něco zeptat. Stačí přejít pod záložku *Issues* ([zde](https://github.com/HonzaSTECH/Poznavacky/issues/new/choose)) nebo na webových stránkách kliknout na *Potřebujete pomoct?*.
+Máte návrh na zlepšení? Může jít o nahlášení chyby, nápad na novou funkci nebo se jen chcete na něco zeptat. Stačí přejít pod záložku *Issues* ([zde](https://github.com/ShadyMedic/Poznavacky/issues/new/choose)) nebo na webových stránkách kliknout na *Potřebujete pomoct?*.
 
 ## Přispívání do projektu
 Hledáme další vývojáře, kteří by nám s tímto projektem pomohli. V současné době vše funguje jak má, ale stále přidávám nové věci a jak projekt roste, je stále těžší a těžší jej spravovat. Aplikace je v současné době pouze v našem rodném jazyce (češtině), takže hledáme i dobrovolníky, kteří by byli ochotni ji přeložit do jazyků, které znají. Dejte mi vědět na [*honza.stech@gmail.com*](mailto:honza.stech@gmail.com), pokud mi chcete pomoci s vývojem nebo překladem.

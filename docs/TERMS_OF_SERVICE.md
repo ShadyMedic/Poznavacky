@@ -7,7 +7,7 @@ jen "*Služba*") se řídí podmínkami právní dohody (dále jen "*Podmínky*"
 mezi vámi a fyzickou osobou provozovatele (dále jen "*Správce*"). Osobní
 informace o správci a kontaktní údaje mohou být nalezeny na online
 úložišti projektu na *GitHub* na
-[této stránce](https://github.com/HonzaSTECH/Poznavacky/wiki/Kontaktn%C3%AD-%C3%BAdaje).
+[této stránce](https://github.com/ShadyMedic/Poznavacky/wiki/Kontaktn%C3%AD-%C3%BAdaje).
 
 1.2 Podmínky představují právně závaznou smlouvu mezi vámi a Správcem.
 

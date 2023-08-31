@@ -1,18 +1,18 @@
 <div id="tests-wrapper">
     <section class="tests-data-section">
-        <div class="tests-data-properties">
-            <span class='test-name'>Název</span>
-            <span class='test-parts'>Části</span>
-            <span class='test-action'>Akce</span>
+        <div class="test data-properties">
+            <span class='test name'>Název</span>
+            <span class='test parts'>Části</span>
+            <span class='test action'>Akce</span>
         </div>
         <?php foreach ($groups as $group) : ?>
-        <div class='tests-data-item' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>
-            <span class='test-name'><?= $group->getName() ?></span>
-            <span class='test-parts'><?= $group->getPartsCount() ?></span>
-            <div class='test-action'>
-                <a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports'>Správa hlášení</a>
-                <a class='btn inline black' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit'>Upravit</a>
-                <a class='btn inline black delete-group-button'>Odstranit</a>
+        <div class='test data-item' data-group-id='<?= $group->getId() ?>' data-group-name='<?= $group->getName() ?>'>
+            <span class='test name'><?= $group->getName() ?></span>
+            <span class='test parts'><?= $group->getPartsCount() ?></span>
+            <div class='test action'>
+                <a class='btn icon' href='<?= $baseUrl.'/'.$group->getUrl() ?>/reports' title="Spravovat hlášení"><img src="images/list-filled-black.svg"></a>
+                <a class='btn icon' href='<?= $baseUrl.'/'.$group->getUrl() ?>/edit' title="Upravit poznávačku"><img src="images/pencil-black.svg"></a>
+                <a class='btn icon delete-group-button' title="Odstranit poznávačku"><img src="images/trash-black.svg"></a>
             </div>
         </div>
         <?php endforeach ?>
@@ -30,14 +30,14 @@
     </section>
 </div>
 
-<div id="test-data-item-template" style="display: none">
-    <div class='tests-data-item'  data-group-id='{id}' data-group-name='{name}'>
-        <span class='test-name'>{name}</span>
-        <span class='test-parts'>{parts}</span>
-        <div class='test-action'>
-            <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/reports'>Správa hlášení</a>
-            <a class='btn inline black' href='<?= $baseUrl.'/' ?>{url}/edit'>Upravit</a>
-            <a class='btn inline black delete-group-button'>Odstranit</a>
+<div id="test-template" class="data-item-template" style="display: none">
+    <div class='test data-item'  data-group-id='{id}' data-group-name='{name}'>
+        <span class='test name'>{name}</span>
+        <span class='test parts'>{parts}</span>
+        <div class='test action'>
+            <a class='btn icon' href='<?= $baseUrl.'/' ?>{url}/reports' title="Spravovat hlášení"><img src="images/list-filled-black.svg"></a>
+            <a class='btn icon' href='<?= $baseUrl.'/' ?>{url}/edit' title="Upravit poznávačku"><img src="images/pencil-black.svg"></a>
+            <a class='btn icon delete-group-button' title="Odstranit poznávačku"><img src="images/trash-black.svg"></a>
         </div>
     </div>
 </div>

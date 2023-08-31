@@ -9,6 +9,7 @@ use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Logger;
 use \DateTime;
 use \Exception;
+use Poznavacky\Models\Statics\Settings;
 
 /**
  * Třída ověřující uživatelovi přihlašovací údaje a přihlašující jej
@@ -192,13 +193,13 @@ class LoginUser
         //Uložit kód do databáze
         try {
             Db::executeQuery('INSERT INTO sezeni (kod_cookie, uzivatele_id, expirace) VALUES(?,?,?)',
-                array(md5($code), $userId, time() + self::INSTALOGIN_COOKIE_LIFESPAN));
+                array(md5($code), $userId, time() + Settings::INSTALOGIN_COOKIE_LIFETIME));
         } catch (DatabaseException $e) {
             //Pro případ, že by se vygeneroval již existující kód zopakuj pokus
             self::setLoginCookie($userId);
             return;
         }
-        setcookie('instantLogin', $code, time() + self::INSTALOGIN_COOKIE_LIFESPAN, '/');
+        setcookie('instantLogin', $code, time() + Settings::INSTALOGIN_COOKIE_LIFETIME, '/');
         $_COOKIE['instantLogin'] = $code;
     }
 }

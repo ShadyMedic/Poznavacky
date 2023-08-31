@@ -17,6 +17,7 @@ $greenMid: #479911;
 $greenLight: #79cf40;
 $purpleLight: #bd4ac2;
 $purpleDark: #6a106e;
+$gradientDark: #007F44;
 
 @mixin scrollbar($size, $foreground-color, $background-color) {
     scrollbar-color: $foreground-color $background-color;
@@ -33,4 +34,11 @@ $purpleDark: #6a106e;
     &::-webkit-scrollbar-track {
         background: $background-color;
     }    
+}
+
+@mixin text-color($color) {
+    color: $color;
+    a {
+        color: $color;
+    }
 }
