@@ -7,6 +7,7 @@ use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\Settings;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\undefined;
@@ -506,7 +507,7 @@ class ClassObject extends Folder
             $invitation = new Invitation(false, $result[Invitation::COLUMN_DICTIONARY['id']]);
         }
 
-        $expiration = new DateTime('@'.(time() + Invitation::INVITATION_LIFETIME));
+        $expiration = new DateTime('@'.(time() + Settings::INVITATION_LIFETIME));
         $invitation->initialize($user, $this, $expiration);
         $invitation->save();
 

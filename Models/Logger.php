@@ -4,6 +4,7 @@ namespace Poznavacky\Models;
 
 use Poznavacky\Models\Emails\EmailComposer;
 use Poznavacky\Models\Emails\EmailSender;
+use Poznavacky\Models\Statics\Settings;
 use Psr\Log\InvalidArgumentException as LoggerInvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -26,8 +27,6 @@ class Logger implements LoggerInterface
     public const DEBUG_LOG_FILE = 'log/debug.log';
 
     private const TIME_FORMAT = 'Y-m-d H:i:s';
-
-    private const WEBMASTER_EMAIL = 'honza.stech@gmail.com';
     
     /**
      * Metoda pro zapsání manuálně nastavené zprávy do logovacího souboru
@@ -234,7 +233,7 @@ class Logger implements LoggerInterface
 			'barColor' => $barColor,
             'content' => $message,
         ));
-        return $sender->sendMail(self::WEBMASTER_EMAIL, $subject, $composer->getMail(), 'poznavacky@email.com', 'Poznávačky', true, false);
+        return $sender->sendMail(Settings::ERROR_ALERT_EMAIL, $subject, $composer->getMail(), 'poznavacky@email.com', 'Poznávačky', true, false);
     }
 }
 
