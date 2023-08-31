@@ -36,16 +36,17 @@ function redirectToClass(event)
  */
 function leaveClass(event)
 {
-    let className = $(event.target).closest('.class.data-item').find("h4").text();
-    let confirmMessage = "Opravdu chceš opustit třídu" + className + "?";
+    event.stopPropagation();
+
+    let className = $(event.target).closest('.class.data-item').find(".class.name").text().trim();
+    let confirmMessage = "Opravdu chceš opustit třídu " + className + "?";
+
     newConfirm(confirmMessage, "Opustit", "Zrušit", function(confirm)
     {
         if (confirm) 
         {
-            let url = $(event.target).attr("data-leave-url");
+            let url = $(event.target).closest(".leave-link").attr("data-leave-url");
             let $leftClass = $(event.target).closest('.class.data-item');
-
-            event.stopPropagation();
 
             $.post(url, {},
                 function (response, status)
