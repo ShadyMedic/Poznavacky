@@ -46,7 +46,7 @@ function changeClassName()
 {
     $("#change-class-name-button").hide();
     $("#change-class-name").show();
-    $("#change-class-name").closest(".class.data-item").find(".class-property-value").hide();
+    $("#change-class-name").closest(".class-property.data-item").find(".value").hide();
     $("#change-class-name-new").focus();
 
     changeClassStatusCancel();
@@ -96,7 +96,7 @@ function changeClassNameCancel()
     $("#change-class-name-new").val("");
     $("#change-class-name-button").show();
     $("#change-class-name").hide();
-    $("#change-class-name").closest(".class.data-item").find(".class-property-value").show();
+    $("#change-class-name").closest(".class-property.data-item").find(".value").show();
     $("#change-class-name-message").text("");
 }
 
@@ -107,7 +107,7 @@ function changeClassStatus()
 {
     $("#change-class-status-button").hide();
     $("#change-class-status").show();
-    $("#change-class-status").closest(".class.data-item").find(".class-property-value").hide();
+    $("#change-class-status").closest(".class-property.data-item").find(".value").hide();
     $("#change-class-status-confirm-button").addClass("disabled");
 
     changeClassNameCancel();
@@ -231,7 +231,7 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
                         //reset HTML
                         $("#change-class-status-button").show();
                         $("#change-class-status").hide();
-                        $("#change-class-status").closest(".class.data-item").find(".class-property-value").show();
+                        $("#change-class-status").closest(".class-property.data-item").find(".value").show();
                     }
                     if (messageType === "error")
                     {
@@ -251,7 +251,7 @@ function changeClassStatusCancel()
 {    
     $("#change-class-status-button").show();
     $("#change-class-status").hide();
-    $("#change-class-status").closest(".class.data-item").find(".class-property-value").show();
+    $("#change-class-status").closest(".class-property.data-item").find(".value").show();
     
     //zrušení změn
     $("#class-status-select .custom-option").removeClass("selected");

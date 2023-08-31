@@ -2235,77 +2235,57 @@ label.required:after {
 #naturals .data-item > span {
   padding: calc(0.4em + 4px) 0;
 }
-#account-settings .data-item.class,
+#account-settings .data-item.class-property,
 #account-settings .data-item.user-property,
-#manage .data-item.class,
+#manage .data-item.class-property,
 #manage .data-item.user-property,
-#members .data-item.class,
+#members .data-item.class-property,
 #members .data-item.user-property,
-#tests .data-item.class,
+#tests .data-item.class-property,
 #tests .data-item.user-property,
-#naturals .data-item.class,
+#naturals .data-item.class-property,
 #naturals .data-item.user-property {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
 }
 @media screen and (min-width: 672px) {
-  #account-settings .data-item.class,
+  #account-settings .data-item.class-property,
   #account-settings .data-item.user-property,
-  #manage .data-item.class,
+  #manage .data-item.class-property,
   #manage .data-item.user-property,
-  #members .data-item.class,
+  #members .data-item.class-property,
   #members .data-item.user-property,
-  #tests .data-item.class,
+  #tests .data-item.class-property,
   #tests .data-item.user-property,
-  #naturals .data-item.class,
+  #naturals .data-item.class-property,
   #naturals .data-item.user-property {
     grid-template-columns: 11.2rem 13rem 1fr;
     grid-template-rows: auto 1fr;
   }
 }
-#account-settings .data-item.class .user-property.action,
-#account-settings .data-item.class .class-property-action,
-#account-settings .data-item.user-property .user-property.action,
-#account-settings .data-item.user-property .class-property-action,
-#manage .data-item.class .user-property.action,
-#manage .data-item.class .class-property-action,
-#manage .data-item.user-property .user-property.action,
-#manage .data-item.user-property .class-property-action,
-#members .data-item.class .user-property.action,
-#members .data-item.class .class-property-action,
-#members .data-item.user-property .user-property.action,
-#members .data-item.user-property .class-property-action,
-#tests .data-item.class .user-property.action,
-#tests .data-item.class .class-property-action,
-#tests .data-item.user-property .user-property.action,
-#tests .data-item.user-property .class-property-action,
-#naturals .data-item.class .user-property.action,
-#naturals .data-item.class .class-property-action,
-#naturals .data-item.user-property .user-property.action,
-#naturals .data-item.user-property .class-property-action {
+#account-settings .data-item.class-property .action,
+#account-settings .data-item.user-property .action,
+#manage .data-item.class-property .action,
+#manage .data-item.user-property .action,
+#members .data-item.class-property .action,
+#members .data-item.user-property .action,
+#tests .data-item.class-property .action,
+#tests .data-item.user-property .action,
+#naturals .data-item.class-property .action,
+#naturals .data-item.user-property .action {
   grid-column: 2/3;
 }
 @media screen and (min-width: 672px) {
-  #account-settings .data-item.class .user-property.action,
-  #account-settings .data-item.class .class-property-action,
-  #account-settings .data-item.user-property .user-property.action,
-  #account-settings .data-item.user-property .class-property-action,
-  #manage .data-item.class .user-property.action,
-  #manage .data-item.class .class-property-action,
-  #manage .data-item.user-property .user-property.action,
-  #manage .data-item.user-property .class-property-action,
-  #members .data-item.class .user-property.action,
-  #members .data-item.class .class-property-action,
-  #members .data-item.user-property .user-property.action,
-  #members .data-item.user-property .class-property-action,
-  #tests .data-item.class .user-property.action,
-  #tests .data-item.class .class-property-action,
-  #tests .data-item.user-property .user-property.action,
-  #tests .data-item.user-property .class-property-action,
-  #naturals .data-item.class .user-property.action,
-  #naturals .data-item.class .class-property-action,
-  #naturals .data-item.user-property .user-property.action,
-  #naturals .data-item.user-property .class-property-action {
+  #account-settings .data-item.class-property .action,
+  #account-settings .data-item.user-property .action,
+  #manage .data-item.class-property .action,
+  #manage .data-item.user-property .action,
+  #members .data-item.class-property .action,
+  #members .data-item.user-property .action,
+  #tests .data-item.class-property .action,
+  #tests .data-item.user-property .action,
+  #naturals .data-item.class-property .action,
+  #naturals .data-item.user-property .action {
     grid-column: 3/4;
     text-align: right;
   }
@@ -3039,23 +3019,23 @@ label.required:after {
 #tests .tests-data-section .data-item.test > span {
   padding: calc(0.2em + 4px) 0;
 }
-#tests .tests-data-section .data-item.test .test-name {
+#tests .tests-data-section .data-item.test .name {
   font-weight: 500;
   text-align: center;
   overflow-wrap: break-word;
 }
-#tests .tests-data-section .data-item.test .test-action {
+#tests .tests-data-section .data-item.test .action {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-#tests .tests-data-section .data-item.test .test-action .btn {
+#tests .tests-data-section .data-item.test .action .btn {
   text-align: center;
   margin: 0.2rem;
 }
 @media screen and (min-width: 672px) {
-  #tests .tests-data-section .data-item.test .test-action .btn {
+  #tests .tests-data-section .data-item.test .action .btn {
     margin: auto 0.4rem;
   }
 }

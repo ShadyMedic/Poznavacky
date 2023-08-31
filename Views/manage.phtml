@@ -1,13 +1,13 @@
 <div id="manage-wrapper">
     <section class="class-data-section">
-        <div class="class data-item">
-            <span class='class-property-name'>ID třídy</span>
-            <span class='class-property-value' id="id"><?= $classId ?></span>
+        <div class="class-property data-item">
+            <span class='class-property name'>ID třídy</span>
+            <span class='class-property value' id="id"><?= $classId ?></span>
         </div>
-        <div class="class data-item">
-            <span class='class-property-name'>Název třídy</span>
-            <span class='class-property-value' id="name"><?= $className ?></span>
-            <div class='class-property-action'>
+        <div class="class-property data-item">
+            <span class='class-property name'>Název třídy</span>
+            <span class='class-property value' id="name"><?= $className ?></span>
+            <div class='class-property action'>
                 <button id="change-class-name-button" class="btn border-btn non-transparent black">Změnit</button>
             </div>
             <div id="change-class-name" class="form change-form" style="display: none;">
@@ -20,14 +20,14 @@
                 <button class="btn inline black" id="change-class-name-cancel-button">Zrušit</button>
             </div>
         </div>
-        <div class="class data-item">
-            <span class='class-property-name'>Stav třídy</span>
-            <span class='class-property-value' id="status">
+        <div class="class-property data-item">
+            <span class='class-property name'>Stav třídy</span>
+            <span class='class-property value' id="status">
                 <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>Veřejná<?php endif ?>
                 <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>Soukromá (kód třídy: <?= $classCode ?>)<?php endif ?> 
                 <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>Uzamčená<?php endif ?>
             </span>
-            <div class='class-property-action'>
+            <div class='class-property action'>
                 <button id="change-class-status-button" class="btn border-btn non-transparent black">Změnit</button>
             </div>
             <div id="change-class-status" class="form change-form" style="display: none">

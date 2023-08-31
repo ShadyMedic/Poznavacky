@@ -9,7 +9,7 @@ $(function()
     ajaxUrl = ajaxUrl.replace('/manage/tests', '/class-update'); //nahrazení neAJAX akci AJAX akcí
   
     //eventy listenery tlačítek
-    $(".test-action .delete-group-button").click(function(event) {deleteTest(event)})
+    $(".test.action .delete-group-button").click(function(event) {deleteTest(event)})
     $("#new-test-button").click(function() {newTest()})
     $("#new-test-confirm-button").click(function() {newTestConfirm()})
     $("#new-test-cancel-button").click(function() {newTestCancel()})
@@ -74,7 +74,7 @@ function newTestConfirm()
                         $('.tests-data-section').append(groupDomItem);
 
                         //doplň event listener na tlačítko pro odstranění poznávačky
-                        $(".tests-data-section .test-action:last .delete-group-button").click(function(event) {deleteTest(event)})
+                        $(".tests-data-section .test.action:last .delete-group-button").click(function(event) {deleteTest(event)})
 
                         newMessage(response["message"], "success");
 

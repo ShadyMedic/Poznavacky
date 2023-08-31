@@ -16,7 +16,7 @@
             padding: calc(0.4em + 4px) 0;
         }
     }
-    .data-item.class,
+    .data-item.class-property,
     .data-item.user-property {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto;
@@ -24,8 +24,7 @@
             grid-template-columns: 11.2rem 13rem 1fr;
             grid-template-rows: auto 1fr;
         }
-        .user-property.action,
-        .class-property-action {
+        .action {
             grid-column: 2/3;
             @media screen and (min-width: $smallTablet) {
                 grid-column: 3/4;
@@ -274,12 +273,12 @@
             > span {
                 padding: calc(0.2em + 4px) 0;
             }
-            .test-name {
+            .name {
                 font-weight: 500;
                 text-align: center;
                 overflow-wrap: break-word;
             }
-            .test-action {
+            .action {
                 width: 100%;
                 display: flex;
                 flex-direction: row;
