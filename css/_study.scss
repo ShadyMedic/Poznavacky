@@ -86,7 +86,10 @@
         bottom: 0;
         height: 16px;
         width: 16px;
-        margin: 6px;
+        margin: 0.6rem;
+        @media screen and (min-width: $tablet) {
+            margin: 1rem;
+        }
         > img {
             position: relative;
             width: 100%;
