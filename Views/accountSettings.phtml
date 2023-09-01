@@ -46,7 +46,7 @@
             <span class='user-property value' id="email-address"><?= $userEmail ?></span>
             <div class='user-property action'>
                 <button class="btn border-btn non-transparent black" id="change-email-button">Změnit</button>
-                <button class="btn border-btn non-transparent black img" id="remove-email-button" title="Odebrat" <?php if ($userEmail == '') : ?> style="display: none" <?php endif ?>><img src="images/trash-white.svg" alt="Odstranit"></button>
+                <button class="btn border-btn non-transparent black img" id="remove-email-button" title="Odebrat" <?php if (empty($userEmail)) : ?> style="display: none" <?php endif ?>><img src="images/trash-white.svg" alt="Odstranit"></button>
             </div>
             <div id="change-email" class="form change-form" style="display: none;">
                 <h3>Změna emailu</h3>
