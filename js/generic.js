@@ -185,6 +185,9 @@ function newConfirm(message, confirmButtonText, cancelButtonText, callback)
     $confirm.find(".confirm-popup-button").text(confirmButtonText);
     $confirm.find(".cancel-popup-button").text(cancelButtonText);
 
+    //aby fungovalo potvrzení enterem
+    $confirm.find(".confirm-popup-button").focus();
+
     $confirm.on("click", ".confirm-popup-button", function()
     {
         $confirm.remove();
