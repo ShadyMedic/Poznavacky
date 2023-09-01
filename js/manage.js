@@ -228,6 +228,10 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
 
                         //aktualizace zobrazovaných údajů
                         $("#status").text(newStatus);
+                        if (newStatus == "Soukromá")
+                        {
+                            $("#status").append(" (kód třídy: " + newCode + ")");
+                        }
                         $("#class-status-select .custom-option").removeClass("selected");
                         $("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
                         
