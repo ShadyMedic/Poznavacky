@@ -71,6 +71,7 @@ function newTestConfirm()
                         groupDomItem = groupDomItem.replace(/{url}/g, groupData.url);
                         groupDomItem = groupDomItem.replace(/{parts}/g, groupData.parts);
 
+                        $(".data-properties").show();
                         $('.tests-data-section').append(groupDomItem);
 
                         //doplň event listener na tlačítko pro odstranění poznávačky
@@ -131,6 +132,12 @@ function deleteTestFinal($test)
                     else if (response["messageType"] === "success")
                     {
                         $test.remove();
+
+                        if ($(".test.data-item").length -1 == 0) //nutné zahrnout i template
+                        {
+                            $(".data-properties").hide();
+                        }
+                        
                         newMessage(response["message"], "success");
                     }
                     $test = undefined;

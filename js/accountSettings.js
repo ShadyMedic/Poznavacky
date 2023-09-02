@@ -45,7 +45,10 @@ function changePasswordCancel()
 function changeEmailCancel()
 {
     $("#change-email-button").show();
-    $("#remove-email-button").show();
+    if ($("#email-address").text() !== "")
+    {
+        $("#remove-email-button").show();
+    }
     $("#change-email").closest(".user-property.data-item").find(".user-property.value").show();
     $("#change-email").hide();
     $("#change-email .text-field").val("");
@@ -225,9 +228,16 @@ function changeEmailFinal(password, newEmail)
                     if (messageType === 'success')
                     {
                         $("#email-address").text(decodeURIComponent(newEmail));
-                        
+
                         //Reset HTML
                         changeEmailCancel();
+
+                        if (newEmail === "")
+                        {
+                            $("#remove-email-button").hide();
+                        }
+                        
+                        
                     }
                     newMessage(message, messageType);
                 }

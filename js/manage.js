@@ -105,6 +105,8 @@ function changeClassNameCancel()
  */
 function changeClassStatus()
 {
+    statusChange();
+
     $("#change-class-status-button").hide();
     $("#change-class-status").show();
     $("#change-class-status").closest(".class-property.data-item").find(".value").hide();
@@ -219,12 +221,17 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
                 {
                     if (messageType === "success")
                     {
+                        $initialStatus = $("#class-status-select").find("li:contains(" + newStatus +")");
                         initialStatus = newStatus;
                         initialCode = newCode;
                         initialReadonly = newReadonly;
 
                         //aktualizace zobrazovaných údajů
                         $("#status").text(newStatus);
+                        if (newStatus == "Soukromá")
+                        {
+                            $("#status").append(" (kód třídy: " + newCode + ")");
+                        }
                         $("#class-status-select .custom-option").removeClass("selected");
                         $("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
                         

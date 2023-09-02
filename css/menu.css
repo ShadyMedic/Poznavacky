@@ -1899,7 +1899,13 @@ label.required:after {
   bottom: 0;
   height: 16px;
   width: 16px;
-  margin: 6px;
+  margin: 0.6rem;
+}
+@media screen and (min-width: 768px) {
+  #learn .report-button,
+  #test .report-button {
+    margin: 1rem;
+  }
 }
 #learn .report-button > img,
 #test .report-button > img {
