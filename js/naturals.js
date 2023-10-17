@@ -29,9 +29,6 @@ $(function()
     $(".preview-picture-button").click(function(event) {previewPicture(event)})
     $(".hide-picture-button").click(function(event) {hidePicture(event)})
 
-    //event listener kliknutí myši
-    //$(document).mouseup(function(event) {hidePictures(event)});
-
     //event listener zmáčknutí klávesy
     $(".natural.name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
 
@@ -393,8 +390,20 @@ function displayPictures(event)
         $naturalPictures.slideDown(function() {$(this).css('display', '');});
         $naturalPictures.addClass("show");
     }
+
+    $(".data-item").each(function()
+    {
+        if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
+        {
+            $(this).find(".pictures").slideUp(function() {$(this).removeClass("show");});
+        }
+    })
 }
 
+/**
+ * FUnkce zobrazující náhled konkrétního obrázku
+ * @param {event} event 
+ */
 function previewPicture(event)
 {
     let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
@@ -407,29 +416,13 @@ function previewPicture(event)
     $naturalPictures.find(".image").show();
 }
 
+/**
+ * FUnkce skrývající náhled konkrétního obrázku
+ * @param {event} event 
+ */
 function hidePicture(event)
 {
     $(event.target).closest(".data-item").find(".image").hide();
     $(event.target).closest(".data-item").find(".list").show();
 }
 
-/**
- * Funkce skrývající obrázky dané přírodniny"
- * @param {event} event 
- */
-/*
-function hidePictures(event)
-{
-    $(".display-buttons-button").each(function()
-    {
-        //kliknutí mimo tlačítko
-        if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
-        {
-            if ($(this).find("li").hasClass("show"))
-            {
-                $(this).find(".buttons-wrapper, .info").slideUp();
-                $(this).find("li").removeClass("show");
-            }
-        }
-    })
-}*/
