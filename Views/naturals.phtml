@@ -70,12 +70,57 @@
             <span class="natural pictures-count"><?= $natural->getPicturesCount() ?></span>
             <div class="natural action">
                 <div class="normal-buttons">
+                    <button class="display-pictures-button btn icon" title="Zobrazit obrázky"><img src="images/eye-black.svg"></button>
                     <button class="rename-natural-button btn icon" title="Přejmenovat"><img src="images/pencil-black.svg"></button>
                     <button class="remove-natural-button btn icon" title="Odebrat"><img src="images/cross-thin-black.svg"></button>
                 </div>
                 <div class="rename-buttons" style="display:none;">
                     <button class="rename-confirm-button btn icon" title="Potvrdit"><img src="images/tick.svg"></button>
                     <button class="rename-cancel-button btn icon" title="Zrušit"><img src="images/cross-thick-black.svg" alt=""></button>
+                </div>
+            </div>
+            <div class="natural pictures">
+                <div class="list">
+                    <div class="img-wrapper">
+                        <img src="images/logo-dummy1.png" alt="" class="natural picture dummy1">
+                        <div class="img-buttons">
+                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img src="images/eye-black.svg"></button>
+                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img src="images/trash-black.svg"></button> 
+                        </div>
+                    </div>
+                    <div class="img-wrapper">
+                        <img src="images/logo.png" alt="" class="natural picture dummy2">
+                        <div class="img-buttons">
+                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img src="images/eye-black.svg"></button>
+                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img src="images/trash-black.svg"></button> 
+                        </div>
+                    </div>
+                    <div class="img-wrapper">
+                        <img src="images/logo-dummy3.png" alt="" class="natural picture dummy3">
+                        <div class="img-buttons">
+                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img src="images/eye-black.svg"></button>
+                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img src="images/trash-black.svg"></button> 
+                        </div>
+                    </div>
+                    <div class="img-wrapper">
+                        <img src="images/logo-dummy2.png" alt="" class="natural picture dummy4">
+                        <div class="img-buttons">
+                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img src="images/eye-black.svg"></button>
+                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img src="images/trash-black.svg"></button> 
+                        </div>
+                    </div>
+                    <div class="img-wrapper">
+                        <img src="images/logo-dummy1.png" alt="" class="natural picture dummy5">
+                        <div class="img-buttons">
+                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img src="images/eye-black.svg"></button>
+                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img src="images/trash-black.svg"></button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="image" style="display: none">
+                    <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img src="images/cross-thin-white.svg"></button>
+                    <button class="btn icon delete-picture-button" title="Odstranit obrázek"><img src="images/trash-white.svg"></button>
+                    <img src="images/logo-dummy1.png" alt="Náhled obrázku">
                 </div>
             </div>
         </div>

@@ -25,6 +25,12 @@ $(function()
     $("#remove-filters-button").click(function() {removeFilters()})
     $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
     $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
+    $(".display-pictures-button").click(function(event) {displayPictures(event)})
+    $(".preview-picture-button").click(function(event) {previewPicture(event)})
+    $(".hide-picture-button").click(function(event) {hidePicture(event)})
+
+    //event listener kliknutí myši
+    //$(document).mouseup(function(event) {hidePictures(event)});
 
     //event listener zmáčknutí klávesy
     $(".natural.name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
@@ -375,3 +381,55 @@ function removeFinal($natural)
     );
 }
 
+/**
+ * Funkce zobrazující obrázky dané přírodniny"
+ * @param {event} event
+ */
+function displayPictures(event)
+{
+    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    if (!$naturalPictures.hasClass("show"))
+    {
+        $naturalPictures.slideDown(function() {$(this).css('display', '');});
+        $naturalPictures.addClass("show");
+    }
+}
+
+function previewPicture(event)
+{
+    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    url = $(event.target).closest(".img-wrapper").find("img.picture").attr("src");
+    console.log(url);
+
+    $naturalPictures.find(".list").hide();
+
+    $naturalPictures.find(".image > img").attr("src", url);
+    $naturalPictures.find(".image").show();
+}
+
+function hidePicture(event)
+{
+    $(event.target).closest(".data-item").find(".image").hide();
+    $(event.target).closest(".data-item").find(".list").show();
+}
+
+/**
+ * Funkce skrývající obrázky dané přírodniny"
+ * @param {event} event 
+ */
+/*
+function hidePictures(event)
+{
+    $(".display-buttons-button").each(function()
+    {
+        //kliknutí mimo tlačítko
+        if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
+        {
+            if ($(this).find("li").hasClass("show"))
+            {
+                $(this).find(".buttons-wrapper, .info").slideUp();
+                $(this).find("li").removeClass("show");
+            }
+        }
+    })
+}*/
