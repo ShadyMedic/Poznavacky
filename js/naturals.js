@@ -399,6 +399,12 @@ function displayPictures(event)
             $(this).find(".pictures").slideUp(function() {$(this).removeClass("show");});
         }
     })
+
+    //Načti obrázky
+    $naturalPictures.find('.picture').each(function()
+    {
+        $(this).attr('src', $(this).attr('data-src'));
+    })
 }
 
 /**
