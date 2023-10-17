@@ -28,6 +28,7 @@ $(function()
     $(".display-pictures-button").click(function(event) {displayPictures(event)})
     $(".preview-picture-button").click(function(event) {previewPicture(event)})
     $(".hide-picture-button").click(function(event) {hidePicture(event)})
+    $(".delete-picture-button").click(function(event) {deletePicture(event)})
 
     //event listener zmáčknutí klávesy
     $(".natural.name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
@@ -401,7 +402,7 @@ function displayPictures(event)
 }
 
 /**
- * FUnkce zobrazující náhled konkrétního obrázku
+ * Funkce zobrazující náhled konkrétního obrázku
  * @param {event} event 
  */
 function previewPicture(event)
@@ -417,12 +418,25 @@ function previewPicture(event)
 }
 
 /**
- * FUnkce skrývající náhled konkrétního obrázku
+ * Funkce skrývající náhled konkrétního obrázku
  * @param {event} event 
  */
 function hidePicture(event)
 {
     $(event.target).closest(".data-item").find(".image").hide();
     $(event.target).closest(".data-item").find(".list").show();
+}
+
+/**
+ * Funkce odstraňující obrázek
+ * @param {event} event 
+ */
+function deletePicture(event)
+{
+    //TODO
+
+    //<img>, který má být smazán ze třídy
+    $picture = $(event.target).closest(".image, .img-wrapper").find(".picture");
+
 }
 
