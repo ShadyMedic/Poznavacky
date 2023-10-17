@@ -439,10 +439,23 @@ function hidePicture(event)
  */
 function deletePicture(event)
 {
-    //TODO
-
-    //<img>, který má být smazán ze třídy
     $picture = $(event.target).closest(".image, .img-wrapper").find(".picture");
-
+    $.post(ajaxUrl,
+        {
+            action:"delete picture",
+            pictureId:$picture.attr('data-id')
+        },
+        function(response)
+        {
+            if (response["messageType"] === "success")
+            {
+                $picture.closest('.img-wrapper').remove();
+            }
+            if (response["messageType"] === "error")
+            {
+                alert(response["message"]);
+            }
+        }
+    );
 }
 

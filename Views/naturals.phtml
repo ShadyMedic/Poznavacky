@@ -83,7 +83,7 @@
                 <div class="list">
                     <?php foreach ($natural->getPictures() as $picture) : ?>
                     <div class="img-wrapper">
-                        <img src="images/loading.svg" data-src="<?= $picture->getSrc() ?>" alt="Náhled obrázku" class="natural picture"> <!-- src doplní JS (lazy loading) -->
+                        <img src="images/loading.svg" data-src="<?= $picture->getSrc() ?>" data-id="<?= $picture->getId() ?>" alt="Náhled obrázku" class="natural picture"> <!-- src doplní JS (lazy loading) -->
                         <div class="img-buttons">
                             <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img src="images/eye-black.svg"></button>
                             <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img src="images/trash-black.svg"></button> 
