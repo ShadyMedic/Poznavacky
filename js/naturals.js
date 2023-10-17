@@ -440,6 +440,7 @@ function hidePicture(event)
 function deletePicture(event)
 {
     $picture = $(event.target).closest(".image, .img-wrapper").find(".picture");
+    $picturesCount = $(event.target).closest(".data-item").find(".pictures-count")[0];
     $.post(ajaxUrl,
         {
             action:"delete picture",
@@ -450,6 +451,7 @@ function deletePicture(event)
             if (response["messageType"] === "success")
             {
                 $picture.closest('.img-wrapper').remove();
+                $picturesCount.innerText = $picturesCount.innerText - 1
             }
             if (response["messageType"] === "error")
             {
