@@ -415,11 +415,12 @@ function previewPicture(event)
 {
     let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
     url = $(event.target).closest(".img-wrapper").find("img.picture").attr("src");
-    console.log(url);
+    id = $(event.target).closest(".img-wrapper").find("img.picture").attr("data-id");
 
     $naturalPictures.find(".list").hide();
 
     $naturalPictures.find(".image > img").attr("src", url);
+    $naturalPictures.find(".image > img").attr("data-id", id);
     $naturalPictures.find(".image").show();
 }
 
@@ -439,7 +440,8 @@ function hidePicture(event)
  */
 function deletePicture(event)
 {
-    $picture = $(event.target).closest(".image, .img-wrapper").find(".picture");
+    id = $(event.target).closest(".image, .img-wrapper").find(".picture").attr("data-id");
+    $picture = $(event.target).closest(".pictures").find(".list .picture[data-id=" + id +"]");
     $picturesCount = $(event.target).closest(".data-item").find(".pictures-count")[0];
     $.post(ajaxUrl,
         {
@@ -452,6 +454,7 @@ function deletePicture(event)
             {
                 $picture.closest('.img-wrapper').remove();
                 $picturesCount.innerText = $picturesCount.innerText - 1
+                hidePicture(event);
             }
             if (response["messageType"] === "error")
             {
