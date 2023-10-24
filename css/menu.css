@@ -3552,7 +3552,7 @@ label.required:after {
   #naturals .pictures .list {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
   }
 }
 #naturals .pictures .list .img-wrapper {
@@ -3560,7 +3560,7 @@ label.required:after {
   position: relative;
   max-width: 200px;
   aspect-ratio: 1/1;
-  margin: auto;
+  margin: min(auto, 40px);
   overflow: hidden;
 }
 #naturals .pictures .list .img-wrapper:after {

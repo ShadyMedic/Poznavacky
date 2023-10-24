@@ -391,6 +391,12 @@ function displayPictures(event)
         $naturalPictures.slideDown(function() {$(this).css('display', '');});
         $naturalPictures.addClass("show");
     }
+    
+    $naturalPictures.find(".picture").on("error", function()
+    {
+        $(this).attr("src", '/images/file-error.svg');
+        $(this).siblings(".img-buttons").find(".preview-picture-button").hide();
+    })
 
     $(".data-item").each(function()
     {

@@ -732,14 +732,14 @@
             @media screen and (min-width: $smallTablet) {
                 display: flex;
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: center;
             } 
             .img-wrapper {
                 width: 100%;
                 position: relative;
                 max-width: 200px;
                 aspect-ratio: 1 / 1; 
-                margin: auto;
+                margin: min(auto, 40px);
                 overflow: hidden;
                 &:after {
                     content: "";
