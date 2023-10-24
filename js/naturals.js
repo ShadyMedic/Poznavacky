@@ -25,6 +25,10 @@ $(function()
     $("#remove-filters-button").click(function() {removeFilters()})
     $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
     $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
+    $(".display-pictures-button").click(function(event) {displayPictures(event)})
+    $(".preview-picture-button").click(function(event) {previewPicture(event)})
+    $(".hide-picture-button").click(function(event) {hidePicture(event)})
+    $(".delete-picture-button").click(function(event) {deletePicture(event)})
 
     //event listener zmáčknutí klávesy
     $(".natural.name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
@@ -372,6 +376,97 @@ function removeFinal($natural)
             );
         },
         "json"
+    );
+}
+
+/**
+ * Funkce zobrazující obrázky dané přírodniny"
+ * @param {event} event
+ */
+function displayPictures(event)
+{
+    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    if (!$naturalPictures.hasClass("show"))
+    {
+        $naturalPictures.slideDown(function() {$(this).css('display', '');});
+        $naturalPictures.addClass("show");
+    }
+    
+    $naturalPictures.find(".picture").on("error", function()
+    {
+        $(this).attr("src", '/images/file-error.svg');
+        $(this).siblings(".img-buttons").find(".preview-picture-button").hide();
+    })
+
+    $(".data-item").each(function()
+    {
+        if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
+        {
+            $(this).find(".pictures").slideUp(function() {$(this).removeClass("show");});
+        }
+    })
+
+    //Načti obrázky
+    $naturalPictures.find('.picture').each(function()
+    {
+        $(this).attr('src', $(this).attr('data-src'));
+    })
+}
+
+/**
+ * Funkce zobrazující náhled konkrétního obrázku
+ * @param {event} event 
+ */
+function previewPicture(event)
+{
+    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    url = $(event.target).closest(".img-wrapper").find("img.picture").attr("src");
+    id = $(event.target).closest(".img-wrapper").find("img.picture").attr("data-id");
+
+    $naturalPictures.find(".list").hide();
+
+    $naturalPictures.find(".image > img").attr("src", url);
+    $naturalPictures.find(".image > img").attr("data-id", id);
+    $naturalPictures.find(".image").show();
+}
+
+/**
+ * Funkce skrývající náhled konkrétního obrázku
+ * @param {event} event 
+ */
+function hidePicture(event)
+{
+    $(event.target).closest(".data-item").find(".image").hide();
+    $(event.target).closest(".data-item").find(".list").show();
+}
+
+/**
+ * Funkce odstraňující obrázek
+ * @param {event} event 
+ */
+function deletePicture(event)
+{
+    id = $(event.target).closest(".image, .img-wrapper").find(".picture").attr("data-id");
+    $picture = $(event.target).closest(".pictures").find(".list .picture[data-id=" + id +"]");
+    $picturesCount = $(event.target).closest(".data-item").find(".pictures-count")[0];
+    $.post(ajaxUrl,
+        {
+            action:"delete picture",
+            pictureId:$picture.attr('data-id')
+        },
+        function(response)
+        {
+            if (response["messageType"] === "success")
+            {
+                $picture.closest('.img-wrapper').remove();
+                $picturesCount.innerText = $picturesCount.innerText - 1
+                hidePicture(event);
+            }
+            if (response["messageType"] === "error")
+            {
+                alert(response["message"]);
+            }
+        }
     );
 }
 

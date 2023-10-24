@@ -657,7 +657,7 @@
         margin: 0.4rem;
         padding: 0.2rem 0.8rem;
         display: grid;
-        grid-template-columns: 1fr 6rem 6rem 6rem;
+        grid-template-columns: 1fr 6rem 6rem 7.2rem;
         @media screen and (min-width: $smallTablet) {
             grid-template-columns: 1fr 7.2rem 7.2rem 7.2rem;
         }
@@ -672,7 +672,7 @@
         }
     }
     .data-properties > *,
-    .data-item > * {
+    .data-item > *:not(.pictures) {
         width: 100%;
         text-align: center;
         .text-field {
@@ -686,6 +686,110 @@
             justify-content: center;
             .btn {
                 margin: auto 0.4rem;
+            }
+        }
+    }
+    .pictures {
+        width: 100%;
+        grid-column: 1/5;
+        display: none;
+        margin: 0.6rem 0 0.6rem 0;
+        &.show {
+            display: block;
+        }
+        .image {
+            height: 300px;
+            width: fit-content;
+            margin: auto;
+            position: relative;
+            .btn {
+                margin: 1rem;
+                position: absolute;
+                > img {
+                    filter: drop-shadow(0 0 0.16rem rgba(black, 0.6));
+                }
+                &.hide-picture-button {
+                    top: 0;
+                    right: 0;
+                }
+                &.delete-picture-button {
+                    bottom: 0;
+                    right: 0;
+                }
+            }
+            > img {
+                height: 100%;
+            }
+        }
+        .list {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            @media screen and (min-width: $smallMobile) {
+                grid-template-columns: repeat(2, 1fr);
+            } 
+            @media screen and (min-width: $smallTablet) {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            } 
+            .img-wrapper {
+                width: 100%;
+                position: relative;
+                max-width: 200px;
+                aspect-ratio: 1 / 1; 
+                margin: min(auto, 40px);
+                overflow: hidden;
+                &:after {
+                    content: "";
+                    display: block;
+                    filter: opacity(0);
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    background: rgba(black, 0.4);
+                    transition: all 0.4s;
+                }
+                &:hover,
+                &:active {
+                    > img {
+                        filter: blur(5px) grayscale(40%);
+                        transform: scale(1.1);
+                    }
+                    .img-buttons {
+                        display: flex;
+                    }
+                    &:after {
+                        filter: opacity(100%);
+                    }
+                }
+                > img {
+                    width: 100%;
+                    aspect-ratio: 1 / 1; 
+                    object-fit: cover;
+                    transition: all 0.4s;
+                }
+                .img-buttons {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    display: none;
+                    z-index: 2;
+                    .btn {
+                        margin: auto 0.4rem;
+                        img {
+                            @include turn-white;
+                        }
+                    }
+                }
             }
         }
     }

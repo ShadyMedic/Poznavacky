@@ -1,1 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.68 39.28"><defs><style>.cls-1{stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}.cls-2{fill:#fff;}</style></defs><title>eye</title><g id="Vrstva_2" data-name="Vrstva 2"><g id="eye"><path class="cls-1" d="M1,19.64A34.64,34.64,0,0,1,31.34,1,34.64,34.64,0,0,1,61.68,19.64"/><path class="cls-1" d="M61.68,19.64A34.66,34.66,0,0,1,31.34,38.28,34.66,34.66,0,0,1,1,19.64"/><circle class="cls-2" cx="31.94" cy="19.64" r="16.51"/><circle cx="31.94" cy="19.64" r="11.15"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 62.68 39.28"
+   version="1.1"
+   id="svg18"
+   sodipodi:docname="eye-black.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview20"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="14.653384"
+     inkscape:cx="39.342447"
+     inkscape:cy="19.210579"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg18" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}.cls-2{fill:#fff;}</style>
+  </defs>
+  <title
+     id="title6">eye</title>
+  <g
+     id="Vrstva_2"
+     data-name="Vrstva 2">
+    <g
+       id="eye">
+      <path
+         id="path8"
+         d="M 31.339844 1 A 34.64 34.64 0 0 0 1 19.640625 A 34.66 34.66 0 0 0 31.339844 38.279297 A 34.66 34.66 0 0 0 61.679688 19.640625 A 34.64 34.64 0 0 0 31.339844 1 z M 31.939453 3.1308594 A 16.51 16.51 0 0 1 48.449219 19.640625 A 16.51 16.51 0 0 1 31.939453 36.150391 A 16.51 16.51 0 0 1 15.429688 19.640625 A 16.51 16.51 0 0 1 31.939453 3.1308594 z " />
+      <circle
+         cx="31.940001"
+         cy="19.639999"
+         r="11.15"
+         id="circle14"
+         style="display:inline" />
+    </g>
+  </g>
+</svg>
