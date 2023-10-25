@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -22,11 +23,6 @@ table {
   border-spacing: 0;
 }
 
-@font-face {
-  font-family: "Ubuntu";
-  src: url(//fonts.googleapis.com/css?family=Ubuntu);
-  font-display: swap;
-}
 html {
   scroll-behavior: smooth;
 }

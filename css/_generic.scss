@@ -1,10 +1,7 @@
 @import "_variables.scss";
 
-@font-face {
-    font-family: 'Ubuntu';
-    src: url(//fonts.googleapis.com/css?family=Ubuntu);
-    font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
