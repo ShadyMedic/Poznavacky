@@ -1835,6 +1835,7 @@ label.required:after {
 #test #learn-wrapper .picture,
 #test #test-wrapper .picture {
   width: 100%;
+  aspect-ratio: 1/1;
   margin: 8px 0;
   position: relative;
   overflow: hidden;

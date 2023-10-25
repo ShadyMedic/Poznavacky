@@ -1,6 +1,5 @@
 $(function()
 {
-    resizeMainImg();
     next();
 
     //eventy listenery tlačítek
@@ -9,19 +8,6 @@ $(function()
     //event listener formuláře na odeslání odpovědi
     $("#answer-form").submit(function(event) {answer(event)});
 })
-
-$(window).resize(function()
-{
-    resizeMainImg();
-})
-
-/**
- * Funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
- */
-function resizeMainImg()
-{
-    $("#test-wrapper .picture").css("height", $("#test-wrapper .picture").outerWidth());
-}
 
 /**
  * Objekt reprezentující obrázek
