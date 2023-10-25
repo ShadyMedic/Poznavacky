@@ -7,6 +7,9 @@ $(function()
     
     //event listener formuláře na odeslání odpovědi
     $("#answer-form").submit(function(event) {answer(event)});
+
+    //event listener chyby načítání obrázku
+    $("#main-img").on("error", function() {imgErrorHandle()});
 })
 
 /**
@@ -225,4 +228,12 @@ function next()
     $("#answer-hidden").val(newNum);
 
     $("#submit-answer-button").removeClass("disabled");
+}
+
+/**
+ * Funkce nahrazující špatně načtené obrázky
+ */
+function imgErrorHandle()
+{
+    $("#main-img").attr("src", '/images/file-error.svg');
 }

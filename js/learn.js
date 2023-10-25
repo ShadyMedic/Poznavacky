@@ -18,6 +18,9 @@ $(function()
 
     //event listener změny select boxu přírodnin
     $("#natural-select span").on('DOMSubtreeModified', function() {sel()});
+    
+    //event listener chyby načítání obrázku
+    $("#main-img").on("error", function() {imgErrorHandle()});
 })
 
 /**
@@ -234,4 +237,12 @@ function updateNatural(offset)
             }
         }
     });
+}
+
+/**
+ * Funkce nahrazující špatně načtené obrázky
+ */
+function imgErrorHandle()
+{
+    $("#main-img").attr("src", '/images/file-error.svg');
 }
