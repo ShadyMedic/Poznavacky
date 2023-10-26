@@ -47,6 +47,16 @@ body {
     }
 }
 
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 600;
+    line-height: 1.3em;
+}
+h5 {
+    line-height: 1.3em;
+}
 
 .container {
     min-height: 100vh;
@@ -192,17 +202,6 @@ footer {
 img {
     height: auto;
     width: auto;
-}
-
-h1,
-h2,
-h4 {
-    font-weight: 500;
-    line-height: 1.3em;
-}
-h3,
-h5 {
-    line-height: 1.3em;
 }
 
 ul.list {
