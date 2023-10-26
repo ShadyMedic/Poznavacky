@@ -1,6 +1,6 @@
 @import "_variables.scss";
 
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:300,400,500&display=swap');
 
 html {
     scroll-behavior: smooth;
@@ -50,11 +50,9 @@ body {
 h1,
 h2,
 h3,
-h4 {
-    font-weight: 600;
-    line-height: 1.3em;
-}
+h4,
 h5 {
+    font-weight: 500;
     line-height: 1.3em;
 }
 
