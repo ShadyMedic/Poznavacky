@@ -1,6 +1,5 @@
 $(function()
 {
-    resizeMainImg();
     next();
 
     //eventy listenery tlačítek
@@ -8,20 +7,10 @@ $(function()
     
     //event listener formuláře na odeslání odpovědi
     $("#answer-form").submit(function(event) {answer(event)});
-})
 
-$(window).resize(function()
-{
-    resizeMainImg();
+    //event listener chyby načítání obrázku
+    $("#main-img").on("error", function() {imgErrorHandle()});
 })
-
-/**
- * Funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
- */
-function resizeMainImg()
-{
-    $("#test-wrapper .picture").css("height", $("#test-wrapper .picture").outerWidth());
-}
 
 /**
  * Objekt reprezentující obrázek
@@ -239,4 +228,12 @@ function next()
     $("#answer-hidden").val(newNum);
 
     $("#submit-answer-button").removeClass("disabled");
+}
+
+/**
+ * Funkce nahrazující špatně načtené obrázky
+ */
+function imgErrorHandle()
+{
+    $("#main-img").attr("src", '/images/file-error.svg');
 }

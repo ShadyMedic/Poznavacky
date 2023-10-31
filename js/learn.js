@@ -6,7 +6,6 @@ $(function()
     $(".show-info-button").show();
 
     loadNaturals();
-    resizeMainImg();
 
     //event listenery tlačítek na posun přírodnin a obrázků
     $("#natural-back-button").click(function() {updateNatural(-1)});
@@ -19,22 +18,10 @@ $(function()
 
     //event listener změny select boxu přírodnin
     $("#natural-select span").on('DOMSubtreeModified', function() {sel()});
+    
+    //event listener chyby načítání obrázku
+    $("#main-img").on("error", function() {imgErrorHandle()});
 })
-
-$(window).resize(function()
-{
-    resizeMainImg();
-})
-
-/**
- * Funkce nastavující výšku #main-img tak, aby byla shodná s jeho šířkou
- */
-function resizeMainImg()
-{
-    let pictureWidth = $("#learn-wrapper .picture").outerWidth();
-
-    $("#learn-wrapper .picture").css("height", pictureWidth);
-}
 
 /**
  * Objekt pro uchování přírodniny a jejích obrázků
@@ -250,4 +237,12 @@ function updateNatural(offset)
             }
         }
     });
+}
+
+/**
+ * Funkce nahrazující špatně načtené obrázky
+ */
+function imgErrorHandle()
+{
+    $("#main-img").attr("src", '/images/file-error.svg');
 }

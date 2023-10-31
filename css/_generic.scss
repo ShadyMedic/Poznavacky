@@ -1,10 +1,7 @@
 @import "_variables.scss";
 
-@font-face {
-    font-family: 'Ubuntu';
-    src: url(//fonts.googleapis.com/css?family=Ubuntu);
-    font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:300,400,500&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
@@ -50,6 +47,14 @@ body {
     }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 500;
+    line-height: 1.3em;
+}
 
 .container {
     min-height: 100vh;
@@ -195,17 +200,6 @@ footer {
 img {
     height: auto;
     width: auto;
-}
-
-h1,
-h2,
-h4 {
-    font-weight: 500;
-    line-height: 1.3em;
-}
-h3,
-h5 {
-    line-height: 1.3em;
 }
 
 ul.list {
@@ -389,13 +383,6 @@ ul.list {
             }
         }
     }
-}
-
-.info {
-    display: inline-block;
-    height: 1em;
-    width: 1em;
-    vertical-align: middle;
 }
 
 .center {
