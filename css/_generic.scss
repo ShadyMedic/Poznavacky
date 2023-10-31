@@ -1,10 +1,7 @@
 @import "_variables.scss";
 
-@font-face {
-    font-family: 'Ubuntu';
-    src: url(//fonts.googleapis.com/css?family=Ubuntu);
-    font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:300,400,500&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
@@ -50,12 +47,19 @@ body {
     }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 500;
+    line-height: 1.3em;
+}
 
 .container {
     min-height: 100vh;
     height: 100%;
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
 }
 
 header {
@@ -150,21 +154,24 @@ header {
 }
 
 footer {
-    color: white;
-    padding: 0.2rem 1rem;
+    padding: 0.12rem 1rem;
     background: $gray1;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     .content {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
         flex-direction: column;
         @media screen and (min-width: $mobile) {
             flex-direction: row;
             flex-wrap: wrap;
         }
+        @media screen and (min-width: $smallTablet) {
+            justify-content: end;
+        }
         a, span {
-            margin: 0.2rem 0.4rem;
+            margin: 0.2rem 0.8rem;
+            color: white;
         }
         a {
             &:after {
@@ -193,15 +200,6 @@ footer {
 img {
     height: auto;
     width: auto;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-weight: 500;
-    line-height: 1.3em;
 }
 
 ul.list {
@@ -387,13 +385,6 @@ ul.list {
     }
 }
 
-.info {
-    display: inline-block;
-    height: 1em;
-    width: 1em;
-    vertical-align: middle;
-}
-
 .center {
     display: block;
     margin: auto;
@@ -465,6 +456,7 @@ textarea {
 label {
     //line-height: 1.6em;
     margin: 0.24rem 0;
+    font-size: 0.9rem;
     display: inline-block;
     &.disabled {
         pointer-events: none;

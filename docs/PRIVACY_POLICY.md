@@ -103,7 +103,7 @@ povolíme.
 
 Úplný seznam všech logovacích zpráv by byl příliš dlouhý, ale jelikož
 je Služba open-source, je možné vše dohledat v online úložišti projektu
-na GitHub, na adrese <https://github.com/HonzaSTECH/Poznavacky>. Pro
+na GitHub, na adrese <https://github.com/ShadyMedic/Poznavacky>. Pro
 vyhledávání míst, kde se do logovacího souboru zapisuje jakákoli zpráva
 zadejte do vyhledávání fragment `(new Logger(true))`.
 

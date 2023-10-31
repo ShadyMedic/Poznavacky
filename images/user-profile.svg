@@ -1,1 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><style>.cls-1{fill:#fff;}.cls-2,.cls-3{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:6px;}.cls-2{stroke-linecap:round;}</style></defs><title>user_1</title><g id="Vrstva_2" data-name="Vrstva 2"><g id="user"><path class="cls-1" d="M64,6A58,58,0,1,1,6,64,58.07,58.07,0,0,1,64,6m0-6a64,64,0,1,0,64,64A64,64,0,0,0,64,0Z"/><path class="cls-2" d="M100.81,92.88A47.52,47.52,0,0,1,63.43,111,46.26,46.26,0,0,1,26.05,92.88"/><path class="cls-3" d="M26.05,92.88S37.38,69.1,63.43,69.1c24.92,0,37.38,23.78,37.38,23.78"/><circle class="cls-2" cx="64.57" cy="46.44" r="22.65"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="svg1229"
+   sodipodi:docname="user-profile.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview1231"
+     pagecolor="#b7a9ae"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="6.359375"
+     inkscape:cx="55.272727"
+     inkscape:cy="64.078624"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1229" />
+  <defs
+     id="defs1215">
+    <style
+       id="style1213">.cls-1{fill:#fff;}.cls-2,.cls-3{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:6px;}.cls-2{stroke-linecap:round;}</style>
+  </defs>
+  <title
+     id="title1217">user_1</title>
+  <g
+     id="Vrstva_2"
+     data-name="Vrstva 2">
+    <g
+       id="user">
+      <path
+         class="cls-1"
+         d="M64,6A58,58,0,1,1,6,64,58.07,58.07,0,0,1,64,6m0-6a64,64,0,1,0,64,64A64,64,0,0,0,64,0Z"
+         id="path1219" />
+      <path
+         id="path1223"
+         class="cls-3"
+         d="m 26.05,92.88 c 0,0 11.33,-23.78 37.38,-23.78 24.92,0 37.38,23.78 37.38,23.78 m 0,0 A 47.52,47.52 0 0 1 63.43,111 46.26,46.26 0 0 1 26.05,92.88"
+         style="stroke-linecap:round" />
+      <circle
+         class="cls-2"
+         cx="64.57"
+         cy="46.44"
+         r="22.65"
+         id="circle1225" />
+    </g>
+  </g>
+  <metadata
+     id="metadata4196">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>user_1</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

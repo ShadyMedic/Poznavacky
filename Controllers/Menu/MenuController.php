@@ -7,6 +7,7 @@ use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\NumberAsWordCaptcha;
+use Poznavacky\Models\Statics\Settings;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\ChangelogManager;
 use Poznavacky\Models\Logger;
@@ -87,6 +88,10 @@ class MenuController extends SynchronousController
                             'classId' => $_SESSION['selection']['class']->getId()
                         ));
                     self::$data['table'] = $parts;
+                    self::$data['displayAddPicturesButton'] = (
+                        !$_SESSION['selection']['class']->isReadOnly() ||
+                        $_SESSION['selection']['class']->isMember(UserManager::getId())
+                    );
                 }
             }
             
@@ -109,11 +114,11 @@ class MenuController extends SynchronousController
         
         $changelogManager = new ChangelogManager();
         if (!$changelogManager->checkLatestChangelogRead()) {
-            UserManager::getUser()->updateLastSeenChangelog(ChangelogManager::LATEST_VERSION);
+            UserManager::getUser()->updateLastSeenChangelog(Settings::VERSION);
             self::$data['staticTitle'] = array($changelogManager->getTitle());
             self::$data['staticContent'] = array($changelogManager->getContent());
             (new Logger())->info('Uživateli s ID {userId} byl zobrazen nejnovější changelog pro verzi {version}',
-                array('userId' => UserManager::getId(), 'version' => ChangelogManager::LATEST_VERSION));
+                array('userId' => UserManager::getId(), 'version' => Settings::VERSION));
         }
         
         //Data pro formulář pro založení nové třídy

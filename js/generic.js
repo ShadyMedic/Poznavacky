@@ -7,7 +7,8 @@ $(function()
     $("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
 
     //event listenery zmáčknutí klávesy
-    $(".form").keyup(function(event) {enterSubmit(event)})
+    $("body").on("keyup", ".form", function(event) {enterSubmit(event)})
+    $("body").on("keyup", ".form", function(event) {escapeSubmit(event)})
 
     //event listener custom select boxů
     $(".custom-select-wrapper").each(function()
@@ -67,6 +68,25 @@ function enterSubmit(event)
     //byl stisknut Enter
     let $form = $(':focus').closest(".form");
     $form.find(".submit-button").click();
+}
+
+/**
+ * Funkce, která zruší formulář stiskem klávesy Escape
+ * Formulář je libovolný prvek s třídou "form", tlačítko na jeho odeslání musí mít třídu "cancel-button"
+ * @param {event} event 
+ * @returns 
+ */
+function escapeSubmit(event)
+{
+    //byla stisknuta jiná klávesa
+    if (event.code != "Escape")
+    {
+        return;
+    }
+    
+    //byl stisknut Escape
+    let $form = $(':focus').closest(".form");
+    $form.find(".cancel-button").click();
 }
 
 /**
@@ -184,6 +204,9 @@ function newConfirm(message, confirmButtonText, cancelButtonText, callback)
     $confirm.find(".message").text(message);
     $confirm.find(".confirm-popup-button").text(confirmButtonText);
     $confirm.find(".cancel-popup-button").text(cancelButtonText);
+
+    //aby fungovalo potvrzení enterem
+    $confirm.focus();
 
     $confirm.on("click", ".confirm-popup-button", function()
     {

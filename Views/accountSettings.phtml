@@ -1,17 +1,17 @@
 <div id="account-settings-wrapper">
-    <section class="user-image-section"> 
-        <img src="images/user-profile.svg" alt="Ikona uživatele">
+    <section class="user image-section"> 
+        <img src="images/user-colour.svg" alt="Ikona uživatele">
         <div>Přihlášen*a: <span><?= $userName ?></span></div>
     </section>
-    <section class="user-data-section">    
-        <div class="user-data-item">
-            <span class='user-property-name'>ID</span>
-            <span class='user-property-value'><?= $userId ?></span>
+    <section class="user data-section">    
+        <div class="user-property data-item">
+            <span class='user-property name'>ID</span>
+            <span class='user-property value'><?= $userId ?></span>
         </div>    
-        <div class="user-data-item">
-            <span class='user-property-name'>Uživatelské jméno</span>
-            <span class='user-property-value' id="username"><?= $userName ?></span>
-            <div class='user-property-action'>
+        <div class="user-property data-item">
+            <span class='user-property name'>Uživatelské jméno</span>
+            <span class='user-property value' id="username"><?= $userName ?></span>
+            <div class='user-property action'>
                 <button class="btn border-btn non-transparent black" id="change-name-button">Změnit</button>
             </div>
             <div id="change-name" class="form change-form" style="display: none;">
@@ -20,13 +20,13 @@
                 <label for="change-name-new">Nové uživatelské jméno</label>
                 <input class="text-field" id="change-name-new" type=text maxlength=15 />
                 <button class="btn border-btn non-transparent black submit-button" id="change-name-confirm-button">Potvrdit</button>
-                <button class="btn inline black" id="change-name-cancel-button">Zrušit</button>
+                <button class="btn inline black cancel-button" id="change-name-cancel-button">Zrušit</button>
             </div>
         </div>
-        <div class="user-data-item">
-            <span class='user-property-name'>Heslo</span>
-            <span class='user-property-value'>[Skryto]</span>
-            <div class='user-property-action'>
+        <div class="user-property data-item">
+            <span class='user-property name'>Heslo</span>
+            <span class='user-property value'>[Skryto]</span>
+            <div class='user-property action'>
                 <button class="btn border-btn non-transparent black" id="change-password-button">Změnit</button>
             </div>
             <div id="change-password" class="form change-form" style="display: none;">
@@ -38,15 +38,15 @@
                 <label for="change-password-re-new">Nové heslo znovu</label>
                 <input class="text-field" id="change-password-re-new" type=password maxlength=31 />
                 <button class="btn border-btn non-transparent black submit-button" id="change-password-confirm-button">Potvrdit</button>
-                <button class="btn inline black" id="change-password-cancel-button">Zrušit</button>
+                <button class="btn inline black cancel-button" id="change-password-cancel-button">Zrušit</button>
             </div>
         </div>
-        <div class="user-data-item">
-            <span class='user-property-name'>E-mail</span>
-            <span class='user-property-value' id="email-address"><?= $userEmail ?></span>
-            <div class='user-property-action'>
+        <div class="user-property data-item">
+            <span class='user-property name'>E-mail</span>
+            <span class='user-property value' id="email-address"><?= $userEmail ?></span>
+            <div class='user-property action'>
                 <button class="btn border-btn non-transparent black" id="change-email-button">Změnit</button>
-                <button class="btn border-btn non-transparent black img" id="remove-email-button" title="Odebrat"><img src="images/trash-white.svg" alt="Odstranit"></button>
+                <button class="btn border-btn non-transparent black img" id="remove-email-button" title="Odebrat" <?php if (empty($userEmail)) : ?> style="display: none" <?php endif ?>><img src="images/trash-white.svg" alt="Odstranit"></button>
             </div>
             <div id="change-email" class="form change-form" style="display: none;">
                 <h3>Změna emailu</h3>
@@ -55,24 +55,24 @@
                 <label for="change-email-new">Nový email</label>
                 <input class="text-field" id="change-email-new" type=text maxlength=255 />
                 <button class="btn border-btn non-transparent black submit-button" id="change-email-confirm-button">Potvrdit</button>
-                <button class="btn inline black" id="change-email-cancel-button">Zrušit</button>
+                <button class="btn inline black cancel-button" id="change-email-cancel-button">Zrušit</button>
             </div>
         </div>
-        <div class="user-data-item">
-            <span class='user-property-name' title="Pro zvýšení přidávejte obrázky">Přidané obrázky</span>
-            <span class='user-property-value'><?= $addedPictures ?></span>
+        <div class="user-property data-item">
+            <span class='user-property name' title="Pro zvýšení přidávejte obrázky">Přidané obrázky</span>
+            <span class='user-property value'><?= $addedPictures ?></span>
         </div>
-        <div class="user-data-item">
-            <span class='user-property-name' title="Pro zvýšení se nechejte testovat">Uhodnuté obrázky</span>
-            <span class='user-property-value'><?= $guessedPictures ?></span>
+        <div class="user-property data-item">
+            <span class='user-property name' title="Pro zvýšení se nechejte testovat">Uhodnuté obrázky</span>
+            <span class='user-property value'><?= $guessedPictures ?></span>
         </div>
-        <div class="user-data-item">
-            <span class='user-property-name' title="Karmu získáte za činnost vedoucí ke zlepšení služby">Karma</span>
-            <span class='user-property-value'><?= $karma ?></span>
+        <div class="user-property data-item">
+            <span class='user-property name' title="Karmu získáte za činnost vedoucí ke zlepšení služby">Karma</span>
+            <span class='user-property value'><?= $karma ?></span>
         </div>
-        <div class="user-data-item">
-            <span class='user-property-name'>Status</span>
-            <span class='user-property-value'><?= $status ?></span>
+        <div class="user-property data-item">
+            <span class='user-property name'>Status</span>
+            <span class='user-property value'><?= $status ?></span>
         </div>
     </section>
     <section class="delete-account-section">
@@ -84,7 +84,7 @@
                 <input class="text-field" id="delete-account-password" type=password maxlength=31 />
                 <button class="btn border-btn non-transparent black submit-button" id="delete-account-confirm-button">OK</button>
                 <div id="delete-account-message" class="message server"></div>
-                <button class="btn inline black" id="delete-account-cancel-button">Zrušit</button>
+                <button class="btn inline black cancel-button" id="delete-account-cancel-button">Zrušit</button>
             </div>
             <div id="delete-account2" style="display: none;">
                 <span>Tato akce je nevratná. Opravdu si přeješ trvale odstranit svůj účet?</span>

@@ -5,6 +5,7 @@
         <li>Nahrané obrázky jsou pevně svázány s jednotlivými přírodninami. Odstraněním přírodniny dojde i k odstranění všech obrázků, které k ní byly přidány.</li>
         <li>Odstraněním přírodniny, která je přiřazená do alespoň jedné poznávačky, ji odebereš i ze všech poznávaček a jejich částí.</li>
         <li>Přejmenováním přírodniny dojde k aktualizaci názvu ve všech poznávačkách, ve kterých se přírodnina vyskytuje.</li>
+        <li>U každé přírodniny můžeš spravovat obrázky, které k ní náleží.</li>
         <li>Nové přírodniny jsou přidávány automaticky při tvorbě nebo úpravě poznávaček. Přírodniny jsou automaticky seřazeny podle data přidání.</li>
         <li>Parametr, podle něhož jsou přírodniny řazeny, můžeš změnit. Také můžeš filtrovat přírodniny podle názvu (konkrétně písmen, kterými název přírodniny začíná).</li>
     </ul>
@@ -20,9 +21,9 @@
         </button>
     </section>
     <section id="naturals-data-section">
-        <div class="naturals-data-properties">
+        <div class="natural data-properties">
             <div>
-                <span class="natural-name">Název přírodniny</span>
+                <span class="natural name">Název přírodniny</span>
                 <div class="sort-buttons">
                     <button class="btn icon sort-up-button" title="Seřadit vzestupně">
                         <img src="images/triangle-up-black.svg" alt="">
@@ -33,7 +34,7 @@
                 </div>
             </div>
             <div>
-                <span class="natural-uses-count">Počet výskytů</span>
+                <span class="natural uses-count">Počet výskytů</span>
                 <div class="sort-buttons">
                     <button class="btn icon sort-up-button" title="Seřadit vzestupně">
                         <img src="images/triangle-up-black.svg" alt="">
@@ -44,7 +45,7 @@
                 </div>
             </div>
             <div>
-                <span class="natural-pictures-count">Počet obrázků</span>
+                <span class="natural pictures-count">Počet obrázků</span>
                 <div class="sort-buttons">
                     <button class="btn icon sort-up-button" title="Seřadit vzestupně">
                         <img src="images/triangle-up-black.svg" alt="">
@@ -54,28 +55,47 @@
                     </button>
                 </div>
             </div>
-            <span class="natural-action">Akce</span>
+            <span class="natural action">Akce</span>
         </div>
         <?php foreach ($naturals as $natural) : ?>
-        <div class="natural-data-item" data-natural-id="<?= $natural->getId() ?>">
-            <div class="natural-name-wrapper">
-                <div class="natural-name-box">
-                    <span class="natural-name"><?= $natural->getName() ?></span>
+        <div class="natural data-item" data-natural-id="<?= $natural->getId() ?>">
+            <div class="natural name-wrapper">
+                <div class="natural name-box">
+                    <span class="natural name"><?= $natural->getName() ?></span>
                 </div>
-                <div class="natural-name-input-box" style="display:none;">
-                    <input type="text" maxlength="31" class="text-field natural-name-input" value="<?= $natural->getName() ?>"/>
+                <div class="natural name-input-box" style="display:none;">
+                    <input type="text" maxlength="31" class="text-field natural name-input" value="<?= $natural->getName() ?>"/>
                 </div>
             </div>
-            <span class="natural-uses-count"><?= $natural->getUsesCount() ?></span>
-            <span class="natural-pictures-count"><?= $natural->getPicturesCount() ?></span>
-            <div class="natural-action">
+            <span class="natural uses-count"><?= $natural->getUsesCount() ?></span>
+            <span class="natural pictures-count"><?= $natural->getPicturesCount() ?></span>
+            <div class="natural action">
                 <div class="normal-buttons">
-                    <button title="Přejmenovat" class="rename-natural-button btn inline black">Přejmenovat</button>
-                    <button title="Odebrat" class="remove-natural-button btn inline black">Odebrat</button>
+                    <button class="display-pictures-button btn icon" title="Zobrazit obrázky"><img src="images/eye-black.svg"></button>
+                    <button class="rename-natural-button btn icon" title="Přejmenovat"><img src="images/pencil-black.svg"></button>
+                    <button class="remove-natural-button btn icon" title="Odebrat"><img src="images/cross-thin-black.svg"></button>
                 </div>
                 <div class="rename-buttons" style="display:none;">
-                    <button class="rename-confirm-button btn inline black">Potvrdit</button>
-                    <button class="rename-cancel-button btn inline black">Zrušit</button>
+                    <button class="rename-confirm-button btn icon" title="Potvrdit"><img src="images/tick.svg"></button>
+                    <button class="rename-cancel-button btn icon" title="Zrušit"><img src="images/cross-thick-black.svg" alt=""></button>
+                </div>
+            </div>
+            <div class="natural pictures">
+                <div class="list">
+                    <?php foreach ($natural->getPictures() as $picture) : ?>
+                    <div class="img-wrapper">
+                        <img src="images/loading.svg" data-src="<?= $picture->getSrc() ?>" data-id="<?= $picture->getId() ?>" alt="Náhled obrázku" class="natural picture"> <!-- src doplní JS (lazy loading) -->
+                        <div class="img-buttons">
+                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img src="images/eye-black.svg"></button>
+                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img src="images/trash-black.svg"></button> 
+                        </div>
+                    </div>
+                    <?php endforeach ?>
+                </div>
+                <div class="image" style="display: none">
+                    <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img src="images/cross-thin-white.svg"></button>
+                    <button class="btn icon delete-picture-button" title="Odstranit obrázek"><img src="images/trash-white.svg"></button>
+                    <img src="images/loading.svg" alt="Náhled obrázku" class="picture"> <!-- src doplní JS -->
                 </div>
             </div>
         </div>

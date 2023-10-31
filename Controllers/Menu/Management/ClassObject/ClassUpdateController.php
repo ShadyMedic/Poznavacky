@@ -52,7 +52,11 @@ class ClassUpdateController extends AjaxController
                         $newStatus = 'unknown';
                     }
                     $newCode = $_POST['newCode'];
-                    $class->updateAccessData($newStatus, $newCode);
+                    if (empty($newCode)) {
+                        $newCode = null;
+                    }
+                    $newReadonly = ($_POST['newReadonly'] === 'true') ? true : false;
+                    $class->updateAccessData($newStatus, $newCode, $newReadonly);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
                         'Přístupová data třídy byla úspěšně změněna');
                     echo $response->getResponseString();

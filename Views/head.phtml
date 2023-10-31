@@ -38,9 +38,9 @@
             </div>
             <footer>
                 <div class="content">
-                    <a id="help" class="btn inline white" target='_blank' rel="noopener" href="https://github.com/HonzaSTECH/Poznavacky/wiki">Nápověda</a>
-                    <a id="issues" class="btn inline white" onclick="showLogin()" rel="noopener" target='_blank' href="https://forms.gle/sreDqmdtNT4Z3jwr5">Nalezl*a jsi problém?</a>
-                    <a id="terms" class="btn inline white" target='_blank' rel="noopener" href='/legal'>Právní informace</a>
+                    <a id="help" class="btn inline" target='_blank' rel="noopener" href="https://github.com/ShadyMedic/Poznavacky/wiki">Nápověda</a>
+                    <a id="issues" class="btn inline" onclick="showLogin()" rel="noopener" target='_blank' href="https://forms.gle/sreDqmdtNT4Z3jwr5">Nalezl*a jsi problém?</a>
+                    <a id="terms" class="btn inline" target='_blank' rel="noopener" href='/legal'>Právní informace</a>
                     <span id="about">&copy Štěchy a Eksyska, <?= $currentYear ?></span>
                 </div>
             </footer>
@@ -55,13 +55,13 @@
             </div>
         </div>
         <div id="confirm-item-template" style="display: none">
-            <div class="confirm-item">
+            <div tabindex="-1" class="confirm-item form">
                 <div class="text">
                     <p class="message"></p>
                 </div>
                 <div class="buttons">
-                    <button class="btn border-btn non-transparent black confirm-popup-button"></button>
-                    <button class="btn border-btn transparent black cancel-popup-button"></button>
+                    <button class="btn border-btn non-transparent black confirm-popup-button submit-button"></button>
+                    <button class="btn border-btn transparent black cancel-popup-button cancel-button"></button>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ namespace Poznavacky\Controllers\Menu\Management\ClassObject;
 
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\DatabaseItems\Natural;
+use Poznavacky\Models\DatabaseItems\Picture;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Processors\NaturalEditor;
@@ -86,6 +87,20 @@ class UpdateNaturalsController extends AjaxController
                             'ip' => $_SERVER['REMOTE_ADDR']
                         ));
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodnina úspěšně odstraněna');
+                    echo $response->getResponseString();
+                    break;
+                case 'delete picture':
+                    $pictureId = $_POST['pictureId'];
+                    $picture = new Picture(false, $pictureId);
+                    $picture->delete();
+                    (new Logger())->info('Uživatel s ID {userId} odstranil ze třídy s ID {classId} obrázek s ID {pictureId} z IP adresy {ip}',
+                        array(
+                            'userId' => UserManager::getId(),
+                            'classId' => $_SESSION['selection']['class']->getId(),
+                            'pictureId' => $pictureId,
+                            'ip' => $_SERVER['REMOTE_ADDR']
+                        ));
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn');
                     echo $response->getResponseString();
                     break;
                 default:

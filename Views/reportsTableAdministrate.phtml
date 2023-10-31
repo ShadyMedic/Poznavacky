@@ -12,7 +12,7 @@
     <tr><td colspan=7>Žádná hlášení k vyřízení</td></tr>
     <?php endif ?>
     <?php foreach ($reports as $report) : ?>
-        <tr class='report-data-item'
+        <tr class='report data-item'
             data-picture-id="<?= $report->getPictureId() ?>"
             data-report-id="<?= $report->getId() ?>"
             data-report-url="<?= $report->getUrl() ?>">
@@ -26,7 +26,7 @@
             <td><?= $report->getReason() ?></td>
             <td><?= $report->getAdditionalInformation() ?>
             <td><?= $report->getReportersCount() ?></td>
-            <td class="report-action">
+            <td class="report action">
                 <div>
                     <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
                         <img src='images/eye-colour.svg'/>

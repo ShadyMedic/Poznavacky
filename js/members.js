@@ -5,6 +5,8 @@ ajaxUrl = ajaxUrl.replace('/manage/members', '/class-update'); //Nahraď neAJAX 
 
 $(function()
 {
+    $(".show-info-button").show();
+
     //event listenery tlačítek
     $(".kick-user-button").click(function(event) {kickMember(event)})
     $(".kick-user-confirm-button").click(function(event) {kickMemberConfirm(event)})
@@ -20,7 +22,7 @@ $(function()
  */
 function kickMember(event)
 {
-    let $member = $(event.target).closest(".member-data-item");
+    let $member = $(event.target).closest(".member.data-item");
 
     $member.find(".kick-user-button").hide();
     $member.find(".kick-user").show();
@@ -32,7 +34,7 @@ function kickMember(event)
  */
 function kickMemberCancel(event)
 {
-    let $member = $(event.target).closest(".member-data-item");
+    let $member = $(event.target).closest(".member.data-item");
 
     $member.find(".kick-user-button").show();
     $member.find(".kick-user").hide();
@@ -44,7 +46,7 @@ function kickMemberCancel(event)
  */
 function kickMemberConfirm(event)
 {
-    let $member = $(event.target).closest(".member-data-item");
+    let $member = $(event.target).closest(".member.data-item");
     let memberId = $member.attr("data-member-id");
 
     $.post(ajaxUrl,

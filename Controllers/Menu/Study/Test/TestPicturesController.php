@@ -5,6 +5,7 @@ use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\Settings;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\AjaxResponse;
 use Poznavacky\Models\Logger;
@@ -15,8 +16,7 @@ use Poznavacky\Models\Logger;
  */
 class TestPicturesController extends AjaxController
 {
-    private const PICTURES_SENT_PER_REQUEST = 20;
-    
+
     /**
      * Metoda odesílající daný počet náhodně zvolených obrázků ze zvolené části/přírodniny
      * Adresy jsou odeslány jako pole v JSON formátu
@@ -32,9 +32,9 @@ class TestPicturesController extends AjaxController
             $aChecker = new AccessChecker();
             if ($aChecker->checkPart()) {
                 $part = $_SESSION['selection']['part'];
-                $pictures = $part->getRandomPictures(self::PICTURES_SENT_PER_REQUEST);
+                $pictures = $part->getRandomPictures(Settings::TEST_PICTURES_SENT_PER_REQUEST);
             } else {
-                $pictures = $_SESSION['selection']['group']->getRandomPictures(self::PICTURES_SENT_PER_REQUEST);
+                $pictures = $_SESSION['selection']['group']->getRandomPictures(Settings::TEST_PICTURES_SENT_PER_REQUEST);
             }
         } catch (DatabaseException $e) {
             (new Logger())->alert('Uživatel s ID {userId} zažádal o náhodné obrázky pro zkoušecí stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',

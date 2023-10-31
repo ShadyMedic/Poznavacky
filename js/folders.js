@@ -8,7 +8,7 @@ $(function()
     $("#request-class-cancel-button").click(function(event) {hideNewClassForm(event)})
     $("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
     $(".display-buttons-button:not(.disabled)").click(function(){displayButtons(this)})
-    $(".class-item").click(function(event) {redirectToClass(event)})
+    $(".class.data-item").click(function(event) {redirectToClass(event)})
 
     //event listener kliknutí myši
     $(document).mouseup(function(event) {hideButtons(event)});
@@ -21,7 +21,7 @@ $(function()
  */
 function redirectToClass(event)
 {
-    let classLink = $(event.target).closest(".class-item").attr("data-class-url");
+    let classLink = $(event.target).closest(".class.data-item").attr("data-class-url");
     
     //kontrola, jestli uživatel neklikl na link pro opuštění/správu třídy
     if (!$(event.target).is("a"))
@@ -36,16 +36,17 @@ function redirectToClass(event)
  */
 function leaveClass(event)
 {
-    let className = $(event.target).closest('.class-item').find("h4").text();
-    let confirmMessage = "Opravdu chceš opustit třídu" + className + "?";
+    event.stopPropagation();
+
+    let className = $(event.target).closest('.class.data-item').find(".class.name").text().trim();
+    let confirmMessage = "Opravdu chceš opustit třídu " + className + "?";
+
     newConfirm(confirmMessage, "Opustit", "Zrušit", function(confirm)
     {
         if (confirm) 
         {
-            let url = $(event.target).attr("data-leave-url");
-            let $leftClass = $(event.target).closest('.class-item');
-
-            event.stopPropagation();
+            let url = $(event.target).closest(".leave-link").attr("data-leave-url");
+            let $leftClass = $(event.target).closest('.class.data-item');
 
             $.post(url, {},
                 function (response, status)
@@ -110,7 +111,7 @@ function submitClassCode(event)
                         for (let i = 0; i < classes.length; i++)
                         {
                             let classData = classes[i];
-                            let classDomItem = $('#class-item-template').html();
+                            let classDomItem = $('#class-template').html();
                             classDomItem = classDomItem.replace(/{name}/g, classData.name);
                             classDomItem = classDomItem.replace(/{url}/g, classData.url);
                             classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
@@ -208,8 +209,7 @@ function displayButtons($button)
 {
     if (!$($button).hasClass("show"))
     {
-        $($button).find(".part-naturals-count, .part-pictures-count").hide();
-        $($button).find(".buttons, .part-info").addClass("show");
+        $($button).find(".buttons-wrapper, .info").slideDown();
         $($button).find("li").addClass("show");
     }
 }
@@ -227,8 +227,7 @@ function hideButtons(event)
         {
             if ($(this).find("li").hasClass("show"))
             {
-                $(this).find(".part-naturals-count, .part-pictures-count").show();
-                $(this).find(".buttons, .part-info").removeClass("show");
+                $(this).find(".buttons-wrapper, .info").slideUp();
                 $(this).find("li").removeClass("show");
             }
         }

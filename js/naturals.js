@@ -12,9 +12,9 @@ $(function()
 {
     $(".show-info-button").show();
 
-    $(".natural-data-item").each(function() {
+    $(".natural.data-item").each(function() {
         $naturals.push($(this));
-        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find(".natural-name").text(), $(this).find(".natural-uses-count").text(), $(this).find(".natural-pictures-count").text()));
+        naturalParameters.push(new Array($(this).attr("data-natural-id"), $(this).find("span.natural.name").text(), $(this).find(".natural.uses-count").text(), $(this).find(".natural.pictures-count").text()));
     })
 
     //event listenery tlačítek
@@ -25,9 +25,13 @@ $(function()
     $("#remove-filters-button").click(function() {removeFilters()})
     $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
     $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
+    $(".display-pictures-button").click(function(event) {displayPictures(event)})
+    $(".preview-picture-button").click(function(event) {previewPicture(event)})
+    $(".hide-picture-button").click(function(event) {hidePicture(event)})
+    $(".delete-picture-button").click(function(event) {deletePicture(event)})
 
     //event listener zmáčknutí klávesy
-    $(".natural-name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
+    $(".natural.name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
 
     $("#filter-name").on("input", function() {filterByName($("#filter-name").val())})
 })
@@ -59,16 +63,17 @@ function sortNaturals(event, direction)
     let classType = $(event.target).closest(".sort-buttons").siblings().first().attr("class");
     let sortBy;
 
-    switch (classType) {
-        case "natural-name":
-            sortBy = 1;
-            break;
-        case "natural-uses-count":
-            sortBy = 2;
-            break;
-        case "natural-pictures-count":
-            sortBy = 3;
-            break;
+    if (classType.includes("name"))
+    {
+        sortBy = 1;
+    }
+    else if (classType.includes("uses-count"))
+    {
+        sortBy = 2;
+    }
+    else if (classType.includes("pictures-count"))
+    {
+        sortBy = 3;
     }
 
 
@@ -116,7 +121,7 @@ function sortNaturals(event, direction)
 
     naturalParameters.forEach(function(element) {
         let id = element[0];
-        $natural = $(".natural-data-item[data-natural-id='" + id + "']");
+        $natural = $(".natural.data-item[data-natural-id='" + id + "']");
         $("#naturals-data-section").append($natural.get(0).outerHTML);
         $natural.first().remove();   
     })
@@ -128,15 +133,15 @@ function sortNaturals(event, direction)
  */
 function removeFilters()
 {
-    //zrušení filtrování podle jména
-    $("#filter-name").val("");
-    filterByName("");
-
-    $(".natural-data-item").remove();
+    $(".natural.data-item").remove();
 
     $naturals.forEach(function($element) {
         $("#naturals-data-section").append($element.get(0).outerHTML);
     })
+
+    //zrušení filtrování podle jména
+    $("#filter-name").val("");
+    $(".natural.data-item").show();
 
     inactivateSortButton();
 }
@@ -148,9 +153,9 @@ function removeFilters()
  */
 function filterByName(name)
 {
-    $(".natural-data-item").each(function() {
-        let naturalName = $(this).find(".natural-name").text().toLowerCase();
-        if (naturalName.startsWith(name.toLowerCase()))
+    $(".natural.data-item").each(function() {
+        let naturalName = $(this).find(".natural.name").text().trim().toLowerCase();
+        if (naturalName.startsWith(name.trim().toLowerCase()))
         {
             $(this).show();
         }
@@ -168,13 +173,13 @@ function filterByName(name)
  */
 function rename(event)
 {
-    let $natural = $(event.target).closest('.natural-data-item');
+    let $natural = $(event.target).closest('.natural.data-item');
 
     $natural.find('.normal-buttons').hide();
-    $natural.find('.natural-name-box').hide();
+    $natural.find('.natural.name-box').hide();
     $natural.find('.rename-buttons').show();
-    $natural.find('.natural-name-input-box').show();
-    $natural.find('.natural-name-input').select();
+    $natural.find('.natural.name-input-box').show();
+    $natural.find('.natural.name-input').select();
 }
 
 /**
@@ -188,21 +193,21 @@ function renameConfirm(event)
     let maxChars = 31;
     let allowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-"; //- musí být z nějakého důvodu až na konci"
 
-    let $natural = $(event.target).closest('.natural-data-item');
+    let $natural = $(event.target).closest('.natural.data-item');
     let newName;
     let oldName;
 
     //potvrzení tlačítkem
     if ($(event.target).prop("tagName") !== "INPUT")
     {
-        newName = $natural.find(".natural-name-input").val();
-        oldName = $natural.find(".natural-name").text();
+        newName = $natural.find(".natural.name-input").val();
+        oldName = $natural.find(".natural.name").text();
     }
     //potvrzení Enterem
     else
     {
         newName = $(event.target).val();
-        oldName = $natural.find(".natural-name").text();
+        oldName = $natural.find(".natural.name").text();
     }
 
     //nový a starý název přírodniny se liší (odlišná velikost písma nevadí)
@@ -226,7 +231,7 @@ function renameConfirm(event)
         //kontrola unikátnosti
 
         //Získání seznamu přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
-        let presentNaturals = $(".natural-data-item .natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
+        let presentNaturals = $(".natural.data-item .natural.name").map(function() {return $(this).text().toUpperCase(); }).get();
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
@@ -234,7 +239,7 @@ function renameConfirm(event)
             newConfirm(confirmMessage, "Sloučit", "Zrušit", function(confirm) {
                 if (confirm) {
                     let fromNaturalId = $natural.attr("data-natural-id");
-                    let toNaturalId = $(".natural-data-item:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
+                    let toNaturalId = $(".natural.data-item:eq(" + presentNaturals.indexOf(newName.toUpperCase()) + ")").attr("data-natural-id");
                     mergeNaturals(fromNaturalId, toNaturalId);
                 }
                 else return;
@@ -263,9 +268,9 @@ function renameConfirm(event)
                     else if (messageType === "success")
                     {
                         //nastavení nového názvu přírodniny a reset DOM
-                        $natural.find(".natural-name").text($natural.find(".natural-name-input").val())
+                        $natural.find(".natural.name").text(newName);
 
-                        renameCancel($(event.target))
+                        renameCancel($natural.find(".rename-cancel-button"));
                     }
                 }
             );
@@ -280,14 +285,14 @@ function renameConfirm(event)
  */
 function renameCancel($clickedButton)
 {
-    let $natural = $clickedButton.closest(".natural-data-item");
+    let $natural = $clickedButton.closest(".natural.data-item");
 
     $natural.find('.rename-buttons').hide();
-    $natural.find('.natural-name-input-box').hide();
+    $natural.find('.natural.name-input-box').hide();
     $natural.find('.normal-buttons').show();
-    $natural.find('.natural-name-box').show();
+    $natural.find('.natural.name-box').show();
 
-    $natural.find('.natural-name-input').val($natural.find('.natural-name').text());
+    $natural.find('.natural.name-input').val($natural.find('.natural.name').text());
 }
 
 /**
@@ -319,8 +324,8 @@ function mergeNaturals(fromNaturalId, toNaturalId)
                     {
                         //odebrání sloučené přírodniny z DOM a přičtení jejích statistik k přírodnině, do které byla sloučena
                         $deletedNatural.remove();
-                        $mergedNatural.find('.natural-uses-count').text(Number($mergedNatural.find('.natural-uses-count').text()) + data.newUsesCount);
-                        $mergedNatural.find('.natural-pictures-count').text(Number($mergedNatural.find('.natural-pictures-count').text()) + data.newPicturesCount);
+                        $mergedNatural.find('.natural.uses-count').text(Number($mergedNatural.find('.natural.uses-count').text()) + data.newUsesCount);
+                        $mergedNatural.find('.natural.pictures-count').text(Number($mergedNatural.find('.natural.pictures-count').text()) + data.newPicturesCount);
                     }
                 }
             );
@@ -335,8 +340,8 @@ function mergeNaturals(fromNaturalId, toNaturalId)
  */
 function remove(event)
 {
-    let $natural = $(event.target).closest('.natural-data-item');
-    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural-name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
+    let $natural = $(event.target).closest('.natural.data-item');
+    let confirmMessage = 'Skutečně chceš odstranit přírodninu "'+ $natural.find('.natural.name').text()+'" a všechny obrázky k ní přidané? Tato akce je nevratná!';
     newConfirm(confirmMessage, "Odebrat", "Zrušit", function(confirm) {
         if (confirm) removeFinal($natural)
         else return;
@@ -371,6 +376,97 @@ function removeFinal($natural)
             );
         },
         "json"
+    );
+}
+
+/**
+ * Funkce zobrazující obrázky dané přírodniny"
+ * @param {event} event
+ */
+function displayPictures(event)
+{
+    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    if (!$naturalPictures.hasClass("show"))
+    {
+        $naturalPictures.slideDown(function() {$(this).css('display', '');});
+        $naturalPictures.addClass("show");
+    }
+    
+    $naturalPictures.find(".picture").on("error", function()
+    {
+        $(this).attr("src", '/images/file-error.svg');
+        $(this).siblings(".img-buttons").find(".preview-picture-button").hide();
+    })
+
+    $(".data-item").each(function()
+    {
+        if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
+        {
+            $(this).find(".pictures").slideUp(function() {$(this).removeClass("show");});
+        }
+    })
+
+    //Načti obrázky
+    $naturalPictures.find('.picture').each(function()
+    {
+        $(this).attr('src', $(this).attr('data-src'));
+    })
+}
+
+/**
+ * Funkce zobrazující náhled konkrétního obrázku
+ * @param {event} event 
+ */
+function previewPicture(event)
+{
+    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    url = $(event.target).closest(".img-wrapper").find("img.picture").attr("src");
+    id = $(event.target).closest(".img-wrapper").find("img.picture").attr("data-id");
+
+    $naturalPictures.find(".list").hide();
+
+    $naturalPictures.find(".image > img").attr("src", url);
+    $naturalPictures.find(".image > img").attr("data-id", id);
+    $naturalPictures.find(".image").show();
+}
+
+/**
+ * Funkce skrývající náhled konkrétního obrázku
+ * @param {event} event 
+ */
+function hidePicture(event)
+{
+    $(event.target).closest(".data-item").find(".image").hide();
+    $(event.target).closest(".data-item").find(".list").show();
+}
+
+/**
+ * Funkce odstraňující obrázek
+ * @param {event} event 
+ */
+function deletePicture(event)
+{
+    id = $(event.target).closest(".image, .img-wrapper").find(".picture").attr("data-id");
+    $picture = $(event.target).closest(".pictures").find(".list .picture[data-id=" + id +"]");
+    $picturesCount = $(event.target).closest(".data-item").find(".pictures-count")[0];
+    $.post(ajaxUrl,
+        {
+            action:"delete picture",
+            pictureId:$picture.attr('data-id')
+        },
+        function(response)
+        {
+            if (response["messageType"] === "success")
+            {
+                $picture.closest('.img-wrapper').remove();
+                $picturesCount.innerText = $picturesCount.innerText - 1
+                hidePicture(event);
+            }
+            if (response["messageType"] === "error")
+            {
+                alert(response["message"]);
+            }
+        }
     );
 }
 

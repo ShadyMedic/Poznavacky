@@ -1,4 +1,5 @@
 <?php
+
 namespace Poznavacky\Models\Statics;
 
 use Poznavacky\Models\Exceptions\DatabaseException;
@@ -12,11 +13,7 @@ use \PDOException;
  */
 class Db
 {
-    private const DEFAULT_HOST = 'localhost';
-    private const DEFAULT_USERNAME = 'root';
-    private const DEFAULT_PASSWORD = '';
-    private const DEFAULT_DATABASE = 'poznavacky';
-    
+
     private static PDO $connection;
     private static array $settings = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -33,10 +30,13 @@ class Db
      * @param string $database Jméno databáze
      * @return PDO|null Připojení k databázi nebo NULL, pokud se nepodařilo navázat připojení
      */
-    public static function connect(string $host = self::DEFAULT_HOST, string $username = self::DEFAULT_USERNAME,
-                                   string $password = self::DEFAULT_PASSWORD,
-                                   string $database = self::DEFAULT_DATABASE): ?PDO
+    public static function connect(string $host = null, string $username = null, string $password = null, string $database = null): ?PDO
     {
+        $host = $host ?: Settings::DB_HOST;
+        $username = $username ?: Settings::DB_USERNAME;
+        $password = $password ?: Settings::DB_PASSWORD;
+        $database = $database ?: Settings::DB_NAME;
+
         try {
             self::$connection = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password,
                 self::$settings);

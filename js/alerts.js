@@ -26,7 +26,7 @@ function resolveAlerts(event)
 {
     if (!confirm('Opravdu odebrat toto chybové hlášení?')) { return; }
 
-    let $alert = $(event.target).closest(".alert-data-item");
+    let $alert = $(event.target).closest(".alert.data-item");
     let alertId = $alert.attr('data-alert-id');
 
     $.post('administrate-action',

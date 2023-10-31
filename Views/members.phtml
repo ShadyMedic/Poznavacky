@@ -1,10 +1,19 @@
+<section class="info-section" style="display: none">
+    <h3>Správa členů třídy</h3>
+    <p>Na této stránce můžeš spravovat členy své třídy.</p>
+    <ul class="list">
+        <li>Pokud je tvá třída nastavena jako soukromá nebo uzavřená, mohou třídu používat pouze její členové.</li>
+        <li>Pokud je tvá třída nastavena jako veřejná, je viditelná pro všechny. Můžeš ale nastavit, jestli přidávat obrázky můžou pouze její členové, nebo jakýkoliv uživatel.</li>
+        <li>Uživatel se může stát členem této třídy na základě přijetí pozvánky, kterou můžeš z této stránky odeslat. Pokud je třída nastavena jako soukromá, může se uživatel stát členem také zadáním vstupního kódu.</li>
+    </ul>
+</section>
 <div id='members-wrapper'>
     <section class="members-data-section">
         <?php foreach ($members as $member) : ?>
-        <div class="member-data-item" data-member-id="<?= $member["id"] ?>">
-            <span class='member-name'><?= $member['name'] ?></span>
-            <div class="member-action">
-                <?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn inline black kick-user-button'>Odebrat uživatele</button><?php endif ?>
+        <div class="member data-item" data-member-id="<?= $member["id"] ?>">
+            <span class='member name'><?= $member['name'] ?></span>
+            <div class="member action">
+                <?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn icon kick-user-button' title="Odebrat uživatele"><img src="images/cross-thin-black.svg"></button><?php endif ?>
             </div>
             <div class="kick-user" style="display: none">
                 <span>Opravdu chceš odebrat tohoto uživatele ze třídy?</span>
@@ -18,13 +27,13 @@
     </section>
     <section class="invite-user-section">
         <button id='invite-user-button' class="btn border-btn non-transparent black">Pozvat nového člena</button>
-        <div id='invite-user-form' style="display: none;">
+        <div id='invite-user-form' class="form" style="display: none;">
             <h3>Pozvat nového uživatele</h3>
-            <p>Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</p>
+            <p class="additional-form-info">Pozvaný uživatel bude mít týden na přijmutí pozvánky. Pozvání nelze odvolat.</p>
             <label for="invite-user-name">Jméno uživatele</label>
             <input id='invite-user-name' class="text-field" type='text' maxlength=15>
-            <button class='btn border-btn non-transparent black' id="invite-user-confirm-button">Pozvat</button>
-            <button class='btn inline black' id="invite-user-cancel-button">Zrušit</button>
+            <button class='btn border-btn non-transparent black submit-button' id="invite-user-confirm-button">Pozvat</button>
+            <button class='btn inline black' id="invite-user-cancel-button cancel-button">Zrušit</button>
         </div>
     </section>
 </div>

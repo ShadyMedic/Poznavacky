@@ -85,6 +85,9 @@ function cancelReport()
     $("#long-loading-info .custom-select-main span").text($("#long-loading-info .selected").text());
     $(".additional-report-info input").val("");
     $(".additional-report-info textarea").val("");
+
+    //report-box a jeho obsah ztratí focus
+    $('.report-box :focus').blur();
 }
 
 /**

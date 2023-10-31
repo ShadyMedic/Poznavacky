@@ -17,6 +17,9 @@
             max-width: 900px;
         }
     }
+    label {
+        font-size: 0.9rem;
+    }
 }
 
 #learn, 
@@ -50,6 +53,7 @@
         }
         .picture {
             width: 100%;
+            aspect-ratio: 1/1;
             margin: 8px 0;
             position: relative;
             overflow: hidden;
@@ -83,7 +87,10 @@
         bottom: 0;
         height: 16px;
         width: 16px;
-        margin: 6px;
+        margin: 0.6rem;
+        @media screen and (min-width: $tablet) {
+            margin: 1rem;
+        }
         > img {
             position: relative;
             width: 100%;
@@ -154,7 +161,7 @@
                     width: 100%;
                     resize: none;
                     height: 54px;
-                    @media screen and(min-width: $smallDesktop) {
+                    @media screen and (min-width: $smallDesktop) {
                         height: 120px;
                     }
                 }    
@@ -262,7 +269,7 @@
             grid-template-rows: auto auto auto auto;
         }
         @media screen and (min-width: $smallDesktop) {
-            column-gap: 6rem;
+            column-gap: 8rem;
         }
         #add-natural-select {
             @media screen and (min-width: $smallTablet) {

@@ -3,14 +3,14 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Změna názvu třídy proběhla úspěšně</title>
+    <title>Chybové hlášení</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
       ------------------------------------- */
       
       /*All the styling goes here*/
-
+      
       @import url(//fonts.googleapis.com/css?family=Ubuntu);
       
       img,
@@ -86,6 +86,14 @@
         padding: 20px; 
       }
 
+      .error {
+        background: #000;
+        border-radius: 2px;
+        padding: 6px;
+        font-family: consolas;
+        color: #fff;
+      }
+
       .content-block {
         padding-bottom: 10px;
         padding-top: 10px;
@@ -111,7 +119,7 @@
 
       /* -------------------------------------
           TYPOGRAPHY
-      ------------------------------------- */
+      ------------------------------------- */      
       h1,
       h2,
       h3,
@@ -349,6 +357,7 @@
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
+
         <td class="container">
           <div class="content">
             <h1>
@@ -358,24 +367,18 @@
             <!-- START CENTERED WHITE CONTAINER -->
             <table role="presentation" class="main">
 
+              
+
               <!-- START MAIN CONTENT AREA -->
               <tr>
                 <td class="wrapper">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <h2>Změna názvu třídy proběhla úspěšně</h2>
-                        <p>Na základě tvé žádosti na <a href='<?= $websiteAddress ?>'><?= $websiteAddress ?></a> bylo změněno jméno tebou spravované třídy <b><?= $oldName ?></b> na <b><?= $newName ?></b>.
-                          <br>
-                          Doporučujeme ti informovat členy tvé třídy o této změně, aby se předešlo jejich zmatení.
-                        </p>
-                        <p>
-                          Pokud si přeješ změnit jméno zpět na staré nebo nějaké úplně jiné, můžeš tak učinit odesláním další žádosti o změnu jména ve správě tvé třídy.
-                        </p>
-                        <br>
-                        <p>
-                          Neodesílal*a jsi žádnou žádost o změnu jména této třídy? Je možné, že ji odeslal předchozí správce této třídy. Pokud to tak není, někdo pravděpodobně získal přístup k tvému účtu. Doporučujeme ti si co nejdříve změnit své heslo. Pokud se nemůžeš přihlásit, kontaktuj nás prosím na e-mailové adrese <a href='mailto:poznavacky@email.com'>poznavacky@email.com</a>.
-                        </p>
+                        <h2><?= $title ?></h2>
+                        <div class="error" style="border-top: 12px solid #<?= $barColor ?>">
+                            <?= $content ?>
+                        </div>
                       </td>
                     </tr>
                   </table>

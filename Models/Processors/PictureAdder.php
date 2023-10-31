@@ -7,6 +7,7 @@ use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\Settings;
 use Poznavacky\Models\Statics\UserManager;
 
 /**
@@ -15,16 +16,6 @@ use Poznavacky\Models\Statics\UserManager;
  */
 class PictureAdder
 {
-    const ALLOWED_IMAGE_TYPES = array(
-        'image/png',
-        'image/jpg',
-        'image/jpeg',
-        'image/jpe',
-        'image/gif',
-        'image/tif',
-        'image/tiff',
-        'image/svg'
-    );
     
     private Group $group;
     
@@ -94,7 +85,7 @@ class PictureAdder
             if ($statusCode >= 400) {
                 $typeCheck = null;
             }
-            if (in_array($type, self::ALLOWED_IMAGE_TYPES)) {
+            if (in_array($type, Settings::ALLOWED_IMAGE_TYPES)) {
                 $typeCheck = true;
             }
         }
