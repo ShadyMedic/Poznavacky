@@ -281,7 +281,7 @@ function renameConfirm(event, type)
     {
         let presentNaturals;
         //získání seznamu přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077    
-        presentNaturals = $(event.target).closest(".naturals-in-part").find(".natural-name").map(function() {return $(this).text().toUpperCase(); }).get();
+        presentNaturals = $(event.target).closest(".naturals-in-part").find(".natural.name").map(function() {return $(this).text().toUpperCase(); }).get();
 
         if (presentNaturals.includes(newName.toUpperCase()))
         {
@@ -388,7 +388,7 @@ function addNatural(event)
     let naturalAllowedChars = "0123456789aábcčdďeěéfghiíjklmnňoópqrřsštťuůúvwxyýzžAÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUŮÚVWXYZŽ _.+/*%()\'\"-";
     
     //kontrola unikátnosti
-    let presentNaturals = $naturalInput.closest(".part.box").find(".natural-name").map(function() {return $(this).text().toUpperCase(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
+    let presentNaturals = $naturalInput.closest(".part.box").find(".natural.name").map(function() {return $(this).text().toUpperCase(); }).get(); //Získej seznam přidaných přírodnin - kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/3496338/14011077
     if (presentNaturals.includes(naturalName.toUpperCase()))
     {
         let message = "Tato přírodnina je již do této části přidána";
@@ -484,7 +484,7 @@ function editSave()
         let naturalsArray = $(partsArray[i]).find(".naturals-in-part").children().get();
         for (let j = 0; j < naturalsArray.length; j++)
         {
-            data.parts[i].addNatural($(naturalsArray[j]).find(".natural-name").text());
+            data.parts[i].addNatural($(naturalsArray[j]).find(".natural.name").text());
         }
     }
 
