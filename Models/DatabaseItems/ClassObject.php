@@ -647,8 +647,8 @@ class ClassObject extends Folder
                 array($this->id, $userId), false);
         }
 
-        $this->accessCheckResult = $result['cnt'] === 1;
-        return $result['cnt'] === 1;
+        $this->accessCheckResult = $result['cnt'] == 1;
+        return $result['cnt'] == 1;
     }
 
     /**
