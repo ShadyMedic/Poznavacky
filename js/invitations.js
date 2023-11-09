@@ -12,11 +12,11 @@ $(function()
  */
 function answerInvitation(event, answer)
 {
-    let $invitation = $(event.target).closest(".invitation");
+    let $invitation = $(event.target).closest(".invitation-wrapper");
 
-    let className = $invitation.find(".class-name").text();
+    let className = $invitation.find(".class.name").text();
     let classUrl = $invitation.attr('data-class-url');
-    let classGroupsCount = $invitation.find(".class-tests-count").text();
+    let classGroupsCount = $invitation.find(".class.tests-count").text();
     console.log(className);
     let ajaxUrl = "menu/" + classUrl + "/invitation/" + ((answer) ? "accept" : "reject");
 
@@ -35,16 +35,16 @@ function answerInvitation(event, answer)
                     {
                         if (answer)
                         {
-                            console.log(className);
                             //přidání nové třídy na konec seznamu
-                            let classDomItem = $('#class-template').html();
-                            classDomItem = classDomItem.replace(/{name}/g, className);
-                            classDomItem = classDomItem.replace(/{url}/g, classUrl);
-                            classDomItem = classDomItem.replace(/{groups}/g, classGroupsCount);
-                            $(classDomItem).insertAfter('ul > .btn:last');
+                            let $classTemplate = $('#class-template').html();
+                            $classTemplate = $classTemplate.replace(/{name}/g, className);
+                            $classTemplate = $classTemplate.replace(/{url}/g, classUrl);
+                            $classTemplate = $classTemplate.replace(/{groups}/g, classGroupsCount);
+                            $($classTemplate).insertAfter('ul > .btn:last');
 
-                            //nastavení event handleru pro opuštění nových tříd
+                            //nastavení event handlerů
                             $(".leave-link").click(function(event) {leaveClass(event)})
+                            $(".class.data-item").click(function(event) {redirectToClass(event)})
                         }
 
                         $invitation.remove();
