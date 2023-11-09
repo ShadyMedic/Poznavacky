@@ -1,7 +1,6 @@
 $(function()
 {
     //event listenery tlačítek
-    $("#change-folders-layout-button").click(function() {changeFoldersLayout()})
     $(".leave-link").click(function(event) {leaveClass(event)})
     $("#class-code-form").on("submit", function(event) {submitClassCode(event)})
     $("#request-class-button").click(function() {showNewClassForm()})
