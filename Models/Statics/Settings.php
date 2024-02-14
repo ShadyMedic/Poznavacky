@@ -19,7 +19,7 @@ class Settings
      * Aktuální verze aplikace
      * Při vydání nové verze je nutné nezapomenout přidat ID nového GitHub release do konstanty ChangelogManager::RELEASE_IDS
      */
-    public const VERSION = '4.2';
+    public const VERSION = '4.2.1';
 
     /**
      * Server hostující MySQL databázi pro aplikaci
