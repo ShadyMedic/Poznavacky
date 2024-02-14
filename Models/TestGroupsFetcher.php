@@ -67,7 +67,7 @@ class TestGroupsFetcher
             $tableRow[0] = $dataRow[ClassObject::COLUMN_DICTIONARY['name']];
             $tableRow[1] = $dataRow[ClassObject::COLUMN_DICTIONARY['groupsCount']];
             //Tlačítko pro správu třídy, pokud je přihlášený uživatel správcem třídy
-            if (UserManager::getId() === $dataRow[ClassObject::COLUMN_DICTIONARY['admin']]) {
+            if (UserManager::getId() == $dataRow[ClassObject::COLUMN_DICTIONARY['admin']]) {
                 $tableRow[2] = self::CLASS_MANAGE_BUTTON_KEYWORD;
             } //Tlačítko pro opuštění třídy, pokud není třída veřejná
             else {

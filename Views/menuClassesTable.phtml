@@ -30,8 +30,8 @@
         <?php endforeach ?>
 
         <?php foreach ($invitations as $invitation) : ?>
-        <li class="invitation" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
-            <span class="invitation-info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
+        <li class="invitation-wrapper" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
+            <span class="invitation info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
             <h4 class="class name"><?= $invitation->getClass()->getName(); ?></h4>
             <span class="class tests-count"><?= $invitation->getClass()->getGroupsCount() ?></span>
             <div class="invitation action">
@@ -80,9 +80,9 @@
 </div>
 
 <div id="class-template" class="data-item-template" style="display: none;">
-    <button class="btn class data-item" onclick="window.location.href='/menu/{url}'"><li> <!--TODO ať tu není onclick -->
+    <button class="btn class data-item" data-class-url="/menu/{url}"><li>
         <h4 class="class name">{name}</h4>
         <span class="class test-count">{groups}</span>
-        <a href="javascript:;" data-leave-url="/menu/{url}/leave" class="btn inline black col3 leave-link">Opustit třídu</a>
+        <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon class action leave-link"><img src="images/logout-filled-black.svg"></a>
     </li></button>
 </div>

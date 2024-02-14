@@ -292,10 +292,10 @@
                     grid-template-columns: 1fr 8rem 5.4rem;
                 }
             }
-            .invitation {
+            .invitation-wrapper {
                 grid-template-rows: auto auto;
                 margin: 0.4rem 0 0.6rem 0;
-                .invitation-info
+                .invitation.info
                 {
                     font-size: 0.8rem;
                     width: 100%;
