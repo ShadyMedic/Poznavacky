@@ -33,10 +33,16 @@ $(function()
     //event listener inputu
     $("#change-class-status-code").on("input", function() {statusChange()})
 
-    //event listener změny select boxu stavu třídy
-    $("#class-status-select span").on('DOMSubtreeModified',function() {statusChange()});
-
     $("#public-readonly").on('change',function() {statusChange()});
+
+    //observery
+    let options = { childList: true };
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function() {
+            statusChange();
+        });    
+    });
+    observer.observe($("#class-status-select span")[0], options);
 })
 
 /**
