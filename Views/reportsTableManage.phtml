@@ -24,7 +24,7 @@
                         <img class="arrow" src="images/arrow-black.svg" alt="Ikona šipky">
                     </div>
                     <ul class="custom-options">
-                        <?php foreach ($naturalsInGroup as $natural) :?>
+                        <?php foreach ($naturalsInClass as $natural) :?>
                             <li class="custom-option <?php if ($natural->getName() == $report->getNaturalName()) : ?>selected<?php endif ?>">
                             <?= $natural->getName() ?></li>
                         <?php endforeach; ?>
