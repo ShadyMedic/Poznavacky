@@ -38,12 +38,15 @@ function naturalSelected()
     var arr = $("#add-natural-select .custom-options .selected").text();
     for (var i = arr.length - 1; arr[i] != '('; i--) {}
     for (var j = 0; j < i - 1; j++) {selectedNatural += arr[j];}
+    
+    selectedNatural = selectedNatural.trim();
 
+    $("#commons-link").attr("href", "https://commons.wikimedia.org/w/index.php?search=" + selectedNatural + "&title=Special:MediaSearch");
     $("#duck-link").attr("href", "https://duckduckgo.com/?q=" + selectedNatural + "&iax=images&ia=images");
     $("#google-link").attr("href", "https://www.google.com/search?q=" + selectedNatural + "&tbm=isch");
     $("#natural-name-hidden").val(selectedNatural);
 
-    $(".add-pictures-url label, #url-input, #url-confirm-button, #duck-link, #google-link").removeClass("disabled");
+    $(".add-pictures-url label, #url-input, #url-confirm-button, #commons-link, #duck-link, #google-link").removeClass("disabled");
 }
 
 /**

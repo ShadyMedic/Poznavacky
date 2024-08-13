@@ -78,16 +78,21 @@ class PictureAdder
         $typeCheck = false;
         $type = null;
         
-        $url_headers = @get_headers($url, 1);
-        if (isset($url_headers['Content-Type'])) {
-            $statusCode = substr($url_headers[0], 9, 3);
-            $type = @strtolower($url_headers['Content-Type']);
-            if ($statusCode >= 400) {
-                $typeCheck = null;
-            }
-            if (in_array($type, Settings::ALLOWED_IMAGE_TYPES)) {
-                $typeCheck = true;
-            }
+        $url_headers = @get_headers($url, 1, stream_context_create(array('http' => array('header' => implode("\r\n", array("User-Agent: Poznávačky.com image type checker"))))));
+	
+	$statusCode = substr($url_headers[0], 9, 3);
+        if ($statusCode >= 400) {
+            $typeCheck = null;
+	}
+	
+	if (isset($url_headers['Content-Type'])) {
+	    $type = strtolower($url_headers['Content-Type']);
+	} else if (isset($url_headers['content-type'])) {
+	    $type = strtolower($url_headers['content-type']);
+	}
+	
+	if (in_array($type, Settings::ALLOWED_IMAGE_TYPES)) {
+            $typeCheck = true;
         }
         
         if (is_null($typeCheck)) {
