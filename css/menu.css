@@ -2899,15 +2899,16 @@ label.required:after {
   display: flex;
   flex-direction: column;
 }
-@media screen and (min-width: 440px) {
+@media screen and (min-width: 512px) {
   #manage .class-buttons-section {
     flex-direction: row;
+    justify-content: space-between;
   }
 }
 #manage .class-buttons-section .border-btn:not(:last-child) {
   margin-bottom: 0.4rem;
 }
-@media screen and (min-width: 440px) {
+@media screen and (min-width: 512px) {
   #manage .class-buttons-section .border-btn:not(:last-child) {
     margin-bottom: 0;
     margin-right: 0.4rem;

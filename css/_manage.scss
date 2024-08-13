@@ -174,12 +174,13 @@
         padding: 0.6rem;
         display: flex;
         flex-direction: column;
-        @media screen and (min-width: 440px) {
+        @media screen and (min-width: 512px) {
             flex-direction: row;
+            justify-content: space-between;
         }
         .border-btn:not(:last-child) {
             margin-bottom: 0.4rem;
-            @media screen and (min-width: 440px) {
+            @media screen and (min-width: 512px) {
                 margin-bottom: 0;
                 margin-right: 0.4rem;
             }
