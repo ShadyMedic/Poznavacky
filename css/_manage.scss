@@ -306,7 +306,7 @@
         width: 100%;
         min-width: fit-content;
         display: grid;
-        grid-template-columns: minmax(6rem, 2.5fr) minmax(6rem, 2.5fr) minmax(8rem, 2fr) minmax(8rem, 3fr) 8.2rem 9rem;
+        grid-template-columns: minmax(6rem, 2.5fr) minmax(6rem, 2.5fr) minmax(8rem, 2fr) minmax(8rem, 3fr) minmax(4.4rem, 8.2rem) minmax(2rem, 9rem);
         column-gap: 0.6rem;
         justify-items: stretch;
         align-items: center;
@@ -365,7 +365,11 @@
         .edit-buttons {
             width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            align-items: center;
+            @media screen and (min-width: $smallDesktop) {
+                flex-direction: row;
+            }
             justify-content: space-evenly;
         }
         .image {
