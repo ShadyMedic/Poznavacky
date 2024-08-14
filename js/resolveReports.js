@@ -28,6 +28,7 @@ $(function()
   
 })
 
+
 /**
  * Funkce zobrazující náhled nahlášeného obrázku
  * @param {event} event 
@@ -36,24 +37,47 @@ function showPicture(event)
 {
     let $report = $(event.target).closest(".report.data-item");
     let url = $report.attr("data-report-url");
-    
-    //class owner
-    if ($('body').attr("id") == "resolve-reports")
+
+    let imgError = false
+
+    let tester = new Image();
+
+    tester.addEventListener('error', function()
     {
-        //skrytí ostatních zobrazených obrázků
-        $(".report.image").not($report.find(".report.image")).hide();
+        //class owner
+        if ($('body').attr("id") == "resolve-reports")
+        {
+            newMessage("Obrázek nelze načíst.", "error");
+        }
 
-        //doplnění url a zobrazení obrázku
-        $report.find(".report.image > img").attr("src", url);
-        $report.find(".report.image").show();
-    }
+        //admin
+        else {
+            alert("Obrázek nelze načíst.");
+        }
+    });
+    
+    tester.addEventListener('load', function()
+    {
+        //class owner
+        if ($('body').attr("id") == "resolve-reports")
+        {
+            //skrytí ostatních zobrazených obrázků
+            $(".report.image").not($report.find(".report.image")).hide();
 
-    //admin
-    else {
-        $("#report-image > img").attr("src", url);
-        $("#report-image").show();
-        $("#overlay").show();
-    }
+            //doplnění url a zobrazení obrázku
+            $report.find(".report.image > img").attr("src", url);
+            $report.find(".report.image").show();
+        }
+
+        //admin
+        else {
+            $("#report-image > img").attr("src", url);
+            $("#report-image").show();
+            $("#overlay").show();
+        }
+    });
+
+    tester.src = url;
 }
 
 /**
