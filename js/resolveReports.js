@@ -26,6 +26,8 @@ $(function()
     $(".delete-picture-button").click(function(event) {deletePicture(event)})
     $(".delete-report-button").click(function(event) {deleteReport(event)})
   
+    //event listenery zmáčknutí klávesy
+    $("body#admin-reports").on("keyup", function(event) {hidePicture(event)})
 })
 
 
