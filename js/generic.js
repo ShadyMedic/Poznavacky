@@ -136,10 +136,13 @@ function manageSelectBox($selectBox)
     //netýká se #report-reason - select box na volbu důvodu nahlášení (pohled reportForm) - způsobovalo to divné poskočení
     if ($selectBox.find(".custom-options .selected").length != 0 && $selectBox[0] != $("#report-reason")[0])
     {
+        
         $selectBox.find(".custom-options .selected")[0].scrollIntoView({ 
-            block: 'start',
+            block: 'nearest',
+            inline: 'nearest',
             inline: 'start' 
         });
+        
     }
 
     //změna zvolené položky
