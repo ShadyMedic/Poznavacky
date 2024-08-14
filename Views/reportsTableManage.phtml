@@ -1,9 +1,9 @@
 <div id="resolve-reports-wrapper">
     <div class="report data-properties" <?php if (count($reports) === 0) : ?>style="display: none"<?php endif ?>>
         <span class="report name">Přírodnina</span>
+        <span class="report group">Poznávačka</span>
         <span class="report url">Zdroj</span>
         <span class="report reason">Důvod</span>
-        <span class="report additional-info">Další informace</span>
         <span class="report number">Počet nahlášení</span>
         <span class="report action">Akce</span>
     </div>
@@ -16,7 +16,7 @@
             data-report-id="<?= $report->getId() ?>"
             data-report-url="<?= $report->getUrl() ?>">
         <span class="report name"><?= $report->getNaturalName() ?></span>
-         <div class="report name-edit" style="display: none">
+        <div class="report name-edit" style="display: none">
             <div class="custom-select-wrapper report-natural-select">
                 <div class="custom-select">
                     <div class="custom-select-main">
@@ -32,12 +32,12 @@
                 </div>
             </div>
         </div>
+        <span class="report group">TODO</span> <!-- TODO - z jaké poznávačky -->
         <div class="report url"><?= $report->getUrl() ?></div>
                 <div class="report url-edit" style="display: none">
                     <textarea type=url size="1" class="text-field"><?= $report->getUrl() ?></textarea>
                 </div>
-        <span class="report reason"><?= $report->getReason() ?></span>
-        <span class="report additional-info"><?= $report->getAdditionalInformation() ?></span>
+        <span class="report reason"><?= $report->getReason() ?><?php if ($report->getAdditionalInformation() != '') : ?>: <?= $report->getAdditionalInformation() ?><?php endif ?></span>
         <span class="report number"><?= $report->getReportersCount() ?></span>
         <div class="report action">
               <button class='btn icon show-picture-button' title='Zobrazit obrázek'>

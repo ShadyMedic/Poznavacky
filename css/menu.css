@@ -3046,7 +3046,7 @@ label.required:after {
   min-width: -moz-fit-content;
   min-width: fit-content;
   display: grid;
-  grid-template-columns: minmax(9rem, 3fr) minmax(6rem, 3fr) minmax(12rem, 3fr) 12rem 8.2rem 9rem;
+  grid-template-columns: minmax(6rem, 2.5fr) minmax(6rem, 2.5fr) minmax(8rem, 2fr) minmax(8rem, 3fr) 8.2rem 9rem;
   -moz-column-gap: 0.6rem;
        column-gap: 0.6rem;
   justify-items: stretch;
@@ -3072,11 +3072,15 @@ label.required:after {
   width: 100%;
   font-size: 0.8rem;
 }
-#resolve-reports .data-item .url,
-#resolve-reports .data-item .url-edit {
+#resolve-reports .data-item .group {
   grid-column: 2/3;
   grid-row: 1/2;
-  font-size: 0.8rem;
+}
+#resolve-reports .data-item .url,
+#resolve-reports .data-item .url-edit {
+  grid-column: 3/4;
+  grid-row: 1/2;
+  font-size: 0.72rem;
 }
 #resolve-reports .data-item .url {
   overflow-wrap: break-word;
@@ -3086,10 +3090,6 @@ label.required:after {
   width: 100%;
 }
 #resolve-reports .data-item .reason {
-  grid-column: 3/4;
-  grid-row: 1/2;
-}
-#resolve-reports .data-item .additional-info {
   grid-column: 4/5;
   grid-row: 1/2;
 }

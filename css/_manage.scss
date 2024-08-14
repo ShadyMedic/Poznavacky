@@ -306,7 +306,7 @@
         width: 100%;
         min-width: fit-content;
         display: grid;
-        grid-template-columns: minmax(9rem, 3fr) minmax(6rem, 3fr) minmax(12rem, 3fr) 12rem 8.2rem 9rem;
+        grid-template-columns: minmax(6rem, 2.5fr) minmax(6rem, 2.5fr) minmax(8rem, 2fr) minmax(8rem, 3fr) 8.2rem 9rem;
         column-gap: 0.6rem;
         justify-items: stretch;
         align-items: center;
@@ -329,11 +329,15 @@
             width: 100%;
             font-size: 0.8rem;
         }
-        .url,
-        .url-edit {
+        .group {
             grid-column: 2/3;
             grid-row: 1/2;
-            font-size: 0.8rem;
+        } 
+        .url,
+        .url-edit {
+            grid-column: 3/4;
+            grid-row: 1/2;
+            font-size: 0.72rem;
         }
         .url {
             overflow-wrap: break-word;
@@ -343,10 +347,6 @@
             width: 100%;
         }
         .reason {
-            grid-column: 3/4;
-            grid-row: 1/2;
-        }
-        .additional-info {
             grid-column: 4/5;
             grid-row: 1/2;
         }
