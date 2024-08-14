@@ -3042,7 +3042,6 @@ label.required:after {
 }
 #resolve-reports .data-properties,
 #resolve-reports .data-item {
-  width: 100%;
   min-width: -moz-fit-content;
   min-width: fit-content;
   display: grid;

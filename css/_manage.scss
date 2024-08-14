@@ -303,7 +303,6 @@
     width: 100%;
     .data-properties,
     .data-item {
-        width: 100%;
         min-width: fit-content;
         display: grid;
         grid-template-columns: minmax(6rem, 2.5fr) minmax(6rem, 2.5fr) minmax(8rem, 2fr) minmax(8rem, 3fr) minmax(4.4rem, 8.2rem) minmax(2rem, 9rem);
