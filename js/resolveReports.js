@@ -2,6 +2,8 @@ var ajaxUrl;
 
 $(function()
 {
+    $(".show-info-button").show();
+    
     ajaxUrl = window.location.href;
     if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
 
