@@ -2,6 +2,8 @@ var ajaxUrl;
 
 $(function()
 {
+    $(".show-info-button").show();
+    
     ajaxUrl = window.location.href;
     if (ajaxUrl.endsWith('/')) { ajaxUrl = ajaxUrl.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
 
@@ -26,7 +28,10 @@ $(function()
     $(".delete-picture-button").click(function(event) {deletePicture(event)})
     $(".delete-report-button").click(function(event) {deleteReport(event)})
   
+    //event listenery zmáčknutí klávesy
+    $("body#admin-reports").on("keyup", function(event) {hidePicture(event)})
 })
+
 
 /**
  * Funkce zobrazující náhled nahlášeného obrázku
@@ -36,24 +41,47 @@ function showPicture(event)
 {
     let $report = $(event.target).closest(".report.data-item");
     let url = $report.attr("data-report-url");
-    
-    //class owner
-    if ($('body').attr("id") == "resolve-reports")
+
+    let imgError = false
+
+    let tester = new Image();
+
+    tester.addEventListener('error', function()
     {
-        //skrytí ostatních zobrazených obrázků
-        $(".report.image").not($report.find(".report.image")).hide();
+        //class owner
+        if ($('body').attr("id") == "resolve-reports")
+        {
+            newMessage("Obrázek nelze načíst.", "error");
+        }
 
-        //doplnění url a zobrazení obrázku
-        $report.find(".report.image > img").attr("src", url);
-        $report.find(".report.image").show();
-    }
+        //admin
+        else {
+            alert("Obrázek nelze načíst.");
+        }
+    });
+    
+    tester.addEventListener('load', function()
+    {
+        //class owner
+        if ($('body').attr("id") == "resolve-reports")
+        {
+            //skrytí ostatních zobrazených obrázků
+            $(".report.image").not($report.find(".report.image")).hide();
 
-    //admin
-    else {
-        $("#report-image > img").attr("src", url);
-        $("#report-image").show();
-        $("#overlay").show();
-    }
+            //doplnění url a zobrazení obrázku
+            $report.find(".report.image > img").attr("src", url);
+            $report.find(".report.image").show();
+        }
+
+        //admin
+        else {
+            $("#report-image > img").attr("src", url);
+            $("#report-image").show();
+            $("#overlay").show();
+        }
+    });
+
+    tester.src = url;
 }
 
 /**
@@ -79,6 +107,7 @@ function hidePicture(event)
 }
 
 var currentName;
+var currentNaturalId;
 var currentUrl;
 /**
  * Funkce zahajující úpravu informací o nahlášeném obrázku
@@ -96,6 +125,7 @@ function editPicture(event)
         
     //uložení současných hodnot
     currentName = $report.find(".report.name").text();
+    currentNaturalId = $report.find(".report.name").attr("data-natural-id");
     currentUrl = $report.find(".report.url").text();
     
     //zobrazení příslušných tlačítek a polí
@@ -147,13 +177,14 @@ function editPictureConfirm(event)
 
     //uložení nových hodnot
     currentName = $report.find(".report.name-edit .report-natural-select .selected").text().trim();
+    currentNaturalId = $report.find(".report.name-edit .report-natural-select .selected").attr("data-option-value");
     currentUrl = $report.find(".report.url-edit .text-field").val().trim();
     
     $.post(ajaxUrl,
         {
             action: 'update picture',
             pictureId: pictureId,
-            natural: currentName,
+            naturalId: currentNaturalId,
             url: currentUrl
         },
         function (response, status)
@@ -167,6 +198,7 @@ function editPictureConfirm(event)
                         $report.find(".edit-picture-cancel-button").trigger("click");
 
                         $report.find(".report.name").text(currentName);
+                        $report.find(".report.name").attr("data-natural-id", currentNaturalId);
                         $report.find(".report.url").text(currentUrl);
                     }
                     if (messageType === "error")
@@ -184,8 +216,11 @@ function editPictureConfirm(event)
                             $reportsToUpdate.each(function()
                             {
                                 let $reportNaturalSelect = $(this).find(".report.name-edit .report-natural-select");
+                                $(this).attr("data-report-url", currentUrl);
+
                                 //aktualizace spanů
                                 $(this).find(".report.name").text(currentName);
+                                $report.find(".report.name").attr("data-natural-id", currentNaturalId);
                                 $(this).find(".report.url").text(currentUrl);
 
                                 //aktualizace custom select boxu

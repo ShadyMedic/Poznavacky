@@ -22,8 +22,8 @@ class SubmitPictureController extends AjaxController
      */
     function process(array $parameters): void
     {
-        $group = $_SESSION['selection']['group'];
-        $adder = new PictureAdder($group);
+        $class = $_SESSION['selection']['class'];
+        $adder = new PictureAdder($class);
         $response = null;
         try {
             if ($adder->processFormData($_POST)) {
