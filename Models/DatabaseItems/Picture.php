@@ -119,7 +119,7 @@ class Picture extends DatabaseItem
     {
         //Kontrola, zda daná nová URL adresa vede na obrázek
         $checker = new PictureAdder($this->getNatural()->getClass());
-        $checker->checkData($newNatural->getName(),
+        $checker->checkData($newNatural->getId(),
             $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
         
         //Kontrola dat OK

@@ -38,37 +38,37 @@ class PictureAdder
      */
     public function processFormData(array $POSTdata): bool
     {
-        $naturalName = trim($POSTdata['naturalName']); //Ořež mezery
+        $naturalId = $POSTdata['naturalId'];
         $url = trim($POSTdata['url']); //Ořež mezery
         
-        $natural = $this->checkData($naturalName, $url);    //Kontrola dat
+        $natural = $this->checkData($naturalId, $url);    //Kontrola dat
         return $this->addPicture($natural, $url);           //Ovlivnění databáze
     }
     
     /**
      * Metoda ověřující, zda jsou poskytnutá data v pořádku
-     * @param string $naturalName Jméno přírodniny, ke které chceme přidat obrázek
+     * @param int $naturalId ID přírodniny, ke které chceme přidat obrázek
      * @param string $url Adresa přidávaného obrázku
      * @return Natural Objekt reprezentující přírodninu, ke které hodláme přidat nový obrázek, pokud jsou data v pořádku
      * @throws DatabaseException
      * @throws AccessDeniedException V případě že data nesplňují podmínky
      */
-    public function checkData(string $naturalName, string $url): Natural
+    public function checkData(int $naturalId, string $url): Natural
     {
         $naturals = $this->class->getNaturals();
 
-        $natural = array_filter($naturals, function($natural) use ($naturalName) {
-            return $natural->getName() === $naturalName;
+        $natural = array_filter($naturals, function($natural) use ($naturalId) {
+            return $natural->getId() === $naturalId;
         });
 
         //Přírodnina s tímto názvem ve zvolené třídě neexistuje
         if (empty($natural)) {
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} z IP adresy {ip}, avšak zvolil neznámou přírodninu s ID ({naturalId})',
                 array(
                     'userId' => UserManager::getId(),
                     'classId' => $this->class->getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
-                    'naturalName' => $naturalName
+                    'naturalId' => $naturalId
                 ));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL, null, null);
         }
