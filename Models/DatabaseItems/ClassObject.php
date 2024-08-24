@@ -959,7 +959,7 @@ class ClassObject extends Folder
         Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['status'].' = ?, '.
             self::COLUMN_DICTIONARY['code'].' = ?, '.self::COLUMN_DICTIONARY['readonly'].' = ? '.
             'WHERE '.self::COLUMN_DICTIONARY['id'].' = ? LIMIT 1;',
-            array($status, $code, $readonly, $this->id), false);
+            array($status, $code, $readonly ? 1 : 0, $this->id), false);
         (new Logger())->info('Uživatel s ID {userId} změnil stav třídy s ID {classId} na {newStatus}, její kód nastavil na {newCode} a třídu nastavil jako {readonly} pouze pro čtení z IP adresy {ip}',
             array(
                 'userId' => UserManager::getId(),

@@ -14,7 +14,7 @@ $(function()
     $initialStatus = $("#class-status-select .selected");
     initialStatus = $("#class-status-select .selected").text();
     initialCode = $("#change-class-status-code").val();
-    initialReadonly = $("#public-readonly").is(':checked');
+    initialReadonly = $("#readonly").is(':checked');
 
     statusChange();
 
@@ -33,7 +33,7 @@ $(function()
     //event listener inputu
     $("#change-class-status-code").on("input", function() {statusChange()})
 
-    $("#public-readonly").on('change',function() {statusChange()});
+    $("#readonly").on('change',function() {statusChange()});
 
     //observery
     let options = { childList: true };
@@ -155,18 +155,6 @@ function statusChange()
             $("#change-class-status-confirm-button").addClass("disabled");
         }
     }
-
-    //třída není jako veřejná
-    if ($("#class-status-select .selected").text() !== "Veřejná")
-    {
-        //není možné nastavit readonly -> skrytí
-        hidePublicReadonlyCheckbox();
-    }
-    //třída je jako veřejná
-    else
-    {
-        showPublicReadonlyCheckbox();
-    }    
 }
 
 /**
@@ -177,7 +165,7 @@ function changeClassStatusConfirm()
 {
     let newStatus = $("#class-status-select .selected").text();
     let newCode = $("#change-class-status-code").val();
-    let newReadonly = $("#public-readonly").is(':checked');
+    let newReadonly = $("#readonly").is(':checked');
 
     let confirmMessage;
     switch (newStatus)
@@ -202,8 +190,6 @@ function changeClassStatusConfirm()
         else return;
     })
 }
-
-//TODO - zpřístupnit správu členů v backendu!! (tlačítko se zobrazuje, ale háže to serverovou chybu)
 
 /**
  * Funkce odesílající požadavek na změnu statutu třídy
@@ -271,7 +257,7 @@ function changeClassStatusCancel()
     $initialStatus.addClass("selected");
     $("#class-status-select .custom-select-main span").text(initialStatus);
     $("#change-class-status-code").val(initialCode);
-    $("#public-readonly").prop('checked', initialReadonly);
+    $("#readonly").prop('checked', initialReadonly);
 
     statusChange();
 }
@@ -286,7 +272,7 @@ function changeWasMade()
 
     if ($("#class-status-select .selected").text() != initialStatus ||
         $("#change-class-status-code").val() != initialCode ||
-        $("#public-readonly").is(":checked") != initialReadonly)
+        $("#readonly").is(":checked") != initialReadonly)
     {
         changeWasMade = true
     }
@@ -303,27 +289,11 @@ function hideClassStatusCode()
 }
 
 /**
- * Funkce skrývající readonly checkbox
- */
-function hidePublicReadonlyCheckbox()
-{
-    $("#public-readonly").parent().hide();
-}
-
-/**
  * Funkce zobrazující pole pro zadání kódu třídy
  */
 function showClassStatusCode()
 {
     $("#change-class-status-code, label[for='change-class-status-code']").show();
-}
-
-/**
- * Funkce zobrazující readonly checkbox
- */
-function showPublicReadonlyCheckbox()
-{
-    $("#public-readonly").parent().show();
 }
 
 /**
