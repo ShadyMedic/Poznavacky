@@ -81,13 +81,11 @@ function submitPicture(event)
     if (url[url.length - 1] === '/'){ url = url.substr(0, url.length - 1); } //odstranění trailing slashe
     url = url.substr(0, url.lastIndexOf("/")); //odstranění názvu posledního kontroleru
     url += "/submit-picture"
-    let naturalName = $("#add-natural-select .custom-options .selected").text();
-    naturalName = naturalName.trim();    //Ořezání whitespace
-    naturalName = naturalName.substr(0, naturalName.lastIndexOf("(") - 1); //Odstranění mezery následované závorkami s počtem obrázků
+    let naturalId = $("#add-natural-select .custom-options .selected").attr("data-option-value");
 
     $.post(url,
         {
-            naturalName: naturalName,
+            naturalId: naturalId,
             url: $("#url-input").val()
         },
         function (response, status)

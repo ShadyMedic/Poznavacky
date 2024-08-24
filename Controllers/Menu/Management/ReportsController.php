@@ -19,17 +19,16 @@ class ReportsController extends SynchronousController
      */
     public function process(array $parameters): void
     {
-        (new Logger())->info('Přístup na stránku pro správu hlášení v poznávačce s ID {groupId} patřící do třídy s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
+        (new Logger())->info('Přístup na stránku pro správu hlášení ve třídě s ID {classId} uživatelem s ID {userId} z IP adresy {ip}',
             array(
-                'groupId' => $_SESSION['selection']['group']->getId(),
                 'classId' => $_SESSION['selection']['class']->getId(),
                 'userId' => UserManager::getId(),
                 'ip' => $_SERVER['REMOTE_ADDR']
             ));
         
-        $group = $_SESSION['selection']['group'];
-        self::$data['reports'] = $group->getReports();
-        self::$data['naturalsInGroup'] = $group->getNaturals();
+        $class = $_SESSION['selection']['class'];
+        self::$data['reports'] = $class->getReports();
+        self::$data['naturalsInClass'] = $class->getNaturals();
         
         self::$pageHeader['title'] = 'Správa hlášení';
         self::$pageHeader['description'] = 'Nástroj pro vlastníky tříd umožňující řešení hlášení obrázků.';

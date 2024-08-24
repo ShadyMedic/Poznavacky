@@ -558,6 +558,9 @@ label {
         border-radius: 3.2px;
         span {
             flex-grow: 1;
+            margin-right: 2px;
+            overflow: hidden;
+            white-space: nowrap;
         }
         .arrow {
             height: 1em;

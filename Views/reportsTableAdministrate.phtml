@@ -1,6 +1,6 @@
 <table id="reports-table">
     <tr>
-        <th>Třída / Poznávačka / Část</th>
+        <th>Třída</th>
         <th>Přírodnina</th>
         <th>Zdroj</th>
         <th>Důvod</th>
@@ -16,11 +16,7 @@
             data-picture-id="<?= $report->getPictureId() ?>"
             data-report-id="<?= $report->getId() ?>"
             data-report-url="<?= $report->getUrl() ?>">
-            <td>
-            <?php foreach ($report->getPicturePaths() as $path) : ?>
-                <li><?= $path ?></li>
-            <?php endforeach ?>
-            </td>
+            <td><?= $report->getClass()->getName() ?></td>
             <td><?= $report->getPicture()->getNatural()->getName() ?></td>
             <td><?= $report->getUrl() ?></td>
             <td><?= $report->getReason() ?></td>
