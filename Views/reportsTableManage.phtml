@@ -27,7 +27,7 @@
             data-picture-id="<?= $report->getPictureId() ?>"
             data-report-id="<?= $report->getId() ?>"
             data-report-url="<?= $report->getUrl() ?>">
-        <span class="report name"><?= $report->getNaturalName() ?></span>
+        <span class="report name" data-natural-id="<?= $report->getNaturalId() ?>"><?= $report->getNaturalName() ?></span>
         <div class="report name-edit" style="display: none">
             <div class="custom-select-wrapper report-natural-select">
                 <div class="custom-select">
@@ -37,14 +37,14 @@
                     </div>
                     <ul class="custom-options">
                         <?php foreach ($naturalsInClass as $natural) :?>
-                            <li class="custom-option <?php if ($natural->getName() == $report->getNaturalName()) : ?>selected<?php endif ?>">
+                            <li class="custom-option<?php if ($natural->getId() == $report->getNaturalId()) : ?> selected<?php endif ?>" data-option-value="<?= $natural->getId() ?>">
                             <?= $natural->getName() ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
         </div>
-        <span class="report group">TODO</span> <!-- TODO - z jaké poznávačky -->
+        <span class="report group">TODO - smazat sloupec</span>
         <div class="report url"><?= $report->getUrl() ?></div>
                 <div class="report url-edit" style="display: none">
                     <textarea type=url size="1" class="text-field"><?= $report->getUrl() ?></textarea>

@@ -91,13 +91,13 @@ class ReportResolver
         }
         
         $picture->save();
-        (new Logger())->info('Uživatel s ID {userId} upravil z IP adresy {ip} obrázek s ID {pictureId} a to tak, že jeho URL adresu nastavil na {newUrl} a přiřadil ho k přírodnině s názvem {newNatural}',
+        (new Logger())->info('Uživatel s ID {userId} upravil z IP adresy {ip} obrázek s ID {pictureId} a to tak, že jeho URL adresu nastavil na {newUrl} a přiřadil ho k přírodnině s ID {newNaturalId}',
             array(
                 'userId' => UserManager::getId(),
                 'ip' => $_SERVER['REMOTE_ADDR'],
                 'pictureId' => $pictureId,
                 'newUrl' => $newUrl,
-                'newNatural' => $newNaturalName
+                'newNaturalId' => $newNaturalId
             ));
     }
     
