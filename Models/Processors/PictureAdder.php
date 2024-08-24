@@ -17,7 +17,15 @@ use Poznavacky\Models\Statics\UserManager;
 class PictureAdder
 {
     
+    private const TEMP_THUMB_DOMAINS = array(
+        'data:image/jpeg;base64',
+        'external-content.duckduckgo.com',
+        'th.bing.com',
+        'avatars.mds.yandex.net'
+    );
+
     private ClassObject $class;
+
     
     /**
      * Konstruktor třídy nastavující objekt (studijní) třídy, do které bude tato třída přidávat obrázky
@@ -78,7 +86,7 @@ class PictureAdder
         $typeCheck = false;
         $type = null;
         
-        $url_headers = @get_headers($url, 1);
+        $url_headers = @get_headers($url, 1, stream_context_create(array('http' => array('header' => implode("\r\n", array("User-Agent: Poznávačky.com image type checker"))))));
         //Pokud je cílová URL adresa přesměrováním, obsahuje $url_headers elementy pro jednotlivé "skoky"
         //Zajímá nás status kód a typ posledního skoku (konečné stránky)
         if (isset($url_headers['Content-Type']) || isset($url_headers['content-type'])) {
@@ -118,6 +126,19 @@ class PictureAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_FORMAT, null, null);
         }
         
+	//Ověření, že není přidáván dočasný náhled z vyhledávače
+	if (in_array(false, array_map(function($domain) use($url) {return strpos($url, $domain) === false;}, self::TEMP_THUMB_DOMAINS))) {
+	    (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak zadaná URL adresa ({url}) vedla na dočasný náhled obrázku vygenerovaný vyhledávačem',
+		array(
+                    'userId' => UserManager::getId(),
+                    'groupId' => $this->group->getId(),
+                    'naturalId' => $natural->getId(),
+                    'ip' => $_SERVER['REMOTE_ADDR'],
+                    'url' => $url
+		));
+	    throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_TEMP_THUMB_URL, null, null);
+	}
+
         //Ověření, zda již obrázek u stejné přírodniny není nahrán
         if ($natural->pictureExists($url)) {
             (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})',
