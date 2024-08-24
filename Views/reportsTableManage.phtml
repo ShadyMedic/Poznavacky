@@ -3,7 +3,7 @@
     <p>Na této stránce můžeš spravovat hlášení ve své třídě.</p>
     <ul class="list">
         <li>Pokud některý ze členů tvé třídy nahlásil obrázek ve třídě, uvidíš hlášení tady.</li>
-        <li>U každého hlášení je název přírodniny, z jaké poznávačky pochází, URL obrázku a důvod nahlášení.</li>
+        <li>U každého hlášení je uveden název přírodniny, URL obrázku a důvod nahlášení.</li>
         <li>Kliknutím na tlačítko s ikonou oka se zobrazí nahlášený obrázek.</li>
         <li>Kliknutím na ikonu tužky lze tyto informace upravit: například pokud je název přírodniny kočka, ale na obrázku je zobrazený pes, můžeš název přepsat.</li>
         <li>Obrázek také můžeš odstranit úplně kliknutím na tlačítko s ikonou popelnice.</li>
@@ -13,7 +13,6 @@
 <div id="resolve-reports-wrapper">
     <div class="report data-properties" <?php if (count($reports) === 0) : ?>style="display: none"<?php endif ?>>
         <span class="report name">Přírodnina</span>
-        <span class="report group">Poznávačka</span>
         <span class="report url">Zdroj</span>
         <span class="report reason">Důvod</span>
         <span class="report number">Počet nahlášení</span>
@@ -44,7 +43,6 @@
                 </div>
             </div>
         </div>
-        <span class="report group">TODO - smazat sloupec</span>
         <div class="report url"><?= $report->getUrl() ?></div>
                 <div class="report url-edit" style="display: none">
                     <textarea type=url size="1" class="text-field"><?= $report->getUrl() ?></textarea>
