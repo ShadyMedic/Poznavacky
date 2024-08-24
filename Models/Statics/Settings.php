@@ -29,12 +29,12 @@ class Settings
     /**
      * Uživatelské jméno pro přístup do databáze aplikace
      */
-    public const DB_USERNAME = 'root';
+    public const DB_USERNAME = 'poznavackyapp';
 
     /**
      * Heslo pro přístup do databáze aplikace
      */
-    public const DB_PASSWORD = '';
+    public const DB_PASSWORD = 'SECRET';
 
     /**
      * Jméno databáze pro aplikaci

@@ -8,7 +8,7 @@
             </div>
             <ul class="custom-options">
                 <?php foreach ($naturals as $natural) :?>
-                    <li class="custom-option">
+                    <li class="custom-option" data-option-value="<?= $natural->getId() ?>">
                         <?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
                     </li>
                 <?php endforeach; ?>

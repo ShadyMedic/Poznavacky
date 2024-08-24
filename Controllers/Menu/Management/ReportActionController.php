@@ -11,7 +11,7 @@ use Poznavacky\Models\Logger;
 use Poznavacky\Models\ReportResolver;
 
 /**
- * Kontroler zpracovávající data odeslaná ze stránky reports (správa hlášení v jedné poznávačce)
+ * Kontroler zpracovávající data odeslaná ze stránky reports (správa hlášení v jedné poznávačce nebo v celé třídě)
  * @author Jan Štěch
  */
 class ReportActionController extends AjaxController
@@ -50,9 +50,9 @@ class ReportActionController extends AjaxController
             switch ($_POST['action']) {
                 case 'update picture':
                     $pictureId = $_POST['pictureId'];
-                    $newNatural = trim($_POST['natural']); //Ořež mezery
+                    $newNaturalId = $_POST['naturalId'];
                     $newUrl = trim($_POST['url']); //Ořež mezery
-                    $resolver->editPicture($pictureId, $newNatural, $newUrl);
+                    $resolver->editPicture($pictureId, $newNaturalId, $newUrl);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny');
                     echo $response->getResponseString();
                     break;

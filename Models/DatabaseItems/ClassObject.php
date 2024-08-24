@@ -194,6 +194,62 @@ class ClassObject extends Folder
     }
 
     /**
+     * Metoda získávající hlášení všech obrázků patřících k přírodninám, které jsou součástí této třídy
+     * @return Report[] Pole objektů hlášení
+     * @throws DatabaseException
+     */
+    public function getReports(): array
+    {
+        $this->loadIfNotLoaded($this->id);
+        
+        //Získání důvodů hlášení vyřizovaných správcem třídy
+        $availableReasons = array_diff(Report::ALL_REASONS, Report::ADMIN_REQUIRING_REASONS);
+        
+        $in = str_repeat('?,', count($availableReasons) - 1).'?';
+        $sqlArguments = array_values($availableReasons);
+        $sqlArguments[] = $this->id;
+        $result = Db::fetchQuery('
+            SELECT
+            '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['id'].' AS "hlaseni_id", '.Report::TABLE_NAME.'.'.
+                                 Report::COLUMN_DICTIONARY['reason'].' AS "hlaseni_duvod", '.Report::TABLE_NAME.'.'.
+                                 Report::COLUMN_DICTIONARY['additionalInformation'].' AS "hlaseni_dalsi_informace", '.
+                                 Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reportersCount'].' AS "hlaseni_pocet",
+            '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].' AS "obrazky_id", '.Picture::TABLE_NAME.'.'.
+                                 Picture::COLUMN_DICTIONARY['src'].' AS "obrazky_zdroj", '.Picture::TABLE_NAME.'.'.
+                                 Picture::COLUMN_DICTIONARY['enabled'].' AS "obrazky_povoleno",
+            '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].' AS "prirodniny_id", '.Natural::TABLE_NAME.'.'.
+                                 Natural::COLUMN_DICTIONARY['name'].' AS "prirodniny_nazev", '.Natural::TABLE_NAME.'.'.
+                                 Natural::COLUMN_DICTIONARY['picturesCount'].' AS "prirodniny_obrazky"
+            FROM hlaseni
+            JOIN '.Picture::TABLE_NAME.' ON '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['picture'].' = '.
+                                 Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].'
+            JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.
+                                 Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
+            WHERE '.Report::TABLE_NAME.'.'.Report::COLUMN_DICTIONARY['reason'].' IN ('.$in.')
+            AND '.Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['class'].' = ?;
+        ', $sqlArguments, true);
+        
+        if ($result === false) {
+            //Žádná hlášení nenalezena
+            return array();
+        }
+        
+        $reports = array();
+        foreach ($result as $reportInfo) {
+            $natural = new Natural(false, $reportInfo['prirodniny_id']);
+            $natural->initialize($reportInfo['prirodniny_nazev'], null, $reportInfo['prirodniny_obrazky']);
+            $picture = new Picture(false, $reportInfo['obrazky_id']);
+            $picture->initialize($reportInfo['obrazky_zdroj'], $natural, $reportInfo['obrazky_povoleno']);
+            $report = new Report(false, $reportInfo['hlaseni_id']);
+            $report->initialize($picture, $reportInfo['hlaseni_duvod'], $reportInfo['hlaseni_dalsi_informace'],
+                $reportInfo['hlaseni_pocet']);
+            $reports[] = $report;
+        }
+        
+        return $reports;
+    }
+
+    /**
      * Metoda načítající a navracející pole přírodnin patřících do této třídy jako objekty
      * Data nejsou po navrácení výsledku nikde uložena, proto je v případě opakovaného použití potřeba uložit si je do
      * nějaké proměnné, aby se opakovaným dotazováním databáze nezpomalovalo zpracování požadavku
