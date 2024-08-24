@@ -1,7 +1,7 @@
 <?php
 namespace Poznavacky\Models\Processors;
 
-use Poznavacky\Models\DatabaseItems\Group;
+use Poznavacky\Models\DatabaseItems\ClassObject;
 use Poznavacky\Models\DatabaseItems\Natural;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
@@ -17,15 +17,15 @@ use Poznavacky\Models\Statics\UserManager;
 class PictureAdder
 {
     
-    private Group $group;
+    private ClassObject $class;
     
     /**
-     * Konstruktor třídy nastavující objekt poznávačky, do které bude tato třída přidávat obrázky
-     * @param Group $group Objekt poznávačky (musí patřit do třídy)
+     * Konstruktor třídy nastavující objekt (studijní) třídy, do které bude tato třída přidávat obrázky
+     * @param ClassObject $class Objekt třídy
      */
-    public function __construct(Group $group)
+    public function __construct(ClassObject $class)
     {
-        $this->group = $group;
+        $this->class = $class;
     }
     
     /**
@@ -55,33 +55,38 @@ class PictureAdder
      */
     public function checkData(string $naturalName, string $url): Natural
     {
-        $naturals = $this->group->getNaturals();
-        
-        for ($i = 0; $i < count($naturals) && $naturals[$i]->getName() !== $naturalName; $i++) {
-        }
-        
-        //Přírodnina s tímto názvem ve zvolené poznávačce neexistuje
-        if ($i === count($naturals)) {
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})',
+        $naturals = $this->class->getNaturals();
+
+        $natural = array_filter($naturals, function($natural) use ($naturalName) {
+            return $natural->getName() === $naturalName;
+        });
+
+        //Přírodnina s tímto názvem ve zvolené třídě neexistuje
+        if (empty($natural)) {
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} z IP adresy {ip}, avšak zvolil neznámou přírodninu ({naturalName})',
                 array(
                     'userId' => UserManager::getId(),
-                    'groupId' => $this->group->getId(),
+                    'classId' => $this->class->getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'naturalName' => $naturalName
                 ));
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL, null, null);
         }
-        
-        $natural = $naturals[$i];
-        
+        $natural = array_shift($natural);
+
         //Ověření, zda adresa vede na obrázek (kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/24936993)
         $typeCheck = false;
         $type = null;
         
         $url_headers = @get_headers($url, 1);
-        if (isset($url_headers['Content-Type'])) {
-            $statusCode = substr($url_headers[0], 9, 3);
-            $type = @strtolower($url_headers['Content-Type']);
+        //Pokud je cílová URL adresa přesměrováním, obsahuje $url_headers elementy pro jednotlivé "skoky"
+        //Zajímá nás status kód a typ posledního skoku (konečné stránky)
+        if (isset($url_headers['Content-Type']) || isset($url_headers['content-type'])) {
+            $statusCode = substr($url_headers[max(array_filter(array_keys($url_headers), 'is_numeric'))], 9, 3);
+            $type = $url_headers['Content-Type'] ?? $url_headers['content-type'];
+            if (is_array($type)) {
+                $type = @strtolower($type[count($type) - 1]);
+            }
             if ($statusCode >= 400) {
                 $typeCheck = null;
             }
@@ -91,10 +96,10 @@ class PictureAdder
         }
         
         if (is_null($typeCheck)) {
-            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek nemohl být načten (zadaná URL adresa: {url})',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek nemohl být načten (zadaná URL adresa: {url})',
                 array(
                     'userId' => UserManager::getId(),
-                    'groupId' => $this->group->getId(),
+                    'classId' => $this->class->getId(),
                     'naturalId' => $natural->getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'url' => $url
@@ -102,10 +107,10 @@ class PictureAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_URL, null, null);
         }
         if ($typeCheck === false) {
-            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek byl v neakceptovaném formátu ({imageFormat})',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak obrázek byl v neakceptovaném formátu ({imageFormat})',
                 array(
                     'userId' => UserManager::getId(),
-                    'groupId' => $this->group->getId(),
+                    'classId' => $this->class->getId(),
                     'naturalId' => $natural->getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'imageFormat' => $type
@@ -115,10 +120,10 @@ class PictureAdder
         
         //Ověření, zda již obrázek u stejné přírodniny není nahrán
         if ($natural->pictureExists($url)) {
-            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})',
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak daný obrázek už byl k přírodnině přidán ({pictureUrl})',
                 array(
                     'userId' => UserManager::getId(),
-                    'groupId' => $this->group->getId(),
+                    'classId' => $this->class->getId(),
                     'naturalId' => $natural->getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'pictureUrl' => $url
@@ -153,10 +158,10 @@ class PictureAdder
 					($_SESSION['selection']['part']->getPicturesCount() + 1));
 			}
         } catch (DatabaseException $e) {
-            (new Logger())->alert('Uživatel s ID {userId} se pokusil přidat obrázek do poznávačky s ID {groupId} z IP adresy {ip}, avšak neznámá chyba zabránila uložení obrázku; pokud toto nebyla ojedinělá chyba, může být vážně narušeno fungování systému',
+            (new Logger())->alert('Uživatel s ID {userId} se pokusil přidat obrázek do třídy s ID {classId} z IP adresy {ip}, avšak neznámá chyba zabránila uložení obrázku; pokud toto nebyla ojedinělá chyba, může být vážně narušeno fungování systému',
                 array(
                     'userId' => UserManager::getId(),
-                    'groupId' => $this->group->getId(),
+                    'classId' => $this->class->getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'pictureUrl' => $url
                 ));
@@ -166,10 +171,10 @@ class PictureAdder
         //Zvýšení počtu přidaných obrázků u uživatele
         UserManager::getUser()->incrementAddedPictures();
         
-        (new Logger())->info('Uživatel s ID {userId} přidal obrázek do poznávačky s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}',
+        (new Logger())->info('Uživatel s ID {userId} přidal obrázek do třídy s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}',
             array(
                 'userId' => UserManager::getId(),
-                'groupId' => $this->group->getId(),
+                'classId' => $this->class->getId(),
                 'naturalId' => $natural->getId(),
                 'ip' => $_SERVER['REMOTE_ADDR']
             ));
