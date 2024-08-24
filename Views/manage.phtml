@@ -26,6 +26,7 @@
                 <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>Veřejná<?php endif ?>
                 <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>Soukromá (kód třídy: <?= $classCode ?>)<?php endif ?> 
                 <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>Uzamčená<?php endif ?>
+                <?php if ($classReadOnly) : ?>| Pouze ty můžeš přidávat obrázky.<?php endif ?>
             </span>
             <div class='class-property action'>
                 <button id="change-class-status-button" class="btn border-btn non-transparent black">Změnit</button>
