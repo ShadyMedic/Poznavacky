@@ -90,7 +90,7 @@ class MenuController extends SynchronousController
                     self::$data['table'] = $parts;
                     self::$data['displayAddPicturesButton'] = (
                         !$_SESSION['selection']['class']->isReadOnly() ||
-                        $_SESSION['selection']['class']->isMember(UserManager::getId())
+                        $_SESSION['selection']['class']->checkAdmin(UserManager::getId())
                     );
                 }
             }
