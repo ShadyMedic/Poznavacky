@@ -2917,6 +2917,11 @@ label.required:after {
     margin-right: 0.4rem;
   }
 }
+#manage #status-readonly {
+  font-size: 0.72rem;
+  white-space: nowrap;
+  display: inline;
+}
 #manage .custom-checkbox-wrapper .checkmark {
   background-color: #fff;
 }

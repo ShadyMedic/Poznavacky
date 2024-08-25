@@ -224,10 +224,16 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
                         {
                             $("#status").append(" (kód třídy: " + newCode + ")");
                         }
+
                         if (newReadonly)
                         {
-                            $("#status").append(" | Pouze ty můžeš přidávat obrázky.");
+                            $("#status-readonly").css('display', 'inline');
                         }
+                        else if (!newReadonly)
+                        {
+                            $("#status-readonly").css('display', 'none');
+                        }
+
                         $("#class-status-select .custom-option").removeClass("selected");
                         $("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
 

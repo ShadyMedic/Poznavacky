@@ -186,6 +186,11 @@
             }
         }
     }
+    #status-readonly {
+        font-size: 0.72rem;
+        white-space: nowrap;
+        display: inline;
+    }
     .custom-checkbox-wrapper {
         .checkmark {
             background-color: #fff;
