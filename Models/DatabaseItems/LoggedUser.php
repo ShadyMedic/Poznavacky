@@ -138,7 +138,7 @@ class LoggedUser extends User
         
         //Kontrola dostupnosti jména
         try {
-            $validator->checkUniqueness($newName, DataValidator::TYPE_USER_NAME);
+            $validator->checkUniqueness($newName, DataValidator::TYPE_USER_NAME, $this->getId());
         } catch (InvalidArgumentException $e) {
             (new Logger())->notice('Uživatel s ID {userId} se pokusil odeslat žádost o změnu jména z IP adresy {ip}, avšak požadované jméno nebylo unikátní',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
@@ -294,7 +294,7 @@ class LoggedUser extends User
             try {
                 $validator->checkLength($newEmail, DataValidator::USER_EMAIL_MIN_LENGTH,
                     DataValidator::USER_EMAIL_MAX_LENGTH, DataValidator::TYPE_USER_EMAIL);
-                $validator->checkUniqueness($newEmail, DataValidator::TYPE_USER_EMAIL);
+                $validator->checkUniqueness($newEmail, DataValidator::TYPE_USER_EMAIL, $this->getId());
             } catch (RangeException $e) {
                 (new Logger())->notice('Uživatel s ID {userId} se pokusil změnit svou e-mailovou adresu z IP adresy {ip}, avšak nová e-mailová adresa byla příliš dlouhá',
                     array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
