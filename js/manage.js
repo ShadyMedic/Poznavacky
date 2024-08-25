@@ -224,6 +224,14 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
                         {
                             $("#status").append(" (kód třídy: " + newCode + ")");
                         }
+                        if (newStatus == "Veřejná")
+                        {
+                            $(".class-buttons-section .border-btn").first().hide();
+                        }
+                        else
+                        {
+                            $(".class-buttons-section .border-btn").first().show();
+                        }
 
                         if (newReadonly)
                         {
