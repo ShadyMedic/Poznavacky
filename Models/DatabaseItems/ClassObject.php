@@ -794,7 +794,7 @@ class ClassObject extends Folder
         //Kontrola dostupnosti jména (konkrétně URL adresy)
         $url = $this->generateUrl($newName);
         try {
-            $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL);
+            $validator->checkUniqueness($url, DataValidator::TYPE_CLASS_URL, $this->getId());
         } catch (InvalidArgumentException $e) {
 
             (new Logger())->notice('Uživatel s ID {userId} se pokusil zažádat o změnu názvu třídy s ID {classId} na {newName} z IP adresy {ip}, avšak třída se stejnou URL reprezentací názvu již existuje',

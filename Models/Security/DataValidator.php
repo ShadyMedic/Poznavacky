@@ -149,6 +149,9 @@ class DataValidator
      * @param string $subject Řetězec jehož unikátnost chceme zjistit
      * @param int $stringType Označení porovnávaného řetězce (pro rozlišení výjimek) - viz konstanty této třídy
      *     začínající na "TYPE_"
+     * @param int|null $recordId ID přejmenovávané třídy/poznávačky/část, slouží k zamezení zamítnutí v případě malé
+     *     změny, jako změna velikosti písmen nebo odebrání nadbytečných bílých znaků; pokud je použita hodnota NULL,
+     *     nebudou žádné výjimky aplikovány
      * @param Folder|null $parentFolder Objekt složky, jejíž součástí je kontrolovaný objekt (pouze u poznávaček a
      *     jejich částí) - bude tak kontrolována unikátnout pouze vůči položkám ve stejné složce (u ostatních typů
      *     nepovinné)
@@ -158,18 +161,20 @@ class DataValidator
      * @throws InvalidArgumentException Pokud se již řetězec v databázi vyskytuje
      * @throws DatabaseException
      */
-    public function checkUniqueness(string $subject, int $stringType, Folder $parentFolder = null): bool
+    public function checkUniqueness(string $subject, int $stringType, int $recordId = null, Folder $parentFolder = null): bool
     {
+        $recordId = $recordId ?? -1;
         switch ($stringType) {
             case self::TYPE_USER_NAME:
                 $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.
                                          User::COLUMN_DICTIONARY['name'].') AS "items" FROM '.User::TABLE_NAME.
                                          ' WHERE UPPER('.User::COLUMN_DICTIONARY['name'].
-                                         ') = ? UNION ALL SELECT COUNT('.
+                                         ') = ? AND '.User::COLUMN_DICTIONARY['id'].' != ? UNION ALL SELECT COUNT('.
                                          UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') FROM '.
                                          UserNameChangeRequest::TABLE_NAME.' WHERE UPPER('.
-                                         UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') = ?) AS tmp',
-                    array(mb_strtoupper($subject), mb_strtoupper($subject)), false);
+                                         UserNameChangeRequest::COLUMN_DICTIONARY['newName'].') = ? AND '.
+                                         UserNameChangeRequest::COLUMN_DICTIONARY['subject'].' != ?) AS tmp',
+                    array(mb_strtoupper($subject), $recordId, mb_strtoupper($subject), $recordId), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }
@@ -180,7 +185,8 @@ class DataValidator
                     return true;
                 }
                 $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.User::TABLE_NAME.' WHERE '.
-                                         User::COLUMN_DICTIONARY['email'].' = ? LIMIT 1', array($subject), false);
+                                         User::COLUMN_DICTIONARY['email'].' = ? AND '.User::COLUMN_DICTIONARY['id'].
+                                        ' != ? LIMIT 1', array($subject, $recordId), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }
@@ -189,11 +195,12 @@ class DataValidator
                 $result = Db::fetchQuery('SELECT SUM(items) AS "cnt" FROM (SELECT COUNT('.
                                          ClassObject::COLUMN_DICTIONARY['url'].') AS "items" FROM '.
                                          ClassObject::TABLE_NAME.' WHERE '.ClassObject::COLUMN_DICTIONARY['url'].
-                                         '= ? UNION ALL SELECT COUNT('.
+                                         '= ? AND '.ClassObject::COLUMN_DICTIONARY['id'].' != ? UNION ALL SELECT COUNT('.
                                          ClassNameChangeRequest::COLUMN_DICTIONARY['newUrl'].') FROM '.
                                          ClassNameChangeRequest::TABLE_NAME.' WHERE '.
-                                         ClassNameChangeRequest::COLUMN_DICTIONARY['newUrl'].'= ?) AS tmp',
-                    array($subject, $subject), false);
+                                         ClassNameChangeRequest::COLUMN_DICTIONARY['newUrl'].' = ? AND '.
+                                         ClassNameChangeRequest::COLUMN_DICTIONARY['subject'].' != ?) AS tmp',
+                    array($subject, $recordId, $subject, $recordId), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }
@@ -205,7 +212,8 @@ class DataValidator
                 
                 $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Group::TABLE_NAME.' WHERE '.
                                          Group::COLUMN_DICTIONARY['url'].' = ? AND '.Group::COLUMN_DICTIONARY['class'].
-                                         ' = ? LIMIT 1', array($subject, $parentFolder->getId()), false);
+                                         ' = ? AND '.Group::COLUMN_DICTIONARY['id'].' != ? LIMIT 1',
+                    array($subject, $parentFolder->getId(), $recordId), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }
@@ -217,7 +225,8 @@ class DataValidator
                 
                 $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Part::TABLE_NAME.' WHERE '.
                                          Part::COLUMN_DICTIONARY['url'].' = ? AND '.Part::COLUMN_DICTIONARY['group'].
-                                         ' = ? LIMIT 1', array($subject, $parentFolder->getId()), false);
+                                         ' = ? AND '.Part::COLUMN_DICTIONARY['id'].' != ? LIMIT 1',
+                    array($subject, $parentFolder->getId(), $recordId), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }
@@ -229,8 +238,9 @@ class DataValidator
                 
                 $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.Natural::TABLE_NAME.' WHERE '.
                                          Natural::COLUMN_DICTIONARY['name'].' = ? AND '.
-                                         Natural::COLUMN_DICTIONARY['class'].' = ? LIMIT 1',
-                    array($subject, $parentFolder->getId()), false);
+                                         Natural::COLUMN_DICTIONARY['class'].' = ? AND '.
+                                         Natural::COLUMN_DICTIONARY['id'].' != ? LIMIT 1',
+                    array($subject, $parentFolder->getId(), $recordId), false);
                 if ($result['cnt'] > 0) {
                     throw new InvalidArgumentException(null, $stringType);
                 }

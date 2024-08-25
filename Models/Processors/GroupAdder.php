@@ -62,7 +62,7 @@ class GroupAdder
         $validator = new DataValidator();
         $url = Folder::generateUrl($groupName);
         try {
-            $validator->checkUniqueness($url, DataValidator::TYPE_GROUP_URL, $this->class);
+            $validator->checkUniqueness($url, DataValidator::TYPE_GROUP_URL, null, $this->class);
         } catch (InvalidArgumentException $e) {
             (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat do třídy s ID {classId} z IP adresy {ip} novou poznávačku s názvem {groupName}, avšak poznávačka se stejnou URL reprezentací se v dané třídě již nachází',
                 array(
