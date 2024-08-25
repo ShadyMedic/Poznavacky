@@ -171,19 +171,24 @@ function changeClassStatusConfirm()
     switch (newStatus)
     {
         case "Veřejná":
-            confirmMessage = "Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup. Pokračovat?";
+            confirmMessage = "Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup.";
             newCode = "";
             break;
         case "Soukromá":
-            confirmMessage = "Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup. Pokračovat?";
+            confirmMessage = "Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup.";
             break;
         case "Uzamčená":
             newCode = "";
-            confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy, do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?";
+            confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy, do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti).";
             break;
         default:
             return;
     }
+    if (newReadonly)
+    {
+        confirmMessage = confirmMessage.concat(" Pouze ty budeš mít možnost přidávat obrázky.");
+    }
+    confirmMessage = confirmMessage.concat(" Pokračovat?");
     
     newConfirm(confirmMessage, "Potvrdit", "Zrušit", function(confirm) {
         if (confirm) changeClassStatusFinal(newStatus, newCode, newReadonly);
