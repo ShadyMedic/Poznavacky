@@ -13,7 +13,8 @@ class AntiXssSanitizer
 {
     /**
      * Metoda ošetřující proměnnou proti XSS útoku
-     * V případě, že je proměnná řetězec, číslo nebo bool, je jednoduše aplikována metoda htmlspecialchars()
+     * V případě, že je proměnná číslo (celé nebo desetiné) nebo bool, není nijak zpracována
+     * V případě, že je proměnná řetězec, je jednoduše aplikována metoda htmlspecialchars()
      * V případě, že je promenná pole, jsou rekurzivně touto metodou ošetřeny všechny jeho prvky
      * V případě, že se jedná o instanci modelu dědícího z DatabaseItem, jsou ošetřeny stejným způsobem všechny jeho
      * definované vlastnosti V případě, že je proměnná instancí třídy DateTime, nebo má hodnotu NULL, nic se s
@@ -48,9 +49,12 @@ class AntiXssSanitizer
                         //Neznámý typ objektu
                         throw new ErrorException('Couldn\'t sanitize object of type '.get_class($data).
                                                  ' against XSS attack.');
-                    } else {
-                        //boolean, integer, double, string
+                    } else if (gettype($data) === 'string') {
+                        //string
                         $data = htmlspecialchars($data, ENT_QUOTES);
+                    } else {
+                        //boolean, integer, double
+                        # $data = $data;
                     }
                 }
             }

@@ -236,14 +236,11 @@ abstract class DatabaseItem
      */
     private function getPropertyList(bool $getDefined): array
     {
-        $result = array();
-        $properties = get_object_vars($this);
-        foreach ($properties as $propertyName => $propertyValue) {
-            if ($getDefined == $this->isDefined($propertyValue)) {
-                $result[$propertyName] = $propertyValue;
-            }
-        }
-        return $result;
+        return array_filter(get_object_vars($this),
+            function($propertyValue) use ($getDefined) {
+                return $getDefined == $this->isDefined($propertyValue);
+            },
+            ARRAY_FILTER_USE_BOTH);
     }
     
     /**
