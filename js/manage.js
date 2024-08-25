@@ -1,7 +1,7 @@
 var $initialStatus;        //ukládá zvolenou položku v custom select elementu statutu třídy uloženého v databázi
 var initialStatus;      //ukládá status třídy uložený v databázi
 var initialCode;        //ukládá vstupní kód třídy uložený v databázi
-var initialReadOnly;     //ukládá, zda je třída nastavena jako jenom pro čtení
+var initialReadonly;     //ukládá, zda je třída nastavena jako jenom pro čtení
 
 //nastavení URL pro AJAX požadavky
 var ajaxUrl = window.location.href;
