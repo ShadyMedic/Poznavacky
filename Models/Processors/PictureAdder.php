@@ -128,10 +128,10 @@ class PictureAdder
         
 	//Ověření, že není přidáván dočasný náhled z vyhledávače
 	if (in_array(false, array_map(function($domain) use($url) {return strpos($url, $domain) === false;}, self::TEMP_THUMB_DOMAINS))) {
-	    (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v poznávačky/poznávačce s ID {groupId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak zadaná URL adresa ({url}) vedla na dočasný náhled obrázku vygenerovaný vyhledávačem',
+	    (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak zadaná URL adresa ({url}) vedla na dočasný náhled obrázku vygenerovaný vyhledávačem',
 		array(
                     'userId' => UserManager::getId(),
-                    'groupId' => $this->group->getId(),
+                    'classId' => $this->class->getId(),
                     'naturalId' => $natural->getId(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'url' => $url
