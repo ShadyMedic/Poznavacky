@@ -1,7 +1,7 @@
 var $initialStatus;        //ukládá zvolenou položku v custom select elementu statutu třídy uloženého v databázi
 var initialStatus;      //ukládá status třídy uložený v databázi
 var initialCode;        //ukládá vstupní kód třídy uložený v databázi
-var initialReadOnly;     //ukládá, zda je třída nastavena jako jenom pro čtení
+var initialReadonly;     //ukládá, zda je třída nastavena jako jenom pro čtení
 
 //nastavení URL pro AJAX požadavky
 var ajaxUrl = window.location.href;
@@ -14,7 +14,7 @@ $(function()
     $initialStatus = $("#class-status-select .selected");
     initialStatus = $("#class-status-select .selected").text();
     initialCode = $("#change-class-status-code").val();
-    initialReadonly = $("#public-readonly").is(':checked');
+    initialReadonly = $("#readonly").is(':checked');
 
     statusChange();
 
@@ -33,7 +33,7 @@ $(function()
     //event listener inputu
     $("#change-class-status-code").on("input", function() {statusChange()})
 
-    $("#public-readonly").on('change',function() {statusChange()});
+    $("#readonly").on('change',function() {statusChange()});
 
     //observery
     let options = { childList: true };
@@ -155,18 +155,6 @@ function statusChange()
             $("#change-class-status-confirm-button").addClass("disabled");
         }
     }
-
-    //třída není jako veřejná
-    if ($("#class-status-select .selected").text() !== "Veřejná")
-    {
-        //není možné nastavit readonly -> skrytí
-        hidePublicReadonlyCheckbox();
-    }
-    //třída je jako veřejná
-    else
-    {
-        showPublicReadonlyCheckbox();
-    }    
 }
 
 /**
@@ -177,33 +165,36 @@ function changeClassStatusConfirm()
 {
     let newStatus = $("#class-status-select .selected").text();
     let newCode = $("#change-class-status-code").val();
-    let newReadonly = $("#public-readonly").is(':checked');
+    let newReadonly = $("#readonly").is(':checked');
 
     let confirmMessage;
     switch (newStatus)
     {
         case "Veřejná":
-            confirmMessage = "Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup. Pokračovat?";
+            confirmMessage = "Třída bude nastavena jako veřejná a všichni přihlášení uživatelé do ní budou mít přístup.";
             newCode = "";
             break;
         case "Soukromá":
-            confirmMessage = "Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup. Pokračovat?";
+            confirmMessage = "Třída bude nastavena jako soukromá a všichni uživatelé, kteří nikdy nezadali platný vstupní kód třídy, ztratí do třídy přístup.";
             break;
         case "Uzamčená":
             newCode = "";
-            confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy, do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti). Pokračovat?";
+            confirmMessage = "Třída bude uzamčena a žádní uživatelé, kteří nyní nejsou jejími členy, do ní nebudou moci vstupit (včetně těch, kteří zadají platný vstupní kód v budoucnosti).";
             break;
         default:
             return;
     }
+    if (newReadonly)
+    {
+        confirmMessage = confirmMessage.concat(" Pouze ty budeš mít možnost přidávat obrázky.");
+    }
+    confirmMessage = confirmMessage.concat(" Pokračovat?");
     
     newConfirm(confirmMessage, "Potvrdit", "Zrušit", function(confirm) {
         if (confirm) changeClassStatusFinal(newStatus, newCode, newReadonly);
         else return;
     })
 }
-
-//TODO - zpřístupnit správu členů v backendu!! (tlačítko se zobrazuje, ale háže to serverovou chybu)
 
 /**
  * Funkce odesílající požadavek na změnu statutu třídy
@@ -238,9 +229,27 @@ function changeClassStatusFinal(newStatus, newCode, newReadonly) //TODO newReado
                         {
                             $("#status").append(" (kód třídy: " + newCode + ")");
                         }
+                        if (newStatus == "Veřejná")
+                        {
+                            $(".class-buttons-section .border-btn").first().hide();
+                        }
+                        else
+                        {
+                            $(".class-buttons-section .border-btn").first().show();
+                        }
+
+                        if (newReadonly)
+                        {
+                            $("#status-readonly").css('display', 'inline');
+                        }
+                        else if (!newReadonly)
+                        {
+                            $("#status-readonly").css('display', 'none');
+                        }
+
                         $("#class-status-select .custom-option").removeClass("selected");
                         $("#class-status-select .custom-option:contains(" + newStatus + ")").addClass("selected");
-                        
+
                         //reset HTML
                         $("#change-class-status-button").show();
                         $("#change-class-status").hide();
@@ -271,7 +280,7 @@ function changeClassStatusCancel()
     $initialStatus.addClass("selected");
     $("#class-status-select .custom-select-main span").text(initialStatus);
     $("#change-class-status-code").val(initialCode);
-    $("#public-readonly").prop('checked', initialReadonly);
+    $("#readonly").prop('checked', initialReadonly);
 
     statusChange();
 }
@@ -286,7 +295,7 @@ function changeWasMade()
 
     if ($("#class-status-select .selected").text() != initialStatus ||
         $("#change-class-status-code").val() != initialCode ||
-        $("#public-readonly").is(":checked") != initialReadonly)
+        $("#readonly").is(":checked") != initialReadonly)
     {
         changeWasMade = true
     }
@@ -303,27 +312,11 @@ function hideClassStatusCode()
 }
 
 /**
- * Funkce skrývající readonly checkbox
- */
-function hidePublicReadonlyCheckbox()
-{
-    $("#public-readonly").parent().hide();
-}
-
-/**
  * Funkce zobrazující pole pro zadání kódu třídy
  */
 function showClassStatusCode()
 {
     $("#change-class-status-code, label[for='change-class-status-code']").show();
-}
-
-/**
- * Funkce zobrazující readonly checkbox
- */
-function showPublicReadonlyCheckbox()
-{
-    $("#public-readonly").parent().show();
 }
 
 /**

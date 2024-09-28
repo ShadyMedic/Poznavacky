@@ -178,13 +178,21 @@
             flex-direction: row;
             justify-content: space-between;
         }
+        .border-btn {
+            flex-grow: 1;
+        }
         .border-btn:not(:last-child) {
             margin-bottom: 0.4rem;
             @media screen and (min-width: 512px) {
                 margin-bottom: 0;
-                margin-right: 0.4rem;
+                margin-right: 0.8rem;
             }
         }
+    }
+    #status-readonly {
+        font-size: 0.72rem;
+        white-space: nowrap;
+        display: inline;
     }
     .custom-checkbox-wrapper {
         .checkmark {

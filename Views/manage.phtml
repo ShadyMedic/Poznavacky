@@ -22,10 +22,15 @@
         </div>
         <div class="class-property data-item">
             <span class='class-property name'>Stav třídy</span>
-            <span class='class-property value' id="status">
-                <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>Veřejná<?php endif ?>
-                <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>Soukromá (kód třídy: <?= $classCode ?>)<?php endif ?> 
-                <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>Uzamčená<?php endif ?>
+            <span class='class-property value'>
+                <span id="status">
+                    <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?>Veřejná<?php endif ?>
+                    <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PRIVATE) : ?>Soukromá (kód třídy: <?= $classCode ?>)<?php endif ?> 
+                    <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_LOCKED) : ?>Uzamčená<?php endif ?>
+                </span>
+                <span <?php if (!$classReadOnly) : ?>style="display: none"<?php endif ?> id="status-readonly">
+                    Pouze ty můžeš přidávat obrázky.
+                </span>
             </span>
             <div class='class-property action'>
                 <button id="change-class-status-button" class="btn border-btn non-transparent black">Změnit</button>
@@ -52,8 +57,8 @@
                 </div>
                 <label for="change-class-status-code">Vstupní kód</label>
                 <input id='change-class-status-code' type="number" maxlength=4 value="<?= $classCode ?>" class="text-field"/>
-                <label class="custom-checkbox-wrapper">Pouze členové třídy mohou přidávat obrázky <!-- TODO na tento checkbox to navázat -->
-                    <input id="public-readonly" type="checkbox" name='public_readonly' <?php if ($classReadOnly) :?>checked <?php endif ?>/>
+                <label class="custom-checkbox-wrapper">Pouze já mohu přidávat obrázky
+                    <input id="readonly" type="checkbox" name='readonly' <?php if ($classReadOnly) :?>checked <?php endif ?>/>
                     <div class="checkmark"></div>
                 </label>
                 <button id="change-class-status-confirm-button" class="btn border-btn non-transparent black submit-button">Aktualizovat</button>
@@ -62,7 +67,7 @@
         </div>
     </section>
     <section class="class-buttons-section">
-        <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/members">Spravovat členy třídy</a>
+        <a class="btn border-btn non-transparent black" <?php if ($classStatus === Poznavacky\Models\DatabaseItems\ClassObject::CLASS_STATUS_PUBLIC) : ?> style="display:none"<?php endif ?> href="<?= $baseUrl ?>/members">Spravovat členy třídy</a>
         <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/tests">Spravovat poznávačky</a>
         <a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/naturals">Spravovat přírodniny</a>
 	<a class="btn border-btn non-transparent black" href="<?= $baseUrl ?>/reports">Spravovat hlášení</a>

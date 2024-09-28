@@ -2908,14 +2908,22 @@ label.required:after {
     justify-content: space-between;
   }
 }
+#manage .class-buttons-section .border-btn {
+  flex-grow: 1;
+}
 #manage .class-buttons-section .border-btn:not(:last-child) {
   margin-bottom: 0.4rem;
 }
 @media screen and (min-width: 512px) {
   #manage .class-buttons-section .border-btn:not(:last-child) {
     margin-bottom: 0;
-    margin-right: 0.4rem;
+    margin-right: 0.8rem;
   }
+}
+#manage #status-readonly {
+  font-size: 0.72rem;
+  white-space: nowrap;
+  display: inline;
 }
 #manage .custom-checkbox-wrapper .checkmark {
   background-color: #fff;
