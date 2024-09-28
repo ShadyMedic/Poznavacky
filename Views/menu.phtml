@@ -3,16 +3,16 @@
 </div>
 <header>
     <div class="wrapper">
-        <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="images/user-profile.svg" alt="Správa účtu"></a><?php endif ?>
-        <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="images/settings.svg" alt="Správa služby"></a><?php endif ?>
-        <button class="btn icon logout-button" title="Odhlásit se"><img src="images/logout.svg" alt="Odhlásit se"></button>
+        <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img class="icon white" src="images/user_o.svg" alt="Správa účtu"></a><?php endif ?>
+        <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img class="icon white" src="images/settings_o.svg" alt="Správa služby"></a><?php endif ?>
+        <button class="btn icon logout-button" title="Odhlásit se"><img class="icon white" src="images/logout_o.svg" alt="Odhlásit se"></button>
     </div>
 </header>
 <aside>
-    <a class="btn icon" href="menu" title="Hlavní stránka"><img src="images/home.svg" alt="Hlavní stránka"></a>
-    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img src="images/user-profile.svg" alt="Správa účtu"></a><?php endif ?>
-    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img src="images/settings.svg" alt="Správa služby"></a><?php endif ?>
-    <button class="btn icon logout-button" title="Odhlásit se"><img src="images/logout.svg" alt="Odhlásit se"></button>
+    <a class="btn icon" href="menu" title="Hlavní stránka"><img class="icon white" src="images/home_o.svg" alt="Hlavní stránka"></a>
+    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img class="icon white" src="images/user_o.svg" alt="Správa účtu"></a><?php endif ?>
+    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img class="icon white" src="images/settings_o.svg" alt="Správa služby"></a><?php endif ?>
+    <button class="btn icon logout-button" title="Odhlásit se"><img class="icon white" src="images/logout_o.svg" alt="Odhlásit se"></button>
 </aside>
 <nav id="level-nav">
     <div>
@@ -28,8 +28,8 @@
             <?php endif ?>
             <?php if ($i == count($navigationBar) - 1) : ?>
                 <span><?= $navigationBar[$i]['text'] ?></span>
-                <button class="btn icon show-info-button" title="Nápověda" style="display: none"><img src="images/info-show.svg" alt="Nápověda"></button>
-                <button class="btn icon hide-info-button" title="Skrýt nápovědu" style="display: none"><img src="images/info-hide.svg" alt="Zavřít"></button>
+                <button class="btn icon show-info-button" title="Nápověda" style="display: none"><img class="icon black" src="images/info_f_2.svg" alt="Nápověda"></button>
+                <button class="btn icon hide-info-button" title="Skrýt nápovědu" style="display: none"><img class="icon black" src="images/info-cross_f_2.svg" alt="Zavřít"></button>
             <?php endif ?>
         <?php endfor ?>
     </div>

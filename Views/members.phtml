@@ -13,7 +13,7 @@
         <div class="member data-item" data-member-id="<?= $member["id"] ?>">
             <span class='member name'><?= $member['name'] ?></span>
             <div class="member action">
-                <?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn icon kick-user-button' title="Odebrat uživatele"><img src="images/cross-thin-black.svg"></button><?php endif ?>
+                <?php if ($member->getId() !== \Poznavacky\Models\Statics\UserManager::getId()) : ?><button class='btn icon kick-user-button' title="Odebrat uživatele"><img class="icon black" src="images/cross-thick.svg"></button><?php endif ?>
             </div>
             <div class="kick-user" style="display: none">
                 <span>Opravdu chceš odebrat tohoto uživatele ze třídy?</span>

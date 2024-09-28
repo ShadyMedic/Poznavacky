@@ -62,7 +62,7 @@
                 margin-left: 0.6rem;
             }
         }
-        .icon {
+        .btn.icon {
             margin: 0.4rem 1rem 0.4rem 0;
             height: 32px;
             width: 32px;
@@ -116,7 +116,7 @@
             display: flex;
             flex-direction: column;
         }
-        .icon {
+        .btn.icon {
             margin: 1rem auto;
             height: 32px;
             width: 32px;
@@ -504,7 +504,7 @@
 @import "_manage.scss" ;
 
 .data-item {
-    .icon {
+    .btn.icon {
         height: 1.4rem;
         width: 1.4rem;
     } 
