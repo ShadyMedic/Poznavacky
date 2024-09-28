@@ -174,9 +174,9 @@ class ClassObject extends Folder
     /**
      * Metoda navracející, zda je třída nastavená pouze pro čtení a zda tak do ní mohou přidávat obrázky pouze členové
      * (čili uživatelé, kteří mají záznam v tabulce "clenstvi" v důsledku pozvání nebo zadání vstupního kódu).
-     * @return bool|null TRUE, pokud je třída nastavena jako pouze pro čtení
+     * @return bool TRUE, pokud je třída nastavena jako pouze pro čtení, FALSE, pokud ne
      */
-    public function isReadOnly(): ?bool
+    public function isReadOnly(): bool
     {
         $this->loadIfNotLoaded($this->readonly);
         return $this->readonly;
