@@ -32,6 +32,8 @@ $(function()
     $("#edit-group-wrapper").on("click", ".remove-natural-button", function(event) {removeNatural(event); })
     $("#edit-group-wrapper").on("click", ".rename-natural-cancel-button", function(event) {renameCancel(event)})
     $("#edit-group-wrapper").on("click", ".rename-part-cancel-button", function(event) {renameCancel(event)})
+    $("#edit-group-wrapper").on("click", ".rename-group-button", function(event) {rename(event, "group")})
+    $("#edit-group-wrapper").on("click", ".rename-group-confirm-button", function(event) {renameConfirm(event, "group")})
     $("#edit-group-wrapper").on("click", ".rename-group-cancel-button", function(event) {renameCancel(event)})
     $("#add-part-button").click(function(){addPart()});
     $("#edit-submit-button").click(function() {editSave()});
