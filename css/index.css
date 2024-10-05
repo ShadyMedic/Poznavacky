@@ -1037,9 +1037,6 @@ label.required:after {
 #index #index-login-section .message.server {
   margin-bottom: 0.6rem;
 }
-#index #index-login-section .checkmark {
-  height: 100%;
-}
 #index #index-login-section .btn.inline,
 #index #index-login-section p {
   font-size: inherit;
