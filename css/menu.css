@@ -403,6 +403,22 @@ ul.list li:not(:last-child) {
   transform: scale(0.96);
 }
 
+img.icon.black {
+  filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
+}
+img.icon.white {
+  filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+}
+img.icon.gray {
+  filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
+}
+img.icon.green {
+  filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
+}
+img.icon.red {
+  filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
+}
+
 .center {
   display: block;
   margin: auto;
@@ -465,8 +481,8 @@ textarea.text-field[type=number] {
 }
 .input-wrapper .text-field.checked + .checkmark {
   display: block;
-  height: 1em;
-  width: 1em;
+  height: 1.4em;
+  width: 1.4em;
 }
 .input-wrapper .text-field.checked + .checkmark img {
   width: 100%;
@@ -871,47 +887,47 @@ label.required:after {
     margin-left: 0.6rem;
   }
 }
-#menu header .icon,
-#learn header .icon,
-#test header .icon,
-#add-pictures header .icon,
-#account-settings header .icon,
-#manage header .icon,
-#members header .icon,
-#tests header .icon,
-#edit-group header .icon,
-#resolve-reports header .icon,
-#naturals header .icon {
+#menu header .btn.icon,
+#learn header .btn.icon,
+#test header .btn.icon,
+#add-pictures header .btn.icon,
+#account-settings header .btn.icon,
+#manage header .btn.icon,
+#members header .btn.icon,
+#tests header .btn.icon,
+#edit-group header .btn.icon,
+#resolve-reports header .btn.icon,
+#naturals header .btn.icon {
   margin: 0.4rem 1rem 0.4rem 0;
   height: 32px;
   width: 32px;
 }
 @media screen and (min-width: 672px) {
-  #menu header .icon,
-  #learn header .icon,
-  #test header .icon,
-  #add-pictures header .icon,
-  #account-settings header .icon,
-  #manage header .icon,
-  #members header .icon,
-  #tests header .icon,
-  #edit-group header .icon,
-  #resolve-reports header .icon,
-  #naturals header .icon {
+  #menu header .btn.icon,
+  #learn header .btn.icon,
+  #test header .btn.icon,
+  #add-pictures header .btn.icon,
+  #account-settings header .btn.icon,
+  #manage header .btn.icon,
+  #members header .btn.icon,
+  #tests header .btn.icon,
+  #edit-group header .btn.icon,
+  #resolve-reports header .btn.icon,
+  #naturals header .btn.icon {
     display: none;
   }
 }
-#menu header .icon:last-child,
-#learn header .icon:last-child,
-#test header .icon:last-child,
-#add-pictures header .icon:last-child,
-#account-settings header .icon:last-child,
-#manage header .icon:last-child,
-#members header .icon:last-child,
-#tests header .icon:last-child,
-#edit-group header .icon:last-child,
-#resolve-reports header .icon:last-child,
-#naturals header .icon:last-child {
+#menu header .btn.icon:last-child,
+#learn header .btn.icon:last-child,
+#test header .btn.icon:last-child,
+#add-pictures header .btn.icon:last-child,
+#account-settings header .btn.icon:last-child,
+#manage header .btn.icon:last-child,
+#members header .btn.icon:last-child,
+#tests header .btn.icon:last-child,
+#edit-group header .btn.icon:last-child,
+#resolve-reports header .btn.icon:last-child,
+#naturals header .btn.icon:last-child {
   margin-left: auto;
   margin-right: 0;
 }
@@ -1023,32 +1039,32 @@ label.required:after {
     flex-direction: column;
   }
 }
-#menu aside .icon,
-#learn aside .icon,
-#test aside .icon,
-#add-pictures aside .icon,
-#account-settings aside .icon,
-#manage aside .icon,
-#members aside .icon,
-#tests aside .icon,
-#edit-group aside .icon,
-#resolve-reports aside .icon,
-#naturals aside .icon {
+#menu aside .btn.icon,
+#learn aside .btn.icon,
+#test aside .btn.icon,
+#add-pictures aside .btn.icon,
+#account-settings aside .btn.icon,
+#manage aside .btn.icon,
+#members aside .btn.icon,
+#tests aside .btn.icon,
+#edit-group aside .btn.icon,
+#resolve-reports aside .btn.icon,
+#naturals aside .btn.icon {
   margin: 1rem auto;
   height: 32px;
   width: 32px;
 }
-#menu aside .icon:last-child,
-#learn aside .icon:last-child,
-#test aside .icon:last-child,
-#add-pictures aside .icon:last-child,
-#account-settings aside .icon:last-child,
-#manage aside .icon:last-child,
-#members aside .icon:last-child,
-#tests aside .icon:last-child,
-#edit-group aside .icon:last-child,
-#resolve-reports aside .icon:last-child,
-#naturals aside .icon:last-child {
+#menu aside .btn.icon:last-child,
+#learn aside .btn.icon:last-child,
+#test aside .btn.icon:last-child,
+#add-pictures aside .btn.icon:last-child,
+#account-settings aside .btn.icon:last-child,
+#manage aside .btn.icon:last-child,
+#members aside .btn.icon:last-child,
+#tests aside .btn.icon:last-child,
+#edit-group aside .btn.icon:last-child,
+#resolve-reports aside .btn.icon:last-child,
+#naturals aside .btn.icon:last-child {
   margin-top: auto;
 }
 #menu nav,
@@ -1902,7 +1918,7 @@ label.required:after {
   position: relative;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
 }
 #learn .report-box,
 #test .report-box {
@@ -2054,7 +2070,7 @@ label.required:after {
   right: 0;
 }
 #learn .picture .picture-control > img {
-  filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 0 0.2rem rgba(255, 255, 255, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
 }
 
 #test .controllers * {
@@ -2871,6 +2887,9 @@ label.required:after {
     max-width: auto;
   }
 }
+#account-settings .user.image-section > img {
+  width: 100%;
+}
 #account-settings .user.image-section > div {
   text-align: center;
   margin: 0.6rem auto;
@@ -3634,6 +3653,10 @@ label.required:after {
     flex-direction: row;
   }
 }
+#naturals .data-properties > * .sort-buttons .sort-down-button {
+  transform: rotate(180deg);
+  transition: none;
+}
 #naturals .data-properties > * .btn {
   width: 0.72em;
   height: 0.72em;
@@ -3645,7 +3668,7 @@ label.required:after {
   bottom: 3px;
 }
 
-.data-item .icon {
+.data-item .btn.icon {
   height: 1.4rem;
   width: 1.4rem;
 }/*# sourceMappingURL=menu.css.map */

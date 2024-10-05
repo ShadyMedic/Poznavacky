@@ -250,5 +250,5 @@ function updateNatural(offset)
  */
 function imgErrorHandle()
 {
-    $("#main-img").attr("src", '/images/file-error.svg');
+    $("#main-img").attr("src", '/images/file-error_o.svg');
 }

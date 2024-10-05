@@ -70,14 +70,14 @@
             <td class="user action">
                 <div>
                     <button class='btn icon edit-button' title='Upravit'>
-                        <img src='images/pencil-colour.svg'/>
+                        <img class="icon" src='images/pencil_f_colour.svg'/>
                     </button>
                     <div class="edit-buttons" style="display: none">
                         <button class='btn icon edit-confirm-button' title='Uložit'>
-                            <img src='images/tick.svg'/>
+                            <img class="icon green" src='images/tick-thick.svg'/>
                         </button>
                         <button class='btn icon edit-cancel-button' title='Zrušit'>
-                            <img src='images/cross-thick-black.svg'/>
+                            <img class="icon black" src='images/cross-thick.svg'/>
                         </button>
                     </div>
                     <?php if (empty($user['email'])) : ?>
@@ -86,10 +86,10 @@
                     <?php if (!empty($user['email'])) : ?>
                     <button class='btn icon start-mail-button' title='Poslat e-mail'>
                     <?php endif ?>
-                        <img src='images/mail-colour.svg'/>
+                        <img class="icon" src='images/mail_f_colour.svg'/>
                     </button>
                     <button class='btn icon delete-user-button' title='Odstranit'>
-                        <img src='images/trash-black.svg'/>
+                        <img class="icon black" src='images/trash_f.svg'/>
                     </button>
                 </div>
             </td>

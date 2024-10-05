@@ -17,10 +17,10 @@
                 </span>
                 <?php if (!$demoVersion): ?>
                     <?php if ($tableRow[2] === 'admin') : ?>
-                    <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img src="images/settings-filled-black.svg"></a>
+                    <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img class="icon black" src="images/settings_f.svg"></a>
                     <?php endif ?>
                     <?php if ($tableRow[2] === 'leave') : ?>
-                    <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class action leave-link"><img src="images/logout-filled-black.svg"></a>
+                    <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
                     <?php endif ?>
                     <?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
                     <?= $tableRow[2] ?>
@@ -35,8 +35,8 @@
             <h4 class="class name"><?= $invitation->getClass()->getName(); ?></h4>
             <span class="class tests-count"><?= $invitation->getClass()->getGroupsCount() ?></span>
             <div class="invitation action">
-                <button class="btn icon accept-invitation-button" title="Přijmout pozvánku"><img src='images/tick.svg' alt="Přijmout pozvánku"></button>
-                <button class="btn icon reject-invitation-button" title="Odmítnout pozvánku"><img src='images/cross-thick-black.svg' alt="Odmítnout pozvánku"></button>
+                <button class="btn icon accept-invitation-button" title="Přijmout pozvánku"><img class="icon green" src='images/tick-thick.svg' alt="Přijmout pozvánku"></button>
+                <button class="btn icon reject-invitation-button" title="Odmítnout pozvánku"><img class="icon black" src='images/cross-thick.svg' alt="Odmítnout pozvánku"></button>
             </div>
         </li>
         <?php endforeach ?>
@@ -83,6 +83,6 @@
     <button class="btn class data-item" data-class-url="/menu/{url}"><li>
         <h4 class="class name">{name}</h4>
         <span class="class test-count">{groups}</span>
-        <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon class action leave-link"><img src="images/logout-filled-black.svg"></a>
+        <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
     </li></button>
 </div>

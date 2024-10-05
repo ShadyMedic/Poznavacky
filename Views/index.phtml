@@ -9,7 +9,7 @@
         <div class="content">
             <h1>Poznávačky</h1>
             <p>Potřebuješ se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistruj se, vytvoř si seznam přírodnin, sdílej ho se svou třídou a uč se rychleji!</p>
-            <button id="learn-more-button" class="btn arrow-btn black"><span>Zjisti více</span><img src="images/arrow-black.svg" alt="Ikona šipky"></button>
+            <button id="learn-more-button" class="btn arrow-btn black"><span>Zjisti více</span><img class="icon black" src="images/arrow-thick.svg" alt="Ikona šipky"></button>
         </div>
         <img <?php if ($ee) : ?>src="images/leaf-guy-blonde.svg"<?php endif ?><?php if (!$ee) : ?>src="images/leaf-guy-dark.svg"<?php endif ?> alt="Ikona postavy">
     </section>
@@ -21,7 +21,7 @@
         </div>
     </section>
     <section id="index-login-section">
-        <button id="hide-login-section-button" class="btn icon" title="Zavřít"><img src="images/cross-thin-black.svg" alt="Zavřít"></button>
+        <button id="hide-login-section-button" class="btn icon" title="Zavřít"><img class="icon black" src="images/cross-thick.svg" alt="Zavřít"></button>
         <div id="login">
             <h2>Přihlaš se</h2>
             <form id="login-form">
@@ -52,25 +52,25 @@
                     <label for="register-name" class="required">Uživatelské jméno</label>
                     <div class="input-wrapper"> 
                         <input id='register-name' class="text-field" type='text' name='registerName' maxlength=15>
-                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-name-message" class="message"></div>
                     <label for="register-pass" class="required">Heslo</label>
                     <div class="input-wrapper"> 
                         <input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31>    
-                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-pass-message" class="message"></div>
                     <label for="register-repass" class="required">Heslo znovu</label>
                     <div class="input-wrapper"> 
                         <input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31>
-                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-repass-message" class="message"></div>
                     <label for="register-email">E-mail</label>
                     <div class="input-wrapper"> 
                         <input id='register-email' class="text-field" type='text' name='registerEmail' maxlength=255>
-                        <div class="checkmark"><img src="images/check.svg" alt="Zkontrolováno"></div>
+                        <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-email-message" class="message"></div>
                 </div>
@@ -109,4 +109,4 @@
     </div>
     <button id="hide-cookies-alert-button" class="btn icon" title="Zavřít"><img src="images/cross-thin-white.svg" alt="Zavřít"></button>
 </div>
-<button id="back-to-top-button" class="btn border-btn rounded non-transparent white" title="Nahoru"><img src="images/arrows-up-black.svg" alt="Nahoru"></button>
+<button id="back-to-top-button" class="btn border-btn rounded non-transparent white" title="Nahoru"><img class="icon black" src="images/arrows-thick.svg" alt="Nahoru"></button>
