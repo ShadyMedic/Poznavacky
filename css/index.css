@@ -481,8 +481,8 @@ textarea.text-field[type=number] {
 }
 .input-wrapper .text-field.checked + .checkmark {
   display: block;
-  height: 1em;
-  width: 1em;
+  height: 1.4em;
+  width: 1.4em;
 }
 .input-wrapper .text-field.checked + .checkmark img {
   width: 100%;
@@ -1036,6 +1036,9 @@ label.required:after {
 }
 #index #index-login-section .message.server {
   margin-bottom: 0.6rem;
+}
+#index #index-login-section .checkmark {
+  height: 100%;
 }
 #index #index-login-section .btn.inline,
 #index #index-login-section p {
