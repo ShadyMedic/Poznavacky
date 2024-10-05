@@ -385,6 +385,24 @@ ul.list {
     }
 }
 
+img.icon {
+    &.black {
+        filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
+    }
+    &.white {
+        filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+    }   
+    &.gray {
+        filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
+    }  
+    &.green {
+        filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
+    } 
+    &.red {
+        filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
+    }    
+}
+
 .center {
     display: block;
     margin: auto;
@@ -439,8 +457,8 @@ textarea {
     }
     .text-field.checked + .checkmark {
         display: block;
-        height: 1em;
-        width: 1em;
+        height: 1.4em;
+        width: 1.4em;
         img {
             width: 100%;
             height: 100%;
@@ -558,6 +576,9 @@ label {
         border-radius: 3.2px;
         span {
             flex-grow: 1;
+            margin-right: 2px;
+            overflow: hidden;
+            white-space: nowrap;
         }
         .arrow {
             height: 1em;

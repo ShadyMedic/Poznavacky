@@ -4,11 +4,11 @@
         <div class="custom-select">
             <div class="custom-select-main">
                 <span></span>
-                <img class="arrow" src="images/arrow-black.svg" alt="Ikona šipky">
+                <img class="icon black arrow" src="images/arrow-thick.svg" alt="Ikona šipky">
             </div>
             <ul class="custom-options">
                 <?php foreach ($naturals as $natural) :?>
-                    <li class="custom-option">
+                    <li class="custom-option" data-option-value="<?= $natural->getId() ?>">
                         <?= $natural->getName() ?> (<?= $natural->getPicturesCount() ?>)
                     </li>
                 <?php endforeach; ?>
@@ -22,6 +22,9 @@
         <button id="url-confirm-button" class="btn border-btn black non-transparent submit-button">OK</button>
     </div>
     <div class="add-pictures-preview disabled">
+        <a id="commons-link" class="btn border-btn black non-transparent" target="_blank" rel="noopener">
+            <span><b>Vyhledat na Commons</b></span><img class="logo" src="images/commons-logo.png" alt="Logo Wikimedia Commmons">
+        </a>
         <a id="duck-link" class="btn border-btn black non-transparent" target=_blank rel="noopener">
             <span>Vyhledat na DuckDuckGo</span><img class="logo" src="images/duck-logo.png" alt="Logo DuckDuckGo">       
         </a>  

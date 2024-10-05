@@ -19,7 +19,7 @@ class Settings
      * Aktuální verze aplikace
      * Při vydání nové verze je nutné nezapomenout přidat ID nového GitHub release do konstanty ChangelogManager::RELEASE_IDS
      */
-    public const VERSION = '4.2';
+    public const VERSION = '4.2.1';
 
     /**
      * Server hostující MySQL databázi pro aplikaci
@@ -29,12 +29,12 @@ class Settings
     /**
      * Uživatelské jméno pro přístup do databáze aplikace
      */
-    public const DB_USERNAME = 'root';
+    public const DB_USERNAME = 'poznavackyapp';
 
     /**
      * Heslo pro přístup do databáze aplikace
      */
-    public const DB_PASSWORD = '';
+    public const DB_PASSWORD = 'SECRET';
 
     /**
      * Jméno databáze pro aplikaci

@@ -1,9 +1,20 @@
+<section class="info-section" style="display: none">
+    <h3>Nápověda</h3>
+    <p>Na této stránce můžeš spravovat hlášení ve své třídě.</p>
+    <ul class="list">
+        <li>Pokud některý ze členů tvé třídy nahlásil obrázek ve třídě, uvidíš hlášení tady.</li>
+        <li>U každého hlášení je uveden název přírodniny, URL obrázku a důvod nahlášení.</li>
+        <li>Kliknutím na tlačítko s ikonou oka se zobrazí nahlášený obrázek.</li>
+        <li>Kliknutím na ikonu tužky lze tyto informace upravit: například pokud je název přírodniny kočka, ale na obrázku je zobrazený pes, můžeš název přepsat.</li>
+        <li>Obrázek také můžeš odstranit úplně kliknutím na tlačítko s ikonou popelnice.</li>
+        <li>Kliknutím na ikonu minus odstraníš pouze hlášení.</li>
+    </ul>
+</section>
 <div id="resolve-reports-wrapper">
     <div class="report data-properties" <?php if (count($reports) === 0) : ?>style="display: none"<?php endif ?>>
         <span class="report name">Přírodnina</span>
         <span class="report url">Zdroj</span>
         <span class="report reason">Důvod</span>
-        <span class="report additional-info">Další informace</span>
         <span class="report number">Počet nahlášení</span>
         <span class="report action">Akce</span>
     </div>
@@ -15,17 +26,17 @@
             data-picture-id="<?= $report->getPictureId() ?>"
             data-report-id="<?= $report->getId() ?>"
             data-report-url="<?= $report->getUrl() ?>">
-        <span class="report name"><?= $report->getNaturalName() ?></span>
-         <div class="report name-edit" style="display: none">
+        <span class="report name" data-natural-id="<?= $report->getNaturalId() ?>"><?= $report->getNaturalName() ?></span>
+        <div class="report name-edit" style="display: none">
             <div class="custom-select-wrapper report-natural-select">
                 <div class="custom-select">
                     <div class="custom-select-main">
                         <span><?= $report->getNaturalName() ?></span>
-                        <img class="arrow" src="images/arrow-black.svg" alt="Ikona šipky">
+                        <img class="icon black arrow" src="images/arrow-thick.svg" alt="Ikona šipky">
                     </div>
                     <ul class="custom-options">
-                        <?php foreach ($naturalsInGroup as $natural) :?>
-                            <li class="custom-option <?php if ($natural->getName() == $report->getNaturalName()) : ?>selected<?php endif ?>">
+                        <?php foreach ($naturalsInClass as $natural) :?>
+                            <li class="custom-option<?php if ($natural->getId() == $report->getNaturalId()) : ?> selected<?php endif ?>" data-option-value="<?= $natural->getId() ?>">
                             <?= $natural->getName() ?></li>
                         <?php endforeach; ?>
                     </ul>
@@ -36,36 +47,35 @@
                 <div class="report url-edit" style="display: none">
                     <textarea type=url size="1" class="text-field"><?= $report->getUrl() ?></textarea>
                 </div>
-        <span class="report reason"><?= $report->getReason() ?></span>
-        <span class="report additional-info"><?= $report->getAdditionalInformation() ?></span>
+        <span class="report reason"><?= $report->getReason() ?><?php if ($report->getAdditionalInformation() != '') : ?>: <?= $report->getAdditionalInformation() ?><?php endif ?></span>
         <span class="report number"><?= $report->getReportersCount() ?></span>
         <div class="report action">
               <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
-                <img src='images/eye-black.svg' alt="Zobrazit obrázek">
+                <img class="icon black" src='images/eye_f.svg' alt="Zobrazit obrázek">
              </button>
              <button class="btn icon edit-picture-button" title='Upravit údaje obrázku'>
-                <img src='images/pencil-black.svg' alt="Upravit údaje obrázku">
+                <img class="icon black" src='images/pencil_f.svg' alt="Upravit údaje obrázku">
               </button>
             <button class='btn icon delete-picture-button' title='Odstranit obrázek'>
-                <img src='images/trash-black.svg' alt="Odstranit obrázek">
+                <img class="icon black" src='images/trash_f.svg' alt="Odstranit obrázek">
             </button>
             <button class='btn icon delete-report-button' title='Odstranit hlášení'>
-                <img src='images/minus-black.svg' alt="Odstranit hlášení">
+                <img class="icon black" src='images/minus-thick.svg' alt="Odstranit hlášení">
             </button>
             <div class="edit-buttons" style="display: none;">
                 <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
-                    <img src='images/eye-black.svg' alt="Zobrazit obrázek">
+                    <img class="icon black" src='images/eye_f.svg' alt="Zobrazit obrázek">
                 </button>
                 <button class='btn icon edit-picture-confirm-button' title='Uložit'>
-                    <img src='images/tick.svg' alt="Uložit">
+                    <img class="icon green" src='images/tick-thick.svg' alt="Uložit">
                 </button>
                 <button class='btn icon edit-picture-cancel-button'title='Zrušit'>
-                    <img src='images/cross-thick-black.svg' alt="Zrušit">
+                    <img class="icon black" src='images/cross-thick.svg' alt="Zrušit">
                 </button>
             </div>
         </div>
         <div class="report image" style="display: none">
-            <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img src="images/cross-thin-white.svg" alt="Skrýt obrázek"></button>
+            <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img class="icon white" src="images/cross-thick.svg" alt="Skrýt obrázek"></button>
             <img src="images/blank.gif" alt="Náhled obrázku">
             </div>
         </div>

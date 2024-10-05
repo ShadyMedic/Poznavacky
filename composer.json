@@ -1,10 +1,10 @@
 {
-	"name" : "honzastech/poznavacky",
+	"name" : "shadymedic/poznavacky",
 	"type" : "project",
 	"license" : "proprietary",
 	"authors" : [{
 			"name" : "Jan Stech",
-			"email" : "honza.stech@gmail.com",
+			"email" : "jan.stech@.posteo.net",
 			"role" : "Back-end developer"
 		}, {
 			"name" : "Eliska Korcova",

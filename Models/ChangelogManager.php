@@ -14,6 +14,7 @@ class ChangelogManager
 {
     private const GITHUB_API_RELEASES_URL = 'https://api.github.com/repos/ShadyMedic/Poznavacky/releases/';
     private const RELEASE_IDS = array(
+        '4.2.1' => 141944858,
         '4.2' => 127441965,
         '4.1.2' => 84261860,
         '4.1.1' => 75769088,

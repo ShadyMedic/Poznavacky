@@ -111,16 +111,15 @@ class Picture extends DatabaseItem
      * Údaje v databázi nejsou aktualizovány - pro potvrzení změn je nutné zavolat metodu Picture::save()
      * @param Natural $newNatural Objekt reprezentující nově zvolenou přírodninu
      * @param string $newUrl Nová adresa k obrázku
-     * @param Group $group Objekt reprezentující poznávačku, do které musí nová přírodnina patřit (pro kontrolu)
      * @return boolean TRUE, pokud jsou údaje tohoto obrázku úspěšně aktualizovány
      * @throws DatabaseException
      * @throws AccessDeniedException Pokud jsou zadaná data neplatná
      */
-    public function updatePicture(Natural $newNatural, string $newUrl, Group $group): bool
+    public function updatePicture(Natural $newNatural, string $newUrl): bool
     {
-        //Kontrola, zda daná nová URL adresa vede na obrázek a zda je nová přírodnina součástí té samé poznávačky, jako ta stará
-        $checker = new PictureAdder($group);
-        $checker->checkData($newNatural->getName(),
+        //Kontrola, zda daná nová URL adresa vede na obrázek
+        $checker = new PictureAdder($this->getNatural()->getClass());
+        $checker->checkData($newNatural->getId(),
             $newUrl);  //Pokud nejsou data v pořádku, nastane výjimka a kód nepokračuje
         
         //Kontrola dat OK

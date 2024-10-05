@@ -86,7 +86,7 @@ class NaturalEditor
         }
         
         try {
-            $validator->checkUniqueness($newName, DataValidator::TYPE_NATURAL_NAME, $this->class);
+            $validator->checkUniqueness($newName, DataValidator::TYPE_NATURAL_NAME, $natural->getId(), $this->class);
         } catch (InvalidArgumentException $e) {
             (new Logger())->warning('Uživatel s ID {userId} se pokusil ve třídě s ID {classId} přejmenovat přírodninu s ID {naturalId} na {newName} z IP adresy {ip}, avšak neuspěl kvůli neunikátnímu názvu',
                 array(

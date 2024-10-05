@@ -129,49 +129,16 @@ class Report extends DatabaseItem
         $this->loadIfNotLoaded($this->picture);
         return $this->picture->getSrc();
     }
-    
+
     /**
-     * Metoda navracející řetězec se zařazením obrázku ve formátu <Název třídy> / <Název poznávačky> / <Název části> /
-     * <Název přírodniny>
-     * @return string[] Pole řetězeců obsahujících cesty k obrázku
-     * @throws NoDataException Pokud není přírodnina, se kterou je nahlášený obrázek spojen nalezena v databázi nebo
-     *     není přiřazena k žádné části
+     * Metoda navracející třídu, ze které bylo hlášení odesláno (třída, jejíž součástí je přírodnina, jejíž obrázek byl
+     * nahlášen)
      * @throws DatabaseException
      */
-    public function getPicturePaths(): array
-    {
-        $allPaths = array();
-        foreach ($this->getPartsWithPicture() as $part) {
-            $allPaths[] = $part->getGroup()->getClass()->getName().' / '.$part->getGroup()->getName().' / '.
-                          $part->getName();
-        }
-        return $allPaths;
-    }
-    
-    /**
-     * Metoda navracející pole objektů částí, do kterých patří přírodnina, které patří nahlášený obrázek
-     * @return Part[] Pole objektů částí, pouze s vyplněným ID, ve kterých se obrázek může zobrazit
-     * @throws DatabaseException
-     * @throws NoDataException Pokud není přírodnina, se kterou je obrázek spojen nalezena v databázi nebo není
-     *     přiřazena k žádné části
-     */
-    public function getPartsWithPicture(): array
+    public function getClass(): ClassObject
     {
         $this->loadIfNotLoaded($this->picture);
-        $natural = $this->picture->getNatural();
-        
-        $result = Db::fetchQuery('SELECT casti_id FROM prirodniny_casti WHERE prirodniny_id = ?',
-            array($natural->getId()), true);
-        
-        if (!$result) {
-            throw new NoDataException(NoDataException::NATURAL_UNASSIGNED);
-        }
-        $allParts = array();
-        foreach ($result as $partInfo) {
-            $partId = $partInfo['casti_id'];
-            $allParts[] = new Part(false, $partId);
-        }
-        return $allParts;
+        return $this->picture->getNatural()->getClass();
     }
     
     /**
@@ -184,6 +151,18 @@ class Report extends DatabaseItem
         $this->loadIfNotLoaded($this->picture);
         $natural = $this->picture->getNatural();
         return $natural->getName();
+    }
+
+    /**
+     * Metoda navracející ID přírodniny, ke které byl nahlášený obrázek nahrán
+     * @return int ID přírodniny na obrázku
+     * @throws DatabaseException
+     */
+    public function getNaturalId(): int
+    {
+        $this->loadIfNotLoaded($this->picture);
+        $natural = $this->picture->getNatural();
+        return $natural->getId();
     }
     
     /**

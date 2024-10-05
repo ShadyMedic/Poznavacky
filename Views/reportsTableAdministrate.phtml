@@ -1,6 +1,6 @@
 <table id="reports-table">
     <tr>
-        <th>Třída / Poznávačka / Část</th>
+        <th>Třída</th>
         <th>Přírodnina</th>
         <th>Zdroj</th>
         <th>Důvod</th>
@@ -16,11 +16,7 @@
             data-picture-id="<?= $report->getPictureId() ?>"
             data-report-id="<?= $report->getId() ?>"
             data-report-url="<?= $report->getUrl() ?>">
-            <td>
-            <?php foreach ($report->getPicturePaths() as $path) : ?>
-                <li><?= $path ?></li>
-            <?php endforeach ?>
-            </td>
+            <td><?= $report->getClass()->getName() ?></td>
             <td><?= $report->getPicture()->getNatural()->getName() ?></td>
             <td><?= $report->getUrl() ?></td>
             <td><?= $report->getReason() ?></td>
@@ -29,13 +25,13 @@
             <td class="report action">
                 <div>
                     <button class='btn icon show-picture-button' title='Zobrazit obrázek'>
-                        <img src='images/eye-colour.svg'/>
+                        <img class="icon purple" src='images/eye_f.svg'/>
                     </button>
                     <button class='btn icon delete-picture-button' title='Odstranit obrázek'>
-                        <img src='images/trash-black.svg'/>
+                        <img class="icon black" src='images/trash_f.svg'/>
                     </button>
                     <button class='btn icon delete-report-button' title='Odstranit hlášení'>
-                        <img src='images/minus-orange.svg'/>
+                        <img class="icon orange" src='images/minus-thick.svg'/>
                     </button>
                 </div>
             </td>
@@ -43,7 +39,7 @@
     <?php endforeach ?>
 </table>
 <div id="report-image" style="display: none">
-    <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img src="images/cross-thin-white.svg" alt="Skrýt obrázek"></button>
+    <button class="btn icon hide-picture-button" title="Skrýt obrázek"><img class="icon white" src="images/cross-thick.svg" alt="Skrýt obrázek"></button>
     <img src="" alt="Náhled obrázku">
     </div>
 </div>

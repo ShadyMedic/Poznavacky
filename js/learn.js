@@ -15,12 +15,18 @@ $(function()
 
     //event listener stisknutí klávesy
     $("body").keydown(function(event) {keyPressed(event)});
-
-    //event listener změny select boxu přírodnin
-    $("#natural-select span").on('DOMSubtreeModified', function() {sel()});
     
     //event listener chyby načítání obrázku
     $("#main-img").on("error", function() {imgErrorHandle()});
+
+    //observery
+    let options = { childList: true };
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function() {
+            sel();
+        });    
+    });
+    observer.observe($("#natural-select span")[0], options);
 })
 
 /**
@@ -244,5 +250,5 @@ function updateNatural(offset)
  */
 function imgErrorHandle()
 {
-    $("#main-img").attr("src", '/images/file-error.svg');
+    $("#main-img").attr("src", '/images/file-error_o.svg');
 }

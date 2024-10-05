@@ -141,6 +141,9 @@
             width: 100%;
             max-width: auto;
         }
+        > img {
+            width: 100%;
+        }
         > div {
             text-align: center;
             margin: 0.6rem auto;
@@ -174,16 +177,25 @@
         padding: 0.6rem;
         display: flex;
         flex-direction: column;
-        @media screen and (min-width: 440px) {
+        @media screen and (min-width: 512px) {
             flex-direction: row;
+            justify-content: space-between;
+        }
+        .border-btn {
+            flex-grow: 1;
         }
         .border-btn:not(:last-child) {
             margin-bottom: 0.4rem;
-            @media screen and (min-width: 440px) {
+            @media screen and (min-width: 512px) {
                 margin-bottom: 0;
-                margin-right: 0.4rem;
+                margin-right: 0.8rem;
             }
         }
+    }
+    #status-readonly {
+        font-size: 0.72rem;
+        white-space: nowrap;
+        display: inline;
     }
     .custom-checkbox-wrapper {
         .checkmark {
@@ -302,10 +314,9 @@
     width: 100%;
     .data-properties,
     .data-item {
-        width: 100%;
         min-width: fit-content;
         display: grid;
-        grid-template-columns: minmax(9rem, 3fr) minmax(6rem, 3fr) minmax(12rem, 3fr) 12rem 8.2rem 9rem;
+        grid-template-columns: minmax(7.2rem, 2.5fr) minmax(7.2rem, 2fr) minmax(7.2rem, 3fr) minmax(4.4rem, 1.2fr) minmax(2rem, 9rem);
         column-gap: 0.6rem;
         justify-items: stretch;
         align-items: center;
@@ -332,7 +343,7 @@
         .url-edit {
             grid-column: 2/3;
             grid-row: 1/2;
-            font-size: 0.8rem;
+            font-size: 0.72rem;
         }
         .url {
             overflow-wrap: break-word;
@@ -345,30 +356,30 @@
             grid-column: 3/4;
             grid-row: 1/2;
         }
-        .additional-info {
+        .number {
             grid-column: 4/5;
             grid-row: 1/2;
         }
-        .number {
+        .action {
             grid-column: 5/6;
             grid-row: 1/2;
-        }
-        .action {
-            grid-column: 6/7;
-            grid-row: 1/2;
             > * {
-                margin: auto 0.4rem;
+                margin: 0.12rem 0.4rem;
             }
         }
         .action,
         .edit-buttons {
             width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            align-items: center;
+            @media screen and (min-width: 840px) {
+                flex-direction: row;
+            }
             justify-content: space-evenly;
         }
         .image {
-            grid-column: 1/7;
+            grid-column: 1/6;
             grid-row: 2/3;
             height: 300px;
             margin: 1rem auto 0.4rem auto;
@@ -809,6 +820,10 @@
             flex-direction: column;
             @media screen and (min-width: $smallDesktop) {
                 flex-direction: row;
+            }
+            .sort-down-button {
+                transform: rotate(180deg);
+                transition: none;
             }
             
         }

@@ -46,10 +46,9 @@ function inactivateSortButton()
     // existuje aktivní řazení (kdyby neexistovalo, tak $buttonImgActiveOld.length == 0)
     if ($buttonImgActiveOld.length != 0)
     {
-        let buttonImgActiveOldSrc = $buttonImgActiveOld.attr("src");
-        let buttonImgSrcNormal = buttonImgActiveOldSrc.slice(0, buttonImgActiveOldSrc.length - 9) + "black" + buttonImgActiveOldSrc.slice(buttonImgActiveOldSrc.length - 4);
-        $buttonImgActiveOld.attr("src", buttonImgSrcNormal);
-        $buttonImgActiveOld.closest(".btn").removeClass("active");
+        $buttonImgActiveOld.closest(".btn").removeClass("active")
+        $buttonImgActiveOld.removeClass("black");
+        $buttonImgActiveOld.addClass("gray")
     }
 }
 
@@ -81,10 +80,9 @@ function sortNaturals(event, direction)
 
     // grafické zvýraznění šipky pro aktivní řazení
     let $buttonImg = $(event.target).closest(".btn").find("img");
-    let buttonImgSrc = $buttonImg.attr("src");
-    let buttonImgSrcActive = buttonImgSrc.slice(0, buttonImgSrc.length - 9) + "green" + buttonImgSrc.slice(buttonImgSrc.length - 4);
-    $buttonImg.attr("src", buttonImgSrcActive);
     $buttonImg.closest(".btn").addClass("active");  
+    $buttonImg.addClass("black");
+    $buttonImg.removeClass("gray");
 
     
     naturalParameters.sort((a,b) => {

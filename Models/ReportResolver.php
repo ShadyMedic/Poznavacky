@@ -18,7 +18,6 @@ use Poznavacky\Models\Statics\UserManager;
 class ReportResolver
 {
     private Classobject $class;
-    private Group $group;
     private bool $adminIsLogged = false;
     
     /**
@@ -45,30 +44,24 @@ class ReportResolver
         }
         
         //Kontrola dat OK
-        if (!isset($_SESSION['selection']['group'])) {
-            if (!$this->adminIsLogged) {
-                throw new AccessDeniedException(AccessDeniedException::REASON_GROUP_NOT_CHOSEN);
-            }
-        } else {
-            //Tyto dvě vlastnosti jsou potřeba při správě hlášení na stránce reports, ne na administrate
-            //Vlastnosti jsou potřeba při úpravách dat obrázku (což není na administrate stránce možné)
-            //a dále při kontrole, zda obrázek patří do spravované třídy (což u systémových administrátorů není třeba řešit)
-            $this->class = $class;
-            $this->group = $_SESSION['selection']['group'];
-        }
+        
+        //Tyto dvě vlastnosti jsou potřeba při správě hlášení na stránce reports, ne na administrate
+        //Vlastnosti jsou potřeba při úpravách dat obrázku (což není na administrate stránce možné)
+        //a dále při kontrole, zda obrázek patří do spravované třídy (což u systémových administrátorů není třeba řešit)
+        $this->class = $class;
     }
     
     /**
      *
      * Metoda upravující přírodninu a/nebo adresu obrázku uloženého v databázi
      * @param int $pictureId ID obrázku, jehož data chceme změnit
-     * @param string $newNaturalName Název nové přírodniny, kterou obrázek zobrazuje
+     * @param int $newNaturalId ID nové přírodniny, kterou obrázek zobrazuje
      * @param string $newUrl Nová adresa obrázku
      * @throws AccessDeniedException V případě, že nově zvolená přírodnina nepatří do té samé poznávačky, jako ta
      *     stávající
      * @throws DatabaseException
      */
-    public function editPicture(int $pictureId, string $newNaturalName, string $newUrl): void
+    public function editPicture(int $pictureId, int $newNaturalId, string $newUrl): void
     {
         $picture = new Picture(false, $pictureId);
         
@@ -79,15 +72,14 @@ class ReportResolver
             throw new AccessDeniedException(AccessDeniedException::REASON_MANAGEMENT_REPORTS_RESOLVE_PICTURE_FOREIGN_NATURAL);
         }
         
-        $natural = new Natural(false, 0);
-        $natural->initialize($newNaturalName, null, null, $this->class);
+        $natural = new Natural(false, $newNaturalId);
+        $natural->initialize(null, null, null, $this->class);
     
         //Změň https na http (funguje častěji)
         $newUrl = preg_replace("/^https:\/\//", "http://", $newUrl);
         
         try {
-            $picture->updatePicture($natural, $newUrl,
-                $this->group); //Logování chyb je řešeno v této metodě a metodách, které volá
+            $picture->updatePicture($natural, $newUrl); //Logování chyb je řešeno v této metodě a metodách, které volá
         } catch (AccessDeniedException $e) {
             if ($e->getMessage() === AccessDeniedException::REASON_ADD_PICTURE_UNKNOWN_NATURAL) {
                 //Nahraď hlášku
@@ -99,13 +91,13 @@ class ReportResolver
         }
         
         $picture->save();
-        (new Logger())->info('Uživatel s ID {userId} upravil z IP adresy {ip} obrázek s ID {pictureId} a to tak, že jeho URL adresu nastavil na {newUrl} a přiřadil ho k přírodnině s názvem {newNatural}',
+        (new Logger())->info('Uživatel s ID {userId} upravil z IP adresy {ip} obrázek s ID {pictureId} a to tak, že jeho URL adresu nastavil na {newUrl} a přiřadil ho k přírodnině s ID {newNaturalId}',
             array(
                 'userId' => UserManager::getId(),
                 'ip' => $_SERVER['REMOTE_ADDR'],
                 'pictureId' => $pictureId,
                 'newUrl' => $newUrl,
-                'newNatural' => $newNaturalName
+                'newNaturalId' => $newNaturalId
             ));
     }
     
