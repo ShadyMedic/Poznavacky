@@ -11,7 +11,7 @@ body {
     font-size: 100%;
     min-width: 100%;
     min-height: 100vh;
-    color: $black1;
+    color: var(--c-text);
     .btn:focus {
         outline: none;
     }
@@ -41,9 +41,6 @@ body {
         input[type="checkbox"]:checked:focus ~ .checkmark {
             box-shadow: inset 0 0 0 1.6px rgba($greenLight, 1);
         }
-    }
-    .text-field:focus {
-        box-shadow: inset 0 0 0 1.6px rgba($greenLight, 0.6);
     }
 }
 
@@ -89,7 +86,7 @@ header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: white;
+        color: var(--c-text-inv);
         word-break: break-word;
         .text {
             max-height: 24vh;
@@ -106,15 +103,16 @@ header {
         background: $greenMid;
     }
     .info-message {
-        background: #888;
+        background: var(--c-info);
     }
     .warning-message {
-        background: #960;
+        background: var(--c-warning);
     }
     .error-message {
-        background: $red1;
+        background: var(--c-error);
     }
 }
+
 #popups {
     position: fixed;
     width: 100vw;
@@ -123,14 +121,15 @@ header {
     pointer-events: none;
     z-index: 10;
 }
+
 .confirm-item {
     position: fixed;
-    border: solid 2px $red1;
+    border: solid 2px var(--c-error);
     box-shadow: 0px 0px 4px 2px rgba(black, 0.2);
     top: 40%;
     left: 50%;
     transform: translateX(-50%);
-    background: white;
+    background: var(--c-bgd-popup);
     width: 90vw;
     max-width: 520px;
     height: fit-content;
@@ -155,7 +154,7 @@ header {
 
 footer {
     padding: 0.12rem 1rem;
-    background: $gray1;
+    background: var(--c-footer);
     font-size: 0.72rem;
     .content {
         display: flex;
@@ -236,22 +235,22 @@ ul.list {
         
         &.non-transparent {
             &.white {
-                background: white;
-                color: $black1;
-                &:after {
+                background: var(--c-button-light);
+                color: var(--c-text-inv);
+                &::after {
                     background: rgba(black, 0.04);
                 }
             }
             &.black {
-                background: $black1;
-                color: white;
-                &:after {
+                background: var(--c-button-dark);
+                color: var(--c-text-inv);
+                &::after {
                     background: rgba(white, 0.08);
                 }
                 &.disabled {
-                    background: #888;
-                    border-color: #888;
-                    color: #ddd;
+                    background: var(--c-disabled);
+                    border-color: var(--c-disabled);
+                    color: (--c-text);
                     > img {
                         filter: grayscale(50%);
                     }
@@ -260,7 +259,7 @@ ul.list {
             &.dark-green {
                 background: $greenDark;
                 color: white;
-                &:after {
+                &::after {
                     background: rgba(white, 0.06);
                 }
             }
@@ -269,17 +268,17 @@ ul.list {
             background: transparent;
             padding: calc(0.44em - 2px) calc(1em - 2px);
             &.white {
-                color: white;
-                border: 2px solid white;
+                color: var(--c-button-light);
+                border: 2px solid var(--c-button-light);
                 &:after {
                     background: rgba(white, 0.06);
                 }
             }
             &.black {
-                color: $black1;
-                border: 2px solid $black1;
+                color: var(--c-text);
+                border: 2px solid var(--c-button-dark);
                 &:after {
-                    background: rgba(black, 0.06);
+                    background: rgb(from var(--c-button-dark) r g b / 6%);
                 }
                 &.disabled {
                     border-color: #888;
@@ -296,11 +295,11 @@ ul.list {
         &:after {
             content:"";
             position: absolute;
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
+            width: 100%;
+            height: 100%;
             transform: scale(0);
-            top: -2px;
-            left: -2px;
+            top: 0;
+            left: 0;
             transition: transform 0.1s ease-out;
             border-radius: 0.2em;
             }
@@ -354,10 +353,10 @@ ul.list {
             text-decoration: underline;
         }
         &.white {
-            color: white;
+            color: var(--c-text-inv);
         }
         &.black {
-            color: $black1;
+            color: var(--c-text);
         }
         &.green {
             color: $greenDark; 
@@ -401,6 +400,42 @@ img.icon {
     &.red {
         filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
     }    
+
+    &.selected {
+        filter: invert(25%) sepia(85%) saturate(4117%) hue-rotate(75deg) brightness(90%) contrast(87%);
+    }
+}
+
+//dark mode
+@media (prefers-color-scheme: dark) {
+    img.icon {
+        &.black {
+            filter: invert(98%) sepia(3%) saturate(7%) hue-rotate(246deg) brightness(114%) contrast(87%);
+        }
+        &.white {
+            filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
+            &.shadow {
+                filter: drop-shadow(0 0 4px rgba(white, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+            }
+        }   
+        &.gray {
+            filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
+        }  
+        &.green {
+            filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
+        } 
+        &.red {
+            filter: invert(32%) sepia(97%) saturate(663%) hue-rotate(320deg) brightness(95%) contrast(83%);
+        }  
+
+        &.selected {
+            filter: invert(49%) sepia(51%) saturate(3856%) hue-rotate(64deg) brightness(94%) contrast(87%);
+        }
+
+        &.white-dm {
+            filter: invert(98%) sepia(3%) saturate(7%) hue-rotate(246deg) brightness(114%) contrast(87%);
+        } 
+    }
 }
 
 .center {
@@ -419,8 +454,13 @@ textarea {
         padding: 0.44em 0.8em;
         border-radius: 0.2em;
         line-height: 1.32em;
+        color: var(--c-text);
+        background: var(--c-text-field);
+        @media (prefers-color-scheme: dark) {
+            border: 1px solid $gray3;
+        }
         &.disabled {
-            background: #ddd;
+            background: var(--c-disabled);
             pointer-events: none;
             cursor: auto;
         }
@@ -433,6 +473,9 @@ textarea {
         }
         &[type="number"] {
             -moz-appearance: textfield;
+        }
+        &:focus {
+            box-shadow: inset 0 0 0 2px var(--c-selected);
         }
     }
 }
@@ -483,7 +526,7 @@ label {
     &.required {
         &:after {
             content: " *";
-            color: $red1;
+            color: var(--c-error);
         }
     }
 }
@@ -556,6 +599,7 @@ label {
             }
             .custom-select-main {
                 border-radius: 3.2px 3.2px 0 0;
+                box-shadow: inset 0 0 0 2px var(--c-selected);
                 .arrow {
                     transform: rotate(270deg);
                 }
@@ -568,10 +612,13 @@ label {
         display: flex;
         align-items: center;
         font-size: 1em;
-        color: $gray1;
+        color: var(--c-text);
         height: 2.28em;
         padding: 0.48em 0.8em;
-        background: #fff;
+        background: var(--c-text-field);
+        @media (prefers-color-scheme: dark) {
+            border: 1px solid $gray3;
+        }
         cursor: pointer;
         border-radius: 3.2px;
         span {
@@ -594,7 +641,7 @@ label {
         top: 100%;
         left: 0;
         right: 0;
-        background: #fff;
+        background: var(--c-text-field);
         transition: all 0.4s ease-out;
         opacity: 0;
         transform: rotateX(90deg);
@@ -606,20 +653,23 @@ label {
         border-radius: 0 0 3.2px 3.2px;
         box-shadow: 0 3px 2px -1px rgba(black, 0.2);
         overflow: auto;
+        @media (prefers-color-scheme: dark) {
+            border: 1px solid $gray3;
+        }
         .custom-option {
             position: relative;
             display: block;
             padding: 0.4em 0.72em;
-            color: $black1;
+            color: var(--c-text);
             cursor: pointer;
-            border-top: 1px solid $gray2;
+            border-top: 1px solid var(--c-bgd-comp);
             &:hover {
                 cursor: pointer;
-                background: $gray2;
+                background: var(--c-selected-hover);
             }
             &.selected {
                 color: #fff;
-                background: $greenMid;
+                background: var(--c-selected);
             }
         }
     }

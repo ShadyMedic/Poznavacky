@@ -47,8 +47,8 @@ function inactivateSortButton()
     if ($buttonImgActiveOld.length != 0)
     {
         $buttonImgActiveOld.closest(".btn").removeClass("active")
-        $buttonImgActiveOld.removeClass("black");
-        $buttonImgActiveOld.addClass("gray")
+        $buttonImgActiveOld.removeClass("selected");
+        $buttonImgActiveOld.addClass("black")
     }
 }
 
@@ -81,8 +81,8 @@ function sortNaturals(event, direction)
     // grafické zvýraznění šipky pro aktivní řazení
     let $buttonImg = $(event.target).closest(".btn").find("img");
     $buttonImg.closest(".btn").addClass("active");  
-    $buttonImg.addClass("black");
-    $buttonImg.removeClass("gray");
+    $buttonImg.addClass("selected");
+    $buttonImg.removeClass("black");
 
     
     naturalParameters.sort((a,b) => {

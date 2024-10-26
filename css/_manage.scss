@@ -2,11 +2,15 @@
 #manage,
 #members,
 #tests,
-#naturals {
-    .data-item {
+#naturals,
+#resolve-reports {
+    .data-item,
+    .data-properties {
         margin: 0.6rem;
         padding: 0.4rem 0.8rem;
-        border: 1px solid #ccc;
+    }
+    .data-item {
+        border: 1px solid var(--c-tile-border);
         border-radius: 0.2rem;
         display: grid;
         @media screen and (min-width: $smallTablet) {
@@ -77,7 +81,7 @@
             font-size: 0.72rem;
             line-height: 0.96rem;
             min-height: 0.96rem; 
-            color: $red1;
+            color: var(--c-error);
             &.server {
                 margin-bottom: 0.2rem;
                 min-height: 0;
@@ -106,7 +110,7 @@
     #delete-class2,
     .kick-user {
         span {
-            color: $red1;
+            color: var(--c-error);
         }
         .buttons {
             display: flex;
@@ -244,7 +248,7 @@
         }
     }
     .invite-user-section {
-        padding: 0.4rem;
+        padding: 0.6rem;
     }
 }
 
@@ -255,8 +259,8 @@
     }
     .tests-data-section {
         width: 100%;
-        .data-properties.test,
-        .data-item.test {
+        .data-properties,
+        .data-item {
             display: grid;
             grid-template-columns: 1fr 3rem 6rem;
             @media screen and (min-width: $smallMobile) {
@@ -273,14 +277,12 @@
             }
             align-items: center;
             justify-items: center;
-            margin: 0.4rem;
-            padding: 0.2rem 0.8rem;
             > * {
                 margin: auto;
             }
         }
         .data-item.test {
-            border: 1px solid #ccc;
+            border: 1px solid var(--c-tile-border);
             border-radius: 0.2rem;
             > span {
                 padding: calc(0.2em + 4px) 0;
@@ -306,7 +308,7 @@
         }
     }
     .tests-new-section {
-        padding: 0.4rem;
+        padding: 0.6rem;
     }
 }
 
@@ -320,15 +322,13 @@
         column-gap: 0.6rem;
         justify-items: stretch;
         align-items: center;
-        margin: 0.4rem;
-        padding: 0.2rem 0.8rem;
         > span {
             padding: calc(0.2em + 4px) 0;
         }
     }
     .data-item {
         grid-template-rows: auto auto;
-        border: 1px solid #ccc;
+        border: 1px solid var(--c-tile-border);
         border-radius: 0.2rem;
         .name,
         .name-edit {
@@ -337,7 +337,6 @@
         }
         .name-edit {
             width: 100%;
-            font-size: 0.8rem;
         }
         .url,
         .url-edit {
@@ -389,9 +388,6 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                > img {
-                    filter: drop-shadow(0 0 0.16rem rgba(black, 0.6));
-                }
             }
             > img {
                 height: 100%;
@@ -402,17 +398,6 @@
             width: 100%;
             resize: none;
             height: fit-content;
-            padding: 0.32em 0.4em;
-        }
-        .custom-select-wrapper {
-            .custom-select-main {
-                height: 1.96em;
-                padding: 0.32em 0.4em;
-            }
-            .custom-options {
-                max-height: 200px;
-                padding: 0.3em 0.32em;
-            }
         }
     }
     .data-properties > *,
@@ -459,7 +444,7 @@
         @media screen and (min-width: $smallTablet) {
             width: auto;
         }
-        border: 1px solid #ccc;
+        border: 1px solid var(--c-tile-border);
         border-radius: 0.2rem;
         padding: 1.6rem;  
         &:not(:last-child) {
@@ -578,7 +563,6 @@
         .text-field {
             height: 1.6em;
             padding: 0.48em 0.4em;
-            background: #f8f8f8;
         }
     }
     .name-box {
@@ -716,9 +700,6 @@
             .btn {
                 margin: 1rem;
                 position: absolute;
-                > img {
-                    filter: drop-shadow(0 0 0.16rem rgba(black, 0.6));
-                }
                 &.hide-picture-button {
                     top: 0;
                     right: 0;
@@ -830,7 +811,6 @@
         .btn {
             width: 0.72em;
             height: 0.72em;
-            //filter: opacity(0.4);
             position: relative;
             top: 1px;
             img {

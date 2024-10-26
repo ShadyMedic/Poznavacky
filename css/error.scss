@@ -13,7 +13,7 @@ header {
         margin: 1em 0;
         text-align: center;
         .error-code {
-            color: $red1;
+            color: var(--c-error);
         }
     }
 }

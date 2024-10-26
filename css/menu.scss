@@ -14,7 +14,7 @@
 #naturals {
     @include scrollbar(12px, $gray3, $gray1);
     position: relative;
-    background: #eee;
+    background: var(--c-bgd);
     @media screen and (min-width: $smallTablet) {
         height: 100vh;
         overflow: hidden;
@@ -110,7 +110,7 @@
         grid-row: 1/6;
         grid-column: 1/2;
         color: white;
-        background: $gray3;
+        background: var(--c-side-panel);
         padding-top: 104px;
         @media screen and (min-width: $smallTablet) {
             display: flex;
@@ -137,7 +137,10 @@
             grid-column: 2/3;
         }
         > div {
-            background-color: #e0e0e0;
+            background-color: var(--c-nav);
+            @media (prefers-color-scheme: dark) {
+                border: 1px solid $gray3;
+            }
             padding: 0.6rem 1.2rem;
             @media screen and (min-width: $smallTablet) {
                 padding: 0.24rem 0.6rem 0.24rem 4rem;
@@ -201,7 +204,7 @@
         line-height: 1.2em;
         margin-top: 0.2rem;
         text-align: justify;
-        color: $gray3;
+        color: var(--c-text-info);
     }
     .info-section {
         text-align: justify;
@@ -274,7 +277,7 @@
         
         li {
             display: block;
-            background: white;
+            background: var(--c-tile);
             border-radius: 6px;
             box-shadow: 0 3px 2px -1px rgba(black, 0.2);
             &:not(#enter-code-wrapper):not(#request-class-wrapper) > * {
@@ -412,7 +415,7 @@
                 &.empty {
                     .part.naturals-count,
                     .part.pictures-count {
-                        color: $red1;
+                        color: var(--c-error);
                     }
                 }
                 .name {
@@ -434,10 +437,8 @@
                     grid-column: 1/5;
                     display: none;
                     overflow: hidden; 
-                    padding: 0.6rem 0.2rem 0.2rem 0.2rem;    
-                }
-                .info {
-                    font-size: 0.9rem;
+                    padding: 0.6rem 0.2rem 0.2rem 0.2rem;   
+                    font-size: 0.9rem; 
                 }
                 .buttons {
                     width: 100%;
@@ -473,7 +474,7 @@
                 display: grid;
                 width: 100%;
                 padding: 0.6rem;
-                color: $black1;
+                color: var(--c-text);
             }
             .name {
                 word-break: break-word;
@@ -484,7 +485,7 @@
                 }
             }
             .text-field {
-                background: #eee;
+                background: VAR(--c-text-field);
             }
         }
         #demo-info {
