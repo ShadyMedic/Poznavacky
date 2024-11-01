@@ -1,4 +1,6 @@
 body {
+  --c-overlay-dark: #000;
+  --c-overlay-light: #fff;
   --c-primary: #479911;
   --c-text: #121212;
   --c-text-inv: #fff;
@@ -15,6 +17,7 @@ body {
   --c-side-panel: #444;
   --c-nav: #e0e0e0;
   --c-text-field: #fff;
+  --c-button-primary: #121212;
   --c-button-dark: #121212;
   --c-button-light: #fff;
   --c-disabled: #888;
@@ -24,6 +27,8 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
+    --c-overlay-dark: #fff;
+    --c-overlay-light: #000;
     --c-primary: #479911;
     --c-text: #eee;
     --c-text-inv: #121212;
@@ -40,7 +45,8 @@ body {
     --c-side-panel: #323232;
     --c-nav: ${$gray1};
     --c-text-field: #1c1c1c;
-    --c-button-dark: #75b34d;
+    --c-button-primary: #75b34d;
+    --c-button-dark: #eee;
     --c-button-light: #75b34d;
     --c-disabled: #666;
     --c-selected-hover: #68924d;

@@ -234,6 +234,21 @@ ul.list {
         line-height: 1.32em;
         
         &.non-transparent {
+            &.primary {
+                background: var(--c-button-primary);
+                color: var(--c-text-inv);
+                &::after {
+                    background: rgba(white, 0.08);
+                }
+                &.disabled {
+                    background: var(--c-disabled);
+                    border-color: var(--c-disabled);
+                    color: (--c-text);
+                    > img {
+                        filter: grayscale(50%);
+                    }
+                }
+            }
             &.white {
                 background: var(--c-button-light);
                 color: var(--c-text-inv);
@@ -241,11 +256,11 @@ ul.list {
                     background: rgba(black, 0.04);
                 }
             }
-            &.black {
+            &.dark {
                 background: var(--c-button-dark);
                 color: var(--c-text-inv);
                 &::after {
-                    background: rgba(white, 0.08);
+                    background: rgb(from var(--c-overlay-light) r g b / 8%);
                 }
                 &.disabled {
                     background: var(--c-disabled);
@@ -267,6 +282,17 @@ ul.list {
         &.transparent {
             background: transparent;
             padding: calc(0.44em - 2px) calc(1em - 2px);
+            &.primary {
+                color: var(--c-text);
+                border: 2px solid var(--c-button-primary);
+                &:after {
+                    background: rgb(from var(--c-button-primary) r g b / 6%);
+                }
+                &.disabled {
+                    border-color: #888;
+                    color: #888;
+                }
+            }
             &.white {
                 color: var(--c-button-light);
                 border: 2px solid var(--c-button-light);
@@ -274,7 +300,7 @@ ul.list {
                     background: rgba(white, 0.06);
                 }
             }
-            &.black {
+            &.dark {
                 color: var(--c-text);
                 border: 2px solid var(--c-button-dark);
                 &:after {
