@@ -54,7 +54,7 @@ body {
     --c-selected: #{$greenMid};
 }
 
-//dark mode
+//dark mode 
 @media (prefers-color-scheme: dark) {
     body {
         --c-overlay-dark: #fff;

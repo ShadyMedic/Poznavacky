@@ -487,6 +487,9 @@ img.icon.black {
 img.icon.white {
   filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
 }
+img.icon.white.shadow {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+}
 img.icon.gray {
   filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
 }
