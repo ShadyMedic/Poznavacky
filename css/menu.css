@@ -1080,7 +1080,7 @@ label.required:after {
   height: 72px;
   width: 72px;
   position: absolute;
-  z-index: 10;
+  z-index: 2;
   border-radius: 100px;
   background: linear-gradient(135deg, #366e11, #007F44);
 }
