@@ -660,15 +660,15 @@ label.required:after {
 }
 .custom-checkbox-wrapper .checkmark:after {
   content: "";
-  position: absolute;
   display: none;
-  left: 0.6rem;
-  top: 0.3rem;
-  width: 0.3rem;
-  height: 0.6rem;
-  border: solid white;
-  border-width: 0 0.15rem 0.15rem 0;
-  transform: rotate(45deg);
+  position: absolute;
+  left: 0.05rem;
+  right: 0;
+  top: 0.05rem;
+  bottom: 0;
+  background-image: url("../../images/tick-thick.svg");
+  transform: scale(60%);
+  filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
 }
 .custom-checkbox-wrapper:hover input ~ .checkmark {
   background-color: #d8d8d8;

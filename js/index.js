@@ -366,7 +366,7 @@ function showLoginDiv($loginSectionDiv)
     $loginSectionDiv.show();
     $loginSectionDiv.find(".text-field").first().focus();
 
-    emptyForms($(".user.data .text-field, .user.data .message"));
+    emptyForms($(".user.data .text-field, .user.data input[type='checkbox'], .user.data .message"));
 }
 
 /**
@@ -378,7 +378,7 @@ function hideLoginSection()
     $("#overlay").removeClass("show");
     $("body").css("overflowY", "auto");
 
-    emptyForms($(".user.data .text-field, .user.data .message"));
+    emptyForms($(".user.data .text-field, .user.data input[type='checkbox'], .user.data .message"));
 }
 
 /**
@@ -400,6 +400,7 @@ function emptyForms($fields)
 {
     $fields.val('');
     $fields.text('');
+    $fields.prop("checked", false);
 }
 
 /*--------------------------------------------------------------------------*/
