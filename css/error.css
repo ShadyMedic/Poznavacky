@@ -27,8 +27,9 @@ body {
   --c-overlay-dark: #000;
   --c-overlay-light: #fff;
   --c-primary: #479911;
+  --c-primary-contrast: #366e11;
   --c-text: #121212;
-  --c-text-inv: #fff;
+  --c-text-inv: #eee;
   --c-text-info: #444;
   --c-error: #a00;
   --c-warning: #960;
@@ -44,10 +45,11 @@ body {
   --c-text-field: #fff;
   --c-button-primary: #121212;
   --c-button-dark: #121212;
-  --c-button-light: #fff;
+  --c-button-light: #eee;
   --c-disabled: #888;
   --c-selected-hover: #eee;
   --c-selected: #479911;
+  --c-checkmark: #479911;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -55,6 +57,7 @@ body {
     --c-overlay-dark: #fff;
     --c-overlay-light: #000;
     --c-primary: #479911;
+    --c-primary-contrast: #79cf40;
     --c-text: #eee;
     --c-text-inv: #121212;
     --c-text-info: #aaa;
@@ -72,10 +75,11 @@ body {
     --c-text-field: #1c1c1c;
     --c-button-primary: #75b34d;
     --c-button-dark: #eee;
-    --c-button-light: #75b34d;
+    --c-button-light: #eee;
     --c-disabled: #666;
     --c-selected-hover: #68924d;
     --c-selected: #366e11;
+    --c-checkmark: #479911;
   }
 }
 html {
@@ -428,10 +432,10 @@ ul.list li:not(:last-child) {
   transition: transform 0.2s ease-out;
 }
 .btn.arrow-btn.white {
-  color: white;
+  color: var(--c-button-light);
 }
-.btn.arrow-btn.black {
-  color: #222;
+.btn.arrow-btn.dark {
+  color: var(--c-button-dark);
 }
 .btn.arrow-btn img {
   height: 1em;
@@ -457,6 +461,9 @@ ul.list li:not(:last-child) {
 }
 .btn.inline.white {
   color: var(--c-text-inv);
+}
+.btn.inline.white-dm {
+  color: #eee;
 }
 .btn.inline.black {
   color: var(--c-text);
@@ -656,7 +663,12 @@ label.required:after {
   height: 1.6rem;
   width: 1.6rem;
   border-radius: 0.2em;
-  background-color: #eee;
+  background-color: var(--c-text-field);
+}
+@media (prefers-color-scheme: dark) {
+  .custom-checkbox-wrapper .checkmark {
+    border: 1px solid #444;
+  }
 }
 .custom-checkbox-wrapper .checkmark:after {
   content: "";
@@ -671,10 +683,10 @@ label.required:after {
   filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
 }
 .custom-checkbox-wrapper:hover input ~ .checkmark {
-  background-color: #d8d8d8;
+  background-color: var(--c-selected-hover);
 }
 .custom-checkbox-wrapper input[type=checkbox]:checked ~ .checkmark {
-  background-color: #366e11;
+  background-color: var(--c-checkmark);
 }
 .custom-checkbox-wrapper input[type=checkbox]:checked ~ .checkmark:after {
   display: block;

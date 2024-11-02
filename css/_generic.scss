@@ -351,10 +351,10 @@ ul.list {
         font-size: 1.2rem;
         transition: transform 0.2s ease-out;
         &.white {
-            color: white;
+            color: var(--c-button-light);
         }
-        &.black {
-            color: $gray1;
+        &.dark {
+            color: var(--c-button-dark)
         }
         img {
             height: 1em;
@@ -380,6 +380,9 @@ ul.list {
         }
         &.white {
             color: var(--c-text-inv);
+        }
+        &.white-dm {
+            color: $textWhite;
         }
         &.black {
             color: var(--c-text);
@@ -581,7 +584,10 @@ label {
         height: 1.6rem;
         width: 1.6rem;
         border-radius: 0.2em;
-        background-color: #eee;
+        background-color: var(--c-text-field);
+        @media (prefers-color-scheme: dark) {
+            border: 1px solid $gray3;
+        }
         &:after {
             content: "";
             display: none;
@@ -597,10 +603,10 @@ label {
     }
 
     &:hover input ~ .checkmark {
-        background-color: #d8d8d8;
+        background-color: var(--c-selected-hover);
     }
     input[type="checkbox"]:checked ~ .checkmark {
-        background-color: $greenDark;
+        background-color: var(--c-checkmark);
         &:after {
             display: block;
         }

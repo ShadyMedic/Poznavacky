@@ -25,14 +25,18 @@ $purpleLight: #bd4ac2;
 $purpleDark: #6a106e;
 $gradientDark: #007F44;
 
+$textWhite: #eee;
+$textBlack: $black1;
+
 
 //light mode
 body {
     --c-overlay-dark: #000;
     --c-overlay-light: #fff;
     --c-primary: #{$greenMid};
-    --c-text: #{$black1};
-    --c-text-inv: #fff;
+    --c-primary-contrast: #{$greenDark};
+    --c-text: #{$textBlack};
+    --c-text-inv: #{$textWhite};
     --c-text-info: #{$gray3};
     --c-error: #{$error};
     --c-warning: #{$warning};
@@ -48,10 +52,11 @@ body {
     --c-text-field: #fff;
     --c-button-primary: #{$black1};
     --c-button-dark: #{$black1};
-    --c-button-light: #fff;
+    --c-button-light: #eee;
     --c-disabled: #888;
     --c-selected-hover: #{$gray2};
     --c-selected: #{$greenMid};
+    --c-checkmark: #{$greenMid};
 }
 
 //dark mode 
@@ -60,8 +65,9 @@ body {
         --c-overlay-dark: #fff;
         --c-overlay-light: #000;
         --c-primary: #{$greenMid};
-        --c-text: #{$gray2};
-        --c-text-inv: #{$black1};
+        --c-primary-contrast: #{$greenLight};
+        --c-text: #{$textWhite};
+        --c-text-inv: #{$textBlack};
         --c-text-info: #aaa;
         --c-error: #{$errorDesaturated};
         --c-warning: #{$warningDesaturated};
@@ -77,10 +83,11 @@ body {
         --c-text-field: #{$black2};
         --c-button-primary: #{$greenMidDesaturated};
         --c-button-dark: #eee;
-        --c-button-light: #{$greenMidDesaturated};
+        --c-button-light: #eee;
         --c-disabled: #666;
         --c-selected-hover: #{$greenDarkDesaturated};
         --c-selected: #{$greenDark};
+        --c-checkmark: #{$greenMid};
     }
 }
 

@@ -27,8 +27,9 @@ body {
   --c-overlay-dark: #000;
   --c-overlay-light: #fff;
   --c-primary: #479911;
+  --c-primary-contrast: #366e11;
   --c-text: #121212;
-  --c-text-inv: #fff;
+  --c-text-inv: #eee;
   --c-text-info: #444;
   --c-error: #a00;
   --c-warning: #960;
@@ -44,10 +45,11 @@ body {
   --c-text-field: #fff;
   --c-button-primary: #121212;
   --c-button-dark: #121212;
-  --c-button-light: #fff;
+  --c-button-light: #eee;
   --c-disabled: #888;
   --c-selected-hover: #eee;
   --c-selected: #479911;
+  --c-checkmark: #479911;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -55,6 +57,7 @@ body {
     --c-overlay-dark: #fff;
     --c-overlay-light: #000;
     --c-primary: #479911;
+    --c-primary-contrast: #79cf40;
     --c-text: #eee;
     --c-text-inv: #121212;
     --c-text-info: #aaa;
@@ -72,10 +75,11 @@ body {
     --c-text-field: #1c1c1c;
     --c-button-primary: #75b34d;
     --c-button-dark: #eee;
-    --c-button-light: #75b34d;
+    --c-button-light: #eee;
     --c-disabled: #666;
     --c-selected-hover: #68924d;
     --c-selected: #366e11;
+    --c-checkmark: #479911;
   }
 }
 html {
@@ -428,10 +432,10 @@ ul.list li:not(:last-child) {
   transition: transform 0.2s ease-out;
 }
 .btn.arrow-btn.white {
-  color: white;
+  color: var(--c-button-light);
 }
-.btn.arrow-btn.black {
-  color: #222;
+.btn.arrow-btn.dark {
+  color: var(--c-button-dark);
 }
 .btn.arrow-btn img {
   height: 1em;
@@ -457,6 +461,9 @@ ul.list li:not(:last-child) {
 }
 .btn.inline.white {
   color: var(--c-text-inv);
+}
+.btn.inline.white-dm {
+  color: #eee;
 }
 .btn.inline.black {
   color: var(--c-text);
@@ -656,7 +663,12 @@ label.required:after {
   height: 1.6rem;
   width: 1.6rem;
   border-radius: 0.2em;
-  background-color: #eee;
+  background-color: var(--c-text-field);
+}
+@media (prefers-color-scheme: dark) {
+  .custom-checkbox-wrapper .checkmark {
+    border: 1px solid #444;
+  }
 }
 .custom-checkbox-wrapper .checkmark:after {
   content: "";
@@ -671,10 +683,10 @@ label.required:after {
   filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
 }
 .custom-checkbox-wrapper:hover input ~ .checkmark {
-  background-color: #d8d8d8;
+  background-color: var(--c-selected-hover);
 }
 .custom-checkbox-wrapper input[type=checkbox]:checked ~ .checkmark {
-  background-color: #366e11;
+  background-color: var(--c-checkmark);
 }
 .custom-checkbox-wrapper input[type=checkbox]:checked ~ .checkmark:after {
   display: block;
@@ -808,10 +820,11 @@ label.required:after {
   }
 }
 #index {
+  background: var(--c-bgd);
   position: relative;
   width: 100vw;
   overflow-x: hidden;
-  color: #222;
+  color: var(--c-text);
   overflow-y: auto;
   scrollbar-color: #444 #222;
   scrollbar-width: auto;
@@ -827,8 +840,14 @@ label.required:after {
   background: #222;
 }
 #index header {
-  background: #366e11;
+  background: linear-gradient(90deg, #366e11, #007F44);
   padding: 1rem 1rem;
+  z-index: 4;
+  inset: 0;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
+          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
 }
 @media screen and (min-width: 576px) {
   #index header {
@@ -860,6 +879,25 @@ label.required:after {
   #index header .content .btn {
     margin: 0 0 0 1.2rem;
   }
+}
+#index #logo-standalone {
+  display: block;
+  top: -12px;
+  left: -12px;
+  height: 72px;
+  width: 72px;
+  position: absolute;
+  z-index: 5;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #366e11, #007F44);
+}
+#index #logo-standalone img {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  height: 50%;
+  width: 50%;
+  margin: auto;
 }
 #index main {
   grid-row: 2/4;
@@ -950,7 +988,6 @@ label.required:after {
   font-size: 1.6rem;
   padding: 0.4rem;
   text-decoration: none;
-  color: #222;
 }
 @media screen and (min-width: 768px) {
   #index #index-text-section > .content .btn {
@@ -980,7 +1017,7 @@ label.required:after {
   }
 }
 #index #index-buttons-section {
-  background: #222;
+  background: var(--c-side-panel);
   padding: 3rem 1rem;
 }
 @media screen and (min-width: 576px) {
@@ -1081,7 +1118,7 @@ label.required:after {
   position: fixed;
   overflow: hidden;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
-  border: 0.8rem solid white;
+  border: 0.8rem solid var(--c-bgd-popup);
   border-radius: 1rem;
   top: 50%;
   left: 50%;
@@ -1090,7 +1127,7 @@ label.required:after {
   height: auto;
   max-width: 520px;
   z-index: 10;
-  background: white;
+  background: var(--c-bgd-popup);
   opacity: 0;
   pointer-events: none;
 }
@@ -1146,16 +1183,14 @@ label.required:after {
 }
 #index #index-login-section .user.data label,
 #index #index-login-section .user.data input.text-field {
-  margin: 0.12rem 0;
+  margin: 0.2rem 0;
 }
 #index #index-login-section .user.data label:not(:nth-of-type(1)),
 #index #index-login-section .user.data .checkbox {
   margin-top: 0.54rem;
 }
 #index #index-login-section .user.data input.text-field {
-  color: #222;
   font-family: "Ubuntu", sans-serif;
-  background: #eee;
   padding-top: 0.6em;
   padding-bottom: 0.6em;
 }
@@ -1192,7 +1227,7 @@ label.required:after {
   margin-top: 0.4rem;
 }
 #index #index-login-section #register-terms .btn {
-  color: #366e11;
+  color: var(--c-primary-contrast);
 }
 #index footer {
   grid-row: 4/5;
@@ -1277,8 +1312,8 @@ label.required:after {
   height: 4rem;
   width: 4rem;
   padding: 0.8rem;
-  background: rgba(221, 221, 221, 0.96);
-  border: 2px solid rgba(221, 221, 221, 0.96);
+  background: var(--c-bgd-comp);
+  border: 2px solid var(--c-bgd-comp);
   position: fixed;
   bottom: 2rem;
   right: 2rem;
