@@ -692,6 +692,59 @@ label.required:after {
   display: block;
 }
 
+.custom-switch-wrapper {
+  display: block;
+  --width-of-switch: 3.8em;
+  --height-of-switch: 2.2em;
+  --size-of-icon: 1.6em;
+  --slider-offset: 0.3em;
+  position: relative;
+  width: var(--width-of-switch);
+  height: var(--height-of-switch);
+}
+.custom-switch-wrapper input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.custom-switch-wrapper .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f4f4f5;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+@media (prefers-color-scheme: dark) {
+  .custom-switch-wrapper .slider {
+    border: 1px solid #444;
+  }
+}
+.custom-switch-wrapper .slider::before {
+  position: absolute;
+  content: "";
+  height: var(--size-of-icon);
+  width: var(--size-of-icon);
+  border-radius: 20px;
+  left: var(--slider-offset);
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(40deg, #6a106e, #bd4ac2 70%);
+  transition: 0.4s;
+}
+.custom-switch-wrapper input:checked + .slider {
+  background-color: var(--c-text-field);
+}
+.custom-switch-wrapper input:checked + .slider::before {
+  left: calc(100% - (var(--size-of-icon) + var(--slider-offset)));
+  background: var(--c-text-field);
+  /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+  box-shadow: inset -10px -4px 0 0 #fff;
+}
+
 .custom-select-wrapper {
   position: relative;
   -webkit-user-select: none;
@@ -3181,13 +3234,23 @@ label.required:after {
 #account-settings .user.image-section > img {
   width: 100%;
 }
-#account-settings .user.image-section > div {
+#account-settings .user.image-section > div:nth-of-type(1) {
   text-align: center;
   margin: 0.6rem auto;
   font-size: 1.2rem;
 }
-#account-settings .user.image-section > div > span {
+#account-settings .user.image-section > div:nth-of-type(1) > span {
   font-weight: 500;
+}
+#account-settings .user.image-section #dark-mode-wrapper {
+  margin: 2rem auto 1rem auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#account-settings .user.image-section #dark-mode-wrapper > span {
+  margin-right: 1rem;
 }
 @media screen and (min-width: 672px) {
   #account-settings .user-property.action {

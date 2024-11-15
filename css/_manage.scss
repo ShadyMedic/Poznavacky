@@ -148,12 +148,22 @@
         > img {
             width: 100%;
         }
-        > div {
+        > div:nth-of-type(1) {
             text-align: center;
             margin: 0.6rem auto;
             font-size: 1.2rem;
             > span {
                 font-weight: 500;
+            }
+        }
+        #dark-mode-wrapper {
+            margin: 2rem auto 1rem auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            > span {
+                margin-right: 1rem;
             }
         }
     }
