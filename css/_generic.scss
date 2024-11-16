@@ -439,7 +439,7 @@ img.icon {
 }
 
 //dark mode
-@media (prefers-color-scheme: dark) {
+body.dark-theme {
     img.icon {
         &.black {
             filter: invert(98%) sepia(3%) saturate(7%) hue-rotate(246deg) brightness(114%) contrast(87%);
@@ -488,9 +488,6 @@ textarea {
         line-height: 1.32em;
         color: var(--c-text);
         background: var(--c-text-field);
-        @media (prefers-color-scheme: dark) {
-            border: 1px solid $gray3;
-        }
         &.disabled {
             background: var(--c-disabled);
             pointer-events: none;
@@ -585,9 +582,6 @@ label {
         width: 1.6rem;
         border-radius: 0.2em;
         background-color: var(--c-text-field);
-        @media (prefers-color-scheme: dark) {
-            border: 1px solid $gray3;
-        }
         &:after {
             content: "";
             display: none;
@@ -638,9 +632,6 @@ label {
         background-color: #f4f4f5;
         transition: .4s;
         border-radius: 30px;
-        @media (prefers-color-scheme: dark) {
-            border: 1px solid $gray3;
-        }
         &::before {
             position: absolute;
             content: "";
@@ -706,9 +697,6 @@ label {
         height: 2.28em;
         padding: 0.48em 0.8em;
         background: var(--c-text-field);
-        @media (prefers-color-scheme: dark) {
-            border: 1px solid $gray3;
-        }
         cursor: pointer;
         border-radius: 3.2px;
         span {
@@ -743,9 +731,6 @@ label {
         border-radius: 0 0 3.2px 3.2px;
         box-shadow: 0 3px 2px -1px rgba(black, 0.2);
         overflow: auto;
-        @media (prefers-color-scheme: dark) {
-            border: 1px solid $gray3;
-        }
         .custom-option {
             position: relative;
             display: block;
@@ -768,6 +753,19 @@ label {
 .code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.08em;
+}
+
+body.dark-mode {
+    input .text-field,
+    select .text-field,
+    textarea .text-field,
+    .custom-checkbox-wrapper .checkmark,
+    .custom-switch-wrapper .slider, 
+    .custom-select-wrapper .custom-select-main,
+    .custom-select-wrapper .custom-options
+    {
+        border: 1px solid $gray3;
+    }
 }
 
 @keyframes fontpop {

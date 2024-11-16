@@ -353,14 +353,17 @@
             }
             #preview-img {
                 background: var(--c-text-field);
-                @media (prefers-color-scheme: dark) {
-                    border: 1px solid $gray3;
-                }
                 object-fit: contain;
                 border-radius: 3.2px;
                 width: 100%;
                 margin: 0.6rem 0;
             }
         }
+    }
+}
+
+body.dark-theme {
+    #add-pictures #preview-img {
+        border: 1px solid $gray3;
     }
 }

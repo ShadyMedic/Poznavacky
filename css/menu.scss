@@ -138,9 +138,6 @@
         }
         > div {
             background-color: var(--c-nav);
-            @media (prefers-color-scheme: dark) {
-                border: 1px solid $gray3;
-            }
             padding: 0.6rem 1.2rem;
             @media screen and (min-width: $smallTablet) {
                 padding: 0.24rem 0.6rem 0.24rem 4rem;
@@ -380,11 +377,6 @@
                     font-weight: 500;
                 }
             }
-            .text-field {
-                @media (prefers-color-scheme: light) {
-                    background: #eee;
-                }
-            }
         }
         &#menu-groups-table {
             .table-title,
@@ -501,6 +493,29 @@
             p {
                 text-align: center;
             }
+        }
+    }
+}
+
+body.dark-theme {
+    #menu,
+    #learn,
+    #test,
+    #add-pictures,
+    #account-settings,
+    #manage,
+    #members,
+    #tests,
+    #edit-group,
+    #resolve-reports,
+    #naturals {
+        nav > div {
+            border: 1px solid $gray3;
+        }
+    }
+    #menu .folders#menu-classes-table {
+        .text-field {
+            background: #eee;
         }
     }
 }

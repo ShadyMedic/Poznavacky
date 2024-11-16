@@ -1,8 +1,19 @@
 var smallTablet = 672;
 var tablet = 768;
+var prefersDarkTheme;
 
 $(function()
 {
+    prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    if (prefersDarkScheme.matches) {
+        $("body").addClass("dark-theme");
+    }
+    else
+    {
+        $("body").removeClass("dark-theme");
+    }
+
     //event listenery tlačítek
     $("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
 
