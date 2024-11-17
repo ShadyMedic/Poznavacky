@@ -1,17 +1,22 @@
 var smallTablet = 672;
 var tablet = 768;
-var prefersDarkTheme;
+var prefersDarkTheme; //automatická preference prohlížeče
+var currentTheme = 'light'; //z databáze TODO
 
 $(function()
 {
     prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)");
-
-    if (prefersDarkScheme.matches) {
+    if (prefersDarkTheme.matches) {
         $("body").addClass("dark-theme");
     }
     else
     {
         $("body").removeClass("dark-theme");
+    }
+    setTheme();
+
+    if ($("body#account-settings").hasClass("dark-theme")) {
+        $("#dark-theme-checkbox").prop("checked", "true");
     }
 
     //event listenery tlačítek
@@ -60,7 +65,33 @@ $(function()
     {
         $("body").removeClass("tab");    
     })
+
+    transitionAfterPageLoad();
 })
+
+/**
+ * Funkce povolující transitions později po načtení stránky
+ */
+function transitionAfterPageLoad()
+{
+    setTimeout(() =>  {
+        $(".no-transition").removeClass("no-transition");
+    }, 400);
+}
+
+/**
+ * Funkce nastavující tmavý/světlý motiv
+ */
+function setTheme() {
+
+    if (currentTheme == "dark") {
+        $("body").addClass("dark-theme");
+    }
+    else
+    {
+        $("body").removeClass("dark-theme");
+    }
+}
 
 /**
  * Funkce, která odešle formulář stiskem klávesy Enter

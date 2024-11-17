@@ -498,22 +498,26 @@
 }
 
 body.dark-theme {
-    #menu,
-    #learn,
-    #test,
-    #add-pictures,
-    #account-settings,
-    #manage,
-    #members,
-    #tests,
-    #edit-group,
-    #resolve-reports,
-    #naturals {
+    &#menu,
+    &#learn,
+    &#test,
+    &#add-pictures,
+    &#account-settings,
+    &#manage,
+    &#members,
+    &#tests,
+    &#edit-group,
+    &#resolve-reports,
+    &#naturals {
         nav > div {
             border: 1px solid $gray3;
         }
     }
-    #menu .folders#menu-classes-table {
+
+}
+
+body:not(.dark-theme) {
+    &#menu .folders#menu-classes-table {
         .text-field {
             background: #eee;
         }

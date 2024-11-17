@@ -701,8 +701,8 @@ label.required:after {
   right: 0;
   bottom: 0;
   background-color: #f4f4f5;
-  transition: 0.4s;
   border-radius: 30px;
+  transition: 0.4s;
 }
 .custom-switch-wrapper .slider::before {
   position: absolute;
@@ -832,14 +832,24 @@ label.required:after {
   font-size: 1.08em;
 }
 
-body.dark-mode input .text-field,
-body.dark-mode select .text-field,
-body.dark-mode textarea .text-field,
-body.dark-mode .custom-checkbox-wrapper .checkmark,
-body.dark-mode .custom-switch-wrapper .slider,
-body.dark-mode .custom-select-wrapper .custom-select-main,
-body.dark-mode .custom-select-wrapper .custom-options {
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition: none !important;
+}
+
+body.dark-theme input .text-field,
+body.dark-theme select .text-field,
+body.dark-theme textarea .text-field,
+body.dark-theme .custom-checkbox-wrapper .checkmark,
+body.dark-theme .custom-switch-wrapper .slider,
+body.dark-theme .custom-select-wrapper .custom-select-main,
+body.dark-theme .custom-select-wrapper .custom-options {
   border: 1px solid #444;
+}
+
+body:not(.dark-theme) .custom-switch-wrapper .slider {
+  background: #fff;
 }
 
 @keyframes fontpop {

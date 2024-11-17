@@ -15,7 +15,27 @@ $(function()
     $("#delete-account-confirm-button").click(function() {deleteAccountVerify()})
     $("#delete-account-final-confirm-button").click(function() {deleteAccountFinal()})
     $("#delete-account-cancel-button, #delete-account-final-cancel-button").click(function() {deleteAccountCancel()})
+    $("#dark-theme-checkbox").click(function() {changeTheme()})
 })
+
+/**
+ * Funkce měnící tmavý/světlý motiv
+ */
+function changeTheme()
+{
+    $darkThemeCheckbox = $("#dark-theme-checkbox");
+
+    if ($darkThemeCheckbox.is(":checked"))
+    {
+        newTheme = "dark";
+    }
+    else {
+        newTheme = "light";
+    }
+    currentTheme = newTheme;
+
+    setTheme();
+}
 
 /**
  * Funkce rušící změnu jména

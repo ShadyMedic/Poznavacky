@@ -630,8 +630,8 @@ label {
         right: 0;
         bottom: 0;
         background-color: #f4f4f5;
-        transition: .4s;
         border-radius: 30px;
+        transition: .4s;
         &::before {
             position: absolute;
             content: "";
@@ -642,7 +642,6 @@ label {
             top: 50%;
             transform: translateY(-50%);
             background: linear-gradient(40deg,$purpleDark,$purpleLight 70%);
-            ;
             transition: .4s;
         }
     }
@@ -755,7 +754,13 @@ label {
     font-size: 1.08em;
 }
 
-body.dark-mode {
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+    transition: none !important;
+}
+
+body.dark-theme {
     input .text-field,
     select .text-field,
     textarea .text-field,
@@ -765,6 +770,12 @@ body.dark-mode {
     .custom-select-wrapper .custom-options
     {
         border: 1px solid $gray3;
+    }
+}
+
+body:not(.dark-theme) {
+    .custom-switch-wrapper .slider {
+        background: #fff;
     }
 }
 
