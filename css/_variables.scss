@@ -29,8 +29,8 @@ $textWhite: #eee;
 $textBlack: $black1;
 
 
-//light mode
-body {
+
+@mixin light-palette {
     --c-overlay-dark: #000;
     --c-overlay-light: #fff;
     --c-primary: #{$greenMid};
@@ -58,9 +58,7 @@ body {
     --c-selected: #{$greenMid};
     --c-checkmark: #{$greenMid};
 }
-
-//dark mode 
-body.dark-theme {
+@mixin dark-palette {
     --c-overlay-dark: #fff;
     --c-overlay-light: #000;
     --c-primary: #{$greenMid};
@@ -87,8 +85,27 @@ body.dark-theme {
     --c-selected-hover: #{$greenDarkDesaturated};
     --c-selected: #{$greenDark};
     --c-checkmark: #{$greenMid};
-    }
+}
 
+@media (prefers-color-scheme: light) {
+    body {
+        @include light-palette();
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        @include dark-palette();
+    }
+}
+//light mode
+body.light-theme {
+    @include light-palette();
+}
+
+//dark mode 
+body.dark-theme {
+    @include dark-palette();
+}
 
 @mixin scrollbar($size, $foreground-color, $background-color) {
     scrollbar-color: $foreground-color $background-color;

@@ -86,9 +86,11 @@ function setTheme() {
 
     if (currentTheme == "dark") {
         $("body").addClass("dark-theme");
+        $("body").removeClass("light-theme");
     }
     else
-    {
+    {   
+        $("body").addClass("light-theme");
         $("body").removeClass("dark-theme");
     }
 }
