@@ -1,5 +1,10 @@
 $(function()
 {
+    let prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)");
+    if (prefersDarkTheme.matches) {
+        $("#leaf-guy").prop("src", "images/leaf-guy-blonde.svg");
+    }
+    
     //zobrazení cookies alertu
     if (!getCookie("cookiesAccepted"))
     {

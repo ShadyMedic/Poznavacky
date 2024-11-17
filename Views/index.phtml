@@ -14,7 +14,7 @@
             <p>Potřebuješ se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistruj se, vytvoř si seznam přírodnin, sdílej ho se svou třídou a uč se rychleji!</p>
             <button id="learn-more-button" class="btn arrow-btn dark"><span>Zjisti více</span><img class="icon black" src="images/arrow-thick.svg" alt="Ikona šipky"></button>
         </div>
-        <img <?php if ($ee) : ?>src="images/leaf-guy-blonde.svg"<?php endif ?><?php if (!$ee) : ?>src="images/leaf-guy-dark.svg"<?php endif ?> alt="Ikona postavy">
+        <img id="leaf-guy" <?php if ($ee) : ?>src="images/leaf-guy-blonde.svg"<?php endif ?><?php if (!$ee) : ?>src="images/leaf-guy-dark.svg"<?php endif ?> alt="Ikona postavy">
     </section>
     <section id="index-buttons-section">
         <div class="content">
@@ -108,8 +108,8 @@
     <img src="images/cookie-white.svg" id="cookie" alt="Cookie">
     <div class="wrapper">
         <p>Tyto stránky využívají ke své funkci soubory cookie. Používáním stránek souhlasíš s ukládáním souborů cookie na svém zařízení.</p>
-        <a class="btn inline white" href="/legal?cookies">Další informace</a>
+        <a class="btn inline white-dm" href="/legal?cookies">Další informace</a>
     </div>
-    <button id="hide-cookies-alert-button" class="btn icon" title="Zavřít"><img src="images/cross-thin-white.svg" alt="Zavřít"></button>
+    <button id="hide-cookies-alert-button" class="btn icon" title="Zavřít"><img class="icon white-dm" src="images/cross-thick.svg" alt="Zavřít"></button>
 </div>
 <button id="back-to-top-button" class="btn border-btn rounded non-transparent white" title="Nahoru"><img class="icon black" src="images/arrows-thick.svg" alt="Nahoru"></button>
