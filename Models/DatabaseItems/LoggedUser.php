@@ -27,6 +27,7 @@ class LoggedUser extends User
         'lastLogin' => 'posledni_prihlaseni',
         'lastChangelog' => 'posledni_changelog',
         'lastMenuTableUrl' => 'adresa_posledni_slozky',
+        'darkTheme' => 'tmavy_motiv',
         'addedPictures' => 'pridane_obrazky',
         'guessedPictures' => 'uhodnute_obrazky',
         'karma' => 'karma',
@@ -40,6 +41,7 @@ class LoggedUser extends User
         'email' => null,
         'lastChangelog' => 0,
         'lastMenuTableUrl' => null,
+        'darkTheme' => 0,
         'addedPictures' => 0,
         'guessedPictures' => 0,
         'karma' => 0,
@@ -52,6 +54,7 @@ class LoggedUser extends User
     protected $hash;
     protected $lastChangelog;
     protected $lastMenuTableUrl;
+    protected $darkTheme;
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -366,6 +369,22 @@ class LoggedUser extends User
         $this->lastMenuTableUrl = $url;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['lastMenuTableUrl'].
                                 ' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($url, $this->id));
+    }
+
+    /**
+     * Metoda aktualizující uživateli jak v $_SESSION tak v databázi barevný zvolený motiv uživatelského rozhraní
+     * stránce
+     * @param bool $darkThemeSelected TRUE pokud má být nastaven tmavý motiv, FALSE pokud světlý
+     * @return bool TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
+     */
+    public function updateTheme(bool $darkThemeSelected): bool
+    {
+        $this->loadIfNotLoaded($this->id);
+
+        $this->darkTheme = $darkThemeSelected;
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['darkTheme'].
+            ' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($darkThemeSelected, $this->id));
     }
     
     /**
