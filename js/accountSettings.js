@@ -24,6 +24,7 @@ $(function()
 function changeTheme()
 {
     $darkThemeCheckbox = $("#dark-theme-checkbox");
+    let newTheme;
 
     if ($darkThemeCheckbox.is(":checked"))
     {
@@ -32,9 +33,27 @@ function changeTheme()
     else {
         newTheme = "light";
     }
-    currentTheme = newTheme; //TODO - propojit s databází
 
-    setTheme();
+    currentTheme = newTheme;
+    $.post("menu/account-update",
+        {
+            action: "change theme",
+            theme: newTheme
+        },
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "success")
+                    {
+                        setTheme();
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
