@@ -32,7 +32,7 @@ function changeTheme()
     else {
         newTheme = "light";
     }
-    currentTheme = newTheme;
+    currentTheme = newTheme; //TODO - propojit s databází
 
     setTheme();
 }
