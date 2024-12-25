@@ -121,5 +121,10 @@ class Settings
         'image/svg'
     );
 
+    /**
+     * Výchozí barevný motiv, použitý pokud není přihlášen žádný uživatel.
+     * Hodnota bude použita pro dosazení do CSS třídy <body> (class="[hodnota]-theme").
+     */
+    public const DEFAULT_THEME = 'light';
 }
 

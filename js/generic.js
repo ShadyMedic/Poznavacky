@@ -1,7 +1,7 @@
 var smallTablet = 672;
 var tablet = 768;
 var prefersDarkTheme; //automatická preference prohlížeče
-var currentTheme = 'light'; //z databáze TODO
+var currentTheme = $('body').classList.contains('dark') ? 'dark' : 'light';
 
 $(function()
 {
