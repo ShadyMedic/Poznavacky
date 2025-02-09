@@ -75,7 +75,7 @@
             #main-img {
                 height: 100%;
                 width: 100%;
-                background: #f8f8f8;
+                background: var(--c-text-field);
                 object-fit: contain;
                 border-radius: 3.2px;
             }
@@ -98,6 +98,7 @@
         }
     }
     .report-box {
+        background: var(--c-bgd-report);
         overflow-y: auto;
         padding: 0.6rem;
         font-size: 0.9rem;
@@ -106,7 +107,6 @@
         flex-direction: column;
         bottom: 0;
         height: 100%;
-        background: white;
         width: 100%;
         transform: translateY(105%);
         transition: transform 0.4s ease-out;
@@ -129,18 +129,6 @@
             height: 30%;
             > img {
                 height: 100%;
-            }
-        }
-        .custom-select-wrapper {
-            margin: 0.2rem 0;
-            .custom-select-main {
-                background: $gray2;
-            }
-            .custom-option {
-                border-top: 1px solid white;
-                &:not(.selected) {
-                    background: $gray2;
-                }
             }
         }
         .custom-options {
@@ -180,7 +168,6 @@
             }
         }
         .text-field {
-            background: $gray2;
             margin: 0.2rem 0;
         }
         #submit-report-button {

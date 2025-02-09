@@ -481,9 +481,6 @@
                     font-size: 1.2rem;
                 }
             }
-            .text-field {
-                background: VAR(--c-text-field);
-            }
         }
         #demo-info {
             width: 100%;
@@ -514,14 +511,6 @@ body.dark-theme {
         }
     }
 
-}
-
-body:not(.dark-theme) {
-    &#menu .folders#menu-classes-table {
-        .text-field {
-            background: #eee;
-        }
-    }
 }
 
 @import "_study.scss" ;
