@@ -1,7 +1,12 @@
 var smallTablet = 672;
+var currentTheme = $('body').classList.contains('dark') ? 'dark' : 'light';
 
 $(function()
 {
+    if ($("body#account-settings").hasClass("dark-theme")) {
+        $("#dark-theme-checkbox").prop("checked", "true");
+    }
+    
     //při zobrazení changelogu se zobrazí i overlay a skryje se scrollbar
     if ($("#changelog").length > 0)
     {

@@ -1,7 +1,6 @@
 var smallTablet = 672;
 var tablet = 768;
 var prefersDarkTheme; //automatická preference prohlížeče
-var currentTheme = $('body').classList.contains('dark') ? 'dark' : 'light';
 
 $(function()
 {
@@ -14,10 +13,6 @@ $(function()
         $("body").removeClass("dark-theme");
     }
     setTheme();
-
-    if ($("body#account-settings").hasClass("dark-theme")) {
-        $("#dark-theme-checkbox").prop("checked", "true");
-    }
 
     //event listenery tlačítek
     $("#messages").on("click", ".close-message-button", function() {closeMessage(this)})

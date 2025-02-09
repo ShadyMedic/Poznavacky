@@ -28,6 +28,8 @@ $gradientDark: #007F44;
 $textWhite: #eee;
 $textBlack: $black1;
 
+$buttonWhite: #eee;
+
 
 
 @mixin light-palette {
@@ -36,7 +38,7 @@ $textBlack: $black1;
     --c-primary: #{$greenMid};
     --c-primary-contrast: #{$greenDark};
     --c-text: #{$textBlack};
-    --c-text-inv: #{$textWhite};
+    --c-text-inverted: #{$textWhite};
     --c-text-info: #{$gray3};
     --c-error: #{$error};
     --c-warning: #{$warning};
@@ -50,11 +52,13 @@ $textBlack: $black1;
     --c-side-panel: #{$gray3};
     --c-nav: #e0e0e0;
     --c-text-field: #fff;
+    --c-text-field-variant: #{$gray2};
     --c-button-primary: #{$black1};
     --c-button-dark: #{$black1};
-    --c-button-light: #eee;
+    --c-button-light: #{$buttonWhite};
     --c-disabled: #888;
     --c-selected-hover: #{$gray2};
+    --c-selected-hover-variant: #ddd;
     --c-selected: #{$greenMid};
     --c-checkmark: #{$greenMid};
 }
@@ -64,7 +68,7 @@ $textBlack: $black1;
     --c-primary: #{$greenMid};
     --c-primary-contrast: #{$greenLight};
     --c-text: #{$textWhite};
-    --c-text-inv: #{$textBlack};
+    --c-text-inverted: #{$textBlack};
     --c-text-info: #aaa;
     --c-error: #{$errorDesaturated};
     --c-warning: #{$warningDesaturated};
@@ -78,15 +82,20 @@ $textBlack: $black1;
     --c-side-panel: #323232; 
     --c-nav: ${$gray1};
     --c-text-field: #{$black2};
+    --c-text-field-variant: #{$black2};
     --c-button-primary: #{$greenMidDesaturated};
-    --c-button-dark: #eee;
-    --c-button-light: #eee;
+    --c-button-dark: #{$buttonWhite};
+    --c-button-light: #{$buttonWhite};
     --c-disabled: #666;
     --c-selected-hover: #{$greenDarkDesaturated};
+    --c-selected-hover-variant: #{$greenDarkDesaturated};
     --c-selected: #{$greenDark};
     --c-checkmark: #{$greenMid};
 }
 
+body {
+    @include light-palette();
+}
 @media (prefers-color-scheme: light) {
     body {
         @include light-palette();
@@ -97,6 +106,7 @@ $textBlack: $black1;
         @include dark-palette();
     }
 }
+
 //light mode
 body.light-theme {
     @include light-palette();

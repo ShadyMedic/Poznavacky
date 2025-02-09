@@ -86,7 +86,7 @@ header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: var(--c-text-inv);
+        color: var(--c-text-inverted);
         word-break: break-word;
         .text {
             max-height: 24vh;
@@ -236,7 +236,7 @@ ul.list {
         &.non-transparent {
             &.primary {
                 background: var(--c-button-primary);
-                color: var(--c-text-inv);
+                color: var(--c-text-inverted);
                 &::after {
                     background: rgba(white, 0.08);
                 }
@@ -251,14 +251,21 @@ ul.list {
             }
             &.white {
                 background: var(--c-button-light);
-                color: var(--c-text-inv);
+                color: var(--c-text-inverted);
                 &::after {
-                    background: rgba(black, 0.04);
+                    background: rgba(black, 0.06);
+                }
+            }
+            &.always-white {
+                background: $buttonWhite;
+                color: $textBlack;
+                &::after {
+                    background: rgba(black, 0.06);
                 }
             }
             &.dark {
                 background: var(--c-button-dark);
-                color: var(--c-text-inv);
+                color: var(--c-text-inverted);
                 &::after {
                     background: rgb(from var(--c-overlay-light) r g b / 8%);
                 }
@@ -298,6 +305,13 @@ ul.list {
                 border: 2px solid var(--c-button-light);
                 &:after {
                     background: rgba(white, 0.06);
+                }
+            }
+            &.always-white {
+                color: $textWhite;
+                border: 2px solid $buttonWhite;
+                &::after {
+                    background: rgba(white, 0.04);
                 }
             }
             &.dark {
@@ -359,9 +373,9 @@ ul.list {
         img {
             height: 1em;
             width: 1em;
-            padding-left: 0.48em;
+            padding-left: 0.32em;
             position: relative;
-            top: 0.12em;
+            top: 0.24em;
             transition: transform 0.2s ease-out;
         }
         &:hover{
@@ -379,7 +393,7 @@ ul.list {
             text-decoration: underline;
         }
         &.white {
-            color: var(--c-text-inv);
+            color: var(--c-text-inverted);
         }
         &.white-dm {
             color: $textWhite;
@@ -413,33 +427,44 @@ ul.list {
     }
 }
 
-img.icon {
-    &.black {
-        filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
-    }
-    &.white {
-        filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
-        &.shadow {
-            filter: drop-shadow(0 0 4px rgba(white, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+//light theme
+@mixin img-icon-light {
+    img.icon { 
+        &.black {
+            filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
         }
-    }   
-    &.gray {
-        filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
-    }  
-    &.green {
-        filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
-    } 
-    &.red {
-        filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
-    }    
+        &.white {
+            filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+            &.shadow {
+                filter: drop-shadow(0 0 4px rgba(white, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+            }
+        }   
+        &.gray {
+            filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
+        }  
+        &.green {
+            filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
+        } 
+        &.red {
+            filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
+        }    
 
-    &.selected {
-        filter: invert(25%) sepia(85%) saturate(4117%) hue-rotate(75deg) brightness(90%) contrast(87%);
+        &.selected {
+            filter: invert(25%) sepia(85%) saturate(4117%) hue-rotate(75deg) brightness(90%) contrast(87%);
+        }
     }
 }
+@media (prefers-color-scheme: light) {
+    body {
+        @include img-icon-light();
+    }
+}
+body.light-theme {
+    @include img-icon-light();
+}
 
-//dark mode
-body.dark-theme {
+//dark theme
+@mixin img-icon-dark {
     img.icon {
         &.black {
             filter: invert(98%) sepia(3%) saturate(7%) hue-rotate(246deg) brightness(114%) contrast(87%);
@@ -469,6 +494,14 @@ body.dark-theme {
         } 
     }
 }
+@media (prefers-color-scheme: dark) {
+    body {
+        @include img-icon-dark();
+    }
+}
+body.dark-theme {
+    @include img-icon-dark();
+}
 
 .center {
     display: block;
@@ -488,6 +521,11 @@ textarea {
         line-height: 1.32em;
         color: var(--c-text);
         background: var(--c-text-field);
+        &.variant {
+            @media (prefers-color-scheme: light) {
+                background: var(--c-text-field-variant);
+            }
+        }
         &.disabled {
             background: var(--c-disabled);
             pointer-events: none;
@@ -582,6 +620,11 @@ label {
         width: 1.6rem;
         border-radius: 0.2em;
         background-color: var(--c-text-field);
+        &.variant {
+            @media (prefers-color-scheme: light) {
+                background: var(--c-text-field-variant);
+            }
+        }
         &:after {
             content: "";
             display: none;
@@ -598,6 +641,11 @@ label {
 
     &:hover input ~ .checkmark {
         background-color: var(--c-selected-hover);
+        &.variant {
+            @media (prefers-color-scheme: light) {
+                background: var(--c-selected-hover-variant);
+            }
+        }
     }
     input[type="checkbox"]:checked ~ .checkmark {
         background-color: var(--c-checkmark);

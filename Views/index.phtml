@@ -14,13 +14,13 @@
             <p>Potřebuješ se naučit, jak rozeznat různé rostliny, živočichy nebo jiné organismy? Zaregistruj se, vytvoř si seznam přírodnin, sdílej ho se svou třídou a uč se rychleji!</p>
             <button id="learn-more-button" class="btn arrow-btn dark"><span>Zjisti více</span><img class="icon black" src="images/arrow-thick.svg" alt="Ikona šipky"></button>
         </div>
-        <img id="leaf-guy" <?php if ($ee) : ?>src="images/leaf-guy-blonde.svg"<?php endif ?><?php if (!$ee) : ?>src="images/leaf-guy-dark.svg"<?php endif ?> alt="Ikona postavy">
+        <img id="leaf-guy" src="" alt="Ilustrace postavy s listem v ruce">
     </section>
     <section id="index-buttons-section">
         <div class="content">
-            <button class="btn border-btn rounded non-transparent white show-login-section-register-button">Zaregistrovat se</button>
-            <button class="btn border-btn rounded non-transparent white show-login-section-login-button">Přihlásit se</button>
-            <button class="btn border-btn rounded transparent white" id="demo-button">Vyzkoušet demo</button>
+            <button class="btn border-btn rounded non-transparent always-white show-login-section-register-button">Zaregistrovat se</button>
+            <button class="btn border-btn rounded non-transparent always-white show-login-section-login-button">Přihlásit se</button>
+            <button class="btn border-btn rounded transparent always-white" id="demo-button">Vyzkoušet demo</button>
         </div>
     </section>
     <section id="index-login-section">
@@ -31,14 +31,14 @@
                 <div class="user data">
                     <input id='login-hidden' type='hidden' name='type' value='l'>
                     <label for='login-name'>Uživatelské jméno nebo e-mail</label>
-                    <input id='login-name' class="text-field" type='text' name='loginName' maxlength=255>
+                    <input id='login-name' class="text-field variant" type='text' name='loginName' maxlength=255>
                     <div id="login-name-message" class="message"></div>
                     <label for='login-pass'>Heslo</label>
-                    <input id='login-pass' class="text-field" type='password' name='loginPass' maxlength=31>
+                    <input id='login-pass' class="text-field variant" type='password' name='loginPass' maxlength=31>
                     <div id="login-pass-message" class="message"></div>
                     <label class="custom-checkbox-wrapper">Zůstat přihlášen*a
                         <input id="login-persist" type="checkbox" name='stay_logged'/>
-                        <div class="checkmark"></div>
+                        <div class="checkmark variant"></div>
                     </label>
                 </div>
                 <button id='login-submit' class="btn border-btn center non-transparent primary">Přihlásit se</button>
@@ -54,25 +54,25 @@
                     <input id='register-hidden' type='hidden' name='type' value='r'>
                     <label for="register-name" class="required">Uživatelské jméno</label>
                     <div class="input-wrapper"> 
-                        <input id='register-name' class="text-field" type='text' name='registerName' maxlength=15>
+                        <input id='register-name' class="text-field variant" type='text' name='registerName' maxlength=15>
                         <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-name-message" class="message"></div>
                     <label for="register-pass" class="required">Heslo</label>
                     <div class="input-wrapper"> 
-                        <input id='register-pass' class="text-field" type='password' name='registerPass' maxlength=31>    
+                        <input id='register-pass' class="text-field variant" type='password' name='registerPass' maxlength=31>    
                         <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-pass-message" class="message"></div>
                     <label for="register-repass" class="required">Heslo znovu</label>
                     <div class="input-wrapper"> 
-                        <input id='register-repass' class="text-field" type='password' name='registerRepass' maxlength=31>
+                        <input id='register-repass' class="text-field variant" type='password' name='registerRepass' maxlength=31>
                         <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-repass-message" class="message"></div>
                     <label for="register-email">E-mail</label>
                     <div class="input-wrapper"> 
-                        <input id='register-email' class="text-field" type='text' name='registerEmail' maxlength=255>
+                        <input id='register-email' class="text-field variant" type='text' name='registerEmail' maxlength=255>
                         <div class="checkmark"><img class="icon green" src="images/tick_f.svg" alt="Zkontrolováno"></div>
                     </div>
                     <div id="register-email-message" class="message"></div>
@@ -90,7 +90,7 @@
                 <div class="user data">
                     <input id='password-recovery-hidden' type='hidden' name='type' value='p'>
                     <label for="password-recovery-email">E-mail</label>
-                    <input id='password-recovery-email' class="text-field" name="passRecoveryEmail" maxlength=255 />
+                    <input id='password-recovery-email' class="text-field variant" name="passRecoveryEmail" maxlength=255 />
                     <div id="password-recovery-email-message" class="message"></div>
                 </div>
                 <button id='password-recovery-submit' class="btn border-btn center non-transparent primary">Odeslat</button>
