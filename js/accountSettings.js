@@ -47,7 +47,7 @@ function changeTheme()
                 {
                     if (messageType === "success")
                     {
-                        setTheme();
+                        setTheme(newTheme);
                     }
                 }
             );

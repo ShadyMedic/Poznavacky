@@ -4,16 +4,6 @@ var prefersDarkTheme; //automatická preference prohlížeče
 
 $(function()
 {
-    prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)");
-    if (prefersDarkTheme.matches) {
-        $("body").addClass("dark-theme");
-    }
-    else
-    {
-        $("body").removeClass("dark-theme");
-    }
-    setTheme();
-
     //event listenery tlačítek
     $("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
 
@@ -77,13 +67,14 @@ function transitionAfterPageLoad()
 /**
  * Funkce nastavující tmavý/světlý motiv
  */
-function setTheme() {
-
-    if (currentTheme == "dark") {
+function setTheme(newTheme)
+{
+    if (newTheme == "dark")
+    {
         $("body").addClass("dark-theme");
         $("body").removeClass("light-theme");
     }
-    else
+    else if (newTheme == "light")
     {   
         $("body").addClass("light-theme");
         $("body").removeClass("dark-theme");
