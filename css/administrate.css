@@ -5,6 +5,7 @@ body {
   --c-primary-contrast: #366e11;
   --c-text: #121212;
   --c-text-inverted: #eee;
+  --c-text-green: #366e11;
   --c-text-info: #444;
   --c-text-disabled: #444;
   --c-error: #a00;
@@ -42,6 +43,7 @@ body {
     --c-primary-contrast: #366e11;
     --c-text: #121212;
     --c-text-inverted: #eee;
+    --c-text-green: #366e11;
     --c-text-info: #444;
     --c-text-disabled: #444;
     --c-error: #a00;
@@ -79,6 +81,7 @@ body {
     --c-primary-contrast: #79cf40;
     --c-text: #eee;
     --c-text-inverted: #121212;
+    --c-text-green: #79cf40;
     --c-text-info: #aaa;
     --c-text-disabled: #888;
     --c-error: #cc6666;
@@ -115,6 +118,7 @@ body.light-theme {
   --c-primary-contrast: #366e11;
   --c-text: #121212;
   --c-text-inverted: #eee;
+  --c-text-green: #366e11;
   --c-text-info: #444;
   --c-text-disabled: #444;
   --c-error: #a00;
@@ -151,6 +155,7 @@ body.dark-theme {
   --c-primary-contrast: #79cf40;
   --c-text: #eee;
   --c-text-inverted: #121212;
+  --c-text-green: #79cf40;
   --c-text-info: #aaa;
   --c-text-disabled: #888;
   --c-error: #cc6666;

@@ -403,7 +403,7 @@ ul.list {
             color: var(--c-text);
         }
         &.green {
-            color: $greenDark; 
+            color: var(--c-text-green); 
         }
     }
     &.icon {

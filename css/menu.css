@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:300,400,500&display=swap");
 * {
   margin: 0;
@@ -30,6 +31,7 @@ body {
   --c-primary-contrast: #366e11;
   --c-text: #121212;
   --c-text-inverted: #eee;
+  --c-text-green: #366e11;
   --c-text-info: #444;
   --c-text-disabled: #444;
   --c-error: #a00;
@@ -67,6 +69,7 @@ body {
     --c-primary-contrast: #366e11;
     --c-text: #121212;
     --c-text-inverted: #eee;
+    --c-text-green: #366e11;
     --c-text-info: #444;
     --c-text-disabled: #444;
     --c-error: #a00;
@@ -104,6 +107,7 @@ body {
     --c-primary-contrast: #79cf40;
     --c-text: #eee;
     --c-text-inverted: #121212;
+    --c-text-green: #79cf40;
     --c-text-info: #aaa;
     --c-text-disabled: #888;
     --c-error: #cc6666;
@@ -140,6 +144,7 @@ body.light-theme {
   --c-primary-contrast: #366e11;
   --c-text: #121212;
   --c-text-inverted: #eee;
+  --c-text-green: #366e11;
   --c-text-info: #444;
   --c-text-disabled: #444;
   --c-error: #a00;
@@ -176,6 +181,7 @@ body.dark-theme {
   --c-primary-contrast: #79cf40;
   --c-text: #eee;
   --c-text-inverted: #121212;
+  --c-text-green: #79cf40;
   --c-text-info: #aaa;
   --c-text-disabled: #888;
   --c-error: #cc6666;
@@ -630,7 +636,7 @@ ul.list li:not(:last-child) {
   color: var(--c-text);
 }
 .btn.inline.green {
-  color: #366e11;
+  color: var(--c-text-green);
 }
 .btn.icon {
   display: block;
@@ -1937,12 +1943,18 @@ html:has(#menu,
   transform: translate(-50%, -50%);
   z-index: 10;
   padding: 1.6rem;
-  background: white;
+  background: var(--c-bgd-popup);
   border-radius: 0.6rem;
   border: 2px solid #366e11;
   overflow: hidden;
   width: 90%;
   max-width: 800px;
+  /*
+  @media screen and (min-width: $smallTablet) {
+      //zohlednění aside panelu a scrollbaru
+      transform: translate(calc(-50% + 32px), -50%);
+      width: calc(90% - 64px);
+  }*/
 }
 @-moz-document url-prefix() {
   #menu #changelog {
@@ -1961,12 +1973,6 @@ html:has(#menu,
 }
 #menu #changelog ::-webkit-scrollbar-thumb:hover {
   background: var(--c-scrollbar-thumb-hover);
-}
-@media screen and (min-width: 672px) {
-  #menu #changelog {
-    transform: translate(calc(-50% + 32px), -50%);
-    width: calc(90% - 64px);
-  }
 }
 #menu #changelog #close-changelog-button {
   margin: 0 0 0.2rem auto;
@@ -1998,9 +2004,13 @@ html:has(#menu,
 #menu #changelog ul ::-webkit-scrollbar-thumb:hover {
   background: var(--c-scrollbar-thumb-hover);
 }
-#menu #changelog h3 {
+#menu #changelog h1 {
   margin: 0 0 1.2rem 0;
   font-size: 1.32rem;
+}
+#menu #changelog h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.16rem;
 }
 #menu #changelog li {
   list-style-type: circle;

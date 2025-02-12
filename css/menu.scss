@@ -238,18 +238,19 @@ html:has(#menu,
         transform: translate(-50%, -50%);
         z-index: 10;
         padding: 1.6rem;
-        background: white;
+        background: var(--c-bgd-popup);
         border-radius: 0.6rem;
         border: 2px solid $greenDark;
         overflow: hidden;
         width: 90%;
         max-width: 800px;
         @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
+        /*
         @media screen and (min-width: $smallTablet) {
             //zohlednění aside panelu a scrollbaru
             transform: translate(calc(-50% + 32px), -50%);
             width: calc(90% - 64px);
-        }
+        }*/
         #close-changelog-button {
             margin: 0 0 0.2rem auto;
         }
@@ -263,9 +264,13 @@ html:has(#menu,
             max-height: 60vh;
             @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
-        h3 {
+        h1 {
             margin: 0 0 1.2rem 0;
             font-size: 1.32rem;
+        }
+        h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.16rem;
         }
         li {
             list-style-type: circle;
