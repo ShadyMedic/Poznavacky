@@ -1,6 +1,12 @@
 @import "_reset.scss";
 @import "_generic.scss";
 
+body {
+    background: var(--c-bgd);
+}
+.container {
+    grid-template-rows: auto 1fr auto;
+}
 header {
     .error-img {
         width: 90vw;
@@ -10,7 +16,7 @@ header {
     }
     h1 {
         font-size: 2rem;
-        margin: 1em 0;
+        margin: 0.6em 0;
         text-align: center;
         .error-code {
             color: var(--c-error);
@@ -22,6 +28,7 @@ main {
     width: 95vw;
     max-width: 800px;
     margin: auto;
+    padding: 2rem;
     h2 {
         font-size: 1.2rem;
         margin: 1em 0;
