@@ -2,13 +2,62 @@
 @import "_generic.scss";
 
 #legal {
+    background: var(--c-bgd);
+    position: relative;
+    width: 100vw;
+    overflow-x: hidden;
+    color: var(--c-text);
+    overflow-y: auto;
+    .container {
+        grid-template-rows: auto 1fr auto;
+    }
     header {
-        background: $greenDark;
+        background: linear-gradient(90deg, $greenDark, $gradientDark);
+        padding: 1rem 1rem;
+        z-index: 4;
+        inset: 0;
+        max-height: 3.2rem;
+        mask:
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, //nevím jak to funguje
+            linear-gradient(#fff,#fff);
+        mask-composite: exclude;  
+        -webkit-mask-composite: destination-out;
+        @media screen and (min-width: $mobile) {
+            padding: 1rem 3rem;
+        }
+        @media screen and (min-width: $tablet) {
+            padding: 1rem 4.8rem;
+        }
+        @media screen and (min-width: $smallDesktop) {
+            padding: 1rem 6rem;
+        }
+    }
+    #logo-standalone {
+        display: block; 
+        top: -12px;
+        left: -12px;
+        height: 72px;
+        width: 72px;
+        position: absolute;
+        z-index: 5;
+        border-radius: 100px;
+        background: linear-gradient(135deg, $greenDark, $gradientDark);
+        img {
+            position: relative;
+            top: 20px;
+            left: 20px;
+            height: 50%;
+            width: 50%;
+            margin: auto;
+        }
     }
     main {
         nav {
-            background: white;
+            background: var(--c-bgd-comp);
             padding: 0.4rem;
+            padding-top: calc(3.2rem + 4px);
+            position: relative;
+            top: -3.2rem;
             display: flex;
             flex-direction: column;
             @media screen and (min-width: $mobile) {
