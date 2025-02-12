@@ -64,6 +64,8 @@ $buttonWhite: #eee;
     --c-selected-hover-variant: #ddd;
     --c-selected: #{$greenMid};
     --c-checkmark: #{$greenMid};
+    --c-scrollbar-thumb: #{$gray3};
+    --c-scrollbar-thumb-hover: #{$gradientDark};
 }
 @mixin dark-palette {
     --c-overlay-dark: #fff;
@@ -97,6 +99,8 @@ $buttonWhite: #eee;
     --c-selected-hover-variant: #{$greenDarkDesaturated};
     --c-selected: #{$greenDark};
     --c-checkmark: #{$greenMid};
+    --c-scrollbar-thumb: #666;
+    --c-scrollbar-thumb-hover: #{$gradientDark};
 }
 
 body {
@@ -123,20 +127,25 @@ body.dark-theme {
     @include dark-palette();
 }
 
-@mixin scrollbar($size, $foreground-color, $background-color) {
-    scrollbar-color: $foreground-color $background-color;
-    scrollbar-width: auto;
-    &::-webkit-scrollbar {
-        width:  $size;
-        height: $size;
+@mixin scrollbar($width, $moz-width, $thumb, $thumb-hover, $background) {
+    @-moz-document url-prefix() {
+        scrollbar-color: #666 transparent;
+        scrollbar-width: $moz-width;
     }
-
-    &::-webkit-scrollbar-thumb {
-        background: $foreground-color;
+    
+    ::-webkit-scrollbar {
+        width: $width;
     }
-
-    &::-webkit-scrollbar-track {
-        background: $background-color;
+    ::-webkit-scrollbar-track {
+        //background: $background;
+        display: none;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: $thumb; 
+        //border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: $thumb-hover;
     }    
 }
 

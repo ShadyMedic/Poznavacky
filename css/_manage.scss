@@ -467,9 +467,10 @@
     .part.box {
         display: grid;
         grid-template-rows: auto 1fr;
+        @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         .naturals-in-part {
             overflow-y: auto;
-            @include scrollbar(12px, $gray3, $gray2);
+            @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
     }
     #add-part-button {

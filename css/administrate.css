@@ -30,6 +30,8 @@ body {
   --c-selected-hover-variant: #ddd;
   --c-selected: #479911;
   --c-checkmark: #479911;
+  --c-scrollbar-thumb: #444;
+  --c-scrollbar-thumb-hover: #007F44;
 }
 
 @media (prefers-color-scheme: light) {
@@ -65,6 +67,8 @@ body {
     --c-selected-hover-variant: #ddd;
     --c-selected: #479911;
     --c-checkmark: #479911;
+    --c-scrollbar-thumb: #444;
+    --c-scrollbar-thumb-hover: #007F44;
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -100,6 +104,8 @@ body {
     --c-selected-hover-variant: #68924d;
     --c-selected: #366e11;
     --c-checkmark: #479911;
+    --c-scrollbar-thumb: #666;
+    --c-scrollbar-thumb-hover: #007F44;
   }
 }
 body.light-theme {
@@ -134,6 +140,8 @@ body.light-theme {
   --c-selected-hover-variant: #ddd;
   --c-selected: #479911;
   --c-checkmark: #479911;
+  --c-scrollbar-thumb: #444;
+  --c-scrollbar-thumb-hover: #007F44;
 }
 
 body.dark-theme {
@@ -168,6 +176,8 @@ body.dark-theme {
   --c-selected-hover-variant: #68924d;
   --c-selected: #366e11;
   --c-checkmark: #479911;
+  --c-scrollbar-thumb: #666;
+  --c-scrollbar-thumb-hover: #007F44;
 }
 
 * {

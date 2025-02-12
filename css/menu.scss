@@ -1,6 +1,20 @@
 @import "_reset.scss";
 @import "_generic.scss";
 
+html:has(#menu,
+#learn,
+#test,
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports,
+#naturals) {
+    @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
+}
+
 #menu,
 #learn,
 #test,
@@ -12,7 +26,6 @@
 #edit-group,
 #resolve-reports,
 #naturals {
-    @include scrollbar(12px, $gray3, $gray1);
     position: relative;
     background: var(--c-bgd);
     @media screen and (min-width: $smallTablet) {
@@ -172,7 +185,7 @@
         @media screen and (min-width: $smallTablet) {
             grid-column: 2/3;
             overflow-y: auto;
-            @include scrollbar(12px, $gray3, $gray2);
+            @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
     }
     #messages {
@@ -231,6 +244,7 @@
         overflow: hidden;
         width: 90%;
         max-width: 800px;
+        @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         @media screen and (min-width: $smallTablet) {
             //zohlednění aside panelu a scrollbaru
             transform: translate(calc(-50% + 32px), -50%);
@@ -247,7 +261,7 @@
         ul {
             overflow-y: auto;
             max-height: 60vh;
-            @include scrollbar(12px, $gray3, none);
+            @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
         h3 {
             margin: 0 0 1.2rem 0;

@@ -1,6 +1,10 @@
 @import "_reset.scss";
 @import "_generic.scss";
 
+html:has(#index) {
+    @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
+}
+
 #index {
     background: var(--c-bgd);
     position: relative;
@@ -8,7 +12,6 @@
     overflow-x: hidden;
     color: var(--c-text);
     overflow-y: auto;
-    @include scrollbar(12px, $gray3, $gray1);
     header {
         background: linear-gradient(90deg, $greenDark, $gradientDark);
         padding: 1rem 1rem;
@@ -269,13 +272,14 @@
             opacity: 1;
             pointer-events: auto;
         }
+        @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         #register,
         #login,
         #password-recovery {
             max-height: 76vh;
             padding: 0 0.4rem;
-            overflow: auto;
-            @include scrollbar(12px, $gray3, none);
+            overflow: auto;  
+            @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
         #hide-login-section-button {
             margin: 0 0 0.6rem auto;

@@ -55,6 +55,8 @@ body {
   --c-selected-hover-variant: #ddd;
   --c-selected: #479911;
   --c-checkmark: #479911;
+  --c-scrollbar-thumb: #444;
+  --c-scrollbar-thumb-hover: #007F44;
 }
 
 @media (prefers-color-scheme: light) {
@@ -90,6 +92,8 @@ body {
     --c-selected-hover-variant: #ddd;
     --c-selected: #479911;
     --c-checkmark: #479911;
+    --c-scrollbar-thumb: #444;
+    --c-scrollbar-thumb-hover: #007F44;
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -125,6 +129,8 @@ body {
     --c-selected-hover-variant: #68924d;
     --c-selected: #366e11;
     --c-checkmark: #479911;
+    --c-scrollbar-thumb: #666;
+    --c-scrollbar-thumb-hover: #007F44;
   }
 }
 body.light-theme {
@@ -159,6 +165,8 @@ body.light-theme {
   --c-selected-hover-variant: #ddd;
   --c-selected: #479911;
   --c-checkmark: #479911;
+  --c-scrollbar-thumb: #444;
+  --c-scrollbar-thumb-hover: #007F44;
 }
 
 body.dark-theme {
@@ -193,6 +201,8 @@ body.dark-theme {
   --c-selected-hover-variant: #68924d;
   --c-selected: #366e11;
   --c-checkmark: #479911;
+  --c-scrollbar-thumb: #666;
+  --c-scrollbar-thumb-hover: #007F44;
 }
 
 html {
@@ -277,22 +287,46 @@ header .logo h1 {
   color: var(--c-text-inverted);
   word-break: break-word;
 }
+@-moz-document url-prefix() {
+  #messages .message-item {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: none;
+  }
+}
+#messages .message-item ::-webkit-scrollbar {
+  width: 8px;
+}
+#messages .message-item ::-webkit-scrollbar-track {
+  display: none;
+}
+#messages .message-item ::-webkit-scrollbar-thumb {
+  background: #666;
+}
+#messages .message-item ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
+}
 #messages .message-item .text {
   max-height: 24vh;
   overflow: auto;
-  scrollbar-color: #222 none;
-  scrollbar-width: auto;
   animation: fontpop 0.4s;
 }
-#messages .message-item .text::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+@-moz-document url-prefix() {
+  #messages .message-item .text {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: thin;
+  }
 }
-#messages .message-item .text::-webkit-scrollbar-thumb {
-  background: #222;
+#messages .message-item .text ::-webkit-scrollbar {
+  width: 0px;
 }
-#messages .message-item .text::-webkit-scrollbar-track {
-  background: none;
+#messages .message-item .text ::-webkit-scrollbar-track {
+  display: none;
+}
+#messages .message-item .text ::-webkit-scrollbar-thumb {
+  background: #666;
+}
+#messages .message-item .text ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
 }
 #messages .message-item .btn {
   margin-left: 1rem;
@@ -979,8 +1013,6 @@ label.required:after {
   transition: transform 0.4s ease-in-out;
 }
 .custom-select-wrapper .custom-options {
-  scrollbar-color: #444 white;
-  scrollbar-width: auto;
   position: absolute;
   display: block;
   top: 100%;
@@ -999,15 +1031,23 @@ label.required:after {
   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
-.custom-select-wrapper .custom-options::-webkit-scrollbar {
+@-moz-document url-prefix() {
+  .custom-select-wrapper .custom-options {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: auto;
+  }
+}
+.custom-select-wrapper .custom-options ::-webkit-scrollbar {
   width: 12px;
-  height: 12px;
 }
-.custom-select-wrapper .custom-options::-webkit-scrollbar-thumb {
-  background: #444;
+.custom-select-wrapper .custom-options ::-webkit-scrollbar-track {
+  display: none;
 }
-.custom-select-wrapper .custom-options::-webkit-scrollbar-track {
-  background: white;
+.custom-select-wrapper .custom-options ::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+}
+.custom-select-wrapper .custom-options ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
 }
 .custom-select-wrapper .custom-options .custom-option {
   position: relative;
@@ -1083,6 +1123,75 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
     transform: scale(1);
   }
 }
+@-moz-document url-prefix() {
+  html:has(#menu,
+  #learn,
+  #test,
+  #add-pictures,
+  #account-settings,
+  #manage,
+  #members,
+  #tests,
+  #edit-group,
+  #resolve-reports,
+  #naturals) {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: auto;
+  }
+}
+html:has(#menu,
+#learn,
+#test,
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports,
+#naturals) ::-webkit-scrollbar {
+  width: 12px;
+}
+html:has(#menu,
+#learn,
+#test,
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports,
+#naturals) ::-webkit-scrollbar-track {
+  display: none;
+}
+html:has(#menu,
+#learn,
+#test,
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports,
+#naturals) ::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+}
+html:has(#menu,
+#learn,
+#test,
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports,
+#naturals) ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
+}
+
 #menu,
 #learn,
 #test,
@@ -1094,50 +1203,8 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
 #edit-group,
 #resolve-reports,
 #naturals {
-  scrollbar-color: #444 #222;
-  scrollbar-width: auto;
   position: relative;
   background: var(--c-bgd);
-}
-#menu::-webkit-scrollbar,
-#learn::-webkit-scrollbar,
-#test::-webkit-scrollbar,
-#add-pictures::-webkit-scrollbar,
-#account-settings::-webkit-scrollbar,
-#manage::-webkit-scrollbar,
-#members::-webkit-scrollbar,
-#tests::-webkit-scrollbar,
-#edit-group::-webkit-scrollbar,
-#resolve-reports::-webkit-scrollbar,
-#naturals::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-#menu::-webkit-scrollbar-thumb,
-#learn::-webkit-scrollbar-thumb,
-#test::-webkit-scrollbar-thumb,
-#add-pictures::-webkit-scrollbar-thumb,
-#account-settings::-webkit-scrollbar-thumb,
-#manage::-webkit-scrollbar-thumb,
-#members::-webkit-scrollbar-thumb,
-#tests::-webkit-scrollbar-thumb,
-#edit-group::-webkit-scrollbar-thumb,
-#resolve-reports::-webkit-scrollbar-thumb,
-#naturals::-webkit-scrollbar-thumb {
-  background: #444;
-}
-#menu::-webkit-scrollbar-track,
-#learn::-webkit-scrollbar-track,
-#test::-webkit-scrollbar-track,
-#add-pictures::-webkit-scrollbar-track,
-#account-settings::-webkit-scrollbar-track,
-#manage::-webkit-scrollbar-track,
-#members::-webkit-scrollbar-track,
-#tests::-webkit-scrollbar-track,
-#edit-group::-webkit-scrollbar-track,
-#resolve-reports::-webkit-scrollbar-track,
-#naturals::-webkit-scrollbar-track {
-  background: #222;
 }
 @media screen and (min-width: 672px) {
   #menu,
@@ -1656,48 +1723,74 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
   #naturals main {
     grid-column: 2/3;
     overflow-y: auto;
-    scrollbar-color: #444 #eee;
-    scrollbar-width: auto;
   }
-  #menu main::-webkit-scrollbar,
-  #learn main::-webkit-scrollbar,
-  #test main::-webkit-scrollbar,
-  #add-pictures main::-webkit-scrollbar,
-  #account-settings main::-webkit-scrollbar,
-  #manage main::-webkit-scrollbar,
-  #members main::-webkit-scrollbar,
-  #tests main::-webkit-scrollbar,
-  #edit-group main::-webkit-scrollbar,
-  #resolve-reports main::-webkit-scrollbar,
-  #naturals main::-webkit-scrollbar {
+  @-moz-document url-prefix() {
+    #menu main,
+    #learn main,
+    #test main,
+    #add-pictures main,
+    #account-settings main,
+    #manage main,
+    #members main,
+    #tests main,
+    #edit-group main,
+    #resolve-reports main,
+    #naturals main {
+      scrollbar-color: #666 transparent;
+      scrollbar-width: auto;
+    }
+  }
+  #menu main ::-webkit-scrollbar,
+  #learn main ::-webkit-scrollbar,
+  #test main ::-webkit-scrollbar,
+  #add-pictures main ::-webkit-scrollbar,
+  #account-settings main ::-webkit-scrollbar,
+  #manage main ::-webkit-scrollbar,
+  #members main ::-webkit-scrollbar,
+  #tests main ::-webkit-scrollbar,
+  #edit-group main ::-webkit-scrollbar,
+  #resolve-reports main ::-webkit-scrollbar,
+  #naturals main ::-webkit-scrollbar {
     width: 12px;
-    height: 12px;
   }
-  #menu main::-webkit-scrollbar-thumb,
-  #learn main::-webkit-scrollbar-thumb,
-  #test main::-webkit-scrollbar-thumb,
-  #add-pictures main::-webkit-scrollbar-thumb,
-  #account-settings main::-webkit-scrollbar-thumb,
-  #manage main::-webkit-scrollbar-thumb,
-  #members main::-webkit-scrollbar-thumb,
-  #tests main::-webkit-scrollbar-thumb,
-  #edit-group main::-webkit-scrollbar-thumb,
-  #resolve-reports main::-webkit-scrollbar-thumb,
-  #naturals main::-webkit-scrollbar-thumb {
-    background: #444;
+  #menu main ::-webkit-scrollbar-track,
+  #learn main ::-webkit-scrollbar-track,
+  #test main ::-webkit-scrollbar-track,
+  #add-pictures main ::-webkit-scrollbar-track,
+  #account-settings main ::-webkit-scrollbar-track,
+  #manage main ::-webkit-scrollbar-track,
+  #members main ::-webkit-scrollbar-track,
+  #tests main ::-webkit-scrollbar-track,
+  #edit-group main ::-webkit-scrollbar-track,
+  #resolve-reports main ::-webkit-scrollbar-track,
+  #naturals main ::-webkit-scrollbar-track {
+    display: none;
   }
-  #menu main::-webkit-scrollbar-track,
-  #learn main::-webkit-scrollbar-track,
-  #test main::-webkit-scrollbar-track,
-  #add-pictures main::-webkit-scrollbar-track,
-  #account-settings main::-webkit-scrollbar-track,
-  #manage main::-webkit-scrollbar-track,
-  #members main::-webkit-scrollbar-track,
-  #tests main::-webkit-scrollbar-track,
-  #edit-group main::-webkit-scrollbar-track,
-  #resolve-reports main::-webkit-scrollbar-track,
-  #naturals main::-webkit-scrollbar-track {
-    background: #eee;
+  #menu main ::-webkit-scrollbar-thumb,
+  #learn main ::-webkit-scrollbar-thumb,
+  #test main ::-webkit-scrollbar-thumb,
+  #add-pictures main ::-webkit-scrollbar-thumb,
+  #account-settings main ::-webkit-scrollbar-thumb,
+  #manage main ::-webkit-scrollbar-thumb,
+  #members main ::-webkit-scrollbar-thumb,
+  #tests main ::-webkit-scrollbar-thumb,
+  #edit-group main ::-webkit-scrollbar-thumb,
+  #resolve-reports main ::-webkit-scrollbar-thumb,
+  #naturals main ::-webkit-scrollbar-thumb {
+    background: var(--c-scrollbar-thumb);
+  }
+  #menu main ::-webkit-scrollbar-thumb:hover,
+  #learn main ::-webkit-scrollbar-thumb:hover,
+  #test main ::-webkit-scrollbar-thumb:hover,
+  #add-pictures main ::-webkit-scrollbar-thumb:hover,
+  #account-settings main ::-webkit-scrollbar-thumb:hover,
+  #manage main ::-webkit-scrollbar-thumb:hover,
+  #members main ::-webkit-scrollbar-thumb:hover,
+  #tests main ::-webkit-scrollbar-thumb:hover,
+  #edit-group main ::-webkit-scrollbar-thumb:hover,
+  #resolve-reports main ::-webkit-scrollbar-thumb:hover,
+  #naturals main ::-webkit-scrollbar-thumb:hover {
+    background: var(--c-scrollbar-thumb-hover);
   }
 }
 #menu #messages,
@@ -1851,6 +1944,24 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
   width: 90%;
   max-width: 800px;
 }
+@-moz-document url-prefix() {
+  #menu #changelog {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: none;
+  }
+}
+#menu #changelog ::-webkit-scrollbar {
+  width: 8px;
+}
+#menu #changelog ::-webkit-scrollbar-track {
+  display: none;
+}
+#menu #changelog ::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+}
+#menu #changelog ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
+}
 @media screen and (min-width: 672px) {
   #menu #changelog {
     transform: translate(calc(-50% + 32px), -50%);
@@ -1868,18 +1979,24 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
 #menu #changelog ul {
   overflow-y: auto;
   max-height: 60vh;
-  scrollbar-color: #444 none;
-  scrollbar-width: auto;
 }
-#menu #changelog ul::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+@-moz-document url-prefix() {
+  #menu #changelog ul {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: thin;
+  }
 }
-#menu #changelog ul::-webkit-scrollbar-thumb {
-  background: #444;
+#menu #changelog ul ::-webkit-scrollbar {
+  width: 0px;
 }
-#menu #changelog ul::-webkit-scrollbar-track {
-  background: none;
+#menu #changelog ul ::-webkit-scrollbar-track {
+  display: none;
+}
+#menu #changelog ul ::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+}
+#menu #changelog ul ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
 }
 #menu #changelog h3 {
   margin: 0 0 1.2rem 0;
@@ -3759,20 +3876,44 @@ body.dark-theme #add-pictures #preview-img {
   display: grid;
   grid-template-rows: auto 1fr;
 }
+@-moz-document url-prefix() {
+  #edit-group .part.box {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: none;
+  }
+}
+#edit-group .part.box ::-webkit-scrollbar {
+  width: 8px;
+}
+#edit-group .part.box ::-webkit-scrollbar-track {
+  display: none;
+}
+#edit-group .part.box ::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+}
+#edit-group .part.box ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
+}
 #edit-group .part.box .naturals-in-part {
   overflow-y: auto;
-  scrollbar-color: #444 #eee;
-  scrollbar-width: auto;
 }
-#edit-group .part.box .naturals-in-part::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+@-moz-document url-prefix() {
+  #edit-group .part.box .naturals-in-part {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: thin;
+  }
 }
-#edit-group .part.box .naturals-in-part::-webkit-scrollbar-thumb {
-  background: #444;
+#edit-group .part.box .naturals-in-part ::-webkit-scrollbar {
+  width: 0px;
 }
-#edit-group .part.box .naturals-in-part::-webkit-scrollbar-track {
-  background: #eee;
+#edit-group .part.box .naturals-in-part ::-webkit-scrollbar-track {
+  display: none;
+}
+#edit-group .part.box .naturals-in-part ::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+}
+#edit-group .part.box .naturals-in-part ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
 }
 #edit-group #add-part-button {
   display: flex;
