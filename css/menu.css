@@ -2730,6 +2730,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   background: var(--c-text-field);
   -o-object-fit: contain;
      object-fit: contain;
+  aspect-ratio: 1/1;
   border-radius: 3.2px;
   width: 100%;
   margin: 0.6rem 0;
