@@ -405,7 +405,7 @@ textarea {
             }
         }
     }
-    data-item {
+    .data-item {
         .alert-date {
             word-break: keep-all;
             @media screen and (min-width: $tablet) {
@@ -443,7 +443,7 @@ textarea {
 
 #database {
     position: relative;
-    #sql {
+    > * {
         width: 100%;
     }
     .sql-center {
