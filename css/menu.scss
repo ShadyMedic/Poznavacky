@@ -1,6 +1,20 @@
 @import "_reset.scss";
 @import "_generic.scss";
 
+html:has(#menu,
+#learn,
+#test,
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports,
+#naturals) {
+    @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
+}
+
 #menu,
 #learn,
 #test,
@@ -12,9 +26,8 @@
 #edit-group,
 #resolve-reports,
 #naturals {
-    @include scrollbar(12px, $gray3, $gray1);
     position: relative;
-    background: #eee;
+    background: var(--c-bgd);
     @media screen and (min-width: $smallTablet) {
         height: 100vh;
         overflow: hidden;
@@ -88,7 +101,7 @@
             width: 112px;
         }
         position: absolute;
-        z-index: 10;
+        z-index: 2;
         border-radius: 100px;
         background: linear-gradient(135deg, $greenDark, $gradientDark);
         img {
@@ -110,7 +123,7 @@
         grid-row: 1/6;
         grid-column: 1/2;
         color: white;
-        background: $gray3;
+        background: var(--c-side-panel);
         padding-top: 104px;
         @media screen and (min-width: $smallTablet) {
             display: flex;
@@ -137,7 +150,7 @@
             grid-column: 2/3;
         }
         > div {
-            background-color: #e0e0e0;
+            background-color: var(--c-nav);
             padding: 0.6rem 1.2rem;
             @media screen and (min-width: $smallTablet) {
                 padding: 0.24rem 0.6rem 0.24rem 4rem;
@@ -172,7 +185,7 @@
         @media screen and (min-width: $smallTablet) {
             grid-column: 2/3;
             overflow-y: auto;
-            @include scrollbar(12px, $gray3, $gray2);
+            @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
     }
     #messages {
@@ -201,7 +214,7 @@
         line-height: 1.2em;
         margin-top: 0.2rem;
         text-align: justify;
-        color: $gray3;
+        color: var(--c-text-info);
     }
     .info-section {
         text-align: justify;
@@ -225,17 +238,19 @@
         transform: translate(-50%, -50%);
         z-index: 10;
         padding: 1.6rem;
-        background: white;
+        background: var(--c-bgd-popup);
         border-radius: 0.6rem;
         border: 2px solid $greenDark;
         overflow: hidden;
         width: 90%;
         max-width: 800px;
+        @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
+        /*
         @media screen and (min-width: $smallTablet) {
             //zohlednění aside panelu a scrollbaru
             transform: translate(calc(-50% + 32px), -50%);
             width: calc(90% - 64px);
-        }
+        }*/
         #close-changelog-button {
             margin: 0 0 0.2rem auto;
         }
@@ -247,11 +262,15 @@
         ul {
             overflow-y: auto;
             max-height: 60vh;
-            @include scrollbar(12px, $gray3, none);
+            @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
-        h3 {
+        h1 {
             margin: 0 0 1.2rem 0;
             font-size: 1.32rem;
+        }
+        h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.16rem;
         }
         li {
             list-style-type: circle;
@@ -274,7 +293,7 @@
         
         li {
             display: block;
-            background: white;
+            background: var(--c-tile);
             border-radius: 6px;
             box-shadow: 0 3px 2px -1px rgba(black, 0.2);
             &:not(#enter-code-wrapper):not(#request-class-wrapper) > * {
@@ -412,7 +431,7 @@
                 &.empty {
                     .part.naturals-count,
                     .part.pictures-count {
-                        color: $red1;
+                        color: var(--c-error);
                     }
                 }
                 .name {
@@ -434,10 +453,8 @@
                     grid-column: 1/5;
                     display: none;
                     overflow: hidden; 
-                    padding: 0.6rem 0.2rem 0.2rem 0.2rem;    
-                }
-                .info {
-                    font-size: 0.9rem;
+                    padding: 0.6rem 0.2rem 0.2rem 0.2rem;   
+                    font-size: 0.9rem; 
                 }
                 .buttons {
                     width: 100%;
@@ -473,7 +490,7 @@
                 display: grid;
                 width: 100%;
                 padding: 0.6rem;
-                color: $black1;
+                color: var(--c-text);
             }
             .name {
                 word-break: break-word;
@@ -482,9 +499,6 @@
                 @media screen and (min-width: $mobile) {
                     font-size: 1.2rem;
                 }
-            }
-            .text-field {
-                background: #eee;
             }
         }
         #demo-info {
@@ -497,6 +511,25 @@
             }
         }
     }
+}
+
+body.dark-theme {
+    &#menu,
+    &#learn,
+    &#test,
+    &#add-pictures,
+    &#account-settings,
+    &#manage,
+    &#members,
+    &#tests,
+    &#edit-group,
+    &#resolve-reports,
+    &#naturals {
+        nav > div {
+            border: 1px solid $gray3;
+        }
+    }
+
 }
 
 @import "_study.scss" ;

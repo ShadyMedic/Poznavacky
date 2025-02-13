@@ -59,6 +59,14 @@ class AccountUpdateController extends AjaxController
                         array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;
+                case 'change theme':
+                    $darkTheme = urldecode($_POST['theme']) == 'dark';
+                    $user = UserManager::getUser();
+                    $user->updateTheme($darkTheme);
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Motiv byl úspěšně změněn',
+                        array('origin' => $_POST['action']));
+                    echo $response->getResponseString();
+                    break;
                 case 'delete account':
                     $password = urldecode($_POST['password']);
                     $user = UserManager::getUser();

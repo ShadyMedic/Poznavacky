@@ -75,6 +75,7 @@ class RooterController extends SynchronousController
         //Nalezení kontroleru k použití
         $path = '/'.implode('/', $urlArguments);
         $controllerName = @$iniRoutes['Routes'][$path];
+
         if (empty($controllerName)) {
             //Cesta nenalezena
             $aChecker = new AccessChecker();

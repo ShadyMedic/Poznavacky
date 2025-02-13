@@ -1,5 +1,15 @@
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const leafGuyImgSrc = prefersDark ? "images/leaf-guy-blonde.svg" : "images/leaf-guy-dark.svg";
+
 $(function()
 {
+    //preload ilustrace leaf guy a použití podle preferovaného barevného motivu, aby neproblikávalo
+    const img = new Image();
+    img.src = leafGuyImgSrc;
+    img.onload = () => {
+        $("#leaf-guy").prop("src", leafGuyImgSrc);
+    };
+
     //zobrazení cookies alertu
     if (!getCookie("cookiesAccepted"))
     {
@@ -366,7 +376,7 @@ function showLoginDiv($loginSectionDiv)
     $loginSectionDiv.show();
     $loginSectionDiv.find(".text-field").first().focus();
 
-    emptyForms($(".user.data .text-field, .user.data .message"));
+    emptyForms($(".user.data .text-field, .user.data input[type='checkbox'], .user.data .message"));
 }
 
 /**
@@ -378,7 +388,7 @@ function hideLoginSection()
     $("#overlay").removeClass("show");
     $("body").css("overflowY", "auto");
 
-    emptyForms($(".user.data .text-field, .user.data .message"));
+    emptyForms($(".user.data .text-field, .user.data input[type='checkbox'], .user.data .message"));
 }
 
 /**
@@ -400,6 +410,7 @@ function emptyForms($fields)
 {
     $fields.val('');
     $fields.text('');
+    $fields.prop("checked", false);
 }
 
 /*--------------------------------------------------------------------------*/

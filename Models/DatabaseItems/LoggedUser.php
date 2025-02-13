@@ -27,6 +27,7 @@ class LoggedUser extends User
         'lastLogin' => 'posledni_prihlaseni',
         'lastChangelog' => 'posledni_changelog',
         'lastMenuTableUrl' => 'adresa_posledni_slozky',
+        'darkTheme' => 'tmavy_motiv',
         'addedPictures' => 'pridane_obrazky',
         'guessedPictures' => 'uhodnute_obrazky',
         'karma' => 'karma',
@@ -40,6 +41,7 @@ class LoggedUser extends User
         'email' => null,
         'lastChangelog' => 0,
         'lastMenuTableUrl' => null,
+        'darkTheme' => 0,
         'addedPictures' => 0,
         'guessedPictures' => 0,
         'karma' => 0,
@@ -52,6 +54,7 @@ class LoggedUser extends User
     protected $hash;
     protected $lastChangelog;
     protected $lastMenuTableUrl;
+    protected $darkTheme;
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -67,12 +70,13 @@ class LoggedUser extends User
      * @param string|undefined|null $hash Heš uživatelova hesla z databáze
      * @param float|undefined|null $lastChangelog Poslední zobrazený changelog
      * @param int|undefined|null $lastMenuTableUrl URL poslední navštívené složky na menu stránce
+     * @param bool|undefined|null $darkTheme TRUE, pokud je povolen tmavý mód, FALSE, pokud ne
      * {@inheritDoc}
      * @see User::initialize()
      */
     public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null,
                                $guessedPictures = null, $karma = null, $status = null, $hash = null,
-                               $lastChangelog = null, $lastMenuTableUrl = null): void
+                               $lastChangelog = null, $lastMenuTableUrl = null, $darkTheme = null): void
     {
         //Nastav vlastnosti zděděné z mateřské třídy
         parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
@@ -87,10 +91,14 @@ class LoggedUser extends User
         if ($lastMenuTableUrl === null) {
             $lastMenuTableUrl = $this->lastMenuTableUrl;
         }
+        if ($darkTheme === null) {
+            $darkTheme = $this->darkTheme;
+        }
         
         $this->hash = $hash;
         $this->lastChangelog = $lastChangelog;
         $this->lastMenuTableUrl = $lastMenuTableUrl;
+        $this->darkTheme = $darkTheme;
     }
     
     /**
@@ -366,6 +374,22 @@ class LoggedUser extends User
         $this->lastMenuTableUrl = $url;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['lastMenuTableUrl'].
                                 ' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($url, $this->id));
+    }
+
+    /**
+     * Metoda aktualizující uživateli jak v $_SESSION tak v databázi barevný zvolený motiv uživatelského rozhraní
+     * stránce
+     * @param bool $darkThemeSelected TRUE pokud má být nastaven tmavý motiv, FALSE pokud světlý
+     * @return bool TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
+     */
+    public function updateTheme(bool $darkThemeSelected): bool
+    {
+        $this->loadIfNotLoaded($this->id);
+
+        $this->darkTheme = $darkThemeSelected;
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['darkTheme'].
+            ' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array((int)$darkThemeSelected, $this->id));
     }
     
     /**

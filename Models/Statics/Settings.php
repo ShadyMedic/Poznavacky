@@ -22,6 +22,16 @@ class Settings
     public const VERSION = '4.2.1';
 
     /**
+     * Absolutní cesta ke kořenové složce aplikace na webserveru
+     */
+    public const APP_ROOT_DIR = '/var/www/html/Poznavacky';
+
+    /**
+     * Kořenový jmenný prostor aplikace
+     */
+    public const ROOT_NAMESPACE = 'Poznavacky';
+
+    /**
      * Server hostující MySQL databázi pro aplikaci
      */
     public const DB_HOST = 'localhost';
@@ -111,5 +121,10 @@ class Settings
         'image/svg'
     );
 
+    /**
+     * Výchozí barevný motiv, použitý pokud není přihlášen žádný uživatel.
+     * Hodnota bude použita pro dosazení do CSS třídy <body> (class="[hodnota]-theme").
+     */
+    public const DEFAULT_THEME = '0';
 }
 

@@ -46,27 +46,27 @@
             <h5>Připoj se pomocí kódu</h5>
             <span>Zadej kód soukromé třídy, do které chceš vstoupit:</span>
             <form id='class-code-form'>
-                <input id='class-code-input' class="text-field" type="number" min=0 max=9999 maxlength=4/>
-                <button class='btn border-btn non-transparent black'>OK</button>
+                <input id='class-code-input' class="text-field variant" type="number" min=0 max=9999 maxlength=4/>
+                <button class='btn border-btn non-transparent primary'>OK</button>
             </form>
         </li>
         <li id="request-class-wrapper">
             <h5>Vytvoř novou třídu</h5>
             <span>Ve své třídě můžeš vytvářet jednotlivé poznávačky a sdílet je se spolužáky. Pro tvorbu třídy vyplň krátký formulář:</span>
-            <button id="request-class-button" class='btn border-btn non-transparent black'>Vytvořit novou třídu</button> <!-- TEMPORARY -->
+            <button id="request-class-button" class='btn border-btn non-transparent primary'>Vytvořit novou třídu</button> <!-- TEMPORARY -->
             <form method="POST" id="request-class-form" style="display:none;">
                 <label for="new-class-form-name">Požadovaný název třídy
                     <p class="additional-form-info">Pokus se do názvu třídy zakomponovat i název školy, aby nedocházelo ke konfliktům v názvech mezi třídami různých škol. Vhodným názvem třídy je například <i>2.A ZŠ Jana Nerudy</i> nebo <i>Biologický kroužek GJVJ</i>.</p>
                     <p class="additional-form-info">Třída bude vytvořena ihned po odeslání žádosti s dočasným názvem <i>Třída uživatele <?= $userName ?></i>. Požadovaný název třídy bude automaticky nastaven, pokud ho schválí správce služby.</p>
                 </label>
-                <input id='new-class-form-name' class="text-field" type=text maxlength=31 />
+                <input id='new-class-form-name' class="text-field variant" type=text maxlength=31 />
                 <?php if (!$specifiedEmail) : ?>
                     <label for="new-class-form-email">Kontaktní e-mailová adresa</label>
-                    <input class='text-field' id='new-class-form-email' length=255 />
+                    <input class='text-field variant' id='new-class-form-email' length=255 />
                 <?php endif ?>
                 <label for="new-class-form-antispam">Prokaž prosím, že nejsi robot, opsáním následujícího čísla pomocí číslic: <span id="antispam-question"> <?= $antispamCode ?> </span></label>
-                <input id='new-class-form-antispam' class="text-field" type="number" min=0 max=99 maxlength=2 />
-                <input type=submit class="btn border-btn non-transparent black" value="Odeslat žádost" />
+                <input id='new-class-form-antispam' class="text-field variant" type="number" min=0 max=99 maxlength=2 />
+                <input type=submit class="btn border-btn non-transparent primary" value="Odeslat žádost" />
                 <button id="request-class-cancel-button" class="btn inline black">Zrušit</button>
             </form>
         </li>

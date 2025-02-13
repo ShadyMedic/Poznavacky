@@ -1,5 +1,6 @@
 var smallTablet = 672;
 var tablet = 768;
+var prefersDarkTheme; //automatická preference prohlížeče
 
 $(function()
 {
@@ -49,7 +50,36 @@ $(function()
     {
         $("body").removeClass("tab");    
     })
+
+    transitionAfterPageLoad();
 })
+
+/**
+ * Funkce povolující transitions později po načtení stránky
+ */
+function transitionAfterPageLoad()
+{
+    setTimeout(() =>  {
+        $(".no-transition").removeClass("no-transition");
+    }, 400);
+}
+
+/**
+ * Funkce nastavující tmavý/světlý motiv
+ */
+function setTheme(newTheme)
+{
+    if (newTheme == "dark")
+    {
+        $("body").addClass("dark-theme");
+        $("body").removeClass("light-theme");
+    }
+    else if (newTheme == "light")
+    {   
+        $("body").addClass("light-theme");
+        $("body").removeClass("dark-theme");
+    }
+}
 
 /**
  * Funkce, která odešle formulář stiskem klávesy Enter

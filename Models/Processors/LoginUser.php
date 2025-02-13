@@ -172,7 +172,8 @@ class LoginUser
             $userData[LoggedUser::COLUMN_DICTIONARY['guessedPictures']],
             $userData[LoggedUser::COLUMN_DICTIONARY['karma']], $userData[LoggedUser::COLUMN_DICTIONARY['status']],
             $userData[LoggedUser::COLUMN_DICTIONARY['hash']], $userData[LoggedUser::COLUMN_DICTIONARY['lastChangelog']],
-            $userData[LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl']]);
+            $userData[LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl']],
+            (bool)$userData[LoggedUser::COLUMN_DICTIONARY['darkTheme']]);
         $_SESSION['user'] = $user;
         
         Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].

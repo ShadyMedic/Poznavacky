@@ -75,7 +75,7 @@
             #main-img {
                 height: 100%;
                 width: 100%;
-                background: #f8f8f8;
+                background: var(--c-text-field);
                 object-fit: contain;
                 border-radius: 3.2px;
             }
@@ -95,10 +95,10 @@
             position: relative;
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 4px rgba(white, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
         }
     }
     .report-box {
+        background: var(--c-bgd-report);
         overflow-y: auto;
         padding: 0.6rem;
         font-size: 0.9rem;
@@ -107,7 +107,6 @@
         flex-direction: column;
         bottom: 0;
         height: 100%;
-        background: white;
         width: 100%;
         transform: translateY(105%);
         transition: transform 0.4s ease-out;
@@ -130,18 +129,6 @@
             height: 30%;
             > img {
                 height: 100%;
-            }
-        }
-        .custom-select-wrapper {
-            margin: 0.2rem 0;
-            .custom-select-main {
-                background: $gray2;
-            }
-            .custom-option {
-                border-top: 1px solid white;
-                &:not(.selected) {
-                    background: $gray2;
-                }
             }
         }
         .custom-options {
@@ -174,14 +161,13 @@
             font-size: 0.72rem;
             line-height: 0.96rem;
             min-height: 0.96rem; 
-            color: $red1;
+            color: var(--c-error);
             &.server {
                 margin-bottom: 0.2rem;
                 min-height: 0;
             }
         }
         .text-field {
-            background: $gray2;
             margin: 0.2rem 0;
         }
         #submit-report-button {
@@ -228,9 +214,6 @@
                 bottom: 0;
                 right: 0;    
             }
-            > img {
-                filter: drop-shadow(0 0 0.2rem rgba(white, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
-            }
         }
     }
 }
@@ -255,7 +238,7 @@
                 color: $greenDark;
             }
             .incorrect {
-                color: $red1;
+                color: var(--c-error);
             }
         }
     }
@@ -356,12 +339,18 @@
                 grid-row: 4/5;
             }
             #preview-img {
-                background: #f8f8f8;
+                background: var(--c-text-field);
                 object-fit: contain;
                 border-radius: 3.2px;
                 width: 100%;
                 margin: 0.6rem 0;
             }
         }
+    }
+}
+
+body.dark-theme {
+    #add-pictures #preview-img {
+        border: 1px solid $gray3;
     }
 }

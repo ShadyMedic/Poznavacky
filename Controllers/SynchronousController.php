@@ -1,6 +1,7 @@
 <?php
 namespace Poznavacky\Controllers;
 
+use Poznavacky\Models\Statics\Settings;
 use Poznavacky\Models\MessageBox;
 
 /**
@@ -66,13 +67,14 @@ abstract class SynchronousController implements ControllerInterface
             
             if (!is_dir($path) && $fileName == $value) //Soubor
             {
-                //Ořízni cestu vedoucí ke složce obsahující kontrolery
-                $rootNamespace = explode('\\', __NAMESPACE__)[0];
-                $path = mb_substr($path, mb_strpos($path, $rootNamespace));
+                //Ořízni cestu vedoucí ke kořenové složce aplikace               
+                $path = mb_substr($path, mb_strlen(Settings::APP_ROOT_DIR));
                 //Nahraď běžná lomítka (v adresářové struktuře) zpětnými lomítky (navigace jmenými prostory)
                 $path = str_replace('/', '\\', $path);
                 //Ořízni příponu zdrojového souboru
-                $path = mb_substr($path, 0, mb_strpos($path, '.', -6)); //Odstřihnutí přípony
+                $path = mb_substr($path, 0, mb_strpos($path, '.', -6)); //Odstřihnutí přípony           
+                //Přidej na začátek plné cesty ke třídě název kořenového jmenného prostoru
+                $path = Settings::ROOT_NAMESPACE.$path;
                 return $path;
             } else {
                 if (is_dir($path)) //Složka
@@ -88,5 +90,6 @@ abstract class SynchronousController implements ControllerInterface
         }
         return false;
     }
+
 }
 
