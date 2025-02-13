@@ -379,17 +379,17 @@ textarea:focus {
   margin: auto;
   width: 90%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #administrate #stats {
     width: 75%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #administrate #stats {
     width: 55%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #administrate #stats {
     width: 35%;
   }
@@ -502,7 +502,7 @@ textarea:focus {
   align-items: center;
   flex-direction: column;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #users .action > div,
   #classes .action > div,
   #admin-reports .action > div,
@@ -573,17 +573,17 @@ textarea:focus {
   width: 95%;
   margin: auto;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #mailsender #email {
     width: 85%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #mailsender #email {
     width: 65%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #mailsender #email {
     width: 45%;
   }
@@ -640,17 +640,17 @@ textarea:focus {
   margin: auto;
   width: 96%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #alerts .center {
     width: 88%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #alerts .center {
     width: 72%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #alerts .center {
     width: 56%;
   }
@@ -675,7 +675,7 @@ textarea:focus {
 #alerts data-item .alert-date {
   word-break: keep-all;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #alerts data-item .alert-date {
     white-space: nowrap;
   }
@@ -711,17 +711,17 @@ textarea:focus {
   text-align: justify;
   width: 96%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #database .sql-center {
     width: 88%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #database .sql-center {
     width: 72%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #database .sql-center {
     width: 56%;
   }
@@ -741,17 +741,17 @@ textarea:focus {
   margin: 0 auto 0.4rem auto;
   width: 96%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #database #sql-result p {
     width: 88%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #database #sql-result p {
     width: 72%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #database #sql-result p {
     width: 56%;
   }

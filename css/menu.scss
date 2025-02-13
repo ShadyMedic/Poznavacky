@@ -43,7 +43,7 @@ html:has(#menu,
     header {    
         background: linear-gradient(90deg, $greenDark, $gradientDark);
         width: 100%;
-        z-index: 5;
+        z-index: 4;
         inset: 0;
         mask:
             url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, //nevím jak to funguje
@@ -54,11 +54,11 @@ html:has(#menu,
             display: none;
         }
         > .wrapper {
-            padding-left: 72px;
+            padding-left: 4.5rem;
             display: grid;
             grid-template-columns: auto auto 1fr;
             grid-template-rows: auto auto;
-            @media screen and (min-width: 420px) {
+            @media screen and (min-width: 26.25rem) {
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
@@ -69,7 +69,7 @@ html:has(#menu,
             grid-row: 2/3;
             grid-column: 1/4;
             margin-left: 0rem;
-            @media screen and (min-width: 420px) {
+            @media screen and (min-width: 26.25rem) {
                 margin-left: 1rem;
             }
             @media screen and (min-width: $smallTablet) {
@@ -78,8 +78,8 @@ html:has(#menu,
         }
         .btn.icon {
             margin: 0.4rem 1rem 0.4rem 0;
-            height: 32px;
-            width: 32px;
+            height: 2rem;
+            width: 2rem;
             @media screen and (min-width: $smallTablet) {
                 display: none;
             }
@@ -91,27 +91,27 @@ html:has(#menu,
     }
     #logo-standalone {
         display: block; 
-        top: -12px;
-        left: -12px;
-        height: 72px;
-        width: 72px;
+        top: -0.75rem;
+        left: -0.75rem;
+        height: 4.5rem;
+        width: 4.5rem;
         @media screen and (min-width: $smallTablet) {
-            top: -20px;
-            left: -20px;
-            height: 112px;
-            width: 112px;
+            top: -1.25rem;
+            left: -1.25rem;
+            height: 7rem;
+            width: 7rem;
         }
         position: absolute;
-        z-index: 2;
-        border-radius: 100px;
+        z-index: 5;
+        border-radius: 6.25rem;
         background: linear-gradient(135deg, $greenDark, $gradientDark);
         img {
             position: relative;
-            top: 20px;
-            left: 20px;
+            top: 1.25rem;
+            left: 1.25rem;
             @media screen and (min-width: $smallTablet) {
-                top: 32px;
-                left: 32px;
+                top: 2rem;
+                left: 2rem;
             }
             height: 50%;
             width: 50%;
@@ -120,20 +120,20 @@ html:has(#menu,
     }
     aside {
         display: none;
-        width: 64px;
+        width: 4rem;
         grid-row: 1/6;
         grid-column: 1/2;
         color: white;
         background: var(--c-side-panel);
-        padding-top: 104px;
+        padding-top: 6.5rem;
         @media screen and (min-width: $smallTablet) {
             display: flex;
             flex-direction: column;
         }
         .btn.icon {
             margin: 1rem auto;
-            height: 32px;
-            width: 32px;
+            height: 2rem;
+            width: 2rem;
             &:last-child {
                 margin-top: auto;    
             }
@@ -244,7 +244,7 @@ html:has(#menu,
         border: 2px solid $greenDark;
         overflow: hidden;
         width: 90%;
-        max-width: 800px;
+        max-width: 50rem;
         @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         /*
         @media screen and (min-width: $smallTablet) {
@@ -348,7 +348,7 @@ html:has(#menu,
                 }
                 > span {
                     width: 90%;
-                    max-width: 400px;
+                    max-width: 25rem;
                     margin: auto;
                     margin-bottom: 0.4rem;
                 }
@@ -373,7 +373,7 @@ html:has(#menu,
                 display: flex;
                 flex-direction: column;
                 width: 90%;
-                max-width: 400px;
+                max-width: 25rem;
                 margin: auto;
                 > * {
                     margin: 0;
@@ -391,7 +391,7 @@ html:has(#menu,
                     margin-top: 0.6rem;
                 }
                 textarea {
-                    max-height: 160px;
+                    max-height: 10rem;
                 }
                 #antispam-question {
                     font-weight: 500;
@@ -467,7 +467,7 @@ html:has(#menu,
         }
         .table-title {
             width: 100%;
-            max-width: 780px;
+            max-width: 48.75rem;
             padding: 0.6rem;
             display: grid;
             span {
@@ -478,7 +478,7 @@ html:has(#menu,
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 780px;
+            max-width: 48.75rem;
             position: relative;
             span,
             h4 {
@@ -504,7 +504,7 @@ html:has(#menu,
         }
         #demo-info {
             width: 100%;
-            max-width: 780px;
+            max-width: 48.75rem;
             margin-top: 1.6rem;
             margin-bottom: 1.2rem;
             p {

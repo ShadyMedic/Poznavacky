@@ -27,18 +27,18 @@
     }
     #logo-standalone {
         display: block; 
-        top: -12px;
-        left: -12px;
-        height: 72px;
-        width: 72px;
+        top: -0.75rem;
+        left: -0.75rem;
+        height: 4.5rem;
+        width: 4.5rem;
         position: absolute;
         z-index: 5;
-        border-radius: 100px;
+        border-radius: 6.25rem;
         background: linear-gradient(135deg, $greenDark, $gradientDark);
         img {
             position: relative;
-            top: 20px;
-            left: 20px;
+            top: 1.25rem;
+            left: 1.25rem;
             height: 50%;
             width: 50%;
             margin: auto;

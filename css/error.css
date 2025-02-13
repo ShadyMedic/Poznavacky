@@ -367,7 +367,7 @@ header .logo h1 {
   transform: translateX(-50%);
   background: var(--c-bgd-popup);
   width: 90vw;
-  max-width: 520px;
+  max-width: 32.5rem;
   height: -moz-fit-content;
   height: fit-content;
   padding: 1rem;
@@ -400,13 +400,13 @@ footer .content {
   align-items: center;
   flex-direction: column;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   footer .content {
     flex-direction: row;
     flex-wrap: wrap;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   footer .content {
     justify-content: end;
   }
@@ -1137,7 +1137,7 @@ body {
 
 header .error-img {
   width: 90vw;
-  max-width: 280px;
+  max-width: 17.5rem;
   display: block;
   margin: 1rem auto;
 }
@@ -1152,7 +1152,7 @@ header h1 .error-code {
 
 main {
   width: 95vw;
-  max-width: 800px;
+  max-width: 50rem;
   margin: auto;
   padding: 2rem;
 }

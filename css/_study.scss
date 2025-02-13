@@ -6,15 +6,15 @@
     #add-pictures-form-wrapper {
         margin: auto;
         width: 100%;
-        max-width: 400px;
+        max-width: 25rem;
         @media screen and (min-width: $smallTablet) {
             display: grid;
             align-items: start;
-            max-width: 700px;
+            max-width: 43.75rem;
             margin: 0 auto;
         }
         @media screen and (min-width: $smallDesktop) {
-            max-width: 900px;
+            max-width: 56.25rem;
         }
     }
     label {
@@ -31,11 +31,11 @@
         }
         margin: auto;
         @media screen and (min-width: $smallTablet) {
-            column-gap: 20px;
+            column-gap: 1.25rem;
             grid-template-columns: auto minmax(10rem, 1fr);
         }
         @media screen and (min-width: $smallDesktop) {
-            column-gap: 40px;
+            column-gap: 2.5rem;
         }
         .controllers {
             width: 100%;
@@ -45,32 +45,32 @@
                 grid-column: 2/3;
             }
             @media screen and (min-width: $tablet) {
-                max-width: 280px;
+                max-width: 17.5rem;
             }
             @media screen and (min-width: $smallDesktop) {
-                max-width: 320px;
+                max-width: 20rem;
             }
         }
         .picture {
             width: 100%;
             aspect-ratio: 1/1;
-            margin: 8px 0;
+            margin: 0.5rem 0;
             position: relative;
             overflow: hidden;
             border-radius: 3.2px;
             @media screen and (min-width: $smallTablet) {
                 grid-column: 1/2;
                 grid-row: 1/2;
-                width: 300px;
+                width: 18.75rem;
             }
             @media screen and (min-width: $tablet) {
-                width: 400px;
+                width: 25rem;
             }
             @media screen and (min-width: $smallDesktop) {
-                width: 500px;
+                width: 31.25rem;
             }
             @media screen and (min-width: $smallTablet) {
-                margin: 6px 0;
+                margin: 0.375rem 0;
             }
             #main-img {
                 height: 100%;
@@ -85,8 +85,8 @@
         position: absolute;
         right: 0;
         bottom: 0;
-        height: 16px;
-        width: 16px;
+        height: 1rem;
+        width: 1rem;
         margin: 0.6rem;
         @media screen and (min-width: $tablet) {
             margin: 1rem;
@@ -132,29 +132,26 @@
             }
         }
         .custom-options {
-            max-height: 120px;
+            max-height: 7.5rem;
             overflow: auto;
         }
         .additional-report-info {
             > * {
                 display: flex;
                 flex-direction: column;
-                margin: 6px auto;
+                margin: 0.375rem auto;
                 width: 100%;
                 > * {
-                    margin: 4px 0;
+                    margin: 0.25rem 0;
                 }
                 textarea {
                     width: 100%;
                     resize: none;
-                    height: 54px;
+                    height: 3.5rem;
                     @media screen and (min-width: $smallDesktop) {
-                        height: 120px;
+                        height: 7.5rem;
                     }
                 }    
-                label {
-                    font-size: inherit;
-                }
             }
         }
         .message {
@@ -179,8 +176,8 @@
             right: 0;
             bottom: 0;
             margin: 1rem;
-            height: 16px;
-            width: 16px;
+            height: 1rem;
+            width: 1rem;
         }
     }
 }
@@ -189,11 +186,11 @@
     .controllers {
         .custom-select {
             width: 100%;
-            margin: 6px auto;
+            margin: 0.375rem auto;
         }
         .btn {
             width: 100%;
-            margin: 4px auto;
+            margin: 0.25rem auto;
         }
     }
     .picture {
@@ -203,7 +200,7 @@
             height: 100%;
             opacity: 0.8;
             position: absolute;
-            padding: 10px;
+            padding: 0.625rem;
             &#picture-back-button {
                 top: 0;
                 bottom: 0;
@@ -223,16 +220,16 @@
         * {
             width: 100%;
             :not(:last-child) {
-                margin-bottom: 6px;
+                margin-bottom: 0.375rem;
             }
         }
         > * {
             display: flex;
             flex-direction: column;
-            margin: 6px auto;
+            margin: 0.375rem auto;
         }
         #result-text {
-            padding: 8px 4px;
+            padding: 0.5rem 0.25rem;
             .correct,
             .correct-typo {
                 color: $greenDark;
@@ -311,7 +308,7 @@
             .btn {
                 width: 100%;
                 display: block;
-                margin: 8px 0;
+                margin: 0.5rem 0;
                 @media screen and (min-width: $smallTablet) {
                     margin: 0;
                 }
