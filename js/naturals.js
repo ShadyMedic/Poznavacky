@@ -26,6 +26,7 @@ $(function()
     $("#naturals-wrapper").on("click", ".rename-cancel-button", function(event) {renameCancel($(event.target))})
     $("#naturals-wrapper").on("click", ".remove-natural-button", function(event) {remove(event)})
     $("#naturals-wrapper").on("click", ".display-pictures-button", function(event) {displayPictures(event)})
+    $("#naturals-wrapper").on("click", ".hide-pictures-button", function(event) {hidePictures(event)})
     $("#naturals-wrapper").on("click", ".preview-picture-button", function(event) {previewPicture(event)})
     $("#naturals-wrapper").on("click", ".hide-picture-button", function(event) {hidePicture(event)})
     $("#naturals-wrapper").on("click", ".delete-picture-button", function(event) {deletePicture(event)})
@@ -383,11 +384,16 @@ function removeFinal($natural)
  */
 function displayPictures(event)
 {
-    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    let $natural = $(event.target).closest(".data-item")
+    let $naturalPictures = $natural.find(".pictures");
     if (!$naturalPictures.hasClass("show"))
     {
-        $naturalPictures.slideDown(function() {$(this).css('display', '');});
-        $naturalPictures.addClass("show");
+        $naturalPictures.slideDown(function() {
+            $naturalPictures.addClass("show");
+        });
+
+        $natural.find(".display-pictures-button").hide();
+        $natural.find(".hide-pictures-button").show();
     }
     
     $naturalPictures.find(".picture").on("error", function()
@@ -400,7 +406,11 @@ function displayPictures(event)
     {
         if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
         {
-            $(this).find(".pictures").slideUp(function() {$(this).removeClass("show");});
+            $(this).find(".pictures").slideUp(function() {
+                $(this).removeClass("show");
+            });
+            $(this).find(".display-pictures-button").show();
+            $(this).find(".hide-pictures-button").hide();
         }
     })
 
@@ -409,6 +419,25 @@ function displayPictures(event)
     {
         $(this).attr('src', $(this).attr('data-src'));
     })
+}
+
+/**
+ * Funkce skrývající obrázky dané přírodniny"
+ * @param {event} event
+ */
+function hidePictures(event)
+{
+    let $natural = $(event.target).closest(".data-item")
+    let $naturalPictures = $natural.find(".pictures");
+    if ($naturalPictures.hasClass("show"))
+    {
+        $naturalPictures.slideUp(function() {
+            $(this).removeClass("show");
+        });
+
+        $natural.find(".display-pictures-button").show();
+        $natural.find(".hide-pictures-button").hide();
+    }
 }
 
 /**
