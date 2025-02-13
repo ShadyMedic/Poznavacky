@@ -1127,44 +1127,52 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
     transform: scale(1);
   }
 }
-#legal {
+#index,
+#legal,
+#recover-password {
   background: var(--c-bgd);
-  position: relative;
-  width: 100vw;
-  overflow-x: hidden;
-  color: var(--c-text);
-  overflow-y: auto;
 }
-#legal .container {
+#index .container,
+#legal .container,
+#recover-password .container {
   grid-template-rows: auto 1fr auto;
 }
-#legal header {
+#index header,
+#legal header,
+#recover-password header {
   background: linear-gradient(90deg, #366e11, #007F44);
-  padding: 1rem 1rem;
   z-index: 4;
   inset: 0;
-  max-height: 3.2rem;
   -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
           mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
   mask-composite: exclude;
   -webkit-mask-composite: destination-out;
+  padding: 1rem 1rem;
 }
 @media screen and (min-width: 576px) {
-  #legal header {
+  #index header,
+  #legal header,
+  #recover-password header {
     padding: 1rem 3rem;
   }
 }
 @media screen and (min-width: 768px) {
-  #legal header {
+  #index header,
+  #legal header,
+  #recover-password header {
     padding: 1rem 4.8rem;
   }
 }
 @media screen and (min-width: 960px) {
-  #legal header {
+  #index header,
+  #legal header,
+  #recover-password header {
     padding: 1rem 6rem;
   }
 }
-#legal #logo-standalone {
+#index #logo-standalone,
+#legal #logo-standalone,
+#recover-password #logo-standalone {
   display: block;
   top: -12px;
   left: -12px;
@@ -1175,13 +1183,22 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
   border-radius: 100px;
   background: linear-gradient(135deg, #366e11, #007F44);
 }
-#legal #logo-standalone img {
+#index #logo-standalone img,
+#legal #logo-standalone img,
+#recover-password #logo-standalone img {
   position: relative;
   top: 20px;
   left: 20px;
   height: 50%;
   width: 50%;
   margin: auto;
+}
+
+#legal {
+  position: relative;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 #legal main nav {
   background: var(--c-bgd-comp);

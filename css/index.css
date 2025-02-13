@@ -1127,6 +1127,73 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
     transform: scale(1);
   }
 }
+#index,
+#legal,
+#recover-password {
+  background: var(--c-bgd);
+}
+#index .container,
+#legal .container,
+#recover-password .container {
+  grid-template-rows: auto 1fr auto;
+}
+#index header,
+#legal header,
+#recover-password header {
+  background: linear-gradient(90deg, #366e11, #007F44);
+  z-index: 4;
+  inset: 0;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
+          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  padding: 1rem 1rem;
+}
+@media screen and (min-width: 576px) {
+  #index header,
+  #legal header,
+  #recover-password header {
+    padding: 1rem 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  #index header,
+  #legal header,
+  #recover-password header {
+    padding: 1rem 4.8rem;
+  }
+}
+@media screen and (min-width: 960px) {
+  #index header,
+  #legal header,
+  #recover-password header {
+    padding: 1rem 6rem;
+  }
+}
+#index #logo-standalone,
+#legal #logo-standalone,
+#recover-password #logo-standalone {
+  display: block;
+  top: -12px;
+  left: -12px;
+  height: 72px;
+  width: 72px;
+  position: absolute;
+  z-index: 5;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #366e11, #007F44);
+}
+#index #logo-standalone img,
+#legal #logo-standalone img,
+#recover-password #logo-standalone img {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  height: 50%;
+  width: 50%;
+  margin: auto;
+}
+
 @-moz-document url-prefix() {
   html:has(#index) {
     scrollbar-color: #666 transparent;
@@ -1147,37 +1214,10 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 
 #index {
-  background: var(--c-bgd);
   position: relative;
   width: 100vw;
   overflow-x: hidden;
-  color: var(--c-text);
   overflow-y: auto;
-}
-#index header {
-  background: linear-gradient(90deg, #366e11, #007F44);
-  padding: 1rem 1rem;
-  z-index: 4;
-  inset: 0;
-  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
-          mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
-  mask-composite: exclude;
-  -webkit-mask-composite: destination-out;
-}
-@media screen and (min-width: 576px) {
-  #index header {
-    padding: 1rem 3rem;
-  }
-}
-@media screen and (min-width: 768px) {
-  #index header {
-    padding: 1rem 4.8rem;
-  }
-}
-@media screen and (min-width: 960px) {
-  #index header {
-    padding: 1rem 6rem;
-  }
 }
 #index header .content {
   display: flex;
@@ -1194,25 +1234,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   #index header .content .btn {
     margin: 0 0 0 1.2rem;
   }
-}
-#index #logo-standalone {
-  display: block;
-  top: -12px;
-  left: -12px;
-  height: 72px;
-  width: 72px;
-  position: absolute;
-  z-index: 5;
-  border-radius: 100px;
-  background: linear-gradient(135deg, #366e11, #007F44);
-}
-#index #logo-standalone img {
-  position: relative;
-  top: 20px;
-  left: 20px;
-  height: 50%;
-  width: 50%;
-  margin: auto;
 }
 #index main {
   grid-row: 2/4;
