@@ -1200,7 +1200,7 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
 }
 #legal main nav.sticky {
   position: fixed;
-  top: 0;
+  top: -3.2rem;
   width: 100%;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
@@ -1211,27 +1211,11 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
   font-weight: 500;
 }
 #legal main .content {
-  padding: 1rem 1rem;
-}
-@media screen and (min-width: 576px) {
-  #legal main .content {
-    padding: 1rem 3rem;
-  }
-}
-@media screen and (min-width: 768px) {
-  #legal main .content {
-    padding: 1.2rem 6rem;
-  }
-}
-@media screen and (min-width: 960px) {
-  #legal main .content {
-    padding: 1.2rem 16vw;
-  }
-}
-@media screen and (min-width: 1200px) {
-  #legal main .content {
-    padding: 1.2rem 20vw;
-  }
+  width: 90vw;
+  max-width: 960px;
+  padding: 0 1rem 1rem 1rem;
+  margin: 0 auto;
+  text-align: justify;
 }
 #legal main .content section {
   margin: 1rem 0;

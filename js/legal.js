@@ -9,11 +9,12 @@ $(function()
 {
     parameter = location.search.substring(1).split("&");
 
-    navOffset = $('nav').offset().top;
+    navOffset = $('nav').offset().top + 3.2*parseFloat(window.getComputedStyle(document.documentElement).fontSize);
     tosOffset = $("#tos").offset().top;
     ppOffset = $("#pp").offset().top;
     cookiesOffset = $("#cookies").offset().top;
     windowHeight = $(window).height();
+    console.log(navOffset);
 
     $('#tos-button').addClass('selected');
 
@@ -28,7 +29,7 @@ $(function()
     $("#cookies-button").click(function(){showCookies()})
 
     //event listener scrollování
-    $(window).scroll(function() {scrollCheck()})
+    $(window).on("scroll resize", function() {scrollCheck()})
 })
 
 /**
