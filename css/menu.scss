@@ -33,6 +33,7 @@ html:has(#menu,
         overflow: hidden;
     }
     .container {
+        height: 100%;
         grid-template-rows: auto auto auto 1fr auto;
         @media screen and (min-width: $smallTablet) {
             grid-template-columns: auto 1fr;
