@@ -58,7 +58,7 @@
                 <label for="change-class-status-code">Vstupní kód</label>
                 <input id='change-class-status-code' type="number" maxlength=4 value="<?= $classCode ?>" class="text-field"/>
                 <label class="custom-checkbox-wrapper">Pouze já mohu přidávat obrázky
-                    <input id="readonly" type="checkbox" name='readonly' <?php if ($classReadOnly) :?>checked <?php endif ?>/>
+                    <input id="readonly-class-checkbox" type="checkbox" name='readonly' <?php if ($classReadOnly) :?>checked <?php endif ?>/>
                     <div class="checkmark"></div>
                 </label>
                 <button id="change-class-status-confirm-button" class="btn border-btn non-transparent primary submit-button">Aktualizovat</button>

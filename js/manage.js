@@ -14,7 +14,7 @@ $(function()
     $initialStatus = $("#class-status-select .selected");
     initialStatus = $("#class-status-select .selected").text();
     initialCode = $("#change-class-status-code").val();
-    initialReadonly = $("#readonly").is(':checked');
+    initialReadonly = $("#readonly-class-checkbox").is(':checked');
 
     statusChange();
 
@@ -33,7 +33,7 @@ $(function()
     //event listener inputu
     $("#change-class-status-code").on("input", function() {statusChange()})
 
-    $("#readonly").on('change',function() {statusChange()});
+    $("#readonly-class-checkbox").on('change',function() {statusChange()});
 
     //observery
     let options = { childList: true };
@@ -165,7 +165,7 @@ function changeClassStatusConfirm()
 {
     let newStatus = $("#class-status-select .selected").text();
     let newCode = $("#change-class-status-code").val();
-    let newReadonly = $("#readonly").is(':checked');
+    let newReadonly = $("#readonly-class-checkbox").is(':checked');
 
     let confirmMessage;
     switch (newStatus)
@@ -280,7 +280,7 @@ function changeClassStatusCancel()
     $initialStatus.addClass("selected");
     $("#class-status-select .custom-select-main span").text(initialStatus);
     $("#change-class-status-code").val(initialCode);
-    $("#readonly").prop('checked', initialReadonly);
+    $("#readonly-class-checkbox").prop('checked', initialReadonly);
 
     statusChange();
 }
@@ -295,7 +295,7 @@ function changeWasMade()
 
     if ($("#class-status-select .selected").text() != initialStatus ||
         $("#change-class-status-code").val() != initialCode ||
-        $("#readonly").is(":checked") != initialReadonly)
+        $("#readonly-class-checkbox").is(":checked") != initialReadonly)
     {
         changeWasMade = true
     }
