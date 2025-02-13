@@ -742,8 +742,10 @@
                 &:hover,
                 &:active {
                     > img {
-                        filter: blur(5px) grayscale(40%);
-                        transform: scale(1.1);
+                        &:not(.icon) {
+                            filter: blur(5px) grayscale(40%);
+                            transform: scale(1.1);
+                        }
                     }
                     .img-buttons {
                         display: flex;
@@ -771,9 +773,6 @@
                     z-index: 2;
                     .btn {
                         margin: auto 0.4rem;
-                        img {
-                            @include turn-white;
-                        }
                     }
                 }
             }

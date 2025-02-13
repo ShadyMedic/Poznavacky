@@ -398,7 +398,8 @@ function displayPictures(event)
     
     $naturalPictures.find(".picture").on("error", function()
     {
-        $(this).attr("src", '/images/file-error.svg');
+        $(this).addClass("icon black");
+        $(this).attr("src", '/images/file-error_o.svg');
         $(this).siblings(".img-buttons").find(".preview-picture-button").hide();
     })
 
