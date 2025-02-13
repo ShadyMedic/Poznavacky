@@ -238,7 +238,7 @@ html:has(#index) {
         #register,
         #login,
         #password-recovery {
-            max-height: 76vh;
+            max-height: 80vh;
             padding: 0 0.4rem;
             overflow: auto;  
             @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));

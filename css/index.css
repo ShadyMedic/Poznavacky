@@ -1504,7 +1504,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-login-section #register,
 #index #index-login-section #login,
 #index #index-login-section #password-recovery {
-  max-height: 76vh;
+  max-height: 80vh;
   padding: 0 0.4rem;
   overflow: auto;
 }
