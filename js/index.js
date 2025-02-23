@@ -398,7 +398,7 @@ function demoLogin()
 {
     $("#login-name").val("Demo");
     $("#login-pass").val("6F{1NPL#/p[O-y25JkKeOp2N7MLN@p}");
-    $("#login-persist").prop("checked", false);
+    $("#login-persist-checkbox").prop("checked", false);
     $("#login-form").submit();
 }
 
@@ -514,7 +514,7 @@ function formSubmitted(event)
         case 'l':
             name = $("#login-name").val();
             pass = $("#login-pass").val();
-            stayLogged = $("#login-persist").is(":checked");
+            stayLogged = $("#login-persist-checkbox").is(":checked");
             break;
         //registrační formulář
         case 'r':

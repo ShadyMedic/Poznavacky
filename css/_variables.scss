@@ -1,9 +1,9 @@
-$smallMobile: 360px;
-$mobile: 576px;
-$smallTablet: 672px;
-$tablet: 768px;
-$smallDesktop: 960px;
-$desktop: 1200px;
+$smallMobile: 22.5rem; //360px
+$mobile: 36rem; //576px
+$smallTablet: 42rem; //672px
+$tablet: 48rem; //768px
+$smallDesktop: 60rem; //960px
+$desktop: 75rem; //1200px
 
 $gray1: #222;
 $gray2: #eee;
@@ -156,8 +156,4 @@ body.dark-theme {
     a {
         color: $color;
     }
-}
-
-@mixin turn-white {
-    filter: brightness(0) saturate(100%) invert(100%);
 }

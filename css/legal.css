@@ -367,7 +367,7 @@ header .logo h1 {
   transform: translateX(-50%);
   background: var(--c-bgd-popup);
   width: 90vw;
-  max-width: 520px;
+  max-width: 32.5rem;
   height: -moz-fit-content;
   height: fit-content;
   padding: 1rem;
@@ -400,13 +400,13 @@ footer .content {
   align-items: center;
   flex-direction: column;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   footer .content {
     flex-direction: row;
     flex-wrap: wrap;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   footer .content {
     justify-content: end;
   }
@@ -1127,61 +1127,78 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
     transform: scale(1);
   }
 }
-#legal {
+#index,
+#legal,
+#recover-password {
   background: var(--c-bgd);
-  position: relative;
-  width: 100vw;
-  overflow-x: hidden;
-  color: var(--c-text);
-  overflow-y: auto;
 }
-#legal .container {
+#index .container,
+#legal .container,
+#recover-password .container {
   grid-template-rows: auto 1fr auto;
 }
-#legal header {
+#index header,
+#legal header,
+#recover-password header {
   background: linear-gradient(90deg, #366e11, #007F44);
-  padding: 1rem 1rem;
   z-index: 4;
   inset: 0;
-  max-height: 3.2rem;
   -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
           mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
   mask-composite: exclude;
   -webkit-mask-composite: destination-out;
+  padding: 1rem 1rem;
 }
-@media screen and (min-width: 576px) {
-  #legal header {
+@media screen and (min-width: 36rem) {
+  #index header,
+  #legal header,
+  #recover-password header {
     padding: 1rem 3rem;
   }
 }
-@media screen and (min-width: 768px) {
-  #legal header {
+@media screen and (min-width: 48rem) {
+  #index header,
+  #legal header,
+  #recover-password header {
     padding: 1rem 4.8rem;
   }
 }
-@media screen and (min-width: 960px) {
-  #legal header {
+@media screen and (min-width: 60rem) {
+  #index header,
+  #legal header,
+  #recover-password header {
     padding: 1rem 6rem;
   }
 }
-#legal #logo-standalone {
+#index #logo-standalone,
+#legal #logo-standalone,
+#recover-password #logo-standalone {
   display: block;
-  top: -12px;
-  left: -12px;
-  height: 72px;
-  width: 72px;
+  top: -0.75rem;
+  left: -0.75rem;
+  height: 4.5rem;
+  width: 4.5rem;
   position: absolute;
   z-index: 5;
-  border-radius: 100px;
+  border-radius: 6.25rem;
   background: linear-gradient(135deg, #366e11, #007F44);
 }
-#legal #logo-standalone img {
+#index #logo-standalone img,
+#legal #logo-standalone img,
+#recover-password #logo-standalone img {
   position: relative;
-  top: 20px;
-  left: 20px;
+  top: 1.25rem;
+  left: 1.25rem;
   height: 50%;
   width: 50%;
   margin: auto;
+}
+
+#legal {
+  position: relative;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 #legal main nav {
   background: var(--c-bgd-comp);
@@ -1192,7 +1209,7 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
   display: flex;
   flex-direction: column;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #legal main nav {
     flex-direction: row;
     justify-content: center;
@@ -1200,7 +1217,7 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
 }
 #legal main nav.sticky {
   position: fixed;
-  top: 0;
+  top: -3.2rem;
   width: 100%;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
@@ -1211,32 +1228,16 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
   font-weight: 500;
 }
 #legal main .content {
-  padding: 1rem 1rem;
-}
-@media screen and (min-width: 576px) {
-  #legal main .content {
-    padding: 1rem 3rem;
-  }
-}
-@media screen and (min-width: 768px) {
-  #legal main .content {
-    padding: 1.2rem 6rem;
-  }
-}
-@media screen and (min-width: 960px) {
-  #legal main .content {
-    padding: 1.2rem 16vw;
-  }
-}
-@media screen and (min-width: 1200px) {
-  #legal main .content {
-    padding: 1.2rem 20vw;
-  }
+  width: 90vw;
+  max-width: 60rem;
+  padding: 0 1rem 1rem 1rem;
+  margin: 0 auto;
+  text-align: justify;
 }
 #legal main .content section {
   margin: 1rem 0;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #legal main .content section {
     margin: 1.2rem 0;
   }

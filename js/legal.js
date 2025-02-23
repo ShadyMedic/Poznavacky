@@ -9,11 +9,12 @@ $(function()
 {
     parameter = location.search.substring(1).split("&");
 
-    navOffset = $('nav').offset().top;
+    navOffset = $('nav').offset().top + 3.2*parseFloat(window.getComputedStyle(document.documentElement).fontSize);
     tosOffset = $("#tos").offset().top;
     ppOffset = $("#pp").offset().top;
     cookiesOffset = $("#cookies").offset().top;
     windowHeight = $(window).height();
+    console.log(navOffset);
 
     $('#tos-button').addClass('selected');
 
@@ -28,7 +29,7 @@ $(function()
     $("#cookies-button").click(function(){showCookies()})
 
     //event listener scrollování
-    $(window).scroll(function() {scrollCheck()})
+    $(window).on("scroll resize", function() {scrollCheck()})
 })
 
 /**
@@ -75,7 +76,7 @@ function scrollCheck()
  */
 function showToS()
 {
-    $(window).scrollTop(tosOffset - navOffset);
+    $(window).scrollTop(tosOffset - navOffset - 3.2*parseFloat(window.getComputedStyle(document.documentElement).fontSize));
     $('#pp-button, #cookies-button').removeClass('selected');
     $('#tos-button').addClass('selected');
 }
@@ -85,7 +86,7 @@ function showToS()
  */
 function showPP()
 {
-    $(window).scrollTop(ppOffset - navOffset);
+    $(window).scrollTop(ppOffset - navOffset - 3.2*parseFloat(window.getComputedStyle(document.documentElement).fontSize));
     $('#tos-button, #cookies-button').removeClass('selected');
     $('#pp-button').addClass('selected');
 }
@@ -95,7 +96,7 @@ function showPP()
  */
 function showCookies()
 {
-    $(window).scrollTop(cookiesOffset - navOffset);
+    $(window).scrollTop(cookiesOffset - navOffset - 3.2*parseFloat(window.getComputedStyle(document.documentElement).fontSize));
     $('#tos-button, #pp-button').removeClass('selected');
     $('#cookies-button').addClass('selected');
 }

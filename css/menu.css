@@ -368,7 +368,7 @@ header .logo h1 {
   transform: translateX(-50%);
   background: var(--c-bgd-popup);
   width: 90vw;
-  max-width: 520px;
+  max-width: 32.5rem;
   height: -moz-fit-content;
   height: fit-content;
   padding: 1rem;
@@ -401,13 +401,13 @@ footer .content {
   align-items: center;
   flex-direction: column;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   footer .content {
     flex-direction: row;
     flex-wrap: wrap;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   footer .content {
     justify-content: end;
   }
@@ -1211,7 +1211,7 @@ html:has(#menu,
   position: relative;
   background: var(--c-bgd);
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu,
   #learn,
   #test,
@@ -1238,9 +1238,10 @@ html:has(#menu,
 #edit-group .container,
 #resolve-reports .container,
 #naturals .container {
+  height: 100%;
   grid-template-rows: auto auto auto 1fr auto;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu .container,
   #learn .container,
   #test .container,
@@ -1269,14 +1270,14 @@ html:has(#menu,
 #naturals header {
   background: linear-gradient(90deg, #366e11, #007F44);
   width: 100%;
-  z-index: 5;
+  z-index: 4;
   inset: 0;
   -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
           mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, linear-gradient(#fff, #fff);
   mask-composite: exclude;
   -webkit-mask-composite: destination-out;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu header,
   #learn header,
   #test header,
@@ -1302,12 +1303,12 @@ html:has(#menu,
 #edit-group header > .wrapper,
 #resolve-reports header > .wrapper,
 #naturals header > .wrapper {
-  padding-left: 72px;
+  padding-left: 4.5rem;
   display: grid;
   grid-template-columns: auto auto 1fr;
   grid-template-rows: auto auto;
 }
-@media screen and (min-width: 420px) {
+@media screen and (min-width: 26.25rem) {
   #menu header > .wrapper,
   #learn header > .wrapper,
   #test header > .wrapper,
@@ -1340,7 +1341,7 @@ html:has(#menu,
   grid-column: 1/4;
   margin-left: 0rem;
 }
-@media screen and (min-width: 420px) {
+@media screen and (min-width: 26.25rem) {
   #menu header .logo,
   #learn header .logo,
   #test header .logo,
@@ -1355,7 +1356,7 @@ html:has(#menu,
     margin-left: 1rem;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu header .logo,
   #learn header .logo,
   #test header .logo,
@@ -1382,10 +1383,10 @@ html:has(#menu,
 #resolve-reports header .btn.icon,
 #naturals header .btn.icon {
   margin: 0.4rem 1rem 0.4rem 0;
-  height: 32px;
-  width: 32px;
+  height: 2rem;
+  width: 2rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu header .btn.icon,
   #learn header .btn.icon,
   #test header .btn.icon,
@@ -1426,16 +1427,16 @@ html:has(#menu,
 #resolve-reports #logo-standalone,
 #naturals #logo-standalone {
   display: block;
-  top: -12px;
-  left: -12px;
-  height: 72px;
-  width: 72px;
+  top: -0.75rem;
+  left: -0.75rem;
+  height: 4.5rem;
+  width: 4.5rem;
   position: absolute;
-  z-index: 2;
-  border-radius: 100px;
+  z-index: 5;
+  border-radius: 6.25rem;
   background: linear-gradient(135deg, #366e11, #007F44);
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu #logo-standalone,
   #learn #logo-standalone,
   #test #logo-standalone,
@@ -1447,10 +1448,10 @@ html:has(#menu,
   #edit-group #logo-standalone,
   #resolve-reports #logo-standalone,
   #naturals #logo-standalone {
-    top: -20px;
-    left: -20px;
-    height: 112px;
-    width: 112px;
+    top: -1.25rem;
+    left: -1.25rem;
+    height: 7rem;
+    width: 7rem;
   }
 }
 #menu #logo-standalone img,
@@ -1465,13 +1466,13 @@ html:has(#menu,
 #resolve-reports #logo-standalone img,
 #naturals #logo-standalone img {
   position: relative;
-  top: 20px;
-  left: 20px;
+  top: 1.25rem;
+  left: 1.25rem;
   height: 50%;
   width: 50%;
   margin: auto;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu #logo-standalone img,
   #learn #logo-standalone img,
   #test #logo-standalone img,
@@ -1483,8 +1484,8 @@ html:has(#menu,
   #edit-group #logo-standalone img,
   #resolve-reports #logo-standalone img,
   #naturals #logo-standalone img {
-    top: 32px;
-    left: 32px;
+    top: 2rem;
+    left: 2rem;
   }
 }
 #menu aside,
@@ -1499,14 +1500,14 @@ html:has(#menu,
 #resolve-reports aside,
 #naturals aside {
   display: none;
-  width: 64px;
+  width: 4rem;
   grid-row: 1/6;
   grid-column: 1/2;
   color: white;
   background: var(--c-side-panel);
-  padding-top: 104px;
+  padding-top: 6.5rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu aside,
   #learn aside,
   #test aside,
@@ -1534,8 +1535,8 @@ html:has(#menu,
 #resolve-reports aside .btn.icon,
 #naturals aside .btn.icon {
   margin: 1rem auto;
-  height: 32px;
-  width: 32px;
+  height: 2rem;
+  width: 2rem;
 }
 #menu aside .btn.icon:last-child,
 #learn aside .btn.icon:last-child,
@@ -1567,7 +1568,7 @@ html:has(#menu,
   padding: 1.2rem 1rem 0.4rem 1rem;
   margin: 0;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu nav,
   #learn nav,
   #test nav,
@@ -1599,7 +1600,7 @@ html:has(#menu,
   padding: 0.6rem 1.2rem;
   border-radius: 0.6rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu nav > div,
   #learn nav > div,
   #test nav > div,
@@ -1671,7 +1672,7 @@ html:has(#menu,
   min-width: fit-content;
   padding: 1rem 1rem;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #menu .content-wrapper,
   #learn .content-wrapper,
   #test .content-wrapper,
@@ -1686,7 +1687,7 @@ html:has(#menu,
     padding: 1.2rem 2rem;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #menu .content-wrapper,
   #learn .content-wrapper,
   #test .content-wrapper,
@@ -1714,7 +1715,7 @@ html:has(#menu,
 #naturals main {
   grid-row: 3/5;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu main,
   #learn main,
   #test main,
@@ -1815,7 +1816,7 @@ html:has(#menu,
   left: 0;
   z-index: 10;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu #messages,
   #learn #messages,
   #test #messages,
@@ -1859,7 +1860,7 @@ html:has(#menu,
 #naturals footer a {
   color: white;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #menu footer,
   #learn footer,
   #test footer,
@@ -1947,7 +1948,7 @@ html:has(#menu,
   border: 2px solid #366e11;
   overflow: hidden;
   width: 90%;
-  max-width: 800px;
+  max-width: 50rem;
   /*
   @media screen and (min-width: $smallTablet) {
       //zohlednění aside panelu a scrollbaru
@@ -2039,13 +2040,13 @@ html:has(#menu,
 #menu .folders#menu-classes-table li {
   grid-template-columns: 1fr 5.6rem 3.2rem;
 }
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 22.5rem) {
   #menu .folders#menu-classes-table .table-title,
   #menu .folders#menu-classes-table li {
     grid-template-columns: 1fr 8rem 4rem;
   }
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #menu .folders#menu-classes-table .table-title,
   #menu .folders#menu-classes-table li {
     grid-template-columns: 1fr 8rem 5.4rem;
@@ -2090,7 +2091,7 @@ html:has(#menu,
 #menu .folders#menu-classes-table #enter-code-wrapper > span,
 #menu .folders#menu-classes-table #request-class-wrapper > span {
   width: 90%;
-  max-width: 400px;
+  max-width: 25rem;
   margin: auto;
   margin-bottom: 0.4rem;
 }
@@ -2114,7 +2115,7 @@ html:has(#menu,
   display: flex;
   flex-direction: column;
   width: 90%;
-  max-width: 400px;
+  max-width: 25rem;
   margin: auto;
 }
 #menu .folders#menu-classes-table #request-class-form > * {
@@ -2133,7 +2134,7 @@ html:has(#menu,
   margin-top: 0.6rem;
 }
 #menu .folders#menu-classes-table #request-class-form textarea {
-  max-height: 160px;
+  max-height: 10rem;
 }
 #menu .folders#menu-classes-table #request-class-form #antispam-question {
   font-weight: 500;
@@ -2142,13 +2143,13 @@ html:has(#menu,
 #menu .folders#menu-groups-table li {
   grid-template-columns: 1fr 5rem;
 }
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 22.5rem) {
   #menu .folders#menu-groups-table .table-title,
   #menu .folders#menu-groups-table li {
     grid-template-columns: 1fr 6rem;
   }
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #menu .folders#menu-groups-table .table-title,
   #menu .folders#menu-groups-table li {
     grid-template-columns: 1fr 8rem;
@@ -2157,12 +2158,12 @@ html:has(#menu,
 #menu .folders#menu-parts-table .table-title {
   grid-template-columns: 1fr 5.2rem 4.2rem;
 }
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 22.5rem) {
   #menu .folders#menu-parts-table .table-title {
     grid-template-columns: 1fr 8rem 6rem;
   }
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #menu .folders#menu-parts-table .table-title {
     grid-template-columns: 1fr 8rem 8rem;
   }
@@ -2171,12 +2172,12 @@ html:has(#menu,
   grid-template-columns: auto 1fr 5.2rem 4.2rem;
   grid-template-rows: max-content min-content;
 }
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 22.5rem) {
   #menu .folders#menu-parts-table li {
     grid-template-columns: auto 1fr 8rem 6rem;
   }
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #menu .folders#menu-parts-table li {
     grid-template-columns: auto 1fr 8rem 8rem;
   }
@@ -2216,7 +2217,7 @@ html:has(#menu,
 }
 #menu .folders .table-title {
   width: 100%;
-  max-width: 780px;
+  max-width: 48.75rem;
   padding: 0.6rem;
   display: grid;
 }
@@ -2227,7 +2228,7 @@ html:has(#menu,
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 780px;
+  max-width: 48.75rem;
   position: relative;
 }
 #menu .folders ul span,
@@ -2248,14 +2249,14 @@ html:has(#menu,
   font-size: 1rem;
   font-weight: 500;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #menu .folders ul .name {
     font-size: 1.2rem;
   }
 }
 #menu .folders #demo-info {
   width: 100%;
-  max-width: 780px;
+  max-width: 48.75rem;
   margin-top: 1.6rem;
   margin-bottom: 1.2rem;
 }
@@ -2278,9 +2279,9 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #add-pictures #add-pictures-form-wrapper {
   margin: auto;
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #learn #learn-wrapper,
   #learn #test-wrapper,
   #learn #add-pictures-form-wrapper,
@@ -2292,11 +2293,11 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   #add-pictures #add-pictures-form-wrapper {
     display: grid;
     align-items: start;
-    max-width: 700px;
+    max-width: 43.75rem;
     margin: 0 auto;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #learn #learn-wrapper,
   #learn #test-wrapper,
   #learn #add-pictures-form-wrapper,
@@ -2306,7 +2307,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   #add-pictures #learn-wrapper,
   #add-pictures #test-wrapper,
   #add-pictures #add-pictures-form-wrapper {
-    max-width: 900px;
+    max-width: 56.25rem;
   }
 }
 #learn label,
@@ -2327,23 +2328,23 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #test #test-wrapper:focus {
   outline: none;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #learn #learn-wrapper,
   #learn #test-wrapper,
   #test #learn-wrapper,
   #test #test-wrapper {
-    -moz-column-gap: 20px;
-         column-gap: 20px;
-    grid-template-columns: auto minmax(10rem, 1fr);
+    -moz-column-gap: 1.25rem;
+         column-gap: 1.25rem;
+    grid-template-columns: minmax(20rem, 30rem) minmax(12rem, 20rem);
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #learn #learn-wrapper,
   #learn #test-wrapper,
   #test #learn-wrapper,
   #test #test-wrapper {
-    -moz-column-gap: 40px;
-         column-gap: 40px;
+    -moz-column-gap: 2.5rem;
+         column-gap: 2.5rem;
   }
 }
 #learn #learn-wrapper .controllers,
@@ -2354,28 +2355,12 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   display: flex;
   flex-direction: column;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #learn #learn-wrapper .controllers,
   #learn #test-wrapper .controllers,
   #test #learn-wrapper .controllers,
   #test #test-wrapper .controllers {
     grid-column: 2/3;
-  }
-}
-@media screen and (min-width: 768px) {
-  #learn #learn-wrapper .controllers,
-  #learn #test-wrapper .controllers,
-  #test #learn-wrapper .controllers,
-  #test #test-wrapper .controllers {
-    max-width: 280px;
-  }
-}
-@media screen and (min-width: 960px) {
-  #learn #learn-wrapper .controllers,
-  #learn #test-wrapper .controllers,
-  #test #learn-wrapper .controllers,
-  #test #test-wrapper .controllers {
-    max-width: 320px;
   }
 }
 #learn #learn-wrapper .picture,
@@ -2384,43 +2369,18 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #test #test-wrapper .picture {
   width: 100%;
   aspect-ratio: 1/1;
-  margin: 8px 0;
+  margin: 0.5rem 0;
   position: relative;
   overflow: hidden;
   border-radius: 3.2px;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #learn #learn-wrapper .picture,
   #learn #test-wrapper .picture,
   #test #learn-wrapper .picture,
   #test #test-wrapper .picture {
     grid-column: 1/2;
     grid-row: 1/2;
-    width: 300px;
-  }
-}
-@media screen and (min-width: 768px) {
-  #learn #learn-wrapper .picture,
-  #learn #test-wrapper .picture,
-  #test #learn-wrapper .picture,
-  #test #test-wrapper .picture {
-    width: 400px;
-  }
-}
-@media screen and (min-width: 960px) {
-  #learn #learn-wrapper .picture,
-  #learn #test-wrapper .picture,
-  #test #learn-wrapper .picture,
-  #test #test-wrapper .picture {
-    width: 500px;
-  }
-}
-@media screen and (min-width: 672px) {
-  #learn #learn-wrapper .picture,
-  #learn #test-wrapper .picture,
-  #test #learn-wrapper .picture,
-  #test #test-wrapper .picture {
-    margin: 6px 0;
   }
 }
 #learn #learn-wrapper .picture #main-img,
@@ -2439,11 +2399,11 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   position: absolute;
   right: 0;
   bottom: 0;
-  height: 16px;
-  width: 16px;
+  height: 1rem;
+  width: 1rem;
   margin: 0.6rem;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #learn .report-button,
   #test .report-button {
     margin: 1rem;
@@ -2470,7 +2430,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   transform: translateY(105%);
   transition: transform 0.4s ease-out;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #learn .report-box,
   #test .report-box {
     padding: 1rem;
@@ -2500,35 +2460,31 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 }
 #learn .report-box .custom-options,
 #test .report-box .custom-options {
-  max-height: 120px;
+  max-height: 7.5rem;
   overflow: auto;
 }
 #learn .report-box .additional-report-info > *,
 #test .report-box .additional-report-info > * {
   display: flex;
   flex-direction: column;
-  margin: 6px auto;
+  margin: 0.375rem auto;
   width: 100%;
 }
 #learn .report-box .additional-report-info > * > *,
 #test .report-box .additional-report-info > * > * {
-  margin: 4px 0;
+  margin: 0.25rem 0;
 }
 #learn .report-box .additional-report-info > * textarea,
 #test .report-box .additional-report-info > * textarea {
   width: 100%;
   resize: none;
-  height: 54px;
+  height: 3.5rem;
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #learn .report-box .additional-report-info > * textarea,
   #test .report-box .additional-report-info > * textarea {
-    height: 120px;
+    height: 7.5rem;
   }
-}
-#learn .report-box .additional-report-info > * label,
-#test .report-box .additional-report-info > * label {
-  font-size: inherit;
 }
 #learn .report-box .message,
 #test .report-box .message {
@@ -2557,17 +2513,17 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   right: 0;
   bottom: 0;
   margin: 1rem;
-  height: 16px;
-  width: 16px;
+  height: 1rem;
+  width: 1rem;
 }
 
 #learn .controllers .custom-select {
   width: 100%;
-  margin: 6px auto;
+  margin: 0.375rem auto;
 }
 #learn .controllers .btn {
   width: 100%;
-  margin: 4px auto;
+  margin: 0.25rem auto;
 }
 #learn .picture .picture-control {
   background: none;
@@ -2575,7 +2531,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   height: 100%;
   opacity: 0.8;
   position: absolute;
-  padding: 10px;
+  padding: 0.625rem;
 }
 #learn .picture .picture-control#picture-back-button {
   top: 0;
@@ -2592,15 +2548,15 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   width: 100%;
 }
 #test .controllers * :not(:last-child) {
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 #test .controllers > * {
   display: flex;
   flex-direction: column;
-  margin: 6px auto;
+  margin: 0.375rem auto;
 }
 #test .controllers #result-text {
-  padding: 8px 4px;
+  padding: 0.5rem 0.25rem;
 }
 #test .controllers #result-text .correct,
 #test .controllers #result-text .correct-typo {
@@ -2610,7 +2566,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   color: var(--c-error);
 }
 
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper {
     -moz-column-gap: 1rem;
          column-gap: 1rem;
@@ -2618,13 +2574,13 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
     grid-template-rows: auto auto auto auto;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #add-pictures #add-pictures-form-wrapper {
     -moz-column-gap: 8rem;
          column-gap: 8rem;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper #add-natural-select {
     grid-column: 1/2;
     grid-row: 2/3;
@@ -2635,7 +2591,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   display: flex;
   flex-direction: column;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-url {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -2650,7 +2606,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #add-pictures #add-pictures-form-wrapper .add-pictures-url label {
   width: 100%;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-url label {
     grid-row: 1/2;
     grid-column: 1/2;
@@ -2659,7 +2615,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #add-pictures #add-pictures-form-wrapper .add-pictures-url .text-field {
   width: 100%;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-url .text-field {
     grid-row: 2/3;
     grid-column: 1/3;
@@ -2668,12 +2624,12 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #add-pictures #add-pictures-form-wrapper .add-pictures-url .btn {
   width: 100%;
 }
-@media screen and (max-width: 672px) {
+@media screen and (max-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-url .btn {
     margin-top: 0.6rem;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-url .btn {
     grid-row: 2/3;
     grid-column: 3/4;
@@ -2683,7 +2639,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   height: 100%;
   position: relative;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-preview {
     grid-column: 1/2;
     grid-row: 4/5;
@@ -2695,9 +2651,9 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #add-pictures #add-pictures-form-wrapper .add-pictures-preview .btn {
   width: 100%;
   display: block;
-  margin: 8px 0;
+  margin: 0.5rem 0;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-preview .btn {
     margin: 0;
   }
@@ -2714,13 +2670,13 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #add-pictures #add-pictures-form-wrapper .add-pictures-preview #submit-picture-button {
   margin-top: 1rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-preview #submit-picture-button {
     margin-top: auto;
     margin-bottom: 1.4rem;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper .add-pictures-picture {
     grid-column: 2/3;
     grid-row: 4/5;
@@ -2730,6 +2686,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   background: var(--c-text-field);
   -o-object-fit: contain;
      object-fit: contain;
+  aspect-ratio: 1/1;
   border-radius: 3.2px;
   width: 100%;
   margin: 0.6rem 0;
@@ -2764,7 +2721,7 @@ body.dark-theme #add-pictures #preview-img {
   border-radius: 0.2rem;
   display: grid;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #account-settings .data-item,
   #manage .data-item,
   #members .data-item,
@@ -2797,7 +2754,7 @@ body.dark-theme #add-pictures #preview-img {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #account-settings .data-item.class-property,
   #account-settings .data-item.user-property,
   #manage .data-item.class-property,
@@ -2828,7 +2785,7 @@ body.dark-theme #add-pictures #preview-img {
 #resolve-reports .data-item.user-property .action {
   grid-column: 2/3;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #account-settings .data-item.class-property .action,
   #account-settings .data-item.user-property .action,
   #manage .data-item.class-property .action,
@@ -2853,7 +2810,7 @@ body.dark-theme #add-pictures #preview-img {
 #resolve-reports .change-form {
   grid-column: 1/3;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #account-settings .change-form,
   #manage .change-form,
   #members .change-form,
@@ -2862,7 +2819,7 @@ body.dark-theme #add-pictures #preview-img {
   #resolve-reports .change-form {
     grid-column: 2/4;
     grid-row: 1/3;
-    max-width: 400px;
+    max-width: 25rem;
   }
 }
 #account-settings .change-form .border-btn,
@@ -3369,7 +3326,7 @@ body.dark-theme #add-pictures #preview-img {
 #resolve-reports #delete-class1,
 #resolve-reports #invite-user-form,
 #resolve-reports #new-test {
-  max-width: 400px;
+  max-width: 25rem;
 }
 #account-settings #delete-account1 .border-btn,
 #account-settings #delete-class1 .border-btn,
@@ -3511,9 +3468,9 @@ body.dark-theme #add-pictures #preview-img {
 #account-settings #account-settings-wrapper {
   margin: auto;
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #account-settings #account-settings-wrapper {
-    max-width: 1100px;
+    max-width: 68.75rem;
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-column-gap: 2rem;
@@ -3523,9 +3480,9 @@ body.dark-theme #add-pictures #preview-img {
   padding: 0.6rem;
   margin: 0 auto;
   width: 90%;
-  max-width: 260px;
+  max-width: 16.25rem;
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #account-settings .user.image-section {
     width: 100%;
     max-width: auto;
@@ -3552,7 +3509,7 @@ body.dark-theme #add-pictures #preview-img {
 #account-settings .user.image-section #dark-theme-wrapper > span {
   margin-right: 1rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #account-settings .user-property.action {
     display: flex;
     flex-direction: row-reverse;
@@ -3568,7 +3525,7 @@ body.dark-theme #add-pictures #preview-img {
 
 #manage #manage-wrapper {
   margin: auto;
-  max-width: 800px;
+  max-width: 50rem;
 }
 #manage .class-buttons-section {
   padding: 0.6rem;
@@ -3613,17 +3570,17 @@ body.dark-theme #add-pictures #preview-img {
 
 #members #members-wrapper {
   margin: auto;
-  max-width: 800px;
+  max-width: 50rem;
 }
 #members .members-data-section {
   margin: auto;
-  max-width: 800px;
+  max-width: 50rem;
 }
 #members .members-data-section .data-item.member {
   grid-template-columns: 10rem 1fr;
   grid-template-rows: auto auto;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #members .members-data-section .data-item.member {
     grid-template-rows: auto 1fr;
   }
@@ -3648,7 +3605,7 @@ body.dark-theme #add-pictures #preview-img {
 
 #tests #tests-wrapper {
   margin: auto;
-  max-width: 800px;
+  max-width: 50rem;
 }
 #tests .tests-data-section {
   width: 100%;
@@ -3660,25 +3617,25 @@ body.dark-theme #add-pictures #preview-img {
   align-items: center;
   justify-items: center;
 }
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 22.5rem) {
   #tests .tests-data-section .data-properties,
   #tests .tests-data-section .data-item {
     grid-template-columns: 1fr 4rem 6rem;
   }
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #tests .tests-data-section .data-properties,
   #tests .tests-data-section .data-item {
     grid-template-columns: 1fr 4rem 6rem;
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #tests .tests-data-section .data-properties,
   #tests .tests-data-section .data-item {
     grid-template-columns: 1fr 6rem 8rem;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #tests .tests-data-section .data-properties,
   #tests .tests-data-section .data-item {
     grid-template-columns: 1fr 10rem 10rem;
@@ -3710,7 +3667,7 @@ body.dark-theme #add-pictures #preview-img {
   text-align: center;
   margin: 0.2rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #tests .tests-data-section .data-item.test .action .btn {
     margin: auto 0.4rem;
   }
@@ -3786,7 +3743,7 @@ body.dark-theme #add-pictures #preview-img {
   align-items: center;
   justify-content: space-evenly;
 }
-@media screen and (min-width: 840px) {
+@media screen and (min-width: 52.5rem) {
   #resolve-reports .data-item .action,
   #resolve-reports .data-item .edit-buttons {
     flex-direction: row;
@@ -3795,7 +3752,7 @@ body.dark-theme #add-pictures #preview-img {
 #resolve-reports .data-item .image {
   grid-column: 1/6;
   grid-row: 2/3;
-  height: 300px;
+  height: 18.75rem;
   margin: 1rem auto 0.4rem auto;
   position: relative;
 }
@@ -3820,16 +3777,16 @@ body.dark-theme #add-pictures #preview-img {
   text-align: center;
 }
 
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group #edit-group-wrapper {
     display: grid;
     grid-template-rows: auto auto auto;
-    grid-template-columns: 8fr 3fr;
+    grid-template-columns: 1fr auto;
     -moz-column-gap: 2rem;
          column-gap: 2rem;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #edit-group #edit-group-wrapper {
     grid-template-columns: 1fr auto;
   }
@@ -3837,7 +3794,7 @@ body.dark-theme #add-pictures #preview-img {
 #edit-group #group-name-container {
   margin-bottom: 1rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group #group-name-container {
     grid-row: 1/2;
     grid-column: 1/2;
@@ -3846,7 +3803,7 @@ body.dark-theme #add-pictures #preview-img {
 #edit-group #parts-boxes-container {
   margin-bottom: 1rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group #parts-boxes-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -3859,13 +3816,13 @@ body.dark-theme #add-pictures #preview-img {
 #edit-group .part.box,
 #edit-group #add-part-button {
   overflow-y: hidden;
-  height: 480px;
-  min-width: 256px;
+  height: 30rem;
+  min-width: 16rem;
   border: 1px solid var(--c-tile-border);
   border-radius: 0.2rem;
   padding: 1.6rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group .part.box,
   #edit-group #add-part-button {
     width: auto;
@@ -3875,7 +3832,7 @@ body.dark-theme #add-pictures #preview-img {
 #edit-group #add-part-button:not(:last-child) {
   margin-bottom: 1rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group .part.box:not(:last-child),
   #edit-group #add-part-button:not(:last-child) {
     margin-bottom: 0;
@@ -3935,8 +3892,8 @@ body.dark-theme #add-pictures #preview-img {
   transform: scale(0.96);
 }
 #edit-group #add-part-button img {
-  height: 180px;
-  width: 180px;
+  height: 11.25rem;
+  width: 11.25rem;
   opacity: 0.12;
   margin-bottom: 2rem;
 }
@@ -3978,7 +3935,7 @@ body.dark-theme #add-pictures #preview-img {
 #edit-group #submit-button {
   width: 100%;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group #submit-button {
     width: -moz-fit-content;
     width: fit-content;
@@ -3989,17 +3946,12 @@ body.dark-theme #add-pictures #preview-img {
   display: flex;
   margin-top: 1.2rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group #submit-buttons-wrapper {
     grid-column: 2/3;
     grid-row: 1/2;
-    flex-direction: column;
-    margin-top: 0;
-  }
-}
-@media screen and (min-width: 768px) {
-  #edit-group #submit-buttons-wrapper {
     flex-direction: row;
+    margin-top: 0;
     align-items: flex-start;
     width: -moz-fit-content;
     width: fit-content;
@@ -4009,32 +3961,15 @@ body.dark-theme #add-pictures #preview-img {
   flex-grow: 1;
   flex-basis: 0;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #edit-group #submit-buttons-wrapper .btn {
     flex-grow: initial;
     flex-basis: initial;
     margin-bottom: 0.4rem;
   }
 }
-@media screen and (min-width: 768px) {
-  #edit-group #submit-buttons-wrapper .btn {
-    margin-bottom: 0;
-  }
-}
 #edit-group #submit-buttons-wrapper .btn:not(:first-child) {
   margin-left: 0.4rem;
-}
-@media screen and (min-width: 672px) {
-  #edit-group #submit-buttons-wrapper .btn:not(:first-child) {
-    margin-bottom: 1.2rem;
-    margin-left: 0;
-  }
-}
-@media screen and (min-width: 768px) {
-  #edit-group #submit-buttons-wrapper .btn:not(:first-child) {
-    margin-bottom: 0;
-    margin-left: 0.4rem;
-  }
 }
 #edit-group .name-box,
 #edit-group .name-input-box {
@@ -4054,11 +3989,11 @@ body.dark-theme #add-pictures #preview-img {
 #edit-group .part.name-input-box .text-field {
   flex-grow: 1;
   width: 100%;
-  max-width: 320px;
+  max-width: 20rem;
 }
 #edit-group .group.name-input-box .text-field {
   width: 100%;
-  max-width: 320px;
+  max-width: 20rem;
 }
 #edit-group .group.name-box, #edit-group .group.name-input-box,
 #edit-group .part.name-box,
@@ -4084,22 +4019,14 @@ body.dark-theme #add-pictures #preview-img {
 #edit-group .natural.name-box,
 #edit-group .natural.name-input-box {
   display: grid;
-  grid-template-columns: 10rem 1rem 1rem;
+  grid-template-columns: 1fr auto auto;
   grid-gap: 0.8rem;
   align-items: center;
   margin: 0.16em 0;
 }
-@media screen and (min-width: 360px) {
-  #edit-group .natural.name-box,
-  #edit-group .natural.name-input-box {
-    grid-template-columns: 12rem 1rem 1rem;
-  }
-}
-@media screen and (min-width: 768px) {
-  #edit-group .natural.name-box,
-  #edit-group .natural.name-input-box {
-    grid-template-columns: 14rem 1rem 1rem;
-  }
+#edit-group .natural.name-box:hover,
+#edit-group .natural.name-input-box:hover {
+  background: var(--c-bgd-comp);
 }
 #edit-group .natural.name-box .btn,
 #edit-group .natural.name-input-box .btn {
@@ -4109,7 +4036,7 @@ body.dark-theme #add-pictures #preview-img {
 }
 
 #naturals #naturals-wrapper {
-  max-width: 1100px;
+  max-width: 68.75rem;
   margin: 0 auto;
 }
 #naturals .naturals-filter-section {
@@ -4135,25 +4062,25 @@ body.dark-theme #add-pictures #preview-img {
   display: grid;
   grid-template-columns: 1fr 6rem 6rem 7.2rem;
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #naturals .data-properties,
   #naturals .data-item {
     grid-template-columns: 1fr 7.2rem 7.2rem 7.2rem;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #naturals .data-properties,
   #naturals .data-item {
     grid-template-columns: 1fr 8.8rem 8.8rem 8.8rem;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #naturals .data-properties,
   #naturals .data-item {
     grid-template-columns: 1fr 10rem 10rem 10rem;
   }
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 75rem) {
   #naturals .data-properties,
   #naturals .data-item {
     grid-template-columns: 1fr 12rem 12rem 14rem;
@@ -4193,7 +4120,7 @@ body.dark-theme #add-pictures #preview-img {
   display: block;
 }
 #naturals .pictures .image {
-  height: 300px;
+  height: 18.75rem;
   width: -moz-fit-content;
   width: fit-content;
   margin: auto;
@@ -4218,14 +4145,14 @@ body.dark-theme #add-pictures #preview-img {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 0.625rem;
 }
-@media screen and (min-width: 360px) {
+@media screen and (min-width: 22.5rem) {
   #naturals .pictures .list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media screen and (min-width: 672px) {
+@media screen and (min-width: 42rem) {
   #naturals .pictures .list {
     display: flex;
     flex-direction: row;
@@ -4235,9 +4162,9 @@ body.dark-theme #add-pictures #preview-img {
 #naturals .pictures .list .img-wrapper {
   width: 100%;
   position: relative;
-  max-width: 200px;
+  max-width: 12.5rem;
   aspect-ratio: 1/1;
-  margin: min(auto, 40px);
+  margin: min(auto, 2.5rem);
   overflow: hidden;
 }
 #naturals .pictures .list .img-wrapper:after {
@@ -4252,7 +4179,7 @@ body.dark-theme #add-pictures #preview-img {
   background: rgba(0, 0, 0, 0.4);
   transition: all 0.4s;
 }
-#naturals .pictures .list .img-wrapper:hover > img, #naturals .pictures .list .img-wrapper:active > img {
+#naturals .pictures .list .img-wrapper:hover > img:not(.icon), #naturals .pictures .list .img-wrapper:active > img:not(.icon) {
   filter: blur(5px) grayscale(40%);
   transform: scale(1.1);
 }
@@ -4284,9 +4211,6 @@ body.dark-theme #add-pictures #preview-img {
 #naturals .pictures .list .img-wrapper .img-buttons .btn {
   margin: auto 0.4rem;
 }
-#naturals .pictures .list .img-wrapper .img-buttons .btn img {
-  filter: brightness(0) saturate(100%) invert(100%);
-}
 #naturals .data-properties > * {
   display: flex;
   justify-content: center;
@@ -4295,7 +4219,7 @@ body.dark-theme #add-pictures #preview-img {
 #naturals .data-properties > * span {
   padding-left: 1.1em;
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #naturals .data-properties > * span {
     padding-left: 1.8em;
   }
@@ -4305,7 +4229,7 @@ body.dark-theme #add-pictures #preview-img {
   display: flex;
   flex-direction: column;
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #naturals .data-properties > * .sort-buttons {
     flex-direction: row;
   }

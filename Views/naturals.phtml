@@ -72,6 +72,7 @@
             <div class="natural action">
                 <div class="normal-buttons">
                     <button class="display-pictures-button btn icon" title="Zobrazit obrázky"><img class="icon black" src="images/eye_f.svg"></button>
+                    <button class="hide-pictures-button btn icon" title="Skrýt obrázky" style="display:none"><img class="icon black" src="images/eye-cross_f.svg"></button>
                     <button class="rename-natural-button btn icon" title="Přejmenovat"><img class="icon black" src="images/pencil_f.svg"></button>
                     <button class="remove-natural-button btn icon" title="Odebrat"><img class="icon black" src="images/cross-thick.svg"></button>
                 </div>
@@ -86,8 +87,8 @@
                     <div class="img-wrapper">
                         <img src="images/loading.svg" data-src="<?= $picture->getSrc() ?>" data-id="<?= $picture->getId() ?>" alt="Náhled obrázku" class="natural picture"> <!-- src doplní JS (lazy loading) -->
                         <div class="img-buttons">
-                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img class="icon black" src="images/eye_f.svg"></button>
-                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img class="icon black" src="images/trash_f.svg"></button> 
+                            <button class="preview-picture-button btn icon" title="Zobrazit náhled"><img class="icon white shadow" src="images/eye_f.svg"></button>
+                            <button class="delete-picture-button btn icon" title="Odstranit obrázek"><img class="icon white shadow" src="images/trash_f.svg"></button> 
                         </div>
                     </div>
                     <?php endforeach ?>

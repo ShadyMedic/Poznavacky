@@ -189,6 +189,14 @@ function changePasswordConfirm()
                     else if (messageType === "error")
                     {
                         //Výmaz nového hesla a zobrazení pole pro nové heslo poprvé
+                        if ($("#change-password-old").val() == "")
+                        {
+                            $("#change-password-old").focus();
+                        }
+                        else
+                        {
+                            $("#change-password-new").focus();
+                        }
                         $("#change-password-new").val("");
                         $("#change-password-re-new").val("");
                     }                
