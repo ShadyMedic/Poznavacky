@@ -35,12 +35,13 @@ function answerInvitation(event, answer)
                     {
                         if (answer)
                         {
-                            //přidání nové třídy na konec seznamu
+                            //přidání nové třídy na konec seznamu neveřejných tříd
                             let $classTemplate = $('#class-template').html();
                             $classTemplate = $classTemplate.replace(/{name}/g, className);
                             $classTemplate = $classTemplate.replace(/{url}/g, classUrl);
                             $classTemplate = $classTemplate.replace(/{groups}/g, classGroupsCount);
-                            $($classTemplate).insertAfter('ul > .btn:last');
+                            $classTemplate = $classTemplate.replace(/btn class data-item/g, 'btn class closed-class data-item');
+                            $($classTemplate).insertAfter('ul > .closed-class:last');
 
                             //nastavení event handlerů
                             $(".leave-link").click(function(event) {leaveClass(event)})
