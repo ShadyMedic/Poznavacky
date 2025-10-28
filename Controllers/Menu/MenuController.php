@@ -97,7 +97,7 @@ class MenuController extends SynchronousController
             }
             
             //Aktualizovat poslední navštívenou tabulku na menu stránce (nejedná-li se o demo účet)
-            if (UserManager::getOtherInformation()['status'] !== User::STATUS_GUEST) {
+            if ($aChecker->checkDemoAccount()) {
                 UserManager::getUser()->updateLastMenuTableUrl($lastVisitedFolderPath);
             }
         } catch (NoDataException $e) {

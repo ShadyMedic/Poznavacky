@@ -25,7 +25,7 @@ class IndexController extends SynchronousController
     {
         //Kontrola, zda již uživatel není přihlášen
         $aChecker = new AccessChecker();
-        if ($aChecker->checkUser()) {
+        if ($aChecker->checkUser() && !$aChecker->checkDemoAccount()) {
             //Uživatel je již přihlášen
             $lastFolderUrl = UserManager::getOtherInformation()['lastMenuTableUrl'];
             if (empty($lastFolderUrl)) {
@@ -39,7 +39,7 @@ class IndexController extends SynchronousController
         }
         
         //Kontrola automatického přihlášení
-        if (isset($_COOKIE['instantLogin'])) {
+        if (isset($_COOKIE['instantLogin']) && !$aChecker->checkDemoAccount()) {
             try {
                 $userLogger = new LoginUser();
                 $userLogger->processCookieLogin($_COOKIE['instantLogin']);

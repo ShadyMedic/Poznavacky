@@ -75,6 +75,9 @@ $(function()
     });
 
     $("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
+
+    //Využívá odkaz na menu stránce při používání demo účtu
+    if (window.location.hash === '#register') { $('.show-login-section-register-button').get(0).click(); }
 })
 
 /**
