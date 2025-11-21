@@ -37,7 +37,7 @@ function natural(name)
 {
     this.name = name;
     this.pictures = new Array();
-    this.lastPicture;
+    this.lastPicture = 0;
     this.status = 'initialized';
     
     /**
@@ -47,16 +47,17 @@ function natural(name)
     this.getPicture = function(picture)
     {
         //kontrola, zda jsou obrázky načteny nebo se právě načítají
-        if (this.status !== "loaded" && this.status !== "loading")
+        if (this.status !== "loaded")
         {
             //po načtení obrázků je tato metoda znovu zavolána automaticky
-            this.loadPictures(picture);
+            if (this.status !== "loading") { this.loadPictures(picture); }
             return;
         }
         
         //úprava čísla posledního zobrazeného obrázku
+        //úprava čísla posledního zobrazeného obrázku
         this.lastPicture += picture;
-        
+
         //kontrola, zda index zobrazovaného obrázku spadá do hranic pole
         if (this.lastPicture > this.pictures.length - 1)
         {
@@ -67,8 +68,10 @@ function natural(name)
             this.lastPicture += this.pictures.length;
         }
 
-        let nextUrl = this.pictures[this.lastPicture];
+        let nextId = this.pictures[this.lastPicture].id;
+        let nextUrl = this.pictures[this.lastPicture].src;
         $("#main-img").attr("src", "images/loading.svg"); //načítací gif bude zobrazován, dokud se plně nenačte obrázek
+        $("#main-img").attr("data-img-id", nextId);      //ID nastavíme hned, aby bylo možné obrázek nahlásit pro pomalé načítání
         $("#main-img").on("load", function()
         {
             $("#main-img").off("load");

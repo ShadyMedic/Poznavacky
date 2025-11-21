@@ -41,7 +41,7 @@ class ReportAdder
      */
     public function processFormData(array $POSTdata): bool
     {
-        $url = $POSTdata['picUrl'];
+        $id = $POSTdata['picId'];
         $reason = $POSTdata['reason'];
         $additionalInformation = @$POSTdata['info'];
         
@@ -49,8 +49,8 @@ class ReportAdder
         $availableReasons = Report::ALL_REASONS;
         
         if (!in_array($reason, $availableReasons, true)) {
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId}, avšak nespecifikoval platný důvod',
-                array('userId' => UserManager::getId(), 'picUrl' => $url, 'groupId' => $this->group->getId()));
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picId} v poznávačce s ID {groupId}, avšak nespecifikoval platný důvod',
+                array('userId' => UserManager::getId(), 'picId' => $id, 'groupId' => $this->group->getId()));
             throw new AccessDeniedException(AccessDeniedException::REASON_REPORT_INVALID_REASON, null, null);
         }
         
@@ -69,10 +69,10 @@ class ReportAdder
         }
         
         if ($insufficientAdditionalInformation) {
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}, avšak nevyplnil správně dodatečné informace',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s ID {picId} v poznávačce s ID {groupId} z důvodu {reason}, avšak nevyplnil správně dodatečné informace',
                 array(
                     'userId' => UserManager::getId(),
-                    'picUrl' => $url,
+                    'picId' => $id,
                     'groupId' => $this->group->getId(),
                     'reason' => $reason
                 ));
@@ -98,21 +98,21 @@ class ReportAdder
         FROM '.Picture::TABLE_NAME.'
         JOIN '.Natural::TABLE_NAME.' ON '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['natural'].' = '.
                                    Natural::TABLE_NAME.'.'.Natural::COLUMN_DICTIONARY['id'].'
-        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['src'].' = ? AND '.Natural::TABLE_NAME.'.'.
+        WHERE '.Picture::TABLE_NAME.'.'.Picture::COLUMN_DICTIONARY['id'].' = ? AND '.Natural::TABLE_NAME.'.'.
                                    Natural::COLUMN_DICTIONARY['id'].' IN (
             SELECT prirodniny_id FROM prirodniny_casti WHERE casti_id IN (
                 SELECT '.Part::COLUMN_DICTIONARY['id'].' FROM '.Part::TABLE_NAME.' WHERE '.
                                    Part::COLUMN_DICTIONARY['group'].' = ?
             )
         );
-        ', array($url, $this->group->getId()), false);
+        ', array($id, $this->group->getId()), false);
         
-        //Obrázek nebyl v databázi podle zdroje nalezen
+        //Obrázek nebyl v databázi podle ID nalezen
         if ($dbResult === false) {
-            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}, avšak obrázek nemohl být v databázi nalezen',
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil odeslat hlášení obrázku s URL {picId} v poznávačce s ID {groupId} z důvodu {reason}, avšak obrázek nemohl být v databázi nalezen',
                 array(
                     'userId' => UserManager::getId(),
-                    'picUrl' => $url,
+                    'picId' => $id,
                     'groupId' => $this->group->getId(),
                     'reason' => $reason
                 ));
@@ -122,8 +122,8 @@ class ReportAdder
         $natural = new Natural(false, $dbResult[Natural::COLUMN_DICTIONARY['id']]);
         $natural->initialize($dbResult[Natural::COLUMN_DICTIONARY['name']], null,
             $dbResult[Natural::COLUMN_DICTIONARY['picturesCount']]);
-        $picture = new Picture(false, $dbResult[Picture::COLUMN_DICTIONARY['id']]);
-        $picture->initialize($url, $natural, $dbResult[Picture::COLUMN_DICTIONARY['enabled']]);
+        $picture = new Picture(false, $id);
+        $picture->initialize($dbResult[Picture::COLUMN_DICTIONARY['src']], $natural, $dbResult[Picture::COLUMN_DICTIONARY['enabled']]);
         
         $report = new Report(false, 0);    //Pokus s hlášením, které již v datbázi existuje, ale u kterého neznáme ID
         $report->initialize($picture, $reason, $additionalInformation);
@@ -131,10 +131,10 @@ class ReportAdder
             $report->load();    //Pokud hlášení zatím v databázi neexistuje, je vyvolána výjimka typu BadMethodCallException
             $report->increaseReportersCount();  //Zvýšení počtu hlášení tohoto typu o 1
             $result = $report->save();    //Uložení hlášení do databáze
-            (new Logger())->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason} (hlášení tohoto typu již existuje a tak byl pouze zvýšen počet nahlašovatelů)',
+            (new Logger())->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picId} v poznávačce s ID {groupId} z důvodu {reason} (hlášení tohoto typu již existuje a tak byl pouze zvýšen počet nahlašovatelů)',
                 array(
                     'userId' => UserManager::getId(),
-                    'picUrl' => $url,
+                    'picId' => $id,
                     'groupId' => $this->group->getId(),
                     'reason' => $reason
                 ));
@@ -142,10 +142,10 @@ class ReportAdder
             $report = new Report(true); //Tvorba nového hlášení
             $report->initialize($picture, $reason, $additionalInformation, 1);
             $result = $report->save();    //Uložení hlášení do databáze
-            (new Logger())->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picUrl} v poznávačce s ID {groupId} z důvodu {reason}',
+            (new Logger())->info('Uživatel s ID {userId} odeslal hlásení obrázku s URL {picId} v poznávačce s ID {groupId} z důvodu {reason}',
                 array(
                     'userId' => UserManager::getId(),
-                    'picUrl' => $url,
+                    'picId' => $id,
                     'groupId' => $this->group->getId(),
                     'reason' => $reason
                 ));

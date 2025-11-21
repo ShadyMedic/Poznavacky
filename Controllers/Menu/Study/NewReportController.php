@@ -16,7 +16,7 @@ use Poznavacky\Models\Logger;
 class NewReportController extends AjaxController
 {
     /**
-     * Metoda přijímající URL nahlašovaného obrázku, důvod a přídavné informace skrz $_POST a po ověření ukládající
+     * Metoda přijímající ID nahlašovaného obrázku, důvod a přídavné informace skrz $_POST a po ověření ukládající
      * data do databáze
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @see AjaxController::process()
@@ -35,18 +35,18 @@ class NewReportController extends AjaxController
             echo $response->getResponseString();
         } catch (DatabaseException $e) {
             try {
-                (new Logger())->alert('Uživatel s ID {userId} se pokusil nahlásit obrázek s URL {picUrl} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
+                (new Logger())->alert('Uživatel s ID {userId} se pokusil nahlásit obrázek s ID {picId} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
                     array(
                         'userId' => UserManager::getId(),
-                        'picUrl' => $_POST['picUrl'],
+                        'picId' => $_POST['picId'],
                         'groupId' => $_SESSION['selection']['group']->getId(),
                         'exception' => $e
                     ));
             } catch (AccessDeniedException $e) {
-                (new Logger())->alert('Nepřihlášený uživatel se pokusil z IP adresy {ip} nahlásit obrázek s URL {picUrl} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
+                (new Logger())->alert('Nepřihlášený uživatel se pokusil z IP adresy {ip} nahlásit obrázek s ID {picId} v poznávačce s ID {groupUrl}, avšak při práci s databází se vyskytla chyba; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
                     array(
                         'ip' => $_SERVER['REMOTE_ADDR'],
-                        'picUrl' => $_POST['picUrl'],
+                        'picId' => $_POST['picId'],
                         'groupId' => $_SESSION['selection']['group']->getId(),
                         'exception' => $e
                     ));

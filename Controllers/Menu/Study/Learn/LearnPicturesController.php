@@ -17,7 +17,7 @@ class LearnPicturesController extends AjaxController
 {
     
     /**
-     * Metoda přijímající název přírodniny skrz $_POST a získávající zdroje všech jejích obrázků z databáze
+     * Metoda přijímající název přírodniny skrz $_GET a získávající zdroje všech jejích obrázků z databáze
      * Adresy jsou odeslány jako pole v JSON formátu
      * @param array $parameters Parametry pro zpracování kontrolerem (nevyužíváno)
      * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
@@ -49,7 +49,7 @@ class LearnPicturesController extends AjaxController
         
         $picturesArr = array();
         foreach ($pictures as $picture) {
-            $picturesArr[] = $picture->getSrc();
+            $picturesArr[] = ['id' => $picture->getId(), 'src' => $picture->getSrc()];
         }
         
         (new Logger())->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byly odeslány obrázky přírodniny s ID {naturalId} pro učební stránku',

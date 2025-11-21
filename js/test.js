@@ -17,9 +17,10 @@ $(function()
  * @param num Číslo, pod kterým je v $_SESSION na serveru uložena správná odpověď
  * @param url URL adresa obrázku k zobrazení
  */
-function picture(num, url)
+function picture(num, id, url)
 {
     this.num = num;
+    this.id = id;
     this.url = url;
 }
 
@@ -37,14 +38,7 @@ function pictureList()
      */
     this.loadPictures = function(callNextUponResponse)
     {
-        if (callNextUponResponse)
-        {
-            this.callNext = true;
-        }
-        else
-        {
-            this.callNext = false;
-        }
+        this.callNext = !!callNextUponResponse;
 
         let url = window.location.href;
         if (url.endsWith('/')) { url = url.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
@@ -59,7 +53,7 @@ function pictureList()
                         if (messageType === "success")
                         {
                             //přepsání dvourozměrného pole do jednorozměrného s objekty
-                            for (let i = 0; i < data.pictures.length; i++) { data.pictures[i] = new picture(data.pictures[i]["num"], data.pictures[i]["url"]); }
+                            for (let i = 0; i < data.pictures.length; i++) { data.pictures[i] = new picture(data.pictures[i]["num"], data.pictures[i]["id"], data.pictures[i]["url"]); }
                             
                             //z nějakého důvodu nejde odkazovat pomocí this
                             pictureManager.pictures = data.pictures;
@@ -94,7 +88,7 @@ function pictureList()
      */
     this.picturesAvailable = function()
     {
-        return (this.pictures.length > 0) ? true : false;
+        return (this.pictures.length > 0);
     }
 }
 
@@ -191,8 +185,7 @@ function softCheck(answer, correct)
     answer = answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     correct = correct.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     
-    if (answer === correct) return true;
-    else return false;
+    return answer === correct;
 }
 
 /**
@@ -222,9 +215,11 @@ function next()
     
     let newPicture = pictureManager.getNextPicture();
     let newNum = newPicture["num"];
+    let newId = newPicture["id"];
     let newUrl = newPicture["url"];
 
     $("#main-img").attr("src", newUrl);
+    $("#main-img").attr("data-img-id", newId);
     $("#answer-hidden").val(newNum);
 
     $("#submit-answer-button").removeClass("disabled");

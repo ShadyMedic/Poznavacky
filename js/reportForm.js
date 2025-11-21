@@ -58,8 +58,11 @@ function reportImg()
     $(".report-button").hide();
     $(".report-box").addClass("show");
 
+    let id;
     let url;
-    if ($("#main-img").get(0).complete){ url = $("#main-img").attr("src"); }
+    if ($("#main-img").get(0).complete){
+        url = $("#main-img").attr("src");
+    }
     else { url = "images/loading.svg"; } //obrázek se stále načítá
     $("#report-img-preview > img").attr("src", url);
 }
@@ -127,7 +130,7 @@ function submitReport()
 {
     let $reason = $("#report-reason").find(".selected");
     let isCompletlyLoaded = $("#main-img").get(0).complete;
-    let picUrl = $("#main-img").attr("src");
+    let picId = $("#main-img").attr("data-img-id");
     let reasonInfo = "";
     
     let $additionalInfoElement = $(".additional-report-info").find("*:visible:first");
@@ -167,7 +170,6 @@ function submitReport()
             $("#report-message").text("Tento obrázek nemůžeš nahlásit");
             return;
         }
-        //TODO - při reportu obrázku blank.gif (důvodem pomalé načítání) vrátí server zprávu Neznámý obrázek
     }
 
     //nebyla zaznamenána žádná chyba
@@ -179,7 +181,7 @@ function submitReport()
     
     $.post(url + '/new-report',
         {
-            picUrl: picUrl,
+            picId: picId,
             reason: $reason.text(),
             info: reasonInfo
         },

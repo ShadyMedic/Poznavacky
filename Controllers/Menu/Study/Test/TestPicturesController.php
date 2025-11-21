@@ -52,11 +52,11 @@ class TestPicturesController extends AjaxController
         //Uložení nových odpovědí do $_SESSION a stavba dvourozměrného pole k odeslání
         $picturesArr = array();
         for ($i = 0; $i < count($pictures); $i++) {
-            $picturesArr[] = array('num' => $i, 'url' => $pictures[$i]->getSrc());
+            $picturesArr[] = array('num' => $i, 'id' => $pictures[$i]->getId(), 'url' => $pictures[$i]->getSrc());
             $_SESSION['testAnswers'][$i] = $pictures[$i]->getNatural()->getName();
         }
         
-        //Odeslání dvourozměrného pole s čísly otázek a adresami obrázků
+        //Odeslání dvourozměrného pole s čísly otázek a s ID a adresami obrázků
         (new Logger())->info('K uživateli s ID {userId} přistupujícímu do systému z IP adresy {ip} byly odeslány náhodné obrázky pro zkoušecí stránku části/částí poznávačky s ID {groupId} patřící do třídy s ID {classId}',
             array(
                 'userId' => UserManager::getId(),
