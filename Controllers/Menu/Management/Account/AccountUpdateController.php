@@ -52,7 +52,7 @@ class AccountUpdateController extends AjaxController
                     break;
                 case 'change email':
                     $password = urldecode($_POST['password']);
-                    $email = trim(urldecode($_POST['newEmail'])); //Ořež mezery
+                    $email = strtolower(trim(urldecode($_POST['newEmail']))); //Ořež mezery a převeď do lowercase
                     $user = UserManager::getUser();
                     $user->changeEmail($password, $email);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'E-mail byl úspěšně změněn',

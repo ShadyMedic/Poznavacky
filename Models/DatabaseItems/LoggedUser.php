@@ -27,7 +27,7 @@ class LoggedUser extends User
         'lastLogin' => 'posledni_prihlaseni',
         'lastChangelog' => 'posledni_changelog',
         'lastMenuTableUrl' => 'adresa_posledni_slozky',
-        'darkTheme' => 'tmavy_motiv',
+        'darkTheme' => 'motiv',
         'addedPictures' => 'pridane_obrazky',
         'guessedPictures' => 'uhodnute_obrazky',
         'karma' => 'karma',

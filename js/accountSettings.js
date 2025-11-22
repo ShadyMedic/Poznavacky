@@ -274,7 +274,7 @@ function changeEmailFinal(password, newEmail)
                     //Funkce zajišťující změnu e-mailu v DOM v případě úspěšné změny
                     if (messageType === 'success')
                     {
-                        $("#email-address").text(decodeURIComponent(newEmail));
+                        $("#email-address").text(decodeURIComponent(newEmail).toLowerCase());
 
                         //Reset HTML
                         changeEmailCancel();
