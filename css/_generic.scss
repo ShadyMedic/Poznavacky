@@ -689,7 +689,7 @@ label {
             left: var(--slider-offset);
             top: 50%;
             transform: translateY(-50%);
-            background: linear-gradient(40deg,$purpleDark,$purpleLight 70%);
+            background: linear-gradient(40deg, $purpleDark, $purpleLight 70%);
             transition: .4s;
         }
     }
@@ -836,9 +836,11 @@ body.dark-theme {
     @include dark-theme-border();
 }
 
-body:not(.dark-theme) {
-    .custom-switch-wrapper .slider {
-        background: #fff;
+@media (prefers-color-scheme: light) {
+    body:not(.dark-theme) {
+        .custom-switch-wrapper .slider {
+            background: #fff;
+        }
     }
 }
 

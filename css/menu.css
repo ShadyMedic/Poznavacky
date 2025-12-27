@@ -933,7 +933,7 @@ label.required:after {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #f4f4f5;
+  background-color: var(--c-text-field);
   border-radius: 30px;
   transition: 0.4s;
 }
@@ -1107,10 +1107,11 @@ body.dark-theme #main-img {
   border: 1px solid #444;
 }
 
-body:not(.dark-theme) .custom-switch-wrapper .slider {
-  background: #fff;
+@media (prefers-color-scheme: light) {
+  body:not(.dark-theme) .custom-switch-wrapper .slider {
+    background: #fff;
+  }
 }
-
 body.light-theme .text-field.variant,
 body.light-theme .custom-select-main.variant,
 body.light-theme .custom-checkbox-wrapper .checkmark.variant {
