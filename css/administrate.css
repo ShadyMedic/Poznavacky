@@ -33,6 +33,9 @@ body {
   --c-checkmark: #479911;
   --c-scrollbar-thumb: #444;
   --c-scrollbar-thumb-hover: #007F44;
+  --c-managed-class-border: #79cf40;
+  --c-closed-class-border: #366e11;
+  --c-public-class-border: #777;
 }
 
 @media (prefers-color-scheme: light) {
@@ -71,6 +74,9 @@ body {
     --c-checkmark: #479911;
     --c-scrollbar-thumb: #444;
     --c-scrollbar-thumb-hover: #007F44;
+    --c-managed-class-border: #79cf40;
+    --c-closed-class-border: #366e11;
+    --c-public-class-border: #777;
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -109,6 +115,9 @@ body {
     --c-checkmark: #479911;
     --c-scrollbar-thumb: #666;
     --c-scrollbar-thumb-hover: #007F44;
+    --c-managed-class-border: #79cf40;
+    --c-closed-class-border: #366e11;
+    --c-public-class-border: #777;
   }
 }
 body.light-theme {
@@ -146,6 +155,9 @@ body.light-theme {
   --c-checkmark: #479911;
   --c-scrollbar-thumb: #444;
   --c-scrollbar-thumb-hover: #007F44;
+  --c-managed-class-border: #79cf40;
+  --c-closed-class-border: #366e11;
+  --c-public-class-border: #777;
 }
 
 body.dark-theme {
@@ -183,6 +195,9 @@ body.dark-theme {
   --c-checkmark: #479911;
   --c-scrollbar-thumb: #666;
   --c-scrollbar-thumb-hover: #007F44;
+  --c-managed-class-border: #79cf40;
+  --c-closed-class-border: #366e11;
+  --c-public-class-border: #777;
 }
 
 * {

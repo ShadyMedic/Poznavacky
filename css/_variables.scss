@@ -8,6 +8,7 @@ $desktop: 75rem; //1200px
 $gray1: #222;
 $gray2: #eee;
 $gray3: #444;
+$gray4: #777;
 $black1: #121212;
 $black2: #1c1c1c;
 
@@ -67,6 +68,9 @@ $buttonWhite: #eee;
     --c-checkmark: #{$greenMid};
     --c-scrollbar-thumb: #{$gray3};
     --c-scrollbar-thumb-hover: #{$gradientDark};
+    --c-managed-class-border: #{$greenLight};
+    --c-closed-class-border: #{$greenDark};
+    --c-public-class-border: #{$gray4};
 }
 @mixin dark-palette {
     --c-overlay-dark: #fff;
@@ -103,6 +107,9 @@ $buttonWhite: #eee;
     --c-checkmark: #{$greenMid};
     --c-scrollbar-thumb: #666;
     --c-scrollbar-thumb-hover: #{$gradientDark};
+    --c-managed-class-border: #{$greenLight};
+    --c-closed-class-border: #{$greenDark};
+    --c-public-class-border: #{$gray4};
 }
 
 body {

@@ -9,7 +9,7 @@
     <ul class="rows">
         <?php foreach ($table['managed'] as $tableRow) : ?>
             <button class="btn class managed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
-                <li style="border-left: 8px solid yellowgreen;">
+                <li>
                 <h4 class="class name">
                     <?= $tableRow[0] ?>
                 </h4>
@@ -22,7 +22,7 @@
 
         <?php foreach ($table['joined'] as $tableRow) : ?>
             <button class="btn class closed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
-                <li style="border-left: 8px solid green;">
+                <li>
                     <h4 class="class name">
                         <?= $tableRow[0] ?>
                     </h4>
@@ -49,7 +49,7 @@
 
         <?php foreach ($table['public'] as $tableRow) : ?>
             <button class="btn class public-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
-                <li style="border-left: 8px solid lightslategray;">
+                <li>
                     <h4 class="class name">
                         <?= $tableRow[0] ?>
                     </h4>

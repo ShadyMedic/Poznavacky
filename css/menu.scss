@@ -302,6 +302,20 @@ html:has(#menu,
             }
         }
         &#menu-classes-table {
+            .data-item {
+                &.managed-class > li {
+                    padding-left: 0;
+                    border-left: 0.6rem solid var(--c-managed-class-border);
+                }
+                &.closed-class > li {
+                    padding-left: 0;
+                    border-left: 0.6rem solid var(--c-closed-class-border);
+                }
+                &.public-class > li {
+                    padding-left: 0;
+                    border-left: 0.6rem solid var(--c-public-class-border);
+                }
+            }
             .table-title,
             li {
                 grid-template-columns: 1fr 5.6rem 3.2rem;
