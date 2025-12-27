@@ -1,5 +1,11 @@
 $(function()
 {
+    let savedThemePreference = $("#dark-theme-checkbox").attr("data-theme");
+    let systemThemePreference = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    if (savedThemePreference === 'dark' || (savedThemePreference !== 'light' && savedThemePreference !== 'dark' && systemThemePreference === 'dark')) {
+        $('#dark-theme-checkbox').prop('checked', true);
+    }
+
     //event listenery tlačítek
     $("#change-name-button").click(function() {changeName()})
     $("#change-name-confirm-button").click(function() {changeNameConfirm()})

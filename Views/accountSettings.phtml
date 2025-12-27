@@ -6,13 +6,6 @@
             <span>Tmavý motiv:</span>
             <label class="custom-switch-wrapper">
                 <input id="dark-theme-checkbox" type="checkbox">
-                <script>
-                    let savedThemePreference = '<?= $theme ?>';
-                    let systemThemePreference = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-                    if (savedThemePreference === 'dark' || (savedThemePreference !== 'dark' && systemThemePreference === 'dark')) {
-                        $('#dark-theme-checkbox').prop('checked', true);
-                    }
-                </script>
                 <span class="slider"></span>
             </label>
         </div>
