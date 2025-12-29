@@ -55,7 +55,7 @@ class TestGroupsFetcher
         }
         
         if (!$classes) {
-            throw new NoDataException(NoDataException::NO_CLASSES, null, null);
+            throw new NoDataException(NoDataException::NO_CLASSES);
         }
         
         //Vytvoř tabulku
@@ -97,7 +97,7 @@ class TestGroupsFetcher
         //Získej data
         $groups = $class->getGroups();
         if (empty($groups)) {
-            throw new NoDataException(NoDataException::NO_GROUPS, null, null);
+            throw new NoDataException(NoDataException::NO_GROUPS);
         }
         
         //Vytvoř tabulku
@@ -128,7 +128,7 @@ class TestGroupsFetcher
         //Získej data
         $parts = $group->getParts();
         if (empty($parts)) {
-            throw new NoDataException(NoDataException::NO_PARTS, null, null);
+            throw new NoDataException(NoDataException::NO_PARTS);
         }
         
         //Vytvoř tabulku

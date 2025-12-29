@@ -2,6 +2,7 @@
 namespace Poznavacky\Models\Exceptions;
 
 use \Exception;
+use Throwable;
 
 /**
  * Výjimka sloužící pro případ zjištění nedostatečných oprávnění při sestavování webové stránky
@@ -143,5 +144,16 @@ class AccessDeniedException extends Exception
     public const REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS = 'Neplatná adresa odesílatele';
     public const REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS = 'Neplatná adresa adresáta';
     public const REASON_SEND_EMAIL_EMPTY_FIELDS = 'S výjimkou patičky e-mailu musí být všechna pole vyplněna';
+
+    /**
+     * Konstruktor slouží pouze k umožnění hodnoty NULL pro druhý argument, většinu aplikace jsem programoval
+     * v PHP verzi 7.X, kde bylo možné do INT parametru posílat NULL argument, v PHP verzi 8.X to však vyvolává
+     * depracation varování. Spíš než abych ve všech místech, kde tuto výjimku vyhazuji aktualizoval kód, raději
+     * přidám konstruktor který pro vestavěnou Exception překonvertzuje $code = null na $code = 0.
+     */
+    public function __construct(string $message = "", ?int $code = 0, ?Throwable $previous = null)
+    {
+        parent::__construct($message, $code ?? 0, $previous);
+    }
 }
 

@@ -72,7 +72,7 @@ class Db
                 return self::$connection->lastInsertId();
             }
         } catch (PDOException $e) {
-            throw new DatabaseException('Database query wasn\'t executed successfully.', null, $e, $query,
+            throw new DatabaseException('Database query wasn\'t executed successfully.', 0, $e, $query,
                 $e->getCode(), $e->errorInfo[2]);
         }
         return $result;
@@ -98,7 +98,7 @@ class Db
             $statement = self::$connection->prepare($query);
             $statement->execute($parameters);
         } catch (PDOException $e) {
-            throw new DatabaseException('Database query wasn\'t executed successfully.', null, $e, $query,
+            throw new DatabaseException('Database query wasn\'t executed successfully.', 0, $e, $query,
                 $e->getCode(), $e->errorInfo[2]);
         }
         
