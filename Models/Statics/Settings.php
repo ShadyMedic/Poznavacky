@@ -124,8 +124,8 @@ class Settings
     /**
      * Výchozí barevný motiv, použitý pokud není přihlášen žádný uživatel.
      * Hodnota bude použita pro dosazení do CSS třídy <body> (class="[hodnota]-theme").
-     * Hodnoty se smyslem jsou "light", "dark" a "auto" (to jako jediné nemá navázáno CSS styly, zbylé dvě hodnoty ano)
+     * Hodnoty se smyslem jsou "light", "dark" a "system" (ta jako jediné nemá navázáno CSS styly, zbylé dvě hodnoty ano)
      */
-    public const DEFAULT_THEME = 'auto';
+    public const DEFAULT_THEME = 'system';
 }
 

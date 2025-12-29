@@ -82,6 +82,7 @@ class AccessDeniedException extends Exception
     public const REASON_EMAIL_CHANGE_DUPLICATE_EMAIL = self::REASON_REGISTER_DUPLICATE_EMAIL;
     public const REASON_EMAIL_CHANGE_REMOVAL_WHEN_ADMIN = 'Jako systémový administrátor nemůžeš odebrat svou e-mailovou adresu';
     public const REASON_EMAIL_CHANGE_REMOVAL_WHEN_CLASS_OWNER = 'Jako správce nejméně jedné třídy nemůžeš odebrat svou e-mailovou adresu';
+    public const REASON_THEME_CHANGE_INVALID_THEME = 'Neznámý motiv';
     public const REASON_ACCOUNT_DELETION_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
     public const REASON_ACCOUNT_DELETION_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
     public const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžeš odstranit svůj účet, protože spravuješ nějakou třídu. Předej správu tříd, které spravuješ, jiným uživatelům pro uvolnění možnosti odstranit svůj účet.';

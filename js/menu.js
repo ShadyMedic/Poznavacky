@@ -1,8 +1,9 @@
 var smallTablet = 672;
-var currentTheme = $('body').hasClass('dark') ? 'dark' : 'light';
+var currentTheme = $('body').hasClass('dark-theme') ? 'dark' : 'light'; // TODO - přidat podporu pro <body class="system-theme">
 
 $(function()
 {
+    // TODO přidat podporu pro hodnotu currentTheme = "system"
     if (currentTheme == 'dark') {
         $("#account-settings #dark-theme-checkbox").prop("checked", "true");
     }

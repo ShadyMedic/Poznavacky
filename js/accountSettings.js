@@ -32,6 +32,7 @@ function changeTheme()
     $darkThemeCheckbox = $("#dark-theme-checkbox");
     let newTheme;
 
+    // TODO - zahrnout možnost načíst hodnotu "system"
     if ($darkThemeCheckbox.is(":checked"))
     {
         newTheme = "dark";
@@ -39,6 +40,7 @@ function changeTheme()
     else {
         newTheme = "light";
     }
+    // TODO - proměnná newTheme v tomto okamžiku může mít jednu z následujících hodnot: "light", "dark", "system"
 
     currentTheme = newTheme;
     $.post("menu/account-update",

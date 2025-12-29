@@ -71,7 +71,7 @@ class LoggedUser extends User
      * @param string|undefined|null $hash Heš uživatelova hesla z databáze
      * @param float|undefined|null $lastChangelog Poslední zobrazený changelog
      * @param int|undefined|null $lastMenuTableUrl URL poslední navštívené složky na menu stránce
-     * @param string|undefined|null $theme 'dark', pokud je povolen tmavý mód, 'light', pokud ne; UNDEFINED pokud zatím nebylo zvoleno
+     * @param string|undefined|null $theme 'dark', pokud je povolen tmavý mód, 'light', pokud ne, 'system' pro volbu dle systémové preference
      * {@inheritDoc}
      * @see User::initialize()
      */
@@ -94,10 +94,6 @@ class LoggedUser extends User
         }
         if ($theme === null) {
             $theme = $this->theme;
-        }
-
-        if ($theme instanceof undefined) {
-            $theme = null;
         }
 
         $this->hash = $hash;
@@ -388,11 +384,15 @@ class LoggedUser extends User
      * @return bool TRUE, pokud vše proběhne hladce
      * @throws DatabaseException
      */
-    public function updateTheme(bool $darkThemeSelected): bool
+    public function updateTheme(string $theme): bool
     {
+        if (!in_array($theme, ['light', 'dark', 'system'])) {
+            throw new AccessDeniedException(AccessDeniedException::REASON_THEME_CHANGE_INVALID_THEME);
+        }
+
         $this->loadIfNotLoaded($this->id);
 
-        $this->theme = $darkThemeSelected ? 'dark' : 'light';
+        $this->theme = $theme;
         return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['theme'].
             ' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->theme, $this->id));
     }
