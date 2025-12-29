@@ -165,7 +165,7 @@ class AntiCsrfMiddleware
     {
         unset($_SESSION[self::TOKEN_NAME]);
         unset($_COOKIE[self::TOKEN_NAME]);
-        setcookie(self::TOKEN_NAME, null, time() - 60, '/');
+        setcookie(self::TOKEN_NAME, '', time() - 60, '/');
     }
 }
 
