@@ -159,11 +159,41 @@
         #dark-theme-wrapper {
             margin: 2rem auto 1rem auto;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            > span {
-                margin-right: 1rem;
+            span {
+                text-align: center;
+                font-size: 0.8rem;
+            }
+        }
+        .custom-3-switch-wrapper {
+            .slider {
+                &::before { //sun
+                    background: linear-gradient(40deg, $purpleDark, $purpleLight 70%);
+                }
+                &::after { //moon
+                    box-shadow: inset -10px -4px 0 0 #fff; /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+                }
+            }
+            input:nth-of-type(1):checked ~ .slider::before {
+                opacity: 1;
+            }
+            input:nth-of-type(2):checked ~ .slider::before {
+                opacity: 1;
+            }
+            input:nth-of-type(3):checked ~ .slider::before {
+                opacity: 0;
+            }
+
+            input:nth-of-type(1):checked ~ .slider::after {
+                opacity: 0;
+            }
+            input:nth-of-type(2):checked ~ .slider::after {
+                opacity: 0.5;
+            }
+            input:nth-of-type(3):checked ~ .slider::after {
+                opacity: 1;
             }
         }
     }
