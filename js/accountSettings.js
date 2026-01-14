@@ -1,5 +1,11 @@
 $(function()
 {
+    let savedThemePreference = $("#dark-theme-checkbox").attr("data-theme");
+    let systemThemePreference = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    if (savedThemePreference === 'dark' || (savedThemePreference !== 'light' && savedThemePreference !== 'dark' && systemThemePreference === 'dark')) {
+        $('#dark-theme-checkbox').prop('checked', true);
+    }
+
     //event listenery tlačítek
     $("#change-name-button").click(function() {changeName()})
     $("#change-name-confirm-button").click(function() {changeNameConfirm()})
@@ -15,7 +21,8 @@ $(function()
     $("#delete-account-confirm-button").click(function() {deleteAccountVerify()})
     $("#delete-account-final-confirm-button").click(function() {deleteAccountFinal()})
     $("#delete-account-cancel-button, #delete-account-final-cancel-button").click(function() {deleteAccountCancel()})
-    $("#dark-theme-checkbox").click(function() {changeTheme()})
+    //$("#dark-theme-checkbox").click(function() {changeTheme()})
+    $("#dark-theme-wrapper .custom-3-switch-wrapper").change(function() {changeTheme()})
 })
 
 /**
@@ -23,16 +30,38 @@ $(function()
  */
 function changeTheme()
 {
-    $darkThemeCheckbox = $("#dark-theme-checkbox");
+    $darkThemeWrapper = $("#dark-theme-wrapper");
     let newTheme;
 
-    if ($darkThemeCheckbox.is(":checked"))
+    // TODO - zahrnout možnost načíst hodnotu "system"
+    if ($darkThemeWrapper.find("input[data-theme='system']").is(":checked"))
+    {
+        newTheme = "system";
+    }
+    else if ($darkThemeWrapper.find("input[data-theme='light']").is(":checked"))
+    {
+        newTheme = "light";
+    }
+    else if ($darkThemeWrapper.find("input[data-theme='dark']").is(":checked"))
     {
         newTheme = "dark";
     }
-    else {
-        newTheme = "light";
+
+    let labelText;
+    switch (newTheme) {
+        case 'system':
+            labelText = "Motiv podle preference prohlížeče";
+            break;
+        case 'light':
+            labelText = "Světlý motiv";
+            break;
+        case 'dark':
+            labelText = "Tmavý motiv";
+            break;
+        default:
+            labelText = "";
     }
+    $darkThemeWrapper.find("#theme-text").text(labelText);
 
     currentTheme = newTheme;
     $.post("menu/account-update",

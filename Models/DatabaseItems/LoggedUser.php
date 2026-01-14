@@ -6,6 +6,7 @@ use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Security\DataValidator;
 use Poznavacky\Models\Statics\Db;
+use Poznavacky\Models\Statics\Settings;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
 use Poznavacky\Models\undefined;
@@ -27,7 +28,7 @@ class LoggedUser extends User
         'lastLogin' => 'posledni_prihlaseni',
         'lastChangelog' => 'posledni_changelog',
         'lastMenuTableUrl' => 'adresa_posledni_slozky',
-        'darkTheme' => 'motiv',
+        'theme' => 'motiv',
         'addedPictures' => 'pridane_obrazky',
         'guessedPictures' => 'uhodnute_obrazky',
         'karma' => 'karma',
@@ -41,7 +42,7 @@ class LoggedUser extends User
         'email' => null,
         'lastChangelog' => 0,
         'lastMenuTableUrl' => null,
-        'darkTheme' => 0,
+        'theme' => null,
         'addedPictures' => 0,
         'guessedPictures' => 0,
         'karma' => 0,
@@ -54,7 +55,7 @@ class LoggedUser extends User
     protected $hash;
     protected $lastChangelog;
     protected $lastMenuTableUrl;
-    protected $darkTheme;
+    protected $theme;
     
     /**
      * Metoda nastavující všechny vlasnosti objektu (s výjimkou ID) podle zadaných argumentů
@@ -70,13 +71,13 @@ class LoggedUser extends User
      * @param string|undefined|null $hash Heš uživatelova hesla z databáze
      * @param float|undefined|null $lastChangelog Poslední zobrazený changelog
      * @param int|undefined|null $lastMenuTableUrl URL poslední navštívené složky na menu stránce
-     * @param bool|undefined|null $darkTheme TRUE, pokud je povolen tmavý mód, FALSE, pokud ne
+     * @param string|undefined|null $theme 'dark', pokud je povolen tmavý mód, 'light', pokud ne, 'system' pro volbu dle systémové preference
      * {@inheritDoc}
      * @see User::initialize()
      */
     public function initialize($name = null, $email = null, $lastLogin = null, $addedPictures = null,
                                $guessedPictures = null, $karma = null, $status = null, $hash = null,
-                               $lastChangelog = null, $lastMenuTableUrl = null, $darkTheme = null): void
+                               $lastChangelog = null, $lastMenuTableUrl = null, $theme = null): void
     {
         //Nastav vlastnosti zděděné z mateřské třídy
         parent::initialize($name, $email, $lastLogin, $addedPictures, $guessedPictures, $karma, $status);
@@ -91,14 +92,14 @@ class LoggedUser extends User
         if ($lastMenuTableUrl === null) {
             $lastMenuTableUrl = $this->lastMenuTableUrl;
         }
-        if ($darkTheme === null) {
-            $darkTheme = $this->darkTheme;
+        if ($theme === null) {
+            $theme = $this->theme;
         }
-        
+
         $this->hash = $hash;
         $this->lastChangelog = $lastChangelog;
         $this->lastMenuTableUrl = $lastMenuTableUrl;
-        $this->darkTheme = $darkTheme;
+        $this->theme = $theme;
     }
     
     /**
@@ -383,13 +384,17 @@ class LoggedUser extends User
      * @return bool TRUE, pokud vše proběhne hladce
      * @throws DatabaseException
      */
-    public function updateTheme(bool $darkThemeSelected): bool
+    public function updateTheme(string $theme): bool
     {
+        if (!in_array($theme, ['light', 'dark', 'system'])) {
+            throw new AccessDeniedException(AccessDeniedException::REASON_THEME_CHANGE_INVALID_THEME);
+        }
+
         $this->loadIfNotLoaded($this->id);
 
-        $this->darkTheme = $darkThemeSelected;
-        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['darkTheme'].
-            ' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array((int)$darkThemeSelected, $this->id));
+        $this->theme = $theme;
+        return Db::executeQuery('UPDATE '.self::TABLE_NAME.' SET '.self::COLUMN_DICTIONARY['theme'].
+            ' = ? WHERE '.self::COLUMN_DICTIONARY['id'].' = ?', array($this->theme, $this->id));
     }
     
     /**

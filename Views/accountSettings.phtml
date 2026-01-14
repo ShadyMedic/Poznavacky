@@ -2,12 +2,19 @@
     <section class="user image-section"> 
         <img class="icon gradient" src="images/user_f_gradient.svg" alt="Ikona uživatele">
         <div>Přihlášen*a: <span><?= $userName ?></span></div>
+        
         <div id="dark-theme-wrapper" class="no-transition">
-            <span>Tmavý motiv:</span>
-            <label class="custom-switch-wrapper"> 
-                <input id="dark-theme-checkbox" type="checkbox"<?= ($theme === 'dark') ? ' checked' : '' ?>>
+            <label class="custom-3-switch-wrapper" >
+                <input id="light" type="radio" name="theme-toggle" data-theme="light" <?php if ($theme == 'light') : ?>checked<?php endif ?> />
+                <input id="system" type="radio" name="theme-toggle" data-theme="system" <?php if ($theme == 'system') : ?>checked<?php endif ?> />
+                <input id="dark" type="radio" name="theme-toggle" data-theme="dark" <?php if ($theme == 'dark') : ?>checked<?php endif ?> />
                 <span class="slider"></span>
             </label>
+            <span id="theme-text">
+                <?php if ($theme == 'system') : ?>Motiv podle preference prohlížeče<?php endif ?>
+                <?php if ($theme == 'light') : ?>Světlý motiv<?php endif ?>
+                <?php if ($theme == 'dark') : ?>Tmavý motiv<?php endif ?>
+            </span>
         </div>
     </section>
     <section class="user data-section">    

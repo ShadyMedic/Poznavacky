@@ -15,7 +15,7 @@ class HeadDataGetter implements DataGetter
     public function get(): array
     {
         $result = array();
-        $result['theme'] = ((new AccessChecker())->checkUser()) ? (UserManager::getUser()->offsetGet('darkTheme') ? 'dark' : 'light') : Settings::DEFAULT_THEME;
+        $result['theme'] = ((new AccessChecker())->checkUser()) ? (UserManager::getUser()->offsetGet('theme') ?? Settings::DEFAULT_THEME) : Settings::DEFAULT_THEME;
         $result['messages'] = $this->getMessages();
         $result['currentYear'] = date('Y');
         return $result;

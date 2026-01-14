@@ -527,7 +527,25 @@ html:has(#menu,
         }
     }
 }
-
+@media (prefers-color-scheme: dark) {
+    body:not(.light-theme) {
+        &#menu,
+        &#learn,
+        &#test,
+        &#add-pictures,
+        &#account-settings,
+        &#manage,
+        &#members,
+        &#tests,
+        &#edit-group,
+        &#resolve-reports,
+        &#naturals {
+            nav > div {
+                border: 1px solid $gray3;
+            }
+        }
+    }
+}
 body.dark-theme {
     &#menu,
     &#learn,

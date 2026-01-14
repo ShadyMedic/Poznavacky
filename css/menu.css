@@ -974,6 +974,67 @@ label.required:after {
   box-shadow: inset -10px -4px 0 0 #fff;
 }
 
+.custom-3-switch-wrapper {
+  display: block;
+  --width-of-switch: 4.8em;
+  --height-of-switch: 2.2em;
+  --size-of-icon: 1.6em;
+  --slider-offset: 0.4em;
+  position: relative;
+  width: var(--width-of-switch);
+  height: var(--height-of-switch);
+}
+.custom-3-switch-wrapper input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.custom-3-switch-wrapper .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f4f4f5;
+  border-radius: 30px;
+  transition: 0.4s;
+}
+.custom-3-switch-wrapper .slider::before, .custom-3-switch-wrapper .slider::after {
+  position: absolute;
+  content: "";
+  height: var(--size-of-icon);
+  width: var(--size-of-icon);
+  border-radius: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: 0.4s;
+}
+.custom-3-switch-wrapper .slider::before {
+  background: #eee;
+}
+.custom-3-switch-wrapper input:nth-of-type(1):checked ~ .slider {
+  background-color: var(--c-text-field);
+}
+.custom-3-switch-wrapper input:nth-of-type(2):checked ~ .slider {
+  background-color: var(--c-text-field);
+}
+.custom-3-switch-wrapper input:nth-of-type(3):checked ~ .slider {
+  background-color: var(--c-text-field);
+}
+.custom-3-switch-wrapper input:nth-of-type(1):checked ~ .slider::before,
+.custom-3-switch-wrapper input:nth-of-type(1):checked ~ .slider::after {
+  left: var(--slider-offset);
+}
+.custom-3-switch-wrapper input:nth-of-type(2):checked ~ .slider::before,
+.custom-3-switch-wrapper input:nth-of-type(2):checked ~ .slider::after {
+  left: calc(50% - var(--size-of-icon) / 2);
+}
+.custom-3-switch-wrapper input:nth-of-type(3):checked ~ .slider::before,
+.custom-3-switch-wrapper input:nth-of-type(3):checked ~ .slider::after {
+  left: calc(100% - (var(--size-of-icon) + var(--slider-offset)));
+}
+
 .custom-select-wrapper {
   position: relative;
   -webkit-user-select: none;
@@ -1103,6 +1164,7 @@ label.required:after {
   body:not(.light-theme) textarea.text-field,
   body:not(.light-theme) .custom-checkbox-wrapper .checkmark,
   body:not(.light-theme) .custom-switch-wrapper .slider,
+  body:not(.light-theme) .custom-3-switch-wrapper .slider,
   body:not(.light-theme) .custom-select-wrapper .custom-select-main,
   body:not(.light-theme) .custom-select-wrapper .custom-options,
   body:not(.light-theme) #preview-img,
@@ -1115,6 +1177,7 @@ body.dark-theme select.text-field,
 body.dark-theme textarea.text-field,
 body.dark-theme .custom-checkbox-wrapper .checkmark,
 body.dark-theme .custom-switch-wrapper .slider,
+body.dark-theme .custom-3-switch-wrapper .slider,
 body.dark-theme .custom-select-wrapper .custom-select-main,
 body.dark-theme .custom-select-wrapper .custom-options,
 body.dark-theme #preview-img,
@@ -1122,10 +1185,11 @@ body.dark-theme #main-img {
   border: 1px solid #444;
 }
 
-body:not(.dark-theme) .custom-switch-wrapper .slider {
-  background: #fff;
+@media (prefers-color-scheme: light) {
+  body:not(.dark-theme) .custom-switch-wrapper .slider {
+    background: #fff;
+  }
 }
-
 body.light-theme .text-field.variant,
 body.light-theme .custom-select-main.variant,
 body.light-theme .custom-checkbox-wrapper .checkmark.variant {
@@ -2291,6 +2355,11 @@ html:has(#menu,
   text-align: center;
 }
 
+@media (prefers-color-scheme: dark) {
+  body:not(.light-theme)#menu nav > div, body:not(.light-theme)#learn nav > div, body:not(.light-theme)#test nav > div, body:not(.light-theme)#add-pictures nav > div, body:not(.light-theme)#account-settings nav > div, body:not(.light-theme)#manage nav > div, body:not(.light-theme)#members nav > div, body:not(.light-theme)#tests nav > div, body:not(.light-theme)#edit-group nav > div, body:not(.light-theme)#resolve-reports nav > div, body:not(.light-theme)#naturals nav > div {
+    border: 1px solid #444;
+  }
+}
 body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme#test nav > div, body.dark-theme#add-pictures nav > div, body.dark-theme#account-settings nav > div, body.dark-theme#manage nav > div, body.dark-theme#members nav > div, body.dark-theme#tests nav > div, body.dark-theme#edit-group nav > div, body.dark-theme#resolve-reports nav > div, body.dark-theme#naturals nav > div {
   border: 1px solid #444;
 }
@@ -3529,12 +3598,37 @@ body.dark-theme #add-pictures #preview-img {
 #account-settings .user.image-section #dark-theme-wrapper {
   margin: 2rem auto 1rem auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-#account-settings .user.image-section #dark-theme-wrapper > span {
-  margin-right: 1rem;
+#account-settings .user.image-section #dark-theme-wrapper span {
+  text-align: center;
+  font-size: 0.8rem;
+}
+#account-settings .user.image-section .custom-3-switch-wrapper .slider::before {
+  background: linear-gradient(40deg, #6a106e, #bd4ac2 70%);
+}
+#account-settings .user.image-section .custom-3-switch-wrapper .slider::after {
+  box-shadow: inset -10px -4px 0 0 #fff; /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+}
+#account-settings .user.image-section .custom-3-switch-wrapper input:nth-of-type(1):checked ~ .slider::before {
+  opacity: 1;
+}
+#account-settings .user.image-section .custom-3-switch-wrapper input:nth-of-type(2):checked ~ .slider::before {
+  opacity: 1;
+}
+#account-settings .user.image-section .custom-3-switch-wrapper input:nth-of-type(3):checked ~ .slider::before {
+  opacity: 0;
+}
+#account-settings .user.image-section .custom-3-switch-wrapper input:nth-of-type(1):checked ~ .slider::after {
+  opacity: 0;
+}
+#account-settings .user.image-section .custom-3-switch-wrapper input:nth-of-type(2):checked ~ .slider::after {
+  opacity: 0.5;
+}
+#account-settings .user.image-section .custom-3-switch-wrapper input:nth-of-type(3):checked ~ .slider::after {
+  opacity: 1;
 }
 @media screen and (min-width: 42rem) {
   #account-settings .user-property.action {
