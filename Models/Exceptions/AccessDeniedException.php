@@ -87,6 +87,7 @@ class AccessDeniedException extends Exception
     public const REASON_ACCOUNT_DELETION_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
     public const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžeš odstranit svůj účet, protože spravuješ nějakou třídu. Předej správu tříd, které spravuješ, jiným uživatelům pro uvolnění možnosti odstranit svůj účet.';
     public const REASON_ADD_PICTURE_UNKNOWN_NATURAL = 'Pokoušíš se přidat obrázek k neznámé přírodnině';
+    public const REASON_ADD_PICTURE_URL_TOO_LONG = 'Adresa obrázku je příliš dlouhá a náš systém jí nedokáže takto zpracovat. Pokus se prosím najít obrázek pod kratší URL adresou, nebo použij některý ze zkracovačů URL adres, například 1url.cz.';
     public const REASON_ADD_PICTURE_TEMP_THUMB_URL = 'Zadaná URL adresa vede pouze na dočasný náhled obrázku vygenerovaný vyhledávačem. Použijte adresu na originál obrázku.';
     public const REASON_ADD_PICTURE_DUPLICATE_PICTURE = 'Tento obrázek je již k této přírodnině přidán';
     public const REASON_ADD_PICTURE_INVALID_URL = 'Na zadané URL adrese nebyl nalezen žádný obrázek';

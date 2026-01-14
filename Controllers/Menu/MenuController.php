@@ -2,6 +2,7 @@
 namespace Poznavacky\Controllers\Menu;
 
 use Poznavacky\Controllers\SynchronousController;
+use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
 use Poznavacky\Models\Exceptions\NoDataException;
@@ -95,8 +96,10 @@ class MenuController extends SynchronousController
                 }
             }
             
-            //Aktualizovat poslední navštívenou tabulku na menu stránce
-            UserManager::getUser()->updateLastMenuTableUrl($lastVisitedFolderPath);
+            //Aktualizovat poslední navštívenou tabulku na menu stránce (nejedná-li se o demo účet)
+            if ($aChecker->checkDemoAccount()) {
+                UserManager::getUser()->updateLastMenuTableUrl($lastVisitedFolderPath);
+            }
         } catch (NoDataException $e) {
             (new Logger())->notice('Uživatel s ID {userId} přistupující do systému z IP adresy {ip} odeslal požadavek na zobrazení obsahu třídy, poznávačky nebo části, která žádný obsah nemá',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));

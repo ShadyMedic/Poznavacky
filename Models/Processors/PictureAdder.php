@@ -24,6 +24,8 @@ class PictureAdder
         'avatars.mds.yandex.net'
     );
 
+    private const SOURCE_LENGTH_LIMIT = 255; //Omezení v databázi
+
     private ClassObject $class;
 
     
@@ -82,6 +84,19 @@ class PictureAdder
         }
         $natural = array_shift($natural);
 
+        //Kontrola délky URL (limit nastavený v databázi)
+        if (strlen($url) > self::SOURCE_LENGTH_LIMIT) {
+            (new Logger())->warning('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak zadaná URL adresa obrázku byla příliš dlouhá ({urlLength} znaků)',
+                array(
+                    'userId' => UserManager::getId(),
+                    'classId' => $this->class->getId(),
+                    'naturalId' => $naturalId,
+                    'ip' => $_SERVER['REMOTE_ADDR'],
+                    'urlLength' => strlen($url)
+                ));
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_URL_TOO_LONG, null, null);
+        }
+
         //Ověření, zda adresa vede na obrázek (kód inspirovaný odpovědí na StackOverflow: https://stackoverflow.com/a/24936993)
         $typeCheck = false;
         $type = null;
@@ -126,18 +141,18 @@ class PictureAdder
             throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_INVALID_FORMAT, null, null);
         }
         
-	//Ověření, že není přidáván dočasný náhled z vyhledávače
-	if (in_array(false, array_map(function($domain) use($url) {return strpos($url, $domain) === false;}, self::TEMP_THUMB_DOMAINS))) {
-	    (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak zadaná URL adresa ({url}) vedla na dočasný náhled obrázku vygenerovaný vyhledávačem',
-		array(
-                    'userId' => UserManager::getId(),
-                    'classId' => $this->class->getId(),
-                    'naturalId' => $natural->getId(),
-                    'ip' => $_SERVER['REMOTE_ADDR'],
-                    'url' => $url
-		));
-	    throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_TEMP_THUMB_URL, null, null);
-	}
+        //Ověření, že není přidáván dočasný náhled z vyhledávače
+        if (in_array(false, array_map(function($domain) use($url) {return strpos($url, $domain) === false;}, self::TEMP_THUMB_DOMAINS))) {
+            (new Logger())->notice('Uživatel s ID {userId} se pokusil přidat nebo upravit obrázek do/v třídy/třídě s ID {classId} k přírodnině s ID {naturalId} z IP adresy {ip}, avšak zadaná URL adresa ({url}) vedla na dočasný náhled obrázku vygenerovaný vyhledávačem',
+            array(
+                        'userId' => UserManager::getId(),
+                        'classId' => $this->class->getId(),
+                        'naturalId' => $natural->getId(),
+                        'ip' => $_SERVER['REMOTE_ADDR'],
+                        'url' => $url
+            ));
+            throw new AccessDeniedException(AccessDeniedException::REASON_ADD_PICTURE_TEMP_THUMB_URL, null, null);
+        }
 
         //Ověření, zda již obrázek u stejné přírodniny není nahrán
         if ($natural->pictureExists($url)) {

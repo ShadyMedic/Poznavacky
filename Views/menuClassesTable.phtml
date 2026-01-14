@@ -7,30 +7,36 @@
     </div>
     <?php endif ?>
     <ul class="rows">
-        <?php foreach ($table as $tableRow) : ?>
-            <button class="btn class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" ><li>
+        <?php foreach ($table['managed'] as $tableRow) : ?>
+            <button class="btn class managed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
+                <li>
                 <h4 class="class name">
                     <?= $tableRow[0] ?>
                 </h4>
                 <span class="class tests-count">
                     <span><?= $tableRow[1] ?></span>
                 </span>
-                <?php if (!$demoVersion): ?>
-                    <?php if ($tableRow[2] === 'admin') : ?>
-                    <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img class="icon black" src="images/settings_f.svg"></a>
-                    <?php endif ?>
-                    <?php if ($tableRow[2] === 'leave') : ?>
-                    <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
-                    <?php endif ?>
-                    <?php if ($tableRow[2] !== 'admin' && $tableRow[2] !== 'leave' ) : ?>
-                    <?= $tableRow[2] ?>
-                    <?php endif ?>
-                <?php endif ?>
+                <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img class="icon black" src="images/settings_f.svg"></a>
             </li></button>
         <?php endforeach ?>
 
+        <?php foreach ($table['joined'] as $tableRow) : ?>
+            <button class="btn class closed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
+                <li>
+                    <h4 class="class name">
+                        <?= $tableRow[0] ?>
+                    </h4>
+                    <span class="class tests-count">
+                    <span><?= $tableRow[1] ?></span>
+                </span>
+                    <?php if (!$demoVersion): ?>
+                        <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
+                    <?php endif ?>
+                </li></button>
+        <?php endforeach ?>
+
         <?php foreach ($invitations as $invitation) : ?>
-        <li class="invitation-wrapper" data-class-url="<?= $invitation->getClass()->getUrl() ?>">
+        <li class="invitation-wrapper" data-class-url="<?= $invitation->getClass()->getUrl() ?>" style="border-left: 8px solid darkcyan;">
             <span class="invitation info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
             <h4 class="class name"><?= $invitation->getClass()->getName(); ?></h4>
             <span class="class tests-count"><?= $invitation->getClass()->getGroupsCount() ?></span>
@@ -39,6 +45,19 @@
                 <button class="btn icon reject-invitation-button" title="Odmítnout pozvánku"><img class="icon black" src='images/cross-thick.svg' alt="Odmítnout pozvánku"></button>
             </div>
         </li>
+        <?php endforeach ?>
+
+        <?php foreach ($table['public'] as $tableRow) : ?>
+            <button class="btn class public-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
+                <li>
+                    <h4 class="class name">
+                        <?= $tableRow[0] ?>
+                    </h4>
+                    <span class="class tests-count">
+                        <span><?= $tableRow[1] ?></span>
+                    </span>
+                </li>
+            </button>
         <?php endforeach ?>
 
         <?php if (!$demoVersion): ?>
@@ -74,15 +93,19 @@
     </ul>
     <?php if ($demoVersion): ?>
     <div id="demo-info" class="center">
-        <p>Pokud si založíš účet, můžeš si vytvořit vlastní třídy s vlastními poznávačkami!</p>
+        <p>Pokud si založíš účet, můžeš si vytvořit <b>vlastní třídy s vlastními poznávačkami</b>!</p>
+        <p>Zároveň můžeš používat i třídy ostatních, pokud jsou veřejné, nebo obdržíš pozvánku.</p>
+        <p class="class name" style="font-size: 1.2rem; margin-top: 1rem; color: darkgreen!important;"><strong><a href="/#register">Mám dozkoušeno, vytvořit účet!</a></strong></p>
     </div>
     <?php endif ?>
 </div>
 
 <div id="class-template" class="data-item-template" style="display: none;">
-    <button class="btn class data-item" data-class-url="/menu/{url}"><li>
-        <h4 class="class name">{name}</h4>
-        <span class="class test-count">{groups}</span>
-        <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
-    </li></button>
+    <button class="btn class data-item" data-class-url="/menu/{url}">
+        <li style="border-left: 8px solid green;">
+            <h4 class="class name">{name}</h4>
+            <span class="class test-count">{groups}</span>
+            <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
+        </li>
+    </button>
 </div>

@@ -33,7 +33,7 @@ class RegisterUser
         $name = trim($POSTdata['name']); //Ořež mezery
         $pass = $POSTdata['pass'];
         $repass = $POSTdata['repass'];
-        $email = trim($POSTdata['email']); //Ořež mezery
+        $email = strtolower(trim($POSTdata['email'])); //Ořež mezery, převeď do lowercase
         
         if (mb_strlen($email) === 0) {
             $email = null;
