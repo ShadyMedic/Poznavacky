@@ -282,16 +282,16 @@ html:has(#menu,
             }
         }
     }
+    .folders,
+    #demo-info {
+        width: 100%;
+        max-width: 48.75rem;
+        margin: auto;
+    }
     .folders {
         a {
             display: block;
         }
-
-        .table-title,
-        ul {
-            margin: auto;
-        }
-        
         li {
             display: block;
             background: var(--c-tile);
@@ -480,8 +480,6 @@ html:has(#menu,
             } 
         }
         .table-title {
-            width: 100%;
-            max-width: 48.75rem;
             padding: 0.6rem;
             display: grid;
             span {
@@ -491,8 +489,6 @@ html:has(#menu,
         ul {
             display: flex;
             flex-direction: column;
-            width: 100%;
-            max-width: 48.75rem;
             position: relative;
             span,
             h4 {
@@ -516,14 +512,21 @@ html:has(#menu,
                 }
             }
         }
-        #demo-info {
-            width: 100%;
-            max-width: 48.75rem;
-            margin-top: 1.6rem;
-            margin-bottom: 1.2rem;
-            p {
-                text-align: center;
-            }
+    }
+
+    #demo-info {
+        margin-top: 2.8rem;
+        display: flex;
+        flex-direction: column;
+        > * {
+            text-align: center;
+            margin: auto;
+        }
+        p {
+            margin-bottom: 0.4rem;
+        }
+        .btn {
+            margin-top: 1.4rem;
         }
     }
 }

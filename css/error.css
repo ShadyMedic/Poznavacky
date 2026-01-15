@@ -618,11 +618,11 @@ ul.list li:not(:last-child) {
   color: var(--c-button-dark);
 }
 .btn.arrow-btn img {
-  height: 1em;
-  width: 1em;
+  height: 1.2em;
+  width: 1.2em;
   padding-left: 0.32em;
   position: relative;
-  top: 0.24em;
+  bottom: -0.25em;
   transition: transform 0.2s ease-out;
 }
 .btn.arrow-btn:hover {

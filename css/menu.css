@@ -619,11 +619,11 @@ ul.list li:not(:last-child) {
   color: var(--c-button-dark);
 }
 .btn.arrow-btn img {
-  height: 1em;
-  width: 1em;
+  height: 1.2em;
+  width: 1.2em;
   padding-left: 0.32em;
   position: relative;
-  top: 0.24em;
+  bottom: -0.25em;
   transition: transform 0.2s ease-out;
 }
 .btn.arrow-btn:hover {
@@ -2099,12 +2099,14 @@ html:has(#menu,
 #menu #changelog li:not(:last-child) {
   margin-bottom: 0.32rem;
 }
+#menu .folders,
+#menu #demo-info {
+  width: 100%;
+  max-width: 48.75rem;
+  margin: auto;
+}
 #menu .folders a {
   display: block;
-}
-#menu .folders .table-title,
-#menu .folders ul {
-  margin: auto;
 }
 #menu .folders li {
   display: block;
@@ -2307,8 +2309,6 @@ html:has(#menu,
        column-gap: 1rem;
 }
 #menu .folders .table-title {
-  width: 100%;
-  max-width: 48.75rem;
   padding: 0.6rem;
   display: grid;
 }
@@ -2318,8 +2318,6 @@ html:has(#menu,
 #menu .folders ul {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 48.75rem;
   position: relative;
 }
 #menu .folders ul span,
@@ -2345,14 +2343,20 @@ html:has(#menu,
     font-size: 1.2rem;
   }
 }
-#menu .folders #demo-info {
-  width: 100%;
-  max-width: 48.75rem;
-  margin-top: 1.6rem;
-  margin-bottom: 1.2rem;
+#menu #demo-info {
+  margin-top: 2.8rem;
+  display: flex;
+  flex-direction: column;
 }
-#menu .folders #demo-info p {
+#menu #demo-info > * {
   text-align: center;
+  margin: auto;
+}
+#menu #demo-info p {
+  margin-bottom: 0.4rem;
+}
+#menu #demo-info .btn {
+  margin-top: 1.4rem;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -91,14 +91,14 @@
         </li>
         <?php endif ?>
     </ul>
-    <?php if ($demoVersion): ?>
-    <div id="demo-info" class="center">
-        <p>Pokud si založíš účet, můžeš si vytvořit <b>vlastní třídy s vlastními poznávačkami</b>!</p>
-        <p>Zároveň můžeš používat i třídy ostatních, pokud jsou veřejné, nebo obdržíš pozvánku.</p>
-        <p class="class name" style="font-size: 1.2rem; margin-top: 1rem; color: darkgreen!important;"><strong><a href="/#register">Mám dozkoušeno, vytvořit účet!</a></strong></p>
-    </div>
-    <?php endif ?>
 </div>
+<?php if ($demoVersion): ?>
+<div id="demo-info" class="center">
+    <p>Pokud si založíš účet, můžeš si vytvořit <b>vlastní třídy s vlastními poznávačkami</b>!</p>
+    <p>Zároveň můžeš používat i třídy ostatních, pokud jsou veřejné nebo do nich obdržíš pozvánku.</p>
+    <a class="btn arrow-btn dark" href="/#register"><span>Klikni sem pro založení účtu!</span><img class="icon black" src="images/arrow-thick.svg" alt="Ikona šipky"></a>
+</div>
+<?php endif ?>
 
 <div id="class-template" class="data-item-template" style="display: none;">
     <button class="btn class data-item" data-class-url="/menu/{url}">
