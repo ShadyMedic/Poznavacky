@@ -42,7 +42,7 @@ class LoggedUser extends User
         'email' => null,
         'lastChangelog' => 0,
         'lastMenuTableUrl' => null,
-        'theme' => null,
+        'theme' => 'system', 
         'addedPictures' => 0,
         'guessedPictures' => 0,
         'karma' => 0,

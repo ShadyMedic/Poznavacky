@@ -33,7 +33,6 @@ function changeTheme()
     $darkThemeWrapper = $("#dark-theme-wrapper");
     let newTheme;
 
-    // TODO - zahrnout možnost načíst hodnotu "system"
     if ($darkThemeWrapper.find("input[data-theme='system']").is(":checked"))
     {
         newTheme = "system";
