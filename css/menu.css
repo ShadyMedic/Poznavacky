@@ -2308,6 +2308,18 @@ html:has(#menu,
   -moz-column-gap: 1rem;
        column-gap: 1rem;
 }
+#menu .folders#menu-parts-table li .buttons .btn {
+  pointer-events: all;
+}
+#menu .folders#menu-parts-table li .buttons .btn.disabled:hover {
+  cursor: default;
+}
+#menu .folders#menu-parts-table li .buttons .btn.disabled:hover:after {
+  display: none;
+}
+#menu .folders#menu-parts-table li .buttons .btn.disabled:active {
+  transform: none;
+}
 #menu .folders .table-title {
   padding: 0.6rem;
   display: grid;

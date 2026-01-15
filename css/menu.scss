@@ -476,6 +476,18 @@ html:has(#menu,
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr;
                     column-gap: 1rem;
+                    .btn {
+                        pointer-events: all;
+                        &.disabled:hover {
+                            cursor: default;
+                            &:after {
+                                display: none;
+                            }
+                        }
+                        &.disabled:active {
+                            transform: none;
+                        }
+                    }
                 }
             } 
         }
