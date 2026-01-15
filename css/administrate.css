@@ -1,3 +1,205 @@
+body {
+  --c-overlay-dark: #000;
+  --c-overlay-light: #fff;
+  --c-primary: #479911;
+  --c-primary-contrast: #366e11;
+  --c-text: #121212;
+  --c-text-inverted: #eee;
+  --c-text-green: #366e11;
+  --c-text-info: #444;
+  --c-text-disabled: #444;
+  --c-error: #a00;
+  --c-warning: #960;
+  --c-info: #666;
+  --c-bgd: #eee;
+  --c-bgd-popup: #fff;
+  --c-bgd-comp: #ddd;
+  --c-bgd-report: #fff;
+  --c-tile: #fff;
+  --c-tile-border: #ccc;
+  --c-footer: #121212;
+  --c-side-panel: #444;
+  --c-nav: #e0e0e0;
+  --c-text-field: #fff;
+  --c-text-field-variant: #eee;
+  --c-text-field-disabled: #ddd;
+  --c-button-primary: #121212;
+  --c-button-dark: #121212;
+  --c-button-light: #eee;
+  --c-button-disabled: #888;
+  --c-selected-hover: #eee;
+  --c-selected-hover-variant: #ddd;
+  --c-selected: #479911;
+  --c-checkmark: #479911;
+  --c-scrollbar-thumb: #444;
+  --c-scrollbar-thumb-hover: #007F44;
+  --c-managed-class-border: #79cf40;
+  --c-closed-class-border: #366e11;
+  --c-public-class-border: #777;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    --c-overlay-dark: #000;
+    --c-overlay-light: #fff;
+    --c-primary: #479911;
+    --c-primary-contrast: #366e11;
+    --c-text: #121212;
+    --c-text-inverted: #eee;
+    --c-text-green: #366e11;
+    --c-text-info: #444;
+    --c-text-disabled: #444;
+    --c-error: #a00;
+    --c-warning: #960;
+    --c-info: #666;
+    --c-bgd: #eee;
+    --c-bgd-popup: #fff;
+    --c-bgd-comp: #ddd;
+    --c-bgd-report: #fff;
+    --c-tile: #fff;
+    --c-tile-border: #ccc;
+    --c-footer: #121212;
+    --c-side-panel: #444;
+    --c-nav: #e0e0e0;
+    --c-text-field: #fff;
+    --c-text-field-variant: #eee;
+    --c-text-field-disabled: #ddd;
+    --c-button-primary: #121212;
+    --c-button-dark: #121212;
+    --c-button-light: #eee;
+    --c-button-disabled: #888;
+    --c-selected-hover: #eee;
+    --c-selected-hover-variant: #ddd;
+    --c-selected: #479911;
+    --c-checkmark: #479911;
+    --c-scrollbar-thumb: #444;
+    --c-scrollbar-thumb-hover: #007F44;
+    --c-managed-class-border: #79cf40;
+    --c-closed-class-border: #366e11;
+    --c-public-class-border: #777;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    --c-overlay-dark: #fff;
+    --c-overlay-light: #000;
+    --c-primary: #479911;
+    --c-primary-contrast: #79cf40;
+    --c-text: #eee;
+    --c-text-inverted: #121212;
+    --c-text-green: #79cf40;
+    --c-text-info: #aaa;
+    --c-text-disabled: #888;
+    --c-error: #cc6666;
+    --c-warning: #c2a366;
+    --c-info: #aaa;
+    --c-bgd: #222;
+    --c-bgd-popup: #333;
+    --c-bgd-comp: #333;
+    --c-bgd-report: #333;
+    --c-tile: #2e2e2e;
+    --c-tile-border: #666;
+    --c-footer: #121212;
+    --c-side-panel: #323232;
+    --c-nav: ${$gray1};
+    --c-text-field: #1c1c1c;
+    --c-text-field-variant: #1c1c1c;
+    --c-text-field-disabled: #444;
+    --c-button-primary: #75b34d;
+    --c-button-dark: #eee;
+    --c-button-light: #eee;
+    --c-button-disabled: #666;
+    --c-selected-hover: #68924d;
+    --c-selected-hover-variant: #68924d;
+    --c-selected: #366e11;
+    --c-checkmark: #479911;
+    --c-scrollbar-thumb: #666;
+    --c-scrollbar-thumb-hover: #007F44;
+    --c-managed-class-border: #79cf40;
+    --c-closed-class-border: #366e11;
+    --c-public-class-border: #777;
+  }
+}
+body.light-theme {
+  --c-overlay-dark: #000;
+  --c-overlay-light: #fff;
+  --c-primary: #479911;
+  --c-primary-contrast: #366e11;
+  --c-text: #121212;
+  --c-text-inverted: #eee;
+  --c-text-green: #366e11;
+  --c-text-info: #444;
+  --c-text-disabled: #444;
+  --c-error: #a00;
+  --c-warning: #960;
+  --c-info: #666;
+  --c-bgd: #eee;
+  --c-bgd-popup: #fff;
+  --c-bgd-comp: #ddd;
+  --c-bgd-report: #fff;
+  --c-tile: #fff;
+  --c-tile-border: #ccc;
+  --c-footer: #121212;
+  --c-side-panel: #444;
+  --c-nav: #e0e0e0;
+  --c-text-field: #fff;
+  --c-text-field-variant: #eee;
+  --c-text-field-disabled: #ddd;
+  --c-button-primary: #121212;
+  --c-button-dark: #121212;
+  --c-button-light: #eee;
+  --c-button-disabled: #888;
+  --c-selected-hover: #eee;
+  --c-selected-hover-variant: #ddd;
+  --c-selected: #479911;
+  --c-checkmark: #479911;
+  --c-scrollbar-thumb: #444;
+  --c-scrollbar-thumb-hover: #007F44;
+  --c-managed-class-border: #79cf40;
+  --c-closed-class-border: #366e11;
+  --c-public-class-border: #777;
+}
+
+body.dark-theme {
+  --c-overlay-dark: #fff;
+  --c-overlay-light: #000;
+  --c-primary: #479911;
+  --c-primary-contrast: #79cf40;
+  --c-text: #eee;
+  --c-text-inverted: #121212;
+  --c-text-green: #79cf40;
+  --c-text-info: #aaa;
+  --c-text-disabled: #888;
+  --c-error: #cc6666;
+  --c-warning: #c2a366;
+  --c-info: #aaa;
+  --c-bgd: #222;
+  --c-bgd-popup: #333;
+  --c-bgd-comp: #333;
+  --c-bgd-report: #333;
+  --c-tile: #2e2e2e;
+  --c-tile-border: #666;
+  --c-footer: #121212;
+  --c-side-panel: #323232;
+  --c-nav: ${$gray1};
+  --c-text-field: #1c1c1c;
+  --c-text-field-variant: #1c1c1c;
+  --c-text-field-disabled: #444;
+  --c-button-primary: #75b34d;
+  --c-button-dark: #eee;
+  --c-button-light: #eee;
+  --c-button-disabled: #666;
+  --c-selected-hover: #68924d;
+  --c-selected-hover-variant: #68924d;
+  --c-selected: #366e11;
+  --c-checkmark: #479911;
+  --c-scrollbar-thumb: #666;
+  --c-scrollbar-thumb-hover: #007F44;
+  --c-managed-class-border: #79cf40;
+  --c-closed-class-border: #366e11;
+  --c-public-class-border: #777;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -192,17 +394,17 @@ textarea:focus {
   margin: auto;
   width: 90%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #administrate #stats {
     width: 75%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #administrate #stats {
     width: 55%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #administrate #stats {
     width: 35%;
   }
@@ -315,7 +517,7 @@ textarea:focus {
   align-items: center;
   flex-direction: column;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #users .action > div,
   #classes .action > div,
   #admin-reports .action > div,
@@ -386,17 +588,17 @@ textarea:focus {
   width: 95%;
   margin: auto;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #mailsender #email {
     width: 85%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #mailsender #email {
     width: 65%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #mailsender #email {
     width: 45%;
   }
@@ -453,17 +655,17 @@ textarea:focus {
   margin: auto;
   width: 96%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #alerts .center {
     width: 88%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #alerts .center {
     width: 72%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #alerts .center {
     width: 56%;
   }
@@ -485,37 +687,37 @@ textarea:focus {
     text-align: center;
   }
 }
-#alerts data-item .alert-date {
+#alerts .data-item .alert-date {
   word-break: keep-all;
 }
-@media screen and (min-width: 768px) {
-  #alerts data-item .alert-date {
+@media screen and (min-width: 48rem) {
+  #alerts .data-item .alert-date {
     white-space: nowrap;
   }
 }
-#alerts data-item .alert-level {
+#alerts .data-item .alert-level {
   word-break: keep-all;
 }
-#alerts data-item .alert-content {
+#alerts .data-item .alert-content {
   text-align: left;
 }
-#alerts data-item.emergency td.alert-level {
+#alerts .data-item.emergency td.alert-level {
   background: #ec52bb;
 }
-#alerts data-item.alert td.alert-level {
+#alerts .data-item.alert td.alert-level {
   background: #ff6868;
 }
-#alerts data-item.critical td.alert-level {
+#alerts .data-item.critical td.alert-level {
   background: #ffae70;
 }
-#alerts data-item.error td.alert-level {
+#alerts .data-item.error td.alert-level {
   background: #ffe76f;
 }
 
 #database {
   position: relative;
 }
-#database #sql {
+#database > * {
   width: 100%;
 }
 #database .sql-center {
@@ -524,17 +726,17 @@ textarea:focus {
   text-align: justify;
   width: 96%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #database .sql-center {
     width: 88%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #database .sql-center {
     width: 72%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #database .sql-center {
     width: 56%;
   }
@@ -554,17 +756,17 @@ textarea:focus {
   margin: 0 auto 0.4rem auto;
   width: 96%;
 }
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 36rem) {
   #database #sql-result p {
     width: 88%;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   #database #sql-result p {
     width: 72%;
   }
 }
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 60rem) {
   #database #sql-result p {
     width: 56%;
   }

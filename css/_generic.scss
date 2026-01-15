@@ -1,17 +1,18 @@
 @import "_variables.scss";
 
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:300,400,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
 html {
     scroll-behavior: smooth;
 }
+
 body {
     font-family: 'Ubuntu', sans-serif;
     line-height: 1.25em;
     font-size: 100%;
     min-width: 100%;
     min-height: 100vh;
-    color: $black1;
+    color: var(--c-text);
     .btn:focus {
         outline: none;
     }
@@ -42,9 +43,6 @@ body {
             box-shadow: inset 0 0 0 1.6px rgba($greenLight, 1);
         }
     }
-    .text-field:focus {
-        box-shadow: inset 0 0 0 1.6px rgba($greenLight, 0.6);
-    }
 }
 
 h1,
@@ -58,7 +56,6 @@ h5 {
 
 .container {
     min-height: 100vh;
-    height: 100%;
     display: grid;
 }
 
@@ -89,12 +86,13 @@ header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: white;
+        color: var(--c-text-inverted);
         word-break: break-word;
+        @include scrollbar(8px, none, #666, var(--c-scrollbar-thumb-hover), var(--c-bgd));
         .text {
             max-height: 24vh;
             overflow: auto;
-            @include scrollbar(12px, $gray1, none);
+            @include scrollbar(0px, thin, #666, var(--c-scrollbar-thumb-hover), var(--c-bgd));
             animation: fontpop 0.4s;
         }
         .btn {
@@ -106,15 +104,16 @@ header {
         background: $greenMid;
     }
     .info-message {
-        background: #888;
+        background: var(--c-info);
     }
     .warning-message {
-        background: #960;
+        background: var(--c-warning);
     }
     .error-message {
-        background: $red1;
+        background: var(--c-error);
     }
 }
+
 #popups {
     position: fixed;
     width: 100vw;
@@ -123,16 +122,17 @@ header {
     pointer-events: none;
     z-index: 10;
 }
+
 .confirm-item {
     position: fixed;
-    border: solid 2px $red1;
+    border: solid 2px var(--c-error);
     box-shadow: 0px 0px 4px 2px rgba(black, 0.2);
     top: 40%;
     left: 50%;
     transform: translateX(-50%);
-    background: white;
+    background: var(--c-bgd-popup);
     width: 90vw;
-    max-width: 520px;
+    max-width: 32.5rem;
     height: fit-content;
     padding: 1rem;
     border-radius: 0.6rem;
@@ -155,7 +155,7 @@ header {
 
 footer {
     padding: 0.12rem 1rem;
-    background: $gray1;
+    background: var(--c-footer);
     font-size: 0.72rem;
     .content {
         display: flex;
@@ -233,25 +233,46 @@ ul.list {
         padding: 0.44em 1em;
         border-radius: 3.2px;
         line-height: 1.32em;
-        
         &.non-transparent {
-            &.white {
-                background: white;
-                color: $black1;
-                &:after {
-                    background: rgba(black, 0.04);
-                }
-            }
-            &.black {
-                background: $black1;
-                color: white;
-                &:after {
+            &.primary {
+                background: var(--c-button-primary);
+                color: var(--c-text-inverted);
+                &::after {
                     background: rgba(white, 0.08);
                 }
                 &.disabled {
-                    background: #888;
-                    border-color: #888;
-                    color: #ddd;
+                    background: var(--c-button-disabled);
+                    border-color: var(--c-button-disabled);
+                    color: (--c-text);
+                    > img {
+                        filter: grayscale(50%);
+                    }
+                }
+            }
+            &.white {
+                background: var(--c-button-light);
+                color: var(--c-text-inverted);
+                &::after {
+                    background: rgba(black, 0.06);
+                }
+            }
+            &.always-white {
+                background: $buttonWhite;
+                color: $textBlack;
+                &::after {
+                    background: rgba(black, 0.06);
+                }
+            }
+            &.dark {
+                background: var(--c-button-dark);
+                color: var(--c-text-inverted);
+                &::after {
+                    background: rgb(from var(--c-overlay-light) r g b / 8%);
+                }
+                &.disabled {
+                    background: var(--c-button-disabled);
+                    border-color: var(--c-button-disabled);
+                    color: (--c-text);
                     > img {
                         filter: grayscale(50%);
                     }
@@ -260,7 +281,7 @@ ul.list {
             &.dark-green {
                 background: $greenDark;
                 color: white;
-                &:after {
+                &::after {
                     background: rgba(white, 0.06);
                 }
             }
@@ -268,22 +289,40 @@ ul.list {
         &.transparent {
             background: transparent;
             padding: calc(0.44em - 2px) calc(1em - 2px);
+            &.primary {
+                color: var(--c-text);
+                border: 2px solid var(--c-button-primary);
+                &:after {
+                    background: rgb(from var(--c-button-primary) r g b / 6%);
+                }
+                &.disabled {
+                    border-color: var(--c-button-disabled);
+                    color: var(--c-button-disabled);
+                }
+            }
             &.white {
-                color: white;
-                border: 2px solid white;
+                color: var(--c-button-light);
+                border: 2px solid var(--c-button-light);
                 &:after {
                     background: rgba(white, 0.06);
                 }
             }
-            &.black {
-                color: $black1;
-                border: 2px solid $black1;
+            &.always-white {
+                color: $textWhite;
+                border: 2px solid $buttonWhite;
+                &::after {
+                    background: rgba(white, 0.04);
+                }
+            }
+            &.dark {
+                color: var(--c-text);
+                border: 2px solid var(--c-button-dark);
                 &:after {
-                    background: rgba(black, 0.06);
+                    background: rgb(from var(--c-button-dark) r g b / 6%);
                 }
                 &.disabled {
-                    border-color: #888;
-                    color: #888;
+                    border-color: var(--c-button-disabled);
+                    color: var(--c-button-disabled);
                 }
             }
         }
@@ -296,11 +335,11 @@ ul.list {
         &:after {
             content:"";
             position: absolute;
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
+            width: 100%;
+            height: 100%;
             transform: scale(0);
-            top: -2px;
-            left: -2px;
+            top: 0;
+            left: 0;
             transition: transform 0.1s ease-out;
             border-radius: 0.2em;
             }
@@ -326,17 +365,17 @@ ul.list {
         font-size: 1.2rem;
         transition: transform 0.2s ease-out;
         &.white {
-            color: white;
+            color: var(--c-button-light);
         }
-        &.black {
-            color: $gray1;
+        &.dark {
+            color: var(--c-button-dark)
         }
         img {
-            height: 1em;
-            width: 1em;
-            padding-left: 0.48em;
+            height: 1.2em;
+            width: 1.2em;
+            padding-left: 0.32em;
             position: relative;
-            top: 0.12em;
+            bottom: -0.25em;
             transition: transform 0.2s ease-out;
         }
         &:hover{
@@ -354,13 +393,16 @@ ul.list {
             text-decoration: underline;
         }
         &.white {
-            color: white;
+            color: var(--c-text-inverted);
+        }
+        &.white-dm {
+            color: $textWhite;
         }
         &.black {
-            color: $black1;
+            color: var(--c-text);
         }
         &.green {
-            color: $greenDark; 
+            color: var(--c-text-green); 
         }
     }
     &.icon {
@@ -385,22 +427,80 @@ ul.list {
     }
 }
 
-img.icon {
-    &.black {
-        filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
+//light theme
+@mixin img-icon-light {
+    img.icon { 
+        &.black {
+            filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
+        }
+        &.white {
+            filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+            &.shadow {
+                filter: drop-shadow(0 0 4px rgba(white, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+            }
+        }   
+        &.gray {
+            filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
+        }  
+        &.green {
+            filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
+        } 
+        &.red {
+            filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
+        }    
+
+        &.selected {
+            filter: invert(25%) sepia(85%) saturate(4117%) hue-rotate(75deg) brightness(90%) contrast(87%);
+        }
     }
-    &.white {
-        filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
-    }   
-    &.gray {
-        filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
-    }  
-    &.green {
-        filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
-    } 
-    &.red {
-        filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
-    }    
+}
+@media (prefers-color-scheme: light) {
+    body:not(.dark-theme) {
+        @include img-icon-light();
+    }
+}
+body.light-theme {
+    @include img-icon-light();
+}
+
+//dark theme
+@mixin img-icon-dark {
+    img.icon {
+        &.black {
+            filter: invert(98%) sepia(3%) saturate(7%) hue-rotate(246deg) brightness(114%) contrast(87%);
+        }
+        &.white {
+            filter: invert(10%) sepia(40%) saturate(5%) hue-rotate(82deg) brightness(98%) contrast(94%);
+            &.shadow {
+                filter: drop-shadow(0 0 4px rgba(white, 0.8)) invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
+            }
+        }   
+        &.gray {
+            filter: invert(61%) sepia(0%) saturate(240%) hue-rotate(212deg) brightness(87%) contrast(93%);
+        }  
+        &.green {
+            filter: invert(48%) sepia(100%) saturate(368%) hue-rotate(52deg) brightness(84%) contrast(102%);
+        } 
+        &.red {
+            filter: invert(32%) sepia(97%) saturate(663%) hue-rotate(320deg) brightness(95%) contrast(83%);
+        }  
+
+        &.selected {
+            filter: invert(49%) sepia(51%) saturate(3856%) hue-rotate(64deg) brightness(94%) contrast(87%);
+        }
+
+        &.white-dm {
+            filter: invert(98%) sepia(3%) saturate(7%) hue-rotate(246deg) brightness(114%) contrast(87%);
+        } 
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.light-theme) {
+        @include img-icon-dark();
+    }
+}
+body.dark-theme {
+    @include img-icon-dark();
 }
 
 .center {
@@ -419,8 +519,15 @@ textarea {
         padding: 0.44em 0.8em;
         border-radius: 0.2em;
         line-height: 1.32em;
+        color: var(--c-text);
+        background: var(--c-text-field);
+        &.variant {
+            @media (prefers-color-scheme: light) {
+                background: var(--c-text-field-variant);
+            }
+        }
         &.disabled {
-            background: #ddd;
+            background: var(--c-text-field-disabled);
             pointer-events: none;
             cursor: auto;
         }
@@ -433,6 +540,9 @@ textarea {
         }
         &[type="number"] {
             -moz-appearance: textfield;
+        }
+        &:focus {
+            box-shadow: inset 0 0 0 2px var(--c-selected);
         }
     }
 }
@@ -478,12 +588,12 @@ label {
     display: inline-block;
     &.disabled {
         pointer-events: none;
-        color: #444; 
+        color: var(--c-text-disabled); 
     }
     &.required {
         &:after {
             content: " *";
-            color: $red1;
+            color: var(--c-error);
         }
     }
 }
@@ -509,32 +619,154 @@ label {
         height: 1.6rem;
         width: 1.6rem;
         border-radius: 0.2em;
-        background-color: #eee;
+        background-color: var(--c-text-field);
+        &.variant {
+            @media (prefers-color-scheme: light) {
+                background: var(--c-text-field-variant);
+            }
+        }
         &:after {
             content: "";
-            position: absolute;
             display: none;
-            left: 0.6rem;
-            top: 0.3rem;
-            width: 0.3rem;
-            height: 0.6rem;
-            border: solid white;
-            border-width: 0 0.15rem 0.15rem 0;
-            transform: rotate(45deg);
+            position: absolute;
+            left: 0.05rem;
+            right: 0;
+            top: 0.05rem;
+            bottom: 0;
+            background-image: url("../../images/tick-thick.svg");
+            transform: scale(60%);
+            filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(198deg) brightness(110%) contrast(101%);
         }
     }
 
     &:hover input ~ .checkmark {
-        background-color: #d8d8d8;
+        background-color: var(--c-selected-hover);
+        &.variant {
+            @media (prefers-color-scheme: light) {
+                background: var(--c-selected-hover-variant);
+            }
+        }
     }
     input[type="checkbox"]:checked ~ .checkmark {
-        background-color: $greenDark;
+        background-color: var(--c-checkmark);
         &:after {
             display: block;
         }
     }
 }
 
+
+.custom-switch-wrapper { // převzato z https://uiverse.io/satyamchaudharydev/shy-earwig-18, upraveno
+    display: block;
+    --width-of-switch: 3.8em;
+    --height-of-switch: 2.2em;
+    --size-of-icon: 1.6em;
+    --slider-offset: 0.3em;
+    position: relative;
+    width: var(--width-of-switch);
+    height: var(--height-of-switch);
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f4f4f5;
+        border-radius: 30px;
+        transition: .4s;
+        &::before {
+            position: absolute;
+            content: "";
+            height: var(--size-of-icon);
+            width: var(--size-of-icon);
+            border-radius: 20px;
+            left: var(--slider-offset);
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(40deg, $purpleDark, $purpleLight 70%);
+            transition: .4s;
+        }
+    }
+    input:checked + .slider {
+        background-color: var(--c-text-field);
+    }
+
+    input:checked + .slider::before {
+        left: calc(100% - (var(--size-of-icon) + var(--slider-offset)));
+        background: var(--c-text-field);
+        /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+        box-shadow: inset -10px -4px 0 0 #fff;
+    }
+}
+
+.custom-3-switch-wrapper {
+    display: block;
+    --width-of-switch: 4.8em;
+    --height-of-switch: 2.2em;
+    --size-of-icon: 1.6em;
+    --slider-offset: 0.4em; 
+    position: relative;
+    width: var(--width-of-switch);
+    height: var(--height-of-switch);
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f4f4f5;
+        border-radius: 30px;
+        transition: .4s;
+        &::before,
+        &::after {
+            position: absolute;
+            content: "";
+            height: var(--size-of-icon);
+            width: var(--size-of-icon);
+            border-radius: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: .4s;
+        }
+        &::before { //sun
+            background: $buttonWhite;
+        }
+    }
+    input:nth-of-type(1):checked ~ .slider {
+        background-color: var(--c-text-field);
+    }
+    input:nth-of-type(2):checked ~ .slider {
+        background-color: var(--c-text-field);
+    }
+    input:nth-of-type(3):checked ~ .slider {
+        background-color: var(--c-text-field);
+    }
+
+    input:nth-of-type(1):checked ~ .slider::before,
+    input:nth-of-type(1):checked ~ .slider::after {
+        left: var(--slider-offset);
+    }
+    input:nth-of-type(2):checked ~ .slider::before,
+    input:nth-of-type(2):checked ~ .slider::after {
+        left: calc(50% - var(--size-of-icon)/2);
+    }
+    input:nth-of-type(3):checked ~ .slider::before,
+    input:nth-of-type(3):checked ~ .slider::after {
+        left: calc(100% - (var(--size-of-icon) + var(--slider-offset)));
+    }
+}
 
 .custom-select-wrapper {
     position: relative;
@@ -556,6 +788,12 @@ label {
             }
             .custom-select-main {
                 border-radius: 3.2px 3.2px 0 0;
+                box-shadow: inset 0 0 0 2px var(--c-selected);
+                &.variant {
+                    @media (prefers-color-scheme: light) {
+                        background: var(--c-selected-hover-variant);
+                    }
+                }
                 .arrow {
                     transform: rotate(270deg);
                 }
@@ -568,10 +806,10 @@ label {
         display: flex;
         align-items: center;
         font-size: 1em;
-        color: $gray1;
+        color: var(--c-text);
         height: 2.28em;
         padding: 0.48em 0.8em;
-        background: #fff;
+        background: var(--c-text-field);
         cursor: pointer;
         border-radius: 3.2px;
         span {
@@ -588,13 +826,13 @@ label {
         }
     }
     .custom-options {
-        @include scrollbar(12px, $gray3, white);
+        @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-text-field));
         position: absolute;
         display: block;
         top: 100%;
         left: 0;
         right: 0;
-        background: #fff;
+        background: var(--c-text-field);
         transition: all 0.4s ease-out;
         opacity: 0;
         transform: rotateX(90deg);
@@ -610,16 +848,16 @@ label {
             position: relative;
             display: block;
             padding: 0.4em 0.72em;
-            color: $black1;
+            color: var(--c-text);
             cursor: pointer;
-            border-top: 1px solid $gray2;
+            border-top: 1px solid var(--c-bgd-comp);
             &:hover {
                 cursor: pointer;
-                background: $gray2;
+                background: var(--c-selected-hover);
             }
             &.selected {
                 color: #fff;
-                background: $greenMid;
+                background: var(--c-selected);
             }
         }
     }
@@ -628,6 +866,54 @@ label {
 .code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.08em;
+}
+
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+    transition: none !important;
+}
+
+@mixin dark-theme-border {
+    input.text-field,
+    select.text-field,
+    textarea.text-field,
+    .custom-checkbox-wrapper .checkmark,
+    .custom-switch-wrapper .slider, 
+    .custom-3-switch-wrapper .slider,
+    .custom-select-wrapper .custom-select-main,
+    .custom-select-wrapper .custom-options,
+    #preview-img,
+    #main-img
+    {
+        border: 1px solid $gray3;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.light-theme) {
+        @include dark-theme-border();
+    }
+}
+body.dark-theme {
+    @include dark-theme-border();
+}
+
+@media (prefers-color-scheme: light) {
+    body:not(.dark-theme) {
+        .custom-switch-wrapper .slider {
+            background: #fff;
+        }
+    }
+}
+
+body.light-theme {
+    .text-field,
+    .custom-select-main,
+    .custom-checkbox-wrapper .checkmark {
+        &.variant {
+            background: var(--c-text-field-variant);
+        }
+    }
 }
 
 @keyframes fontpop {

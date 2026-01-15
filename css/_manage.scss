@@ -2,11 +2,15 @@
 #manage,
 #members,
 #tests,
-#naturals {
-    .data-item {
+#naturals,
+#resolve-reports {
+    .data-item,
+    .data-properties {
         margin: 0.6rem;
         padding: 0.4rem 0.8rem;
-        border: 1px solid #ccc;
+    }
+    .data-item {
+        border: 1px solid var(--c-tile-border);
         border-radius: 0.2rem;
         display: grid;
         @media screen and (min-width: $smallTablet) {
@@ -37,7 +41,7 @@
         @media screen and (min-width: $smallTablet) {
             grid-column: 2/4;
             grid-row: 1/3;
-            max-width: 400px;
+            max-width: 25rem;
         }
         .border-btn {
             margin: 0.6rem auto 0.2rem auto;
@@ -77,7 +81,7 @@
             font-size: 0.72rem;
             line-height: 0.96rem;
             min-height: 0.96rem; 
-            color: $red1;
+            color: var(--c-error);
             &.server {
                 margin-bottom: 0.2rem;
                 min-height: 0;
@@ -93,7 +97,7 @@
     #delete-class1,
     #invite-user-form,
     #new-test {
-        max-width: 400px;
+        max-width: 25rem;
         .border-btn {
             margin: 0.6rem auto 0.2rem auto;
             width: 100%
@@ -106,7 +110,7 @@
     #delete-class2,
     .kick-user {
         span {
-            color: $red1;
+            color: var(--c-error);
         }
         .buttons {
             display: flex;
@@ -126,7 +130,7 @@
     #account-settings-wrapper {
         margin: auto;
         @media screen and (min-width: $smallDesktop) {
-            max-width: 1100px;
+            max-width: 68.75rem;
             display: grid;
             grid-template-columns: 1fr 3fr;
             grid-column-gap: 2rem;
@@ -136,7 +140,7 @@
         padding: 0.6rem;
         margin: 0 auto;
         width: 90%;
-        max-width: 260px;
+        max-width: 16.25rem;
         @media screen and (min-width: $smallDesktop) {
             width: 100%;
             max-width: auto;
@@ -144,12 +148,52 @@
         > img {
             width: 100%;
         }
-        > div {
+        > div:nth-of-type(1) {
             text-align: center;
             margin: 0.6rem auto;
             font-size: 1.2rem;
             > span {
                 font-weight: 500;
+            }
+        }
+        #dark-theme-wrapper {
+            margin: 2rem auto 1rem auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            span {
+                text-align: center;
+                font-size: 0.8rem;
+            }
+        }
+        .custom-3-switch-wrapper {
+            .slider {
+                &::before { //sun
+                    background: linear-gradient(40deg, $purpleDark, $purpleLight 70%);
+                }
+                &::after { //moon
+                    box-shadow: inset -10px -4px 0 0 #fff; /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+                }
+            }
+            input:nth-of-type(1):checked ~ .slider::before {
+                opacity: 1;
+            }
+            input:nth-of-type(2):checked ~ .slider::before {
+                opacity: 1;
+            }
+            input:nth-of-type(3):checked ~ .slider::before {
+                opacity: 0;
+            }
+
+            input:nth-of-type(1):checked ~ .slider::after {
+                opacity: 0;
+            }
+            input:nth-of-type(2):checked ~ .slider::after {
+                opacity: 0.5;
+            }
+            input:nth-of-type(3):checked ~ .slider::after {
+                opacity: 1;
             }
         }
     }
@@ -171,7 +215,7 @@
 #manage {
     #manage-wrapper {
         margin: auto;
-        max-width: 800px;
+        max-width: 50rem;
     }
     .class-buttons-section {
         padding: 0.6rem;
@@ -216,11 +260,11 @@
 #members {
     #members-wrapper {
         margin: auto;
-        max-width: 800px;
+        max-width: 50rem;
     }
     .members-data-section {
         margin: auto;
-        max-width: 800px;
+        max-width: 50rem;
         .data-item.member {
             grid-template-columns: 10rem 1fr;
             grid-template-rows: auto auto;
@@ -244,19 +288,19 @@
         }
     }
     .invite-user-section {
-        padding: 0.4rem;
+        padding: 0.6rem;
     }
 }
 
 #tests {
     #tests-wrapper {
         margin: auto;
-        max-width: 800px;
+        max-width: 50rem;
     }
     .tests-data-section {
         width: 100%;
-        .data-properties.test,
-        .data-item.test {
+        .data-properties,
+        .data-item {
             display: grid;
             grid-template-columns: 1fr 3rem 6rem;
             @media screen and (min-width: $smallMobile) {
@@ -273,14 +317,12 @@
             }
             align-items: center;
             justify-items: center;
-            margin: 0.4rem;
-            padding: 0.2rem 0.8rem;
             > * {
                 margin: auto;
             }
         }
         .data-item.test {
-            border: 1px solid #ccc;
+            border: 1px solid var(--c-tile-border);
             border-radius: 0.2rem;
             > span {
                 padding: calc(0.2em + 4px) 0;
@@ -306,7 +348,7 @@
         }
     }
     .tests-new-section {
-        padding: 0.4rem;
+        padding: 0.6rem;
     }
 }
 
@@ -320,15 +362,13 @@
         column-gap: 0.6rem;
         justify-items: stretch;
         align-items: center;
-        margin: 0.4rem;
-        padding: 0.2rem 0.8rem;
         > span {
             padding: calc(0.2em + 4px) 0;
         }
     }
     .data-item {
         grid-template-rows: auto auto;
-        border: 1px solid #ccc;
+        border: 1px solid var(--c-tile-border);
         border-radius: 0.2rem;
         .name,
         .name-edit {
@@ -337,7 +377,6 @@
         }
         .name-edit {
             width: 100%;
-            font-size: 0.8rem;
         }
         .url,
         .url-edit {
@@ -373,7 +412,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            @media screen and (min-width: 840px) {
+            @media screen and (min-width: 52.5rem) {
                 flex-direction: row;
             }
             justify-content: space-evenly;
@@ -381,7 +420,7 @@
         .image {
             grid-column: 1/6;
             grid-row: 2/3;
-            height: 300px;
+            height: 18.75rem;
             margin: 1rem auto 0.4rem auto;
             position: relative;
             .btn {
@@ -389,9 +428,6 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                > img {
-                    filter: drop-shadow(0 0 0.16rem rgba(black, 0.6));
-                }
             }
             > img {
                 height: 100%;
@@ -402,17 +438,6 @@
             width: 100%;
             resize: none;
             height: fit-content;
-            padding: 0.32em 0.4em;
-        }
-        .custom-select-wrapper {
-            .custom-select-main {
-                height: 1.96em;
-                padding: 0.32em 0.4em;
-            }
-            .custom-options {
-                max-height: 200px;
-                padding: 0.3em 0.32em;
-            }
         }
     }
     .data-properties > *,
@@ -426,7 +451,7 @@
         @media screen and (min-width: $smallTablet) {
             display: grid;
             grid-template-rows: auto auto auto;
-            grid-template-columns: 8fr 3fr;
+            grid-template-columns: 1fr auto;
             column-gap: 2rem;
         }
         @media screen and (min-width: $tablet) {
@@ -454,12 +479,12 @@
     .part.box,
     #add-part-button {
         overflow-y: hidden;
-        height: 480px;
-        min-width: 256px;
+        height: 30rem;
+        min-width: 16rem;
         @media screen and (min-width: $smallTablet) {
             width: auto;
         }
-        border: 1px solid #ccc;
+        border: 1px solid var(--c-tile-border);
         border-radius: 0.2rem;
         padding: 1.6rem;  
         &:not(:last-child) {
@@ -472,9 +497,10 @@
     .part.box {
         display: grid;
         grid-template-rows: auto 1fr;
+        @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         .naturals-in-part {
             overflow-y: auto;
-            @include scrollbar(12px, $gray3, $gray2);
+            @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
     }
     #add-part-button {
@@ -487,8 +513,8 @@
             transform: scale(0.96);
         }
         img {
-            height: 180px;
-            width: 180px;
+            height: 11.25rem;;
+            width: 11.25rem;
             opacity: 0.12;
             margin-bottom: 2rem;
         }
@@ -540,11 +566,8 @@
         @media screen and (min-width: $smallTablet) {        
             grid-column: 2/3;
             grid-row: 1/2;
-            flex-direction: column;
-            margin-top: 0;
-        }
-        @media screen and (min-width: $tablet) {
             flex-direction: row;
+            margin-top: 0;
             align-items: flex-start;
             width: fit-content;
         }
@@ -556,19 +579,8 @@
                 flex-basis: initial;
                 margin-bottom: 0.4rem;
             }
-            @media screen and (min-width: $tablet) {
-                margin-bottom: 0;
-            }
             &:not(:first-child) {
                 margin-left: 0.4rem;
-                @media screen and (min-width: $smallTablet) {
-                    margin-bottom: 1.2rem;
-                    margin-left: 0;
-                }
-                @media screen and (min-width: $tablet) {
-                    margin-bottom: 0;
-                    margin-left: 0.4rem;
-                }
             }
         }
     }
@@ -578,7 +590,6 @@
         .text-field {
             height: 1.6em;
             padding: 0.48em 0.4em;
-            background: #f8f8f8;
         }
     }
     .name-box {
@@ -591,13 +602,13 @@
         .text-field {
             flex-grow: 1;
             width: 100%;
-            max-width: 320px;
+            max-width: 20rem;
         }
     }
     .group.name-input-box {
         .text-field {
             width: 100%;
-            max-width: 320px;
+            max-width: 20rem;
         }
     }
     .group,
@@ -624,16 +635,13 @@
     .natural.name-box, 
     .natural.name-input-box {
         display: grid;
-        grid-template-columns: 10rem 1rem 1rem;
-        @media screen and (min-width: $smallMobile) {
-            grid-template-columns: 12rem 1rem 1rem;
-        }
-        @media screen and (min-width: $tablet) {
-            grid-template-columns: 14rem 1rem 1rem;
-        }
+        grid-template-columns: 1fr auto auto;
         grid-gap: 0.8rem;
         align-items: center;
         margin: 0.16em 0;
+        &:hover {
+            background: var(--c-bgd-comp);
+        }
         .btn {
             transform: scale(0.8);
             top: 1px;
@@ -644,7 +652,7 @@
 
 #naturals {
     #naturals-wrapper {
-        max-width: 1100px;
+        max-width: 68.75rem;
         margin: 0 auto;
     }
     .naturals-filter-section {
@@ -709,16 +717,13 @@
             display: block;
         }
         .image {
-            height: 300px;
+            height: 18.75rem;
             width: fit-content;
             margin: auto;
             position: relative;
             .btn {
                 margin: 1rem;
                 position: absolute;
-                > img {
-                    filter: drop-shadow(0 0 0.16rem rgba(black, 0.6));
-                }
                 &.hide-picture-button {
                     top: 0;
                     right: 0;
@@ -736,7 +741,7 @@
             width: 100%;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 0.625rem;
             @media screen and (min-width: $smallMobile) {
                 grid-template-columns: repeat(2, 1fr);
             } 
@@ -748,9 +753,9 @@
             .img-wrapper {
                 width: 100%;
                 position: relative;
-                max-width: 200px;
+                max-width: 12.5rem;
                 aspect-ratio: 1 / 1; 
-                margin: min(auto, 40px);
+                margin: min(auto, 2.5rem);
                 overflow: hidden;
                 &:after {
                     content: "";
@@ -767,8 +772,10 @@
                 &:hover,
                 &:active {
                     > img {
-                        filter: blur(5px) grayscale(40%);
-                        transform: scale(1.1);
+                        &:not(.icon) {
+                            filter: blur(5px) grayscale(40%);
+                            transform: scale(1.1);
+                        }
                     }
                     .img-buttons {
                         display: flex;
@@ -796,9 +803,6 @@
                     z-index: 2;
                     .btn {
                         margin: auto 0.4rem;
-                        img {
-                            @include turn-white;
-                        }
                     }
                 }
             }
@@ -830,7 +834,6 @@
         .btn {
             width: 0.72em;
             height: 0.72em;
-            //filter: opacity(0.4);
             position: relative;
             top: 1px;
             img {

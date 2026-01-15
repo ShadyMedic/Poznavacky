@@ -18,17 +18,18 @@ $(function()
     })
 
     //event listenery tlačítek
-    $(".rename-natural-button").click(function(event) {rename(event)})
-    $(".rename-confirm-button").click(function(event) {renameConfirm(event)})
-    $(".rename-cancel-button").click(function(event) {renameCancel($(event.target))})
-    $(".remove-natural-button").click(function(event) {remove(event)})
     $("#remove-filters-button").click(function() {removeFilters()})
     $(".sort-up-button").click(function(event) {sortNaturals(event, "up")})
     $(".sort-down-button").click(function(event) {sortNaturals(event, "down")})
-    $(".display-pictures-button").click(function(event) {displayPictures(event)})
-    $(".preview-picture-button").click(function(event) {previewPicture(event)})
-    $(".hide-picture-button").click(function(event) {hidePicture(event)})
-    $(".delete-picture-button").click(function(event) {deletePicture(event)})
+    $("#naturals-wrapper").on("click", ".rename-natural-button", function(event) {rename(event)})
+    $("#naturals-wrapper").on("click", ".rename-confirm-button", function(event) {renameConfirm(event)})
+    $("#naturals-wrapper").on("click", ".rename-cancel-button", function(event) {renameCancel($(event.target))})
+    $("#naturals-wrapper").on("click", ".remove-natural-button", function(event) {remove(event)})
+    $("#naturals-wrapper").on("click", ".display-pictures-button", function(event) {displayPictures(event)})
+    $("#naturals-wrapper").on("click", ".hide-pictures-button", function(event) {hidePictures(event)})
+    $("#naturals-wrapper").on("click", ".preview-picture-button", function(event) {previewPicture(event)})
+    $("#naturals-wrapper").on("click", ".hide-picture-button", function(event) {hidePicture(event)})
+    $("#naturals-wrapper").on("click", ".delete-picture-button", function(event) {deletePicture(event)})
 
     //event listener zmáčknutí klávesy
     $(".natural.name-input").keyup(function(event) { if (event.keyCode === 13) renameConfirm(event) })
@@ -47,8 +48,8 @@ function inactivateSortButton()
     if ($buttonImgActiveOld.length != 0)
     {
         $buttonImgActiveOld.closest(".btn").removeClass("active")
-        $buttonImgActiveOld.removeClass("black");
-        $buttonImgActiveOld.addClass("gray")
+        $buttonImgActiveOld.removeClass("selected");
+        $buttonImgActiveOld.addClass("black")
     }
 }
 
@@ -81,8 +82,8 @@ function sortNaturals(event, direction)
     // grafické zvýraznění šipky pro aktivní řazení
     let $buttonImg = $(event.target).closest(".btn").find("img");
     $buttonImg.closest(".btn").addClass("active");  
-    $buttonImg.addClass("black");
-    $buttonImg.removeClass("gray");
+    $buttonImg.addClass("selected");
+    $buttonImg.removeClass("black");
 
     
     naturalParameters.sort((a,b) => {
@@ -383,16 +384,22 @@ function removeFinal($natural)
  */
 function displayPictures(event)
 {
-    let $naturalPictures = $(event.target).closest(".data-item").find(".pictures");
+    let $natural = $(event.target).closest(".data-item")
+    let $naturalPictures = $natural.find(".pictures");
     if (!$naturalPictures.hasClass("show"))
     {
-        $naturalPictures.slideDown(function() {$(this).css('display', '');});
-        $naturalPictures.addClass("show");
+        $naturalPictures.slideDown(function() {
+            $naturalPictures.addClass("show");
+        });
+
+        $natural.find(".display-pictures-button").hide();
+        $natural.find(".hide-pictures-button").show();
     }
     
     $naturalPictures.find(".picture").on("error", function()
     {
-        $(this).attr("src", '/images/file-error.svg');
+        $(this).addClass("icon black");
+        $(this).attr("src", '/images/file-error_o.svg');
         $(this).siblings(".img-buttons").find(".preview-picture-button").hide();
     })
 
@@ -400,7 +407,11 @@ function displayPictures(event)
     {
         if (!$(this).is(event.target) && $(this).has(event.target).length === 0)
         {
-            $(this).find(".pictures").slideUp(function() {$(this).removeClass("show");});
+            $(this).find(".pictures").slideUp(function() {
+                $(this).removeClass("show");
+            });
+            $(this).find(".display-pictures-button").show();
+            $(this).find(".hide-pictures-button").hide();
         }
     })
 
@@ -409,6 +420,25 @@ function displayPictures(event)
     {
         $(this).attr('src', $(this).attr('data-src'));
     })
+}
+
+/**
+ * Funkce skrývající obrázky dané přírodniny"
+ * @param {event} event
+ */
+function hidePictures(event)
+{
+    let $natural = $(event.target).closest(".data-item")
+    let $naturalPictures = $natural.find(".pictures");
+    if ($naturalPictures.hasClass("show"))
+    {
+        $naturalPictures.slideUp(function() {
+            $(this).removeClass("show");
+        });
+
+        $natural.find(".display-pictures-button").show();
+        $natural.find(".hide-pictures-button").hide();
+    }
 }
 
 /**

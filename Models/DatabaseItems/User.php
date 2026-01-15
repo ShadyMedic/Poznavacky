@@ -226,7 +226,7 @@ class User extends DatabaseItem implements ArrayAccess
      * @throws DatabaseException
      * @see ArrayAccess::offsetGet()
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset) : mixed
     {
         $this->loadIfNotLoaded($this->$offset);
         return $this->$offset;

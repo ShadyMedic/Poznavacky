@@ -1,10 +1,12 @@
 var smallTablet = 672;
 var tablet = 768;
+var prefersDarkTheme; //automatická preference prohlížeče
 
 $(function()
 {
     //event listenery tlačítek
     $("#messages").on("click", ".close-message-button", function() {closeMessage(this)})
+    $(".custom-3-switch-wrapper").on("click", function(event) {toggleThreeSwitch(this, event)})
 
     //event listenery zmáčknutí klávesy
     $("body").on("keyup", ".form", function(event) {enterSubmit(event)})
@@ -49,7 +51,60 @@ $(function()
     {
         $("body").removeClass("tab");    
     })
+
+    transitionAfterPageLoad();
 })
+
+/**
+ * Funkce přepne trojitý toggle switch o jedno posunutí vpřed a spustí 'change' event
+ */
+function toggleThreeSwitch(wrapper, event)
+{
+    event.preventDefault();
+
+    let $radios = $(wrapper).find("input[type=radio]");
+    let index = $radios.index($radios.filter(":checked"));
+
+    index = (index + 1) % $radios.length;
+    $radios.eq(index).prop("checked", true);
+    $(wrapper).trigger("change");
+}
+
+/**
+ * Funkce povolující transitions později po načtení stránky
+ */
+function transitionAfterPageLoad()
+{
+    setTimeout(() =>  {
+        $(".no-transition").removeClass("no-transition");
+    }, 400);
+}
+
+/**
+ * Funkce nastavující tmavý/světlý motiv
+ */
+function setTheme(newTheme)
+{
+    if (newTheme == "light")
+    {   
+        $("body").addClass("light-theme");
+        $("body").removeClass("dark-theme");
+        $("body").removeClass("system-theme");
+    }
+    else if (newTheme == "dark")
+    {
+        $("body").addClass("dark-theme");
+        $("body").removeClass("light-theme");
+        $("body").removeClass("system-theme");
+    }
+    else if (newTheme == "system")
+    {
+        $("body").addClass("system-theme");
+        $("body").removeClass("dark-theme");
+        $("body").removeClass("light-theme");
+    }
+    
+}
 
 /**
  * Funkce, která odešle formulář stiskem klávesy Enter

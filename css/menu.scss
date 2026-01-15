@@ -1,6 +1,20 @@
 @import "_reset.scss";
 @import "_generic.scss";
 
+html:has(#menu,
+#learn,
+#test,
+#add-pictures,
+#account-settings,
+#manage,
+#members,
+#tests,
+#edit-group,
+#resolve-reports,
+#naturals) {
+    @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
+}
+
 #menu,
 #learn,
 #test,
@@ -12,14 +26,14 @@
 #edit-group,
 #resolve-reports,
 #naturals {
-    @include scrollbar(12px, $gray3, $gray1);
     position: relative;
-    background: #eee;
+    background: var(--c-bgd);
     @media screen and (min-width: $smallTablet) {
         height: 100vh;
         overflow: hidden;
     }
     .container {
+        height: 100%;
         grid-template-rows: auto auto auto 1fr auto;
         @media screen and (min-width: $smallTablet) {
             grid-template-columns: auto 1fr;
@@ -29,7 +43,7 @@
     header {    
         background: linear-gradient(90deg, $greenDark, $gradientDark);
         width: 100%;
-        z-index: 5;
+        z-index: 4;
         inset: 0;
         mask:
             url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80px 80px" ><circle cx="24" cy="24" r="40px" fill="black"/></svg>') 0/100% 100%, //nevím jak to funguje
@@ -40,11 +54,11 @@
             display: none;
         }
         > .wrapper {
-            padding-left: 72px;
+            padding-left: 4.5rem;
             display: grid;
             grid-template-columns: auto auto 1fr;
             grid-template-rows: auto auto;
-            @media screen and (min-width: 420px) {
+            @media screen and (min-width: 26.25rem) {
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
@@ -55,7 +69,7 @@
             grid-row: 2/3;
             grid-column: 1/4;
             margin-left: 0rem;
-            @media screen and (min-width: 420px) {
+            @media screen and (min-width: 26.25rem) {
                 margin-left: 1rem;
             }
             @media screen and (min-width: $smallTablet) {
@@ -64,8 +78,8 @@
         }
         .btn.icon {
             margin: 0.4rem 1rem 0.4rem 0;
-            height: 32px;
-            width: 32px;
+            height: 2rem;
+            width: 2rem;
             @media screen and (min-width: $smallTablet) {
                 display: none;
             }
@@ -77,27 +91,27 @@
     }
     #logo-standalone {
         display: block; 
-        top: -12px;
-        left: -12px;
-        height: 72px;
-        width: 72px;
+        top: -0.75rem;
+        left: -0.75rem;
+        height: 4.5rem;
+        width: 4.5rem;
         @media screen and (min-width: $smallTablet) {
-            top: -20px;
-            left: -20px;
-            height: 112px;
-            width: 112px;
+            top: -1.25rem;
+            left: -1.25rem;
+            height: 7rem;
+            width: 7rem;
         }
         position: absolute;
-        z-index: 10;
-        border-radius: 100px;
+        z-index: 5;
+        border-radius: 6.25rem;
         background: linear-gradient(135deg, $greenDark, $gradientDark);
         img {
             position: relative;
-            top: 20px;
-            left: 20px;
+            top: 1.25rem;
+            left: 1.25rem;
             @media screen and (min-width: $smallTablet) {
-                top: 32px;
-                left: 32px;
+                top: 2rem;
+                left: 2rem;
             }
             height: 50%;
             width: 50%;
@@ -106,20 +120,20 @@
     }
     aside {
         display: none;
-        width: 64px;
+        width: 4rem;
         grid-row: 1/6;
         grid-column: 1/2;
         color: white;
-        background: $gray3;
-        padding-top: 104px;
+        background: var(--c-side-panel);
+        padding-top: 6.5rem;
         @media screen and (min-width: $smallTablet) {
             display: flex;
             flex-direction: column;
         }
         .btn.icon {
             margin: 1rem auto;
-            height: 32px;
-            width: 32px;
+            height: 2rem;
+            width: 2rem;
             &:last-child {
                 margin-top: auto;    
             }
@@ -137,7 +151,7 @@
             grid-column: 2/3;
         }
         > div {
-            background-color: #e0e0e0;
+            background-color: var(--c-nav);
             padding: 0.6rem 1.2rem;
             @media screen and (min-width: $smallTablet) {
                 padding: 0.24rem 0.6rem 0.24rem 4rem;
@@ -172,7 +186,7 @@
         @media screen and (min-width: $smallTablet) {
             grid-column: 2/3;
             overflow-y: auto;
-            @include scrollbar(12px, $gray3, $gray2);
+            @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
     }
     #messages {
@@ -201,7 +215,7 @@
         line-height: 1.2em;
         margin-top: 0.2rem;
         text-align: justify;
-        color: $gray3;
+        color: var(--c-text-info);
     }
     .info-section {
         text-align: justify;
@@ -225,17 +239,19 @@
         transform: translate(-50%, -50%);
         z-index: 10;
         padding: 1.6rem;
-        background: white;
+        background: var(--c-bgd-popup);
         border-radius: 0.6rem;
         border: 2px solid $greenDark;
         overflow: hidden;
         width: 90%;
-        max-width: 800px;
+        max-width: 50rem;
+        @include scrollbar(8px, none, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
+        /*
         @media screen and (min-width: $smallTablet) {
             //zohlednění aside panelu a scrollbaru
             transform: translate(calc(-50% + 32px), -50%);
             width: calc(90% - 64px);
-        }
+        }*/
         #close-changelog-button {
             margin: 0 0 0.2rem auto;
         }
@@ -247,11 +263,15 @@
         ul {
             overflow-y: auto;
             max-height: 60vh;
-            @include scrollbar(12px, $gray3, none);
+            @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
-        h3 {
+        h1 {
             margin: 0 0 1.2rem 0;
             font-size: 1.32rem;
+        }
+        h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.16rem;
         }
         li {
             list-style-type: circle;
@@ -262,19 +282,19 @@
             }
         }
     }
+    .folders,
+    #demo-info {
+        width: 100%;
+        max-width: 48.75rem;
+        margin: auto;
+    }
     .folders {
         a {
             display: block;
         }
-
-        .table-title,
-        ul {
-            margin: auto;
-        }
-        
         li {
             display: block;
-            background: white;
+            background: var(--c-tile);
             border-radius: 6px;
             box-shadow: 0 3px 2px -1px rgba(black, 0.2);
             &:not(#enter-code-wrapper):not(#request-class-wrapper) > * {
@@ -282,6 +302,20 @@
             }
         }
         &#menu-classes-table {
+            .data-item {
+                &.managed-class > li {
+                    padding-left: 0;
+                    border-left: 0.6rem solid var(--c-managed-class-border);
+                }
+                &.closed-class > li {
+                    padding-left: 0;
+                    border-left: 0.6rem solid var(--c-closed-class-border);
+                }
+                &.public-class > li {
+                    padding-left: 0;
+                    border-left: 0.6rem solid var(--c-public-class-border);
+                }
+            }
             .table-title,
             li {
                 grid-template-columns: 1fr 5.6rem 3.2rem;
@@ -328,7 +362,7 @@
                 }
                 > span {
                     width: 90%;
-                    max-width: 400px;
+                    max-width: 25rem;
                     margin: auto;
                     margin-bottom: 0.4rem;
                 }
@@ -353,7 +387,7 @@
                 display: flex;
                 flex-direction: column;
                 width: 90%;
-                max-width: 400px;
+                max-width: 25rem;
                 margin: auto;
                 > * {
                     margin: 0;
@@ -371,7 +405,7 @@
                     margin-top: 0.6rem;
                 }
                 textarea {
-                    max-height: 160px;
+                    max-height: 10rem;
                 }
                 #antispam-question {
                     font-weight: 500;
@@ -412,7 +446,7 @@
                 &.empty {
                     .part.naturals-count,
                     .part.pictures-count {
-                        color: $red1;
+                        color: var(--c-error);
                     }
                 }
                 .name {
@@ -434,22 +468,30 @@
                     grid-column: 1/5;
                     display: none;
                     overflow: hidden; 
-                    padding: 0.6rem 0.2rem 0.2rem 0.2rem;    
-                }
-                .info {
-                    font-size: 0.9rem;
+                    padding: 0.6rem 0.2rem 0.2rem 0.2rem;   
+                    font-size: 0.9rem; 
                 }
                 .buttons {
                     width: 100%;
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr;
                     column-gap: 1rem;
+                    .btn {
+                        pointer-events: all;
+                        &.disabled:hover {
+                            cursor: default;
+                            &:after {
+                                display: none;
+                            }
+                        }
+                        &.disabled:active {
+                            transform: none;
+                        }
+                    }
                 }
             } 
         }
         .table-title {
-            width: 100%;
-            max-width: 780px;
             padding: 0.6rem;
             display: grid;
             span {
@@ -459,8 +501,6 @@
         ul {
             display: flex;
             flex-direction: column;
-            width: 100%;
-            max-width: 780px;
             position: relative;
             span,
             h4 {
@@ -473,7 +513,7 @@
                 display: grid;
                 width: 100%;
                 padding: 0.6rem;
-                color: $black1;
+                color: var(--c-text);
             }
             .name {
                 word-break: break-word;
@@ -483,20 +523,61 @@
                     font-size: 1.2rem;
                 }
             }
-            .text-field {
-                background: #eee;
-            }
         }
-        #demo-info {
-            width: 100%;
-            max-width: 780px;
-            margin-top: 1.6rem;
-            margin-bottom: 1.2rem;
-            p {
-                text-align: center;
+    }
+
+    #demo-info {
+        margin-top: 2.8rem;
+        display: flex;
+        flex-direction: column;
+        > * {
+            text-align: center;
+            margin: auto;
+        }
+        p {
+            margin-bottom: 0.4rem;
+        }
+        .btn {
+            margin-top: 1.4rem;
+        }
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.light-theme) {
+        &#menu,
+        &#learn,
+        &#test,
+        &#add-pictures,
+        &#account-settings,
+        &#manage,
+        &#members,
+        &#tests,
+        &#edit-group,
+        &#resolve-reports,
+        &#naturals {
+            nav > div {
+                border: 1px solid $gray3;
             }
         }
     }
+}
+body.dark-theme {
+    &#menu,
+    &#learn,
+    &#test,
+    &#add-pictures,
+    &#account-settings,
+    &#manage,
+    &#members,
+    &#tests,
+    &#edit-group,
+    &#resolve-reports,
+    &#naturals {
+        nav > div {
+            border: 1px solid $gray3;
+        }
+    }
+
 }
 
 @import "_study.scss" ;

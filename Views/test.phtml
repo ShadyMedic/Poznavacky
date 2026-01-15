@@ -1,7 +1,7 @@
 <div id="test-wrapper">
     <section class="picture">
         <img id="main-img" src="images/blank.gif" alt="Obrázek přírodniny"> <!-- Adresa bude dodána JavaScriptem -->
-        <button class="btn report-button icon" title="Nahlásit"><img class="icon white" src="images/report_f_2.svg" alt="Nahlásit"></button>
+        <button class="btn report-button icon" title="Nahlásit"><img class="icon white shadow" src="images/report_f_2.svg" alt="Nahlásit"></button>
         <div class="report-box">
             <?php require 'Views/reportForm.phtml'; ?>
         </div>
@@ -11,12 +11,12 @@
             <label for="answer">Zadej odpověď:</label>
             <input type=text autocomplete="off" id="answer" class="text-field" />
             <input type=hidden id="answer-hidden" />
-            <button id="submit-answer-button" class="btn border-btn non-transparent black">Odeslat odpověď</button>
+            <button id="submit-answer-button" class="btn border-btn non-transparent primary">Odeslat odpověď</button>
         </form>
         <div id="result">
             <!-- ZHODNOCENÍ ODPOVĚDI -->
             <div id="result-text"></div>
-            <button id="next-button" class="btn border-btn non-transparent black">Další obrázek</button>
+            <button id="next-button" class="btn border-btn non-transparent primary">Další obrázek</button>
         </div>
     </section>
 </div>

@@ -23,7 +23,7 @@
             <link rel="stylesheet" type="text/css" href="<?= $cssFile ?>">
         <?php endforeach ?>
     </head>
-    <body id="<?= $bodyId ?>">
+    <body id="<?= $bodyId ?>" class="<?= $theme ?>-theme">
         <div id="overlay"></div>
         <div id="popups"></div>
         <div class="container">
@@ -60,8 +60,8 @@
                     <p class="message"></p>
                 </div>
                 <div class="buttons">
-                    <button class="btn border-btn non-transparent black confirm-popup-button submit-button"></button>
-                    <button class="btn border-btn transparent black cancel-popup-button cancel-button"></button>
+                    <button class="btn border-btn non-transparent dark confirm-popup-button submit-button"></button>
+                    <button class="btn border-btn transparent dark cancel-popup-button cancel-button"></button>
                 </div>
             </div>
         </div>

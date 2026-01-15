@@ -3,16 +3,16 @@
 </div>
 <header>
     <div class="wrapper">
-        <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img class="icon white" src="images/user_o.svg" alt="Správa účtu"></a><?php endif ?>
-        <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img class="icon white" src="images/settings_o.svg" alt="Správa služby"></a><?php endif ?>
-        <button class="btn icon logout-button" title="Odhlásit se"><img class="icon white" src="images/logout_o.svg" alt="Odhlásit se"></button>
+        <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img class="icon white white-dm" src="images/user_o.svg" alt="Správa účtu"></a><?php endif ?>
+        <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img class="icon white white-dm" src="images/settings_o.svg" alt="Správa služby"></a><?php endif ?>
+        <button class="btn icon logout-button" title="Odhlásit se"><img class="icon white white-dm" src="images/logout_o.svg" alt="Odhlásit se"></button>
     </div>
 </header>
 <aside>
-    <a class="btn icon" href="menu" title="Hlavní stránka"><img class="icon white" src="images/home_o.svg" alt="Hlavní stránka"></a>
-    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img class="icon white" src="images/user_o.svg" alt="Správa účtu"></a><?php endif ?>
-    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img class="icon white" src="images/settings_o.svg" alt="Správa služby"></a><?php endif ?>
-    <button class="btn icon logout-button" title="Odhlásit se"><img class="icon white" src="images/logout_o.svg" alt="Odhlásit se"></button>
+    <a class="btn icon" href="menu" title="Hlavní stránka"><img class="icon white white-dm" src="images/home_o.svg" alt="Hlavní stránka"></a>
+    <?php if (!$demoVersion) : ?><a class="btn icon" href="menu/account-settings" title="Správa účtu"><img class="icon white white-dm" src="images/user_o.svg" alt="Správa účtu"></a><?php endif ?>
+    <?php if ($adminLogged) : ?><a class="btn icon" href="administrate" title="Správa služby"><img class="icon white white-dm" src="images/settings_o.svg" alt="Správa služby"></a><?php endif ?>
+    <button class="btn icon logout-button" title="Odhlásit se"><img class="icon white white-dm" src="images/logout_o.svg" alt="Odhlásit se"></button>
 </aside>
 <nav id="level-nav">
     <div>
@@ -41,8 +41,8 @@
 </main>
 <?php if (isset($staticTitle)) : ?>
     <div id="changelog">
-        <button class="btn icon" id="close-changelog-button" title="Zavřít"><img src="images/cross-thin-black.svg" alt="Zavřít"></button>
-        <h3>Novinky</h3>
+        <button class="btn icon" id="close-changelog-button" title="Zavřít"><img class="icon black" src="images/cross-thick.svg" alt="Zavřít"></button>
+        <h1>Novinky</h1>
         <?php require 'staticArticle.phtml' ?>
         <div id="old-changelog-link-wrapper">
             <a class="btn inline green" href="https://github.com/ShadyMedic/Poznavacky/releases" target="_blank">Zobrazit starší seznamy změn</a>

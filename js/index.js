@@ -1,5 +1,15 @@
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const leafGuyImgSrc = prefersDark ? "images/leaf-guy-blonde.svg" : "images/leaf-guy-dark.svg";
+
 $(function()
 {
+    //preload ilustrace leaf guy a použití podle preferovaného barevného motivu, aby neproblikávalo
+    const img = new Image();
+    img.src = leafGuyImgSrc;
+    img.onload = () => {
+        $("#leaf-guy").prop("src", leafGuyImgSrc);
+    };
+
     //zobrazení cookies alertu
     if (!getCookie("cookiesAccepted"))
     {
@@ -65,6 +75,9 @@ $(function()
     });
 
     $("#register-form, #login-form, #pass-recovery-form").on("submit", function(e) {formSubmitted(e)})
+
+    //Využívá odkaz na menu stránce při používání demo účtu
+    if (window.location.hash === '#register') { $('.show-login-section-register-button').get(0).click(); }
 })
 
 /**
@@ -366,7 +379,7 @@ function showLoginDiv($loginSectionDiv)
     $loginSectionDiv.show();
     $loginSectionDiv.find(".text-field").first().focus();
 
-    emptyForms($(".user.data .text-field, .user.data .message"));
+    emptyForms($(".user.data .text-field, .user.data input[type='checkbox'], .user.data .message"));
 }
 
 /**
@@ -378,7 +391,7 @@ function hideLoginSection()
     $("#overlay").removeClass("show");
     $("body").css("overflowY", "auto");
 
-    emptyForms($(".user.data .text-field, .user.data .message"));
+    emptyForms($(".user.data .text-field, .user.data input[type='checkbox'], .user.data .message"));
 }
 
 /**
@@ -388,7 +401,7 @@ function demoLogin()
 {
     $("#login-name").val("Demo");
     $("#login-pass").val("6F{1NPL#/p[O-y25JkKeOp2N7MLN@p}");
-    $("#login-persist").prop("checked", false);
+    $("#login-persist-checkbox").prop("checked", false);
     $("#login-form").submit();
 }
 
@@ -400,6 +413,7 @@ function emptyForms($fields)
 {
     $fields.val('');
     $fields.text('');
+    $fields.prop("checked", false);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -503,7 +517,7 @@ function formSubmitted(event)
         case 'l':
             name = $("#login-name").val();
             pass = $("#login-pass").val();
-            stayLogged = $("#login-persist").is(":checked");
+            stayLogged = $("#login-persist-checkbox").is(":checked");
             break;
         //registrační formulář
         case 'r':

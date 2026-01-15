@@ -75,6 +75,7 @@ class RooterController extends SynchronousController
         //Nalezení kontroleru k použití
         $path = '/'.implode('/', $urlArguments);
         $controllerName = @$iniRoutes['Routes'][$path];
+
         if (empty($controllerName)) {
             //Cesta nenalezena
             $aChecker = new AccessChecker();
@@ -99,7 +100,7 @@ class RooterController extends SynchronousController
         }
         
         //Získání seznamu nastavní složek
-        $selections = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Selections'][$path]);
+        $selections = explode(self::INI_ARRAY_SEPARATOR, $iniRoutes['Selections'][$path] ?? '');
         if (empty($selections[0])) {
             $selections = array();
         }
@@ -115,13 +116,13 @@ class RooterController extends SynchronousController
             $shortPath = $path;
         }
         
-        $checks = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Checks'][$shortPath]);
+        $checks = explode(self::INI_ARRAY_SEPARATOR, $iniRoutes['Checks'][$shortPath] ?? '');
         if (empty($checks[0])) {
             $checks = array();
         }
         
         //Získání seznamu pohledu pro použití
-        self::$views = explode(self::INI_ARRAY_SEPARATOR, @$iniRoutes['Views'][$shortPath]);
+        self::$views = explode(self::INI_ARRAY_SEPARATOR, $iniRoutes['Views'][$shortPath] ?? '');
         if (empty(self::$views[0])) {
             self::$views = array();
         }

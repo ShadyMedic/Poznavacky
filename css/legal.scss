@@ -1,14 +1,19 @@
 @import "_reset.scss";
 @import "_generic.scss";
+@import "_unlogged.scss";
 
 #legal {
-    header {
-        background: $greenDark;
-    }
+    position: relative;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
     main {
         nav {
-            background: white;
+            background: var(--c-bgd-comp);
             padding: 0.4rem;
+            padding-top: calc(3.2rem + 4px);
+            position: relative;
+            top: -3.2rem;
             display: flex;
             flex-direction: column;
             @media screen and (min-width: $mobile) {
@@ -17,7 +22,7 @@
             }
             &.sticky {
                 position: fixed;
-                top: 0;
+                top: -3.2rem;
                 width: 100%;
                 box-shadow: 0px 4px 4px 0px rgba(black, 0.2);
             }
@@ -29,19 +34,11 @@
             }
         }
         .content {
-            padding: 1rem 1rem;
-            @media screen and (min-width: $mobile) {
-                padding: 1rem 3rem;
-            }
-            @media screen and (min-width: $tablet) {
-                padding: 1.2rem 6rem;
-            }
-            @media screen and (min-width: $smallDesktop) {
-                padding: 1.2rem 16vw;
-            }
-            @media screen and (min-width: $desktop) {
-                padding: 1.2rem 20vw;
-            }
+            width: 90vw;
+            max-width: 60rem;
+            padding: 0 1rem 1rem 1rem;
+            margin: 0 auto;
+            text-align: justify;
             section {
                 margin: 1rem 0;
                 @media screen and (min-width: $tablet) {

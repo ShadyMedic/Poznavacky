@@ -12,6 +12,12 @@ $(function()
     //event listener kliknutí myši
     $(document).mouseup(function(event) {hideButtons(event)});
 
+    //manuálně disabled tlačítko (uvnitř jiného tlačítka, proto nelze použít pointer-events: none)
+    $('.display-buttons-button').on('click keydown', '.btn.disabled', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
 });
 
 /**

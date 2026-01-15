@@ -2,6 +2,7 @@
 namespace Poznavacky\Models\Exceptions;
 
 use \Exception;
+use Throwable;
 
 /**
  * Výjimka sloužící pro případ zjištění nedostatečných oprávnění při sestavování webové stránky
@@ -59,7 +60,7 @@ class AccessDeniedException extends Exception
     public const REASON_NEW_CLASS_REQUEST_ALREADY_WAITING = 'Již ti byla založena třída s dočasným názvem. Požadovaný název musí schválit administrátor předtím, než budeš moci požádat o založení další třídy.';
     public const REASON_NEW_CLASS_REQUEST_FORBIDDEN_URL = 'Tento název třídy nelze z technických důvodů použít, pokus se přidat nebo odebrat některé znaky';
     public const REASON_NEW_CLASS_REQUEST_INVALID_CODE = 'Přístupový kód třídy nemá platný formát - musí to být čtyři číslice';
-    public const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nepsrávně vyplněná ochrana proti robotům - zkus to prosím znovu';
+    public const REASON_NEW_CLASS_REQUEST_CAPTCHA_FAILED = 'Nesprávně vyplněná ochrana proti robotům - zkus to prosím znovu';
     public const REASON_LEAVE_CLASS_ADMIN = 'Jako správce třídy nemůžeš třídu opustit';
     public const REASON_NAME_CHANGE_NO_NAME = self::REASON_REGISTER_NO_NAME;
     public const REASON_NAME_CHANGE_NAME_TOO_LONG = self::REASON_REGISTER_NAME_TOO_LONG;
@@ -81,10 +82,12 @@ class AccessDeniedException extends Exception
     public const REASON_EMAIL_CHANGE_DUPLICATE_EMAIL = self::REASON_REGISTER_DUPLICATE_EMAIL;
     public const REASON_EMAIL_CHANGE_REMOVAL_WHEN_ADMIN = 'Jako systémový administrátor nemůžeš odebrat svou e-mailovou adresu';
     public const REASON_EMAIL_CHANGE_REMOVAL_WHEN_CLASS_OWNER = 'Jako správce nejméně jedné třídy nemůžeš odebrat svou e-mailovou adresu';
+    public const REASON_THEME_CHANGE_INVALID_THEME = 'Neznámý motiv';
     public const REASON_ACCOUNT_DELETION_NO_PASSWORD = self::REASON_REGISTER_NO_PASSWORD;
     public const REASON_ACCOUNT_DELETION_WRONG_PASSWORD = self::REASON_LOGIN_WRONG_PASSWORD;
     public const REASON_ACCOUNT_DELETION_CLASS_ADMINISTRATOR = 'Nemůžeš odstranit svůj účet, protože spravuješ nějakou třídu. Předej správu tříd, které spravuješ, jiným uživatelům pro uvolnění možnosti odstranit svůj účet.';
     public const REASON_ADD_PICTURE_UNKNOWN_NATURAL = 'Pokoušíš se přidat obrázek k neznámé přírodnině';
+    public const REASON_ADD_PICTURE_URL_TOO_LONG = 'Adresa obrázku je příliš dlouhá a náš systém jí nedokáže takto zpracovat. Pokus se prosím najít obrázek pod kratší URL adresou, nebo použij některý ze zkracovačů URL adres, například 1url.cz.';
     public const REASON_ADD_PICTURE_TEMP_THUMB_URL = 'Zadaná URL adresa vede pouze na dočasný náhled obrázku vygenerovaný vyhledávačem. Použijte adresu na originál obrázku.';
     public const REASON_ADD_PICTURE_DUPLICATE_PICTURE = 'Tento obrázek je již k této přírodnině přidán';
     public const REASON_ADD_PICTURE_INVALID_URL = 'Na zadané URL adrese nebyl nalezen žádný obrázek';
@@ -143,5 +146,16 @@ class AccessDeniedException extends Exception
     public const REASON_SEND_EMAIL_INVALID_SENDER_ADDRESS = 'Neplatná adresa odesílatele';
     public const REASON_SEND_EMAIL_INVALID_ADDRESSEE_ADDRESS = 'Neplatná adresa adresáta';
     public const REASON_SEND_EMAIL_EMPTY_FIELDS = 'S výjimkou patičky e-mailu musí být všechna pole vyplněna';
+
+    /**
+     * Konstruktor slouží pouze k umožnění hodnoty NULL pro druhý argument, většinu aplikace jsem programoval
+     * v PHP verzi 7.X, kde bylo možné do INT parametru posílat NULL argument, v PHP verzi 8.X to však vyvolává
+     * depracation varování. Spíš než abych ve všech místech, kde tuto výjimku vyhazuji aktualizoval kód, raději
+     * přidám konstruktor který pro vestavěnou Exception překonvertzuje $code = null na $code = 0.
+     */
+    public function __construct(string $message = "", ?int $code = 0, ?Throwable $previous = null)
+    {
+        parent::__construct($message, $code ?? 0, $previous);
+    }
 }
 

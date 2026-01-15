@@ -13,9 +13,9 @@
             <?php if ($tableRow[1] > 0) : ?>
             <div class="buttons-wrapper">
                 <div class="buttons">
-                    <a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn transparent black border-btn<?php if ($demoVersion || !$displayAddPicturesButton) : ?> disabled<?php endif ?>">Přidat obrázky</a>
-                    <a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Učit se</a>
-                    <a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent black border-btn<?php if ($tableRow[2] === '0') : ?> disabled<?php endif ?>">Vyzkoušet se</a>
+                    <a href="<?= $tableRow['rowLink'].'/add-pictures' ?>" class="btn transparent primary border-btn<?php if ($demoVersion || !$displayAddPicturesButton) : ?> disabled<?php endif ?>">Přidat obrázky</a>
+                    <a href="<?= $tableRow['rowLink'].'/learn' ?>" class="btn transparent primary border-btn<?php if ($tableRow[2] === 0) : ?> disabled<?php endif ?>">Učit se</a>
+                    <a href="<?= $tableRow['rowLink'].'/test' ?>" class="btn transparent primary border-btn<?php if ($tableRow[2] === 0) : ?> disabled<?php endif ?>">Vyzkoušet se</a>
                 </div>
             </div>
             <?php endif ?>

@@ -1,6 +1,11 @@
 <?php
 namespace Poznavacky\DataGetters;
 
+use Poznavacky\Models\DatabaseItems\User;
+use Poznavacky\Models\Security\AccessChecker;
+use Poznavacky\Models\Statics\Settings;
+use Poznavacky\Models\Statics\UserManager;
+
 class HeadDataGetter implements DataGetter
 {
     
@@ -10,6 +15,7 @@ class HeadDataGetter implements DataGetter
     public function get(): array
     {
         $result = array();
+        $result['theme'] = ((new AccessChecker())->checkUser()) ? (UserManager::getUser()->offsetGet('theme') ?? Settings::DEFAULT_THEME) : Settings::DEFAULT_THEME;
         $result['messages'] = $this->getMessages();
         $result['currentYear'] = date('Y');
         return $result;

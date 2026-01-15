@@ -10,6 +10,7 @@ use Poznavacky\Models\Logger;
 use \DateTime;
 use \Exception;
 use Poznavacky\Models\Statics\Settings;
+use Poznavacky\Models\undefined;
 
 /**
  * Třída ověřující uživatelovi přihlašovací údaje a přihlašující jej
@@ -172,7 +173,9 @@ class LoginUser
             $userData[LoggedUser::COLUMN_DICTIONARY['guessedPictures']],
             $userData[LoggedUser::COLUMN_DICTIONARY['karma']], $userData[LoggedUser::COLUMN_DICTIONARY['status']],
             $userData[LoggedUser::COLUMN_DICTIONARY['hash']], $userData[LoggedUser::COLUMN_DICTIONARY['lastChangelog']],
-            $userData[LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl']]);
+            $userData[LoggedUser::COLUMN_DICTIONARY['lastMenuTableUrl']],
+            $userData[LoggedUser::COLUMN_DICTIONARY['theme']] ?? new undefined()
+        );
         $_SESSION['user'] = $user;
         
         Db::executeQuery('UPDATE '.User::TABLE_NAME.' SET '.LoggedUser::COLUMN_DICTIONARY['lastLogin'].
