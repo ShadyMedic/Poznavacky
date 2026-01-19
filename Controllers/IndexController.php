@@ -39,7 +39,7 @@ class IndexController extends SynchronousController
         }
         
         //Kontrola automatického přihlášení
-        if (isset($_COOKIE['instantLogin']) && !$aChecker->checkDemoAccount()) {
+        if (isset($_COOKIE['instantLogin'])) {
             try {
                 $userLogger = new LoginUser();
                 $userLogger->processCookieLogin($_COOKIE['instantLogin']);

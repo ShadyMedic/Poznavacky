@@ -5,6 +5,7 @@ use Poznavacky\Models\DatabaseItems\LoggedUser;
 use Poznavacky\Models\DatabaseItems\User;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
 use Poznavacky\Models\Exceptions\DatabaseException;
+use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\Db;
 use Poznavacky\Models\Logger;
 use \DateTime;
@@ -75,6 +76,14 @@ class LoginUser
             if ($POSTdata['stayLogged'] === 'true') {
                 try {
                     self::setLoginCookie($userData[User::COLUMN_DICTIONARY['id']]);
+                    (new Logger())->info('Kód pro trvalé přihlášení byl vygenerován na základě požadavku z IP adresy {ip} a byl přidružen k uživatelskému účtu s ID {userId}',
+                        array('ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $userData[User::COLUMN_DICTIONARY['id']]));
+                } catch (AccessDeniedException $e) {
+                    (new Logger())->warning("Selhalo uložení kódu pro trvalé přihlášení pro demo uživatele s ID {userId} přihlašujícího se z IP adresy {ip}(demo uživatelé nemohou využívat tuto funkci)",
+                        array(
+                            'userId' => $userData[LoggedUser::COLUMN_DICTIONARY['id']],
+                            'ip' => $_SERVER['REMOTE_ADDR']
+                        ));
                 } catch (Exception $e) {
                     (new Logger())->error('Nepodařilo se vygenerovat kód pro trvalé přihlášení pro uživatele s ID {userId} přihlašujícího se z IP adresy {ip}',
                         array(
@@ -82,8 +91,6 @@ class LoginUser
                             'ip' => $_SERVER['REMOTE_ADDR']
                         ));
                 }
-                (new Logger())->info('Kód pro trvalé přihlášení byl vygenerován na základě požadavku z IP adresy {ip} a byl přidružen k uživatelskému účtu s ID {userId}',
-                    array('ip' => $_SERVER['REMOTE_ADDR'], 'userId' => $userData[User::COLUMN_DICTIONARY['id']]));
             }
         } else {
             if (empty($errors)) {
@@ -186,10 +193,15 @@ class LoginUser
     /**
      * Metoda generující kód pro cookie trvalého přihlášení a ukládající jej do databáze
      * @param int $userId ID uživatele, s nímž bude kód svázán
+     * @throws AccessDeniedException Pokud se uživatel pokouší přihlásit do demo účtu
      * @throws Exception Pokud se nepovede vygenerovat náhodný kód
      */
     private function setLoginCookie(int $userId): void
     {
+        if ((new AccessChecker())->checkDemoAccount()) {
+            throw new AccessDeniedException(REASON_LOGIN_DEMO_INSTALOGIN, null, null);
+        }
+    
         //Vygenerovat čtrnáctimístný kód
         $code = bin2hex(random_bytes(7));   //56 bitů --> maximálně čtrnáctimístný kód
         
