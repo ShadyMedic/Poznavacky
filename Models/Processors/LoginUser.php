@@ -199,7 +199,7 @@ class LoginUser
     private function setLoginCookie(int $userId): void
     {
         if ((new AccessChecker())->checkDemoAccount()) {
-            throw new AccessDeniedException(REASON_LOGIN_DEMO_INSTALOGIN, null, null);
+            throw new AccessDeniedException(AccessDeniedException::REASON_LOGIN_DEMO_INSTALOGIN, null, null);
         }
     
         //Vygenerovat čtrnáctimístný kód
