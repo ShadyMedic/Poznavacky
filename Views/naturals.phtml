@@ -71,8 +71,8 @@
             <span class="natural pictures-count"><?= $natural->getPicturesCount() ?></span>
             <div class="natural action">
                 <div class="normal-buttons">
-                    <button class="display-pictures-button btn icon" title="Zobrazit obrázky"><img class="icon black" src="images/eye_f.svg"></button>
-                    <button class="hide-pictures-button btn icon" title="Skrýt obrázky" style="display:none"><img class="icon black" src="images/eye-cross_f.svg"></button>
+                    <button class="display-pictures-button btn icon <?php if ($natural->getPicturesCount() == 0) : ?>disabled<?php endif ?>" title="Zobrazit obrázky"><img class="icon black <?php if ($natural->getPicturesCount() == 0) : ?>disabled-mono<?php endif ?>" src="images/eye_f.svg"></button>
+                    <button class="hide-pictures-button btn icon <?php if ($natural->getPicturesCount() == 0) : ?>disabled<?php endif ?>" title="Skrýt obrázky" style="display:none"><img class="icon black <?php if ($natural->getPicturesCount() == 0) : ?>disabled-mono<?php endif ?>" src="images/eye-cross_f.svg"></button>
                     <button class="rename-natural-button btn icon" title="Přejmenovat"><img class="icon black" src="images/pencil_f.svg"></button>
                     <button class="remove-natural-button btn icon" title="Odebrat"><img class="icon black" src="images/cross-thick.svg"></button>
                 </div>
