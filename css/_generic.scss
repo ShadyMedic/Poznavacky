@@ -285,6 +285,21 @@ ul.list {
                     background: rgba(white, 0.06);
                 }
             }
+            &.warning {
+                color: var(--c-text);
+                background: var(--c-error);
+                &:after {
+                    background: rgba(white, 0.08);
+                }
+                &.disabled {
+                    background: var(--c-button-disabled);
+                    border-color: var(--c-button-disabled);
+                    color: (--c-text);
+                    > img {
+                        filter: grayscale(50%);
+                    }
+                }
+            }
         }
         &.transparent {
             background: transparent;
@@ -319,6 +334,17 @@ ul.list {
                 border: 2px solid var(--c-button-dark);
                 &:after {
                     background: rgb(from var(--c-button-dark) r g b / 6%);
+                }
+                &.disabled {
+                    border-color: var(--c-button-disabled);
+                    color: var(--c-button-disabled);
+                }
+            }
+            &.warning {
+                color: var(--c-text);
+                border: 2px solid var(--c-error);
+                &:after {
+                    background: rgb(from var(--c-error) r g b / 6%);
                 }
                 &.disabled {
                     border-color: var(--c-button-disabled);

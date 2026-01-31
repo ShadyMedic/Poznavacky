@@ -73,21 +73,21 @@
 	<a class="btn border-btn non-transparent primary" href="<?= $baseUrl ?>/reports">Spravovat hlášení</a>
     </section>
     <section class="delete-class-section">
-        <button class="btn border-btn non-transparent primary" id="delete-class-button">Odstranit třídu</button>
+        <button class="btn border-btn transparent warning" id="delete-class-button">Odstranit třídu</button>
         <div id="delete-class" style="display: none;">
             <h3>Odstranění třídy</h3>
             <div id="delete-class1" class="form" style="display: none;">
                 <label for="delete-class-password">Heslo</label>
                 <input class="text-field" id="delete-class-password" type=password maxlength=31 />
-                <button class="btn border-btn non-transparent primary submit-button" id="delete-class-confirm-button">OK</button>
+                <button class="btn border-btn transparent warning submit-button" id="delete-class-confirm-button">OK</button>
                 <div id="delete-class-message" class="message server"></div>
                 <button class="btn inline black" id="delete-class-cancel-button cancel-button">Zrušit</button>
             </div>
             <div id="delete-class2" style="display: none;">
                 <span>Tato akce je nevratná. Opravdu si přeješ trvale odstranit tuto třídu včetně všech poznávaček, přířodnin a obrázků, které do ní patří?</span>
                 <div class="buttons">
-                    <button class="btn border-btn non-transparent primary" id="delete-class-final-confirm-button">Ano, odstranit třídu</button>
-                    <button class="btn border-btn non-transparent primary" id="delete-class-final-cancel-button">Ne, zachovat třídu</button>
+                    <button class="btn border-btn non-transparent warning" id="delete-class-final-confirm-button">Ano, odstranit třídu</button>
+                    <button class="btn border-btn transparent white" id="delete-class-final-cancel-button">Ne, zachovat třídu</button>
                 </div>
             </div>
         </div>
