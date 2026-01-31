@@ -1359,28 +1359,38 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
     margin: 1.2rem 0;
   }
 }
-#legal main .content h1,
-#legal main .content h2,
-#legal main .content p {
-  margin-bottom: 0.4em;
-}
 #legal main .content h1 {
   font-size: 1.6rem;
+  margin: 1.4rem auto 0.8rem auto;
 }
 #legal main .content h2 {
   font-size: 1.2rem;
+  margin: 1.2rem auto 0.6rem auto;
+}
+#legal main .content h3 {
+  margin: 1rem auto 0.6rem auto;
+  font-weight: 700;
 }
 #legal main .content h5 {
-  color: #444;
   font-size: 0.88rem;
+  color: var(--c-info);
+  margin-top: 1.6rem;
 }
 #legal main .content p {
   text-align: justify;
+  margin-bottom: 0.6rem;
 }
 #legal main .content li {
   list-style-type: circle;
-  margin-left: 1.2rem;
+  margin-left: 1rem;
 }
 #legal main .content ol {
   margin-left: 2rem;
+}
+#legal main .content a {
+  color: var(--c-button-primary);
+}
+#legal main .content code {
+  font-family: inherit;
+  font-style: italic;
 }/*# sourceMappingURL=legal.css.map */
