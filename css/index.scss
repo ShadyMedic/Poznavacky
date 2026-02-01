@@ -152,25 +152,55 @@ html:has(#index) {
 
     #index-info-section {
         padding: 3rem 1.6rem;
-        @media screen and (min-width: $mobile) {
-            padding: 3rem 3rem;
-        }
-        @media screen and (min-width: $tablet) {
-            padding: 4rem 6rem;
-        }
-        @media screen and (min-width: $smallDesktop) {
-            padding: 4rem 16vw;
-        }
-        @media screen and (min-width: $desktop) {
-            padding: 4rem 20vw;
-        }
+        width: 90vw;
+        max-width: 60rem;
+        margin: auto;
         h3 {
             font-size: 1.32rem;
-            margin: 1.6rem 0 0.4rem 0;
+            margin: 1.2rem 0 0.4rem 0;
         }
         p {
             font-size: 1.24rem;
         }
+        #info-icons {
+            margin: 3rem auto;
+            display: grid;
+            grid-template-columns: minmax(100px, 1fr);
+            grid-template-rows: repeat(4, minmax(0, 20rem) min-content);
+            p {
+                margin-bottom: 2.8rem;
+            }
+            .img-wrapper {
+                position: relative;
+            }
+            img {
+                max-height: 20rem;
+                position: absolute;
+                top: 0; 
+            }
+            .img-left {
+                right: 0;
+            }
+            .img-right {
+                left: 0;
+            }
+            @media screen and (min-width: $tablet) {
+                display: grid;
+                grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr);
+                grid-template-rows: repeat(4, minmax(0, 20rem));
+                row-gap: 1rem;
+                column-gap: 0.8rem;
+                > :nth-child(1) { grid-row: 1; grid-column: 1; }
+                > :nth-child(2) { grid-row: 1; grid-column: 2; }
+                > :nth-child(3) { grid-row: 2; grid-column: 2; }
+                > :nth-child(4) { grid-row: 2; grid-column: 1; }
+                > :nth-child(5) { grid-row: 3; grid-column: 1; }
+                > :nth-child(6) { grid-row: 3; grid-column: 2; }
+                > :nth-child(7) { grid-row: 4; grid-column: 2; }
+                > :nth-child(8) { grid-row: 4; grid-column: 1; }
+            }
+        }
+        /*
         #info-icons {
             @media screen and (min-width: $mobile) {
                 display: grid;
@@ -207,7 +237,7 @@ html:has(#index) {
                     align-self: start;
                 }
             }
-        }
+        }*/
     }    
 
     #index-login-section {
