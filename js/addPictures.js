@@ -2,6 +2,8 @@ var smallTablet = 672;
 
 $(function()
 {
+    $(".show-info-button").show();
+
     //přidání třídy disabled tlačítkům a inputům, které nelze zpočátku využít
     $(".add-pictures-url label, #url-input, #url-confirm-button, .add-pictures-preview .btn").addClass("disabled");
 
