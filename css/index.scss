@@ -107,14 +107,7 @@ html:has(#index) {
             }
         }
         #leaf-guy {
-            width: 100%;
-            /*
-            @media (prefers-color-scheme: dark) {
-                content: url("images/leaf-guy-blonde.svg");
-            }
-            @media (prefers-color-scheme: light) {
-                content: url("images/leaf-guy-dark.svg");
-            }*/
+            width: 100%; 
             @media screen and (min-width: $tablet) {
                 grid-row: 2/4;
                 grid-column: 2/4;
