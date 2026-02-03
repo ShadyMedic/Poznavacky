@@ -326,13 +326,11 @@ html:has(#menu,
                     grid-template-columns: 1fr 8rem 5.4rem;
                 }
             }
-            .class.action {
+            .data-item .class.action {
                 @media screen and (min-width: $smallTablet) {
                     display: flex;
                     flex-direction: row-reverse;
-                    > *:not(:last-child) {
-                        margin-left: 0.4rem;
-                    }
+                    column-gap: 0.4rem;
                 }
             }
             .invitation-wrapper {

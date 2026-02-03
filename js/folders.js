@@ -7,6 +7,9 @@ $(function()
     $("#request-class-cancel-button").click(function(event) {hideNewClassForm(event)})
     $("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
     $(".display-buttons-button:not(.disabled)").click(function(){displayButtons(this)})
+    $("#menu-classes-table").on("click", ".add-favs", function(event) {addFavs(event)})
+    $("#menu-classes-table").on("click", ".remove-favs", function(event) {removeFavs(event)})
+
     $(".class.data-item").click(function(event) {redirectToClass(event)})
 
     //event listener kliknutí myši
@@ -21,11 +24,43 @@ $(function()
 });
 
 /**
+ * Přidá danou třídu k oblíbeným
+ * @param {event} event 
+ */
+function addFavs(event)
+{
+    $class = $(event.target).closest(".class.data-item");
+    $class.addClass("fav");
+
+    $class.find(".add-favs").hide();
+    $class.find(".remove-favs").show();
+}
+
+/**
+ * Odebere danou třídu z oblíbených
+ * @param {event} event 
+ */
+function removeFavs(event)
+{
+    $class = $(event.target).closest(".class.data-item");
+    $class.removeClass("fav");
+
+    $class.find(".remove-favs").hide();
+    $class.find(".add-favs").show();
+}
+
+/**
  * Funkce přesměrovávající do třídy
  * @param {event} event 
  */
 function redirectToClass(event)
 {
+    if ($(event.target).closest(".add-favs, .remove-favs").length != 0)
+    {
+        // nepřesměruj, pokud bylo kliknuto na tlačítko pro přidání k oblíbeným/odebrání z oblíbených (je uvnitř linku)
+        return;
+    }
+
     let classLink = $(event.target).closest(".class.data-item").attr("data-class-url");
     
     //kontrola, jestli uživatel neklikl na link pro opuštění/správu třídy

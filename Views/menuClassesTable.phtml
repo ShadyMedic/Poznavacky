@@ -1,6 +1,6 @@
 <div id="menu-classes-table" class="folders">
     <?php if (!empty($table)) : ?>
-    <div class="table-title rows">
+    <div class="table-title rows class data-properties">
         <span class="class name">Název třídy</span>
         <span class="class tests-count">Poznávačky</span>
         <span class="class action">Akce</span>
@@ -16,6 +16,9 @@
                         <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img class="icon black" src="images/settings_f.svg"></a>
                         <a title="Přidat k oblíbeným" class="btn icon add-favs">
                             <img class="icon black" src="images/star_o.svg">
+                        </a>
+                        <a title="Odebrat z oblíbených" class="btn icon remove-favs" style="display:none">
+                            <img class="icon black" src="images/star_f.svg">
                         </a>
                     </div>
                 </li>
@@ -33,6 +36,9 @@
                         <?php endif ?>
                         <a title="Přidat k oblíbeným" class="btn icon add-favs">
                             <img class="icon black" src="images/star_o.svg">
+                        </a>
+                        <a title="Odebrat z oblíbených" class="btn icon remove-favs" style="display:none">
+                            <img class="icon black" src="images/star_f.svg">
                         </a>
                     </div>
                 </li>
@@ -59,6 +65,9 @@
                     <div class="class action">
                         <a title="Přidat k oblíbeným" class="btn icon add-favs">
                             <img class="icon black" src="images/star_o.svg">
+                        </a>
+                        <a title="Odebrat z oblíbených" class="btn icon remove-favs" style="display:none">
+                            <img class="icon black" src="images/star_f.svg">
                         </a>
                     </div>
                 </li>

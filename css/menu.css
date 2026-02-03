@@ -2184,12 +2184,11 @@ html:has(#menu,
   }
 }
 @media screen and (min-width: 42rem) {
-  #menu .folders#menu-classes-table .class.action {
+  #menu .folders#menu-classes-table .data-item .class.action {
     display: flex;
     flex-direction: row-reverse;
-  }
-  #menu .folders#menu-classes-table .class.action > *:not(:last-child) {
-    margin-left: 0.4rem;
+    -moz-column-gap: 0.4rem;
+         column-gap: 0.4rem;
   }
 }
 #menu .folders#menu-classes-table .invitation-wrapper {
