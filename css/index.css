@@ -1454,13 +1454,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 #index #index-text-section #leaf-guy {
   width: 100%;
-  /*
-  @media (prefers-color-scheme: dark) {
-      content: url("images/leaf-guy-blonde.svg");
-  }
-  @media (prefers-color-scheme: light) {
-      content: url("images/leaf-guy-dark.svg");
-  }*/
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section #leaf-guy {
@@ -1579,8 +1572,8 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   #index #index-info-section #info-icons {
     display: grid;
     grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr);
-    grid-template-rows: repeat(4, minmax(0, 20rem));
-    row-gap: 1rem;
+    grid-template-rows: repeat(4, 20rem);
+    row-gap: 1.6rem;
     -moz-column-gap: 0.8rem;
          column-gap: 0.8rem;
   }
