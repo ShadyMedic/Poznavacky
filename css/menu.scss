@@ -326,6 +326,15 @@ html:has(#menu,
                     grid-template-columns: 1fr 8rem 5.4rem;
                 }
             }
+            .class.action {
+                @media screen and (min-width: $smallTablet) {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    > *:not(:last-child) {
+                        margin-left: 0.4rem;
+                    }
+                }
+            }
             .invitation-wrapper {
                 grid-template-rows: auto auto;
                 margin: 0.4rem 0 0.6rem 0;
@@ -506,7 +515,7 @@ html:has(#menu,
             h4 {
                 text-align: center;
             }
-            button {
+            .data-item {
                 margin: 0.4rem 0;
             }
             li {

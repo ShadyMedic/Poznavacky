@@ -10,29 +10,33 @@
         <?php foreach ($table['managed'] as $tableRow) : ?>
             <button class="btn class managed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
                 <li>
-                <h4 class="class name">
-                    <?= $tableRow[0] ?>
-                </h4>
-                <span class="class tests-count">
-                    <span><?= $tableRow[1] ?></span>
-                </span>
-                <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img class="icon black" src="images/settings_f.svg"></a>
-            </li></button>
+                    <h4 class="class name"><?= $tableRow[0] ?></h4>
+                    <span class="class tests-count"><?= $tableRow[1] ?></span>
+                    <div class="class action">
+                        <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img class="icon black" src="images/settings_f.svg"></a>
+                        <a title="Přidat k oblíbeným" class="btn icon add-favs">
+                            <img class="icon black" src="images/star_o.svg">
+                        </a>
+                    </div>
+                </li>
+            </button>
         <?php endforeach ?>
 
         <?php foreach ($table['joined'] as $tableRow) : ?>
             <button class="btn class closed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
                 <li>
-                    <h4 class="class name">
-                        <?= $tableRow[0] ?>
-                    </h4>
-                    <span class="class tests-count">
-                    <span><?= $tableRow[1] ?></span>
-                </span>
-                    <?php if (!$demoVersion): ?>
-                        <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
-                    <?php endif ?>
-                </li></button>
+                    <h4 class="class name"><?= $tableRow[0] ?></h4>
+                    <span class="class tests-count"><?= $tableRow[1] ?></span>
+                    <div class="class action">
+                        <?php if (!$demoVersion): ?>
+                            <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
+                        <?php endif ?>
+                        <a title="Přidat k oblíbeným" class="btn icon add-favs">
+                            <img class="icon black" src="images/star_o.svg">
+                        </a>
+                    </div>
+                </li>
+            </button>
         <?php endforeach ?>
 
         <?php foreach ($invitations as $invitation) : ?>
@@ -50,12 +54,13 @@
         <?php foreach ($table['public'] as $tableRow) : ?>
             <button class="btn class public-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
                 <li>
-                    <h4 class="class name">
-                        <?= $tableRow[0] ?>
-                    </h4>
-                    <span class="class tests-count">
-                        <span><?= $tableRow[1] ?></span>
-                    </span>
+                    <h4 class="class name"><?= $tableRow[0] ?></h4>
+                    <span class="class tests-count"><?= $tableRow[1] ?></span>
+                    <div class="class action">
+                        <a title="Přidat k oblíbeným" class="btn icon add-favs">
+                            <img class="icon black" src="images/star_o.svg">
+                        </a>
+                    </div>
                 </li>
             </button>
         <?php endforeach ?>
