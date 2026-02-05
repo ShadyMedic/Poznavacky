@@ -23,11 +23,11 @@
                     <h4 class="class name"><?= $tableRow[0] ?></h4>
                     <span class="class tests-count"><?= $tableRow[1] ?></span>
                     <div class="class action">
-                        <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon class action"><img class="icon black" src="images/settings_f.svg"></a>
-                        <a title="Přidat k oblíbeným" class="btn icon add-favs">
+                        <a href="<?= $tableRow['rowLink'].'/'.'manage' ?>" title="Nastavení třídy" class="btn icon manage-class-button"><img class="icon black" src="images/settings_f.svg"></a>
+                        <a title="Přidat k oblíbeným" class="btn icon add-favs-button">
                             <img class="icon black" src="images/star_o.svg">
                         </a>
-                        <a title="Odebrat z oblíbených" class="btn icon remove-favs" style="display:none">
+                        <a title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
                             <img class="icon black" src="images/star_f.svg">
                         </a>
                     </div>
@@ -42,12 +42,12 @@
                     <span class="class tests-count"><?= $tableRow[1] ?></span>
                     <div class="class action">
                         <?php if (!$demoVersion): ?>
-                            <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
+                            <a data-leave-url="<?= $tableRow['rowLink'].'/'.'leave' ?>" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a>
                         <?php endif ?>
-                        <a title="Přidat k oblíbeným" class="btn icon add-favs">
+                        <a title="Přidat k oblíbeným" class="btn icon add-favs-button">
                             <img class="icon black" src="images/star_o.svg">
                         </a>
-                        <a title="Odebrat z oblíbených" class="btn icon remove-favs" style="display:none">
+                        <a title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
                             <img class="icon black" src="images/star_f.svg">
                         </a>
                     </div>
@@ -73,10 +73,10 @@
                     <h4 class="class name"><?= $tableRow[0] ?></h4>
                     <span class="class tests-count"><?= $tableRow[1] ?></span>
                     <div class="class action">
-                        <a title="Přidat k oblíbeným" class="btn icon add-favs">
+                        <a title="Přidat k oblíbeným" class="btn icon add-favs-button">
                             <img class="icon black" src="images/star_o.svg">
                         </a>
-                        <a title="Odebrat z oblíbených" class="btn icon remove-favs" style="display:none">
+                        <a title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
                             <img class="icon black" src="images/star_f.svg">
                         </a>
                     </div>

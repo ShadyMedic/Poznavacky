@@ -3,14 +3,14 @@ $(function()
     $(".show-info-button").show();
 
     //event listenery tlačítek
-    $(".leave-link").click(function(event) {leaveClass(event)})
+    $(".leave-class-button").click(function(event) {leaveClass(event)})
     $("#class-code-form").on("submit", function(event) {submitClassCode(event)})
     $("#request-class-button").click(function() {showNewClassForm()})
     $("#request-class-cancel-button").click(function(event) {hideNewClassForm(event)})
     $("#request-class-form").on("submit", function(event) {processNewClassForm(event)})
     $(".display-buttons-button:not(.disabled)").click(function(){displayButtons(this)})
-    $("#menu-classes-table").on("click", ".add-favs", function(event) {addFavs(event)})
-    $("#menu-classes-table").on("click", ".remove-favs", function(event) {removeFavs(event)})
+    $("#menu-classes-table").on("click", ".add-favs-button", function(event) {addFavs(event)})
+    $("#menu-classes-table").on("click", ".remove-favs-button", function(event) {removeFavs(event)})
 
     $(".class.data-item").click(function(event) {redirectToClass(event)})
 
@@ -34,8 +34,8 @@ function addFavs(event)
     $class = $(event.target).closest(".class.data-item");
     $class.addClass("fav");
 
-    $class.find(".add-favs").hide();
-    $class.find(".remove-favs").show();
+    $class.find(".add-favs-button").hide();
+    $class.find(".remove-favs-button").show();
 }
 
 /**
@@ -47,8 +47,8 @@ function removeFavs(event)
     $class = $(event.target).closest(".class.data-item");
     $class.removeClass("fav");
 
-    $class.find(".remove-favs").hide();
-    $class.find(".add-favs").show();
+    $class.find(".remove-favs-button").hide();
+    $class.find(".add-favs-button").show();
 }
 
 /**
@@ -57,19 +57,16 @@ function removeFavs(event)
  */
 function redirectToClass(event)
 {
-    if ($(event.target).closest(".add-favs, .remove-favs").length != 0)
+    if ($(event.target).closest(".add-favs-button, .remove-favs-button, .manage-class-button, .leave-class-button").length != 0)
     {
-        // nepřesměruj, pokud bylo kliknuto na tlačítko pro přidání k oblíbeným/odebrání z oblíbených (je uvnitř linku)
+        // nepřesměruj, pokud bylo kliknuto na tlačítko pro přidání k oblíbeným/odebrání z oblíbených
+        // nebo na tlačítko pro opuštění správu třídy (jsou uvnitř linku)
         return;
     }
 
     let classLink = $(event.target).closest(".class.data-item").attr("data-class-url");
     
-    //kontrola, jestli uživatel neklikl na link pro opuštění/správu třídy
-    if (!$(event.target).is("a"))
-    {
-        window.location.href = classLink;
-    }
+    window.location.href = classLink;
 }
 
 /**
@@ -87,7 +84,7 @@ function leaveClass(event)
     {
         if (confirm) 
         {
-            let url = $(event.target).closest(".leave-link").attr("data-leave-url");
+            let url = $(event.target).closest(".leave-class-button").attr("data-leave-url");
             let $leftClass = $(event.target).closest('.class.data-item');
 
             $.post(url, {},
@@ -161,7 +158,7 @@ function submitClassCode(event)
                         }
 
                         //nastavení event handleru pro opuštění nových tříd
-                        $(".leave-link").click(function(event) {leaveClass(event)})
+                        $(".leave-class-button").click(function(event) {leaveClass(event)})
 
                         newMessage(message, "success");
                     }
