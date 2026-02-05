@@ -125,11 +125,19 @@
 <?php endif ?>
 
 <div id="class-template" class="data-item-template" style="display: none;">
-    <button class="btn class data-item" data-class-url="/menu/{url}">
-        <li style="border-left: 8px solid green;">
+    <button class="btn class managed-class data-item" data-class-url="/menu/{url}">
+        <li>
             <h4 class="class name">{name}</h4>
             <span class="class test-count">{groups}</span>
-            <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon class action leave-link"><img class="icon black" src="images/logout_f.svg"></a>
+            <div class="class action">
+                <a title="Přidat k oblíbeným" class="btn icon add-favs-button">
+                    <img class="icon black" src="images/star_o.svg">
+                </a>
+                <a title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
+                    <img class="icon black" src="images/star_f.svg">
+                </a>
+                <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a>
+            </div>
         </li>
     </button>
 </div>
