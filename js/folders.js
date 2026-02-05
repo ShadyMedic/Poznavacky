@@ -1,5 +1,7 @@
 $(function()
 {
+    $(".show-info-button").show();
+
     //event listenery tlačítek
     $(".leave-link").click(function(event) {leaveClass(event)})
     $("#class-code-form").on("submit", function(event) {submitClassCode(event)})
