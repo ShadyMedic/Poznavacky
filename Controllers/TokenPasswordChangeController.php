@@ -39,7 +39,7 @@ class TokenPasswordChangeController extends AjaxController
         }
         
         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-            'Heslo bylo úspěšně změněno. Za okamžik budete přesměrováni na domovskou stránku.');
+            'Heslo bylo úspěšně změněno. Za okamžik budeš přesměrován*a na domovskou stránku.');
         echo $response->getResponseString();
     }
 }

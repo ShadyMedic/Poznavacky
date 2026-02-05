@@ -85,11 +85,11 @@ class IndexFormsController extends AjaxController
                             throw new Exception();
                         }
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                            'Na vámi zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud vám e-mail nepřišel, zkontrolujte prosím i složku se spamem a/nebo opakujte akci. V případě dlouhodobých problémů prosíme kontaktujte správce.',
+                            'Na tebou zadanou e-mailovou adresu byly odeslány další instrukce pro obnovu hesla. Pokud ti e-mail nepřišel, zkontroluj si prosím i složku se spamem a/nebo opakuj akci. V případě dlouhodobých problémů prosím kontaktuj administrátora.',
                             array('origin' => $form));
                     } catch (Exception $e) {
                         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
-                            'E-mail pro obnovu hesla se nepovedlo odeslat. Kontaktujte prosím administrátora, nebo zkuste akci opakovat později.',
+                            'E-mail pro obnovu hesla se nepodařilo odeslat. Kontaktuj prosím administrátora, nebo zkus akci opakovat později.',
                             array('origin' => $form));
                     }
                     echo $response->getResponseString();

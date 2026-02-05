@@ -80,8 +80,8 @@ class ConfirmGroupEditController extends AjaxController
                 ));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_WARNING, '
                 Došlo k chybě na straně serveru a změny nemohly být uloženy.
-                Kontaktujte prosím administrátora.
-                Abyste o provedené změny nepřišli, zkopírujte a uložte si prosím text níže.
+                Kontaktuj prosím administrátora.
+                Abys o provedené změny nepřišel*a, zkopíruj a ulož si prosím text níže.
                 Omlouváme se za nepříjemnosti.
             ', array('json' => $dataString));
         }

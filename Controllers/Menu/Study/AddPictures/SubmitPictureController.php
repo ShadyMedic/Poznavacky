@@ -27,7 +27,7 @@ class SubmitPictureController extends AjaxController
         $response = null;
         try {
             if ($adder->processFormData($_POST)) {
-                $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, "Obrázek úspěšně přidán");
+                $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, "Obrázek úspěšně přidán.");
             }
         } catch (AccessDeniedException|DatabaseException $e) {
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, $e->getMessage());
