@@ -40,7 +40,7 @@ class TestGroupsFetcher
                                       ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
                                       ' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "locked" AND '.
                                       ClassObject::COLUMN_DICTIONARY['id'].
-                                      ' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);',
+                                      ' IN (SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ?);',
                 array(UserManager::getId()), true);
         } else {
             $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','. //Třídy spravované uživatelem
@@ -56,7 +56,7 @@ class TestGroupsFetcher
                                       ClassObject::COLUMN_DICTIONARY['status'].','.
                                       ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
                                       ' WHERE '.ClassObject::COLUMN_DICTIONARY['id'].
-                                      ' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?)'.
+                                      ' IN (SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ?)'.
                                       ' UNION '.
                                       'SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','. //Veřejné třídy
                                       ClassObject::COLUMN_DICTIONARY['url'].','.

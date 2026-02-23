@@ -52,7 +52,7 @@ class ClassManager
             ClassObject::COLUMN_DICTIONARY['status'].' = ? AND '.
             ClassObject::COLUMN_DICTIONARY['id'].' NOT IN
         (
-            SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?
+            SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ?
         )
         ', array($code, ClassObject::CLASS_STATUS_PRIVATE, $userId), true);
 
