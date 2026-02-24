@@ -440,7 +440,7 @@ class ClassObject extends Folder
             User::COLUMN_DICTIONARY['karma'].','.User::TABLE_NAME.'.'.
             User::COLUMN_DICTIONARY['status'].' FROM uzivatele_tridy JOIN '.User::TABLE_NAME.
             ' ON uzivatele_tridy.uzivatele_id = '.User::TABLE_NAME.'.'.User::COLUMN_DICTIONARY['id'].
-            ' WHERE uzivatele_tridy.tridy_id = ? ORDER BY '.User::TABLE_NAME.'.'.
+            ' WHERE uzivatele_tridy.tridy_id = ? AND uzivatele_tridy.clenstvi = 1 ORDER BY '.User::TABLE_NAME.'.'.
             User::COLUMN_DICTIONARY['lastLogin'].' DESC;', array($this->id), true);
         if ($result === false || count($result) === 0) {
             //Žádní členové nenalezeni
@@ -559,7 +559,8 @@ class ClassObject extends Folder
     }
 
     /**
-     * Metoda přidávající uživatele do třídy (přidává spojení uživatele a třídy do tabulky "uzivatele_tridy")
+     * Metoda přidávající uživatele do třídy (přidává nebo aktualizuje spojení uživatele a třídy do tabulky
+     * "uzivatele_tridy", nastavujíce sloupec "clenstvi" na TRUE).
      * Pokud je tato třída veřejná nebo uzamčená, nic se nestane
      * @param int $userId ID uživatele získávajícího členství
      * @return boolean TRUE, pokud je členství ve třídě úspěšně přidáno, FALSE, pokud ne
@@ -585,7 +586,7 @@ class ClassObject extends Folder
         #     return false;
         # }
 
-        Db::executeQuery('INSERT INTO uzivatele_tridy (uzivatele_id,tridy_id) VALUES (?,?)', array($userId, $this->id));
+        Db::executeQuery('INSERT INTO uzivatele_tridy (uzivatele_id,tridy_id,clenstvi,oblibenost) VALUES (?,?,1,0) ON DUPLICATE KEY UPDATE clenstvi = 1;', array($userId, $this->id));
 
         return true;
     }
@@ -636,7 +637,7 @@ class ClassObject extends Folder
         }
 
         //Odstranit členství z databáze
-        if (Db::executeQuery('DELETE FROM uzivatele_tridy WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1',
+        if (Db::executeQuery('UPDATE uzivatele_tridy SET clenstvi = 0 WHERE tridy_id = ? AND uzivatele_id = ? LIMIT 1',
             array($this->id, $userId))) {
             (new Logger())->info('Uživatel s ID {userId} odebral ze třídy s ID {classId} uživatele s ID {kickedUserId} z IP adresy {ip}',
                 array(
@@ -693,13 +694,13 @@ class ClassObject extends Folder
             $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.
                 self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].
                 ' = "locked" AND '.self::COLUMN_DICTIONARY['id'].
-                ' IN (SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ?));',
+                ' IN (SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ? AND clenstvi = 1));',
                 array($this->id, $userId), false);
         } else {
             $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM '.self::TABLE_NAME.' WHERE '.
                 self::COLUMN_DICTIONARY['id'].' = ? AND ('.self::COLUMN_DICTIONARY['status'].
                 ' = "public" OR '.self::COLUMN_DICTIONARY['id'].
-                ' IN (SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ?));',
+                ' IN (SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ? AND clenstvi = 1));',
                 array($this->id, $userId), false);
         }
 
@@ -715,7 +716,7 @@ class ClassObject extends Folder
      */
     public function isMember(int $userId): bool
     {
-        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele_tridy WHERE tridy_id = ? AND uzivatele_id = ?;',
+        $result = Db::fetchQuery('SELECT COUNT(*) AS "cnt" FROM uzivatele_tridy WHERE tridy_id = ? AND uzivatele_id = ? AND clenstvi = 1;',
             array($this->id, $userId), false);
         return ($result['cnt'] === 1);
     }

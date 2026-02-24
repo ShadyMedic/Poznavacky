@@ -63,7 +63,7 @@ class NewClassRequester
                 ) VALUES (?,?,?);', array($tempName, ClassObject::generateUrl($tempName), UserManager::getId()), true);
 
             //Dej správci členství
-            Db::executeQuery('INSERT INTO uzivatele_tridy(uzivatele_id,tridy_id) VALUES (?,?);',
+            Db::executeQuery('INSERT INTO uzivatele_tridy(uzivatele_id,tridy_id,clenstvi,oblibenost) VALUES (?,?,1,0);',
                 array(UserManager::getId(), $newClassId));
 
             if (UserManager::getOtherInformation()['status'] !== User::STATUS_ADMIN) {
