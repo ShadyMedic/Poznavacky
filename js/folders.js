@@ -31,11 +31,34 @@ $(function()
  */
 function addFavs(event)
 {
-    $class = $(event.target).closest(".class.data-item");
-    $class.addClass("fav");
+    let $favedClass = $(event.target).closest(".class.data-item");
+    let url = $(event.target).closest(".add-favs-button").attr("data-fav-url");
 
-    $class.find(".add-favs-button").hide();
-    $class.find(".remove-favs-button").show();
+    $.post(url, {},
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "error")
+                    {
+                        //chyba při zpracování požadavku (například protože uživatel nemá do třídy přístup)
+                        newMessage(message, "error");
+                    }
+                    else if (messageType === "success")
+                    {
+                        //vizuální update třídy
+                        $favedClass.addClass("fav");
+                        $favedClass.find(".add-favs-button").hide();
+                        $favedClass.find(".remove-favs-button").show();
+
+                        newMessage(message, "success");
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
@@ -44,11 +67,36 @@ function addFavs(event)
  */
 function removeFavs(event)
 {
-    $class = $(event.target).closest(".class.data-item");
-    $class.removeClass("fav");
+    event.stopPropagation();
 
-    $class.find(".remove-favs-button").hide();
-    $class.find(".add-favs-button").show();
+    let $unfavedClass = $(event.target).closest(".class.data-item");
+    let url = $(event.target).closest(".remove-favs-button").attr("data-unfav-url");
+
+    $.post(url, {},
+        function (response, status)
+        {
+            ajaxCallback(response, status,
+                function (messageType, message, data)
+                {
+                    if (messageType === "error")
+                    {
+                        //chyba při zpracování požadavku (například protože uživatel nemá do třídy přístup)
+                        newMessage(message, "error");
+                    }
+                    else if (messageType === "success")
+                    {
+                        //vizuální update třídy
+                        $class.removeClass("fav");
+                        $class.find(".remove-favs-button").hide();
+                        $class.find(".add-favs-button").show();
+
+                        newMessage(message, "success");
+                    }
+                }
+            );
+        },
+        "json"
+    );
 }
 
 /**
@@ -159,6 +207,7 @@ function submitClassCode(event)
 
                         //nastavení event handleru pro opuštění nových tříd
                         $(".leave-class-button").click(function(event) {leaveClass(event)})
+                        //TODO @eksyska přidej handlery pro fav/unfav tlačítka
 
                         newMessage(message, "success");
                     }
