@@ -43,7 +43,7 @@ class ClassUpdateController extends AjaxController
                     $newName = trim($_POST['newName']); //Ořež mezery
                     $class->requestNameChange($newName);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                        'Žádost o změnu názvu třídy byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši žádost posoudí správce, dostanete zprávu.');
+                        'Žádost o změnu názvu třídy byla odeslána. Sleduj prosím svou e-mailovou schránku (pokud máš v účtu nastavenou e-mailovou adresu). V okamžiku, kdy tvou žádost posoudí administrátor, dostaneš zprávu.');
                     echo $response->getResponseString();
                     break;
                 case 'update access':
@@ -58,27 +58,27 @@ class ClassUpdateController extends AjaxController
                     $newReadonly = ($_POST['newReadonly'] === 'true') ? true : false;
                     $class->updateAccessData($newStatus, $newCode, $newReadonly);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                        'Přístupová data třídy byla úspěšně změněna');
+                        'Přístupová data třídy byla úspěšně změněna.');
                     echo $response->getResponseString();
                     break;
                 case 'kick member':
                     $kickedUserId = $_POST['memberId'];
                     $class->removeMember($kickedUserId);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                        'Uživatel byl úspěšně odebrán ze třídy');
+                        'Uživatel byl úspěšně odebrán ze třídy.');
                     echo $response->getResponseString();
                     break;
                 case 'invite user':
                     $invitedUserName = trim($_POST['userName']); //Ořež mezery
                     $class->inviteUser($invitedUserName);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Pozvánka úspěšně odeslána');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Pozvánka úspěšně odeslána.');
                     echo $response->getResponseString();
                     break;
                 case 'create test':
                     $adder = new GroupAdder($class);
                     $group = $adder->processFormData($_POST);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                        'Poznávačka '.$_POST['testName'].' úspěšně vytvořena', array(
+                        'Poznávačka '.$_POST['testName'].' úspěšně vytvořena.', array(
                             'newGroupData' => array(
                                 'id' => $group->getId(),
                                 'name' => $group->getName(),
@@ -96,13 +96,13 @@ class ClassUpdateController extends AjaxController
                     } catch (BadMethodCallException $e) {
                         throw new NoDataException(NoDataException::UNKNOWN_GROUP);
                     }
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Poznávačka byla odstraněna');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Poznávačka byla odstraněna.');
                     echo $response->getResponseString();
                     break;
                 case 'delete class':
                     $adminPassword = $_POST['password'];
                     $class->deleteAsClassAdmin($adminPassword);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Třída byla odstraněna.');
                     echo $response->getResponseString();
                     break;
                 case 'verify password':

@@ -51,7 +51,7 @@ class UpdateNaturalsController extends AjaxController
                             'newName' => $newName,
                             'ip' => $_SERVER['REMOTE_ADDR']
                         ));
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodnina úspěšně přejmenována');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodnina úspěšně přejmenována.');
                     echo $response->getResponseString();
                     break;
                 case 'merge':
@@ -86,7 +86,7 @@ class UpdateNaturalsController extends AjaxController
                             'naturalId' => $naturalId,
                             'ip' => $_SERVER['REMOTE_ADDR']
                         ));
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodnina úspěšně odstraněna');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Přírodnina úspěšně odstraněna.');
                     echo $response->getResponseString();
                     break;
                 case 'delete picture':
@@ -100,7 +100,7 @@ class UpdateNaturalsController extends AjaxController
                             'pictureId' => $pictureId,
                             'ip' => $_SERVER['REMOTE_ADDR']
                         ));
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn.');
                     echo $response->getResponseString();
                     break;
                 default:

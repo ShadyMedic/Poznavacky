@@ -33,7 +33,7 @@ class LeaveController extends AjaxController
         } catch (BadMethodCallException $e) {
             (new Logger())->warning('Uživatel s ID {userId} se pokusil opustit třídu s URL {classUrl} z IP adresy {ip}, avšak taková třída nebyla v databázi nalezena',
                 array('userId' => UserManager::getId(), 'classUrl' => $parameters[0], 'ip' => $_SERVER['REMOTE_ADDR']));
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Třída se zadaným URL nebyla nalezena');
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Třída se zadaným URL nebyla nalezena.');
             echo $response->getResponseString();
             return;
         } catch (DatabaseException $e) {
@@ -87,7 +87,7 @@ class LeaveController extends AjaxController
         
         (new Logger())->info('Uživatel s ID {userId} opustil třídu s ID {classId} z IP adresy {ip}',
             array('userId' => $userId, 'classId' => $classId, 'ip' => $_SERVER['REMOTE_ADDR']));
-        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Třída úspěšně opuštěna');
+        $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Třída úspěšně opuštěna.');
         echo $response->getResponseString();
     }
 }

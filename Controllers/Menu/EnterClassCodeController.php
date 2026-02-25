@@ -31,7 +31,7 @@ class EnterClassCodeController extends AjaxController
             //Chybně vyplněný formulář
             (new Logger())->notice('Uživatel s ID {userId} odeslal formulář pro zadání vstupního kódu třídy z IP adresy {ip}, avšak nevyplnil do něj údaje',
                 array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR']));
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Musíte vyplnit kód třídy');
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Musíš vyplnit kód třídy.');
             echo $response->getResponseString();
             return;
         }
@@ -44,7 +44,7 @@ class EnterClassCodeController extends AjaxController
             (new Logger())->notice('Uživatel s ID {userId} odeslal formulář pro zadání vstupního kódu třídy z IP adresy {ip}, avšak zadaný kód ({code}) nebyl ve správném formátu',
                 array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR'], 'code' => $code));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
-                'Vstupní kód třídy musí být tvořen čtyřmi číslicemi');
+                'Vstupní kód třídy musí být tvořen čtyřmi číslicemi.');
             echo $response->getResponseString();
             return;
         }
@@ -54,7 +54,7 @@ class EnterClassCodeController extends AjaxController
             //Se zadaným kódem se nelze dostat do žádné třídy
             (new Logger())->notice('Uživatel s ID {userId} odeslal vstupní kód třídy z IP adresy {ip}, avšak zadaný kód ({$code}) není možné použít k získání přístupu do žádné třídy',
                 array('userId' => $userId, 'ip' => $_SERVER['REMOTE_ADDR'], 'code' => $code));
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_WARNING, 'Zadaný kód není platný');
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_WARNING, 'Zadaný kód není platný.');
             echo $response->getResponseString();
             return;
         }
@@ -83,7 +83,7 @@ class EnterClassCodeController extends AjaxController
                 'classesIds' => implode(', ', $accessedClassesIds)
             ));
         $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-            'Získali jste přístup do následujících tříd: '.implode(', ', $accessedClasses),
+            'Získal*a jsi přístup do následujících tříd: '.implode(', ', $accessedClasses),
             array('accessedClassesInfo' => $accessedClassInformation));
         echo $response->getResponseString();
     }

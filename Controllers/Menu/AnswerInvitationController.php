@@ -35,7 +35,7 @@ class AnswerInvitationController extends AjaxController
             //Jsou odeslána neplatná data v důsledku manipulace s HTML dokumentem
             (new Logger())->warning('Uživatel s ID {userId} odeslal požadavek na stránku pro zpracování odpovědi na pozvánku z IP adresy {ip}, avšak odeslaná data nebyla ve správném formátu',
                 array('userId' => UserManager::getId(), 'ip' => $_SERVER['REMOTE_ADDR']));
-            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Neplatná odpověď nebo neplatná pozvánka');
+            $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR, 'Neplatná odpověď nebo neplatná pozvánka.');
             echo $response->getResponseString();
             return;
         }
@@ -58,7 +58,7 @@ class AnswerInvitationController extends AjaxController
             (new Logger())->notice('Uživatel s ID {userId} se pokusil odpovědět na pozvánku do třídy s URL {classUrl} z IP adresy {ip}, avšak daná pozvánka nebyla v databázi nalezena nebo nebyla určena pro tohoto uživatele',
                 array('userId' => UserManager::getId(), 'classUrl' => $classUrl, 'ip' => $_SERVER['REMOTE_ADDR']));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_ERROR,
-                'Tato pozvánka neexistuje, není určená pro vás nebo již vypršela její platnost');
+                'Tato pozvánka neexistuje, není určená pro tebe nebo již vypršela její platnost.');
             echo $response->getResponseString();
             return;
         }
@@ -81,7 +81,7 @@ class AnswerInvitationController extends AjaxController
                     'ip' => $_SERVER['REMOTE_ADDR']
                 ));
             $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                'Pozvánka byla přijata. Nyní máte do třídy '.$invitation->getClass()->getName().' přístup.');
+                'Pozvánka byla přijata. Nyní máš do třídy '.$invitation->getClass()->getName().' přístup.');
         } else {
             //Odmítnout pozvánku (pouze smazat)
             $invitation->delete();

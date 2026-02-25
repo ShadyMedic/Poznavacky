@@ -36,7 +36,7 @@ class AccountUpdateController extends AjaxController
                     $user = UserManager::getUser();
                     $user->requestNameChange($newName);
                     $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS,
-                        'Žádost o změnu jména byla odeslána. Sledujte prosím svou e-mailovou schránku (pokud jste si zde nastavili e-mailovou adresu). V okamžiku, kdy vaši změnu posoudí správce, dostanete zprávu.',
+                        'Žádost o změnu jména byla odeslána. Sleduj prosím svou e-mailovou schránku (pokud máš v účtu nastavenou e-mailovou adresu). V okamžiku, kdy tvou změnu posoudí administrátor, dostaneš zprávu.',
                         array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;
@@ -46,7 +46,7 @@ class AccountUpdateController extends AjaxController
                     $rePassword = urldecode($_POST['rePassword']);
                     $user = UserManager::getUser();
                     $user->changePassword($oldPassword, $newPassword, $rePassword);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno',
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Heslo bylo úspěšně změněno.',
                         array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;
@@ -55,7 +55,7 @@ class AccountUpdateController extends AjaxController
                     $email = strtolower(trim(urldecode($_POST['newEmail']))); //Ořež mezery a převeď do lowercase
                     $user = UserManager::getUser();
                     $user->changeEmail($password, $email);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'E-mail byl úspěšně změněn',
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'E-mail byl úspěšně změněn.',
                         array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;
@@ -63,7 +63,7 @@ class AccountUpdateController extends AjaxController
                     $theme = urldecode($_POST['theme']);
                     $user = UserManager::getUser();
                     $user->updateTheme($theme);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Motiv byl úspěšně změněn',
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Motiv byl úspěšně změněn.',
                         array('origin' => $_POST['action']));
                     echo $response->getResponseString();
                     break;

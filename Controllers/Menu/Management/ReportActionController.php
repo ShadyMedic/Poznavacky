@@ -53,19 +53,19 @@ class ReportActionController extends AjaxController
                     $newNaturalId = $_POST['naturalId'];
                     $newUrl = trim($_POST['url']); //Ořež mezery
                     $resolver->editPicture($pictureId, $newNaturalId, $newUrl);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Údaje obrázku úspěšně upraveny.');
                     echo $response->getResponseString();
                     break;
                 case 'delete picture':
                     $pictureId = $_POST['pictureId'];
                     $resolver->deletePicture($pictureId);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Obrázek úspěšně odstraněn.');
                     echo $response->getResponseString();
                     break;
                 case 'delete report':
                     $reportId = $_POST['reportId'];
                     $resolver->deleteReport($reportId);
-                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Hlášení úspěšně odstraněno');
+                    $response = new AjaxResponse(AjaxResponse::MESSAGE_TYPE_SUCCESS, 'Hlášení úspěšně odstraněno.');
                     echo $response->getResponseString();
                     break;
                 default:
