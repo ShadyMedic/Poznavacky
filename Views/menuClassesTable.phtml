@@ -135,13 +135,15 @@
             <span class="class test-count">{groups}</span>
             <div class="class action">
                 <?php if (!$demoVersion): ?>
+                    <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon leave-class-button">
+                        <img class="icon black" src="images/logout_f.svg">
+                        </a>
                     <a data-fav-url="menu/{url}/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button">
                         <img class="icon black" src="images/star_o.svg">
                     </a>
                     <a data-unfav-url="menu/{url}/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
                         <img class="icon black" src="images/star_f.svg">
                     </a>
-                    <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a>
                 <?php endif ?>
             </div>
         </li>
