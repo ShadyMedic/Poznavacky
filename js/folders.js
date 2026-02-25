@@ -3,7 +3,6 @@ $(function()
     $(".show-info-button").show();
 
     //event listenery tlačítek
-    $(".leave-class-button").click(function(event) {leaveClass(event)})
     $("#class-code-form").on("submit", function(event) {submitClassCode(event)})
     $("#request-class-button").click(function() {showNewClassForm()})
     $("#request-class-cancel-button").click(function(event) {hideNewClassForm(event)})
@@ -11,6 +10,7 @@ $(function()
     $(".display-buttons-button:not(.disabled)").click(function(){displayButtons(this)})
     $("#menu-classes-table").on("click", ".add-favs-button", function(event) {addFavs(event)})
     $("#menu-classes-table").on("click", ".remove-favs-button", function(event) {removeFavs(event)})
+    $("#menu-classes-table").on("click", ".leave-class-button", function(event) {leaveClass(event)})
 
     $(".class.data-item").click(function(event) {redirectToClass(event)})
 
@@ -31,7 +31,7 @@ $(function()
  */
 function addFavs(event)
 {
-    let $favedClass = $(event.target).closest(".class.data-item");
+    let $class = $(event.target).closest(".class.data-item");
     let url = $(event.target).closest(".add-favs-button").attr("data-fav-url");
 
     $.post(url, {},
@@ -48,9 +48,9 @@ function addFavs(event)
                     else if (messageType === "success")
                     {
                         //vizuální update třídy
-                        $favedClass.addClass("fav");
-                        $favedClass.find(".add-favs-button").hide();
-                        $favedClass.find(".remove-favs-button").show();
+                        $class.addClass("fav");
+                        $class.find(".add-favs-button").hide();
+                        $class.find(".remove-favs-button").show();
 
                         newMessage(message, "success");
                     }
@@ -69,7 +69,7 @@ function removeFavs(event)
 {
     event.stopPropagation();
 
-    let $unfavedClass = $(event.target).closest(".class.data-item");
+    let $class = $(event.target).closest(".class.data-item");
     let url = $(event.target).closest(".remove-favs-button").attr("data-unfav-url");
 
     $.post(url, {},
@@ -204,11 +204,6 @@ function submitClassCode(event)
                             classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
                             $(classDomItem).insertAfter('ul > .btn:last');
                         }
-
-                        //nastavení event handleru pro opuštění nových tříd
-                        $(".leave-class-button").click(function(event) {leaveClass(event)})
-                        //TODO @eksyska přidej handlery pro fav/unfav tlačítka
-
                         newMessage(message, "success");
                     }
                 }
