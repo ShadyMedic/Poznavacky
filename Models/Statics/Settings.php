@@ -24,7 +24,7 @@ class Settings
     /**
      * Absolutní cesta ke kořenové složce aplikace na webserveru
      */
-    public const APP_ROOT_DIR = '/var/www/html/Poznavacky';
+    public const APP_ROOT_DIR = '/var/www/Poznavacky';
 
     /**
      * Kořenový jmenný prostor aplikace
