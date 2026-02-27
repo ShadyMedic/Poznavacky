@@ -25,7 +25,7 @@
                     <div class="class action">
                         <?php if (!$demoVersion): ?>
                             <?php if ($tableRow['status'] === 'managed') : ?><a href="<?= $tableRow['rowLink'] ?>/manage" title="Nastavení třídy" class="btn icon manage-class-button"><img class="icon black" src="images/settings_f.svg"></a><?php endif ?>
-                            <?php if ($tableRow['status'] === 'closedy') : ?><a data-leave-url="<?= $tableRow['rowLink'] ?>/leave" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a><?php endif ?>
+                            <?php if ($tableRow['status'] === 'closed') : ?><a data-leave-url="<?= $tableRow['rowLink'] ?>/leave" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a><?php endif ?>
                             <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button"<?php if ($tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_o.svg">
                             </a>
