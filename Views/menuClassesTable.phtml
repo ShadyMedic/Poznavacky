@@ -17,65 +17,15 @@
     </div>
     <?php endif ?>
     <ul class="rows">
-        <?php foreach ($table['managed'] as $tableRow) : ?>
-            <button class="btn class managed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
+        <?php foreach ($table as $tableRow) : ?>
+            <button class="btn class <?= $tableRow['status'] ?>-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
                 <li>
-                    <h4 class="class name"><?= $tableRow[0] ?></h4>
-                    <span class="class tests-count"><?= $tableRow[1] ?></span>
+                    <h4 class="class name"><?= $tableRow['name'] ?></h4>
+                    <span class="class tests-count"><?= $tableRow['groups'] ?></span>
                     <div class="class action">
                         <?php if (!$demoVersion): ?>
-                            <a href="<?= $tableRow['rowLink'] ?>/manage" title="Nastavení třídy" class="btn icon manage-class-button"><img class="icon black" src="images/settings_f.svg"></a>
-                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button"<?php if ($tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
-                                <img class="icon black" src="images/star_o.svg">
-                            </a>
-                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button"<?php if (!$tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
-                                <img class="icon black" src="images/star_f.svg">
-                            </a>
-                        <?php endif ?>
-                    </div>
-                </li>
-            </button>
-        <?php endforeach ?>
-
-        <?php foreach ($table['joined'] as $tableRow) : ?>
-            <button class="btn class closed-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
-                <li>
-                    <h4 class="class name"><?= $tableRow[0] ?></h4>
-                    <span class="class tests-count"><?= $tableRow[1] ?></span>
-                    <div class="class action">
-                        <?php if (!$demoVersion): ?>
-                            <a data-leave-url="<?= $tableRow['rowLink'] ?>/leave" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a>
-                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button"<?php if ($tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
-                                <img class="icon black" src="images/star_o.svg">
-                            </a>
-                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button"<?php if (!$tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
-                                <img class="icon black" src="images/star_f.svg">
-                            </a>
-                        <?php endif ?>
-                    </div>
-                </li>
-            </button>
-        <?php endforeach ?>
-
-        <?php foreach ($invitations as $invitation) : ?>
-        <li class="invitation-wrapper" data-class-url="<?= $invitation->getClass()->getUrl() ?>" style="border-left: 8px solid darkcyan;">
-            <span class="invitation info">Pozvánka do třídy (vyprší <?= $invitation->getExpirationDate(); ?>)</span>
-            <h4 class="class name"><?= $invitation->getClass()->getName(); ?></h4>
-            <span class="class tests-count"><?= $invitation->getClass()->getGroupsCount() ?></span>
-            <div class="invitation action">
-                <button class="btn icon accept-invitation-button" title="Přijmout pozvánku"><img class="icon green" src='images/tick-thick.svg' alt="Přijmout pozvánku"></button>
-                <button class="btn icon reject-invitation-button" title="Odmítnout pozvánku"><img class="icon black" src='images/cross-thick.svg' alt="Odmítnout pozvánku"></button>
-            </div>
-        </li>
-        <?php endforeach ?>
-
-        <?php foreach ($table['public'] as $tableRow) : ?>
-            <button class="btn class public-class data-item" data-class-url="<?= $tableRow['rowLink'] ?>" >
-                <li>
-                    <h4 class="class name"><?= $tableRow[0] ?></h4>
-                    <span class="class tests-count"><?= $tableRow[1] ?></span>
-                    <div class="class action">
-                        <?php if (!$demoVersion): ?>
+                            <?php if ($tableRow['status'] === 'managed') : ?><a href="<?= $tableRow['rowLink'] ?>/manage" title="Nastavení třídy" class="btn icon manage-class-button"><img class="icon black" src="images/settings_f.svg"></a><?php endif ?>
+                            <?php if ($tableRow['status'] === 'closedy') : ?><a data-leave-url="<?= $tableRow['rowLink'] ?>/leave" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a><?php endif ?>
                             <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button"<?php if ($tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_o.svg">
                             </a>
@@ -129,7 +79,7 @@
 <?php endif ?>
 
 <div id="class-template" class="data-item-template" style="display: none;">
-    <button class="btn class managed-class data-item" data-class-url="/menu/{url}">
+    <button class="btn class {status}-class data-item" data-class-url="/menu/{url}">
         <li>
             <h4 class="class name">{name}</h4>
             <span class="class test-count">{groups}</span>

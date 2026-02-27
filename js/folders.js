@@ -202,6 +202,7 @@ function submitClassCode(event)
                             classDomItem = classDomItem.replace(/{name}/g, classData.name);
                             classDomItem = classDomItem.replace(/{url}/g, classData.url);
                             classDomItem = classDomItem.replace(/{groups}/g, classData.groupsCount);
+                            classDomItem = classDomItem.replace(/{status}/g, 'closed');
                             $(classDomItem).insertAfter('ul > .btn:last');
                         }
                         newMessage(message, "success");
