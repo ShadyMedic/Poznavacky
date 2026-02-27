@@ -25,10 +25,10 @@
                     <div class="class action">
                         <?php if (!$demoVersion): ?>
                             <a href="<?= $tableRow['rowLink'] ?>/manage" title="Nastavení třídy" class="btn icon manage-class-button"><img class="icon black" src="images/settings_f.svg"></a>
-                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button">
+                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button"<?php if ($tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_o.svg">
                             </a>
-                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
+                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button"<?php if (!$tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_f.svg">
                             </a>
                         <?php endif ?>
@@ -45,10 +45,10 @@
                     <div class="class action">
                         <?php if (!$demoVersion): ?>
                             <a data-leave-url="<?= $tableRow['rowLink'] ?>/leave" title="Opustit třídu" class="btn icon leave-class-button"><img class="icon black" src="images/logout_f.svg"></a>
-                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button">
+                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button"<?php if ($tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_o.svg">
                             </a>
-                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
+                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button"<?php if (!$tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_f.svg">
                             </a>
                         <?php endif ?>
@@ -76,10 +76,10 @@
                     <span class="class tests-count"><?= $tableRow[1] ?></span>
                     <div class="class action">
                         <?php if (!$demoVersion): ?>
-                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button">
+                            <a data-fav-url="<?= $tableRow['rowLink'] ?>/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button"<?php if ($tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_o.svg">
                             </a>
-                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button" style="display:none">
+                            <a data-unfav-url="<?= $tableRow['rowLink'] ?>/mark/unfavourite" title="Odebrat z oblíbených" class="btn icon remove-favs-button"<?php if (!$tableRow['favourite']) : ?> style="display: none;"<?php endif ?>>
                                 <img class="icon black" src="images/star_f.svg">
                             </a>
                         <?php endif ?>
@@ -137,7 +137,7 @@
                 <?php if (!$demoVersion): ?>
                     <a data-leave-url="/menu/{url}/leave" title="Opustit třídu" class="btn icon leave-class-button">
                         <img class="icon black" src="images/logout_f.svg">
-                        </a>
+                    </a>
                     <a data-fav-url="menu/{url}/mark/favourite" title="Přidat k oblíbeným" class="btn icon add-favs-button">
                         <img class="icon black" src="images/star_o.svg">
                     </a>
