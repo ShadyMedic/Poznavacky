@@ -25,6 +25,8 @@ function autoloader(string $name): void
     require $name;
 }
 
+error_reporting(E_ALL ^ E_DEPRECATED);
+
 spl_autoload_register('Poznavacky\\autoloader');
 
 //Obnov session a nastav kódování

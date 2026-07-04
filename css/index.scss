@@ -144,9 +144,7 @@ html:has(#index) {
     }
 
     #index-info-section {
-        padding: 3rem 1.6rem;
-        width: 90vw;
-        max-width: 60rem;
+        width: 100%;
         margin: auto;
         h3 {
             font-size: 1.32rem;
@@ -155,42 +153,213 @@ html:has(#index) {
         p {
             font-size: 1.24rem;
         }
+        .app-info {
+            position: relative;
+        }
         #info-icons {
             margin: 3rem auto;
-            display: grid;
-            grid-template-columns: minmax(100px, 1fr);
-            grid-template-rows: repeat(4, minmax(0, 20rem) min-content);
             p {
                 margin-bottom: 2.8rem;
             }
-            .img-wrapper {
-                position: relative;
-            }
             img {
                 max-height: 20rem;
-                position: absolute;
-                top: 0; 
             }
-            .img-left {
-                right: 0;
-            }
-            .img-right {
-                left: 0;
-            }
+        }
+
+        .glow {
+
+            filter: drop-shadow(-5px -5px 25px rgba(rgb(204, 255, 143),0.2));
+            z-index: -1;
+        }
+
+        section {
+            position: relative;
+            width: 100%;
+            height: 800px;
             @media screen and (min-width: $tablet) {
-                display: grid;
-                grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr);
-                grid-template-rows: repeat(4, 20rem);
-                row-gap: 1.6rem;
-                column-gap: 0.8rem;
-                > :nth-child(1) { grid-row: 1; grid-column: 1; }
-                > :nth-child(2) { grid-row: 1; grid-column: 2; }
-                > :nth-child(3) { grid-row: 2; grid-column: 2; }
-                > :nth-child(4) { grid-row: 2; grid-column: 1; }
-                > :nth-child(5) { grid-row: 3; grid-column: 1; }
-                > :nth-child(6) { grid-row: 3; grid-column: 2; }
-                > :nth-child(7) { grid-row: 4; grid-column: 2; }
-                > :nth-child(8) { grid-row: 4; grid-column: 1; }
+                height: 600px;
+            }
+            mask-size: 100%;
+            mask-position: bottom center;
+            mask-repeat: no-repeat;
+
+            &:nth-of-type(1),
+            &:nth-of-type(3) {
+                background-color: #282828;
+                padding-top: 4rem;
+                top: -4rem;
+                z-index: 5;
+            }
+            &:nth-of-type(2),
+            &:nth-of-type(4) {
+                background-color: #222;
+                z-index: 6;
+            }
+
+            .index-img.bg1,
+            .index-img.bg2,
+            .index-img.bush1,
+            .index-img.bush2,
+            .index-img.chars {
+                background-repeat: no-repeat;
+                background-position-y: bottom;
+                mask-repeat: no-repeat;
+                mask-position: bottom center;
+                position: absolute;
+                bottom: 0;
+            }
+            .index-img.bg1 {
+                background-size: 80%;
+                width: 100%;
+                height: 100%;
+                transform: scaleY(70%) translateY(20%);
+                z-index: 7;
+            }
+            .index-img.bg2 {
+                mask-size: 65%;
+                width: 100%;
+                height: 100%;
+                z-index: 8;
+            }
+            .index-img.bush1,
+            .index-img.bush2 {
+                background-size: 80%;
+                width: 100%;
+                height: 100%;
+                opacity:70%;
+                z-index: 9;
+            }
+            .index-img.chars {
+                background-size: auto 80%;
+                height: 100%;
+                width: 100%;
+                z-index: 10;
+            }   
+
+            &:nth-of-type(1) {
+                mask-image: url("../images/index/clip1.svg");
+                .index-img.chars {
+                    background-image: url("../images/index/chs1.svg");
+                    background-position-x: 30%;
+                    background-position-y: 140%;
+                }
+                .index-img.bg1 {
+                    background-image: url("../images/index/bg1.svg");
+                    background-position-x: left;
+                }
+                .index-img.bg2 {
+                    mask-image: url("../images/index/bg4.svg");
+                    background: $greenDark;
+                    opacity: 50%;
+                    mask-position: -10% bottom;
+                }
+                .index-img.bush1 {
+                    background-image: url("../images/index/bush7.svg");
+                    background-position-x: -10%;
+                    background-size: 40%;
+                }
+                .index-img.bush2 {
+                    background-image: url("../images/index/bush2.svg");
+                    background-position-x: 80%;
+                    background-position-y: 120%;
+                    background-size: 40%;
+                }
+            }
+
+            &:nth-of-type(2) {
+                mask-image: url("../images/index/clip2.svg");
+                .index-img.chars {
+                    background-image: url("../images/index/chs2.svg");
+                    background-position-x: 60%;
+                }
+                .index-img.bg1 {
+                    background-image: url("../images/index/bg2.svg");
+                    background-position-x: left;
+                    right: 0;
+                    transform: scaleX(-1)
+                }
+                .index-img.bg2 {
+                    mask-image: url("../images/index/bg6.svg");
+                    background: $greenDark;
+                    opacity: 90%;
+                    transform: scaleY(130%) translateY(-5%);
+                    mask-position: 120% bottom;
+                }
+                .index-img.bush1 {
+                    background-image: url("../images/index/bush2.svg");
+                    background-position-x: 50%;
+                    background-size: 45%;
+                }
+                .index-img.bush2 {
+                    background-image: url("../images/index/bush1.svg");
+                    background-position-x: 200%;
+                    background-size: 60%;
+                }
+            }
+
+            &:nth-of-type(3) {
+                mask-image: url("../images/index/clip3.svg");
+                .index-img.chars {
+                    background-image: url("../images/index/chs3.svg");
+                    background-position-x: 30%;
+                    background-size: auto 70%;
+                }
+                .index-img.bg1 {
+                    background-image: url("../images/index/bg3.svg");
+                    background-position-x: left;
+                }
+                .index-img.bg2 {
+                    mask-image: url("../images/index/bg8.svg");
+                    background: $greenDark;
+                    opacity: 90%;
+                    mask-position: 110% bottom;
+                    transform: scaleX(-1);
+                }
+                .index-img.bush1 {
+                    background-image: url("../images/index/bush3.svg");
+                    background-position-x: 40%;
+                    background-position-y: 100%;
+                    transform: scaleX(-1);
+                    background-size: 35%;
+                }
+                .index-img.bush2 {
+                    background-image: url("../images/index/bush6.svg");
+                    background-position-x: 0;
+                    background-size: 30%;
+                }
+            }
+
+            &:nth-of-type(4) {
+                mask-image: url("../images/index/clip4.svg");
+                .index-img.chars {
+                    background-image: url("../images/index/chs4.svg");
+                    background-position-x: 60%;
+                    background-position-y: 110%;
+                }
+                .index-img.bg1 {
+                    background-image: url("../images/index/bg5.svg");
+                    background-position-x: right;
+                    right: 0;
+                    transform: scaleY(85%) translateY(10%);
+                }
+                .index-img.bg2 {
+                    mask-image: url("../images/index/bg11.svg");
+                    background: $greenDark;
+                    opacity: 90%;
+                    mask-position: 30% bottom;
+                }
+                .index-img.bush1 {
+                    background-image: url("../images/index/bush5.svg");
+                    background-position-x: -30%;
+                    background-position-y: 100%;
+                    transform: scaleX(-1);
+                    background-size: 60%;
+                }
+                .index-img.bush2 {
+                    background-image: url("../images/index/bush4.svg");
+                    background-position-x: 25%;
+                    background-size: 35%;
+                }
             }
         }
         /*

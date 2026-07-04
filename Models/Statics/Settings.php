@@ -24,7 +24,7 @@ class Settings
     /**
      * Absolutní cesta ke kořenové složce aplikace na webserveru
      */
-    public const APP_ROOT_DIR = '/var/www/html/Poznavacky';
+    public const APP_ROOT_DIR = 'D:/wamp64/www/Poznavacky';
 
     /**
      * Kořenový jmenný prostor aplikace
@@ -39,12 +39,12 @@ class Settings
     /**
      * Uživatelské jméno pro přístup do databáze aplikace
      */
-    public const DB_USERNAME = 'poznavackyapp';
+    public const DB_USERNAME = 'root';
 
     /**
      * Heslo pro přístup do databáze aplikace
      */
-    public const DB_PASSWORD = 'SECRET';
+    public const DB_PASSWORD = '';
 
     /**
      * Jméno databáze pro aplikaci
