@@ -166,34 +166,84 @@ html:has(#index) {
             }
         }
 
-        .glow {
+        #info-text{
+            padding-bottom: 4rem;
+            width: 90vw;
+            max-width: 900px;
+            margin: auto;
+        }
 
-            filter: drop-shadow(-5px -5px 25px rgba(rgb(204, 255, 143),0.2));
+        .glow {
+            filter: drop-shadow(0 0 40px rgba(rgb(204, 255, 143),0.3));
             z-index: -1;
         }
 
         section {
             position: relative;
             width: 100%;
-            height: 800px;
+            height: 70vh;
             @media screen and (min-width: $tablet) {
-                height: 600px;
+                height: 520px;
             }
-            mask-size: 100%;
+            mask-size: cover;
             mask-position: bottom center;
             mask-repeat: no-repeat;
 
+            .info-tile {
+                margin: auto;
+                width: 90vw;
+                z-index: 14;
+                @media screen and (min-width: $tablet) {
+                    max-width: 30rem;
+                }
+                @media screen and (min-width: $smallDesktop) {
+                    max-width: 24rem;
+                }
+            }
+            
             &:nth-of-type(1),
             &:nth-of-type(3) {
                 background-color: #282828;
-                padding-top: 4rem;
                 top: -4rem;
+                padding-top: 4rem;
                 z-index: 5;
+                .info-tile {
+                    @media screen and (min-width: $tablet) {
+                        position: absolute;
+                        right: 10%;
+                        top: 5%;
+                    }
+                    @media screen and (min-width: $smallDesktop) {
+                        position: absolute;
+                        right: 15%;
+                        top: 15%;
+                    }
+                }
             }
             &:nth-of-type(2),
             &:nth-of-type(4) {
-                background-color: #222;
+                background-color: #222222;
                 z-index: 6;
+                margin-top: -4rem;
+                .index-img {
+                    right: 0;
+                }
+                .info-tile {
+                    @media screen and (min-width: $tablet) {
+                        position: absolute;
+                        left: 10%;
+                        top: 5%;
+                    }
+                    @media screen and (min-width: $smallDesktop) {
+                        position: absolute;
+                        left: 15%;
+                        top: 10%;
+                    }
+                }
+            }
+
+            &:nth-of-type(4) {
+                margin-bottom: -6.5rem;
             }
 
             .index-img.bg1,
@@ -502,6 +552,10 @@ html:has(#index) {
 
     footer {
         grid-row: 4/5;
+        padding: 6rem 2rem 1rem 2rem;
+        .content {
+            justify-content: space-evenly;
+        }
     }
 
     #cookies-alert {
@@ -574,7 +628,7 @@ html:has(#index) {
         position: fixed; 
         bottom: 2rem;
         right: 2rem;
-        z-index: 4;
+        z-index: 15;
         @media screen and (min-width: $tablet) {
             bottom: 3rem;
             right: 3rem;

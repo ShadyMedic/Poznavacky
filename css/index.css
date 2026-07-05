@@ -1515,34 +1515,90 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-info-section #info-icons img {
   max-height: 20rem;
 }
+#index #index-info-section #info-text {
+  padding-bottom: 4rem;
+  width: 90vw;
+  max-width: 900px;
+  margin: auto;
+}
 #index #index-info-section .glow {
-  filter: drop-shadow(-5px -5px 25px rgba(204, 255, 143, 0.2));
+  filter: drop-shadow(0 0 40px rgba(204, 255, 143, 0.3));
   z-index: -1;
 }
 #index #index-info-section section {
   position: relative;
   width: 100%;
-  height: 800px;
+  height: 70vh;
 }
 @media screen and (min-width: 48rem) {
   #index #index-info-section section {
-    height: 600px;
+    height: 520px;
   }
 }
 #index #index-info-section section {
-  mask-size: 100%;
+  mask-size: cover;
   mask-position: bottom center;
   mask-repeat: no-repeat;
 }
+#index #index-info-section section .info-tile {
+  margin: auto;
+  width: 90vw;
+  z-index: 14;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section .info-tile {
+    max-width: 30rem;
+  }
+}
+@media screen and (min-width: 60rem) {
+  #index #index-info-section section .info-tile {
+    max-width: 24rem;
+  }
+}
 #index #index-info-section section:nth-of-type(1), #index #index-info-section section:nth-of-type(3) {
   background-color: #282828;
-  padding-top: 4rem;
   top: -4rem;
+  padding-top: 4rem;
   z-index: 5;
 }
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section:nth-of-type(1) .info-tile, #index #index-info-section section:nth-of-type(3) .info-tile {
+    position: absolute;
+    right: 10%;
+    top: 5%;
+  }
+}
+@media screen and (min-width: 60rem) {
+  #index #index-info-section section:nth-of-type(1) .info-tile, #index #index-info-section section:nth-of-type(3) .info-tile {
+    position: absolute;
+    right: 15%;
+    top: 15%;
+  }
+}
 #index #index-info-section section:nth-of-type(2), #index #index-info-section section:nth-of-type(4) {
-  background-color: #222;
+  background-color: #222222;
   z-index: 6;
+  margin-top: -4rem;
+}
+#index #index-info-section section:nth-of-type(2) .index-img, #index #index-info-section section:nth-of-type(4) .index-img {
+  right: 0;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section:nth-of-type(2) .info-tile, #index #index-info-section section:nth-of-type(4) .info-tile {
+    position: absolute;
+    left: 10%;
+    top: 5%;
+  }
+}
+@media screen and (min-width: 60rem) {
+  #index #index-info-section section:nth-of-type(2) .info-tile, #index #index-info-section section:nth-of-type(4) .info-tile {
+    position: absolute;
+    left: 15%;
+    top: 10%;
+  }
+}
+#index #index-info-section section:nth-of-type(4) {
+  margin-bottom: -6.5rem;
 }
 #index #index-info-section section .index-img.bg1,
 #index #index-info-section section .index-img.bg2,
@@ -1891,6 +1947,10 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 #index footer {
   grid-row: 4/5;
+  padding: 6rem 2rem 1rem 2rem;
+}
+#index footer .content {
+  justify-content: space-evenly;
 }
 #index #cookies-alert {
   position: fixed;
@@ -1977,7 +2037,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  z-index: 4;
+  z-index: 15;
 }
 @media screen and (min-width: 48rem) {
   #index #back-to-top-button {
