@@ -1385,31 +1385,58 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   left: 0;
   z-index: 10;
 }
-@media screen and (min-width: 48rem) {
+#index .index-img.bg1,
+#index .index-img.bg2,
+#index .index-img.bush1,
+#index .index-img.bush2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+#index .glow {
+  filter: drop-shadow(0 0 40px rgba(204, 255, 143, 0.3));
+}
+#index #index-text-section {
+  /*
+  mask: url("../images/index/mask1.svg"),
+      linear-gradient(#000 0 0);
+  mask-size: calc(100% + 1rem); //1rem kompenzuje scrollbar
+  mask-position: center bottom;
+  mask-repeat: no-repeat;
+  mask-composite: exclude;
+  */
+  background: var(--c-bgd2);
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(15rem, 45vh) minmax(5rem, 25vh) minmax(20rem, 60vh);
+  grid-template-columns: 1fr;
+}
+@media screen and (min-width: 36rem) {
   #index #index-text-section {
-    display: grid;
-    grid-template-columns: 2fr 1fr 3fr;
-    grid-template-rows: 1fr 6fr 1fr;
+    grid-template-rows: minmax(15rem, 45vh) minmax(5rem, 15vh) minmax(18rem, 50vh);
   }
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section {
-    grid-template-columns: 4fr 1fr 3fr;
-    grid-template-rows: 1fr 6fr 1fr;
+    grid-template-columns: 4fr 6fr 4fr;
+    grid-template-rows: minmax(15rem, 20vh) minmax(5rem, 35vh) minmax(10rem, 30vh);
   }
 }
 #index #index-text-section > .content {
+  grid-row: 1/3;
   padding: 3rem 1.6rem;
   text-align: center;
 }
 @media screen and (min-width: 36rem) {
   #index #index-text-section > .content {
-    padding: 3rem 3rem;
+    padding: 3rem 2rem;
   }
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section > .content {
-    padding: 3rem 4rem;
+    padding: 3rem 5rem;
     grid-row: 1/3;
     grid-column: 1/3;
     text-align: justify;
@@ -1417,85 +1444,147 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 @media screen and (min-width: 60rem) {
   #index #index-text-section > .content {
-    padding: 4rem 6rem;
+    padding: 4rem 5rem;
   }
 }
 @media screen and (min-width: 75rem) {
   #index #index-text-section > .content {
-    padding: 4rem 10rem;
+    padding: 4rem 8rem;
   }
 }
-#index #index-text-section > .content p {
+#index #index-text-section > .content {
   font-size: 1.4rem;
-  margin-bottom: 0.4rem;
+}
+@media screen and (min-width: 60rem) {
+  #index #index-text-section > .content {
+    font-size: 1.6rem;
+  }
+}
+#index #index-text-section > .content h1 {
+  margin-top: 0;
+}
+#index #index-text-section > .content p {
+  margin-bottom: 1.6rem;
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section > .content p {
-    font-size: 1.6rem;
     text-align: left;
   }
 }
-@media screen and (min-width: 60rem) {
-  #index #index-text-section > .content p {
-    font-size: 1.8rem;
-  }
+#index #index-text-section > .content {
+  z-index: 10;
 }
-#index #index-text-section > .content .btn {
-  font-size: 1.6rem;
-  padding: 0.4rem;
-  text-decoration: none;
-}
-@media screen and (min-width: 48rem) {
-  #index #index-text-section > .content .btn {
-    font-size: 1.8rem;
-  }
-}
-@media screen and (min-width: 60rem) {
-  #index #index-text-section > .content .btn {
-    font-size: 2rem;
-  }
-}
-#index #index-text-section #leaf-guy {
-  width: 100%;
+#index #index-text-section .index-img.bg1 {
+  grid-row: 3/4;
+  background: url("../images/index/bg3.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position-y: bottom;
+  transform: scaleX(-1);
 }
 @media screen and (min-width: 48rem) {
-  #index #index-text-section #leaf-guy {
-    grid-row: 2/4;
+  #index #index-text-section .index-img.bg1 {
     grid-column: 2/4;
-    align-self: end;
-    justify-self: end;
+    grid-row: 2/4;
+    background-size: 100%;
+    transform: scaleX(-1) scaleY(90%) translateY(5%);
   }
 }
-@media screen and (max-width: 48rem) {
-  #index #index-text-section #leaf-guy {
-    position: relative;
-    bottom: -5px;
+#index #index-text-section .index-img.bg2 {
+  grid-row: 2/4;
+  mask-image: url("../images/index/bg6.svg");
+  mask-repeat: no-repeat;
+  background: #366e11;
+  opacity: 50%;
+  mask-size: 70%;
+  mask-position: 110% bottom;
+}
+#index #index-text-section .index-img.chs {
+  grid-row: 3/4;
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+  transform: translateY(5%);
+}
+@media screen and (min-width: 48rem) {
+  #index #index-text-section .index-img.chs {
+    grid-column: 3/4;
+    grid-row: 2/4;
+    right: 5%;
   }
 }
-#index #index-buttons-section {
-  background: var(--c-side-panel);
-  padding: 3rem 1rem;
-}
-@media screen and (min-width: 36rem) {
-  #index #index-buttons-section {
-    padding: 3rem 3rem;
+@media screen and (min-width: 60rem) {
+  #index #index-text-section .index-img.chs {
+    grid-column: 2/4;
+    grid-row: 2/4;
   }
 }
-#index #index-buttons-section .content {
+@media screen and (min-width: 75rem) {
+  #index #index-text-section .index-img.chs {
+    grid-column: 2/4;
+    grid-row: 2/4;
+    right: 15%;
+  }
+}
+#index #index-text-section .index-img.chs img {
+  height: 25rem;
+}
+@media screen and (min-width: 60rem) {
+  #index #index-text-section .index-img.chs img {
+    height: 30rem;
+  }
+}
+#index #index-text-section .buttons {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  flex-grow: 1;
 }
-#index #index-buttons-section .content .btn {
-  width: 100%;
-  margin: 1rem 0;
-  font-size: 1.4rem;
-  max-width: 10em;
+#index #index-text-section .buttons .btn {
+  margin-bottom: 0.8em;
 }
-@media screen and (min-width: 22.5rem) {
-  #index #index-buttons-section .content .btn {
-    font-size: 1.8rem;
+@media screen and (min-width: 36rem) {
+  #index #index-text-section .buttons .btn:not(:last-child) {
+    margin-right: 0.6em;
   }
+}
+@media screen and (min-width: 36rem) {
+  #index #index-text-section .buttons {
+    flex-direction: row;
+    flex-shrink: 1;
+  }
+}
+@media screen and (min-width: 48rem) {
+  #index #index-text-section .buttons {
+    flex-wrap: wrap;
+  }
+}
+#index #info-text-wrapper {
+  position: relative;
+  top: -4rem;
+}
+#index .dummy-block {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4rem;
+  z-index: -1;
+  background: #282828;
+}
+#index .divider {
+  height: 4rem;
+  background: #222;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  z-index: 15;
+}
+#index .divider:nth-of-type(1) {
+  mask-image: url("../images/index/mask1.svg");
+  mask-position: bottom center;
+}
+#index .divider:nth-of-type(3) {
+  transform: translateY(-1px);
+  mask-image: url("../images/index/mask2.svg");
+  mask-position: top center;
 }
 #index #index-info-section {
   width: 100%;
@@ -1510,6 +1599,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 #index #index-info-section .app-info {
   position: relative;
+  margin-top: 8rem;
 }
 #index #index-info-section #info-icons {
   margin: 3rem auto;
@@ -1518,14 +1608,22 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   margin-bottom: 2.8rem;
 }
 #index #index-info-section #info-text {
-  padding-bottom: 4rem;
+  background: #222;
+  color: #eee;
+  width: 100%;
+  margin: auto;
+  position: relative;
+  z-index: 8;
+  border-top: 3.2rem solid #222;
+  border-bottom: 3.2rem solid #222;
+}
+#index #index-info-section #info-text p {
   width: 90vw;
-  max-width: 900px;
+  max-width: 50rem;
   margin: auto;
 }
-#index #index-info-section .glow {
-  filter: drop-shadow(0 0 40px rgba(204, 255, 143, 0.3));
-  z-index: -1;
+#index #index-info-section #info-icons {
+  margin-top: -8rem;
 }
 #index #index-info-section section {
   position: relative;
@@ -1564,10 +1662,16 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     max-width: 22rem;
   }
 }
+#index #index-info-section section:nth-of-type(1) {
+  top: calc(-4rem - 1px);
+  padding-top: 2rem;
+}
+#index #index-info-section section:nth-of-type(3) {
+  top: -12rem;
+  padding-top: 6rem;
+}
 #index #index-info-section section:nth-of-type(1), #index #index-info-section section:nth-of-type(3) {
   background-color: var(--c-bgd2);
-  top: -4rem;
-  padding-top: 4rem;
   z-index: 5;
 }
 @media screen and (min-width: 48rem) {
@@ -1581,13 +1685,18 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   #index #index-info-section section:nth-of-type(1) .info-tile, #index #index-info-section section:nth-of-type(3) .info-tile {
     position: absolute;
     right: 15%;
-    top: 15%;
+    top: 20%;
   }
+}
+#index #index-info-section section:nth-of-type(2) {
+  margin-top: -4rem;
+}
+#index #index-info-section section:nth-of-type(4) {
+  margin-top: -12rem;
 }
 #index #index-info-section section:nth-of-type(2), #index #index-info-section section:nth-of-type(4) {
   background-color: var(--c-bgd);
   z-index: 6;
-  margin-top: -4rem;
 }
 #index #index-info-section section:nth-of-type(2) .index-img, #index #index-info-section section:nth-of-type(4) .index-img {
   right: 0;
@@ -1621,8 +1730,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   background-position-y: bottom;
   mask-repeat: no-repeat;
   mask-position: bottom center;
-  position: absolute;
-  bottom: 0;
 }
 #index #index-info-section section .index-img.chars {
   position: absolute;
@@ -1639,8 +1746,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   }
 }
 #index #index-info-section section .index-img.bg1 {
-  width: 100%;
-  height: 100%;
   transform: translateY(5%);
 }
 @media screen and (min-width: 48rem) {
@@ -1670,8 +1775,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   }
 }
 #index #index-info-section section .index-img.bg2 {
-  width: 100%;
-  height: 100%;
   z-index: 8;
 }
 #index #index-info-section section .index-img.bush1,
@@ -1686,8 +1789,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 #index #index-info-section section .index-img.bush1,
 #index #index-info-section section .index-img.bush2 {
-  width: 100%;
-  height: 100%;
   opacity: 70%;
   z-index: 9;
 }
@@ -1769,6 +1870,11 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   right: 10%;
 }
 @media screen and (min-width: 60rem) {
+  #index #index-info-section section:nth-of-type(2) .index-img.chars {
+    right: 20%;
+  }
+}
+@media screen and (min-width: 75rem) {
   #index #index-info-section section:nth-of-type(2) .index-img.chars {
     right: 25%;
   }

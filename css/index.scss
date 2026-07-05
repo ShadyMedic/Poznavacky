@@ -55,95 +55,187 @@ html:has(#index) {
         z-index: 10;
     }
 
+    .index-img.bg1,
+    .index-img.bg2,
+    .index-img.bush1,
+    .index-img.bush2 {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .glow {
+        filter: drop-shadow(0 0 40px rgba(rgb(204, 255, 143),0.3));
+    }
+
     #index-text-section {
-        @media screen and (min-width: $tablet) {
-            display: grid;
-            grid-template-columns: 2fr 1fr 3fr;
-            grid-template-rows: 1fr 6fr 1fr;
+        /*
+        mask: url("../images/index/mask1.svg"),
+            linear-gradient(#000 0 0);
+        mask-size: calc(100% + 1rem); //1rem kompenzuje scrollbar
+        mask-position: center bottom;
+        mask-repeat: no-repeat;
+        mask-composite: exclude;
+        */
+
+        background: var(--c-bgd2);
+
+        position: relative;
+        display: grid;
+        grid-template-rows: minmax(15rem, 45vh) minmax(5rem, 25vh) minmax(20rem, 60vh);
+        grid-template-columns: 1fr;
+        @media screen and (min-width: $mobile) {
+            grid-template-rows: minmax(15rem, 45vh) minmax(5rem, 15vh) minmax(18rem, 50vh);
         }
         @media screen and (min-width: $tablet) {
-            grid-template-columns: 4fr 1fr 3fr;
-            grid-template-rows: 1fr 6fr 1fr;
+            grid-template-columns: 4fr 6fr 4fr;
+            grid-template-rows: minmax(15rem, 20vh) minmax(5rem, 35vh) minmax(10rem, 30vh);
         }
+        
         > .content {
+            grid-row: 1/3;
             padding: 3rem 1.6rem;
             text-align: center;
             @media screen and (min-width: $mobile) {
-                padding: 3rem 3rem;
+                padding: 3rem 2rem;
             }
             @media screen and (min-width: $tablet) {
-                padding: 3rem 4rem;
+                padding: 3rem 5rem;
                 grid-row: 1/3;
                 grid-column: 1/3;
                 text-align: justify;
             }
             @media screen and (min-width: $smallDesktop) {
-                padding: 4rem 6rem;
+                padding: 4rem 5rem;
             }
             @media screen and (min-width: $desktop) {
-                padding: 4rem 10rem;
+                padding: 4rem 8rem;
+            }
+            font-size: 1.4rem;
+            @media screen and (min-width: $smallDesktop) {
+                font-size: 1.6rem;
+            }
+            h1 {
+                margin-top: 0;
             }
             p {
-                font-size: 1.4rem;
-                margin-bottom: 0.4rem;
+                margin-bottom: 1.6rem;
                 @media screen and (min-width: $tablet) {
-                    font-size: 1.6rem;
                     text-align: left;
                 }
-                @media screen and (min-width: $smallDesktop) {
-                    font-size: 1.8rem;
-                }
             }
-            .btn {
-                font-size: 1.6rem;
-                padding: 0.4rem;
-                text-decoration: none;
-                @media screen and (min-width: $tablet) {
-                    font-size: 1.8rem;
-                }
+            z-index: 10;
+        }
+
+        .index-img.bg1 {
+            grid-row: 3/4;
+            background: url("../images/index/bg3.svg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-position-y: bottom;
+            transform: scaleX(-1);
+            @media screen and (min-width: $tablet) {
+                grid-column: 2/4;
+                grid-row: 2/4;
+                background-size: 100%;
+                transform: scaleX(-1) scaleY(90%) translateY(5%);
+            } 
+        }
+
+        .index-img.bg2 {
+            grid-row: 2/4;
+            mask-image: url("../images/index/bg6.svg");
+            mask-repeat: no-repeat;
+            background: $greenDark;
+            opacity: 50%;
+            mask-size: 70%;
+            mask-position: 110% bottom;
+        }
+        
+        .index-img.chs {
+            grid-row: 3/4;
+            position: absolute;
+            bottom: 0;
+            right: 10%;
+            transform: translateY(5%);
+            @media screen and (min-width: $tablet) {
+                grid-column: 3/4;
+                grid-row: 2/4;
+                right: 5%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                grid-column: 2/4;
+                grid-row: 2/4;
+            }
+            @media screen and (min-width: $desktop) {
+                grid-column: 2/4;
+                grid-row: 2/4;
+                right: 15%;
+            }
+            img {
+                height: 25rem;
                 @media screen and (min-width: $smallDesktop) {
-                    font-size: 2rem;
+                    height: 30rem;
                 }
             }
         }
-        #leaf-guy {
-            width: 100%; 
-            @media screen and (min-width: $tablet) {
-                grid-row: 2/4;
-                grid-column: 2/4;
-                align-self: end;
-                justify-self: end;
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            .btn {
+                margin-bottom: 0.8em;
+                @media screen and (min-width: $mobile) {
+                    &:not(:last-child) {
+                        margin-right: 0.6em;
+                    }
+                }
             }
-            @media screen and (max-width: $tablet) {
-                position: relative;
-                bottom: -5px; //z neznámého důvodu je jinak pod obrázkem prázdné místo
+            @media screen and (min-width: $mobile) {
+                flex-direction: row;
+                flex-shrink: 1;
+            }
+            @media screen and (min-width: $tablet) {
+                flex-wrap: wrap;
             }
         }
     }
 
-    #index-buttons-section {
-        background: var(--c-side-panel);
-        padding: 3rem 1rem;
-        @media screen and (min-width: $mobile) {
-            padding: 3rem 3rem;
+    #info-text-wrapper {
+        position: relative;
+        top: -4rem;
+        //background: #282828;
+    }
+    .dummy-block {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 4rem;
+        z-index: -1;
+        background: #282828;
+    }
+    .divider {
+        height: 4rem;
+        background: $gray1;
+        mask-repeat: no-repeat;
+        mask-size: cover;
+        z-index: 15;
+        &:nth-of-type(1) {
+            mask-image: url("../images/index/mask1.svg");
+            mask-position: bottom center;
         }
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .btn {
-                width: 100%;
-                margin: 1rem 0;
-                font-size: 1.4rem;
-                max-width: 10em;
-                @media screen and (min-width: $smallMobile) {
-                    font-size: 1.8rem;
-                }
-            }
+        &:nth-of-type(3) {
+            transform: translateY(-1px);
+            mask-image: url("../images/index/mask2.svg");
+            mask-position: top center;
         }
     }
 
     #index-info-section {
+        
         width: 100%;
         margin: auto;
         h3 {
@@ -155,6 +247,7 @@ html:has(#index) {
         }
         .app-info {
             position: relative;
+            margin-top: 8rem;
         }
         #info-icons {
             margin: 3rem auto;
@@ -163,16 +256,24 @@ html:has(#index) {
             }
         }
 
-        #info-text{
-            padding-bottom: 4rem;
-            width: 90vw;
-            max-width: 900px;
+        #info-text {
+            background: $gray1;
+            color: $textWhite;
+            width: 100%;
             margin: auto;
+            position: relative;
+            z-index: 8;
+            border-top: 3.2rem solid $gray1;
+            border-bottom: 3.2rem solid $gray1;
+            p {
+                width: 90vw;
+                max-width: 50rem;
+                margin: auto;
+            }
         }
 
-        .glow {
-            filter: drop-shadow(0 0 40px rgba(rgb(204, 255, 143),0.3));
-            z-index: -1;
+        #info-icons {
+            margin-top: -8rem;
         }
 
         section {
@@ -205,11 +306,18 @@ html:has(#index) {
                 }
             }
             
+            &:nth-of-type(1) {
+                top: calc(-4rem - 1px);
+                padding-top: 2rem;
+            }
+            &:nth-of-type(3) {
+                top: -12rem;
+                padding-top: 6rem;
+            }
+
             &:nth-of-type(1),
             &:nth-of-type(3) {
                 background-color: var(--c-bgd2);
-                top: -4rem;
-                padding-top: 4rem;
                 z-index: 5;
                 .info-tile {
                     @media screen and (min-width: $tablet) {
@@ -220,15 +328,22 @@ html:has(#index) {
                     @media screen and (min-width: $smallDesktop) {
                         position: absolute;
                         right: 15%;
-                        top: 15%;
+                        top: 20%;
                     }
                 }
             }
+            &:nth-of-type(2) {
+                margin-top: -4rem;
+            }
+            &:nth-of-type(4) {
+                margin-top: -12rem;
+            }
+
             &:nth-of-type(2),
             &:nth-of-type(4) {
                 background-color: var(--c-bgd);
                 z-index: 6;
-                margin-top: -4rem;
+                
                 .index-img {
                     right: 0;
                 }
@@ -260,9 +375,8 @@ html:has(#index) {
                 background-position-y: bottom;
                 mask-repeat: no-repeat;
                 mask-position: bottom center;
-                position: absolute;
-                bottom: 0;
             }
+
             .index-img.chars {
                 position: absolute;
                 bottom: 0;
@@ -274,8 +388,6 @@ html:has(#index) {
                 @media screen and (min-width: $smallDesktop) {
                     background-size: 80%;
                 }
-                width: 100%;
-                height: 100%;
                 transform: translateY(5%);
                 @media screen and (min-width: $tablet) {
                     transform: scaleY(90%) translateY(15%);
@@ -293,8 +405,6 @@ html:has(#index) {
                 @media screen and (min-width: $tablet) {
                     mask-size: 65%;
                 }
-                width: 100%;
-                height: 100%;
                 z-index: 8;
             }
             .index-img.bush1,
@@ -303,12 +413,11 @@ html:has(#index) {
                 @media screen and (min-width: $smallDesktop) {
                     background-size: 80%;
                 }
-                width: 100%;
-                height: 100%;
                 opacity: 70%;
                 z-index: 9;
             }  
 
+            // ---------------------- zde pozicování jednotlivých grafik ----------------------
             &:nth-of-type(1) {
                 mask-image: url("../images/index/clip1.svg");
                 .index-img.chars {
@@ -372,6 +481,9 @@ html:has(#index) {
                 .index-img.chars {
                     right: 10%;
                     @media screen and (min-width: $smallDesktop) {
+                        right: 20%;
+                    }
+                    @media screen and (min-width: $desktop) {
                         right: 25%;
                     }
                 }
@@ -504,6 +616,7 @@ html:has(#index) {
                     }
                 }
             }
+            // --------------------------------------------------------------------------------
         }
         /*
         #info-icons {
