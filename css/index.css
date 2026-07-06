@@ -1386,7 +1386,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   z-index: 10;
 }
 #index {
-  --c-divider-height: 4rem;
+  --c-divider-height: 2rem;
+}
+@media screen and (min-width: 48rem) {
+  #index {
+    --c-divider-height: 4rem;
+  }
 }
 #index .divider {
   height: var(--c-divider-height);
@@ -1400,12 +1405,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index .divider.top {
   top: calc(-1 * var(--c-divider-height));
   mask-position: bottom center;
-  transform: translateY(1px);
+  transform: translateY(2px);
 }
 #index .divider.bottom {
   bottom: calc(-1 * var(--c-divider-height));
   mask-position: top center;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 #index .index-img.bg1,
 #index .index-img.bg2,
@@ -1413,22 +1418,24 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index .index-img.bush2 {
   position: absolute;
   bottom: 0;
-  right: 0;
   width: 100%;
   height: 100%;
+  background-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-position-y: bottom;
+  mask-position: bottom center;
+  pointer-events: none;
+}
+#index .index-img.chs {
+  position: absolute;
+  bottom: 0;
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
 #index .glow {
   filter: drop-shadow(0 0 40px rgba(204, 255, 143, 0.3));
 }
 #index #index-text-section {
-  /*
-  mask: url("../images/index/mask1.svg"),
-      linear-gradient(#000 0 0);
-  mask-size: calc(100% + 1rem); //1rem kompenzuje scrollbar
-  mask-position: center bottom;
-  mask-repeat: no-repeat;
-  mask-composite: exclude;
-  */
   background: var(--c-bgd2);
   position: relative;
   display: grid;
@@ -1496,14 +1503,36 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-text-section > .content {
   z-index: 10;
 }
+#index #index-text-section .buttons {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#index #index-text-section .buttons .btn {
+  margin-bottom: 0.8em;
+}
+@media screen and (min-width: 36rem) {
+  #index #index-text-section .buttons .btn:not(:last-child) {
+    margin-right: 0.6em;
+  }
+}
+@media screen and (min-width: 36rem) {
+  #index #index-text-section .buttons {
+    flex-direction: row;
+    flex-shrink: 1;
+  }
+}
+@media screen and (min-width: 48rem) {
+  #index #index-text-section .buttons {
+    flex-wrap: wrap;
+  }
+}
 #index #index-text-section .index-img.bg1 {
   grid-row: 3/4;
-  background: url("../images/index/bg3.svg");
-  background-repeat: no-repeat;
+  background-image: url("../images/index/bg3.svg");
   background-size: 100%;
   background-position-y: bottom;
   transform: scaleX(-1);
-  pointer-events: none;
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section .index-img.bg1 {
@@ -1516,20 +1545,15 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-text-section .index-img.bg2 {
   grid-row: 2/4;
   mask-image: url("../images/index/bg6.svg");
-  mask-repeat: no-repeat;
   background: #366e11;
   opacity: 50%;
   mask-size: 70%;
   mask-position: 110% bottom;
-  pointer-events: none;
 }
 #index #index-text-section .index-img.chs {
   grid-row: 3/4;
-  position: absolute;
-  bottom: 0;
   right: 10%;
   transform: translateY(5%);
-  pointer-events: none;
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section .index-img.chs {
@@ -1559,39 +1583,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     height: 30rem;
   }
 }
-#index #index-text-section .buttons {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-#index #index-text-section .buttons .btn {
-  margin-bottom: 0.8em;
-}
-@media screen and (min-width: 36rem) {
-  #index #index-text-section .buttons .btn:not(:last-child) {
-    margin-right: 0.6em;
-  }
-}
-@media screen and (min-width: 36rem) {
-  #index #index-text-section .buttons {
-    flex-direction: row;
-    flex-shrink: 1;
-  }
-}
-@media screen and (min-width: 48rem) {
-  #index #index-text-section .buttons {
-    flex-wrap: wrap;
-  }
-}
-#index #info-text-wrapper {
-  position: relative;
-}
-#index #info-text-wrapper .divider:nth-of-type(1) {
-  mask-image: url("../images/index/mask1.svg");
-}
-#index #info-text-wrapper .divider:nth-of-type(2) {
-  mask-image: url("../images/index/mask2.svg");
-}
 #index #index-info-section {
   width: 100%;
   margin: auto;
@@ -1606,13 +1597,8 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-info-section #info-icons p {
   margin-bottom: 2.8rem;
 }
-#index #index-info-section #info-icons .divider {
-  position: absolute;
-  top: -4rem;
-  height: 4rem;
-  width: 100%;
-}
 #index #index-info-section #info-text {
+  position: relative;
   background: #222;
   color: #eee;
   width: 100%;
@@ -1625,6 +1611,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   width: 90vw;
   max-width: 50rem;
   margin: auto;
+}
+#index #index-info-section #info-text .divider:nth-of-type(1) {
+  mask-image: url("../images/index/mask1.svg");
+}
+#index #index-info-section #info-text .divider:nth-of-type(2) {
+  mask-image: url("../images/index/mask2.svg");
 }
 #index #index-info-section section.app-info {
   position: relative;
@@ -1639,14 +1631,8 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info {
-    height: 520px;
+    height: 32rem;
   }
-}
-#index #index-info-section section.app-info {
-  mask-size: cover;
-  mask-position: bottom center;
-  mask-repeat: no-repeat;
-  box-sizing: content-box;
 }
 #index #index-info-section section.app-info .info-tile {
   margin: auto;
@@ -1706,6 +1692,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 }
 #index #index-info-section section.app-info:nth-of-type(1) {
   z-index: 6;
+}
+#index #index-info-section section.app-info:nth-of-type(1) .divider {
+  mask-image: none;
+  background-color: var(--c-bgd2);
+}
+#index #index-info-section section.app-info:nth-of-type(1) {
   padding-top: var(--c-divider-height);
 }
 #index #index-info-section section.app-info:nth-of-type(2) {
@@ -1729,22 +1721,9 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   mask-image: url("../images/index/mask5.svg");
   background-color: var(--c-bgd);
 }
-#index #index-info-section section.app-info .index-img.bg1,
-#index #index-info-section section.app-info .index-img.bg2,
-#index #index-info-section section.app-info .index-img.bush1,
-#index #index-info-section section.app-info .index-img.bush2 {
-  background-repeat: no-repeat;
-  background-position-y: bottom;
-  mask-repeat: no-repeat;
-  mask-position: bottom center;
-  pointer-events: none;
-}
-#index #index-info-section section.app-info .index-img.chars {
-  position: absolute;
-  bottom: 0;
+#index #index-info-section section.app-info .index-img.chs {
   transform: scale(80%) translateY(20%);
   z-index: 10;
-  pointer-events: none;
 }
 #index #index-info-section section.app-info .index-img.bg1 {
   background-size: 95%;
@@ -1801,11 +1780,11 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   opacity: 70%;
   z-index: 9;
 }
-#index #index-info-section section.app-info:nth-of-type(1) .index-img.chars {
+#index #index-info-section section.app-info:nth-of-type(1) .index-img.chs {
   left: 5%;
 }
 @media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(1) .index-img.chars {
+  #index #index-info-section section.app-info:nth-of-type(1) .index-img.chs {
     left: 10%;
   }
 }
@@ -1869,16 +1848,16 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     background-position-y: 120%;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(2) .index-img.chars {
+#index #index-info-section section.app-info:nth-of-type(2) .index-img.chs {
   right: 10%;
 }
 @media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(2) .index-img.chars {
+  #index #index-info-section section.app-info:nth-of-type(2) .index-img.chs {
     right: 20%;
   }
 }
 @media screen and (min-width: 75rem) {
-  #index #index-info-section section.app-info:nth-of-type(2) .index-img.chars {
+  #index #index-info-section section.app-info:nth-of-type(2) .index-img.chs {
     right: 25%;
   }
 }
@@ -1917,12 +1896,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     background-position-x: 200%;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(3) .index-img.chars {
+#index #index-info-section section.app-info:nth-of-type(3) .index-img.chs {
   left: 10%;
   bottom: 5%;
 }
 @media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(3) .index-img.chars {
+  #index #index-info-section section.app-info:nth-of-type(3) .index-img.chs {
     left: 20%;
   }
 }
@@ -1976,11 +1955,11 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     background-position-x: 0;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(4) .index-img.chars {
+#index #index-info-section section.app-info:nth-of-type(4) .index-img.chs {
   right: 5%;
 }
 @media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(4) .index-img.chars {
+  #index #index-info-section section.app-info:nth-of-type(4) .index-img.chs {
     right: 15%;
   }
 }
@@ -2031,46 +2010,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   #index #index-info-section section.app-info:nth-of-type(4) .index-img.bush2 {
     background-size: 35%;
   }
-}
-#index #index-info-section {
-  /*
-  #info-icons {
-      @media screen and (min-width: $mobile) {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          grid-template-rows: auto auto auto auto;
-          column-gap: 2rem;
-      }
-      margin: 1rem 0;
-      .info-tile {
-          max-width: 22.5rem;
-          margin: 0 auto;
-      }
-      #new-class-info {
-          @media screen and (min-width: $mobile) {
-              grid-column: 1/2;
-              grid-row: 2/3;
-          }
-      }
-      #learn-info {
-          @media screen and (min-width: $mobile) {
-              grid-column: 1/2;
-              grid-row: 4/5;
-          }
-      }
-      img {
-          display: block;
-          padding-top: 3.2rem;
-          @media screen and (min-width: $mobile) {
-              align-self: end;
-          }
-      }
-      div {
-          @media screen and (min-width: $mobile) {
-              align-self: start;
-          }
-      }
-  }*/
 }
 #index #index-login-section {
   display: grid;
