@@ -1538,7 +1538,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   #index #index-text-section .index-img.bg1 {
     grid-column: 2/4;
     grid-row: 2/4;
-    background-size: 100%;
     transform: scaleX(-1) scaleY(90%) translateY(5%);
   }
 }
@@ -1547,8 +1546,29 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   mask-image: url("../images/index/bg6.svg");
   background: #366e11;
   opacity: 50%;
-  mask-size: 70%;
-  mask-position: 110% bottom;
+  mask-size: 95%;
+  mask-position: 80% bottom;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-text-section .index-img.bg2 {
+    mask-size: 70%;
+    mask-position: 110% bottom;
+  }
+}
+#index #index-text-section .index-img.bush1 {
+  grid-row: 3/4;
+  background-image: url("../images/index/bush3.svg");
+  background-size: 90%;
+  background-position-y: bottom;
+  background-position-x: 280%;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-text-section .index-img.bush1 {
+    grid-column: 2/4;
+    grid-row: 2/4;
+    background-size: 70%;
+    background-position-x: 90%;
+  }
 }
 #index #index-text-section .index-img.chs {
   grid-row: 3/4;
