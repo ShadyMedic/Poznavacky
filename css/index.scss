@@ -2,6 +2,206 @@
 @import "_generic.scss";
 @import "_unlogged.scss";
 
+@mixin app-info-positioning { // extends the section.app-info
+    // ---------------------- zde pozicování jednotlivých grafik ----------------------
+    &:nth-of-type(1) {
+        .index-img.chars {
+            left: 5%;
+            @media screen and (min-width: $smallDesktop) {
+                left: 10%;
+            }
+        }
+        .index-img.bg1 {
+            background-image: url("../images/index/bg1.svg");
+            background-position-x: left;
+            background-position-y: 90%;
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg4.svg");
+            background: $greenDark;
+            opacity: 50%;
+            mask-position: 10% bottom;
+            @media screen and (min-width: $tablet) {
+                mask-position: -10% bottom;
+            }
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush7.svg");
+            background-size: 80%;
+            background-position-x: -200%;
+            background-position-y: 110%;
+            @media screen and (min-width: $tablet) {
+                background-size: 60%;
+                background-position-x: -50%;
+                background-position-y: 100%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 40%;
+                background-position-x: -10%;   
+            }
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush2.svg");
+            background-size: 60%;
+            background-position-x: 80%;
+            background-position-y: 100%;
+            @media screen and (min-width: $tablet) {
+                background-size: 60%;
+                background-position-x: 100%;
+                background-position-y: 120%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 40%; 
+                background-position-x: 80%;
+                background-position-y: 110%;
+            }
+            @media screen and (min-width: $desktop) {
+                background-position-y: 120%;
+            }
+        }
+    }
+
+    &:nth-of-type(2) {
+        .index-img.chars {
+            right: 10%;
+            @media screen and (min-width: $smallDesktop) {
+                right: 20%;
+            }
+            @media screen and (min-width: $desktop) {
+                right: 25%;
+            }
+        }
+        .index-img.bg1 {
+            background-image: url("../images/index/bg2.svg");
+            background-position-x: left;
+            right: 0;
+            transform: scaleX(-1)
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg6.svg");
+            background: $greenDark;
+            opacity: 90%;
+            mask-position: 120% bottom;
+            transform: scaleY(130%) translateY(-5%);
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush2.svg");
+            background-size: 50%;
+            background-position-x: 20%;
+            @media screen and (min-width: $tablet) {
+                background-size: 45%;
+                background-position-x: 50%;
+            }
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush1.svg");
+            background-size: 90%;
+            background-position-x: 450%;
+            @media screen and (min-width: $tablet) {
+                background-size: 60%;
+                background-position-x: 200%;
+            }
+        }
+    }
+
+    &:nth-of-type(3) {
+        .index-img.chars {
+            left: 10%;
+            bottom: 5%;
+            @media screen and (min-width: $smallDesktop) {
+                left: 20%;
+            }
+        }
+        .index-img.bg1 {
+            background-image: url("../images/index/bg3.svg");
+            background-position-x: left;
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg8.svg");
+            background: $greenDark;
+            opacity: 90%;
+            mask-position: 700% bottom;
+            @media screen and (min-width: $tablet) {
+                mask-position: 120% bottom;
+            }
+            transform: scaleX(-1);
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush3.svg");
+            background-size: 70%;
+            background-position-x: 20%;
+            background-position-y: 100%;
+            @media screen and (min-width: $tablet) {
+                background-size: 50%;
+                background-position-x: 30%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 35%;
+                background-position-x: 40%;
+            }
+            transform: scaleX(-1);
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush6.svg");
+            background-size: 50%;
+            background-position-x: -20%;
+            @media screen and (min-width: $tablet) {
+                background-size: 30%;
+                background-position-x: 0;
+            }
+        }
+    }
+
+    &:nth-of-type(4) {
+        .index-img.chars {
+            right: 5%;
+            @media screen and (min-width: $smallDesktop) {
+                right: 15%;
+            }
+        }
+        .index-img.bg1 {
+            background-image: url("../images/index/bg5.svg");
+            right: 0;
+            background-position-x: right;
+            transform: scaleY(85%) translateY(10%);
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg11.svg");
+            background: $greenDark;
+            opacity: 90%;
+            mask-position: 30% bottom;
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush5.svg");
+            background-size: 90%;
+            background-position-x: -350%;
+            @media screen and (min-width: $tablet) {
+                background-size: 75%;
+                background-position-x: -150%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 60%;
+                background-position-x: -30%;
+            }
+            transform: scaleX(-1);
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush4.svg");
+            background-size: 55%;
+            background-position-x: 15%;
+            @media screen and (min-width: $tablet) {
+                background-size: 45%;
+                background-position-x: 25%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 35%;
+            }
+        }
+    }
+    // --------------------------------------------------------------------------------
+}
+
+
 html:has(#index) {
     @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
 }
@@ -53,6 +253,27 @@ html:has(#index) {
         right: 0;
         left: 0;
         z-index: 10;
+    }
+
+    --c-divider-height: 4rem;
+    .divider {
+        height: var(--c-divider-height);
+        background: $gray1;
+        position: absolute;
+        width: calc(100% + 2rem);
+        mask-repeat: no-repeat;
+        mask-size: 100% 100%;
+        z-index: 15;
+        &.top {
+            top: calc( -1 * var(--c-divider-height) );
+            mask-position: bottom center;
+            transform: translateY(1px); // jinak se renderuje s divnou škvírou
+        }
+        &.bottom {
+            bottom: calc( -1 * var(--c-divider-height) );
+            mask-position: top center;
+            transform: translateY(-1px); // jinak se renderuje s divnou škvírou
+        }
     }
 
     .index-img.bg1,
@@ -206,33 +427,16 @@ html:has(#index) {
 
     #info-text-wrapper {
         position: relative;
-        top: -4rem;
-        //background: #282828;
-    }
-    .dummy-block {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 4rem;
-        z-index: -1;
-        background: #282828;
-    }
-    .divider {
-        height: 4rem;
-        background: $gray1;
-        mask-repeat: no-repeat;
-        mask-size: cover;
-        z-index: 15;
-        &:nth-of-type(1) {
-            mask-image: url("../images/index/mask1.svg");
-            mask-position: bottom center;
-        }
-        &:nth-of-type(3) {
-            transform: translateY(-1px);
-            mask-image: url("../images/index/mask2.svg");
-            mask-position: top center;
+        .divider {
+            &:nth-of-type(1) {
+                mask-image: url("../images/index/mask1.svg");
+            }
+            &:nth-of-type(2) {
+                mask-image: url("../images/index/mask2.svg");
+            }
         }
     }
+    
 
     #index-info-section {
         
@@ -245,14 +449,15 @@ html:has(#index) {
         p {
             font-size: 1.24rem;
         }
-        .app-info {
-            position: relative;
-            margin-top: 8rem;
-        }
         #info-icons {
-            margin: 3rem auto;
             p {
                 margin-bottom: 2.8rem;
+            }
+            .divider {
+                position: absolute;
+                top: -4rem;
+                height: 4rem;
+                width: 100%;
             }
         }
 
@@ -263,8 +468,7 @@ html:has(#index) {
             margin: auto;
             position: relative;
             z-index: 8;
-            border-top: 3.2rem solid $gray1;
-            border-bottom: 3.2rem solid $gray1;
+            padding: 4rem 0;
             p {
                 width: 90vw;
                 max-width: 50rem;
@@ -272,11 +476,7 @@ html:has(#index) {
             }
         }
 
-        #info-icons {
-            margin-top: -8rem;
-        }
-
-        section {
+        section.app-info {
             position: relative;
             width: 100%;
             height: 70vh;
@@ -305,20 +505,10 @@ html:has(#index) {
                     max-width: 22rem;
                 }
             }
-            
-            &:nth-of-type(1) {
-                top: calc(-4rem - 1px);
-                padding-top: 2rem;
-            }
-            &:nth-of-type(3) {
-                top: -12rem;
-                padding-top: 6rem;
-            }
 
             &:nth-of-type(1),
             &:nth-of-type(3) {
                 background-color: var(--c-bgd2);
-                z-index: 5;
                 .info-tile {
                     @media screen and (min-width: $tablet) {
                         position: absolute;
@@ -332,18 +522,10 @@ html:has(#index) {
                     }
                 }
             }
-            &:nth-of-type(2) {
-                margin-top: -4rem;
-            }
-            &:nth-of-type(4) {
-                margin-top: -12rem;
-            }
 
             &:nth-of-type(2),
             &:nth-of-type(4) {
                 background-color: var(--c-bgd);
-                z-index: 6;
-                
                 .index-img {
                     right: 0;
                 }
@@ -362,9 +544,30 @@ html:has(#index) {
                     }
                 }
             }
-
+            &:nth-of-type(1) {
+                z-index: 6;
+                padding-top: var(--c-divider-height);
+            }
+            &:nth-of-type(2) {
+                z-index: 7;
+                .divider {
+                    mask-image: url("../images/index/mask3.svg");
+                    background-color: var(--c-bgd);
+                }
+            }
+            &:nth-of-type(3) {
+                z-index: 8;
+                .divider {
+                    mask-image: url("../images/index/mask4.svg");
+                    background-color: var(--c-bgd2);
+                }
+            }
             &:nth-of-type(4) {
-                margin-bottom: -6.5rem;
+                z-index: 9;
+                .divider {
+                    mask-image: url("../images/index/mask5.svg");
+                    background-color: var(--c-bgd);
+                }
             }
 
             .index-img.bg1,
@@ -417,206 +620,7 @@ html:has(#index) {
                 z-index: 9;
             }  
 
-            // ---------------------- zde pozicování jednotlivých grafik ----------------------
-            &:nth-of-type(1) {
-                mask-image: url("../images/index/clip1.svg");
-                .index-img.chars {
-                    left: 5%;
-                    @media screen and (min-width: $smallDesktop) {
-                        left: 10%;
-                    }
-                }
-                .index-img.bg1 {
-                    background-image: url("../images/index/bg1.svg");
-                    background-position-x: left;
-                    background-position-y: 90%;
-                }
-                .index-img.bg2 {
-                    mask-image: url("../images/index/bg4.svg");
-                    background: $greenDark;
-                    opacity: 50%;
-                    mask-position: 10% bottom;
-                    @media screen and (min-width: $tablet) {
-                        mask-position: -10% bottom;
-                    }
-                }
-                .index-img.bush1 {
-                    background-image: url("../images/index/bush7.svg");
-                    background-size: 80%;
-                    background-position-x: -200%;
-                    background-position-y: 110%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 60%;
-                        background-position-x: -50%;
-                        background-position-y: 100%;
-                    }
-                    @media screen and (min-width: $smallDesktop) {
-                        background-size: 40%;
-                        background-position-x: -10%;   
-                    }
-                }
-                .index-img.bush2 {
-                    background-image: url("../images/index/bush2.svg");
-                    background-size: 60%;
-                    background-position-x: 80%;
-                    background-position-y: 100%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 60%;
-                        background-position-x: 100%;
-                        background-position-y: 120%;
-                    }
-                    @media screen and (min-width: $smallDesktop) {
-                        background-size: 40%; 
-                        background-position-x: 80%;
-                        background-position-y: 110%;
-                    }
-                    @media screen and (min-width: $desktop) {
-                        background-position-y: 120%;
-                    }
-                }
-            }
-
-            &:nth-of-type(2) {
-                mask-image: url("../images/index/clip2.svg");
-                .index-img.chars {
-                    right: 10%;
-                    @media screen and (min-width: $smallDesktop) {
-                        right: 20%;
-                    }
-                    @media screen and (min-width: $desktop) {
-                        right: 25%;
-                    }
-                }
-                .index-img.bg1 {
-                    background-image: url("../images/index/bg2.svg");
-                    background-position-x: left;
-                    right: 0;
-                    transform: scaleX(-1)
-                }
-                .index-img.bg2 {
-                    mask-image: url("../images/index/bg6.svg");
-                    background: $greenDark;
-                    opacity: 90%;
-                    mask-position: 120% bottom;
-                    transform: scaleY(130%) translateY(-5%);
-                }
-                .index-img.bush1 {
-                    background-image: url("../images/index/bush2.svg");
-                    background-size: 50%;
-                    background-position-x: 20%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 45%;
-                        background-position-x: 50%;
-                    }
-                }
-                .index-img.bush2 {
-                    background-image: url("../images/index/bush1.svg");
-                    background-size: 90%;
-                    background-position-x: 450%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 60%;
-                        background-position-x: 200%;
-                    }
-                }
-            }
-
-            &:nth-of-type(3) {
-                mask-image: url("../images/index/clip3.svg");
-                .index-img.chars {
-                    left: 10%;
-                    bottom: 5%;
-                    @media screen and (min-width: $smallDesktop) {
-                        left: 20%;
-                    }
-                }
-                .index-img.bg1 {
-                    background-image: url("../images/index/bg3.svg");
-                    background-position-x: left;
-                }
-                .index-img.bg2 {
-                    mask-image: url("../images/index/bg8.svg");
-                    background: $greenDark;
-                    opacity: 90%;
-                    mask-position: 700% bottom;
-                    @media screen and (min-width: $tablet) {
-                        mask-position: 120% bottom;
-                    }
-                    transform: scaleX(-1);
-                }
-                .index-img.bush1 {
-                    background-image: url("../images/index/bush3.svg");
-                    background-size: 70%;
-                    background-position-x: 20%;
-                    background-position-y: 100%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 50%;
-                        background-position-x: 30%;
-                    }
-                    @media screen and (min-width: $smallDesktop) {
-                        background-size: 35%;
-                        background-position-x: 40%;
-                    }
-                    transform: scaleX(-1);
-                }
-                .index-img.bush2 {
-                    background-image: url("../images/index/bush6.svg");
-                    background-size: 50%;
-                    background-position-x: -20%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 30%;
-                        background-position-x: 0;
-                    }
-                }
-            }
-
-            &:nth-of-type(4) {
-                mask-image: url("../images/index/clip4.svg");
-                .index-img.chars {
-                    right: 5%;
-                    @media screen and (min-width: $smallDesktop) {
-                        right: 15%;
-                    }
-                }
-                .index-img.bg1 {
-                    background-image: url("../images/index/bg5.svg");
-                    right: 0;
-                    background-position-x: right;
-                    transform: scaleY(85%) translateY(10%);
-                }
-                .index-img.bg2 {
-                    mask-image: url("../images/index/bg11.svg");
-                    background: $greenDark;
-                    opacity: 90%;
-                    mask-position: 30% bottom;
-                }
-                .index-img.bush1 {
-                    background-image: url("../images/index/bush5.svg");
-                    background-size: 90%;
-                    background-position-x: -350%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 75%;
-                        background-position-x: -150%;
-                    }
-                    @media screen and (min-width: $smallDesktop) {
-                        background-size: 60%;
-                        background-position-x: -30%;
-                    }
-                    transform: scaleX(-1);
-                }
-                .index-img.bush2 {
-                    background-image: url("../images/index/bush4.svg");
-                    background-size: 55%;
-                    background-position-x: 15%;
-                    @media screen and (min-width: $tablet) {
-                        background-size: 45%;
-                        background-position-x: 25%;
-                    }
-                    @media screen and (min-width: $smallDesktop) {
-                        background-size: 35%;
-                    }
-                }
-            }
-            // --------------------------------------------------------------------------------
+            @include app-info-positioning();
         }
         /*
         #info-icons {
@@ -758,9 +762,15 @@ html:has(#index) {
 
     footer {
         grid-row: 4/5;
-        padding: 6rem 2rem 1rem 2rem;
+        position: relative;
+        z-index: 15;
         .content {
             justify-content: space-evenly;
+            padding: 0.8rem 1rem;
+        }
+        .divider {
+            background: var(--c-footer);
+            mask-image: url("../images/index/mask6.svg");
         }
     }
 
@@ -834,7 +844,7 @@ html:has(#index) {
         position: fixed; 
         bottom: 2rem;
         right: 2rem;
-        z-index: 15;
+        z-index: 19;
         @media screen and (min-width: $tablet) {
             bottom: 3rem;
             right: 3rem;
