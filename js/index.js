@@ -12,6 +12,7 @@ $(function()
             $("#cookies-alert").addClass("show");
         }, 1000);
     }
+    showScrollButton();
 
     //event listenery tlačítek
     $("#hide-login-section-button").click(function() {hideLoginSection()})
