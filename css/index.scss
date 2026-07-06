@@ -682,14 +682,20 @@ html:has(#index) {
             overflow: auto;  
             @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
-        #hide-login-section-button {
-            margin: 0 0 0.6rem auto;
-            height: 1.4rem;
-            width: 1.4rem;
-        }
-        h2 {
-            font-size: 1.6rem;
-            margin: 0 0 0.8rem 0;
+        .login-title {
+            position: relative;
+            margin: 0.8rem 0 1.6rem 0;
+            #hide-login-section-button {
+                height: 1.4rem;
+                width: 1.4rem;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+            h2 {
+                font-size: 1.6rem;
+                line-height: 1em;
+            }
         }
         .user.data {
             display: flex;

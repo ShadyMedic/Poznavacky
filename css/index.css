@@ -2152,14 +2152,20 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-login-section #password-recovery ::-webkit-scrollbar-thumb:hover {
   background: var(--c-scrollbar-thumb-hover);
 }
-#index #index-login-section #hide-login-section-button {
-  margin: 0 0 0.6rem auto;
+#index #index-login-section .login-title {
+  position: relative;
+  margin: 0.8rem 0 1.6rem 0;
+}
+#index #index-login-section .login-title #hide-login-section-button {
   height: 1.4rem;
   width: 1.4rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
-#index #index-login-section h2 {
+#index #index-login-section .login-title h2 {
   font-size: 1.6rem;
-  margin: 0 0 0.8rem 0;
+  line-height: 1em;
 }
 #index #index-login-section .user.data {
   display: flex;
