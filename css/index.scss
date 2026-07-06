@@ -357,6 +357,7 @@ html:has(#index) {
             background-size: 100%;
             background-position-y: bottom;
             transform: scaleX(-1);
+            pointer-events: none;
             @media screen and (min-width: $tablet) {
                 grid-column: 2/4;
                 grid-row: 2/4;
@@ -373,6 +374,7 @@ html:has(#index) {
             opacity: 50%;
             mask-size: 70%;
             mask-position: 110% bottom;
+            pointer-events: none;
         }
         
         .index-img.chs {
@@ -381,6 +383,7 @@ html:has(#index) {
             bottom: 0;
             right: 10%;
             transform: translateY(5%);
+            pointer-events: none;
             @media screen and (min-width: $tablet) {
                 grid-column: 3/4;
                 grid-row: 2/4;
@@ -578,6 +581,7 @@ html:has(#index) {
                 background-position-y: bottom;
                 mask-repeat: no-repeat;
                 mask-position: bottom center;
+                pointer-events: none;
             }
 
             .index-img.chars {
@@ -585,6 +589,7 @@ html:has(#index) {
                 bottom: 0;
                 transform: scale(80%) translateY(20%);
                 z-index: 10;
+                pointer-events: none;
             }
             .index-img.bg1 {
                 background-size: 95%;

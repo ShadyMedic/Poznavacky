@@ -1503,6 +1503,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   background-size: 100%;
   background-position-y: bottom;
   transform: scaleX(-1);
+  pointer-events: none;
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section .index-img.bg1 {
@@ -1520,6 +1521,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   opacity: 50%;
   mask-size: 70%;
   mask-position: 110% bottom;
+  pointer-events: none;
 }
 #index #index-text-section .index-img.chs {
   grid-row: 3/4;
@@ -1527,6 +1529,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   bottom: 0;
   right: 10%;
   transform: translateY(5%);
+  pointer-events: none;
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section .index-img.chs {
@@ -1734,12 +1737,14 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   background-position-y: bottom;
   mask-repeat: no-repeat;
   mask-position: bottom center;
+  pointer-events: none;
 }
 #index #index-info-section section.app-info .index-img.chars {
   position: absolute;
   bottom: 0;
   transform: scale(80%) translateY(20%);
   z-index: 10;
+  pointer-events: none;
 }
 #index #index-info-section section.app-info .index-img.bg1 {
   background-size: 95%;
