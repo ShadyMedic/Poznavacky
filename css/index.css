@@ -1386,15 +1386,15 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   z-index: 10;
 }
 #index {
-  --c-divider-height: 2rem;
+  --divider-height: 2rem;
 }
 @media screen and (min-width: 48rem) {
   #index {
-    --c-divider-height: 4rem;
+    --divider-height: 4rem;
   }
 }
 #index .divider {
-  height: var(--c-divider-height);
+  height: var(--divider-height);
   background: #222;
   position: absolute;
   width: calc(100% + 2rem);
@@ -1403,12 +1403,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   z-index: 15;
 }
 #index .divider.top {
-  top: calc(-1 * var(--c-divider-height));
+  top: calc(-1 * var(--divider-height));
   mask-position: bottom center;
   transform: translateY(2px);
 }
 #index .divider.bottom {
-  bottom: calc(-1 * var(--c-divider-height));
+  bottom: calc(-1 * var(--divider-height));
   mask-position: top center;
   transform: translateY(-2px);
 }
@@ -1576,11 +1576,11 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   }
 }
 #index #index-text-section .index-img.chs img {
-  height: 25rem;
+  height: 30rem;
 }
-@media screen and (min-width: 60rem) {
+@media screen and (min-width: 75rem) {
   #index #index-text-section .index-img.chs img {
-    height: 30rem;
+    height: 32rem;
   }
 }
 #index #index-info-section {
@@ -1621,27 +1621,51 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-info-section section.app-info {
   position: relative;
   width: 100%;
+}
+#index #index-info-section section.app-info:nth-of-type(1) {
   height: 70vh;
 }
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info:nth-of-type(1) {
+    max-height: 35rem;
+  }
+}
 #index #index-info-section section.app-info:nth-of-type(2) {
-  height: 80vh;
+  height: 74vh;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info:nth-of-type(2) {
+    max-height: 34rem;
+  }
 }
 #index #index-info-section section.app-info:nth-of-type(3) {
   height: 68vh;
 }
 @media screen and (min-width: 48rem) {
-  #index #index-info-section section.app-info {
-    height: 32rem;
+  #index #index-info-section section.app-info:nth-of-type(3) {
+    max-height: 32rem;
+  }
+}
+#index #index-info-section section.app-info:nth-of-type(4) {
+  height: 68vh;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info:nth-of-type(4) {
+    max-height: 31rem;
   }
 }
 #index #index-info-section section.app-info .info-tile {
   margin: auto;
   width: 90vw;
   z-index: 14;
+  padding-top: var(--divider-height);
 }
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info .info-tile {
+    position: absolute;
     max-width: 26rem;
+    padding-top: 0;
+    top: 10%;
   }
 }
 @media screen and (min-width: 60rem) {
@@ -1649,46 +1673,42 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     max-width: 22rem;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(1), #index #index-info-section section.app-info:nth-of-type(3) {
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info:nth-of-type(1) .info-tile {
+    top: calc(10% + var(--divider-height));
+  }
+}
+#index #index-info-section section.app-info:nth-of-type(odd) {
   background-color: var(--c-bgd2);
 }
 @media screen and (min-width: 48rem) {
-  #index #index-info-section section.app-info:nth-of-type(1) .info-tile, #index #index-info-section section.app-info:nth-of-type(3) .info-tile {
-    position: absolute;
+  #index #index-info-section section.app-info:nth-of-type(odd) .info-tile {
     right: 10%;
-    top: 15%;
   }
 }
 @media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(1) .info-tile, #index #index-info-section section.app-info:nth-of-type(3) .info-tile {
-    position: absolute;
+  #index #index-info-section section.app-info:nth-of-type(odd) .info-tile {
     right: 15%;
-    top: 20%;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(2), #index #index-info-section section.app-info:nth-of-type(4) {
+#index #index-info-section section.app-info:nth-of-type(even) {
   background-color: var(--c-bgd);
 }
-#index #index-info-section section.app-info:nth-of-type(2) .index-img, #index #index-info-section section.app-info:nth-of-type(4) .index-img {
+#index #index-info-section section.app-info:nth-of-type(even) .index-img {
   right: 0;
 }
-#index #index-info-section section.app-info:nth-of-type(2) .info-tile, #index #index-info-section section.app-info:nth-of-type(4) .info-tile {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
 @media screen and (min-width: 48rem) {
-  #index #index-info-section section.app-info:nth-of-type(2) .info-tile, #index #index-info-section section.app-info:nth-of-type(4) .info-tile {
-    position: absolute;
+  #index #index-info-section section.app-info:nth-of-type(even) .info-tile {
     left: 10%;
-    top: 5%;
   }
 }
 @media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(2) .info-tile, #index #index-info-section section.app-info:nth-of-type(4) .info-tile {
-    position: absolute;
+  #index #index-info-section section.app-info:nth-of-type(even) .info-tile {
     left: 15%;
-    top: 10%;
   }
+}
+#index #index-info-section section.app-info {
+  box-sizing: content-box;
 }
 #index #index-info-section section.app-info:nth-of-type(1) {
   z-index: 6;
@@ -1698,7 +1718,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   background-color: var(--c-bgd2);
 }
 #index #index-info-section section.app-info:nth-of-type(1) {
-  padding-top: var(--c-divider-height);
+  padding-top: var(--divider-height);
 }
 #index #index-info-section section.app-info:nth-of-type(2) {
   z-index: 7;
@@ -1721,10 +1741,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   mask-image: url("../images/index/mask5.svg");
   background-color: var(--c-bgd);
 }
-#index #index-info-section section.app-info .index-img.chs {
-  transform: scale(80%) translateY(20%);
-  z-index: 10;
-}
 #index #index-info-section section.app-info .index-img.bg1 {
   background-size: 95%;
 }
@@ -1733,8 +1749,13 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     background-size: 80%;
   }
 }
+@media screen and (min-width: 75rem) {
+  #index #index-info-section section.app-info .index-img.bg1 {
+    background-size: 75%;
+  }
+}
 #index #index-info-section section.app-info .index-img.bg1 {
-  transform: translateY(5%);
+  transform: translateY(8%);
 }
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info .index-img.bg1 {
@@ -1762,31 +1783,81 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     mask-size: 65%;
   }
 }
+@media screen and (min-width: 75rem) {
+  #index #index-info-section section.app-info .index-img.bg2 {
+    mask-size: 60%;
+  }
+}
 #index #index-info-section section.app-info .index-img.bg2 {
   z-index: 8;
 }
 #index #index-info-section section.app-info .index-img.bush1,
 #index #index-info-section section.app-info .index-img.bush2 {
   background-size: 100%;
-}
-@media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info .index-img.bush1,
-  #index #index-info-section section.app-info .index-img.bush2 {
-    background-size: 80%;
-  }
-}
-#index #index-info-section section.app-info .index-img.bush1,
-#index #index-info-section section.app-info .index-img.bush2 {
   opacity: 70%;
   z-index: 9;
 }
-#index #index-info-section section.app-info:nth-of-type(1) .index-img.chs {
+#index #index-info-section section.app-info .index-img.chs {
+  bottom: -5%;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info .index-img.chs {
+    bottom: -2%;
+  }
+}
+#index #index-info-section section.app-info .index-img.chs img {
+  display: block;
+  width: 80%;
+}
+@media screen and (min-width: 75rem) {
+  #index #index-info-section section.app-info .index-img.chs img {
+    width: 100%;
+  }
+}
+#index #index-info-section section.app-info .index-img.chs.left {
   left: 5%;
 }
-@media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(1) .index-img.chs {
+@media screen and (min-width: 36rem) {
+  #index #index-info-section section.app-info .index-img.chs.left {
     left: 10%;
   }
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info .index-img.chs.left {
+    left: 15%;
+  }
+}
+@media screen and (min-width: 75rem) {
+  #index #index-info-section section.app-info .index-img.chs.left {
+    left: 20%;
+  }
+}
+#index #index-info-section section.app-info .index-img.chs.left img {
+  margin-right: auto;
+}
+#index #index-info-section section.app-info .index-img.chs.right {
+  right: 5%;
+}
+@media screen and (min-width: 36rem) {
+  #index #index-info-section section.app-info .index-img.chs.right {
+    right: 10%;
+  }
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info .index-img.chs.right {
+    right: 15%;
+  }
+}
+@media screen and (min-width: 75rem) {
+  #index #index-info-section section.app-info .index-img.chs.right {
+    right: 20%;
+  }
+}
+#index #index-info-section section.app-info .index-img.chs.right img {
+  margin-left: auto;
+}
+#index #index-info-section section.app-info .index-img.chs {
+  z-index: 10;
 }
 #index #index-info-section section.app-info:nth-of-type(1) .index-img.bg1 {
   background-image: url("../images/index/bg1.svg");
@@ -1848,19 +1919,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
     background-position-y: 120%;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(2) .index-img.chs {
-  right: 10%;
-}
-@media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(2) .index-img.chs {
-    right: 20%;
-  }
-}
-@media screen and (min-width: 75rem) {
-  #index #index-info-section section.app-info:nth-of-type(2) .index-img.chs {
-    right: 25%;
-  }
-}
 #index #index-info-section section.app-info:nth-of-type(2) .index-img.bg1 {
   background-image: url("../images/index/bg2.svg");
   background-position-x: left;
@@ -1894,15 +1952,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   #index #index-info-section section.app-info:nth-of-type(2) .index-img.bush2 {
     background-size: 60%;
     background-position-x: 200%;
-  }
-}
-#index #index-info-section section.app-info:nth-of-type(3) .index-img.chs {
-  left: 10%;
-  bottom: 5%;
-}
-@media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(3) .index-img.chs {
-    left: 20%;
   }
 }
 #index #index-info-section section.app-info:nth-of-type(3) .index-img.bg1 {
@@ -1953,14 +2002,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   #index #index-info-section section.app-info:nth-of-type(3) .index-img.bush2 {
     background-size: 30%;
     background-position-x: 0;
-  }
-}
-#index #index-info-section section.app-info:nth-of-type(4) .index-img.chs {
-  right: 5%;
-}
-@media screen and (min-width: 60rem) {
-  #index #index-info-section section.app-info:nth-of-type(4) .index-img.chs {
-    right: 15%;
   }
 }
 #index #index-info-section section.app-info:nth-of-type(4) .index-img.bg1 {

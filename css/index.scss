@@ -46,9 +46,9 @@
             right: 15%;
         }
         img {
-            height: 25rem;
-            @media screen and (min-width: $smallDesktop) {
-                height: 30rem;
+            height: 30rem;
+            @media screen and (min-width: $desktop) {
+                height: 32rem;
             }
         }
     }
@@ -61,7 +61,10 @@
         @media screen and (min-width: $smallDesktop) {
             background-size: 80%;
         }
-        transform: translateY(5%);
+        @media screen and (min-width: $desktop) {
+            background-size: 75%;
+        }
+        transform: translateY(8%);
         @media screen and (min-width: $tablet) {
             transform: scaleY(90%) translateY(15%);
         }
@@ -78,25 +81,64 @@
         @media screen and (min-width: $tablet) {
             mask-size: 65%;
         }
+        @media screen and (min-width: $desktop) {
+            mask-size: 60%;
+        }
         z-index: 8;
     }
     .index-img.bush1,
     .index-img.bush2 {
         background-size: 100%;
-        @media screen and (min-width: $smallDesktop) {
-            background-size: 80%;
-        }
         opacity: 70%;
         z-index: 9;
     }
-    // ---------------------- zde pozicování jednotlivých grafik ----------------------
-    &:nth-of-type(1) {
-        .index-img.chs {
-            left: 5%;
-            @media screen and (min-width: $smallDesktop) {
-                left: 10%;
+
+    .index-img.chs {
+        bottom: -5%;
+        @media screen and (min-width: $tablet) {
+            bottom: -2%;
+        }
+        img {
+            display: block;
+            width: 80%;
+            @media screen and (min-width: $desktop) {
+                width: 100%;
             }
         }
+        &.left {
+            left: 5%;
+            @media screen and (min-width: $mobile) {
+                left: 10%;
+            }
+            @media screen and (min-width: $tablet) {
+                left: 15%;
+            }
+            @media screen and (min-width: $desktop) {
+                left: 20%;
+            }
+            img {
+                margin-right: auto;
+            }
+        }
+        &.right {
+            right: 5%;
+            @media screen and (min-width: $mobile) {
+                right: 10%;
+            }
+            @media screen and (min-width: $tablet) {
+                right: 15%;
+            }
+            @media screen and (min-width: $desktop) {
+                right: 20%;
+            }
+            img {
+                margin-left: auto;
+            }
+        }
+        z-index: 10;
+    }
+    // ---------------------- zde pozicování jednotlivých grafik ----------------------
+    &:nth-of-type(1) {
         .index-img.bg1 {
             background-image: url("../images/index/bg1.svg");
             background-position-x: left;
@@ -148,15 +190,6 @@
     }
 
     &:nth-of-type(2) {
-        .index-img.chs {
-            right: 10%;
-            @media screen and (min-width: $smallDesktop) {
-                right: 20%;
-            }
-            @media screen and (min-width: $desktop) {
-                right: 25%;
-            }
-        }
         .index-img.bg1 {
             background-image: url("../images/index/bg2.svg");
             background-position-x: left;
@@ -191,13 +224,6 @@
     }
 
     &:nth-of-type(3) {
-        .index-img.chs {
-            left: 10%;
-            bottom: 5%;
-            @media screen and (min-width: $smallDesktop) {
-                left: 20%;
-            }
-        }
         .index-img.bg1 {
             background-image: url("../images/index/bg3.svg");
             background-position-x: left;
@@ -239,12 +265,6 @@
     }
 
     &:nth-of-type(4) {
-        .index-img.chs {
-            right: 5%;
-            @media screen and (min-width: $smallDesktop) {
-                right: 15%;
-            }
-        }
         .index-img.bg1 {
             background-image: url("../images/index/bg5.svg");
             right: 0;
@@ -341,12 +361,12 @@ html:has(#index) {
         z-index: 10;
     }
     
-    --c-divider-height: 2rem;
+    --divider-height: 2rem;
     @media screen and (min-width: $tablet) {
-        --c-divider-height: 4rem;
+        --divider-height: 4rem;
     }
     .divider {
-        height: var(--c-divider-height);
+        height: var(--divider-height);
         background: $gray1;
         position: absolute;
         width: calc(100% + 2rem);
@@ -354,12 +374,12 @@ html:has(#index) {
         mask-size: 100% 100%;
         z-index: 15;
         &.top {
-            top: calc( -1 * var(--c-divider-height) );
+            top: calc( -1 * var(--divider-height) );
             mask-position: bottom center;
             transform: translateY(2px); // jinak se renderuje s divnou škvírou
         }
         &.bottom {
-            bottom: calc( -1 * var(--c-divider-height) );
+            bottom: calc( -1 * var(--divider-height) );
             mask-position: top center;
             transform: translateY(-2px); // jinak se renderuje s divnou škvírou
         }
@@ -510,67 +530,82 @@ html:has(#index) {
             position: relative;
             width: 100%;
 
-            height: 70vh;
+            &:nth-of-type(1) {
+                height: 70vh;
+                @media screen and (min-width: $tablet) {
+                    max-height: 35rem;
+                }
+            }
             &:nth-of-type(2) {
-                height: 80vh;
+                height: 74vh;
+                @media screen and (min-width: $tablet) {
+                    max-height: 34rem;
+                }
             }
             &:nth-of-type(3) {
                 height: 68vh;
+                @media screen and (min-width: $tablet) {
+                    max-height: 32rem;
+                }
             }
-            @media screen and (min-width: $tablet) {
-                height: 32rem;
+            &:nth-of-type(4) {
+                height: 68vh;
+                @media screen and (min-width: $tablet) {
+                    max-height: 31rem;
+                }
             }
 
             .info-tile {
                 margin: auto;
                 width: 90vw;
                 z-index: 14;
+                padding-top: var(--divider-height);
                 @media screen and (min-width: $tablet) {
+                    position: absolute;
                     max-width: 26rem;
+                    padding-top: 0;
+                    top: 10%;
                 }
                 @media screen and (min-width: $smallDesktop) {
                     max-width: 22rem;
                 }
             }
 
-            &:nth-of-type(1),
-            &:nth-of-type(3) {
-                background-color: var(--c-bgd2);
+            &:nth-of-type(1) {
                 .info-tile {
                     @media screen and (min-width: $tablet) {
-                        position: absolute;
-                        right: 10%;
-                        top: 15%;
-                    }
-                    @media screen and (min-width: $smallDesktop) {
-                        position: absolute;
-                        right: 15%;
-                        top: 20%;
+                        top: calc(10% + var(--divider-height));
                     }
                 }
             }
 
-            &:nth-of-type(2),
-            &:nth-of-type(4) {
+            &:nth-of-type(odd) {
+                background-color: var(--c-bgd2);
+                .info-tile {
+                    @media screen and (min-width: $tablet) {
+                        right: 10%;
+                    }
+                    @media screen and (min-width: $smallDesktop) {
+                        right: 15%;
+                    }
+                }
+            }
+
+            &:nth-of-type(even) {
                 background-color: var(--c-bgd);
                 .index-img {
                     right: 0;
                 }
                 .info-tile {
-                    padding-top: 1rem;
-                    padding-bottom: 1rem;
                     @media screen and (min-width: $tablet) {
-                        position: absolute;
                         left: 10%;
-                        top: 5%;
                     }
                     @media screen and (min-width: $smallDesktop) {
-                        position: absolute;
                         left: 15%;
-                        top: 10%;
                     }
                 }
             }
+            box-sizing: content-box;
 
             @mixin divider-mask($z, $mask-image, $bgd) {
                 z-index: $z;
@@ -581,7 +616,7 @@ html:has(#index) {
             }
             &:nth-of-type(1) {
                 @include divider-mask(6, none, var(--c-bgd2));
-                padding-top: var(--c-divider-height);
+                padding-top: var(--divider-height);
             }
             &:nth-of-type(2) {
                 @include divider-mask(7, url("../images/index/mask3.svg"), var(--c-bgd));
@@ -591,11 +626,6 @@ html:has(#index) {
             }
             &:nth-of-type(4) {
                 @include divider-mask(9, url("../images/index/mask5.svg"), var(--c-bgd));
-            }
-
-            .index-img.chs {
-                transform: scale(80%) translateY(20%);
-                z-index: 10;
             }
               
             @include app-info-positioning();
