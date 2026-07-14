@@ -386,7 +386,7 @@ html:has(#index) {
         height: var(--divider-height);
         background: $gray1;
         position: absolute;
-        width: calc(100% + 2rem);
+        width: 100%;
         mask-repeat: no-repeat;
         mask-size: 100% 100%;
         z-index: 15;
