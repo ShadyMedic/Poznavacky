@@ -1438,24 +1438,30 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-text-section {
   background: var(--c-bgd2);
   position: relative;
-  display: grid;
-  grid-template-rows: minmax(15rem, 45vh) minmax(5rem, 25vh) minmax(20rem, 60vh);
-  grid-template-columns: 1fr;
-}
-@media screen and (min-width: 36rem) {
-  #index #index-text-section {
-    grid-template-rows: minmax(15rem, 45vh) minmax(5rem, 15vh) minmax(18rem, 50vh);
-  }
+  display: flex;
+  flex-direction: column;
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section {
+    display: grid;
     grid-template-columns: 4fr 6fr 4fr;
-    grid-template-rows: minmax(15rem, 20vh) minmax(5rem, 35vh) minmax(10rem, 30vh);
+    grid-template-rows: clamp(15rem, 20vh, 30rem) clamp(5rem, 35vh, 12rem) clamp(10rem, 30vh, 30rem);
+  }
+}
+#index #index-text-section .index-img.chs {
+  position: initial;
+  margin-left: auto;
+  margin-right: 5%;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-text-section .index-img.chs {
+    position: absolute;
+    bottom: 0;
+    margin: auto;
   }
 }
 #index #index-text-section > .content {
-  grid-row: 1/3;
-  padding: 3rem 1.6rem;
+  padding: 3rem 1.6rem 0.4rem 1.6rem;
   text-align: center;
 }
 @media screen and (min-width: 36rem) {
@@ -1571,19 +1577,23 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   }
 }
 #index #index-text-section .index-img.chs {
-  grid-row: 3/4;
-  right: 10%;
+  right: 5%;
   transform: translateY(5%);
+}
+@media screen and (min-width: 36rem) {
+  #index #index-text-section .index-img.chs {
+    right: 10%;
+  }
 }
 @media screen and (min-width: 48rem) {
   #index #index-text-section .index-img.chs {
     grid-column: 3/4;
-    grid-row: 2/4;
     right: 5%;
   }
 }
 @media screen and (min-width: 60rem) {
   #index #index-text-section .index-img.chs {
+    grid-row: 3/4;
     grid-column: 2/4;
     grid-row: 2/4;
   }
@@ -1596,7 +1606,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   }
 }
 #index #index-text-section .index-img.chs img {
-  height: 30rem;
+  height: clamp(18rem, 120vw, 30rem);
+}
+@media screen and (min-width: 36rem) {
+  #index #index-text-section .index-img.chs img {
+    height: 30rem;
+  }
 }
 @media screen and (min-width: 75rem) {
   #index #index-text-section .index-img.chs img {
