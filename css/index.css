@@ -2156,7 +2156,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   position: relative;
   margin: 0.8rem 0 1.6rem 0;
 }
-#index #index-login-section .login-title #hide-login-section-button {
+#index #index-login-section .login-title .hide-login-section-button {
   height: 1.4rem;
   width: 1.4rem;
   position: absolute;

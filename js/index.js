@@ -15,7 +15,7 @@ $(function()
     showScrollButton();
 
     //event listenery tlačítek
-    $("#hide-login-section-button").click(function() {hideLoginSection()})
+    $(".hide-login-section-button").click(function() {hideLoginSection()})
     $("#hide-cookies-alert-button").click(function() {hideCookiesAlert()})
     $(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event) {showLoginSection(event)});
     $("#demo-button").click(function() {demoLogin()})
