@@ -116,24 +116,26 @@
     }
 
     .index-img.chs {
-        bottom: -5%;
+        transform: translateY(5%);
         @media screen and (min-width: $tablet) {
             bottom: -2%;
         }
+        
         img {
             display: block;
             width: 80%;
+            max-width: 25rem;
+            @media screen and (min-width: $tablet) {
+                max-width: none;
+            }
             @media screen and (min-width: $desktop) {
                 width: 100%;
             }
         }
         &.left {
-            left: 5%;
+            left: 5%;   
             @media screen and (min-width: $mobile) {
                 left: 10%;
-            }
-            @media screen and (min-width: $tablet) {
-                left: 15%;
             }
             @media screen and (min-width: $desktop) {
                 left: 20%;
@@ -146,9 +148,6 @@
             right: 5%;
             @media screen and (min-width: $mobile) {
                 right: 10%;
-            }
-            @media screen and (min-width: $tablet) {
-                right: 15%;
             }
             @media screen and (min-width: $desktop) {
                 right: 20%;
@@ -391,7 +390,7 @@ html:has(#index) {
         height: var(--divider-height);
         background: $gray1;
         position: absolute;
-        width: 100%;
+        width: calc(100% + 1px); // +1px, jinak se renderuje s divnou škvírou
         mask-repeat: no-repeat;
         mask-size: 100% 100%;
         z-index: 15;
@@ -423,8 +422,12 @@ html:has(#index) {
     }
 
     .index-img.chs {
-        position: absolute;
-        bottom: 0;
+        position: relative;
+        @media screen and (min-width: $tablet) {
+            position: absolute;
+            bottom: 0;
+            margin: auto;
+        }
         background-repeat: no-repeat;
         pointer-events: none;
     }
@@ -445,14 +448,8 @@ html:has(#index) {
         }
 
         .index-img.chs {
-            position: initial;
             margin-left: auto;
             margin-right: 5%;
-            @media screen and (min-width: $tablet) {
-                position: absolute;
-                bottom: 0;
-                margin: auto;
-            }
         }
         
         > .content {
@@ -518,15 +515,21 @@ html:has(#index) {
         width: 100%;
         margin: auto;
         h3 {
-            font-size: 1.32rem;
+            font-size: 1.16rem;
+            @media screen and (min-width: $mobile) {
+                font-size: 1.32rem
+            }
             margin: 1.2rem 0 0.4rem 0;
         }
         p {
-            font-size: 1.24rem;
+            font-size: 1.12rem;
+            @media screen and (min-width: $mobile) {
+                font-size: 1.24rem
+            }
         }
         #info-icons {
             p {
-                margin-bottom: 2.8rem;
+                margin-bottom: 1rem;
             }
         }
 
@@ -559,26 +562,26 @@ html:has(#index) {
             width: 100%;
 
             &:nth-of-type(1) {
-                height: 70vh;
                 @media screen and (min-width: $tablet) {
+                    height: 70vh;
                     max-height: 35rem;
                 }
             }
             &:nth-of-type(2) {
-                height: 74vh;
                 @media screen and (min-width: $tablet) {
+                    height: 74vh;
                     max-height: 34rem;
                 }
             }
             &:nth-of-type(3) {
-                height: 68vh;
                 @media screen and (min-width: $tablet) {
+                    height: 68vh;
                     max-height: 32rem;
                 }
             }
             &:nth-of-type(4) {
-                height: 68vh;
                 @media screen and (min-width: $tablet) {
+                    height: 68vh;
                     max-height: 31rem;
                 }
             }

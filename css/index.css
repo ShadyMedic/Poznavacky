@@ -1397,7 +1397,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   height: var(--divider-height);
   background: #222;
   position: absolute;
-  width: 100%;
+  width: calc(100% + 1px);
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
   z-index: 15;
@@ -1427,8 +1427,16 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   pointer-events: none;
 }
 #index .index-img.chs {
-  position: absolute;
-  bottom: 0;
+  position: relative;
+}
+@media screen and (min-width: 48rem) {
+  #index .index-img.chs {
+    position: absolute;
+    bottom: 0;
+    margin: auto;
+  }
+}
+#index .index-img.chs {
   background-repeat: no-repeat;
   pointer-events: none;
 }
@@ -1449,16 +1457,8 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   }
 }
 #index #index-text-section .index-img.chs {
-  position: initial;
   margin-left: auto;
   margin-right: 5%;
-}
-@media screen and (min-width: 48rem) {
-  #index #index-text-section .index-img.chs {
-    position: absolute;
-    bottom: 0;
-    margin: auto;
-  }
 }
 #index #index-text-section > .content {
   padding: 3rem 1.6rem 0.4rem 1.6rem;
@@ -1623,14 +1623,26 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   margin: auto;
 }
 #index #index-info-section h3 {
-  font-size: 1.32rem;
+  font-size: 1.16rem;
+}
+@media screen and (min-width: 36rem) {
+  #index #index-info-section h3 {
+    font-size: 1.32rem;
+  }
+}
+#index #index-info-section h3 {
   margin: 1.2rem 0 0.4rem 0;
 }
 #index #index-info-section p {
-  font-size: 1.24rem;
+  font-size: 1.12rem;
+}
+@media screen and (min-width: 36rem) {
+  #index #index-info-section p {
+    font-size: 1.24rem;
+  }
 }
 #index #index-info-section #info-icons p {
-  margin-bottom: 2.8rem;
+  margin-bottom: 1rem;
 }
 #index #index-info-section #info-text {
   position: relative;
@@ -1657,35 +1669,27 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   position: relative;
   width: 100%;
 }
-#index #index-info-section section.app-info:nth-of-type(1) {
-  height: 70vh;
-}
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info:nth-of-type(1) {
+    height: 70vh;
     max-height: 35rem;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(2) {
-  height: 74vh;
-}
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info:nth-of-type(2) {
+    height: 74vh;
     max-height: 34rem;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(3) {
-  height: 68vh;
-}
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info:nth-of-type(3) {
+    height: 68vh;
     max-height: 32rem;
   }
 }
-#index #index-info-section section.app-info:nth-of-type(4) {
-  height: 68vh;
-}
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info:nth-of-type(4) {
+    height: 68vh;
     max-height: 31rem;
   }
 }
@@ -1833,7 +1837,7 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
   z-index: 9;
 }
 #index #index-info-section section.app-info .index-img.chs {
-  bottom: -5%;
+  transform: translateY(5%);
 }
 @media screen and (min-width: 48rem) {
   #index #index-info-section section.app-info .index-img.chs {
@@ -1843,6 +1847,12 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 #index #index-info-section section.app-info .index-img.chs img {
   display: block;
   width: 80%;
+  max-width: 25rem;
+}
+@media screen and (min-width: 48rem) {
+  #index #index-info-section section.app-info .index-img.chs img {
+    max-width: none;
+  }
 }
 @media screen and (min-width: 75rem) {
   #index #index-info-section section.app-info .index-img.chs img {
@@ -1855,11 +1865,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 @media screen and (min-width: 36rem) {
   #index #index-info-section section.app-info .index-img.chs.left {
     left: 10%;
-  }
-}
-@media screen and (min-width: 48rem) {
-  #index #index-info-section section.app-info .index-img.chs.left {
-    left: 15%;
   }
 }
 @media screen and (min-width: 75rem) {
@@ -1876,11 +1881,6 @@ html:has(#index) ::-webkit-scrollbar-thumb:hover {
 @media screen and (min-width: 36rem) {
   #index #index-info-section section.app-info .index-img.chs.right {
     right: 10%;
-  }
-}
-@media screen and (min-width: 48rem) {
-  #index #index-info-section section.app-info .index-img.chs.right {
-    right: 15%;
   }
 }
 @media screen and (min-width: 75rem) {
