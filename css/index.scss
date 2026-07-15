@@ -443,8 +443,8 @@ html:has(#index) {
         flex-direction: column;
         @media screen and (min-width: $tablet) {
             display: grid;
-            grid-template-columns: 4fr 6fr 4fr;
-            grid-template-rows: clamp(15rem, 20vh, 30rem) clamp(5rem, 35vh, 12rem) clamp(10rem, 30vh, 30rem);
+            grid-template-columns: minmax(20rem, 4fr) minmax(25rem, 6fr) 4fr;
+            grid-template-rows: clamp(16rem, 15vh, 15rem) clamp(10rem, 30vh, 20rem) clamp(10rem, 30vh, 30rem);
         }
 
         .index-img.chs {
