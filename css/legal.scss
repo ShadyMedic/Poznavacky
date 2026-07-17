@@ -45,30 +45,41 @@
                     margin: 1.2rem 0;
                 }
             }
-            h1,
-            h2,
-            p {
-                margin-bottom: 0.4em;
-            }
             h1 {
                 font-size: 1.6rem;
+                margin: 1.4rem auto 0.8rem auto;
             }
             h2 {
                 font-size: 1.2rem;
+                margin: 1.2rem auto 0.6rem auto;
+            }
+            h3 {
+                margin: 1rem auto 0.6rem auto;
+                font-weight: 700;
             }
             h5 {
-                color: $gray3;
                 font-size: 0.88rem;
+                color: var(--c-info);
+                margin-top: 1.6rem;
             }
             p {
                 text-align: justify;
+                margin-bottom: 0.6rem;
             }
             li {
                 list-style-type: circle;
-                margin-left: 1.2rem;
+                margin-left: 1rem;
             }
             ol {
                 margin-left: 2rem;
+            }
+            
+            a {
+                color: var(--c-button-primary);
+            }
+            code {
+                font-family: inherit;
+                font-style: italic;
             }
         }
     }

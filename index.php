@@ -33,7 +33,7 @@ mb_internal_encoding('UTF-8');
 
 //Zkontroluj, zda je navázáno zabezpečné připojení a případně přesměruj
 if (Settings::PRODUCTION_ENVIRONMENT) {
-    if (!(isset($_SERVER["HTTP_X_FORWARDED_PROTO"]) && $_SERVER["HTTP_X_FORWARDED_PROTO"] === "https")) {
+    if (empty($_SERVER['HTTPS'])) {
         (new Logger(true))->notice('Uživatel se pokusil odeslat požadavek na adresu {uri} z IP adresy {ip}, avšak nepoužil zabezpečené SSL připojení',
             array('uri' => $_SERVER['REQUEST_URI'], 'ip' => $_SERVER['REMOTE_ADDR']));
         header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);

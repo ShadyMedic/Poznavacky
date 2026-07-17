@@ -365,11 +365,15 @@ class LoggedUser extends User
      * Metoda aktualizující uživateli jak v $_SESSION tak v databázi URL adresu poslední zobrazení tabulky na menu
      * stránce
      * @param string $url Nová URL adresa k uložení
-     * @return bool TRUE, pokud vše proběhne hladce
+     * @return bool TRUE, pokud vše proběhne hladce, FALSE, pokud nebyla žádná změna uložena (například kvůli statusu demo účtu)
      * @throws DatabaseException
      */
     public function updateLastMenuTableUrl(string $url): bool
     {
+        if (UserManager::getOtherInformation()['status'] === User::STATUS_GUEST) {
+            return false;
+        }
+    
         $this->loadIfNotLoaded($this->id);
         
         $this->lastMenuTableUrl = $url;

@@ -21,6 +21,7 @@ class AccessDeniedException extends Exception
     public const REASON_LOGIN_WRONG_PASSWORD = 'Špatné heslo';
     public const REASON_LOGIN_NONEXISTANT_USER = 'Uživatel s tímto jménem nebo e-mailem neexistuje';
     public const REASON_LOGIN_INVALID_COOKIE_CODE = 'Kód pro trvalé přihlášení není platný';
+    public const REASON_LOGIN_DEMO_INSTALOGIN = 'Při přihlášení do demo účtu není možné nastavit trvalé přihlášení';
     public const REASON_REGISTER_NO_NAME = 'Musíš vyplnit své uživatelské jméno';
     public const REASON_REGISTER_NO_PASSWORD = 'Musíš vyplnit své heslo';
     public const REASON_REGISTER_NO_REPEATED_PASSWORD = 'Musíš své heslo vyplnit znovu';

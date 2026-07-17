@@ -37,6 +37,7 @@ body {
   --c-warning: #960;
   --c-info: #666;
   --c-bgd: #eee;
+  --c-bgd2: #f8f8f8;
   --c-bgd-popup: #fff;
   --c-bgd-comp: #ddd;
   --c-bgd-report: #fff;
@@ -78,6 +79,7 @@ body {
     --c-warning: #960;
     --c-info: #666;
     --c-bgd: #eee;
+    --c-bgd2: #f8f8f8;
     --c-bgd-popup: #fff;
     --c-bgd-comp: #ddd;
     --c-bgd-report: #fff;
@@ -119,6 +121,7 @@ body {
     --c-warning: #c2a366;
     --c-info: #aaa;
     --c-bgd: #222;
+    --c-bgd2: #282828;
     --c-bgd-popup: #333;
     --c-bgd-comp: #333;
     --c-bgd-report: #333;
@@ -159,6 +162,7 @@ body.light-theme {
   --c-warning: #960;
   --c-info: #666;
   --c-bgd: #eee;
+  --c-bgd2: #f8f8f8;
   --c-bgd-popup: #fff;
   --c-bgd-comp: #ddd;
   --c-bgd-report: #fff;
@@ -199,6 +203,7 @@ body.dark-theme {
   --c-warning: #c2a366;
   --c-info: #aaa;
   --c-bgd: #222;
+  --c-bgd2: #282828;
   --c-bgd-popup: #333;
   --c-bgd-comp: #333;
   --c-bgd-report: #333;
@@ -536,6 +541,21 @@ ul.list li:not(:last-child) {
 .btn.border-btn.non-transparent.dark-green::after {
   background: rgba(255, 255, 255, 0.06);
 }
+.btn.border-btn.non-transparent.warning {
+  color: var(--c-text);
+  background: var(--c-error);
+}
+.btn.border-btn.non-transparent.warning:after {
+  background: rgba(255, 255, 255, 0.08);
+}
+.btn.border-btn.non-transparent.warning.disabled {
+  background: var(--c-button-disabled);
+  border-color: var(--c-button-disabled);
+  color: --c-text;
+}
+.btn.border-btn.non-transparent.warning.disabled > img {
+  filter: grayscale(50%);
+}
 .btn.border-btn.transparent {
   background: transparent;
   padding: calc(0.44em - 2px) calc(1em - 2px);
@@ -573,6 +593,17 @@ ul.list li:not(:last-child) {
   background: rgb(from var(--c-button-dark) r g b/6%);
 }
 .btn.border-btn.transparent.dark.disabled {
+  border-color: var(--c-button-disabled);
+  color: var(--c-button-disabled);
+}
+.btn.border-btn.transparent.warning {
+  color: var(--c-text);
+  border: 2px solid var(--c-error);
+}
+.btn.border-btn.transparent.warning:after {
+  background: rgb(from var(--c-error) r g b/6%);
+}
+.btn.border-btn.transparent.warning.disabled {
   border-color: var(--c-button-disabled);
   color: var(--c-button-disabled);
 }
@@ -687,6 +718,9 @@ ul.list li:not(:last-child) {
   body:not(.dark-theme) img.icon.red {
     filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
   }
+  body:not(.dark-theme) img.icon.disabled-mono {
+    filter: invert(60%) sepia(0%) saturate(27%) hue-rotate(204deg) brightness(89%) contrast(95%);
+  }
   body:not(.dark-theme) img.icon.selected {
     filter: invert(25%) sepia(85%) saturate(4117%) hue-rotate(75deg) brightness(90%) contrast(87%);
   }
@@ -708,6 +742,9 @@ body.light-theme img.icon.green {
 }
 body.light-theme img.icon.red {
   filter: invert(9%) sepia(88%) saturate(6994%) hue-rotate(17deg) brightness(88%) contrast(118%);
+}
+body.light-theme img.icon.disabled-mono {
+  filter: invert(60%) sepia(0%) saturate(27%) hue-rotate(204deg) brightness(89%) contrast(95%);
 }
 body.light-theme img.icon.selected {
   filter: invert(25%) sepia(85%) saturate(4117%) hue-rotate(75deg) brightness(90%) contrast(87%);
@@ -731,6 +768,9 @@ body.light-theme img.icon.selected {
   }
   body:not(.light-theme) img.icon.red {
     filter: invert(32%) sepia(97%) saturate(663%) hue-rotate(320deg) brightness(95%) contrast(83%);
+  }
+  body:not(.light-theme) img.icon.disabled-mono {
+    filter: invert(44%) sepia(0%) saturate(1098%) hue-rotate(135deg) brightness(87%) contrast(88%);
   }
   body:not(.light-theme) img.icon.selected {
     filter: invert(49%) sepia(51%) saturate(3856%) hue-rotate(64deg) brightness(94%) contrast(87%);
@@ -756,6 +796,9 @@ body.dark-theme img.icon.green {
 }
 body.dark-theme img.icon.red {
   filter: invert(32%) sepia(97%) saturate(663%) hue-rotate(320deg) brightness(95%) contrast(83%);
+}
+body.dark-theme img.icon.disabled-mono {
+  filter: invert(44%) sepia(0%) saturate(1098%) hue-rotate(135deg) brightness(87%) contrast(88%);
 }
 body.dark-theme img.icon.selected {
   filter: invert(49%) sepia(51%) saturate(3856%) hue-rotate(64deg) brightness(94%) contrast(87%);
@@ -1321,28 +1364,38 @@ body.light-theme .custom-checkbox-wrapper .checkmark.variant {
     margin: 1.2rem 0;
   }
 }
-#legal main .content h1,
-#legal main .content h2,
-#legal main .content p {
-  margin-bottom: 0.4em;
-}
 #legal main .content h1 {
   font-size: 1.6rem;
+  margin: 1.4rem auto 0.8rem auto;
 }
 #legal main .content h2 {
   font-size: 1.2rem;
+  margin: 1.2rem auto 0.6rem auto;
+}
+#legal main .content h3 {
+  margin: 1rem auto 0.6rem auto;
+  font-weight: 700;
 }
 #legal main .content h5 {
-  color: #444;
   font-size: 0.88rem;
+  color: var(--c-info);
+  margin-top: 1.6rem;
 }
 #legal main .content p {
   text-align: justify;
+  margin-bottom: 0.6rem;
 }
 #legal main .content li {
   list-style-type: circle;
-  margin-left: 1.2rem;
+  margin-left: 1rem;
 }
 #legal main .content ol {
   margin-left: 2rem;
+}
+#legal main .content a {
+  color: var(--c-button-primary);
+}
+#legal main .content code {
+  font-family: inherit;
+  font-style: italic;
 }/*# sourceMappingURL=legal.css.map */
