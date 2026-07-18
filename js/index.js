@@ -1,14 +1,9 @@
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const leafGuyImgSrc = prefersDark ? "images/leaf-guy-blonde.svg" : "images/leaf-guy-dark.svg";
 
 $(function()
 {
     //preload ilustrace leaf guy a použití podle preferovaného barevného motivu, aby neproblikávalo
     const img = new Image();
-    img.src = leafGuyImgSrc;
-    img.onload = () => {
-        $("#leaf-guy").prop("src", leafGuyImgSrc);
-    };
 
     //zobrazení cookies alertu
     if (!getCookie("cookiesAccepted"))
@@ -17,9 +12,10 @@ $(function()
             $("#cookies-alert").addClass("show");
         }, 1000);
     }
+    showScrollButton();
 
     //event listenery tlačítek
-    $("#hide-login-section-button").click(function() {hideLoginSection()})
+    $(".hide-login-section-button").click(function() {hideLoginSection()})
     $("#hide-cookies-alert-button").click(function() {hideCookiesAlert()})
     $(".show-login-section-login-button, .show-login-section-register-button, .show-login-section-password-recovery-button").click(function(event) {showLoginSection(event)});
     $("#demo-button").click(function() {demoLogin()})

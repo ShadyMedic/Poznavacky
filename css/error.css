@@ -37,6 +37,7 @@ body {
   --c-warning: #960;
   --c-info: #666;
   --c-bgd: #eee;
+  --c-bgd2: #f8f8f8;
   --c-bgd-popup: #fff;
   --c-bgd-comp: #ddd;
   --c-bgd-report: #fff;
@@ -78,6 +79,7 @@ body {
     --c-warning: #960;
     --c-info: #666;
     --c-bgd: #eee;
+    --c-bgd2: #f8f8f8;
     --c-bgd-popup: #fff;
     --c-bgd-comp: #ddd;
     --c-bgd-report: #fff;
@@ -119,6 +121,7 @@ body {
     --c-warning: #c2a366;
     --c-info: #aaa;
     --c-bgd: #222;
+    --c-bgd2: #282828;
     --c-bgd-popup: #333;
     --c-bgd-comp: #333;
     --c-bgd-report: #333;
@@ -159,6 +162,7 @@ body.light-theme {
   --c-warning: #960;
   --c-info: #666;
   --c-bgd: #eee;
+  --c-bgd2: #f8f8f8;
   --c-bgd-popup: #fff;
   --c-bgd-comp: #ddd;
   --c-bgd-report: #fff;
@@ -199,6 +203,7 @@ body.dark-theme {
   --c-warning: #c2a366;
   --c-info: #aaa;
   --c-bgd: #222;
+  --c-bgd2: #282828;
   --c-bgd-popup: #333;
   --c-bgd-comp: #333;
   --c-bgd-report: #333;

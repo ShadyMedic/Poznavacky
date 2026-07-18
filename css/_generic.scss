@@ -154,7 +154,6 @@ header {
 }
 
 footer {
-    padding: 0.12rem 1rem;
     background: var(--c-footer);
     font-size: 0.72rem;
     .content {
@@ -162,6 +161,7 @@ footer {
         justify-content: space-between;
         align-items: center;
         flex-direction: column;
+        padding: 0.12rem 1rem;
         @media screen and (min-width: $mobile) {
             flex-direction: row;
             flex-wrap: wrap;
@@ -184,7 +184,7 @@ footer {
 
 #overlay {
     position: fixed;
-    z-index: 9;
+    z-index: 20;
     width: 100vw;
     height: 100vh;
     background: rgba(black, 0.6);

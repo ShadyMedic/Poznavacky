@@ -2,6 +2,333 @@
 @import "_generic.scss";
 @import "_unlogged.scss";
 
+
+@mixin text-section-positioning { // rozšiřuje section#index-text-section
+    .index-img.bg1 {
+        grid-row: 3/4;
+        background-image: url("../images/index/bg3.svg");
+        background-size: 100%;
+        background-position-y: bottom;
+        transform: scaleX(-1);
+        @media screen and (min-width: $tablet) {
+            grid-column: 2/4;
+            grid-row: 2/4;
+            transform: scaleX(-1) scaleY(90%) translateY(5%);
+        } 
+    }
+
+    .index-img.bg2 {
+        grid-row: 2/4;
+        mask-image: url("../images/index/bg6.svg");
+        background: $greenDark;
+        opacity: 50%;
+        mask-size: 95%;
+        mask-position: 80% bottom; 
+        @media screen and (min-width: $tablet) {
+            mask-size: 70%;
+            mask-position: 110% bottom; 
+        } 
+    }
+
+    .index-img.bush1 {
+        grid-row: 3/4;
+        background-image: url("../images/index/bush3.svg");
+        background-size: 90%;
+        background-position-y: bottom;
+        background-position-x: 280%;
+        @media screen and (min-width: $tablet) {
+            grid-column: 2/4;
+            grid-row: 2/4;
+            background-size: 70%;
+            background-position-x: 90%;
+        } 
+    }
+    
+    .index-img.chs {
+        right: 5%;
+        transform: translateY(5%);
+        @media screen and (min-width: $mobile) {
+            right: 10%;
+        }
+        @media screen and (min-width: $tablet) {
+            grid-column: 3/4;
+            right: 5%;
+        }
+        @media screen and (min-width: $smallDesktop) {
+            grid-row: 3/4;
+            grid-column: 2/4;
+            grid-row: 2/4;
+        }
+        @media screen and (min-width: $desktop) {
+            grid-column: 2/4;
+            grid-row: 2/4;
+            right: 15%;
+        }
+        img {
+            height: clamp(18rem, 120vw, 30rem);
+            @media screen and (min-width: $mobile) {
+                height: 30rem;
+            }
+            @media screen and (min-width: $desktop) {
+                height: 32rem;
+            }
+        }
+    }
+}
+
+@mixin app-info-positioning { // rozšiřuje section.app-info
+
+    .index-img.bg1 {
+        background-size: 95%;
+        @media screen and (min-width: $smallDesktop) {
+            background-size: 80%;
+        }
+        @media screen and (min-width: $desktop) {
+            background-size: 75%;
+        }
+        transform: translateY(8%);
+        @media screen and (min-width: $tablet) {
+            transform: scaleY(90%) translateY(15%);
+        }
+        @media screen and (min-width: $smallDesktop) {
+            transform: scaleY(80%) translateY(20%);
+        }
+        @media screen and (min-width: $desktop) {
+            transform: scaleY(70%) translateY(25%);
+        }
+        z-index: 7;
+    }
+    .index-img.bg2 {
+        mask-size: 95%;
+        @media screen and (min-width: $tablet) {
+            mask-size: 65%;
+        }
+        @media screen and (min-width: $desktop) {
+            mask-size: 60%;
+        }
+        z-index: 8;
+    }
+    .index-img.bush1,
+    .index-img.bush2 {
+        background-size: 100%;
+        opacity: 70%;
+        z-index: 9;
+    }
+
+    .index-img.chs {
+        transform: translateY(5%);
+        @media screen and (min-width: $tablet) {
+            bottom: -2%;
+        }
+        
+        img {
+            display: block;
+            width: 80%;
+            max-width: 25rem;
+            @media screen and (min-width: $tablet) {
+                max-width: none;
+            }
+            @media screen and (min-width: $desktop) {
+                width: 100%;
+            }
+        }
+        &.left {
+            left: 5%;   
+            @media screen and (min-width: $mobile) {
+                left: 10%;
+            }
+            @media screen and (min-width: $desktop) {
+                left: 20%;
+            }
+            img {
+                margin-right: auto;
+            }
+        }
+        &.right {
+            right: 5%;
+            @media screen and (min-width: $mobile) {
+                right: 10%;
+            }
+            @media screen and (min-width: $desktop) {
+                right: 20%;
+            }
+            img {
+                margin-left: auto;
+            }
+        }
+        z-index: 10;
+    }
+    // ---------------------- zde pozicování jednotlivých grafik ----------------------
+    &:nth-of-type(1) {
+        .index-img.bg1 {
+            background-image: url("../images/index/bg1.svg");
+            background-position-x: left;
+            background-position-y: 90%;
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg4.svg");
+            background: $greenDark;
+            opacity: 50%;
+            mask-position: 10% bottom;
+            @media screen and (min-width: $tablet) {
+                mask-position: -10% bottom;
+            }
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush7.svg");
+            background-size: 80%;
+            background-position-x: -200%;
+            background-position-y: 110%;
+            @media screen and (min-width: $tablet) {
+                background-size: 60%;
+                background-position-x: -50%;
+                background-position-y: 100%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 40%;
+                background-position-x: -10%;   
+            }
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush2.svg");
+            background-size: 60%;
+            background-position-x: 80%;
+            background-position-y: 100%;
+            @media screen and (min-width: $tablet) {
+                background-size: 60%;
+                background-position-x: 100%;
+                background-position-y: 120%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 40%; 
+                background-position-x: 80%;
+                background-position-y: 110%;
+            }
+            @media screen and (min-width: $desktop) {
+                background-position-y: 120%;
+            }
+        }
+    }
+
+    &:nth-of-type(2) {
+        .index-img.bg1 {
+            background-image: url("../images/index/bg2.svg");
+            background-position-x: left;
+            right: 0;
+            transform: scaleX(-1)
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg6.svg");
+            background: $greenDark;
+            opacity: 90%;
+            mask-position: 120% bottom;
+            transform: scaleY(130%) translateY(-5%);
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush2.svg");
+            background-size: 50%;
+            background-position-x: 20%;
+            @media screen and (min-width: $tablet) {
+                background-size: 45%;
+                background-position-x: 50%;
+            }
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush1.svg");
+            background-size: 90%;
+            background-position-x: 450%;
+            @media screen and (min-width: $tablet) {
+                background-size: 60%;
+                background-position-x: 200%;
+            }
+        }
+    }
+
+    &:nth-of-type(3) {
+        .index-img.bg1 {
+            background-image: url("../images/index/bg3.svg");
+            background-position-x: left;
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg8.svg");
+            background: $greenDark;
+            opacity: 90%;
+            mask-position: 700% bottom;
+            @media screen and (min-width: $tablet) {
+                mask-position: 120% bottom;
+            }
+            transform: scaleX(-1);
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush3.svg");
+            background-size: 70%;
+            background-position-x: 20%;
+            background-position-y: 100%;
+            @media screen and (min-width: $tablet) {
+                background-size: 50%;
+                background-position-x: 30%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 35%;
+                background-position-x: 40%;
+            }
+            transform: scaleX(-1);
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush6.svg");
+            background-size: 50%;
+            background-position-x: -20%;
+            @media screen and (min-width: $tablet) {
+                background-size: 30%;
+                background-position-x: 0;
+            }
+        }
+    }
+
+    &:nth-of-type(4) {
+        .index-img.bg1 {
+            background-image: url("../images/index/bg5.svg");
+            right: 0;
+            background-position-x: right;
+            transform: scaleY(85%) translateY(10%);
+        }
+        .index-img.bg2 {
+            mask-image: url("../images/index/bg11.svg");
+            background: $greenDark;
+            opacity: 90%;
+            mask-position: 30% bottom;
+        }
+        .index-img.bush1 {
+            background-image: url("../images/index/bush5.svg");
+            background-size: 90%;
+            background-position-x: -350%;
+            @media screen and (min-width: $tablet) {
+                background-size: 75%;
+                background-position-x: -150%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 60%;
+                background-position-x: -30%;
+            }
+            transform: scaleX(-1);
+        }
+        .index-img.bush2 {
+            background-image: url("../images/index/bush4.svg");
+            background-size: 55%;
+            background-position-x: 15%;
+            @media screen and (min-width: $tablet) {
+                background-size: 45%;
+                background-position-x: 25%;
+            }
+            @media screen and (min-width: $smallDesktop) {
+                background-size: 35%;
+            }
+        }
+    }
+    // --------------------------------------------------------------------------------
+}
+
+
 html:has(#index) {
     @include scrollbar(12px, auto, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
 }
@@ -54,159 +381,285 @@ html:has(#index) {
         left: 0;
         z-index: 10;
     }
+    
+    --divider-height: 2rem;
+    @media screen and (min-width: $tablet) {
+        --divider-height: 4rem;
+    }
+    .divider {
+        height: var(--divider-height);
+        background: $gray1;
+        position: absolute;
+        width: calc(100% + 1px); // +1px, jinak se renderuje s divnou škvírou
+        mask-repeat: no-repeat;
+        mask-size: 100% 100%;
+        z-index: 15;
+        &.top {
+            top: calc( -1 * var(--divider-height) );
+            mask-position: bottom center;
+            transform: translateY(2px); // jinak se renderuje s divnou škvírou
+        }
+        &.bottom {
+            bottom: calc( -1 * var(--divider-height) );
+            mask-position: top center;
+            transform: translateY(-2px); // jinak se renderuje s divnou škvírou
+        }
+    }
+
+    .index-img.bg1,
+    .index-img.bg2,
+    .index-img.bush1,
+    .index-img.bush2 {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        background-position-y: bottom;
+        mask-position: bottom center;
+        pointer-events: none;
+    }
+
+    .index-img.chs {
+        position: relative;
+        @media screen and (min-width: $tablet) {
+            position: absolute;
+            bottom: 0;
+            margin: auto;
+        }
+        background-repeat: no-repeat;
+        pointer-events: none;
+    }
+
+    .glow {
+        filter: drop-shadow(0 0 40px rgba(rgb(204, 255, 143),0.3));
+    }
 
     #index-text-section {
+        background: var(--c-bgd2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
         @media screen and (min-width: $tablet) {
             display: grid;
-            grid-template-columns: 2fr 1fr 3fr;
-            grid-template-rows: 1fr 6fr 1fr;
+            grid-template-columns: minmax(20rem, 4fr) minmax(25rem, 6fr) 4fr;
+            grid-template-rows: clamp(16rem, 15vh, 15rem) clamp(10rem, 30vh, 20rem) clamp(10rem, 30vh, 30rem);
         }
-        @media screen and (min-width: $tablet) {
-            grid-template-columns: 4fr 1fr 3fr;
-            grid-template-rows: 1fr 6fr 1fr;
+
+        .index-img.chs {
+            margin-left: auto;
+            margin-right: 5%;
         }
+        
         > .content {
-            padding: 3rem 1.6rem;
+            padding: 3rem 1.6rem 0.4rem 1.6rem;
             text-align: center;
             @media screen and (min-width: $mobile) {
-                padding: 3rem 3rem;
+                padding: 3rem 2rem;
             }
             @media screen and (min-width: $tablet) {
-                padding: 3rem 4rem;
+                padding: 3rem 5rem;
                 grid-row: 1/3;
                 grid-column: 1/3;
                 text-align: justify;
             }
             @media screen and (min-width: $smallDesktop) {
-                padding: 4rem 6rem;
+                padding: 4rem 5rem;
             }
             @media screen and (min-width: $desktop) {
-                padding: 4rem 10rem;
+                padding: 4rem 8rem;
+            }
+
+            font-size: 1.4rem;
+            @media screen and (min-width: $smallDesktop) {
+                font-size: 1.6rem;
+            }
+            h1 {
+                margin-top: 0;
             }
             p {
-                font-size: 1.4rem;
-                margin-bottom: 0.4rem;
+                margin-bottom: 1.6rem;
                 @media screen and (min-width: $tablet) {
-                    font-size: 1.6rem;
                     text-align: left;
                 }
-                @media screen and (min-width: $smallDesktop) {
-                    font-size: 1.8rem;
-                }
             }
-            .btn {
-                font-size: 1.6rem;
-                padding: 0.4rem;
-                text-decoration: none;
-                @media screen and (min-width: $tablet) {
-                    font-size: 1.8rem;
-                }
-                @media screen and (min-width: $smallDesktop) {
-                    font-size: 2rem;
-                }
-            }
+            z-index: 10;
         }
-        #leaf-guy {
-            width: 100%;
-            /*
-            @media (prefers-color-scheme: dark) {
-                content: url("images/leaf-guy-blonde.svg");
-            }
-            @media (prefers-color-scheme: light) {
-                content: url("images/leaf-guy-dark.svg");
-            }*/
-            @media screen and (min-width: $tablet) {
-                grid-row: 2/4;
-                grid-column: 2/4;
-                align-self: end;
-                justify-self: end;
-            }
-            @media screen and (max-width: $tablet) {
-                position: relative;
-                bottom: -5px; //z neznámého důvodu je jinak pod obrázkem prázdné místo
-            }
-        }
-    }
 
-    #index-buttons-section {
-        background: var(--c-side-panel);
-        padding: 3rem 1rem;
-        @media screen and (min-width: $mobile) {
-            padding: 3rem 3rem;
-        }
-        .content {
+        .buttons {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            flex-grow: 1;
             .btn {
-                width: 100%;
-                margin: 1rem 0;
-                font-size: 1.4rem;
-                max-width: 10em;
-                @media screen and (min-width: $smallMobile) {
-                    font-size: 1.8rem;
+                margin-bottom: 0.8em;
+                @media screen and (min-width: $mobile) {
+                    &:not(:last-child) {
+                        margin-right: 0.6em;
+                    }
                 }
             }
+            @media screen and (min-width: $mobile) {
+                flex-direction: row;
+                flex-shrink: 1;
+            }
+            @media screen and (min-width: $tablet) {
+                flex-wrap: wrap;
+            }
         }
+
+        @include text-section-positioning();
     }
 
     #index-info-section {
-        padding: 3rem 1.6rem;
-        @media screen and (min-width: $mobile) {
-            padding: 3rem 3rem;
-        }
-        @media screen and (min-width: $tablet) {
-            padding: 4rem 6rem;
-        }
-        @media screen and (min-width: $smallDesktop) {
-            padding: 4rem 16vw;
-        }
-        @media screen and (min-width: $desktop) {
-            padding: 4rem 20vw;
-        }
+        width: 100%;
+        margin: auto;
         h3 {
-            font-size: 1.32rem;
-            margin: 1.6rem 0 0.4rem 0;
+            font-size: 1.16rem;
+            @media screen and (min-width: $mobile) {
+                font-size: 1.32rem
+            }
+            margin: 1.2rem 0 0.4rem 0;
         }
         p {
-            font-size: 1.24rem;
+            font-size: 1.12rem;
+            @media screen and (min-width: $mobile) {
+                font-size: 1.24rem
+            }
         }
         #info-icons {
-            @media screen and (min-width: $mobile) {
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-                grid-template-rows: auto auto auto auto;
-                column-gap: 2rem;
+            p {
+                margin-bottom: 1rem;
             }
-            margin: 1rem 0;
+        }
+
+        #info-text {
+            position: relative;
+            background: $gray1;
+            color: $textWhite;
+            width: 100%;
+            margin: auto;
+            position: relative;
+            z-index: 8;
+            padding: 4rem 0;
+            p {
+                width: 90vw;
+                max-width: 50rem;
+                margin: auto;
+            }
+            .divider {
+                &:nth-of-type(1) {
+                    mask-image: url("../images/index/mask1.svg");
+                }
+                &:nth-of-type(2) {
+                    mask-image: url("../images/index/mask2.svg");
+                }
+            }
+        }
+
+        section.app-info {
+            position: relative;
+            width: 100%;
+
+            &:nth-of-type(1) {
+                @media screen and (min-width: $tablet) {
+                    height: 70vh;
+                    max-height: 35rem;
+                }
+            }
+            &:nth-of-type(2) {
+                @media screen and (min-width: $tablet) {
+                    height: 74vh;
+                    max-height: 34rem;
+                }
+            }
+            &:nth-of-type(3) {
+                @media screen and (min-width: $tablet) {
+                    height: 68vh;
+                    max-height: 32rem;
+                }
+            }
+            &:nth-of-type(4) {
+                @media screen and (min-width: $tablet) {
+                    height: 68vh;
+                    max-height: 31rem;
+                }
+            }
+
             .info-tile {
-                max-width: 22.5rem;
-                margin: 0 auto;
-            }
-            #new-class-info {
-                @media screen and (min-width: $mobile) {
-                    grid-column: 1/2;
-                    grid-row: 2/3;
+                margin: auto;
+                width: 90vw;
+                z-index: 14;
+                padding-top: var(--divider-height);
+                @media screen and (min-width: $tablet) {
+                    position: absolute;
+                    max-width: 26rem;
+                    padding-top: 0;
+                    top: 10%;
+                }
+                @media screen and (min-width: $smallDesktop) {
+                    max-width: 22rem;
                 }
             }
-            #learn-info {
-                @media screen and (min-width: $mobile) {
-                    grid-column: 1/2;
-                    grid-row: 4/5;
+
+            &:nth-of-type(1) {
+                .info-tile {
+                    @media screen and (min-width: $tablet) {
+                        top: calc(10% + var(--divider-height));
+                    }
                 }
             }
-            img {
-                display: block;
-                padding-top: 3.2rem;
-                @media screen and (min-width: $mobile) {
-                    align-self: end;
+
+            &:nth-of-type(odd) {
+                background-color: var(--c-bgd2);
+                .info-tile {
+                    @media screen and (min-width: $tablet) {
+                        right: 10%;
+                    }
+                    @media screen and (min-width: $smallDesktop) {
+                        right: 15%;
+                    }
                 }
             }
-            div {
-                @media screen and (min-width: $mobile) {
-                    align-self: start;
+
+            &:nth-of-type(even) {
+                background-color: var(--c-bgd);
+                .index-img {
+                    right: 0;
+                }
+                .info-tile {
+                    @media screen and (min-width: $tablet) {
+                        left: 10%;
+                    }
+                    @media screen and (min-width: $smallDesktop) {
+                        left: 15%;
+                    }
                 }
             }
+            box-sizing: content-box;
+
+            @mixin divider-mask($z, $mask-image, $bgd) {
+                z-index: $z;
+                .divider {
+                    mask-image: $mask-image;
+                    background-color: $bgd;
+                }
+            }
+            &:nth-of-type(1) {
+                @include divider-mask(6, none, var(--c-bgd2));
+                padding-top: var(--divider-height);
+            }
+            &:nth-of-type(2) {
+                @include divider-mask(7, url("../images/index/mask3.svg"), var(--c-bgd));
+            }
+            &:nth-of-type(3) {
+                @include divider-mask(8, url("../images/index/mask4.svg"), var(--c-bgd2));
+            }
+            &:nth-of-type(4) {
+                @include divider-mask(9, url("../images/index/mask5.svg"), var(--c-bgd));
+            }
+              
+            @include app-info-positioning();
         }
     }    
 
@@ -223,7 +676,7 @@ html:has(#index) {
         width: 90vw;
         height: auto;
         max-width: 32.5rem;
-        z-index: 10;
+        z-index: 21;
         background: var(--c-bgd-popup);
         opacity: 0;
         pointer-events: none;
@@ -243,14 +696,20 @@ html:has(#index) {
             overflow: auto;  
             @include scrollbar(0px, thin, var(--c-scrollbar-thumb), var(--c-scrollbar-thumb-hover), var(--c-bgd));
         }
-        #hide-login-section-button {
-            margin: 0 0 0.6rem auto;
-            height: 1.4rem;
-            width: 1.4rem;
-        }
-        h2 {
-            font-size: 1.6rem;
-            margin: 0 0 0.8rem 0;
+        .login-title {
+            position: relative;
+            margin: 0.8rem 0 1.6rem 0;
+            .hide-login-section-button {
+                height: 1.4rem;
+                width: 1.4rem;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+            h2 {
+                font-size: 1.6rem;
+                line-height: 1em;
+            }
         }
         .user.data {
             display: flex;
@@ -310,6 +769,16 @@ html:has(#index) {
 
     footer {
         grid-row: 4/5;
+        position: relative;
+        z-index: 15;
+        .content {
+            justify-content: space-evenly;
+            padding: 0.8rem 1rem;
+        }
+        .divider {
+            background: var(--c-footer);
+            mask-image: url("../images/index/mask6.svg");
+        }
     }
 
     #cookies-alert {
@@ -382,7 +851,7 @@ html:has(#index) {
         position: fixed; 
         bottom: 2rem;
         right: 2rem;
-        z-index: 4;
+        z-index: 19;
         @media screen and (min-width: $tablet) {
             bottom: 3rem;
             right: 3rem;
