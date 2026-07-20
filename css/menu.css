@@ -2525,21 +2525,36 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   border: 1px solid #444;
 }
 
-#learn #learn-wrapper,
-#learn #test-wrapper,
-#learn #add-pictures-form-wrapper,
-#test #learn-wrapper,
-#test #test-wrapper,
-#test #add-pictures-form-wrapper,
-#test-new #learn-wrapper,
-#test-new #test-wrapper,
-#test-new #add-pictures-form-wrapper,
-#add-pictures #learn-wrapper,
-#add-pictures #test-wrapper,
-#add-pictures #add-pictures-form-wrapper {
+#learn .study-wrapper,
+#test .study-wrapper,
+#test-new .study-wrapper,
+#add-pictures .study-wrapper {
   margin: auto;
   width: 100%;
   max-width: 25rem;
+}
+@media screen and (min-width: 42rem) {
+  #learn .study-wrapper,
+  #test .study-wrapper,
+  #test-new .study-wrapper,
+  #add-pictures .study-wrapper {
+    max-width: 43.75rem;
+    margin: 0 auto;
+  }
+}
+@media screen and (min-width: 60rem) {
+  #learn .study-wrapper,
+  #test .study-wrapper,
+  #test-new .study-wrapper,
+  #add-pictures .study-wrapper {
+    max-width: 56.25rem;
+  }
+}
+#learn label,
+#test label,
+#test-new label,
+#add-pictures label {
+  font-size: 0.9rem;
 }
 @media screen and (min-width: 42rem) {
   #learn #learn-wrapper,
@@ -2556,31 +2571,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   #add-pictures #add-pictures-form-wrapper {
     display: grid;
     align-items: start;
-    max-width: 43.75rem;
-    margin: 0 auto;
   }
-}
-@media screen and (min-width: 60rem) {
-  #learn #learn-wrapper,
-  #learn #test-wrapper,
-  #learn #add-pictures-form-wrapper,
-  #test #learn-wrapper,
-  #test #test-wrapper,
-  #test #add-pictures-form-wrapper,
-  #test-new #learn-wrapper,
-  #test-new #test-wrapper,
-  #test-new #add-pictures-form-wrapper,
-  #add-pictures #learn-wrapper,
-  #add-pictures #test-wrapper,
-  #add-pictures #add-pictures-form-wrapper {
-    max-width: 56.25rem;
-  }
-}
-#learn label,
-#test label,
-#test-new label,
-#add-pictures label {
-  font-size: 0.9rem;
 }
 
 #learn #learn-wrapper:focus,
@@ -2865,6 +2856,45 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 }
 #test .controllers #result-text .incorrect {
   color: var(--c-error);
+}
+
+#test-new #cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+}
+@media screen and (min-width: 36rem) {
+  #test-new #cards {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  }
+}
+#test-new #cards {
+  gap: 1rem;
+}
+#test-new .answer-card {
+  width: 100%;
+  background: var(--c-tile);
+  border-radius: 6px;
+  box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
+}
+#test-new .answer-card .picture {
+  width: 100%;
+  aspect-ratio: 1/1;
+  position: relative;
+  overflow: hidden;
+}
+#test-new .answer-card img {
+  width: 100%;
+  height: 100%;
+  background: var(--c-text-field);
+  object-fit: contain;
+  aspect-ratio: 1/1;
+  border-radius: 6px 6px 0 0;
+  border: 4px solid var(--c-tile);
+}
+#test-new .answer-card .name {
+  text-align: center;
+  padding: 0.6rem;
 }
 
 @media screen and (min-width: 42rem) {
