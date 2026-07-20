@@ -1,3 +1,63 @@
-<div id="test-new-wrapper">
-    
-</div>
+<section id="settings-wrapper">
+    <p>Aplikace ti vygeneruje test a spočítá ti statistiky úspěšnosti. Na konci testu si ještě budeš moci projít špatně zodpovězené přírodniny. Zvol si, kolik otázek bude test obsahovat:
+    </p>
+    <form id="test-settings">
+        <div class="buttons-wrapper">
+            <button class="btn border-btn transparent primary test-pics-num-button">10 otázek</button>
+            <button class="btn border-btn transparent primary test-pics-num-button">20 otázek</button>
+            <button class="btn border-btn transparent primary test-pics-num-button">30 otázek</button>
+        </div>
+        <label for="test-pics-num">Jiný počet otázek:</label>
+        <input type=text autocomplete="off" id="test-pics-num" class="text-field" />
+    </form>
+</section>
+
+<section id="test-wrapper">
+    <section class="picture">
+        <img id="main-img" src="images/blank.gif" alt="Obrázek přírodniny"> <!-- Adresa bude dodána JavaScriptem -->
+        <button class="btn report-button icon" title="Nahlásit"><img class="icon white shadow" src="images/report_f_2.svg" alt="Nahlásit"></button>
+        <div class="report-box">
+            <?php require 'Views/reportForm.phtml'; ?>
+        </div>
+    </section>
+    <section class="controllers">
+        <form id="answer-form">
+            <label for="answer">Zadej odpověď:</label>
+            <input type=text autocomplete="off" id="answer" class="text-field" />
+            <input type=hidden id="answer-hidden" />
+            <button id="submit-answer-button" class="btn border-btn non-transparent primary">Odeslat odpověď</button>
+        </form>
+        <div id="result">
+            <!-- ZHODNOCENÍ ODPOVĚDI -->
+            <div id="result-text"></div>
+            <button id="next-button" class="btn border-btn non-transparent primary">Další obrázek</button>
+        </div>
+    </section>
+    <div class="progress-bar">
+        <span>1/20</span>
+    </div>
+</section>
+
+<section id="results-wrapper">
+    <p>Zodpověděl*a jsi správně 15/20 otázek.</p>
+    <button class="btn border-btn non-transparent primary new-test-button">Otestovat, co mi nešlo</button>
+    <!-- ukáže se popup, jestli zobrazovat stejné obrázky, nebo náhodné -->
+    <button class="btn border-btn non-transparent primary new-test-button">Zobrazit správné odpovědi</button>
+    <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+</section>
+
+<section id="answers-wrapper">
+    <div class="correct-answer-card">
+        <img src="images/logo.png">
+        <div class="name"></div>
+    </div>
+    <div class="correct-answer-card">
+        <img src="images/logo.png">
+        <div class="name"></div>
+    </div>
+    <div class="correct-answer-card">
+        <img src="images/logo.png">
+        <div class="name"></div>
+    </div>
+    <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+</section>
