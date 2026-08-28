@@ -44,7 +44,7 @@ function answerInvitation(event, answer)
                             $($classTemplate).insertAfter('ul > .closed-class:last');
 
                             //nastavení event handlerů
-                            $(".leave-link").click(function(event) {leaveClass(event)})
+                            $(".leave-class-button").click(function(event) {leaveClass(event)})
                             $(".class.data-item").click(function(event) {redirectToClass(event)})
                         }
 

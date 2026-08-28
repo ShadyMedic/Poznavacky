@@ -382,6 +382,32 @@ class LoggedUser extends User
     }
 
     /**
+     * Metoda označující určitou třídu jako oblíbenou pro daného uživatele
+     * @param ClassObject $class Třída k označení jako oblíbená
+     * @return bool TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
+     */
+    public function markFavouriteClass(ClassObject $class): bool
+    {
+        $this->loadIfNotLoaded($this->id);
+        $classId = $class->getId();
+        return Db::executeQuery('INSERT INTO uzivatele_tridy (uzivatele_id,tridy_id,clenstvi,oblibenost) VALUES (?,?,0,1) ON DUPLICATE KEY UPDATE oblibenost = 1;', array($this->id, $classId));
+    }
+
+    /**
+     * Metoda odznačující určitou třídu jako oblíbenou pro daného uživatele
+     * @param ClassObject $class Třída k odznačení jako oblíbená
+     * @return bool TRUE, pokud vše proběhne hladce
+     * @throws DatabaseException
+     */
+    public function unmarkFavouriteClass(ClassObject $class): bool
+    {
+        $this->loadIfNotLoaded($this->id);
+        $classId = $class->getId();
+        return Db::executeQuery('UPDATE uzivatele_tridy SET oblibenost = 0 WHERE uzivatele_id = ? AND tridy_id = ? LIMIT 1;', array($this->id, $classId));
+    }
+
+    /**
      * Metoda aktualizující uživateli jak v $_SESSION tak v databázi barevný zvolený motiv uživatelského rozhraní
      * stránce
      * @param bool $darkThemeSelected TRUE pokud má být nastaven tmavý motiv, FALSE pokud světlý

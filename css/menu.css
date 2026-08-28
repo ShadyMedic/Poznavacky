@@ -2188,6 +2188,14 @@ html:has(#menu,
     grid-template-columns: 1fr 8rem 5.4rem;
   }
 }
+@media screen and (min-width: 42rem) {
+  #menu .folders#menu-classes-table .data-item .class.action {
+    display: flex;
+    flex-direction: row-reverse;
+    -moz-column-gap: 0.4rem;
+         column-gap: 0.4rem;
+  }
+}
 #menu .folders#menu-classes-table .invitation-wrapper {
   grid-template-rows: auto auto;
   margin: 0.4rem 0 0.6rem 0;
@@ -2379,7 +2387,7 @@ html:has(#menu,
 #menu .folders ul h4 {
   text-align: center;
 }
-#menu .folders ul button {
+#menu .folders ul .data-item {
   margin: 0.4rem 0;
 }
 #menu .folders ul li {

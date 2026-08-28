@@ -37,34 +37,36 @@ class TestGroupsFetcher
                                       ClassObject::COLUMN_DICTIONARY['url'].','.
                                       ClassObject::COLUMN_DICTIONARY['groupsCount'].','.
                                       ClassObject::COLUMN_DICTIONARY['status'].','.
-                                      ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
+                                      ClassObject::COLUMN_DICTIONARY['admin'].','.
+                                      '0 AS oblibenost'. //U demo účtu je nám oblíbenost jedno, jen nechceme chybu z nedefinovaného indexu
+                                      ' FROM '.ClassObject::TABLE_NAME.
                                       ' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "locked" AND '.
                                       ClassObject::COLUMN_DICTIONARY['id'].
-                                      ' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?);',
+                                      ' IN (SELECT tridy_id FROM uzivatele_tridy WHERE uzivatele_id = ? AND clenstvi = 1);',
                 array(UserManager::getId()), true);
         } else {
-            $classes = Db::fetchQuery('SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','. //Třídy spravované uživatelem
-                                      ClassObject::COLUMN_DICTIONARY['url'].','.
-                                      ClassObject::COLUMN_DICTIONARY['groupsCount'].','.
-                                      ClassObject::COLUMN_DICTIONARY['status'].','.
-                                      ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
-                                      ' WHERE '.ClassObject::COLUMN_DICTIONARY['admin'].' = ?'.
-                                      ' UNION '.
-                                      'SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','. //Neveřejné třídy v nichž je uživatel členem
-                                      ClassObject::COLUMN_DICTIONARY['url'].','.
-                                      ClassObject::COLUMN_DICTIONARY['groupsCount'].','.
-                                      ClassObject::COLUMN_DICTIONARY['status'].','.
-                                      ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
-                                      ' WHERE '.ClassObject::COLUMN_DICTIONARY['id'].
-                                      ' IN (SELECT tridy_id FROM clenstvi WHERE uzivatele_id = ?)'.
-                                      ' UNION '.
-                                      'SELECT '.ClassObject::COLUMN_DICTIONARY['name'].','. //Veřejné třídy
-                                      ClassObject::COLUMN_DICTIONARY['url'].','.
-                                      ClassObject::COLUMN_DICTIONARY['groupsCount'].','.
-                                      ClassObject::COLUMN_DICTIONARY['status'].','.
-                                      ClassObject::COLUMN_DICTIONARY['admin'].' FROM '.ClassObject::TABLE_NAME.
-                                      ' WHERE '.ClassObject::COLUMN_DICTIONARY['status'].' = "public";',
-                array(UserManager::getId(), UserManager::getId()), true);
+            $classes = Db::fetchQuery('SELECT * FROM (
+                                        SELECT ' . ClassObject::COLUMN_DICTIONARY['name'] . ',' . //Neveřejné třídy v nichž je uživatel členem (včetně správce)
+                                        ClassObject::COLUMN_DICTIONARY['url'] . ',' .
+                                        ClassObject::COLUMN_DICTIONARY['groupsCount'] . ',' .
+                                        ClassObject::COLUMN_DICTIONARY['status'] . ',' .
+                                        ClassObject::COLUMN_DICTIONARY['admin'] . ',' .
+                                        'oblibenost' .
+                                        ' FROM ' . ClassObject::TABLE_NAME .
+                                        ' JOIN uzivatele_tridy ON uzivatele_tridy.tridy_id = ' . ClassObject::TABLE_NAME . '.' . ClassObject::COLUMN_DICTIONARY['id'] .
+                                        ' WHERE uzivatele_tridy.uzivatele_id = ? AND uzivatele_tridy.clenstvi = 1' .
+                                        ' UNION ' .
+                                        'SELECT ' . ClassObject::COLUMN_DICTIONARY['name'] . ',' . //Veřejné třídy
+                                        ClassObject::COLUMN_DICTIONARY['url'] . ',' .
+                                        ClassObject::COLUMN_DICTIONARY['groupsCount'] . ',' .
+                                        ClassObject::COLUMN_DICTIONARY['status'] . ',' .
+                                        ClassObject::COLUMN_DICTIONARY['admin'] . ',' .
+                                        'oblibenost' .
+                                        ' FROM ' . ClassObject::TABLE_NAME .
+                                        ' JOIN uzivatele_tridy ON uzivatele_tridy.tridy_id = ' . ClassObject::TABLE_NAME . '.' . ClassObject::COLUMN_DICTIONARY['id'] .
+                                        ' WHERE ' . ClassObject::COLUMN_DICTIONARY['status'] . ' = "public"
+                                      ) classes ORDER BY oblibenost DESC, '.ClassObject::COLUMN_DICTIONARY['admin'].' = ? DESC, '.ClassObject::COLUMN_DICTIONARY['status'].' != "public" DESC;',
+                array(UserManager::getId(),UserManager::getId()), true);
         }
         
         if (!$classes) {
@@ -72,28 +74,27 @@ class TestGroupsFetcher
         }
         
         //Vytvoř tabulku
-        $table = [
-            'managed' => [],
-            'joined' => [],
-            'public' => []
-        ];
+        $table = [];
         foreach ($classes as $dataRow) {
             $tableRow = array();
             $tableRow['rowLink'] = rtrim($_SERVER['REQUEST_URI'], '/').'/'.
                                    $dataRow[ClassObject::COLUMN_DICTIONARY['url']];
-           $tableRow[0] = $dataRow[ClassObject::COLUMN_DICTIONARY['name']];
-           $tableRow[1] = $dataRow[ClassObject::COLUMN_DICTIONARY['groupsCount']];
+            $tableRow['name'] = $dataRow[ClassObject::COLUMN_DICTIONARY['name']];
+            $tableRow['groups'] = $dataRow[ClassObject::COLUMN_DICTIONARY['groupsCount']];
+            $tableRow['favourite'] = $dataRow['oblibenost'];
+
             //Tlačítko pro správu třídy, pokud je přihlášený uživatel správcem třídy
             if (UserManager::getId() == $dataRow[ClassObject::COLUMN_DICTIONARY['admin']]) {
-                $table['managed'][] = $tableRow;
+                $tableRow['status'] = 'managed';
             } //Tlačítko pro opuštění třídy, pokud není třída veřejná
             else if ($dataRow[ClassObject::COLUMN_DICTIONARY['status']] !== self::CLASS_STATUS_PUBLIC) {
-                $table['joined'][] = $tableRow;
+                $tableRow['status'] = 'closed';
             } else {
-                $table['public'][] = $tableRow;
+                $tableRow['status'] = 'public';
             }
+            $table[] = $tableRow;
         }
-        
+
         return $table;
     }
     

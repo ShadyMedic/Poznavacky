@@ -26,7 +26,7 @@ class AnswerInvitationController extends AjaxController
      * @throws AccessDeniedException Pokud není přihlášen žádný uživatel
      * @throws DatabaseException Pokud se při práci s databází vyskytne chyba
      * @throws Exception Pokud se nepodaří vytvořit objekt DateTime
-     * @see SynchronousController::process()
+     * @see AjaxController::process()
      */
     public function process(array $parameters): void
     {

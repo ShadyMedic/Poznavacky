@@ -47,8 +47,6 @@ class MenuController extends SynchronousController
         self::$pageHeader['bodyId'] = 'menu';
         
         //Získání dat pro tabulku
-        $dataForTable = null;
-        $viewForTable = null;
         $aChecker = new AccessChecker();
         try {
             if (!$aChecker->checkClass()) {
