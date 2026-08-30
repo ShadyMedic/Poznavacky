@@ -7,3 +7,5 @@ vendor/
 local/
 log/
 external/
+frontend/node_modules/
+js/dist/
