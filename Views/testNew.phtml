@@ -1,14 +1,22 @@
 <section id="settings-wrapper" class="study-wrapper">
-    <p>Aplikace ti vygeneruje test a spočítá ti statistiky úspěšnosti. Na konci testu si ještě budeš moci projít špatně zodpovězené přírodniny. Zvol si, kolik otázek bude test obsahovat:
-    </p>
+    <p>Aplikace ti vygeneruje test a spočítá ti statistiky úspěšnosti. Na konci testu si ještě budeš moci projít špatně zodpovězené přírodniny. </p>
     <form id="test-settings">
+        <p>Zvol si, kolik otázek bude test obsahovat:</p>
         <div class="buttons-wrapper">
-            <button class="btn border-btn transparent primary test-pics-num-button">10 otázek</button>
+            <button class="btn border-btn transparent primary test-pics-num-button selected">10 otázek</button>
             <button class="btn border-btn transparent primary test-pics-num-button">20 otázek</button>
             <button class="btn border-btn transparent primary test-pics-num-button">30 otázek</button>
         </div>
         <label for="test-pics-num">Jiný počet otázek:</label>
         <input type=text autocomplete="off" id="test-pics-num" class="text-field" />
+        <p>Zvol si časový limit testu:</p>
+        <div class="buttons-wrapper">
+            <button class="btn border-btn transparent primary test-pics-num-button selected">Žádný limit</button>
+            <button class="btn border-btn transparent primary test-pics-num-button">5 minut</button>
+            <button class="btn border-btn transparent primary test-pics-num-button">10 minut</button>
+        </div>
+        <label for="test-pics-num">Jiný čas:</label>
+        <input type=text autocomplete="off" id="test-pics-time" class="text-field" />
     </form>
 </section>
 
@@ -27,11 +35,6 @@
             <input type=hidden id="answer-hidden" />
             <button id="submit-answer-button" class="btn border-btn non-transparent primary">Odeslat odpověď</button>
         </form>
-        <div id="result">
-            <!-- ZHODNOCENÍ ODPOVĚDI -->
-            <div id="result-text"></div>
-            <button id="next-button" class="btn border-btn non-transparent primary">Další obrázek</button>
-        </div>
     </section>
     
     <div
