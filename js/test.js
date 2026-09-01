@@ -1,3 +1,5 @@
+const pictureManager = new PictureManager();
+
 $(function()
 {
     next();
@@ -11,95 +13,6 @@ $(function()
     //event listener chyby načítání obrázku
     $("#main-img").on("error", function() {imgErrorHandle()});
 })
-
-/**
- * Objekt reprezentující obrázek
- * @param num Číslo, pod kterým je v $_SESSION na serveru uložena správná odpověď
- * @param url URL adresa obrázku k zobrazení
- */
-function picture(num, url)
-{
-    this.num = num;
-    this.url = url;
-}
-
-/**
- * Objekt reprezentující správce obrázků, který uchovává jejich data a v případě potřeby načítá další ze serveru
- */
-function pictureList()
-{
-    this.pictures = new Array();
-    
-    /**
-     * Metoda získávající ze serveru náhodné obrázky z části/poznávačky pomocí AJAX get požadavku
-     * Po obdržení odpovědi je seznam obrázků naplněn (staré obrázky jsou přepsány)
-     * @param {bool} callNextUponResponse True, pokud se má po obdržení odpovědi zavolat funkce pro zobrazení dalšího obrázku
-     */
-    this.loadPictures = function(callNextUponResponse)
-    {
-        if (callNextUponResponse)
-        {
-            this.callNext = true;
-        }
-        else
-        {
-            this.callNext = false;
-        }
-
-        let url = window.location.href;
-        if (url.endsWith('/')) { url = url.slice(0, -1); } //odstranění trailing slashe (pokud je přítomen)
-        url = url.substr(0, url.lastIndexOf("/")); //Odstranění akce (/test)
-
-        $.get(url + "/test-pictures",
-            function (response, status)
-            {
-                ajaxCallback(response, status,
-                    function(messageType, message, data)
-                    {
-                        if (messageType === "success")
-                        {
-                            //přepsání dvourozměrného pole do jednorozměrného s objekty
-                            for (let i = 0; i < data.pictures.length; i++) { data.pictures[i] = new picture(data.pictures[i]["num"], data.pictures[i]["url"]); }
-                            
-                            //z nějakého důvodu nejde odkazovat pomocí this
-                            pictureManager.pictures = data.pictures;
-                            
-                            //kontrola, zda se má zavolat funkce pro načtení dalšího obrázku (také nelze odkazovat pomocí this)
-                            if (pictureManager.callNext === true)
-                            {
-                                next();
-                            }
-                        }
-                        else
-                        {
-                            newMessage(message, "error");
-                        }
-                    }
-                );
-            },
-            "json"
-        );
-    }
-    
-    /**
-     * Metoda získávající první dostupný objekt obrázku a odstraňující jej z pole dostupných obrázků
-     */
-    this.getNextPicture = function()
-    {
-        return this.pictures.shift();
-    }
-    
-    /**
-     * Metoda zjišťující, zda je k dispozici alespoň jeden objekt obrázku
-     */
-    this.picturesAvailable = function()
-    {
-        return (this.pictures.length > 0) ? true : false;
-    }
-}
-
-//jediná instance správce obrázků (statika není zatím moc spolehlivá)
-var pictureManager = new pictureList();
 
 /**
  * Funkce odesílající zadanou odpověď na server ke kontrole

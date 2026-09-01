@@ -30,6 +30,7 @@ class TestNewController extends SynchronousController
         self::$pageHeader['cssFiles'] = array('css/menu.css');
         self::$pageHeader['jsFiles'] = array(
             'js/generic.js',
+            'js/PictureManager.js',
             'js/ajaxMediator.js',
             'js/testNew.js',
             'js/reportForm.js',
