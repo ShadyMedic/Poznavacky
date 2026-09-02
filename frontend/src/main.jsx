@@ -1,9 +1,9 @@
 import { render } from 'preact';
 import ProgressBar from './components/ProgressBar';
-
 import AnswerCard from './components/AnswerCard';
+import TestImg from './components/TestImg';
 
-//zatím zde provizorně, potom by se z backendu měly fetchovat reálná data v tomto formátu
+//TODO zatím zde provizorně, potom by se z backendu měla fetchovat reálná data v tomto formátu
 const cards = [
     {
         id: 1,
@@ -55,6 +55,15 @@ $(function () {
                 value={Number($(this).data('value'))}
                 max={Number($(this).data('max'))}
             />,
+            this
+        );
+    });
+});
+
+$(function () {
+    $('[data-preact="test-img"]').each(function () {
+        render(
+            <TestImg />,
             this
         );
     });
