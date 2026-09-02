@@ -28,7 +28,8 @@ export default function TestSection() {
     }
 
     return (
-        <>
+        <section id="test-wrapper" class="study-wrapper">
+
             <section class="picture">
             
                 <TestImg picture={picture} />
@@ -70,6 +71,7 @@ export default function TestSection() {
             </section>
 
             <ProgressBar />
-        </>
+
+        </section>
     );
 }
