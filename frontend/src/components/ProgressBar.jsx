@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export default function ProgressBar({value, max = 20 }) {
+export default function ProgressBar({value = 15, max = 20 }) {
 
     const percentage = Math.min(100, Math.max(0, (value / max) * 100));
 

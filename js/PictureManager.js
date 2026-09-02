@@ -24,15 +24,12 @@ class PictureManager {
         this.pictCount = pictCount; 
     }
 
-
-    // TODO tato funkce je momentálně někde v backendu nahardcodovaná, že vždy načte 20 obrázků
-    // bylo by třeba zajistit, aby v případě režimu testu načetla přesně tolik obrázků, které si uživatel zvolí
-    // a tyto obrázky by zůstaly uložené
     /**
      * Načte ze serveru náhodné obrázky.
      * @param {boolean} callNextUponResponse
+     * @param {int} numberOfPictures Počet obrázků, který se má načíst. Default null (řízeno backend konstantou)
      */
-    loadPictures(callNextUponResponse) {
+    loadPictures(callNextUponResponse, numberOfPictures = null, onLoaded = null) {
         this.callNext = callNextUponResponse;
 
         let url = window.location.href;
@@ -40,6 +37,12 @@ class PictureManager {
             url = url.slice(0, -1); 
         } //odstranění trailing slashe (pokud je přítomen)
         url = url.substring(0, url.lastIndexOf("/")); //Odstranění akce (/test)
+
+        const data = {};
+
+        if (numberOfPictures !== null) {
+            data.numberOfPictures = numberOfPictures;
+        }
 
         $.get(
             url + "/test-pictures",
@@ -50,9 +53,16 @@ class PictureManager {
                         // namapuje data ze serveru na uložené objekty
                         this.pictures = data.pictures.map(p => new Picture(p.num, p.url));
 
+                        // starý JS callback
                         if (this.callNext === true) {
                             next();
                         }
+
+                        // Preact callback
+                        if (onLoaded) {
+                            onLoaded();
+                        }
+
                     } else {
                         newMessage(message, "error");
                     }
@@ -71,5 +81,6 @@ class PictureManager {
     }
 }
 
-// k dispozici globálně
+// k dispozici globálně (dočasné, než bude JS psáno přes moduly)
+window.Picture = Picture;
 window.PictureManager = PictureManager;

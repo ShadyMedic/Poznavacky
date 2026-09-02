@@ -1,7 +1,7 @@
 import { render } from 'preact';
 import ProgressBar from './components/ProgressBar';
 import AnswerCard from './components/AnswerCard';
-import TestImg from './components/TestImg';
+import TestSection from './components/TestSection';
 
 //TODO zatím zde provizorně, potom by se z backendu měla fetchovat reálná data v tomto formátu
 const cards = [
@@ -61,10 +61,12 @@ $(function () {
 });
 
 $(function () {
-    $('[data-preact="test-img"]').each(function () {
+    $('[data-preact="test-section"]').each(function () {
         render(
-            <TestImg />,
+            <TestSection />,
             this
         );
     });
 });
+
+

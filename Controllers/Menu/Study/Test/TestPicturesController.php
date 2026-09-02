@@ -30,11 +30,16 @@ class TestPicturesController extends AjaxController
         $pictures = array();
         try {
             $aChecker = new AccessChecker();
+
+            $numberOfPictures = !empty($_GET['numberOfPictures'])
+                ? (int) $_GET['numberOfPictures']
+                : Settings::TEST_PICTURES_SENT_PER_REQUEST;
+
             if ($aChecker->checkPart()) {
                 $part = $_SESSION['selection']['part'];
-                $pictures = $part->getRandomPictures(Settings::TEST_PICTURES_SENT_PER_REQUEST);
+                $pictures = $part->getRandomPictures($numberOfPictures);
             } else {
-                $pictures = $_SESSION['selection']['group']->getRandomPictures(Settings::TEST_PICTURES_SENT_PER_REQUEST);
+                $pictures = $_SESSION['selection']['group']->getRandomPictures($numberOfPictures);
             }
         } catch (DatabaseException $e) {
             (new Logger())->alert('Uživatel s ID {userId} zažádal o náhodné obrázky pro zkoušecí stránku poznávačky s ID {groupId} z IP adresy {ip}, avšak při jejich načítání došlo k chybě databáze; pokud toto není ojedinělá chyba, je možné, že tato část systému nefunguje nikomu; chybová hláška: {exception}',
