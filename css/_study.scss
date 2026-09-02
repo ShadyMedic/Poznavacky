@@ -1,6 +1,6 @@
 #learn, 
+#practise,
 #test,
-#test-new,
 #add-pictures {
     .study-wrapper {
         margin: auto;
@@ -28,8 +28,8 @@
 }
 
 #learn, 
-#test,
-#test-new {
+#practise,
+#test {
     #learn-wrapper,
     #test-wrapper {
         &:focus {
@@ -205,8 +205,8 @@
     }
 }
 
-#test,
-#test-new {
+#practise,
+#test {
     .controllers {
         * {
             width: 100%;
@@ -232,7 +232,7 @@
     }
 }
 
-#test-new {
+#test {
     #cards {
         width: 100%;
         display: grid;

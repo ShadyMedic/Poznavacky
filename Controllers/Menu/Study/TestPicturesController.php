@@ -1,5 +1,5 @@
 <?php
-namespace Poznavacky\Controllers\Menu\Study\Test;
+namespace Poznavacky\Controllers\Menu\Study;
 
 use Poznavacky\Controllers\AjaxController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;

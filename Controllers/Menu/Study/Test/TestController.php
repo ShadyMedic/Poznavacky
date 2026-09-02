@@ -7,6 +7,9 @@ use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
 
+
+/* TODO pouze provizorní Controller vzniklý kopií původního TestControlleru pro nový režim */
+
 /**
  * Kontroler starající se o výpis stránky pro testování
  * @author Jan Štěch

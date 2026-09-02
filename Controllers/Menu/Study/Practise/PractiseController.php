@@ -1,5 +1,5 @@
 <?php
-namespace Poznavacky\Controllers\Menu\Study\Testnew;
+namespace Poznavacky\Controllers\Menu\Study\Practise;
 
 use Poznavacky\Controllers\SynchronousController;
 use Poznavacky\Models\Exceptions\AccessDeniedException;
@@ -7,14 +7,11 @@ use Poznavacky\Models\Security\AccessChecker;
 use Poznavacky\Models\Statics\UserManager;
 use Poznavacky\Models\Logger;
 
-
-/* TODO pouze provizorní Controller vzniklý kopií původního TestControlleru pro nový režim */
-
 /**
  * Kontroler starající se o výpis stránky pro testování
  * @author Jan Štěch
  */
-class TestNewController extends SynchronousController
+class PractiseController extends SynchronousController
 {
     /**
      * Metoda nastavující hlavičku stránky a pohled
@@ -32,11 +29,11 @@ class TestNewController extends SynchronousController
             'js/generic.js',
             'js/PictureManager.js',
             'js/ajaxMediator.js',
-            'js/testNew.js',
+            'js/practise.js',
             'js/reportForm.js',
             'js/menu.js'
         );
-        self::$pageHeader['bodyId'] = 'test-new';
+        self::$pageHeader['bodyId'] = 'practise';
         
         $aChecker = new AccessChecker();
         if (!$aChecker->checkPart()) {
