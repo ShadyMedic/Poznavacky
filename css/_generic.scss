@@ -80,6 +80,18 @@ header {
     }
 }
 
+.flex-row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.6rem;
+    > * {
+        flex: 1;
+        min-width: fit-content;
+    }
+}
+
 #messages {
     .message-item {
         padding: 1rem;

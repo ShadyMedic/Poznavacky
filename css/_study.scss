@@ -233,6 +233,23 @@
 }
 
 #test {
+    .param-settings {
+        margin: 1.8rem auto;
+        > * {
+            margin: 0.4rem auto;
+        }
+        label {
+            font-size: 1em;
+            margin-right: 0.6rem;
+        }
+        .text-field {
+            max-width: 8rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+  
     #cards {
         width: 100%;
         display: grid;
@@ -267,6 +284,7 @@
             padding: 0.6rem;
         }
     }
+
     .progress-bar {
         width: 100%;
         height: 2rem;
@@ -275,7 +293,6 @@
         overflow: hidden; 
         position: relative;
     }
-
     .progress-bar-fill {
         height: 100%;
         background: linear-gradient(90deg, $greenMidDesaturated, $gradientDark);

@@ -304,6 +304,18 @@ header .logo h1 {
   margin: 0;
 }
 
+.flex-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 0.6rem;
+}
+.flex-row > * {
+  flex: 1;
+  min-width: fit-content;
+}
+
 #messages .message-item {
   padding: 1rem;
   display: flex;
@@ -2871,6 +2883,22 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   color: var(--c-error);
 }
 
+#test .param-settings {
+  margin: 1.8rem auto;
+}
+#test .param-settings > * {
+  margin: 0.4rem auto;
+}
+#test .param-settings label {
+  font-size: 1em;
+  margin-right: 0.6rem;
+}
+#test .param-settings .text-field {
+  max-width: 8rem;
+}
+#test .param-settings p {
+  margin-bottom: 1rem;
+}
 #test #cards {
   width: 100%;
   display: grid;

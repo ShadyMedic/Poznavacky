@@ -303,6 +303,18 @@ header .logo h1 {
   margin: 0;
 }
 
+.flex-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 0.6rem;
+}
+.flex-row > * {
+  flex: 1;
+  min-width: fit-content;
+}
+
 #messages .message-item {
   padding: 1rem;
   display: flex;
@@ -332,7 +344,6 @@ header .logo h1 {
 #messages .message-item .text {
   max-height: 24vh;
   overflow: auto;
-  animation: fontpop 0.4s;
 }
 @-moz-document url-prefix() {
   #messages .message-item .text {
@@ -351,6 +362,9 @@ header .logo h1 {
 }
 #messages .message-item .text ::-webkit-scrollbar-thumb:hover {
   background: var(--c-scrollbar-thumb-hover);
+}
+#messages .message-item .text {
+  animation: fontpop 0.4s;
 }
 #messages .message-item .btn {
   margin-left: 1rem;
@@ -388,7 +402,6 @@ header .logo h1 {
   background: var(--c-bgd-popup);
   width: 90vw;
   max-width: 32.5rem;
-  height: -moz-fit-content;
   height: fit-content;
   padding: 1rem;
   border-radius: 0.6rem;
@@ -410,7 +423,6 @@ header .logo h1 {
 }
 
 footer {
-  padding: 0.12rem 1rem;
   background: var(--c-footer);
   font-size: 0.72rem;
 }
@@ -419,6 +431,7 @@ footer .content {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  padding: 0.12rem 1rem;
 }
 @media screen and (min-width: 36rem) {
   footer .content {
@@ -441,7 +454,7 @@ footer .content a:after {
 
 #overlay {
   position: fixed;
-  z-index: 9;
+  z-index: 20;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
@@ -570,6 +583,10 @@ ul.list li:not(:last-child) {
 .btn.border-btn.transparent.primary.disabled {
   border-color: var(--c-button-disabled);
   color: var(--c-button-disabled);
+}
+.btn.border-btn.transparent.primary.selected {
+  background: var(--c-button-primary);
+  color: var(--c-text-inverted);
 }
 .btn.border-btn.transparent.white {
   color: var(--c-button-light);
@@ -915,9 +932,7 @@ label.required:after {
   position: relative;
   padding-left: 2rem;
   cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   line-height: 1.6rem;
 }
 .custom-checkbox-wrapper input[type=checkbox] {
@@ -1079,9 +1094,7 @@ label.required:after {
 
 .custom-select-wrapper {
   position: relative;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   width: 100%;
   margin: 0;
   font-size: 100%;
@@ -1135,6 +1148,24 @@ label.required:after {
   transform: rotate(90deg);
   transition: transform 0.4s ease-in-out;
 }
+@-moz-document url-prefix() {
+  .custom-select-wrapper .custom-options {
+    scrollbar-color: #666 transparent;
+    scrollbar-width: auto;
+  }
+}
+.custom-select-wrapper .custom-options ::-webkit-scrollbar {
+  width: 12px;
+}
+.custom-select-wrapper .custom-options ::-webkit-scrollbar-track {
+  display: none;
+}
+.custom-select-wrapper .custom-options ::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+}
+.custom-select-wrapper .custom-options ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-thumb-hover);
+}
 .custom-select-wrapper .custom-options {
   position: absolute;
   display: block;
@@ -1153,24 +1184,6 @@ label.required:after {
   border-radius: 0 0 3.2px 3.2px;
   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.2);
   overflow: auto;
-}
-@-moz-document url-prefix() {
-  .custom-select-wrapper .custom-options {
-    scrollbar-color: #666 transparent;
-    scrollbar-width: auto;
-  }
-}
-.custom-select-wrapper .custom-options ::-webkit-scrollbar {
-  width: 12px;
-}
-.custom-select-wrapper .custom-options ::-webkit-scrollbar-track {
-  display: none;
-}
-.custom-select-wrapper .custom-options ::-webkit-scrollbar-thumb {
-  background: var(--c-scrollbar-thumb);
-}
-.custom-select-wrapper .custom-options ::-webkit-scrollbar-thumb:hover {
-  background: var(--c-scrollbar-thumb-hover);
 }
 .custom-select-wrapper .custom-options .custom-option {
   position: relative;
@@ -1209,6 +1222,7 @@ label.required:after {
   body:not(.light-theme) .custom-3-switch-wrapper .slider,
   body:not(.light-theme) .custom-select-wrapper .custom-select-main,
   body:not(.light-theme) .custom-select-wrapper .custom-options,
+  body:not(.light-theme) .progress-bar,
   body:not(.light-theme) #preview-img,
   body:not(.light-theme) #main-img {
     border: 1px solid #444;
@@ -1222,6 +1236,7 @@ body.dark-theme .custom-switch-wrapper .slider,
 body.dark-theme .custom-3-switch-wrapper .slider,
 body.dark-theme .custom-select-wrapper .custom-select-main,
 body.dark-theme .custom-select-wrapper .custom-options,
+body.dark-theme .progress-bar,
 body.dark-theme #preview-img,
 body.dark-theme #main-img {
   border: 1px solid #444;
@@ -1284,4 +1299,4 @@ main h2 {
 }
 main a {
   font-weight: 500;
-}/*# sourceMappingURL=error.css.map */
+}

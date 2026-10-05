@@ -303,6 +303,18 @@ header .logo h1 {
   margin: 0;
 }
 
+.flex-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 0.6rem;
+}
+.flex-row > * {
+  flex: 1;
+  min-width: fit-content;
+}
+
 #messages .message-item {
   padding: 1rem;
   display: flex;
@@ -571,6 +583,10 @@ ul.list li:not(:last-child) {
 .btn.border-btn.transparent.primary.disabled {
   border-color: var(--c-button-disabled);
   color: var(--c-button-disabled);
+}
+.btn.border-btn.transparent.primary.selected {
+  background: var(--c-button-primary);
+  color: var(--c-text-inverted);
 }
 .btn.border-btn.transparent.white {
   color: var(--c-button-light);
@@ -1206,6 +1222,7 @@ label.required:after {
   body:not(.light-theme) .custom-3-switch-wrapper .slider,
   body:not(.light-theme) .custom-select-wrapper .custom-select-main,
   body:not(.light-theme) .custom-select-wrapper .custom-options,
+  body:not(.light-theme) .progress-bar,
   body:not(.light-theme) #preview-img,
   body:not(.light-theme) #main-img {
     border: 1px solid #444;
@@ -1219,6 +1236,7 @@ body.dark-theme .custom-switch-wrapper .slider,
 body.dark-theme .custom-3-switch-wrapper .slider,
 body.dark-theme .custom-select-wrapper .custom-select-main,
 body.dark-theme .custom-select-wrapper .custom-options,
+body.dark-theme .progress-bar,
 body.dark-theme #preview-img,
 body.dark-theme #main-img {
   border: 1px solid #444;
