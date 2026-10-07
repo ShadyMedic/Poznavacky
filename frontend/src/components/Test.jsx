@@ -41,15 +41,18 @@ const TIME_PRESETS = [
 
 export default function Test() {
 
-    const [presetNumPics, setPresetNumPics] = useState(10);
+    const [phase, setPhase] = useState("settings"); // "settings" | "test" | "results" | "answers"
+
+    const [numPics, setNumPics] = useState(10);
     const [customNumPics, setCustomNumPics] = useState("");
 
-    const [customMinutes, setCustomMinutes] = useState("");
+    const [timeLimit, setTimeLimit] = useState("");
     const [presetMinutes, setPresetMinutes] = useState(null);      // v sekundách; null = neomezený čas
+
 
     function pickPictures(num)
     {
-        setPresetNumPics(num);
+        setNumPics(num);
         setCustomNumPics("");
     }
 
@@ -57,101 +60,120 @@ export default function Test() {
     {
         const val = e.currentTarget.value;
         setCustomNumPics(val);
-        setPresetNumPics(val.trim() === "" ? 10 : Number(val)); 
+        setNumPics(val.trim() === "" ? 10 : Number(val)); 
     }
 
     function pickTime(seconds)
     {
         setPresetMinutes(seconds);
-        setCustomMinutes("");
+        setTimeLimit("");
     }
 
-    function onCustomMinutes(e)
+    function ontimeLimit(e)
     {
         const val = e.currentTarget.value;
-        setCustomMinutes(val);
+        setTimeLimit(val);
         setPresetMinutes(val.trim() === "" ? null : Number(val) * 60);
     }
 
+    function startTest() {
+        setPhase("test");
+    }
+
+
     return (
         <>
-            <section id="settings-wrapper" class="study-wrapper">
+            {phase === "settings" && (
+                <section id="settings-wrapper" class="study-wrapper">
 
-                <p>Aplikace ti vygeneruje test a spočítá ti statistiky úspěšnosti. Na konci testu si ještě budeš moci projít špatně zodpovězené přírodniny. </p>
+                    <p>Aplikace ti vygeneruje test a spočítá ti statistiky úspěšnosti. Na konci testu si ještě budeš moci projít špatně zodpovězené přírodniny. </p>
 
-                <form id="test-settings">
-                    <div id="pics-num-settings" class="param-settings">
-                        <p>Zvol si, kolik otázek bude test obsahovat:</p>
-                        <div class="buttons-wrapper flex-row">
-                            {PICTURE_PRESETS.map(n => (
-                                <button
-                                    type="button"
-                                    key={n}
-                                    class={`btn border-btn transparent primary test-pics-num-button
-                                        ${customNumPics === "" && presetNumPics === n ? " selected" : ""}`}
-                                    onClick={() => pickPictures(n)}
-                                >
-                                    {n} otázek
-                                </button>
-                            ))}
+                    <form id="test-settings">
+                        <div id="pics-num-settings" class="param-settings">
+                            <p>Zvol si, kolik otázek bude test obsahovat:</p>
+                            <div class="buttons-wrapper flex-row">
+                                {PICTURE_PRESETS.map(n => (
+                                    <button
+                                        type="button"
+                                        key={n}
+                                        class={`btn border-btn transparent primary test-pics-num-button
+                                            ${customNumPics === "" && numPics === n ? " selected" : ""}`}
+                                        onClick={() => pickPictures(n)}
+                                    >
+                                        {n} otázek
+                                    </button>
+                                ))}
+                            </div>
+                            <label for="test-pics-num">Jiný počet otázek:</label>
+                            <input type="number" id="test-pics-num" min="1"
+                                class={`text-field ${customNumPics != "" ? "selected" : ""}`}
+                                value={customNumPics} onInput={onCustomNumPics} />
                         </div>
-                        <label for="test-pics-num">Jiný počet otázek:</label>
-                        <input type="number" id="test-pics-num" min="1"
-                            class={`text-field ${customNumPics != "" ? "selected" : ""}`}
-                            value={customNumPics} onInput={onCustomNumPics} />
+
+                        <div id="time-limit-settings" class="param-settings">
+                            <p>Zvol si časový limit testu:</p>
+                            <div class="buttons-wrapper flex-row">
+                                {TIME_PRESETS.map(t => (
+                                    <button
+                                        type="button"
+                                        key={t.label}
+                                        class={`btn border-btn transparent primary test-time-limit-button
+                                            ${timeLimit === "" && presetMinutes === t.value ? " selected" : ""}`}
+                                        onClick={() => pickTime(t.value)}
+                                    >
+                                        {t.label}
+                                    </button>
+                                ))}
+                            </div>
+                            <label for="test-time-limit">Jiný čas:</label>
+                            <input type="number" id="test-time-limit" min="1"
+                                class={`text-field ${timeLimit != "" ? "selected" : ""}`}
+                                value={timeLimit} onInput={ontimeLimit} /> minut
+                        </div>
+                    </form>
+
+                    <button id="start-test-button" class="btn border-btn transparent primary"
+                        onClick={startTest}
+                    >
+                        Spustit test
+                    </button>
+                </section>
+            )}
+
+            {phase === "test" && (
+                <TestSection
+                    numPics={numPics}
+                    timeLimit={timeLimit}
+                />
+            )}
+
+            {phase === "results" && (
+                <section id="results-wrapper" class="study-wrapper">
+
+                    <p>Zodpověděl*a jsi správně 15/20 otázek.</p>
+                    <button class="btn border-btn non-transparent primary new-test-button">Otestovat, co mi nešlo</button>
+
+                    <button class="btn border-btn non-transparent primary new-test-button">Zobrazit správné odpovědi</button>
+                    <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+
+                </section>
+            )}
+
+            {phase === "answers" && (
+                <section id="answers-wrapper" class="study-wrapper">
+
+                    <div id="cards">
+                        {cards.map(card => (
+                            <AnswerCard
+                                key={card.id}
+                                {...card}
+                            />
+                        ))}
                     </div>
 
-                    <div id="time-limit-settings" class="param-settings">
-                        <p>Zvol si časový limit testu:</p>
-                        <div class="buttons-wrapper flex-row">
-                            {TIME_PRESETS.map(t => (
-                                <button
-                                    type="button"
-                                    key={t.label}
-                                    class={`btn border-btn transparent primary test-time-limit-button
-                                        ${customMinutes === "" && presetMinutes === t.value ? " selected" : ""}`}
-                                    onClick={() => pickTime(t.value)}
-                                >
-                                    {t.label}
-                                </button>
-                            ))}
-                        </div>
-                        <label for="test-time-limit">Jiný čas:</label>
-                        <input type="number" id="test-time-limit" min="1"
-                            class={`text-field ${customMinutes != "" ? "selected" : ""}`}
-                            value={customMinutes} onInput={onCustomMinutes} /> minut
-                    </div>
-                </form>
-
-                <button id="start-test-button" class="btn border-btn transparent primary">Spustit test</button>
-            </section>
-
-            
-            <TestSection />
-
-            <section id="results-wrapper" class="study-wrapper">
-
-                <p>Zodpověděl*a jsi správně 15/20 otázek.</p>
-                <button class="btn border-btn non-transparent primary new-test-button">Otestovat, co mi nešlo</button>
-
-                <button class="btn border-btn non-transparent primary new-test-button">Zobrazit správné odpovědi</button>
-                <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
-
-            </section>
-
-            <section id="answers-wrapper" class="study-wrapper">
-
-                <div id="cards">
-                    {cards.map(card => (
-                        <AnswerCard
-                            key={card.id}
-                            {...card}
-                        />
-                    ))}
-                </div>
-
-                <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
-            </section>
+                    <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+                </section>
+            )}
         </>
     );
 }
