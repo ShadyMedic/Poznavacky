@@ -4,27 +4,68 @@ import { useRef } from 'preact/hooks';
 import TestImg from './TestImg';
 import ProgressBar from './ProgressBar';
 
-export default function TestSection() {
+export default function TestSection({numPics, timeLimit}) {
 
-    const [picture, setPicture] = useState(null);
-    const [answer, setAnswer] = useState('');
+    const [picture, setPicture] = useState(null); // obrázek (objekt Picture)
+
+    const [answer, setAnswer] = useState(''); // odpověď zadaná uživatelem
+    const [checking, setChecking] = useState(false); // odpověď je zrovna kontrolována
+    const [error, setError] = useState(null); // chyba kontroly odpovědi
 
     const pictureManager = useRef(new PictureManager()).current;
 
     useEffect(() => {
-        pictureManager.loadPictures(false, 10, () => {
+        pictureManager.loadPictures(false, numPics, () => {
             setPicture(pictureManager.getNextPicture());
         });
     }, []);
 
-    function handleSubmit(event) {
-        event.preventDefault();
+    async function handleSubmit(e)
+    {
+        e.preventDefault();    
 
-        // další obrázek
-        setPicture(pictureManager.getNextPicture());
+        setChecking(true);
+        setError(null);
 
-        // vyčištění odpovědi
-        setAnswer('');
+        let url = window.location.href;
+        if (url.endsWith('/')) { url = url.slice(0, -1); } // odstranění trailing slashe (pokud je přítomen)
+        url = url.substring(0, url.lastIndexOf("/")); // odstranění akce (/test)
+        
+        try {
+            const response = await ajaxPost(url + "/check-test-answer", {
+                qNum: picture.num,
+                ans: answer,
+            });
+
+            if (response === null) return;   // redirect in progress
+
+            if (response.messageType === "failure") {
+                setError(response.message);
+                return;
+            }
+
+            // TODO zatím první obrázek funguje, je třeba pořešit loadování dalších
+
+            const result = { id: picture.num, userAns: answer, isCorrect: response.message, correct: response.data.answer };
+            console.log(result);
+
+            if (picture.num + 1 >= numPics)
+            {
+                // test skončil
+                onFinish(next);              
+            }
+            else
+            {
+                // další obrázek
+                setPicture(pictureManager.getNextPicture());
+                setAnswer("");
+            }
+
+        } catch (err) {
+            setError("Nepodařilo se ověřit odpověď, zkus to znovu.");
+        } finally {
+            setChecking(false);
+        }
     }
 
     return (
@@ -47,24 +88,12 @@ export default function TestSection() {
                 <form id="answer-form" onSubmit={handleSubmit}>
                     <label for="answer">Zadej odpověď:</label>
 
-                    <input
-                        type="text"
-                        autocomplete="off"
-                        id="answer"
-                        class="text-field"
+                    <input type="text" autocomplete="off" id="answer" class="text-field"
                         value={answer}
                         onInput={e => setAnswer(e.currentTarget.value)}
                     />
 
-                    <input
-                        type="hidden"
-                        id="answer-hidden"
-                    />
-
-                    <button
-                        type="submit"
-                        class="btn border-btn non-transparent primary"
-                    >
+                    <button type="submit" class="btn border-btn non-transparent primary">
                         Odeslat odpověď
                     </button>
                 </form>
