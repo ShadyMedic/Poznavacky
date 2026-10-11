@@ -4,13 +4,15 @@ import { useRef } from 'preact/hooks';
 import TestImg from './TestImg';
 import ProgressBar from './ProgressBar';
 
-export default function TestSection({numPics, timeLimit}) {
+export default function TestSection({numPics, timeLimit, onFinish}) {
 
     const [picture, setPicture] = useState(null); // obrázek (objekt Picture)
 
     const [answer, setAnswer] = useState(''); // odpověď zadaná uživatelem
     const [checking, setChecking] = useState(false); // odpověď je zrovna kontrolována
     const [error, setError] = useState(null); // chyba kontroly odpovědi
+
+    const [results, setResults] = useState([]);
 
     const pictureManager = useRef(new PictureManager()).current;
 
@@ -47,16 +49,18 @@ export default function TestSection({numPics, timeLimit}) {
             // TODO zatím první obrázek funguje, je třeba pořešit loadování dalších
 
             const result = { id: picture.num, userAns: answer, isCorrect: response.message, correct: response.data.answer };
+            const newResults = [...results, result];
             console.log(result);
 
             if (picture.num + 1 >= numPics)
             {
                 // test skončil
-                onFinish(next);              
+                onFinish(newResults);              
             }
             else
             {
                 // další obrázek
+                setResults(newResults);
                 setPicture(pictureManager.getNextPicture());
                 setAnswer("");
             }

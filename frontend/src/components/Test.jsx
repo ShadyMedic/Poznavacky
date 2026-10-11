@@ -49,6 +49,8 @@ export default function Test() {
     const [timeLimit, setTimeLimit] = useState("");
     const [presetMinutes, setPresetMinutes] = useState(null);      // v sekundách; null = neomezený čas
 
+    const [results, setResults] = useState([]);
+
 
     function pickPictures(num)
     {
@@ -78,6 +80,11 @@ export default function Test() {
 
     function startTest() {
         setPhase("test");
+    }
+
+    function showResults(testResults) {
+        setResults(testResults);
+        setPhase("results");
     }
 
 
@@ -144,6 +151,7 @@ export default function Test() {
                 <TestSection
                     numPics={numPics}
                     timeLimit={timeLimit}
+                    onFinish={showResults}
                 />
             )}
 
