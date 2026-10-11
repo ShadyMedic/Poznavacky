@@ -30,7 +30,7 @@ function answer(event)
     
     let url = window.location.href;
     if (url.endsWith('/')) { url = url.slice(0, -1); } //dstranění trailing slashe (pokud je přítomen)
-    url = url.substr(0, url.lastIndexOf("/")); //odstranění akce (/test)
+    url = url.substring(0, url.lastIndexOf("/")); //odstranění akce (/test)
 
     if (num == -1) return;
 
