@@ -103,7 +103,9 @@ export default function TestSection({numPics, timeLimit, onFinish}) {
                 </form>
             </section>
 
-            <ProgressBar />
+            <ProgressBar 
+                current={results.length+1}
+                max={numPics} />
 
         </section>
     );

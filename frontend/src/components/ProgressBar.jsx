@@ -1,8 +1,8 @@
 import { useState } from "preact/hooks";
 
-export default function ProgressBar({value = 15, max = 20 }) {
+export default function ProgressBar({current, max}) {
 
-    const percentage = Math.min(100, Math.max(0, (value / max) * 100));
+    const percentage = Math.min(100, Math.max(0, (current / max) * 100));
 
     return (
         <div className="progress-bar">
@@ -10,7 +10,7 @@ export default function ProgressBar({value = 15, max = 20 }) {
                 className="progress-bar-fill"
                 style={{ width: `${percentage}%` }}
             />
-            <span className="progress-stats">15/20</span>
+            <span className="progress-stats">{current}/{max}</span>
         </div>
     );
 }
