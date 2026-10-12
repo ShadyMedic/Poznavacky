@@ -46,7 +46,7 @@ export default function Test() {
     const [numPics, setNumPics] = useState(PICTURE_PRESETS[0]);
     const [customNumPics, setCustomNumPics] = useState("");
 
-    const [timeLimit, setTimeLimit] = useState(TIME_PRESETS[0].value);      // v sekundách; null = neomezený čas
+    const [timeLimit, setTimeLimit] = useState(TIME_PRESETS[0].value); // v sekundách; null = neomezený čas
     const [customMinutes, setCustomMinutes] = useState("");
 
     const [results, setResults] = useState([]);

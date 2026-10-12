@@ -76,7 +76,7 @@ export default function TestSection({numPics, timeLimit, onFinish}) {
 
             if (response === null) return;   // redirect in progress
 
-            if (response.messageType === "failure") {
+            if (response.messageType === "error") {
                 setError(response.message);
                 return;
             }
