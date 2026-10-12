@@ -90,6 +90,22 @@ export default function Test() {
         setPhase("results");
     }
 
+    function showAnswers()
+    {
+        setPhase("answers");
+    }
+
+    function retest()
+    {
+
+    }
+
+    function newTest()
+    {
+        setResults([]);
+        setPhase("settings");
+        // numPics a timeLimit zůstanou stejné jako v posledním testu
+    }
 
     return (
         <>
@@ -163,10 +179,12 @@ export default function Test() {
 
                     <p>Zodpověděl*a jsi správně {correctNum}/{numPics} otázek.</p>
                     <div class="buttons-wrapper flex-row"> 
-                        <button class="btn border-btn non-transparent primary new-test-button">Otestovat, co mi nešlo</button>
-
-                        <button class="btn border-btn non-transparent primary new-test-button">Zobrazit správné odpovědi</button>
-                        <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+                        <button class="btn border-btn non-transparent primary new-test-button"
+                            onClick={retest}>Otestovat, co mi nešlo</button>
+                        <button class="btn border-btn non-transparent primary new-test-button"
+                            onClick={showAnswers}>Zobrazit správné odpovědi</button>
+                        <button class="btn border-btn non-transparent primary new-test-button"
+                            onClick={newTest}>Nový test</button>
                     </div>
 
                 </section>
@@ -184,7 +202,8 @@ export default function Test() {
                         ))}
                     </div>
 
-                    <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+                    <button class="btn border-btn non-transparent primary new-test-button"
+                        onClick={newTest}>Nový test</button>
                 </section>
             )}
         </>
