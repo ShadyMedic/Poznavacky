@@ -43,11 +43,11 @@ export default function Test() {
 
     const [phase, setPhase] = useState("settings"); // "settings" | "test" | "results" | "answers"
 
-    const [numPics, setNumPics] = useState(10);
+    const [numPics, setNumPics] = useState(PICTURE_PRESETS[0]);
     const [customNumPics, setCustomNumPics] = useState("");
 
+    const [presetMinutes, setPresetMinutes] = useState(TIME_PRESETS[0].value);      // v sekundách; null = neomezený čas
     const [timeLimit, setTimeLimit] = useState("");
-    const [presetMinutes, setPresetMinutes] = useState(null);      // v sekundách; null = neomezený čas
 
     const [results, setResults] = useState([]);
 
@@ -62,7 +62,7 @@ export default function Test() {
     {
         const val = e.currentTarget.value;
         setCustomNumPics(val);
-        setNumPics(val.trim() === "" ? 10 : Number(val)); 
+        setNumPics(val.trim() === "" ? PICTURE_PRESETS[0] : Number(val)); 
     }
 
     function pickTime(seconds)
@@ -75,7 +75,7 @@ export default function Test() {
     {
         const val = e.currentTarget.value;
         setTimeLimit(val);
-        setPresetMinutes(val.trim() === "" ? null : Number(val) * 60);
+        setPresetMinutes(val.trim() === "" ? TIME_PRESETS[0].value : Number(val) * 60);
     }
 
     function startTest() {
