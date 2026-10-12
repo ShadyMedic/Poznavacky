@@ -46,8 +46,8 @@ export default function Test() {
     const [numPics, setNumPics] = useState(PICTURE_PRESETS[0]);
     const [customNumPics, setCustomNumPics] = useState("");
 
-    const [presetMinutes, setPresetMinutes] = useState(TIME_PRESETS[0].value);      // v sekundách; null = neomezený čas
-    const [timeLimit, setTimeLimit] = useState("");
+    const [timeLimit, setTimeLimit] = useState(TIME_PRESETS[0].value);      // v sekundách; null = neomezený čas
+    const [customMinutes, setCustomMinutes] = useState("");
 
     const [results, setResults] = useState([]);
 
@@ -67,15 +67,15 @@ export default function Test() {
 
     function pickTime(seconds)
     {
-        setPresetMinutes(seconds);
-        setTimeLimit("");
+        setTimeLimit(seconds);
+        setCustomMinutes("");
     }
 
-    function ontimeLimit(e)
+    function oncustomMinutes(e)
     {
         const val = e.currentTarget.value;
-        setTimeLimit(val);
-        setPresetMinutes(val.trim() === "" ? TIME_PRESETS[0].value : Number(val) * 60);
+        setCustomMinutes(val);
+        setTimeLimit(val.trim() === "" ? TIME_PRESETS[0].value : Number(val) * 60);
     }
 
     function startTest() {
@@ -125,7 +125,7 @@ export default function Test() {
                                         type="button"
                                         key={t.label}
                                         class={`btn border-btn transparent primary test-time-limit-button
-                                            ${timeLimit === "" && presetMinutes === t.value ? " selected" : ""}`}
+                                            ${customMinutes === "" && timeLimit === t.value ? " selected" : ""}`}
                                         onClick={() => pickTime(t.value)}
                                     >
                                         {t.label}
@@ -134,8 +134,8 @@ export default function Test() {
                             </div>
                             <label for="test-time-limit">Jiný čas:</label>
                             <input type="number" id="test-time-limit" min="1"
-                                class={`text-field ${timeLimit != "" ? "selected" : ""}`}
-                                value={timeLimit} onInput={ontimeLimit} /> minut
+                                class={`text-field ${customMinutes != "" ? "selected" : ""}`}
+                                value={customMinutes} onInput={oncustomMinutes} /> minut
                         </div>
                     </form>
 

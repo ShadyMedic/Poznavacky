@@ -14,13 +14,48 @@ export default function TestSection({numPics, timeLimit, onFinish}) {
 
     const [results, setResults] = useState([]);
 
+    const [timeLeft, setTimeLeft] = useState(timeLimit);
+
     const pictureManager = useRef(new PictureManager()).current;
 
+    // načtení obrázků do testu
     useEffect(() => {
         pictureManager.loadPictures(false, numPics, () => {
             setPicture(pictureManager.getNextPicture());
         });
     }, []);
+
+    // časový odpočet
+    useEffect(() => {
+        if (timeLimit == null) return; // není časový limit
+
+        // setInterval - prohlížečová funkce volající se opakovaně, parametr 1000 ~ 1 s
+        const intervalId = setInterval(() => {
+            setTimeLeft(t => (t > 0) ? t - 1 : 0);
+        }, 1000)
+
+        return () => clearInterval(intervalId) // vyčištění při odchodu z komponenty
+    }, [])
+
+    useEffect(() => {
+        if (timeLeft === 0) {
+            onFinish(results);
+        }
+    }, [timeLeft]);
+
+    /**
+     * Formátovač času s -> hh:mm:ss
+     * @param {int} seconds 
+     * @returns string reprezentující čas ve formátu hh:mm:ss
+     */
+    function formatTime(seconds)
+    {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+
+        return [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
+    }
 
     async function handleSubmit(e)
     {
@@ -106,6 +141,10 @@ export default function TestSection({numPics, timeLimit, onFinish}) {
             <ProgressBar 
                 current={results.length+1}
                 max={numPics} />
+
+            {timeLimit != null && (
+                <div class="time-counter">Zbývající čas: {formatTime(timeLeft)}</div>
+            )}
 
         </section>
     );

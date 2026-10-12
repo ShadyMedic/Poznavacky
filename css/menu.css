@@ -2957,6 +2957,9 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
   transform: translateY(25%);
   z-index: 10;
 }
+#test .time-counter {
+  align-self: center;
+}
 
 @media screen and (min-width: 42rem) {
   #add-pictures #add-pictures-form-wrapper {
