@@ -83,7 +83,7 @@ export default function TestSection({numPics, timeLimit, onFinish}) {
 
             // TODO zatím první obrázek funguje, je třeba pořešit loadování dalších
 
-            const result = { id: picture.num, userAns: answer, isCorrect: response.message, correct: response.data.answer };
+            const result = { id: picture.num, userAns: answer, isCorrect: response.message === "correct", correct: response.data.answer };
             const newResults = [...results, result];
             console.log(result);
 

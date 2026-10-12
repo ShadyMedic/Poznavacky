@@ -2896,7 +2896,7 @@ body.dark-theme#menu nav > div, body.dark-theme#learn nav > div, body.dark-theme
 #test .param-settings .text-field {
   max-width: 8rem;
 }
-#test .param-settings p {
+#test p {
   margin-bottom: 1rem;
 }
 #test #cards {

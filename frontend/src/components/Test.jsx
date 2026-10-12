@@ -50,6 +50,8 @@ export default function Test() {
     const [customMinutes, setCustomMinutes] = useState("");
 
     const [results, setResults] = useState([]);
+    
+    const correctNum = results.filter(r => r.isCorrect).length; // počet správných odpovědí
 
 
     function pickPictures(num)
@@ -82,7 +84,8 @@ export default function Test() {
         setPhase("test");
     }
 
-    function showResults(testResults) {
+    function showResults(testResults)
+    {
         setResults(testResults);
         setPhase("results");
     }
@@ -158,11 +161,13 @@ export default function Test() {
             {phase === "results" && (
                 <section id="results-wrapper" class="study-wrapper">
 
-                    <p>Zodpověděl*a jsi správně 15/20 otázek.</p>
-                    <button class="btn border-btn non-transparent primary new-test-button">Otestovat, co mi nešlo</button>
+                    <p>Zodpověděl*a jsi správně {correctNum}/{numPics} otázek.</p>
+                    <div class="buttons-wrapper flex-row"> 
+                        <button class="btn border-btn non-transparent primary new-test-button">Otestovat, co mi nešlo</button>
 
-                    <button class="btn border-btn non-transparent primary new-test-button">Zobrazit správné odpovědi</button>
-                    <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+                        <button class="btn border-btn non-transparent primary new-test-button">Zobrazit správné odpovědi</button>
+                        <button class="btn border-btn non-transparent primary new-test-button">Nový test</button>
+                    </div>
 
                 </section>
             )}
