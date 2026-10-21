@@ -79,6 +79,7 @@ class DataValidator
         "submit-picture",
         "learn",
         "learn-pictures",
+        "practise",
         "test",
         "test-pictures",
         "check-test-answer",
