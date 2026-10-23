@@ -258,6 +258,7 @@
             grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
         }
         gap: 1rem;
+        margin-bottom: 2rem;
     }
     .answer-card {
         width: 100%;
@@ -282,6 +283,26 @@
         .name {
             text-align: center;
             padding: 0.6rem;
+        }
+        img.badge {
+            position: absolute;
+            top: 0.6rem;
+            right: 0.6rem;
+            width: 1.8rem;
+            height: 1.8rem;
+            padding: 0.35rem;
+            border: none;
+            border-radius: 50%;
+            aspect-ratio: auto;
+            background: var(--c-correct);
+        }
+        &.incorrect img.badge {
+            background: var(--c-error);
+        }
+        .user-answer {
+            text-decoration: line-through;
+            color: var(--c-error);
+            font-size: 0.9em;
         }
     }
 

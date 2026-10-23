@@ -3,34 +3,6 @@ import { useEffect, useState } from 'preact/hooks';
 import TestSection from './TestSection';
 import AnswerCard from './AnswerCard';
 
-//TODO zatím zde provizorně, potom by se z backendu měla fetchovat reálná data v tomto formátu
-const cards = [
-    {
-        id: 1,
-        name: 'Název přírodniny',
-        src: 'images/logo.png',
-    },
-    {
-        id: 2,
-        name: 'Název přírodniny',
-        src: 'images/logo.png',
-    },
-    {
-        id: 3,
-        name: 'Název přírodniny',
-        src: 'images/logo.png',
-    },
-    {
-        id: 4,
-        name: 'Název přírodniny',
-        src: 'images/logo.png',
-    },
-    {
-        id: 5,
-        name: 'Název přírodniny',
-        src: 'images/logo.png',
-    },
-];
 
 const PICTURE_PRESETS = [10, 20, 30];
 const TIME_PRESETS = [
@@ -49,8 +21,8 @@ export default function Test() {
     const [timeLimit, setTimeLimit] = useState(TIME_PRESETS[0].value); // v sekundách; null = neomezený čas
     const [customMinutes, setCustomMinutes] = useState("");
 
-    const [results, setResults] = useState([]);
-    
+    const [results, setResults] = useState([]); // výsledky ve formátu [{ id, src, userAns, isCorrect, correct }]
+
     const correctNum = results.filter(r => r.isCorrect).length; // počet správných odpovědí
 
 
@@ -106,6 +78,7 @@ export default function Test() {
         setPhase("settings");
         // numPics a timeLimit zůstanou stejné jako v posledním testu
     }
+
 
     return (
         <>
@@ -182,9 +155,9 @@ export default function Test() {
                         <button class="btn border-btn non-transparent primary new-test-button"
                             onClick={retest}>Otestovat, co mi nešlo</button>
                         <button class="btn border-btn non-transparent primary new-test-button"
-                            onClick={showAnswers}>Zobrazit správné odpovědi</button>
-                        <button class="btn border-btn non-transparent primary new-test-button"
                             onClick={newTest}>Nový test</button>
+                        <button class="btn border-btn transparent primary new-test-button"
+                            onClick={showAnswers}>Zobrazit správné odpovědi</button>
                     </div>
 
                 </section>
@@ -194,16 +167,24 @@ export default function Test() {
                 <section id="answers-wrapper" class="study-wrapper">
 
                     <div id="cards">
-                        {cards.map(card => (
+                        {results.map(card => (
                             <AnswerCard
                                 key={card.id}
-                                {...card}
+                                name={card.correct}
+                                userAns={card.userAns}
+                                isCorrect={card.isCorrect}
+                                src={card.src}
                             />
                         ))}
                     </div>
 
-                    <button class="btn border-btn non-transparent primary new-test-button"
-                        onClick={newTest}>Nový test</button>
+                    <div class="buttons-wrapper flex-row"> 
+                        <button class="btn border-btn non-transparent primary new-test-button"
+                            onClick={retest}>Otestovat, co mi nešlo</button>
+                        <button class="btn border-btn non-transparent primary new-test-button"
+                            onClick={newTest}>Nový test</button>
+                    </div>
+
                 </section>
             )}
         </>
